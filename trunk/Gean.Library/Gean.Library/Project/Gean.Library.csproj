@@ -53,8 +53,6 @@
     <Compile Include="Src\Base\Collections\EventIndexedDictionary.cs" />
     <Compile Include="Src\Base\Collections\EventList.cs" />
     <Compile Include="Src\Base\Pair.cs" />
-    <Compile Include="Src\Base\Collections\Set.cs" />
-    <Compile Include="Src\Base\Collections\UtilityReadOnlyCollection.cs" />
     <Compile Include="Src\Base\EventArgs\ChangedEventArgs.cs" />
     <Compile Include="Src\Base\EventArgs\EventArgs.cs" />
     <Compile Include="Src\Base\EventArgs\EventHandler.cs" />

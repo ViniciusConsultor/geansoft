@@ -65,5 +65,68 @@ namespace Gean.Library.Test
 
         #endregion
 
+
+        /// <summary>
+        ///Equals 的测试
+        ///</summary>
+        public void EqualsTestHelper<A, B>()
+            where A : IEquatable<int>
+            where B : IEquatable<string>
+        {
+            Pair<int, string> target = new Pair<int, string>(100, "test");
+            Pair<int, string> other = new Pair<int, string>(100, "test");
+            bool expected = true;
+            bool actual;
+            actual = target.Equals(other);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void EqualsTest()
+        {
+            this.EqualsTestHelper<int, string>();
+        }
+
+        /// <summary>
+        ///op_Equality 的测试
+        ///</summary>
+        public void op_EqualityTestHelper<A, B>()
+            where A : IEquatable<int>
+            where B : IEquatable<string>
+        {
+            Pair<int, string> lhs = new Pair<int, string>(100, "test");
+            Pair<int, string> rhs = new Pair<int, string>(100, "test");
+            bool expected = true;
+            bool actual;
+            actual = (lhs == rhs);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void op_EqualityTest()
+        {
+            this.op_EqualityTestHelper<int, string>();
+        }
+
+        /// <summary>
+        ///op_Inequality 的测试
+        ///</summary>
+        public void op_InequalityTestHelper<A, B>()
+            where A : IEquatable<int>
+            where B : IEquatable<string>
+        {
+            Pair<int, string> lhs = new Pair<int, string>(100, "test");
+            Pair<int, string> rhs = new Pair<int, string>(100, "Test");
+            bool expected = true; // TODO: 初始化为适当的值
+            bool actual;
+            actual = (lhs != rhs);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void op_InequalityTest()
+        {
+            this.op_InequalityTestHelper<int, string>();
+        }
     }
 }
