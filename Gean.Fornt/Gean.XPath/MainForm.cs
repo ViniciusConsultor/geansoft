@@ -1,4 +1,4 @@
-﻿namespace VisualXPath
+﻿namespace Gean.Front.XPathTool
 {
     using System;
     using System.Collections;
@@ -440,6 +440,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.txtXmlFileName = new System.Windows.Forms.TextBox();
             this.btnLoadXmlFile = new System.Windows.Forms.Button();
@@ -757,9 +758,9 @@
             this.Controls.Add(this.btnLoadXmlFile);
             this.Controls.Add(this.txtXmlFileName);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this._MainMenu;
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Visual XPath";
             this.Load += new System.EventHandler(this.MainForm_Load);

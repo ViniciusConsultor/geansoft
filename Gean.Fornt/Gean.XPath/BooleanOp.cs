@@ -1,4 +1,4 @@
-﻿namespace VisualXPath
+﻿namespace Gean.Front.XPathTool
 {
     using System;
     using System.Text;

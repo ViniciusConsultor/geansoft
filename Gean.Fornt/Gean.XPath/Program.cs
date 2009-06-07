@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using VisualXPath;
+using Gean.Front.XPathTool;
 
-namespace WindowsFormsApplication2
+namespace Gean.Front.XPathTool
 {
     static class Program
     {
