@@ -46,13 +46,13 @@
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
             this.ClientSize = new System.Drawing.Size(519, 308);
-            this.ControlBox = false;
             this.Controls.Add(this.textBox1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "HelpForm";
             this.Padding = new System.Windows.Forms.Padding(5);
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Help";
             this.ResumeLayout(false);
