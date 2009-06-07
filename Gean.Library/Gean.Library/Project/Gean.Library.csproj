@@ -1,0 +1,143 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</ProjectGuid>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>Gean.Library</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Gean</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\FilterString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FilterString.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RegexString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegexString.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Base\Collections\EventIndexedDictionary.cs" />
+    <Compile Include="Src\Base\Collections\EventList.cs" />
+    <Compile Include="Src\Base\Pair.cs" />
+    <Compile Include="Src\Base\Collections\Set.cs" />
+    <Compile Include="Src\Base\Collections\UtilityReadOnlyCollection.cs" />
+    <Compile Include="Src\Base\EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\EventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\EventHandler.cs" />
+    <Compile Include="Src\Base\EventArgs\FileNameEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ICancelEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\IIndexEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\INewValueEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\IOldValueEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\IRangeEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\IValueEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\RangeCancelEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\RangeEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueCancelEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueChangedEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueChangingEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueIndexCancelEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueIndexChangedEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueIndexChangingEventArgs.cs" />
+    <Compile Include="Src\Base\EventArgs\ValueIndexEventArgs.cs" />
+    <Compile Include="Src\Interfaces\Content\ICanBeDirty.cs" />
+    <Compile Include="Src\Interfaces\Content\IClipboardHandler.cs" />
+    <Compile Include="Src\Interfaces\Content\IContextHelpProvider.cs" />
+    <Compile Include="Src\Interfaces\Content\ICustomizedCommands.cs" />
+    <Compile Include="Src\Interfaces\Content\IEditable.cs" />
+    <Compile Include="Src\Interfaces\Content\IPositionable.cs" />
+    <Compile Include="Src\Interfaces\Content\IPrintable.cs" />
+    <Compile Include="Src\Interfaces\Content\IUndoHandler.cs" />
+    <Compile Include="Src\Interfaces\ICommand.cs" />
+    <Compile Include="Src\Interfaces\ILogWriter.cs" />
+    <Compile Include="Src\Interfaces\IMementoCapable.cs" />
+    <Compile Include="Src\Interfaces\IOwnerState.cs" />
+    <Compile Include="Src\Interfaces\IPadContent.cs" />
+    <Compile Include="Src\Interfaces\IProgressMonitor.cs" />
+    <Compile Include="Src\Utility\File\FileEnums.cs" />
+    <Compile Include="Src\Utility\File\FileSearching.cs" />
+    <Compile Include="Src\Utility\File\UtilityFile.cs" />
+    <Compile Include="Src\Utility\UtilityClipboard.cs" />
+    <Compile Include="Src\Utility\UtilityCollection.cs" />
+    <Compile Include="Src\Utility\UtilityConvert.cs" />
+    <Compile Include="Src\Utility\UtilityDateTime.cs" />
+    <Compile Include="Src\Utility\UtilityEncrypt.cs" />
+    <Compile Include="Src\Utility\UtilityGuid.cs" />
+    <Compile Include="Src\Utility\UtilityHardware.cs" />
+    <Compile Include="Src\Utility\UtilityKeys.cs" />
+    <Compile Include="Src\Utility\UtilityRandom.cs" />
+    <Compile Include="Src\Utility\UtilityRegex.cs" />
+    <Compile Include="Src\Utility\UtilityString.cs" />
+    <Compile Include="Src\Widgets\Chinese\ChineseIDCardValid.cs" />
+    <Compile Include="Src\Widgets\Chinese\ChineseSpell.cs" />
+    <Compile Include="Src\Wrapper\Duration.cs" />
+    <Compile Include="Src\Wrapper\Logger\LogLevel.cs" />
+    <Compile Include="Src\Wrapper\Logger\LogWriter.cs" />
+    <Compile Include="Src\Wrapper\Logger\TextLog.cs" />
+    <Compile Include="Src\Wrapper\Properties\Properties.cs" />
+    <Compile Include="Src\Wrapper\Properties\PropertiesItemChangedEventArgs.cs" />
+    <Compile Include="Src\Wrapper\Properties\SerializedValue.cs" />
+    <Compile Include="Src\Wrapper\User32.cs" />
+    <Compile Include="Src\Wrapper\Xml\AbstractXmlAttribute.cs" />
+    <Compile Include="Src\Wrapper\Xml\AbstractXmlDocument.cs" />
+    <Compile Include="Src\Wrapper\Xml\AbstractXmlElement.cs" />
+    <Compile Include="Src\Wrapper\Xml\AbstractXmlNode.cs" />
+    <Compile Include="Src\Wrapper\Xml\XmlHelper.cs" />
+    <Compile Include="Src\Wrapper\Xml\XmlSchemaValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\Wrapper\Duration.cd" />
+    <None Include="Src\Wrapper\Xml\AbstractXml.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\FilterString.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RegexString.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

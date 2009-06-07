@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Aarhus.Framework.Duration">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <NestedTypes>
+      <Class Name="Aarhus.Framework.Duration.DurationMethods" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Src\Wrapper\Duration.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIgACAAACAAAAAEwAkgAAAAAAAAEIAAIAAAAAACAiA=</HashCode>
+      <FileName>Src\Wrapper\Duration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
