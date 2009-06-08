@@ -7,7 +7,8 @@ using Gean.Resources;
 namespace Gean
 {
     /// <summary>
-    /// An indexable Dictionary
+    /// 一个有事件的且加上了索引的Dictionary。索引从0开始。
+    /// Gean: 2009-06-07 23:31:48
     /// </summary>
     /// <typeparam name="TKey">type for the key</typeparam>
     /// <typeparam name="TValue">type for the value</typeparam>
@@ -86,7 +87,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="TValue"/> at the specified index.
+        /// 使用索引来获取与设置<see cref="TValue"/>.
         /// </summary>
         /// <value></value>
         public TValue this[int index]
