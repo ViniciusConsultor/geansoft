@@ -1,0 +1,155 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FDA143BE-C848-4EAC-820A-1D063F71DF0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Aarhus.Wrapper.PlugTreeTest</RootNamespace>
+    <AssemblyName>Aarhus.Wrapper.PlugTreeTest</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <StartupObject>
+    </StartupObject>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConditionTest.cs" />
+    <Compile Include="PlugTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_other\ahsplugin\NewFolder4\CodeFile1.cs" />
+    <Compile Include="_other\ahsplugin\NewFolder4\DataClasses1.cs">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="_other\ahsplugin\NewFolder4\DataClasses1.designer.cs">
+      <DependentUpon>DataClasses1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_other\ahsplugin\NewFolder4\DataClasses11.designer.cs" />
+    <Compile Include="_other\ahsplugin\NewFolder4\DataClasses12.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_other\ahsplugin\NewFolder5\PlugTest.ahsplugin" />
+    <None Include="Aaa.Bbb.Ccc.Ddd.Eee.dll">
+    </None>
+    <Content Include="_other\addin\AddInManager.addin" />
+    <Content Include="_other\addin\AddInScout.addin" />
+    <Content Include="_other\addin\BooBinding.addin" />
+    <Content Include="_other\addin\ClassDiagramAddin.addin" />
+    <Content Include="_other\addin\CodeAnalysis.addin" />
+    <Content Include="_other\addin\CodeCoverage.addin" />
+    <Content Include="_other\addin\ComponentInspector.addin" />
+    <Content Include="_other\addin\CSharpBinding.addin" />
+    <Content Include="_other\addin\Debugger.AddIn.addin" />
+    <Content Include="_other\addin\FiletypeRegisterer.addin" />
+    <Content Include="_other\addin\FormsDesigner.addin" />
+    <Content Include="_other\addin\HexEditor.addin" />
+    <Content Include="_other\addin\HighlightingEditor.addin" />
+    <Content Include="_other\addin\Hornung.ResourceToolkit.addin" />
+    <Content Include="_other\addin\HtmlHelp2.addin" />
+    <Content Include="_other\addin\HtmlHelp2.DynamicHelp.addin" />
+    <Content Include="_other\addin\IconEditorAddIn.addin" />
+    <Content Include="_other\addin\ICSharpCode.SharpDevelop.addin" />
+    <Content Include="_other\addin\ICSharpCode.Svn.addin" />
+    <Content Include="_other\addin\ILAsmBinding.addin" />
+    <Content Include="_other\addin\PInvoke.addin" />
+    <Content Include="_other\addin\PythonBinding.addin" />
+    <Content Include="_other\addin\ReflectorAddIn.addin" />
+    <Content Include="_other\addin\RegExpTk.addin" />
+    <Content Include="_other\addin\ResourceEditor.addin" />
+    <Content Include="_other\addin\SearchAndReplace.addin" />
+    <Content Include="_other\addin\SharpDevelop.addin" />
+    <Content Include="_other\addin\SharpDevelop.XmlEditor.addin" />
+    <Content Include="_other\addin\SharpRefactoring.addin" />
+    <Content Include="_other\addin\StartPage.addin" />
+    <Content Include="_other\addin\UnitTesting.addin" />
+    <Content Include="_other\addin\VBNetBinding.addin" />
+    <Content Include="_other\addin\WixBinding.addin" />
+    <Content Include="_other\addin\XamlBinding.addin" />
+    <Content Include="_other\addin\XmlEditor.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_other\ahsplugin\NewFolder1\abcdxyz0.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder1\abcdxyz1.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder1\abcdxyz2.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\NewFolder1\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\NewFolder1\NewFolder1\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\NewFolder1\NewFolder1\NewFolder1\abcdxyz0.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\NewFolder1\NewFolder1\NewFolder1\abcdxyz1.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder1\NewFolder1\NewFolder1\NewFolder1\abcdxyz2.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder2\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder3\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder2\NewFolder1\NewFolder4\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder3\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder3\NewFolder1\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder3\NewFolder2\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder3\NewFolder3\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder4\abcdxyz.ahs" />
+    <None Include="_other\ahsplugin\NewFolder4\abcdxyz.ahsplugin" />
+    <None Include="_other\ahsplugin\NewFolder4\abcdxyz.ahspluginnnnnnn" />
+    <None Include="_other\ahsplugin\NewFolder4\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses12.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_other\ahsplugin\NewFolder4\中文文件名.ahsplugin" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project\Gean.Wrapper.PlugTree.csproj">
+      <Project>{B0329AD2-DECE-4080-AFCD-5AC2EFEB27EF}</Project>
+      <Name>Gean.Wrapper.PlugTree</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
