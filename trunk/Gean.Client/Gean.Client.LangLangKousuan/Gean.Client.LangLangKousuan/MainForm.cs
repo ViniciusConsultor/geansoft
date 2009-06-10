@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.Specialized;
 
-namespace Gean.Client.LangLangKousuan
+namespace Gean.Client.MathsExercise
 {
     public partial class MainForm : Form
     {

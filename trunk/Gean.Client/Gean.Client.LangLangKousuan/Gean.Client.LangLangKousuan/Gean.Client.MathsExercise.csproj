@@ -8,8 +8,8 @@
     <ProjectGuid>{3833F0B2-D74D-44D7-9358-F7EC6145DFC6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Client.LangLangKousuan</RootNamespace>
-    <AssemblyName>Gean.Client.LangLangKousuan</AssemblyName>
+    <RootNamespace>Gean.Client.MathsExercise</RootNamespace>
+    <AssemblyName>StudentMathsExercise</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -63,6 +63,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
