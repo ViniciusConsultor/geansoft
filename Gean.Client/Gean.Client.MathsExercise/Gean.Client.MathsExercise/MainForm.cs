@@ -84,5 +84,15 @@ namespace Gean.Client.MathsExercise
 
         private int _Count;
         private StringBuilder _KousuanStringBuilder = new StringBuilder();
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void _AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new AboutForm()).ShowDialog(this);
+        }
     }
 }
