@@ -1,4 +1,4 @@
-﻿namespace Gean.Client.LangLangKousuan
+﻿namespace Gean.Client.MathsExercise
 {
     partial class MainForm
     {
