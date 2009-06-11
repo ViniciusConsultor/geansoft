@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Xml;
-using Gean.Framework;
+
 using Gean.Wrapper.PlugTree.Exceptions;
 
 namespace Gean.Wrapper.PlugTree

@@ -6,7 +6,7 @@ using System.Xml;
 using Gean.Wrapper.PlugTree.Components;
 using Gean.Wrapper.PlugTree.Exceptions;
 using Gean.Wrapper.PlugTree.Service;
-using Gean.Framework;
+
 
 namespace Gean.Wrapper.PlugTree
 {

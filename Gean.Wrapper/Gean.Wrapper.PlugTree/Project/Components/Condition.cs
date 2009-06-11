@@ -2,7 +2,7 @@
 using System.Xml;
 using Gean.Wrapper.PlugTree.Components.ComplexCondition;
 using Gean.Wrapper.PlugTree.Exceptions;
-using Gean.Framework;
+
 
 namespace Gean.Wrapper.PlugTree.Components
 {

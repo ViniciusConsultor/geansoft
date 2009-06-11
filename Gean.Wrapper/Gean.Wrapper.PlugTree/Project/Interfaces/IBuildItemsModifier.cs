@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace Gean.Framework
+namespace Gean.Wrapper.PlugTree
 {
 	/// <summary>
 	/// When a <see cref="IDoozer">doozer</see> returns an object implementing
