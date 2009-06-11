@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gean.Resources {
+namespace Gean.Client.Sudoku.Properties {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Gean.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FilterString {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FilterString() {
+        internal Resources() {
         }
         
         /// <summary>
         ///   返回此类使用的缓存 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Resources.FilterString", typeof(FilterString).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Client.Sudoku.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,66 +51,12 @@ namespace Gean.Resources {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 All Files|*.* 的本地化字符串。
-        /// </summary>
-        public static string All {
-            get {
-                return ResourceManager.GetString("All", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Image Files|*.bmp;*.jpg;*.ico;*.icon;*.png;*.gif;|All Files|*.* 的本地化字符串。
-        /// </summary>
-        public static string Image {
-            get {
-                return ResourceManager.GetString("Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Media Files|*.mpg;*.avi;*.wma;*.mov;*.wav;*.mp2;*.mp3|All Files|*.* 的本地化字符串。
-        /// </summary>
-        public static string Media {
-            get {
-                return ResourceManager.GetString("Media", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 SimpleSudoku Files (*.simsudo)|*.simsudo|All Files (*.*)|*.* 的本地化字符串。
-        /// </summary>
-        public static string SimpleSudoku {
-            get {
-                return ResourceManager.GetString("SimpleSudoku", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Text Files (*.txt)|*.txt|All Files (*.*)|*.* 的本地化字符串。
-        /// </summary>
-        public static string Txt {
-            get {
-                return ResourceManager.GetString("Txt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Xml Files (*.xml)|*.xml|All Files (*.*)|*.* 的本地化字符串。
-        /// </summary>
-        public static string Xml {
-            get {
-                return ResourceManager.GetString("Xml", resourceCulture);
             }
         }
     }

@@ -1,11 +1,11 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
-    <ProjectGuid>{F4525F47-D7DB-49B5-B40F-FC9C7856F506}</ProjectGuid>
+    <ProjectGuid>{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Gean.Library.UI.SudokuPanel</RootNamespace>
-    <AssemblyName>Gean.Library.UI.SudokuPanel</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Gean.Client.Sudoku</RootNamespace>
+    <AssemblyName>GeanSudoku</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
@@ -56,14 +56,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="GraphicsHelper.cs" />
-    <Compile Include="SudokuCell.cs">
+    <Compile Include="Control\ExerciseTree.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SudokuPanel.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Control\TreeNode\ExerciseNode.cs" />
+    <Compile Include="Form\AboutForm.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Form\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainService.cs" />
+    <Compile Include="Form\NewExerciseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\NewExerciseForm.Designer.cs">
+      <DependentUpon>NewExerciseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Form\AboutForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\NewExerciseForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewExerciseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -83,6 +122,21 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\Debug\MyData.simsudo" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean.Library.UI\Gean.Library.UI.Controls\Gean.Library.UI.Controls\Gean.Library.UI.Controls.csproj">
+      <Project>{BC9321B1-A644-45DB-838A-D65AF74AFAA7}</Project>
+      <Name>Gean.Library.UI.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Gean.Library.UI\Gean.Library.UI.SudokuPanel\Gean.Library.UI.SudokuPanel\Gean.Library.UI.SudokuPanel.csproj">
+      <Project>{F4525F47-D7DB-49B5-B40F-FC9C7856F506}</Project>
+      <Name>Gean.Library.UI.SudokuPanel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Gean.Library\Gean.Library\Gean.Library\Gean.Library.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Gean.Wrapper\Gean.Wrapper.Sudoku\Gean.Wrapper.Sudoku\Gean.Wrapper.Sudoku.csproj">
       <Project>{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}</Project>
       <Name>Gean.Wrapper.Sudoku</Name>

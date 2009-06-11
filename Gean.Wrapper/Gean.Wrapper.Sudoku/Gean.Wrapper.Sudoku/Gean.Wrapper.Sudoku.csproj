@@ -5,8 +5,8 @@
     <ProjectGuid>{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>Aarhus.Wrapper.Sudoku</AssemblyName>
-    <RootNamespace>Aarhus.Wrapper.Sudoku</RootNamespace>
+    <AssemblyName>Gean.Wrapper.Sudoku</AssemblyName>
+    <RootNamespace>Gean.Wrapper.Sudoku</RootNamespace>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
