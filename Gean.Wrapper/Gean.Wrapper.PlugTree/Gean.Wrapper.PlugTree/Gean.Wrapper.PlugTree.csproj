@@ -83,7 +83,6 @@
     </Compile>
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="UnitTestClass.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
