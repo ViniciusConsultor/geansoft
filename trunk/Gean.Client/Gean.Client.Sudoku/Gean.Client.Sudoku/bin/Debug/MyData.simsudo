@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <Do>
+    <Easy>
+      <data>
+        <Exercise>.9..3.....5......2....1....6..2..8..1..5.....3.7............31.7..4............9.</Exercise>
+        <Solution></Solution>
+        <SolveDuration></SolveDuration>
+        <SolveTime></SolveTime>
+      </data>
+      <data>
+        <Exercise>73..8..........1.5......6..2516.........48............48.....3....1.....9........</Exercise>
+        <Solution></Solution>
+        <SolveDuration></SolveDuration>
+        <SolveTime></SolveTime>
+      </data>
+    </Easy>
+    <Middle>
+      <data>
+        <Exercise>2......3.6...1....7..8......8...5.4..1...........2....3....9.........2.1...4..6..</Exercise>
+        <Solution></Solution>
+        <SolveDuration></SolveDuration>
+        <SolveTime></SolveTime>
+      </data>
+    </Middle>
+    <Hard>
+      <data>
+        <Exercise>.......519..2..............451.6.......4..38..........24....7.......32......5....</Exercise>
+        <Solution></Solution>
+        <SolveDuration></SolveDuration>
+        <SolveTime></SolveTime>
+      </data>
+    </Hard>
+    <Hardest>
+      <data>
+        <Exercise>.......519..2..............451.6.......4..38..........24....7.......32......5....</Exercise>
+        <Solution></Solution>
+        <SolveDuration></SolveDuration>
+        <SolveTime></SolveTime>
+      </data>
+    </Hardest>
+  </Do>
+</Root>

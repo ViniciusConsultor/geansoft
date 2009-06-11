@@ -22,7 +22,7 @@ namespace Gean.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class RegexString {
+    public class RegexString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Gean.Resources {
         ///   返回此类使用的缓存 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Resources.RegexString", typeof(RegexString).Assembly);
@@ -51,7 +51,7 @@ namespace Gean.Resources {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 \r\n 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_Br {
+        public static string RegexStr_Br {
             get {
                 return ResourceManager.GetString("RegexStr_Br", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 ((^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(10|12|0?[13578])([-\/\._])(3[01]|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(11|0?[469])([-\/\._])(30|[12][0-9]|0?[1-9])$)|(^((1[8-9]\d{2})|([2-9]\d{3}))([-\/\._])(0?2)([-\/\._])(2[0-8]|1[0-9]|0?[1-9])$)|(^([2468][048]00)([-\/\._])(0?2)([-\/\._])(29)$)|(^([3579][26]00)([-\/\._])(0?2)([-\/\._])(29)$)|(^([1][89][0][48])([-\/\._])(0?2)([-\/\._])(29)$)|(^([2-9][0-9][0][48])([-\/\._])(0?2)([-\/\._])(29)$)|(^([1][89][2468][048])([-\/\._])(0?2)([-\/\._])( [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_Date {
+        public static string RegexStr_Date {
             get {
                 return ResourceManager.GetString("RegexStr_Date", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 ^((?&amp;gt;[a-zA-Z\d!#$%&amp;amp;&apos;*+\-/=?^_`{|}~]+\x20*|&quot;&quot;((?=[\x01-\x7f])[^&quot;&quot;\\]|\\[\x01-\x7f])*&quot;&quot;\x20*)*(?&amp;lt;angle&amp;gt;&amp;lt;))?((?!\.)(?&amp;gt;\.?[a-zA-Z\d!#$%&amp;amp;&apos;*+\-/=?^_`{|}~]+)+|&quot;&quot;((?=[\x01-\x7f])[^&quot;&quot;\\]|\\[\x01-\x7f])*&quot;&quot;)@(((?!-)[a-zA-Z\d\-]+(?&amp;lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&amp;lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&amp;gt;)$ 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_EmailAddress {
+        public static string RegexStr_EmailAddress {
             get {
                 return ResourceManager.GetString("RegexStr_EmailAddress", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 ^([a-zA-Z]:)?[^:]+$ 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_FileName {
+        public static string RegexStr_FileName {
             get {
                 return ResourceManager.GetString("RegexStr_FileName", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 ^(http|https)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{1,10}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\&apos;\\\+&amp;amp;%\$#\=~_\-]+))*$ 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_HttpUrl {
+        public static string RegexStr_HttpUrl {
             get {
                 return ResourceManager.GetString("RegexStr_HttpUrl", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Gean.Resources {
         /// <summary>
         ///   查找类似 ^((([0-1]?[0-9])|(2[0-3])):([0-5]?[0-9])(:[0-5]?[0-9])?)$ 的本地化字符串。
         /// </summary>
-        internal static string RegexStr_Time {
+        public static string RegexStr_Time {
             get {
                 return ResourceManager.GetString("RegexStr_Time", resourceCulture);
             }
