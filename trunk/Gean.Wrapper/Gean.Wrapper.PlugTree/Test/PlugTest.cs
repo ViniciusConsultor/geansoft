@@ -122,7 +122,7 @@ namespace Gean.Wrapper.PlugTreeTest
             File.WriteAllText(filename, this._TestSimpleString, Encoding.UTF8);
 
             Plug plug = null;
-            Plug.Parse(Path.GetFullPath(filename), out plug);
+            //Plug.Parse(Path.GetFullPath(filename), out plug);
 
             Assert.AreEqual(2, plug.PlugManifest.Identities.Count);
             Assert.AreEqual(1, plug.PlugManifest.Dependencies.Count);

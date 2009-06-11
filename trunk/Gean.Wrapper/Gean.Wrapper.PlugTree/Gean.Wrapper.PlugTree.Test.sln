@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.PlugTree", "Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aaa.Bbb.Ccc.Ddd.Eee", "Aaa.Bbb.Ccc.Ddd.Eee\Aaa.Bbb.Ccc.Ddd.Eee\Aaa.Bbb.Ccc.Ddd.Eee.csproj", "{FE46CD69-FB7B-42B2-B617-EA00D1283096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library", "..\..\Gean.Library\Gean.Library\Project\Gean.Library.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library", "..\..\Gean.Library\Gean.Library\Gean.Library\Gean.Library.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
