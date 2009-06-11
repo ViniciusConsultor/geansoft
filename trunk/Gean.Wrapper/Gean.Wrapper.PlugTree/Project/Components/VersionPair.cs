@@ -5,7 +5,7 @@ using System.IO;
 using System.Diagnostics;
 using Gean.Wrapper.PlugTree.Exceptions;
 using System.Reflection;
-using Gean.Framework;
+
 
 namespace Gean.Wrapper.PlugTree.Components
 {

@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Gean.Framework;
+
 using Gean.Wrapper.PlugTree.Service;
 
 namespace Gean.Wrapper.PlugTree

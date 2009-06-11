@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using Gean.Wrapper.PlugTree.Exceptions;
-using Gean.Framework;
+
 using Gean.Wrapper.PlugTree.Components;
 using System.Reflection;
 
