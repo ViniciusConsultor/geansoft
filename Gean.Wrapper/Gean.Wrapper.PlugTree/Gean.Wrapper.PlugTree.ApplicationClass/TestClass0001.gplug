@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GPlug>
+  <MainDescription>
+    <Assembly>TestClass0001.dll</Assembly>
+    <Class>
+      <Value>TestClass0001.TestRunner</Value>
+      <Value>TestClass0001.DemoRunner</Value>
+    </Class>
+  </MainDescription>
+</GPlug>
