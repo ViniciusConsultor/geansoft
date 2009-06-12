@@ -42,47 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AbstractCommand.cs" />
-    <Compile Include="DescriptorAndBuilders\ClassBuilder.cs" />
-    <Compile Include="DescriptorAndBuilders\LazyLoadBuilder.cs" />
-    <Compile Include="Commands\Menu\AbstractCheckableMenuCommand.cs" />
-    <Compile Include="Commands\Menu\AbstractMenuCommand.cs" />
-    <Compile Include="Commands\Menu\ICheckableMenuCommand.cs" />
-    <Compile Include="Commands\Menu\IMenuCommand.cs" />
-    <Compile Include="DescriptorAndBuilders\MenuItem\MenuItemDescriptor.cs" />
-    <Compile Include="DescriptorAndBuilders\MenuItem\MenuItemBuilder.cs" />
-    <Compile Include="DescriptorAndBuilders\ToolStripItem\ToolStripItemBuilder.cs" />
-    <Compile Include="DescriptorAndBuilders\ToolStripItem\ToolStripItemDescriptor.cs" />
-    <Compile Include="Interfaces\IBuilder.cs" />
-    <Compile Include="Interfaces\IBuildItemsModifier.cs" />
-    <Compile Include="Interfaces\ICondition.cs" />
-    <Compile Include="Interfaces\IConditionEvaluator.cs" />
-    <Compile Include="PlugAtom.cs" />
-    <Compile Include="Components\Collections.cs" />
-    <Compile Include="Components\ComplexCondition\AbstractCondition.cs" />
-    <Compile Include="Components\ComplexCondition\AndCondition.cs" />
-    <Compile Include="Components\ComplexCondition\NegatedCondition.cs" />
-    <Compile Include="Components\ComplexCondition\OrCondition.cs" />
-    <Compile Include="Components\Condition.cs" />
-    <Compile Include="Components\DefaultConditionEvaluators\CompareConditionEvaluator.cs" />
-    <Compile Include="Components\DefaultConditionEvaluators\LazyConditionEvaluator.cs" />
-    <Compile Include="Components\DefaultConditionEvaluators\OwnerStateConditionEvaluator.cs" />
-    <Compile Include="Components\VersionPair.cs" />
-    <Compile Include="Enums\ConditionFailedAction.cs" />
-    <Compile Include="Enums\PlugAction.cs" />
-    <Compile Include="Exception\PlugParseException.cs" />
-    <Compile Include="Exception\PlugTreeException.cs" />
-    <Compile Include="Exception\TreePathNotFoundException.cs" />
-    <Compile Include="Plug.cs" />
-    <Compile Include="PlugManifest.cs" />
-    <Compile Include="PlugPath.cs" />
-    <Compile Include="PlugRuntime.cs" />
-    <Compile Include="PlugManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\LogService.cs" />
-    <Compile Include="Services\MessageService.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
