@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Collections.Specialized;
+using System.IO;
+using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree
 {
+    /// <summary>
+    /// 从Plug文件中解析出实现了IRun接口的类型，并对他进行封装
+    /// </summary>
     public class Runner
     {
         private string[] _ClassNameList;
@@ -22,31 +27,28 @@ namespace Gean.Wrapper.PlugTree
 
         private void SearchRunType(string path)
         {
+            Debug.Assert(File.Exists(path), "Gean: File not found.");
             List<Type> typelist = new List<Type>();
             this.OwnerAssembly = Assembly.LoadFile(path);
             foreach (string classname in this._ClassNameList)
             {
-                Type type;
-                try
-                {
-                    type = this.OwnerAssembly.GetType(classname, true, false);
-                }
-                catch (Exception)
-                {
-                    //TODO:返回找不到类的异常
-                    throw;
-                }
+                Type type = this.OwnerAssembly.GetType(classname, true, false);
                 if (typeof(IRun).IsAssignableFrom(type))
                 {
                     this.Types.Add(classname, type);
                 }
-                else
-                {
-                    //TODO:返回找到的类没有继承IRun接口的异常
-                }
             }//foreach
         }
 
+        public IRun GetRunObject()
+        {
+            string str = string.Empty;
+            foreach (string s in this.Types.Keys)
+            {
+                str = s;
+            }
+            return this.GetRunObject(str);
+        }
         public IRun GetRunObject(string classname)
         {
             Type type = this.Types[classname];
