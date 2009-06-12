@@ -58,4 +58,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

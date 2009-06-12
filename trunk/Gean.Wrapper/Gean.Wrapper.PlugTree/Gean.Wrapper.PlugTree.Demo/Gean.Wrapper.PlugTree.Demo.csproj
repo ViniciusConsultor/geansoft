@@ -75,18 +75,6 @@
       <Project>{02FCE16E-7F04-465B-BB02-57FE59257660}</Project>
       <Name>Gean.Wrapper.PlugTree</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TestClass0001\TestClass0001.csproj">
-      <Project>{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}</Project>
-      <Name>TestClass0001</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestClass0002\TestClass0002.csproj">
-      <Project>{D460DB48-8D00-4E13-97A8-443230CA14D4}</Project>
-      <Name>TestClass0002</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestClass0003\TestClass0003.csproj">
-      <Project>{BB294B26-DA7C-4219-8DD1-E38A0320740A}</Project>
-      <Name>TestClass0003</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
