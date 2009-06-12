@@ -5,7 +5,7 @@ using Gean.Wrapper.PlugTree;
 
 namespace TestClass0001
 {
-    public class TestClass0001 : IRun
+    public class BigRunner : IRun
     {
         #region IRun 成员
 
