@@ -25,8 +25,8 @@ namespace Gean.Wrapper.PlugTree.Demo
 
             foreach (string file in files)
             {
-                Runner runner = new Runner(file);
-                IRun i = runner.GetRunObject();
+                Runner runner = new Runner(file, new string[] { "TestClass0001.TestClass0001" });
+                IRun i = runner.GetRunObject("TestClass0001.TestClass0001");
                 i.Run();
             }
 
