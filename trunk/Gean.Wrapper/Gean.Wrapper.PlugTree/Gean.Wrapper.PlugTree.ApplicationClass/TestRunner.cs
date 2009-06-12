@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean.Wrapper.PlugTree;
 
-namespace TestClass0001
+namespace Gean.Wrapper.PlugTree.ApplicationClass
 {
     public class TestRunner : IRun
     {
