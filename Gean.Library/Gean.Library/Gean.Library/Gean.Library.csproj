@@ -85,7 +85,6 @@
     <Compile Include="Src\Interfaces\Content\IPositionable.cs" />
     <Compile Include="Src\Interfaces\Content\IPrintable.cs" />
     <Compile Include="Src\Interfaces\Content\IUndoHandler.cs" />
-    <Compile Include="Src\Interfaces\ICommand.cs" />
     <Compile Include="Src\Interfaces\ILogWriter.cs" />
     <Compile Include="Src\Interfaces\IMementoCapable.cs" />
     <Compile Include="Src\Interfaces\IOwnerState.cs" />
