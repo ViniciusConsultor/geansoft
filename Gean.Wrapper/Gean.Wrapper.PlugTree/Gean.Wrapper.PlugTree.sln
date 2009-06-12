@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.PlugTree.Demo"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library", "..\..\Gean.Library\Gean.Library\Gean.Library\Gean.Library.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.PlugTree.ApplicationClass", "Gean.Wrapper.PlugTree.ApplicationClass\Gean.Wrapper.PlugTree.ApplicationClass.csproj", "{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -29,6 +31,10 @@ Global
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

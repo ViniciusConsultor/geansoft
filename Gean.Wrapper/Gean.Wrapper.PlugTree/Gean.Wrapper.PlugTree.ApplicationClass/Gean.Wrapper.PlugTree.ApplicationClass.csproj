@@ -8,8 +8,8 @@
     <ProjectGuid>{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestClass0001</RootNamespace>
-    <AssemblyName>TestClass0001</AssemblyName>
+    <RootNamespace>Gean.Wrapper.PlugTree.ApplicationClass</RootNamespace>
+    <AssemblyName>Gean.Wrapper.PlugTree.ApplicationClass</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -53,7 +53,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestClass0001.gplug">
+    <None Include="Gean.Wrapper.PlugTree.ApplicationClass.gplug">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -66,6 +66,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\
+copy Gean.Wrapper.PlugTree.ApplicationClass.gplug ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\</PostBuildEvent>
   </PropertyGroup>
 </Project>
