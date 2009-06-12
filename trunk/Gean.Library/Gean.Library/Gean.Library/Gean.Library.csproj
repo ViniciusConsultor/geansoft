@@ -106,7 +106,7 @@
     <Compile Include="Src\Utility\UtilityString.cs" />
     <Compile Include="Src\Widgets\Chinese\ChineseIDCardValid.cs" />
     <Compile Include="Src\Widgets\Chinese\ChineseSpell.cs" />
-    <Compile Include="Src\Wrapper\Duration.cs" />
+    <Compile Include="Src\Widgets\Duration.cs" />
     <Compile Include="Src\Wrapper\Logger\LogLevel.cs" />
     <Compile Include="Src\Wrapper\Logger\LogWriter.cs" />
     <Compile Include="Src\Wrapper\Logger\TextLog.cs" />
@@ -122,7 +122,6 @@
     <Compile Include="Src\Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Src\Wrapper\Duration.cd" />
     <None Include="Src\Wrapper\Xml\AbstractXml.cd" />
   </ItemGroup>
   <ItemGroup>
