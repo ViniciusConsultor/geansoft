@@ -30,24 +30,27 @@
         {
             this._CloseButton = new System.Windows.Forms.Button();
             this._BeginDemoButton = new System.Windows.Forms.Button();
-            this._MainMessageTextbox = new System.Windows.Forms.ListBox();
+            this._MessageListbox = new System.Windows.Forms.ListBox();
             this._ClearButton = new System.Windows.Forms.Button();
+            this._PathTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // _CloseButton
             // 
+            this._CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CloseButton.Location = new System.Drawing.Point(542, 253);
+            this._CloseButton.Location = new System.Drawing.Point(829, 422);
             this._CloseButton.Name = "_CloseButton";
             this._CloseButton.Size = new System.Drawing.Size(62, 24);
             this._CloseButton.TabIndex = 1;
             this._CloseButton.Text = "Close";
             this._CloseButton.UseVisualStyleBackColor = true;
-            this._CloseButton.Click += new System.EventHandler(this.button1_Click);
+            this._CloseButton.Click += new System.EventHandler(this._CloseButton_Click);
             // 
             // _BeginDemoButton
             // 
-            this._BeginDemoButton.Location = new System.Drawing.Point(418, 254);
+            this._BeginDemoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._BeginDemoButton.Location = new System.Drawing.Point(770, 148);
             this._BeginDemoButton.Name = "_BeginDemoButton";
             this._BeginDemoButton.Size = new System.Drawing.Size(118, 23);
             this._BeginDemoButton.TabIndex = 0;
@@ -55,18 +58,20 @@
             this._BeginDemoButton.UseVisualStyleBackColor = true;
             this._BeginDemoButton.Click += new System.EventHandler(this._BeginDemoButton_Click);
             // 
-            // _MainMessageTextbox
+            // _MessageListbox
             // 
-            this._MainMessageTextbox.Dock = System.Windows.Forms.DockStyle.Top;
-            this._MainMessageTextbox.FormattingEnabled = true;
-            this._MainMessageTextbox.Location = new System.Drawing.Point(8, 8);
-            this._MainMessageTextbox.Name = "_MainMessageTextbox";
-            this._MainMessageTextbox.Size = new System.Drawing.Size(596, 238);
-            this._MainMessageTextbox.TabIndex = 3;
+            this._MessageListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._MessageListbox.FormattingEnabled = true;
+            this._MessageListbox.Location = new System.Drawing.Point(8, 8);
+            this._MessageListbox.Name = "_MessageListbox";
+            this._MessageListbox.Size = new System.Drawing.Size(880, 134);
+            this._MessageListbox.TabIndex = 3;
             // 
             // _ClearButton
             // 
-            this._ClearButton.Location = new System.Drawing.Point(8, 254);
+            this._ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._ClearButton.Location = new System.Drawing.Point(689, 148);
             this._ClearButton.Name = "_ClearButton";
             this._ClearButton.Size = new System.Drawing.Size(75, 23);
             this._ClearButton.TabIndex = 2;
@@ -74,15 +79,23 @@
             this._ClearButton.UseVisualStyleBackColor = true;
             this._ClearButton.Click += new System.EventHandler(this._ClearButton_Click);
             // 
+            // _PathTreeView
+            // 
+            this._PathTreeView.Location = new System.Drawing.Point(437, 177);
+            this._PathTreeView.Name = "_PathTreeView";
+            this._PathTreeView.Size = new System.Drawing.Size(451, 239);
+            this._PathTreeView.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AcceptButton = this._BeginDemoButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CloseButton;
-            this.ClientSize = new System.Drawing.Size(612, 288);
+            this.ClientSize = new System.Drawing.Size(899, 458);
+            this.Controls.Add(this._PathTreeView);
             this.Controls.Add(this._ClearButton);
-            this.Controls.Add(this._MainMessageTextbox);
+            this.Controls.Add(this._MessageListbox);
             this.Controls.Add(this._BeginDemoButton);
             this.Controls.Add(this._CloseButton);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
@@ -99,8 +112,9 @@
 
         private System.Windows.Forms.Button _CloseButton;
         private System.Windows.Forms.Button _BeginDemoButton;
-        private System.Windows.Forms.ListBox _MainMessageTextbox;
+        private System.Windows.Forms.ListBox _MessageListbox;
         private System.Windows.Forms.Button _ClearButton;
+        private System.Windows.Forms.TreeView _PathTreeView;
     }
 }
 

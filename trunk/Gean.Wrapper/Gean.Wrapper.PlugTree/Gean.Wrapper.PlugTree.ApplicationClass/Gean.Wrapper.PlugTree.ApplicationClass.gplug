@@ -3,9 +3,20 @@
   <MainDescription>
     <Assembly>Gean.Wrapper.PlugTree.ApplicationClass.dll</Assembly>
     <Class>
-      <Value>Gean.Wrapper.PlugTree.ApplicationClass.TestRunner</Value>
-      <Value>Gean.Wrapper.PlugTree.ApplicationClass.DemoRunner</Value>
       <Value>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Value>
+      <Value>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Value>
     </Class>
   </MainDescription>
+  <Path name="Gean|PlugTree.Demo|MainMenu|File|YellowForm">
+    <Type>FormControl.MainMenu</Type>
+    <Class>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Class>
+    <Shortcut>ctrl+shift+a</Shortcut>
+    <Text>@RES|TXT|YellowForm.Text</Text>
+  </Path>
+  <Path name="Gean|PlugTree.Demo|MainMenu|File|YellowForm|Project|BigRunnerMenu">
+    <Type>FormControl.MainMenu</Type>
+    <Class>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Class>
+    <Shortcut>ctrl+shift+f9</Shortcut>
+    <Text>@RES|TXT|BigRunnerMenu.Text</Text>
+  </Path>
 </GPlug>

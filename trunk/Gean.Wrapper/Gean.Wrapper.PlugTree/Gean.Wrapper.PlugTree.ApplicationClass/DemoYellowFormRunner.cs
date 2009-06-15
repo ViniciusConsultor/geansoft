@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean.Wrapper.PlugTree;
+using Gean.Wrapper.PlugTree.Demo;
+using System.Windows.Forms;
 
 namespace Gean.Wrapper.PlugTree.ApplicationClass
 {
-    public class TestRunner : IRun
+    public class DemoYellowFormRunner : IRun
     {
         #region IRun 成员
 
@@ -23,7 +24,8 @@ namespace Gean.Wrapper.PlugTree.ApplicationClass
 
         public void Run()
         {
-            System.Windows.Forms.MessageBox.Show(this.GetType().ToString());
+            DemoYellowForm form = new DemoYellowForm();
+            form.ShowDialog(Program.MainWorkBench as Form);
         }
 
         public event EventHandler OwnerChanged;

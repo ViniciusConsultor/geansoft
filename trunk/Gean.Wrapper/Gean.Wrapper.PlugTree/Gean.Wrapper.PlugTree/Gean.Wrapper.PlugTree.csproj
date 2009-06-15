@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exception.cs" />
     <Compile Include="IRun.cs" />
-    <Compile Include="PlugFile.cs" />
-    <Compile Include="Runner.cs" />
+    <Compile Include="PlugPath.cs" />
+    <Compile Include="Runners.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartupService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean.Library\Gean.Library\Gean.Library\Gean.Library.csproj">
