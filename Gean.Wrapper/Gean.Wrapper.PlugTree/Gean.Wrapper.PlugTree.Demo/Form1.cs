@@ -15,6 +15,13 @@ namespace Gean.Wrapper.PlugTree.Demo
         public Form1()
         {
             InitializeComponent();
+            this._PathTreeView.NodeMouseClick += new TreeNodeMouseClickEventHandler(_PathTreeView_NodeMouseClick);
+        }
+
+        void _PathTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            PlugPath pp = (PlugPath)e.Node.Tag;
+            this._PropertyGrid.SelectedObject = pp;
         }
 
         private void DemoMethod()
@@ -25,9 +32,23 @@ namespace Gean.Wrapper.PlugTree.Demo
             {
                 this._MessageListbox.Items.Add(item.ToString());
             }
-            foreach (var item in StartupService.PlugPath)
+            TreeNode node = new TreeNode("PlugPath");
+            this._PathTreeView.Nodes.Add(node);
+            this.ViewPlugPath(StartupService.PlugPath, node);
+        }
+
+        private void ViewPlugPath(PlugPath plugPath, TreeNode node)
+        {
+            TreeNode subnode = new TreeNode(plugPath.ToString());
+            subnode.Tag = plugPath;
+            node.Nodes.Add(subnode);
+            if (!plugPath.HasChildPath)
             {
-                this._MessageListbox.Items.Add(item.ToString());
+                return;
+            }
+            foreach (PlugPath item in plugPath.Items)
+            {
+                this.ViewPlugPath(item, subnode);
             }
         }
 

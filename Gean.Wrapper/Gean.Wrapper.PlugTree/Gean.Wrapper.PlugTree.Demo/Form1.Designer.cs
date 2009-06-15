@@ -33,6 +33,7 @@
             this._MessageListbox = new System.Windows.Forms.ListBox();
             this._ClearButton = new System.Windows.Forms.Button();
             this._PathTreeView = new System.Windows.Forms.TreeView();
+            this._PropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
             // _CloseButton
@@ -86,6 +87,13 @@
             this._PathTreeView.Size = new System.Drawing.Size(451, 239);
             this._PathTreeView.TabIndex = 4;
             // 
+            // _PropertyGrid
+            // 
+            this._PropertyGrid.Location = new System.Drawing.Point(197, 177);
+            this._PropertyGrid.Name = "_PropertyGrid";
+            this._PropertyGrid.Size = new System.Drawing.Size(234, 239);
+            this._PropertyGrid.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AcceptButton = this._BeginDemoButton;
@@ -93,12 +101,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CloseButton;
             this.ClientSize = new System.Drawing.Size(899, 458);
+            this.Controls.Add(this._PropertyGrid);
             this.Controls.Add(this._PathTreeView);
             this.Controls.Add(this._ClearButton);
             this.Controls.Add(this._MessageListbox);
             this.Controls.Add(this._BeginDemoButton);
             this.Controls.Add(this._CloseButton);
-            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(8);
             this.ShowIcon = false;
@@ -115,6 +124,7 @@
         private System.Windows.Forms.ListBox _MessageListbox;
         private System.Windows.Forms.Button _ClearButton;
         private System.Windows.Forms.TreeView _PathTreeView;
+        private System.Windows.Forms.PropertyGrid _PropertyGrid;
     }
 }
 
