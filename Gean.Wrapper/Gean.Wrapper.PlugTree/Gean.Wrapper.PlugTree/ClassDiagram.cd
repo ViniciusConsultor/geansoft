@@ -1,21 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Gean.Wrapper.PlugTree.Runner">
-    <Position X="0.5" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAEAAAACgAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
-      <FileName>Runner.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Gean.Wrapper.PlugTree.PlugFile">
-    <Position X="4.75" Y="1.5" Width="1.5" />
+  <Class Name="Gean.Wrapper.PlugTree.PlugTreeException" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PlugFile.cs</FileName>
+      <FileName>Exception.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Gean.Wrapper.PlugTree.StartupService">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQTAAIACAAAAEAAAAgAAAAAAAAAgABAAAACQAgAAA=</HashCode>
+      <FileName>StartupService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.PlugTree.PlugPath" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAADBAEAAAAIAQAAgAAAAAQAQAAAAICAAA=</HashCode>
+      <FileName>PlugPath.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Wrapper.PlugTree.PlugPathCollection" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PlugPath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.PlugTree.Runners" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAAAAAAAAAABAAAAAAAAAAAAAAAAAAACAEAAAAABA=</HashCode>
+      <FileName>Runners.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Interface Name="Gean.Wrapper.PlugTree.IRun" Collapsed="true">
-    <Position X="3" Y="0.5" Width="2.25" />
+    <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAI=</HashCode>
       <FileName>IRun.cs</FileName>

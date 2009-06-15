@@ -8,7 +8,9 @@ using System.Reflection;
 namespace Gean.Wrapper.PlugTree
 {
     /// <summary>
-    /// 从Plug文件中解析出实现了IRun接口的类型，并对他进行封装
+    /// 从所有Plug文件中解析出实现了IRun接口的类型，以键值对的模式存储在一个Hash的集合里。
+    /// 键是类的全名，值为System.Type。
+    /// 通过GetIRunObject方法可以直接获得已实例的IRun接口类型。
     /// </summary>
     public sealed class Runners : IEnumerable
     {
@@ -45,11 +47,16 @@ namespace Gean.Wrapper.PlugTree
             return null;
         }
 
-        public Type GetIRunType(string classname)
+        internal Type GetIRunType(string classname)
         {
             return this.Types[classname];
         }
 
+        /// <summary>
+        /// 根据类型的全名获得已实例的IRun接口类型。
+        /// </summary>
+        /// <param name="classname">类型的全名</param>
+        /// <returns>一个已实例的IRun接口类型</returns>
         public IRun GetIRunObject(string classname)
         {
             Type type = this.GetIRunType(classname);
