@@ -34,6 +34,11 @@ namespace Gean.Wrapper.PlugTree
         }
         private bool _IsRoot = false;
 
+        public bool HasChildPath
+        {
+            get { return this.Items.Count > 0; } 
+        }
+
         public PlugPathCollection Items { get; set; }
 
         public Properties Properties { get; set; }
