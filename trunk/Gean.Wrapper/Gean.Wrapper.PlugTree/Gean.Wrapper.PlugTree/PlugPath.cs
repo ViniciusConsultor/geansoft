@@ -83,11 +83,6 @@ namespace Gean.Wrapper.PlugTree
                     // 向前递归
                     CheckInstallPath(item, newPathStringArray, properties);
                     isInstall = false;
-                    if (paths.Length == 1)
-                    {
-                        // 给递归到的当前PlugPath绑定Properties
-                        item.Properties = properties;
-                    }
                     break;
                 }
             }
@@ -102,23 +97,23 @@ namespace Gean.Wrapper.PlugTree
         /// </summary>
         /// <param name="pathStringArray">拆分后的路径字符串数组</param>
         /// <param name="plugpath">路径树</param>
-        private static void SetupUnInstallPath(PlugPath parentPath, string[] pathStringArray, Properties properties)
+        private static void SetupUnInstallPath(PlugPath parentPath, string[] paths, Properties properties)
         {
-            PlugPath newPlugpath = new PlugPath(pathStringArray[0].ToLowerInvariant());
-            if (pathStringArray.Length == 1)
+            PlugPath newpath = new PlugPath(paths[0].ToLowerInvariant());
+            if (paths.Length == 1)
             {
-                newPlugpath.Properties = properties;// 给递归到的当前PlugPath绑定Properties
+                newpath.Properties = properties;// 给递归到的当前PlugPath绑定Properties
             }
-            newPlugpath.ParentPath = parentPath;
+            newpath.ParentPath = parentPath;
             // 安装一个新的路径描述
-            parentPath.Items.Add(newPlugpath);
+            parentPath.Items.Add(newpath);
             // 如果路径字符串数组仍有值，继续安装
-            if (pathStringArray.Length > 1) //a,b
+            if (paths.Length > 1) //a,b
             {
                 // 移除数组中的刚才已安装的第一个值后，复制到一个新的数组中
-                string[] newPathStringArray = new string[pathStringArray.Length - 1];
-                Array.Copy(pathStringArray, 1, newPathStringArray, 0, pathStringArray.Length - 1);
-                SetupUnInstallPath(newPlugpath, newPathStringArray, properties);
+                string[] newPathStringArray = new string[paths.Length - 1];
+                Array.Copy(paths, 1, newPathStringArray, 0, paths.Length - 1);
+                SetupUnInstallPath(newpath, newPathStringArray, properties);
             }
         }
 
