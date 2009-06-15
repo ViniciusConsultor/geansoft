@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Gean.Wrapper.PlugTree.Demo
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// 应用程序的主入口点。
@@ -14,7 +14,10 @@ namespace Gean.Wrapper.PlugTree.Demo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            MainWorkBench = new Form1();
+            Application.Run((Form)MainWorkBench);
         }
+
+        public static IWorkBench MainWorkBench { get; private set; }
     }
 }

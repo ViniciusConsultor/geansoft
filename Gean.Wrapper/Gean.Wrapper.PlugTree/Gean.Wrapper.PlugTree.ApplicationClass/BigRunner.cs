@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Wrapper.PlugTree;
+using Gean.Wrapper.PlugTree.Demo;
 
 namespace Gean.Wrapper.PlugTree.ApplicationClass
 {
@@ -23,7 +24,7 @@ namespace Gean.Wrapper.PlugTree.ApplicationClass
 
         public void Run()
         {
-            System.Windows.Forms.MessageBox.Show(this.GetType().ToString());
+            Program.MainWorkBench.MessageBench = DateTime.Now.ToLongTimeString() + " | " + this.GetType().ToString();
         }
 
         public event EventHandler OwnerChanged;

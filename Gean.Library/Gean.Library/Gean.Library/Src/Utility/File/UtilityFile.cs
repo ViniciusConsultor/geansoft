@@ -60,6 +60,17 @@ namespace Gean
         }
 
         /// <summary>
+        /// 从一个文件的全路径字符串中获取一个目录路径
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static string GetDirectoryByFilepath(string filepath)
+        {
+            return filepath.Substring(0, filepath.LastIndexOf(PATH_SPLIT_CHAR));
+        }
+
+
+        /// <summary>
         /// 检查文件名是否规范(windows)
         /// </summary>
         public static bool IsValidFileName(string fileName)
@@ -575,6 +586,25 @@ namespace Gean
         }
         #endregion
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // TODO: GetFullPath is a **very** expensive method (performance-wise)!
         // Call it only when necessary. (see IsEqualFile)
 
@@ -787,9 +817,6 @@ namespace Gean
             return fileName;
         }
 
-
-
-
         /// <summary>
         /// Deeps the copy.
         /// </summary>
@@ -819,18 +846,6 @@ namespace Gean
             CopyDirectory(OldDirectory, NewDirectory);
         }
 
-        public static void DelDirectory(string OldDirectoryStr)
-        {
-            DirectoryInfo OldDirectory = new DirectoryInfo(OldDirectoryStr);
-            OldDirectory.Delete(true);
-        }
-
-        public static void CopyAndDelDirectory(string OldDirectory, string NewDirectory)
-        {
-            CopyDirectory(OldDirectory, NewDirectory);
-            DelDirectory(OldDirectory);
-        }
-
         private static void CopyDirectory(DirectoryInfo OldDirectory, DirectoryInfo NewDirectory)
         {
             string NewDirectoryFullName = NewDirectory.FullName + @"\" + OldDirectory.Name;
@@ -851,9 +866,6 @@ namespace Gean
                 CopyDirectory(aOldDirectory, aNewDirectory);
             }
         }
-
-
-
 
         public static StringCollection SearchDirectory(string directory, string filemask, bool searchSubdirectories, bool ignoreHidden)
         {
@@ -994,245 +1006,6 @@ namespace Gean
         }
 
 
-        public static string NormalizePath(string value)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 } 
-/*
-        // Observe SAVE functions
-        public static FileOperationResult ObservedSave(FileOperationDelegate saveFile, string fileName, string message, FileErrorPolicy policy)
-        {
-            System.Diagnostics.Debug.Assert(IsValidFileName(fileName));
-            try
-            {
-                saveFile();
-                OnFileSaved(new FileNameEventArgs(fileName));
-                return FileOperationResult.OK;
-            }
-            catch (Exception e)
-            {
-                switch (policy)
-                {
-                    case FileErrorPolicy.Inform:
-
-                        using (SaveErrorInformDialog informDialog = new SaveErrorInformDialog(fileName, message, "${res:IOProService.ErrorWhileSaving}", e))
-                        {
-                            informDialog.ShowDialog();
-                        }
-                        break;
-                    case FileErrorPolicy.ProvideAlternative:
-                        using (SaveErrorChooseDialog chooseDialog = new SaveErrorChooseDialog(fileName, message, "${res:IOProService.ErrorWhileSaving}", e, false))
-                        {
-                            switch (chooseDialog.ShowDialog())
-                            {
-                                case DialogResult.OK: // choose location (never happens here)
-                                    break;
-                                case DialogResult.Retry:
-                                    return ObservedSave(saveFile, fileName, message, policy);
-                                case DialogResult.Ignore:
-                                    return FileOperationResult.Failed;
-                            }
-                        }
-                        break;
-                }
-            }
-            return FileOperationResult.Failed;
-        }
-
-        public static FileOperationResult ObservedSave(FileOperationDelegate saveFile, string fileName, FileErrorPolicy policy)
-        {
-            return ObservedSave(saveFile,
-                                fileName,
-                                "CantSaveFileStandardText",
-                                policy);
-        }
-
-        public static FileOperationResult ObservedSave(FileOperationDelegate saveFile, string fileName)
-        {
-            return ObservedSave(saveFile, fileName, FileErrorPolicy.Inform);
-        }
-
-        public static FileOperationResult ObservedSave(NamedFileOperationDelegate saveFileAs, string fileName, string message, FileErrorPolicy policy)
-        {
-            System.Diagnostics.Debug.Assert(IsValidFileName(fileName));
-            try
-            {
-                string directory = Path.GetDirectoryName(fileName);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-                saveFileAs(fileName);
-                OnFileSaved(new FileNameEventArgs(fileName));
-                return FileOperationResult.OK;
-            }
-            catch (Exception e)
-            {
-                switch (policy)
-                {
-                    case FileErrorPolicy.Inform:
-                        using (SaveErrorInformDialog informDialog = new SaveErrorInformDialog(fileName, message, "${res:IOProService.ErrorWhileSaving}", e))
-                        {
-                            informDialog.ShowDialog();
-                        }
-                        break;
-                    case FileErrorPolicy.ProvideAlternative:
-                    restartlabel:
-                        using (SaveErrorChooseDialog chooseDialog = new SaveErrorChooseDialog(fileName, message, "${res:IOProService.ErrorWhileSaving}", e, true))
-                        {
-                            switch (chooseDialog.ShowDialog())
-                            {
-                                case DialogResult.OK:
-                                    using (SaveFileDialog fdiag = new SaveFileDialog())
-                                    {
-                                        fdiag.OverwritePrompt = true;
-                                        fdiag.AddExtension = true;
-                                        fdiag.CheckFileExists = false;
-                                        fdiag.CheckPathExists = true;
-                                        fdiag.Title = "Choose alternate file name";
-                                        fdiag.FileName = fileName;
-                                        if (fdiag.ShowDialog() == DialogResult.OK)
-                                        {
-                                            return ObservedSave(saveFileAs, fdiag.FileName, message, policy);
-                                        }
-                                        else
-                                        {
-                                            goto restartlabel;
-                                        }
-                                    }
-                                case DialogResult.Retry:
-                                    return ObservedSave(saveFileAs, fileName, message, policy);
-                                case DialogResult.Ignore:
-                                    return FileOperationResult.Failed;
-                            }
-                        }
-                    break;
-                }
-            }
-            return FileOperationResult.Failed;
-        }
-
-        public static FileOperationResult ObservedSave(NamedFileOperationDelegate saveFileAs, string fileName, FileErrorPolicy policy)
-        {
-            return ObservedSave(saveFileAs,
-                                fileName,
-                                "CantSaveFileStandardText",
-                                policy);
-        }
-
-        public static FileOperationResult ObservedSave(NamedFileOperationDelegate saveFileAs, string fileName)
-        {
-            return ObservedSave(saveFileAs, fileName, FileErrorPolicy.Inform);
-        }
-
-        // Observe LOAD functions
-        public static FileOperationResult ObservedLoad(FileOperationDelegate loadFile, string fileName, string message, FileErrorPolicy policy)
-        {
-            try
-            {
-                loadFile();
-                OnFileLoaded(new FileNameEventArgs(fileName));
-                return FileOperationResult.OK;
-            }
-            catch (Exception e)
-            {
-                switch (policy)
-                {
-                    case FileErrorPolicy.Inform:
-                        using (SaveErrorInformDialog informDialog = new SaveErrorInformDialog(fileName, message, "${res:IOProService.ErrorWhileLoading}", e))
-                        {
-                            informDialog.ShowDialog();
-                        }
-                        break;
-                    case FileErrorPolicy.ProvideAlternative:
-                        using (SaveErrorChooseDialog chooseDialog = new SaveErrorChooseDialog(fileName, message, "${res:IOProService.ErrorWhileLoading}", e, false))
-                        {
-                            switch (chooseDialog.ShowDialog())
-                            {
-                                case DialogResult.OK: // choose location (never happens here)
-                                    break;
-                                case DialogResult.Retry:
-                                    return ObservedLoad(loadFile, fileName, message, policy);
-                                case DialogResult.Ignore:
-                                    return FileOperationResult.Failed;
-                            }
-                        }
-                        break;
-                }
-            }
-            return FileOperationResult.Failed;
-        }
-
-        public static FileOperationResult ObservedLoad(FileOperationDelegate loadFile, string fileName, FileErrorPolicy policy)
-        {
-            return ObservedLoad(loadFile,
-                                fileName,
-                                "CantSaveFileStandardText",
-                                policy);
-        }
-
-        public static FileOperationResult ObservedLoad(FileOperationDelegate loadFile, string fileName)
-        {
-            return ObservedLoad(loadFile, fileName, FileErrorPolicy.Inform);
-        }
-
-        class LoadWrapper
-        {
-            NamedFileOperationDelegate loadFile;
-            string fileName;
-
-            public LoadWrapper(NamedFileOperationDelegate loadFile, string fileName)
-            {
-                this.loadFile = loadFile;
-                this.fileName = fileName;
-            }
-
-            public void Invoke()
-            {
-                loadFile(fileName);
-            }
-        }
-
-        public static FileOperationResult ObservedLoad(NamedFileOperationDelegate saveFileAs, string fileName, string message, FileErrorPolicy policy)
-        {
-            return ObservedLoad(new FileOperationDelegate(new LoadWrapper(saveFileAs, fileName).Invoke), fileName, message, policy);
-        }
-
-        public static FileOperationResult ObservedLoad(NamedFileOperationDelegate saveFileAs, string fileName, FileErrorPolicy policy)
-        {
-            return ObservedLoad(saveFileAs,
-                                fileName,
-                                "CantSaveFileStandardText",
-                                policy);
-        }
-
-        public static FileOperationResult ObservedLoad(NamedFileOperationDelegate saveFileAs, string fileName)
-        {
-            return ObservedLoad(saveFileAs, fileName, FileErrorPolicy.Inform);
-        }
-
-        static void OnFileLoaded(FileNameEventArgs e)
-        {
-            if (FileLoaded != null)
-            {
-                FileLoaded(null, e);
-            }
-        }
-
-        static void OnFileSaved(FileNameEventArgs e)
-        {
-            if (FileSaved != null)
-            {
-                FileSaved(null, e);
-            }
-        }
-
-        public static event FileNameEventHandler FileLoaded;
-        public static event FileNameEventHandler FileSaved;
-        public delegate void FileOperationDelegate();
-        public delegate void NamedFileOperationDelegate(string fileName);
-
-        */
