@@ -33,16 +33,17 @@
             this._MessageListbox = new System.Windows.Forms.ListBox();
             this._ClearButton = new System.Windows.Forms.Button();
             this._PathTreeView = new System.Windows.Forms.TreeView();
-            this._PropertyGrid = new System.Windows.Forms.PropertyGrid();
+            this._FPropertyGrid = new System.Windows.Forms.PropertyGrid();
+            this._SPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
             // _CloseButton
             // 
             this._CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CloseButton.Location = new System.Drawing.Point(829, 422);
+            this._CloseButton.Location = new System.Drawing.Point(800, 419);
             this._CloseButton.Name = "_CloseButton";
-            this._CloseButton.Size = new System.Drawing.Size(62, 24);
+            this._CloseButton.Size = new System.Drawing.Size(76, 24);
             this._CloseButton.TabIndex = 1;
             this._CloseButton.Text = "Close";
             this._CloseButton.UseVisualStyleBackColor = true;
@@ -51,7 +52,7 @@
             // _BeginDemoButton
             // 
             this._BeginDemoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._BeginDemoButton.Location = new System.Drawing.Point(770, 148);
+            this._BeginDemoButton.Location = new System.Drawing.Point(758, 148);
             this._BeginDemoButton.Name = "_BeginDemoButton";
             this._BeginDemoButton.Size = new System.Drawing.Size(118, 23);
             this._BeginDemoButton.TabIndex = 0;
@@ -66,13 +67,13 @@
             this._MessageListbox.FormattingEnabled = true;
             this._MessageListbox.Location = new System.Drawing.Point(8, 8);
             this._MessageListbox.Name = "_MessageListbox";
-            this._MessageListbox.Size = new System.Drawing.Size(880, 134);
+            this._MessageListbox.Size = new System.Drawing.Size(868, 134);
             this._MessageListbox.TabIndex = 3;
             // 
             // _ClearButton
             // 
             this._ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._ClearButton.Location = new System.Drawing.Point(689, 148);
+            this._ClearButton.Location = new System.Drawing.Point(677, 148);
             this._ClearButton.Name = "_ClearButton";
             this._ClearButton.Size = new System.Drawing.Size(75, 23);
             this._ClearButton.TabIndex = 2;
@@ -82,17 +83,31 @@
             // 
             // _PathTreeView
             // 
-            this._PathTreeView.Location = new System.Drawing.Point(437, 177);
+            this._PathTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._PathTreeView.Location = new System.Drawing.Point(471, 178);
             this._PathTreeView.Name = "_PathTreeView";
-            this._PathTreeView.Size = new System.Drawing.Size(451, 239);
+            this._PathTreeView.Size = new System.Drawing.Size(405, 235);
             this._PathTreeView.TabIndex = 4;
             // 
-            // _PropertyGrid
+            // _FPropertyGrid
             // 
-            this._PropertyGrid.Location = new System.Drawing.Point(197, 177);
-            this._PropertyGrid.Name = "_PropertyGrid";
-            this._PropertyGrid.Size = new System.Drawing.Size(234, 239);
-            this._PropertyGrid.TabIndex = 5;
+            this._FPropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this._FPropertyGrid.Location = new System.Drawing.Point(234, 178);
+            this._FPropertyGrid.Name = "_FPropertyGrid";
+            this._FPropertyGrid.Size = new System.Drawing.Size(223, 235);
+            this._FPropertyGrid.TabIndex = 5;
+            // 
+            // _SPropertyGrid
+            // 
+            this._SPropertyGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this._SPropertyGrid.Location = new System.Drawing.Point(8, 178);
+            this._SPropertyGrid.Name = "_SPropertyGrid";
+            this._SPropertyGrid.Size = new System.Drawing.Size(214, 235);
+            this._SPropertyGrid.TabIndex = 5;
             // 
             // Form1
             // 
@@ -100,8 +115,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CloseButton;
-            this.ClientSize = new System.Drawing.Size(899, 458);
-            this.Controls.Add(this._PropertyGrid);
+            this.ClientSize = new System.Drawing.Size(887, 455);
+            this.Controls.Add(this._SPropertyGrid);
+            this.Controls.Add(this._FPropertyGrid);
             this.Controls.Add(this._PathTreeView);
             this.Controls.Add(this._ClearButton);
             this.Controls.Add(this._MessageListbox);
@@ -124,7 +140,8 @@
         private System.Windows.Forms.ListBox _MessageListbox;
         private System.Windows.Forms.Button _ClearButton;
         private System.Windows.Forms.TreeView _PathTreeView;
-        private System.Windows.Forms.PropertyGrid _PropertyGrid;
+        private System.Windows.Forms.PropertyGrid _FPropertyGrid;
+        private System.Windows.Forms.PropertyGrid _SPropertyGrid;
     }
 }
 

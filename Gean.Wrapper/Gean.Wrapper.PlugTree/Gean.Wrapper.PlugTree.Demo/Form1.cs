@@ -21,7 +21,15 @@ namespace Gean.Wrapper.PlugTree.Demo
         void _PathTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             PlugPath pp = (PlugPath)e.Node.Tag;
-            this._PropertyGrid.SelectedObject = pp;
+            this._FPropertyGrid.SelectedObject = pp;
+        }
+
+        private void _BeginDemoButton_Click(object sender, EventArgs e)
+        {
+            this.DemoMethod();
+            this.Text = DateTime.Now.ToLongTimeString() + "  Demo completed!";
+            //MessageBox.Show("Test");
+            //StartupService.Runners.GetIRunObject("Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner").Run();
         }
 
         private void DemoMethod()
@@ -50,14 +58,6 @@ namespace Gean.Wrapper.PlugTree.Demo
             {
                 this.ViewPlugPath(item, subnode);
             }
-        }
-
-        private void _BeginDemoButton_Click(object sender, EventArgs e)
-        {
-            this.DemoMethod();
-            this.Text = DateTime.Now.ToLongTimeString() + "  Demo completed!";
-            MessageBox.Show("Test");
-            StartupService.Runners.GetIRunObject("Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner").Run();
         }
 
         private void _ClearButton_Click(object sender, EventArgs e)

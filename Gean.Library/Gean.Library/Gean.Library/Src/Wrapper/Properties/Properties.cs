@@ -12,7 +12,7 @@ namespace Gean
     /// <summary>
     /// 属性值集合
     /// </summary>
-    public sealed class Properties// : EventIndexedDictionary<string, object>
+    public sealed class Properties : IEnumerable
     {
         internal Properties() {}
 
@@ -388,6 +388,14 @@ namespace Gean
             }
         }
 
+        #region IEnumerable 成员
+
+        public IEnumerator GetEnumerator()
+        {
+            return this._Properties.GetEnumerator();
+        }
+
+        #endregion
     }
 
     public delegate void PropertiesItemChangedEventHandler(object sender, PropertiesItemChangedEventArgs e);
