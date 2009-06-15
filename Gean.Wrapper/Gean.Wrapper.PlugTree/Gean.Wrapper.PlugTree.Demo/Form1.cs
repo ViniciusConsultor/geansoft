@@ -19,20 +19,33 @@ namespace Gean.Wrapper.PlugTree.Demo
 
         private void DemoMethod()
         {
-            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
-                "*.gplug", SearchOption.TopDirectoryOnly);
-
-            this._MainMessageTextbox.Items.AddRange(files);
-
-            foreach (string file in files)
+            StartupService.Initializes(Application.ProductName, AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+            this._MessageListbox.Items.AddRange(StartupService.PlugFiles);
+            foreach (var item in StartupService.Runners)
             {
-                PlugFile plugfile = new PlugFile(file);
-                IRun i = plugfile.Runner.GetRunObject();
-                i.Run();
+                this._MessageListbox.Items.Add(item.ToString());
+            }
+            foreach (var item in StartupService.PlugPath)
+            {
+                this._MessageListbox.Items.Add(item.ToString());
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void _BeginDemoButton_Click(object sender, EventArgs e)
+        {
+            this.DemoMethod();
+            this.Text = DateTime.Now.ToLongTimeString() + "  Demo completed!";
+            MessageBox.Show("Test");
+            StartupService.Runners.GetIRunObject("Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner").Run();
+        }
+
+        private void _ClearButton_Click(object sender, EventArgs e)
+        {
+            this._MessageListbox.Items.Clear();
+            this.Update();
+        }
+
+        private void _CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -43,25 +56,15 @@ namespace Gean.Wrapper.PlugTree.Demo
         {
             get
             {
-                return this._MainMessageTextbox.Text;
+                return this._MessageListbox.Text;
             }
             set
             {
-                this._MainMessageTextbox.Items.Add(value);
+                this._MessageListbox.Items.Add(value);
             }
         }
 
         #endregion
 
-        private void _BeginDemoButton_Click(object sender, EventArgs e)
-        {
-            this.DemoMethod();
-        }
-
-        private void _ClearButton_Click(object sender, EventArgs e)
-        {
-            this._MainMessageTextbox.Items.Clear();
-            this.Update();
-        }
     }
 }

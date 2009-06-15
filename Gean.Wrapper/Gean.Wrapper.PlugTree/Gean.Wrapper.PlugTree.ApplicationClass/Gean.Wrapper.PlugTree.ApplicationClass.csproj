@@ -37,13 +37,19 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BigRunner.cs" />
-    <Compile Include="DemoRunner.cs" />
-    <Compile Include="TestRunner.cs" />
+    <Compile Include="DemoYellowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoYellowForm.Designer.cs">
+      <DependentUpon>DemoYellowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DemoYellowFormRunner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +66,12 @@
     <None Include="Gean.Wrapper.PlugTree.ApplicationClass.gplug">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DemoYellowForm.resx">
+      <DependentUpon>DemoYellowForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

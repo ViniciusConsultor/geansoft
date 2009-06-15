@@ -12,7 +12,7 @@ namespace Gean
     /// <summary>
     /// 属性值集合
     /// </summary>
-    public sealed class Properties : EventIndexedDictionary<string, object>
+    public sealed class Properties// : EventIndexedDictionary<string, object>
     {
         internal Properties() {}
 
@@ -234,22 +234,60 @@ namespace Gean
 
         public static Properties Parse(XmlElement element)
         {
-            return Parse(element.Attributes);
+            return Parse(element, true);
         }
-
+        public static Properties Parse(XmlElement element, bool isParseChildNodes)
+        {
+            if (isParseChildNodes)
+            {
+                return Parse(element.Attributes) + Parse(element.ChildNodes);
+            }
+            else
+            {
+                return Parse(element.Attributes);
+            }
+        }
         public static Properties Parse(XmlAttributeCollection attributes)
         {
-            //if (attributes == null || attributes.Count <= 0)
-            //    return null;
+            if (attributes == null || attributes.Count <= 0)
+                return null;
             Properties properties = new Properties();
             foreach (XmlAttribute item in attributes)
             {
-                properties.Add(item.LocalName.ToLowerInvariant(), item.Value);
+                properties.Set<string>(item.LocalName.ToLowerInvariant(), item.Value);
+            }
+            return properties;
+        }
+        public static Properties Parse(XmlNodeList childNodes)
+        {
+            if (childNodes == null || childNodes.Count <= 0)
+                return null;
+            Properties properties = new Properties();
+            foreach (XmlNode node in childNodes)
+            {
+                if (node.NodeType != XmlNodeType.Element)
+                {
+                    continue;
+                }
+                properties.Set<string>(node.LocalName.ToLowerInvariant(), node.InnerText);
             }
             return properties;
         }
 
         #endregion
+
+        public static Properties operator +(Properties pa, Properties pb)
+        {
+            foreach (var item in pb._Properties)
+            {
+                if (pa._Properties.ContainsKey(item.Key))
+                {
+                    continue;
+                }
+                pa._Properties.Add(item.Key, item.Value);
+            }
+            return pa;
+        }
 
         /// <summary>
         /// 将Properties封装存入指定的文件
