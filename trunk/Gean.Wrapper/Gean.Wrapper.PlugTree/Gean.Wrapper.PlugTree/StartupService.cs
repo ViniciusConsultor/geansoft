@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 
 namespace Gean.Wrapper.PlugTree
 {
     public static class StartupService
     {
+        private static readonly string _ExpandName = "*.gplug";
+        private static bool _AlreadyInitializes = false;
+        private static string _ApplicationPath;
+
         public static Runners Runners
         {
             get { return _Runners; }
@@ -26,8 +27,6 @@ namespace Gean.Wrapper.PlugTree
         }
         private static string[] _PlugFiles = null;
 
-        private static string _ApplicationPath;
-        private static bool _AlreadyInitializes = false;
         public static void Initializes(string applicationName, string path)
         {
             if (_AlreadyInitializes)
@@ -46,7 +45,7 @@ namespace Gean.Wrapper.PlugTree
             }
             if (_PlugFiles == null)
             {
-                _PlugFiles = Directory.GetFiles(path, "*.gplug", SearchOption.TopDirectoryOnly);
+                _PlugFiles = Directory.GetFiles(path, _ExpandName, SearchOption.TopDirectoryOnly);
             }
             _AlreadyInitializes = true;
             ScanPlugFiles();
@@ -79,7 +78,7 @@ namespace Gean.Wrapper.PlugTree
 
         private static void ScanRunner(XmlDocument doc)
         {
-            XmlElement element = ((XmlElement)doc.DocumentElement.SelectSingleNode("MainDescription"));
+            XmlElement element = ((XmlElement)doc.DocumentElement.SelectSingleNode("Definiens"));
             string assName = element.SelectSingleNode("Assembly").InnerText;
             XmlNodeList nodelist = element.SelectSingleNode("Class").ChildNodes;
 
@@ -90,9 +89,9 @@ namespace Gean.Wrapper.PlugTree
                     continue;
                 }
                 string classname = node.InnerText;
+                string filepath = Path.Combine(_ApplicationPath, assName);
 
-                _Runners.Add(classname,
-                    Runners.SearchRunType(Path.Combine(_ApplicationPath, assName), classname));
+                _Runners.Add(classname, Runners.SearchRunType(filepath, classname));
             }
         }
     }

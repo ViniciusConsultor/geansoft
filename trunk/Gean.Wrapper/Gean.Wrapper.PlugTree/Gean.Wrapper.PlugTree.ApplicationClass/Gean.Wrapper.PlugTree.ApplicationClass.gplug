@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GPlug>
-  <MainDescription>
+  <Definiens>
     <Assembly>Gean.Wrapper.PlugTree.ApplicationClass.dll</Assembly>
     <Class>
       <Value>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Value>
       <Value>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Value>
     </Class>
-  </MainDescription>
+  </Definiens>
   <Path name="Gean|PlugTree.Demo|MainMenu|File|YellowForm">
     <Type>FormControl.MainMenu</Type>
     <Class>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Class>
