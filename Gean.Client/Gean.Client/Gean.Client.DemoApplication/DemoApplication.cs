@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Gean.Client.DemoApplication
 {
@@ -15,7 +16,23 @@ namespace Gean.Client.DemoApplication
         /// </summary>
         private void MainDemoApplication()
         {
-            MessageBox.Show("MainDemoApplication");
+            List<Definers> definersList = new List<Definers>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("abcd.xml");
+            XmlNodeList nodelist = doc.DocumentElement.SelectNodes("Path");
+            foreach (XmlNode node in nodelist)
+            {
+                if (node.NodeType != XmlNodeType.Element)
+                {
+                    continue;
+                }
+                XmlElement element = (XmlElement)node;
+                Definers definers = Definers.Parse(element);
+                definersList.Add(definers);
+            }
+
+            this._Listbox.Items.Add(definersList.Count.ToString());
         }
         /// <summary>
         /// Demo 1 应用方法

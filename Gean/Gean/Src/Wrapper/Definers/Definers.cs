@@ -43,7 +43,7 @@ namespace Gean
                     this._Definers[key] = value;
                 }
             }
-            OnPropertyChanged(new DefinersItemChangedEventArgs(this, key, oldValue, value));
+            OnDefinersItemChanged(new DefinersItemChangedEventArgs(this, key, oldValue, value));
         }
 
         /// <summary>
@@ -279,17 +279,17 @@ namespace Gean
 
         #endregion
 
-        public static Definers operator +(Definers pa, Definers pb)
+        public static Definers operator +(Definers da, Definers db)
         {
-            foreach (var item in pb._Definers)
+            foreach (var item in db._Definers)
             {
-                if (pa._Definers.ContainsKey(item.Key))
+                if (da._Definers.ContainsKey(item.Key))
                 {
                     continue;
                 }
-                pa._Definers.Add(item.Key, item.Value);
+                da._Definers.Add(item.Key, item.Value);
             }
-            return pa;
+            return da;
         }
 
         /// <summary>
@@ -382,12 +382,12 @@ namespace Gean
         /// <summary>
         /// 当Property值发生改变时
         /// </summary>
-        public event PropertiesItemChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(DefinersItemChangedEventArgs e)
+        public event DefinersItemChangedEventHandler DefinersItemChanged;
+        private void OnDefinersItemChanged(DefinersItemChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if (DefinersItemChanged != null)
             {
-                PropertyChanged(this, e);
+                DefinersItemChanged(this, e);
             }
         }
 
@@ -401,6 +401,6 @@ namespace Gean
         #endregion
     }
 
-    public delegate void PropertiesItemChangedEventHandler(object sender, DefinersItemChangedEventArgs e);
+    public delegate void DefinersItemChangedEventHandler(object sender, DefinersItemChangedEventArgs e);
 
 }
