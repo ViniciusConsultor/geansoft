@@ -4,7 +4,7 @@ using System.Text;
 using Gean.Wrapper.PlugTree;
 using Gean.Wrapper.PlugTree.Demo;
 
-namespace Gean.Wrapper.PlugTree.ApplicationClass
+namespace Gean.Wrapper.PlugTree.DemoClass1
 {
     public class BigRunner : IRun
     {

@@ -1,4 +1,4 @@
-﻿namespace Gean.Wrapper.PlugTree.ApplicationClass
+﻿namespace Gean.Wrapper.PlugTree.DemoClass1
 {
     partial class DemoYellowForm
     {

@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Gean.Wrapper.PlugTree.ApplicationClass
+namespace Gean.Wrapper.PlugTree.DemoClass1
 {
     public partial class DemoYellowForm : Form
     {
