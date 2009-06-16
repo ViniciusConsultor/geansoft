@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gean.Wrapper.PlugTree.Demo\Gean.Wrapper.PlugTree.Demo.csproj">
+    <ProjectReference Include="..\Gean.Wrapper.PlugTree.DemoApplication\Gean.Wrapper.PlugTree.DemoApplication.csproj">
       <Project>{9B41B864-FBE8-4D4E-92C2-9E53CC61A846}</Project>
-      <Name>Gean.Wrapper.PlugTree.Demo</Name>
+      <Name>Gean.Wrapper.PlugTree.DemoApplication</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gean.Wrapper.PlugTree\Gean.Wrapper.PlugTree.csproj">
       <Project>{02FCE16E-7F04-465B-BB02-57FE59257660}</Project>
@@ -83,7 +83,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\
-copy Gean.Wrapper.PlugTree.ApplicationClass.gplug ..\..\..\Gean.Wrapper.PlugTree.Demo\bin\Debug\</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.DemoApplication\bin\Debug\
+copy Gean.Wrapper.PlugTree.ApplicationClass.gplug ..\..\..\Gean.Wrapper.PlugTree.DemoApplication\bin\Debug\</PostBuildEvent>
   </PropertyGroup>
 </Project>
