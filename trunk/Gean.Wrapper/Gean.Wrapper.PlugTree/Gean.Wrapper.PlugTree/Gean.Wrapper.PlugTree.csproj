@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Definers\Definers.cs" />
+    <Compile Include="Definers.cs" />
     <Compile Include="Exception.cs" />
     <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />
