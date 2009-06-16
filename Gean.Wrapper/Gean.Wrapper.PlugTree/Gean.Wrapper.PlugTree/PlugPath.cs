@@ -7,13 +7,9 @@ using System.Xml;
 namespace Gean.Wrapper.PlugTree
 {
     /// <summary>
-    /// 对Plug的路径以及该Plug下的PlugAtom集合的描述类。
-    /// 在PlugManager中会初始化一个该类型，然后从其他Plug文件中所读取的所有Plug的路径都将会以
-    /// 安装到树的动作进行路径的安装。
+    /// 这是一个树状结构的描述类，每节点定义为该类型本身。在Items属性节点下绑定其所有的子节点。
     /// 访问该类型的Items属性将会形成一个比较大的树形结构。
-    /// 同时，每个PlugPath下面会绑定一些(有可能没有，有可能很多)的Block对象。
-    /// 初始化完成后，将遍历整个PlugPath树的PlugAtom来Build相应的对象。
-    /// 类似于下述节点的中的name属性值：＜Path name = "/Develop/Pads/Browser/ToolBar/Standard"＞。
+    /// 同时，每个PlugPath下面会绑定一个Definers对象。
     /// </summary>
     public sealed class PlugPath : IEnumerable
     {  
@@ -26,6 +22,9 @@ namespace Gean.Wrapper.PlugTree
         }
         private string _Name;
 
+        /// <summary>
+        /// 是否是根路径
+        /// </summary>
         public bool IsRoot
         {
             get { return _IsRoot; }
@@ -33,14 +32,19 @@ namespace Gean.Wrapper.PlugTree
         }
         private bool _IsRoot = false;
 
+        /// <summary>
+        /// 返回是否有子级路径
+        /// </summary>
         public bool HasChildPath
         {
             get { return this.Items.Count > 0; } 
         }
 
-        public PlugPathCollection Items { get; set; }
+        public PlugPathCollection Items { get; internal set; }
 
-        public Definers Definers { get; set; }
+        public Definers Definers { get; internal set; }
+
+        public object Tag { get; set; }
 
         internal PlugPath(string name)
         {
@@ -50,9 +54,14 @@ namespace Gean.Wrapper.PlugTree
 
         public override string ToString()
         {
-            return (new StringBuilder()).Append("PlugPath: ").Append(this.Name).ToString();
+            return string.Format("PlugPath: {0}", this.Name);
         }
 
+        /// <summary>
+        /// 从一个XmlElement中解析出一个路径安装到一个父级路径中去。
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="ownerPath"></param>
         internal static void Install(XmlElement element, PlugPath ownerPath)
         {
             string pathname = element.GetAttribute("name");
@@ -65,7 +74,13 @@ namespace Gean.Wrapper.PlugTree
             CheckInstallPath(ownerPath, paths, properties);
         }
 
-        private static void CheckInstallPath(PlugPath parentPath, string[] paths, Definers properties)
+        /// <summary>
+        /// 检查该路径字符串所表达的路径是符已被安装
+        /// </summary>
+        /// <param name="parentPath">父级路径</param>
+        /// <param name="paths">路径字符串解析出的数组</param>
+        /// <param name="properties"></param>
+        private static void CheckInstallPath(PlugPath parentPath, string[] paths, Definers definers)
         {
             if (paths.Length <= 0 || paths == null)
             {
@@ -80,28 +95,28 @@ namespace Gean.Wrapper.PlugTree
                     string[] newPathStringArray = new string[paths.Length - 1];
                     Array.Copy(paths, 1, newPathStringArray, 0, paths.Length - 1);
                     // 向前递归
-                    CheckInstallPath(item, newPathStringArray, properties);
+                    CheckInstallPath(item, newPathStringArray, definers);
                     isInstall = false;
                     break;
                 }
             }
             if (isInstall)
             {
-                SetupUnInstallPath(parentPath, paths, properties);
+                SetupUnInstallPath(parentPath, paths, definers);
             }
         }
 
         /// <summary>
         /// 安装路径的子方法
         /// </summary>
-        /// <param name="pathStringArray">拆分后的路径字符串数组</param>
-        /// <param name="plugpath">路径树</param>
-        private static void SetupUnInstallPath(PlugPath parentPath, string[] paths, Definers properties)
+        /// <param name="paths">拆分后的路径字符串数组</param>
+        /// <param name="parentPath">父级路径</param>
+        private static void SetupUnInstallPath(PlugPath parentPath, string[] paths, Definers definers)
         {
             PlugPath newpath = new PlugPath(paths[0].ToLowerInvariant());
             if (paths.Length == 1)
             {
-                newpath.Definers = properties;// 给递归到的当前PlugPath绑定Properties
+                newpath.Definers = definers;// 给递归到的当前PlugPath绑定Properties
             }
             newpath.ParentPath = parentPath;
             // 安装一个新的路径描述
@@ -112,7 +127,7 @@ namespace Gean.Wrapper.PlugTree
                 // 移除数组中的刚才已安装的第一个值后，复制到一个新的数组中
                 string[] newPathStringArray = new string[paths.Length - 1];
                 Array.Copy(paths, 1, newPathStringArray, 0, paths.Length - 1);
-                SetupUnInstallPath(newpath, newPathStringArray, properties);
+                SetupUnInstallPath(newpath, newPathStringArray, definers);
             }
         }
 
@@ -124,140 +139,5 @@ namespace Gean.Wrapper.PlugTree
         }
 
         #endregion
-
-
-        ///// <summary>
-        ///// Builds the child items in this path. Ensures that all items have the type T.
-        ///// </summary>
-        ///// <param name="caller">The owner used to create the objects.</param>
-        //public List<T> BuildChildItems<T>(object caller)
-        //{
-        //    List<T> items = new List<T>(this.PlugAtoms.Count);
-        //    foreach (PlugAtom plugAtom in this.PlugAtoms)
-        //    {
-        //        ArrayList subItems = null;
-        //        if (this.Items.Contains(plugAtom.OwnerPlugPath))
-        //        {
-        //            subItems = plugAtom.OwnerPlugPath.BuildChildItems(caller);
-        //        }
-        //        object result = plugAtom.BuildItem(caller, subItems);
-        //        if (result == null)
-        //            continue;
-        //        if (result is T)
-        //        {
-        //            items.Add((T)result);
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidCastException("The AddInTreeNode <" + plugAtom.Name + " id='" + plugAtom.Id
-        //                                           + "' returned an instance of " + result.GetType().FullName
-        //                                           + " but the type " + typeof(T).FullName + " is expected.");
-        //        }
-        //    }
-        //    return items;
-        //}
-
-        ///// <summary>
-        ///// Builds the child items in this path.
-        ///// </summary>
-        ///// <param name="caller">The owner used to create the objects.</param>
-        //public ArrayList BuildChildItems(object caller)
-        //{
-        //    ArrayList items = new ArrayList(this.PlugAtoms.Count);
-        //    foreach (PlugAtom plugAtom in this.PlugAtoms)
-        //    {
-        //        ArrayList subItems = null;
-        //        if (this.Items.Contains(plugAtom.OwnerPlugPath))
-        //        {
-        //            subItems = plugAtom.OwnerPlugPath.BuildChildItems(caller);
-        //        }
-        //        object result = plugAtom.BuildItem(caller, subItems);
-        //        if (result == null)
-        //            continue;
-        //        items.Add(result);
-        //    }
-        //    return items;
-        //}
-
-        ///// <summary>
-        ///// Builds a specific child items in this path.
-        ///// </summary>
-        ///// <param name="childItemID">
-        ///// The ID of the child item to build.
-        ///// </param>
-        ///// <param name="caller">The owner used to create the objects.</param>
-        ///// <param name="subItems">The subitems to pass to the doozer</param>
-        ///// <exception cref="TreePathNotFoundException">
-        ///// Occurs when <paramref name="childItemID"/> does not exist in this path.
-        ///// </exception>
-        //public object BuildChildItem(string childItemID, object caller, ArrayList subItems)
-        //{
-        //    foreach (PlugAtom plugAtom in this.PlugAtoms)
-        //    {
-        //        if (plugAtom.Id == childItemID)
-        //        {
-        //            return plugAtom.BuildItem(caller, subItems);
-        //        }
-        //    }
-        //    throw new TreePathNotFoundException(childItemID);
-        //}
-
-        ///// <summary>
-        ///// 路径的完整字符串表示
-        ///// </summary>
-        //private string _PathFullString = null;
-        ///// <summary>
-        ///// 已重写。生成路径的完整字符串
-        ///// </summary>
-        //public override string ToString()
-        //{
-        //    if (this._PathFullString == null)
-        //    {
-        //        StringBuilder sb = new StringBuilder();
-        //        ToString(sb, this);
-        //        return this._PathFullString = sb.ToString();
-        //    }
-        //    else
-        //    {
-        //        return this._PathFullString;
-        //    }
-        //}
-        ///// <summary>
-        ///// this.ToString()的子方法
-        ///// </summary>
-        //private static void ToString(StringBuilder sb, PlugPath plugPath)
-        //{
-        //    sb.Insert(0, plugPath.Name).Insert(0, '/');
-        //    if (!plugPath.IsRoot)
-        //    {
-        //        ToString(sb, plugPath.ParentPath);//递归
-        //    }
-        //}
-
-        //#region ICloneable 成员
-
-        //public object Clone()
-        //{
-        //    PlugPath colonePlugPath = new PlugPath(this.Name);
-        //    colonePlugPath.PlugAtoms = this.PlugAtoms;
-        //    colonePlugPath.IsRoot = this.IsRoot;
-        //    colonePlugPath.Items = this.Items;
-        //    colonePlugPath.ParentPath = this.ParentPath;
-        //    colonePlugPath._PathFullString = this._PathFullString;
-        //    return colonePlugPath;
-        //}
-
-        //#endregion
-
-        //#region IEnumerable 成员
-
-        //public IEnumerator GetEnumerator()
-        //{
-        //    return this.Items.GetEnumerator();
-        //}
-
-        //#endregion
     }
-
-    public class PlugPathCollection : List<PlugPath> { }
 }
