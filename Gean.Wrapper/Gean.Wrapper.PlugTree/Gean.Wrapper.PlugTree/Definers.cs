@@ -10,9 +10,11 @@ using System.Xml.Serialization;
 namespace Gean.Wrapper.PlugTree
 {
     /// <summary>
-    /// 一个定义的集合，类似名词解释，或者属性定义，他以 Dictionary《string, object》的方式进行存储。
-    /// 键为字符串，而值可以为任何可序列化的类型。一般来讲，该集合均为从XML的节点中解析得到，同样，
-    /// 他也可以序列化成XML节点或文件。
+    /// 一个类似Hashtable的保存“定义”的集合类(数据包)。
+    /// Definer：可以直译为“定义者”，也就是对某事物(对象)的定义，对该对象的各个属性解释、定义，
+    /// 所有属性(定义)以 Dictionary(string, object)的方式进行存储。键为字符串，而值可以为任何
+    /// 可序列化的类型。一般来讲，该集合均为从XML的节点中解析得到，同样，他也可以序列化成 XML
+    /// 节点或文件。
     /// Gean: 2009-06-16 11:27:24
     /// </summary>
     public sealed class Definers : IEnumerable
@@ -293,7 +295,7 @@ namespace Gean.Wrapper.PlugTree
         }
 
         /// <summary>
-        /// 将Properties封装存入指定的文件
+        /// 将Definers封装存入指定的文件
         /// </summary>
         /// <param name="fileName">指定的文件</param>
         public void Save(string fileName)
@@ -301,30 +303,30 @@ namespace Gean.Wrapper.PlugTree
             using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;
-                writer.WriteStartElement("Properties");
-                this.WriteProperties(writer);
+                writer.WriteStartElement("Definers");
+                this.WriteDefiners(writer);
                 writer.WriteEndElement();
             }
         }
 
         /// <summary>
-        /// 将Properties写入XmlWriter
+        /// 将Definers写入XmlWriter
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public void WriteProperties(XmlWriter writer)
+        public void WriteDefiners(XmlWriter writer)
         {
             lock (this._Definers)
             {
-                List<KeyValuePair<string, object>> sortedProperties = new List<KeyValuePair<string, object>>(this._Definers);
-                sortedProperties.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.Key, b.Key));
-                foreach (KeyValuePair<string, object> entry in sortedProperties)
+                List<KeyValuePair<string, object>> sortedDefiners = new List<KeyValuePair<string, object>>(this._Definers);
+                sortedDefiners.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.Key, b.Key));
+                foreach (KeyValuePair<string, object> entry in sortedDefiners)
                 {
                     object val = entry.Value;
                     if (val is Definers)
                     {
-                        writer.WriteStartElement("Properties");
+                        writer.WriteStartElement("Definers");
                         writer.WriteAttributeString("name", entry.Key);
-                        ((Definers)val).WriteProperties(writer);
+                        ((Definers)val).WriteDefiners(writer);
                         writer.WriteEndElement();
                     }
                     else if (val is Array || val is ArrayList)
@@ -406,28 +408,28 @@ namespace Gean.Wrapper.PlugTree
     public class DefinersItemChangedEventArgs : EventArgs
     {
         /// <returns>
-        /// returns the changed property object
+        /// returns the changed Definers object
         /// </returns>
-        public Definers DefinerCollection { get; private set; }
+        public Definers Definers { get; private set; }
 
         /// <returns>
-        /// The key of the changed property
+        /// The key of the changed Definers
         /// </returns>
         public string Key { get; private set; }
 
         /// <returns>
-        /// The new value of the property
+        /// The new value of the Definers
         /// </returns>
         public object NewValue { get; private set; }
 
         /// <returns>
-        /// The new value of the property
+        /// The new value of the Definers
         /// </returns>
         public object OldValue { get; private set; }
 
         public DefinersItemChangedEventArgs(Definers definers, string key, object oldValue, object newValue)
         {
-            this.DefinerCollection = definers;
+            this.Definers = definers;
             this.Key = key;
             this.OldValue = oldValue;
             this.NewValue = newValue;
