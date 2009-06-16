@@ -8,8 +8,8 @@
     <ProjectGuid>{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Wrapper.PlugTree.DemoApplicationClass</RootNamespace>
-    <AssemblyName>Gean.Wrapper.PlugTree.DemoApplicationClass</AssemblyName>
+    <RootNamespace>Gean.Wrapper.PlugTree.DemoClass1</RootNamespace>
+    <AssemblyName>Gean.Wrapper.PlugTree.DemoClass1</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -50,7 +50,6 @@
       <DependentUpon>DemoYellowForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DemoYellowFormRunner.cs" />
-    <Compile Include="EditSaveMenuItemCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gean.Wrapper.PlugTree.ApplicationClass.gplug">
+    <None Include="Gean.Wrapper.PlugTree.DemoClass1.gplug">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -84,6 +83,6 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.DemoApplication\bin\Debug\
-copy Gean.Wrapper.PlugTree.ApplicationClass.gplug ..\..\..\Gean.Wrapper.PlugTree.DemoApplication\bin\Debug\</PostBuildEvent>
+copy *.gplug ..\..\..\Gean.Wrapper.PlugTree.DemoApplication\bin\Debug\</PostBuildEvent>
   </PropertyGroup>
 </Project>

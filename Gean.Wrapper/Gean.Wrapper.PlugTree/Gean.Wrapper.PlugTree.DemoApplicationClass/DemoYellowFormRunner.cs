@@ -4,7 +4,7 @@ using System.Text;
 using Gean.Wrapper.PlugTree.Demo;
 using System.Windows.Forms;
 
-namespace Gean.Wrapper.PlugTree.ApplicationClass
+namespace Gean.Wrapper.PlugTree.DemoClass1
 {
     public class DemoYellowFormRunner : IRun
     {
