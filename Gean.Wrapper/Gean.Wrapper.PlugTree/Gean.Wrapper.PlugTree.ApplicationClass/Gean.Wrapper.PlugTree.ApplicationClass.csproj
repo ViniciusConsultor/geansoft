@@ -50,6 +50,7 @@
       <DependentUpon>DemoYellowForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DemoYellowFormRunner.cs" />
+    <Compile Include="EditSaveMenuItemCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
