@@ -12,11 +12,11 @@ namespace Gean
     /// <summary>
     /// 属性值集合
     /// </summary>
-    public sealed class PropertyDictionary : IEnumerable
+    public sealed class DefinerCollection : IEnumerable
     {
-        internal PropertyDictionary() {}
+        internal DefinerCollection() {}
 
-        private Dictionary<string, object> _Properties = new Dictionary<string, object>();
+        private Dictionary<string, object> _DefinerCollection = new Dictionary<string, object>();
 
         /// <summary>
         /// Sets the specified key.
@@ -27,20 +27,20 @@ namespace Gean
         public void Set<T>(string key, T value)
         { 
             T oldValue = default(T);
-            lock (this._Properties)
+            lock (this._DefinerCollection)
             {
                 key = key.ToLowerInvariant();
-                if (!this._Properties.ContainsKey(key))
+                if (!this._DefinerCollection.ContainsKey(key))
                 {
-                    this._Properties.Add(key, value);
+                    this._DefinerCollection.Add(key, value);
                 }
                 else
                 {
                     oldValue = Get<T>(key, value);
-                    this._Properties[key] = value;
+                    this._DefinerCollection[key] = value;
                 }
             }
-            OnPropertyChanged(new PropertiesItemChangedEventArgs(this, key, oldValue, value));
+            OnPropertyChanged(new DefinerCollectionItemChangedEventArgs(this, key, oldValue, value));
         }
 
         /// <summary>
@@ -53,12 +53,12 @@ namespace Gean
         /// <returns></returns>
         public T Get<T>(string key, T defaultValue)
         {
-            lock (this._Properties)
+            lock (this._DefinerCollection)
             {
                 object obj;
-                if (!this._Properties.TryGetValue(key, out obj))
+                if (!this._DefinerCollection.TryGetValue(key, out obj))
                 {
-                    this._Properties.Add(key, defaultValue);
+                    this._DefinerCollection.Add(key, defaultValue);
                     return defaultValue;
                 }
 
@@ -73,7 +73,7 @@ namespace Gean
                     {
                         obj = defaultValue;
                     }
-                    this._Properties[key] = obj;
+                    this._DefinerCollection[key] = obj;
                 }
                 else if (obj is ArrayList && typeof(T).IsArray)//NUnitTest: TGetTest2
                 {
@@ -96,7 +96,7 @@ namespace Gean
                     {
                         obj = defaultValue;
                     }
-                    this._Properties[key] = obj;
+                    this._DefinerCollection[key] = obj;
                 }
                 else if (!(obj is string) && typeof(T) == typeof(string))
                 {
@@ -120,7 +120,7 @@ namespace Gean
                     {
                         obj = defaultValue;
                     }
-                    this._Properties[key] = obj;
+                    this._DefinerCollection[key] = obj;
                 }
                 try
                 {
@@ -140,7 +140,7 @@ namespace Gean
         /// </summary>
         /// <param name="fileName">指定的文件</param>
         /// <returns></returns>
-        public static PropertyDictionary Parse(string fileName)
+        public static DefinerCollection Parse(string fileName)
         {
             if (!File.Exists(fileName))
                 return null;
@@ -153,7 +153,7 @@ namespace Gean
                         switch (reader.LocalName)
                         {
                             case "Properties":
-                                PropertyDictionary properties = new PropertyDictionary();
+                                DefinerCollection properties = new DefinerCollection();
                                 properties.ReadProperties(reader, "Properties");
                                 return properties;
                         }
@@ -183,23 +183,23 @@ namespace Gean
                         if (propertyName == "Properties")
                         {
                             propertyName = reader.GetAttribute(0);
-                            PropertyDictionary p = new PropertyDictionary();
+                            DefinerCollection p = new DefinerCollection();
                             p.ReadProperties(reader, "Properties");
-                            this._Properties[propertyName] = p;
+                            this._DefinerCollection[propertyName] = p;
                         }
                         else if (propertyName == "Array")
                         {
                             propertyName = reader.GetAttribute(0);
-                            this._Properties[propertyName] = ReadArray(reader);
+                            this._DefinerCollection[propertyName] = ReadArray(reader);
                         }
                         else if (propertyName == "SerializedValue")
                         {
                             propertyName = reader.GetAttribute(0);
-                            this._Properties[propertyName] = new SerializedValue(reader.ReadInnerXml());
+                            this._DefinerCollection[propertyName] = new SerializedValue(reader.ReadInnerXml());
                         }
                         else
                         {
-                            this._Properties[propertyName] = reader.HasAttributes ? reader.GetAttribute(0) : null;
+                            this._DefinerCollection[propertyName] = reader.HasAttributes ? reader.GetAttribute(0) : null;
                         }
                         break;
                 }
@@ -232,11 +232,11 @@ namespace Gean
 
         #region 从XmlElement中解析Properties
 
-        public static PropertyDictionary Parse(XmlElement element)
+        public static DefinerCollection Parse(XmlElement element)
         {
             return Parse(element, true);
         }
-        public static PropertyDictionary Parse(XmlElement element, bool isParseChildNodes)
+        public static DefinerCollection Parse(XmlElement element, bool isParseChildNodes)
         {
             if (isParseChildNodes)
             {
@@ -247,22 +247,22 @@ namespace Gean
                 return Parse(element.Attributes);
             }
         }
-        public static PropertyDictionary Parse(XmlAttributeCollection attributes)
+        public static DefinerCollection Parse(XmlAttributeCollection attributes)
         {
             if (attributes == null || attributes.Count <= 0)
                 return null;
-            PropertyDictionary properties = new PropertyDictionary();
+            DefinerCollection properties = new DefinerCollection();
             foreach (XmlAttribute item in attributes)
             {
                 properties.Set<string>(item.LocalName.ToLowerInvariant(), item.Value);
             }
             return properties;
         }
-        public static PropertyDictionary Parse(XmlNodeList childNodes)
+        public static DefinerCollection Parse(XmlNodeList childNodes)
         {
             if (childNodes == null || childNodes.Count <= 0)
                 return null;
-            PropertyDictionary properties = new PropertyDictionary();
+            DefinerCollection properties = new DefinerCollection();
             foreach (XmlNode node in childNodes)
             {
                 if (node.NodeType != XmlNodeType.Element)
@@ -276,15 +276,15 @@ namespace Gean
 
         #endregion
 
-        public static PropertyDictionary operator +(PropertyDictionary pa, PropertyDictionary pb)
+        public static DefinerCollection operator +(DefinerCollection pa, DefinerCollection pb)
         {
-            foreach (var item in pb._Properties)
+            foreach (var item in pb._DefinerCollection)
             {
-                if (pa._Properties.ContainsKey(item.Key))
+                if (pa._DefinerCollection.ContainsKey(item.Key))
                 {
                     continue;
                 }
-                pa._Properties.Add(item.Key, item.Value);
+                pa._DefinerCollection.Add(item.Key, item.Value);
             }
             return pa;
         }
@@ -310,18 +310,18 @@ namespace Gean
         /// <param name="writer">The writer.</param>
         public void WriteProperties(XmlWriter writer)
         {
-            lock (this._Properties)
+            lock (this._DefinerCollection)
             {
-                List<KeyValuePair<string, object>> sortedProperties = new List<KeyValuePair<string, object>>(this._Properties);
+                List<KeyValuePair<string, object>> sortedProperties = new List<KeyValuePair<string, object>>(this._DefinerCollection);
                 sortedProperties.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.Key, b.Key));
                 foreach (KeyValuePair<string, object> entry in sortedProperties)
                 {
                     object val = entry.Value;
-                    if (val is PropertyDictionary)
+                    if (val is DefinerCollection)
                     {
                         writer.WriteStartElement("Properties");
                         writer.WriteAttributeString("name", entry.Key);
-                        ((PropertyDictionary)val).WriteProperties(writer);
+                        ((DefinerCollection)val).WriteProperties(writer);
                         writer.WriteEndElement();
                     }
                     else if (val is Array || val is ArrayList)
@@ -380,7 +380,7 @@ namespace Gean
         /// 当Property值发生改变时
         /// </summary>
         public event PropertiesItemChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(PropertiesItemChangedEventArgs e)
+        private void OnPropertyChanged(DefinerCollectionItemChangedEventArgs e)
         {
             if (PropertyChanged != null)
             {
@@ -392,12 +392,12 @@ namespace Gean
 
         public IEnumerator GetEnumerator()
         {
-            return this._Properties.GetEnumerator();
+            return this._DefinerCollection.GetEnumerator();
         }
 
         #endregion
     }
 
-    public delegate void PropertiesItemChangedEventHandler(object sender, PropertiesItemChangedEventArgs e);
+    public delegate void PropertiesItemChangedEventHandler(object sender, DefinerCollectionItemChangedEventArgs e);
 
 }

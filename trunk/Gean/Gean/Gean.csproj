@@ -98,7 +98,7 @@
     <Compile Include="Src\Wrapper\Logger\LogLevel.cs" />
     <Compile Include="Src\Wrapper\Logger\LogWriter.cs" />
     <Compile Include="Src\Wrapper\Logger\TextLog.cs" />
-    <Compile Include="Src\Wrapper\Properties\Properties.cs" />
+    <Compile Include="Src\Wrapper\Properties\DefinerCollection.cs" />
     <Compile Include="Src\Wrapper\Properties\PropertiesItemChangedEventArgs.cs" />
     <Compile Include="Src\Wrapper\Properties\SerializedValue.cs" />
     <Compile Include="Src\Wrapper\User32.cs" />

@@ -3,12 +3,12 @@
 namespace Gean
 {
 
-    public class PropertiesItemChangedEventArgs : EventArgs
+    public class DefinerCollectionItemChangedEventArgs : EventArgs
     {
         /// <returns>
         /// returns the changed property object
         /// </returns>
-        public PropertyDictionary Properties { get; private set; }
+        public DefinerCollection DefinerCollection { get; private set; }
 
         /// <returns>
         /// The key of the changed property
@@ -25,9 +25,9 @@ namespace Gean
         /// </returns>
         public object OldValue { get; private set; }
 
-        public PropertiesItemChangedEventArgs(PropertyDictionary properties, string key, object oldValue, object newValue)
+        public DefinerCollectionItemChangedEventArgs(DefinerCollection definerCollection, string key, object oldValue, object newValue)
         {
-            this.Properties = properties;
+            this.DefinerCollection = definerCollection;
             this.Key = key;
             this.OldValue = oldValue;
             this.NewValue = newValue;
