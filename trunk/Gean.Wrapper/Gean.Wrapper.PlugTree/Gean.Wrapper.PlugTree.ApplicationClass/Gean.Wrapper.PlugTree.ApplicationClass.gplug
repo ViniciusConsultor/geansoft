@@ -7,34 +7,108 @@
       <Value>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Value>
     </Class>
   </Definiens>
-  <Path name="Gean|PlugTree.Demo|MainMenu|File|YellowForm">
-    <Type>FormControl.MainMenu</Type>
-    <Class>Gean.Wrapper.PlugTree.ApplicationClass.DemoYellowFormRunner</Class>
-    <Shortcut>ctrl+shift+a</Shortcut>
-    <Text>@RES|TXT|YellowForm.Text</Text>
+  <Path name = "/GeanSoft/Workbench/FileFilter">
+    <FileFilter id         = "AllFiles"
+		            name       = "${res:GeanSoft.FileFilter.AllFiles}"
+		            extensions = "*.*"/>
   </Path>
-  <Path name="Gean|PlugTree.Demo|MainMenu|File|YellowForm|Project|BigRunnerMenu">
-    <Type>FormControl.MainMenu</Type>
-    <Class>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Class>
-    <Shortcut>ctrl+shift+f9</Shortcut>
-    <Text>@RES|TXT|BigRunnerMenu.Text</Text>
+  <Path name = "/GeanSoft/Workbench/Pads">
+    <Pad id       = "ProjectBrowser"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ProjectScoutLabel}"
+		     icon     = "PadIcons.ProjectBrowser"
+		     shortcut = "Control|Alt|L"
+		     class    = "ICSharpCode.GeanSoft.Project.ProjectBrowserPad"/>
+    <Pad id       = "ClassBrowser"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ClassScoutLabel}"
+		     icon     = "PadIcons.ClassBrowser"
+		     shortcut = "Control|Shift|C"
+		     class    = "ICSharpCode.GeanSoft.Gui.ClassBrowser.ClassBrowserPad"/>
+    <Pad id       = "SideBar"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ToolbarLabel}"
+		     icon     = "PadIcons.Toolbar"
+		     shortcut = "Control|Alt|X"
+		     class    = "ICSharpCode.GeanSoft.Gui.ToolsPad"/>
+    <Pad id       = "ErrorList"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ErrorList}"
+		     shortcut = "Control|Alt|K"
+		     icon     = "PadIcons.ErrorList"
+		     class    = "ICSharpCode.GeanSoft.Gui.ErrorListPad"/>
+    <Pad id       = "TaskList"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.TaskList}"
+		     icon     = "PadIcons.TaskList"
+		     class    = "ICSharpCode.GeanSoft.Gui.TaskListPad"/>
+    <Pad id       = "CompilerMessageView"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.OutputWindow}"
+		     icon     = "PadIcons.Output"
+		     shortcut = "Control|Alt|O"
+		     class    = "ICSharpCode.GeanSoft.Gui.CompilerMessageView"/>
+    <Pad id       = "PropertyPad"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.PropertiesScoutLabel}"
+		     icon     = "Icons.16x16.PropertiesIcon"
+		     shortcut = "F4"
+		     class    = "ICSharpCode.GeanSoft.Gui.PropertyPad"/>
+    <Pad id       = "FileScout"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.FileScoutLabel}"
+		     icon     = "PadIcons.FileBrowser"
+		     shortcut = "Control|Alt|F"
+		     class    = "ICSharpCode.GeanSoft.Gui.FileScout"/>
+    <Pad id       = "SearchResults"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.SearchResultsLabel}"
+		     icon     = "PadIcons.FindResults"
+		     class    = "SearchAndReplace.SearchResultPanel"/>
+    <Pad id       = "Bookmarks"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.BookmarksLabel}"
+		     icon     = "PadIcons.Bookmarks"
+		     class    = "ICSharpCode.GeanSoft.Bookmarks.BookmarkPad"/>
+    <Pad id       = "DefinitionView"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.DefinitionViewLabel}"
+		     icon     = "PadIcons.DefinitionView"
+		     class    = "ICSharpCode.GeanSoft.Gui.DefinitionViewPad"/>
   </Path>
-  <Path name="Gean|PlugTree.Demo|MainMenu|Edit|YellowForm|Project|BigRunnerMenu">
-    <Type>FormControl.MainMenu</Type>
-    <Class>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Class>
-    <Shortcut>ctrl+shift+f9</Shortcut>
-    <Text>@RES|TXT|BigRunnerMenu.Text</Text>
+  <Path name = "/GeanSoft/Workbench/Combine/FileFilter">
+    <FileFilter id         = "Solution"
+		            name       = "${res:GeanSoft.FileFilter.SolutionFiles}"
+		            class      = "ICSharpCode.GeanSoft.Project.LoadSolution"
+		            extensions = "*.sln"/>
+    <FileFilter id         = "Combine"
+		            name       = "${res:GeanSoft.FileFilter.CombineFiles}"
+		            class      = "ICSharpCode.GeanSoft.Project.LoadSolution"
+		            extensions = "*.cmbx"/>
+    <FileFilter id         = "Prjx"
+		            name       = "${res:GeanSoft.FileFilter.PrjxFiles}"
+		            class      = "ICSharpCode.GeanSoft.Project.LoadSolution"
+		            extensions = "*.prjx"/>
+    <FileFilter id         = "AllFiles"
+		            name       = "${res:GeanSoft.FileFilter.AllFiles}"
+		            extensions = "*.*"/>
   </Path>
-  <Path name="Gean|PlugTree.Demo|MainMenu|Help|About|Project|BigRunnerMenu">
-    <Type>FormControl.MainMenu</Type>
-    <Class>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Class>
-    <Shortcut>ctrl+shift+f9</Shortcut>
-    <Text>@RES|TXT|BigRunnerMenu.Text</Text>
-  </Path>
-  <Path name="Gean|PlugTree.Demo|MainMenu|Help|Tipop|Project|BigRunnerMenu">
-    <Type>FormControl.MainMenu</Type>
-    <Class>Gean.Wrapper.PlugTree.ApplicationClass.BigRunner</Class>
-    <Shortcut>ctrl+shift+f9</Shortcut>
-    <Text>@RES|TXT|BigRunnerMenu.Text</Text>
+  <Path name = "/GeanSoft/Pads/ProjectBrowser/ToolBar/Standard">
+    <Condition name = "SolutionOpen" action="Disable">
+      <ToolbarItem id      = "Properties"
+			             icon    = "Icons.16x16.PropertiesIcon"
+			             tooltip = "${res:MainWindow.Windows.PropertiesScoutLabel}"
+			             class   = "ICSharpCode.GeanSoft.Project.Commands.ShowPropertiesForNode"/>
+      <ToolbarItem id = "PropertySeparator" type = "Separator"/>
+      <ToolbarItem id      = "ShowAll"
+			             type    = "CheckBox"
+			             icon    = "ProjectBrowser.Toolbar.ShowHiddenFiles"
+			             tooltip = "${res:Gui.ProjectBrowser.ShowAllFiles}"
+			             class   = "ICSharpCode.GeanSoft.Project.Commands.ToggleShowAll"/>
+      <ToolbarItem id      = "Refresh"
+			             icon    = "ProjectBrowser.Toolbar.Refresh"
+			             tooltip = "${res:AddIns.HtmlHelp2.Refresh}"
+			             class   = "ICSharpCode.GeanSoft.Project.Commands.RefreshProjectBrowser"/>
+    </Condition>
   </Path>
 </GPlug>
