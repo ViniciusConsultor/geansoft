@@ -28,6 +28,8 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         {
             InitializeComponent();
             this.UpdateListBox();
+            this._Demo1Button.Text = "Definers";
+
         }
 
         private void _OKButton_Click(object sender, EventArgs e)
