@@ -40,7 +40,7 @@ namespace Gean.Wrapper.PlugTree
 
         public PlugPathCollection Items { get; set; }
 
-        public DefinerCollection PropertyDictionary { get; set; }
+        public Definers Definers { get; set; }
 
         internal PlugPath(string name)
         {
@@ -61,11 +61,11 @@ namespace Gean.Wrapper.PlugTree
                 throw new PlugTreeException("Gean: Plug name cannot empty!");
             }
             string[] paths = pathname.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            DefinerCollection properties = DefinerCollection.Parse(element);
+            Definers properties = Definers.Parse(element);
             CheckInstallPath(ownerPath, paths, properties);
         }
 
-        private static void CheckInstallPath(PlugPath parentPath, string[] paths, DefinerCollection properties)
+        private static void CheckInstallPath(PlugPath parentPath, string[] paths, Definers properties)
         {
             if (paths.Length <= 0 || paths == null)
             {
@@ -96,12 +96,12 @@ namespace Gean.Wrapper.PlugTree
         /// </summary>
         /// <param name="pathStringArray">拆分后的路径字符串数组</param>
         /// <param name="plugpath">路径树</param>
-        private static void SetupUnInstallPath(PlugPath parentPath, string[] paths, DefinerCollection properties)
+        private static void SetupUnInstallPath(PlugPath parentPath, string[] paths, Definers properties)
         {
             PlugPath newpath = new PlugPath(paths[0].ToLowerInvariant());
             if (paths.Length == 1)
             {
-                newpath.PropertyDictionary = properties;// 给递归到的当前PlugPath绑定Properties
+                newpath.Definers = properties;// 给递归到的当前PlugPath绑定Properties
             }
             newpath.ParentPath = parentPath;
             // 安装一个新的路径描述
