@@ -8,7 +8,7 @@ namespace Gean
         /// <returns>
         /// returns the changed property object
         /// </returns>
-        public Properties Properties { get; private set; }
+        public PropertyDictionary Properties { get; private set; }
 
         /// <returns>
         /// The key of the changed property
@@ -25,7 +25,7 @@ namespace Gean
         /// </returns>
         public object OldValue { get; private set; }
 
-        public PropertiesItemChangedEventArgs(Properties properties, string key, object oldValue, object newValue)
+        public PropertiesItemChangedEventArgs(PropertyDictionary properties, string key, object oldValue, object newValue)
         {
             this.Properties = properties;
             this.Key = key;

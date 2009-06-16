@@ -12,9 +12,9 @@ namespace Gean
     /// <summary>
     /// 属性值集合
     /// </summary>
-    public sealed class Properties : IEnumerable
+    public sealed class PropertyDictionary : IEnumerable
     {
-        internal Properties() {}
+        internal PropertyDictionary() {}
 
         private Dictionary<string, object> _Properties = new Dictionary<string, object>();
 
@@ -25,7 +25,7 @@ namespace Gean
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         public void Set<T>(string key, T value)
-        {
+        { 
             T oldValue = default(T);
             lock (this._Properties)
             {
@@ -140,7 +140,7 @@ namespace Gean
         /// </summary>
         /// <param name="fileName">指定的文件</param>
         /// <returns></returns>
-        public static Properties Parse(string fileName)
+        public static PropertyDictionary Parse(string fileName)
         {
             if (!File.Exists(fileName))
                 return null;
@@ -153,7 +153,7 @@ namespace Gean
                         switch (reader.LocalName)
                         {
                             case "Properties":
-                                Properties properties = new Properties();
+                                PropertyDictionary properties = new PropertyDictionary();
                                 properties.ReadProperties(reader, "Properties");
                                 return properties;
                         }
@@ -183,7 +183,7 @@ namespace Gean
                         if (propertyName == "Properties")
                         {
                             propertyName = reader.GetAttribute(0);
-                            Properties p = new Properties();
+                            PropertyDictionary p = new PropertyDictionary();
                             p.ReadProperties(reader, "Properties");
                             this._Properties[propertyName] = p;
                         }
@@ -232,11 +232,11 @@ namespace Gean
 
         #region 从XmlElement中解析Properties
 
-        public static Properties Parse(XmlElement element)
+        public static PropertyDictionary Parse(XmlElement element)
         {
             return Parse(element, true);
         }
-        public static Properties Parse(XmlElement element, bool isParseChildNodes)
+        public static PropertyDictionary Parse(XmlElement element, bool isParseChildNodes)
         {
             if (isParseChildNodes)
             {
@@ -247,22 +247,22 @@ namespace Gean
                 return Parse(element.Attributes);
             }
         }
-        public static Properties Parse(XmlAttributeCollection attributes)
+        public static PropertyDictionary Parse(XmlAttributeCollection attributes)
         {
             if (attributes == null || attributes.Count <= 0)
                 return null;
-            Properties properties = new Properties();
+            PropertyDictionary properties = new PropertyDictionary();
             foreach (XmlAttribute item in attributes)
             {
                 properties.Set<string>(item.LocalName.ToLowerInvariant(), item.Value);
             }
             return properties;
         }
-        public static Properties Parse(XmlNodeList childNodes)
+        public static PropertyDictionary Parse(XmlNodeList childNodes)
         {
             if (childNodes == null || childNodes.Count <= 0)
                 return null;
-            Properties properties = new Properties();
+            PropertyDictionary properties = new PropertyDictionary();
             foreach (XmlNode node in childNodes)
             {
                 if (node.NodeType != XmlNodeType.Element)
@@ -276,7 +276,7 @@ namespace Gean
 
         #endregion
 
-        public static Properties operator +(Properties pa, Properties pb)
+        public static PropertyDictionary operator +(PropertyDictionary pa, PropertyDictionary pb)
         {
             foreach (var item in pb._Properties)
             {
@@ -317,11 +317,11 @@ namespace Gean
                 foreach (KeyValuePair<string, object> entry in sortedProperties)
                 {
                     object val = entry.Value;
-                    if (val is Properties)
+                    if (val is PropertyDictionary)
                     {
                         writer.WriteStartElement("Properties");
                         writer.WriteAttributeString("name", entry.Key);
-                        ((Properties)val).WriteProperties(writer);
+                        ((PropertyDictionary)val).WriteProperties(writer);
                         writer.WriteEndElement();
                     }
                     else if (val is Array || val is ArrayList)
