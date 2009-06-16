@@ -35,7 +35,7 @@ namespace Gean.Wrapper.PlugTree
         /// <summary>
         /// 返回是否有子级路径
         /// </summary>
-        public bool HasChildPath
+        public bool HasChildPathItems
         {
             get { return this.Items.Count > 0; } 
         }
@@ -46,6 +46,10 @@ namespace Gean.Wrapper.PlugTree
 
         public object Tag { get; set; }
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="name"></param>
         internal PlugPath(string name)
         {
             this.Name = name;

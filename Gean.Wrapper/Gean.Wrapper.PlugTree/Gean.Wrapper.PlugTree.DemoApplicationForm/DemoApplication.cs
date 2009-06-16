@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
+using System.IO;
 
 namespace Gean.Wrapper.PlugTree.DemoApplicationForm
 {
@@ -22,7 +24,40 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         /// </summary>
         private void Demo1Application()
         {
-            MessageBox.Show("Demo1Application");
+            XmlDocument doc = new XmlDocument();
+            doc.Load("Definers.xml");
+            Definers definers;
+
+            definers = Definers.Parse(doc.DocumentElement.SelectSingleNode("element").ChildNodes);
+            this._Listbox.Items.Add("XmlNodeList");
+            foreach (KeyValuePair<string,object> item in definers)
+            {
+                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            }
+
+            definers = Definers.Parse(doc.DocumentElement.SelectSingleNode("attributes").Attributes);
+            this._Listbox.Items.Add("XmlAttributeCollection");
+            foreach (KeyValuePair<string, object> item in definers)
+            {
+                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            }
+
+            definers = Definers.Parse((XmlElement)doc.DocumentElement.SelectSingleNode("ele_att"));
+            this._Listbox.Items.Add("XmlElement");
+            foreach (KeyValuePair<string, object> item in definers)
+            {
+                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            }
+
+            string filename = "Definers.Save.Test.xml";
+            definers.Save(filename);
+
+            doc.Load(filename);
+            this._Listbox.Items.Add("XML Save:");
+            this._Listbox.Items.Add(doc.DocumentElement.InnerXml);
+            FileInfo fi = new FileInfo(filename);
+            string fileinfo = fi.FullName + "\r\n" + fi.Length + "\r\n" + fi.LastWriteTime.ToLongTimeString() + "\r\n";
+            MessageBox.Show(fileinfo + doc.DocumentElement.InnerXml);
         }
         /// <summary>
         /// Demo 2 应用方法

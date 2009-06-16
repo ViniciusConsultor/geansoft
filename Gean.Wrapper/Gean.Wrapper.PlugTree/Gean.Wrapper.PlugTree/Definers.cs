@@ -24,11 +24,8 @@ namespace Gean.Wrapper.PlugTree
         private Dictionary<string, object> _Definers = new Dictionary<string, object>();
 
         /// <summary>
-        /// Sets the specified key.
+        /// 设置(增加)一组键与值
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
         public void Set<T>(string key, T value)
         { 
             T oldValue = default(T);
@@ -40,7 +37,7 @@ namespace Gean.Wrapper.PlugTree
                     this._Definers.Add(key, value);
                 }
                 else
-                {
+                {   //如果已有该值，记录原值后，进行设置
                     oldValue = Get<T>(key, value);
                     this._Definers[key] = value;
                 }
@@ -67,7 +64,7 @@ namespace Gean.Wrapper.PlugTree
                     return defaultValue;
                 }
 
-                if (obj is string && typeof(T) != typeof(string))//NUnitTest: TGetTest1
+                if (obj is string && typeof(T) != typeof(string))
                 {
                     TypeConverter conver = TypeDescriptor.GetConverter(typeof(T));
                     try
@@ -80,7 +77,7 @@ namespace Gean.Wrapper.PlugTree
                     }
                     this._Definers[key] = obj;
                 }
-                else if (obj is ArrayList && typeof(T).IsArray)//NUnitTest: TGetTest2
+                else if (obj is ArrayList && typeof(T).IsArray)
                 {
                     ArrayList list = (ArrayList)obj;
                     Type elementType = typeof(T).GetElementType();
@@ -115,7 +112,7 @@ namespace Gean.Wrapper.PlugTree
                         obj = obj.ToString();
                     }
                 }
-                else if (obj is SerializedValue)//NUnitTest: TGetTestSerializedValue
+                else if (obj is SerializedValue)
                 {
                     try
                     {
@@ -281,17 +278,23 @@ namespace Gean.Wrapper.PlugTree
 
         #endregion
 
-        public static Definers operator +(Definers da, Definers db)
+        public static Definers operator +(Definers definersA, Definers definersB)
         {
-            foreach (var item in db._Definers)
+            if (definersA == null && definersB == null)
+                return null;
+            if (definersA == null && definersB != null)
+                return definersB;
+            if (definersB == null && definersA != null)
+                return definersA;
+            foreach (var item in definersB._Definers)
             {
-                if (da._Definers.ContainsKey(item.Key))
+                if (definersA._Definers.ContainsKey(item.Key))
                 {
                     continue;
                 }
-                da._Definers.Add(item.Key, item.Value);
+                definersA._Definers.Add(item.Key, item.Value);
             }
-            return da;
+            return definersA;
         }
 
         /// <summary>
@@ -299,10 +302,11 @@ namespace Gean.Wrapper.PlugTree
         /// </summary>
         /// <param name="fileName">指定的文件</param>
         public void Save(string fileName)
-        {
+        { 
             using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;
+                writer.WriteStartDocument();
                 writer.WriteStartElement("Definers");
                 this.WriteDefiners(writer);
                 writer.WriteEndElement();
