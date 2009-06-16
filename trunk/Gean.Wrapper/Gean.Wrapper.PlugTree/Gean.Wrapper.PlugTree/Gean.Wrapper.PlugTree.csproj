@@ -36,12 +36,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Definers\Definers.cs" />
     <Compile Include="Exception.cs" />
+    <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />
     <Compile Include="PlugPath.cs" />
+    <Compile Include="PlugPathCollection.cs" />
     <Compile Include="Runners.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupService.cs" />
