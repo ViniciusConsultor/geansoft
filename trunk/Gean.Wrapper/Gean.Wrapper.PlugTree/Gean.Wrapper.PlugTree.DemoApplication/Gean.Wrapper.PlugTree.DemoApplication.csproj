@@ -8,8 +8,8 @@
     <ProjectGuid>{9B41B864-FBE8-4D4E-92C2-9E53CC61A846}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Wrapper.PlugTree.Demo</RootNamespace>
-    <AssemblyName>Gean.Wrapper.PlugTree.Demo</AssemblyName>
+    <RootNamespace>Gean.Wrapper.PlugTree.DemoApplication</RootNamespace>
+    <AssemblyName>Gean.Wrapper.PlugTree.DemoApplication</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -64,6 +64,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -84,9 +85,6 @@
       <Project>{02FCE16E-7F04-465B-BB02-57FE59257660}</Project>
       <Name>Gean.Wrapper.PlugTree</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,8 +8,8 @@
     <ProjectGuid>{9AE760F4-9DCE-4A35-A50E-AAFF7DC06DFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Wrapper.PlugTree.ApplicationClass</RootNamespace>
-    <AssemblyName>Gean.Wrapper.PlugTree.ApplicationClass</AssemblyName>
+    <RootNamespace>Gean.Wrapper.PlugTree.DemoApplicationClass</RootNamespace>
+    <AssemblyName>Gean.Wrapper.PlugTree.DemoApplicationClass</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
