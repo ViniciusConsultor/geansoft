@@ -14,7 +14,7 @@ namespace Gean.Wrapper.PlugTree
     /// </summary>
     public sealed class PlugPath : IEnumerable
     {
-        private const char SPLIT_CHAR = '|';
+        private const char SPLIT_CHAR = '/';
 
         public string Name { get; internal set; }
 

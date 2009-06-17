@@ -8,6 +8,8 @@ namespace Gean.Wrapper.PlugTree
 {
     public sealed class Plug
     {
+        internal Plug() { }
+
         public Definers Definers { get; private set; }
 
         internal static Plug Parse(XmlElement element)

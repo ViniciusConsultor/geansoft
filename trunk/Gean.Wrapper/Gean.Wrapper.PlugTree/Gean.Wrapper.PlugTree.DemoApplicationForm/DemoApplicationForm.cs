@@ -29,7 +29,7 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
             InitializeComponent();
             this.UpdateListBox();
             this._Demo1Button.Text = "Definers";
-
+            this._Demo2Button.Text = "PlugPath";
         }
 
         private void _OKButton_Click(object sender, EventArgs e)

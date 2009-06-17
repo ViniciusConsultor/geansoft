@@ -1,8 +1,12 @@
 ﻿using System.IO;
 using System.Xml;
+using Gean.Wrapper.PlugTree.Exceptions;
 
 namespace Gean.Wrapper.PlugTree
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class StartupService
     {
         private static readonly string PLUG_FILE_EXPAND_NAME = "*.gplug";
@@ -27,13 +31,18 @@ namespace Gean.Wrapper.PlugTree
         }
         private static string[] _PlugFiles = null;
 
-        public static void Initializes(string applicationName, string path)
+        /// <summary>
+        /// PlugTree的初始化
+        /// </summary>
+        /// <param name="applicationName">Name of the application.</param>
+        /// <param name="startupPath">The startup path.</param>
+        public static void Initializes(string applicationName, string startupPath)
         {
             if (_AlreadyInitializes)
             {
                 return;
             }
-            _ApplicationPath = path;
+            _ApplicationPath = startupPath;
             if (_PlugPath == null)
             {
                 _PlugPath = new PlugPath(applicationName);
@@ -45,7 +54,7 @@ namespace Gean.Wrapper.PlugTree
             }
             if (_PlugFiles == null)
             {
-                _PlugFiles = Directory.GetFiles(path, PLUG_FILE_EXPAND_NAME, SearchOption.TopDirectoryOnly);
+                _PlugFiles = Directory.GetFiles(startupPath, PLUG_FILE_EXPAND_NAME, SearchOption.AllDirectories);
             }
             _AlreadyInitializes = true;
             ScanPlugFiles();
@@ -58,12 +67,27 @@ namespace Gean.Wrapper.PlugTree
                 XmlDocument doc = new XmlDocument();
                 doc.Load(pathstr);
                 ScanRunner(doc);
-                ScanPath(doc);
+                ScanPlugPath(doc);
             }
         }
 
+#if DEBUG //在DEBUG状态时测试使用该方法
+
+        /// <summary>
+        /// 从给定的一个XML文件中扫描所有的PlugPath
+        /// </summary>
+        /// <param name="doc">一个Plug的XML文件</param>
+        public static void ScanPlugPath(XmlDocument doc)
+#else
         private static void ScanPath(XmlDocument doc)
+#endif
         {
+            if (_PlugPath == null)
+            {
+                _PlugPath = new PlugPath("Application");
+                _PlugPath.IsRoot = true;
+            }
+
             XmlNodeList nodelist = doc.DocumentElement.SelectNodes("Path");
             foreach (XmlNode node in nodelist)
             {
@@ -78,18 +102,25 @@ namespace Gean.Wrapper.PlugTree
 
         private static void ScanRunner(XmlDocument doc)
         {
-            XmlElement element = ((XmlElement)doc.DocumentElement.SelectSingleNode("Definiens"));
-            string assName = element.SelectSingleNode("Assembly").InnerText;
-            XmlNodeList nodelist = element.SelectSingleNode("Class").ChildNodes;
+            XmlElement element = ((XmlElement)doc.DocumentElement.SelectSingleNode("Runtime/Import"));
+
+            string assName = element.GetAttribute("assembly");//程序集的名称
+            if (string.IsNullOrEmpty(assName))
+            {
+                throw new PlugTreeException("Gean: Assembly name is Error!");
+            }
+            XmlNodeList nodelist = element.ChildNodes;
 
             foreach (XmlNode node in nodelist)//在文件里扫描所有类型
             {
-                if (node.NodeType != XmlNodeType.Element)
+                if (node.NodeType != XmlNodeType.Element && node.LocalName.Equals("Runner"))
                 {
                     continue;
                 }
-                string classname = node.InnerText;
+                //程序集所在路径
                 string filepath = Path.Combine(_ApplicationPath, assName);
+                //程序集中类型的名称
+                string classname = node.Attributes["class"].Value;
 
                 _Runners.Add(classname, Runners.SearchRunType(filepath, classname));
             }
