@@ -19,10 +19,42 @@ namespace Gean.Wrapper.PlugTree
             get { return this._PlugPaths[index]; }
             internal set { this._PlugPaths[index] = value; }
         }
+        /// <summary>
+        /// 尝试用一个PlugPath的名字(PlugPath.Name)来获取该PlugPath。
+        /// 如果该PlugPath存在则返回true，并out该PlugPath。不存在返回false。
+        /// </summary>
+        public bool TryGetValue(string name, out PlugPath plagpath)
+        {
+            plagpath = null;
+            foreach (PlugPath path in _PlugPaths)
+            {
+                if (path.Name.Equals(name))
+                {
+                    plagpath = path;
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public int IndexOf(PlugPath item)
         {
             return this._PlugPaths.IndexOf(item);
+        }
+
+        /// <summary>
+        /// 通过一个PlugPath的名字(PlugPath.Name)来查询该PlugPath是否存在。
+        /// </summary>
+        public bool Contains(string name)
+        {
+            foreach (PlugPath path in _PlugPaths)
+            {
+                if (path.Name.Equals(name))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool Contains(PlugPath item)
@@ -90,15 +122,5 @@ namespace Gean.Wrapper.PlugTree
         }
 
         #endregion
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (PlugPath item in this._PlugPaths)
-            {
-                sb.Append(item.Name);
-            }
-            return sb.ToString();
-        }
     }
 }

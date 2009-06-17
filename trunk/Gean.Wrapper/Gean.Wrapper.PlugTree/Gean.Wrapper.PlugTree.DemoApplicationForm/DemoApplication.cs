@@ -18,6 +18,13 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         private void MainDemoApplication()
         {
             StartupService.Initializes(Application.ProductName, AppDomain.CurrentDomain.BaseDirectory);
+
+            TreeNode treenode = new TreeNode();
+            this.BuildTreeNode(StartupService.PlugPath, treenode);
+
+            this._TreeView.Nodes.Add(treenode);
+            this._TreeView.ExpandAll();
+
         }
 
 
@@ -69,24 +76,30 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         {
             XmlDocument doc = new XmlDocument();
             doc.Load("PlugPaths.xml");
-            StartupService.ScanPlugPath(doc);
 
-            PlugPath paths = StartupService.PlugPath;
+            PlugPath paths = DemoService.ScanPlugPath(doc);
+
             TreeNode treenode = new TreeNode();
-            this.TreeNodeBegin(paths, treenode);
+            this.BuildTreeNode(paths, treenode);
+
             this._TreeView.Nodes.Add(treenode);
+            this._TreeView.ExpandAll();
         }
 
-        private void TreeNodeBegin(PlugPath paths, TreeNode node)
+        private void BuildTreeNode(PlugPath paths, TreeNode node)
         {
             node.Text = paths.Name;
             if (paths.HasChildPathItems)
             {
-                foreach (PlugPath item in paths.Items)
+                foreach (PlugPath item in paths.PlugPaths)
                 {
                     TreeNode subnode = new TreeNode();
+                    if (item.Plugs != null)
+                    {
+                        subnode.BackColor = Color.Goldenrod;
+                    }
                     node.Nodes.Add(subnode);
-                    this.TreeNodeBegin(item, subnode);
+                    this.BuildTreeNode(item, subnode);
                 }
             }
         }

@@ -71,16 +71,11 @@ namespace Gean.Wrapper.PlugTree
             }
         }
 
-#if DEBUG //在DEBUG状态时测试使用该方法
-
         /// <summary>
         /// 从给定的一个XML文件中扫描所有的PlugPath
         /// </summary>
         /// <param name="doc">一个Plug的XML文件</param>
-        public static void ScanPlugPath(XmlDocument doc)
-#else
-        private static void ScanPath(XmlDocument doc)
-#endif
+        private static void ScanPlugPath(XmlDocument doc)
         {
             if (_PlugPath == null)
             {
