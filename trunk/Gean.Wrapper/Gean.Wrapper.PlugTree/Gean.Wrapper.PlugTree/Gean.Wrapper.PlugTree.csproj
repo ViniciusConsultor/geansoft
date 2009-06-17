@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConditionEntries.cs" />
     <Compile Include="Definers.cs" />
-    <Compile Include="Exception.cs" />
+    <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />
+    <Compile Include="Plug.cs" />
     <Compile Include="PlugPath.cs" />
     <Compile Include="PlugPathCollection.cs" />
     <Compile Include="Runners.cs" />

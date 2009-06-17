@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Gean.Wrapper.PlugTree
+namespace Gean.Wrapper.PlugTree.Exceptions
 {
     [global::System.Serializable]
     public class PlugTreeException : Exception
