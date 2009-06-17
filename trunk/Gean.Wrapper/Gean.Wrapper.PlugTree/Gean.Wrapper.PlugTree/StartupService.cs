@@ -5,7 +5,7 @@ namespace Gean.Wrapper.PlugTree
 {
     public static class StartupService
     {
-        private static readonly string _ExpandName = "*.gplug";
+        private static readonly string PLUG_FILE_EXPAND_NAME = "*.gplug";
         private static bool _AlreadyInitializes = false;
         private static string _ApplicationPath;
 
@@ -45,7 +45,7 @@ namespace Gean.Wrapper.PlugTree
             }
             if (_PlugFiles == null)
             {
-                _PlugFiles = Directory.GetFiles(path, _ExpandName, SearchOption.TopDirectoryOnly);
+                _PlugFiles = Directory.GetFiles(path, PLUG_FILE_EXPAND_NAME, SearchOption.TopDirectoryOnly);
             }
             _AlreadyInitializes = true;
             ScanPlugFiles();

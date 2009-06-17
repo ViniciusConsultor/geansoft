@@ -46,6 +46,7 @@
     <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />
     <Compile Include="Plug.cs" />
+    <Compile Include="PlugCollection.cs" />
     <Compile Include="PlugPath.cs" />
     <Compile Include="PlugPathCollection.cs" />
     <Compile Include="Runners.cs" />
