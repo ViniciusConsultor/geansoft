@@ -82,6 +82,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DemoApplicationIcon.ico" />
+    <Content Include="PlugPaths.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gean.Wrapper.PlugTree\Gean.Wrapper.PlugTree.csproj">

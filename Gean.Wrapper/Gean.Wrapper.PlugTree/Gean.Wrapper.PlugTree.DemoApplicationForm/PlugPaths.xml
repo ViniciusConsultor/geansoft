@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<plug>
+  <Path name="/aaa/bbbb/cccc/dddd/eeee/ffff/gggg/hhhh"></Path>
+
+  <!--<Path name="/aaa/bb1/ccc/ddd/eee/fff/ggg/hhhAAA"></Path>
+  <Path name="/aaa/bb1/ccc/ddd/eee/fff/ggg/hhhBBB"></Path>
+  <Path name="/aaa/bb1/ccc/ddd/eee/fff/ggg/hhhCCC"></Path>
+
+  <Path name="/aaa/bb2/ccc/ddd/eee/fff/gggAAA/h1/HHH111"></Path>
+  <Path name="/aaa/bb2/ccc/ddd/eee/fff/gggBBB/h2"></Path>
+  <Path name="/aaa/bb2/ccc/ddd/eee/fff/gggCCC/h3"></Path>
+
+  <Path name="/aaa/bb3/ccc/ddd"></Path>
+  <Path name="/aaa/bb3/ccc"></Path>
+  <Path name="/aaa/bb3/"></Path>
+
+  <Path name="/aaa/bbbb/cccc/dddd/eeee/ffff/gggg/hhhh/pp1"></Path>
+  <Path name="/aaa/bb2/ccc/ddd/eee/fff/gggAAA/h1/HHH111"></Path>
+  <Path name="/aaa/bb2/ccc/ddd/eee/fff/gggAAA/h1/HHH111/k2"></Path>
+
+  <Path name="/aaa/bb5/ccc/ddd/eee/fff/ggg/hhh"></Path>
+  <Path name="/aaa/bb5/ccc/ddd/eee/fff/ggg/hhh"></Path>
+  <Path name="/aaa/bb5/ccc/ddd/eee/fff/ggg/hhh"></Path>-->
+</plug>

@@ -38,11 +38,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveContentExtension.cs" />
+    <Compile Include="ActiveViewContentUntitled.cs" />
+    <Compile Include="CustomProperty.cs" />
+    <Compile Include="CustomTool.cs" />
+    <Compile Include="DialogPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICSharpCode.SharpDevelop.addin" />
+    <None Include="Gean.Wrapper.PlugTree.DemoProject1.gplug" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gean.Wrapper.PlugTree\Gean.Wrapper.PlugTree.csproj">
+      <Project>{02FCE16E-7F04-465B-BB02-57FE59257660}</Project>
+      <Name>Gean.Wrapper.PlugTree</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -52,4 +64,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy ..\..\*.gplug ..\..\..\Gean.Wrapper.PlugTree.DemoApplicationForm\bin\Debug\
+
+copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.DemoApplicationForm\bin\Debug\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

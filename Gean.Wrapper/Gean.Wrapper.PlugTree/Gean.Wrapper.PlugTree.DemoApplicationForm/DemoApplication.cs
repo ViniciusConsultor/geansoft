@@ -17,10 +17,13 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         /// </summary>
         private void MainDemoApplication()
         {
-            MessageBox.Show("MainDemoApplication");
+            StartupService.Initializes(Application.ProductName, AppDomain.CurrentDomain.BaseDirectory);
         }
+
+
+
         /// <summary>
-        /// Demo 1 应用方法
+        /// Definers类型的Demo方法
         /// </summary>
         private void Demo1Application()
         {
@@ -60,12 +63,35 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
             MessageBox.Show(fileinfo + doc.DocumentElement.InnerXml);
         }
         /// <summary>
-        /// Demo 2 应用方法
+        /// PlugPath类型的Demo方法
         /// </summary>
         private void Demo2Application()
         {
-            MessageBox.Show("Demo2Application");
+            XmlDocument doc = new XmlDocument();
+            doc.Load("PlugPaths.xml");
+            StartupService.ScanPlugPath(doc);
+
+            PlugPath paths = StartupService.PlugPath;
+            TreeNode treenode = new TreeNode();
+            this.TreeNodeBegin(paths, treenode);
+            this._TreeView.Nodes.Add(treenode);
         }
+
+        private void TreeNodeBegin(PlugPath paths, TreeNode node)
+        {
+            node.Text = paths.Name;
+            if (paths.HasChildPathItems)
+            {
+                foreach (PlugPath item in paths.Items)
+                {
+                    TreeNode subnode = new TreeNode();
+                    node.Nodes.Add(subnode);
+                    this.TreeNodeBegin(item, subnode);
+                }
+            }
+        }
+
+
         /// <summary>
         /// Demo 3 应用方法
         /// </summary>
@@ -80,7 +106,7 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         /// <param name="treeNode">被点击的TreeNode</param>
         private void TreeNodeClick(TreeNode treeNode)
         {
-            MessageBox.Show("TreeNodeClick");
+            //MessageBox.Show("TreeNodeClick");
         }
     }
 }
