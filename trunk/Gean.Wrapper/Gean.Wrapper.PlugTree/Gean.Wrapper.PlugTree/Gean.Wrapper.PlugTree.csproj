@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="ConditionEntries.cs" />
     <Compile Include="Definers.cs" />
-    <Compile Include="DemoService.cs" />
+    <Compile Include="%24DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="StartupService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="%24ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
