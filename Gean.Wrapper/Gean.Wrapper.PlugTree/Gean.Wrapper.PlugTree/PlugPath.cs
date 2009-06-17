@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using Gean.Wrapper.PlugTree.Exceptions;
 
 namespace Gean.Wrapper.PlugTree
 {

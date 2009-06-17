@@ -7,7 +7,7 @@ namespace Gean.Wrapper.PlugTree
     public interface ICondition
     {
         string Name { get; }
-        object Owner { get; }
+        Plug Owner { get; }
         bool SetByCondition(PlugPath path);
     }
 }

@@ -17,7 +17,7 @@
   <Class Name="Gean.Wrapper.PlugTree.PlugPath" BaseTypeListCollapsed="true">
     <Position X="2.25" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAADBAEAAAAIAQAAgAAAAAQAQAAAAICAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgDBAEAAAkIAQAAAAAAAAQAQAAAAIAAAA=</HashCode>
       <FileName>PlugPath.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -26,7 +26,7 @@
     <Position X="6" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PlugPath.cs</FileName>
+      <FileName>PlugPathCollection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.PlugTree.Runners" BaseTypeListCollapsed="true">
@@ -37,6 +37,28 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="Gean.Wrapper.PlugTree.Definers" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIAAAAAABBBAQAAIAAAAAAAAAAAEAUAAgQAAAAg=</HashCode>
+      <FileName>Definers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Gean.Wrapper.PlugTree.DefinersItemChangedEventArgs" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQAAAAgEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.PlugTree.SerializedValue" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="Gean.Wrapper.PlugTree.IRun" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -44,5 +66,12 @@
       <FileName>IRun.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Delegate Name="Gean.Wrapper.PlugTree.DefinersItemChangedEventHandler" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Definers.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>
