@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ConditionEntries.cs" />
     <Compile Include="Definers.cs" />
+    <Compile Include="DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="ICondition.cs" />
     <Compile Include="IRun.cs" />

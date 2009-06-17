@@ -37,14 +37,14 @@
             this._Demo3Button = new System.Windows.Forms.Button();
             this._Listbox = new System.Windows.Forms.ListBox();
             this._TreeView = new System.Windows.Forms.TreeView();
-            this._PropertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this._PropertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this._PropertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
             // 
             // _ClearButton
             // 
             this._ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._ClearButton.Location = new System.Drawing.Point(409, 399);
+            this._ClearButton.Location = new System.Drawing.Point(454, 414);
             this._ClearButton.Name = "_ClearButton";
             this._ClearButton.Size = new System.Drawing.Size(87, 34);
             this._ClearButton.TabIndex = 5;
@@ -55,7 +55,7 @@
             // _OKButton
             // 
             this._OKButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._OKButton.Location = new System.Drawing.Point(520, 399);
+            this._OKButton.Location = new System.Drawing.Point(565, 414);
             this._OKButton.Name = "_OKButton";
             this._OKButton.Size = new System.Drawing.Size(87, 34);
             this._OKButton.TabIndex = 0;
@@ -67,7 +67,7 @@
             // 
             this._CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._CancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._CancelButton.Location = new System.Drawing.Point(613, 399);
+            this._CancelButton.Location = new System.Drawing.Point(658, 414);
             this._CancelButton.Name = "_CancelButton";
             this._CancelButton.Size = new System.Drawing.Size(87, 34);
             this._CancelButton.TabIndex = 1;
@@ -78,7 +78,7 @@
             // _Demo1Button
             // 
             this._Demo1Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._Demo1Button.Location = new System.Drawing.Point(12, 399);
+            this._Demo1Button.Location = new System.Drawing.Point(12, 414);
             this._Demo1Button.Name = "_Demo1Button";
             this._Demo1Button.Size = new System.Drawing.Size(75, 23);
             this._Demo1Button.TabIndex = 2;
@@ -89,7 +89,7 @@
             // _Demo2Button
             // 
             this._Demo2Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._Demo2Button.Location = new System.Drawing.Point(93, 399);
+            this._Demo2Button.Location = new System.Drawing.Point(93, 414);
             this._Demo2Button.Name = "_Demo2Button";
             this._Demo2Button.Size = new System.Drawing.Size(75, 23);
             this._Demo2Button.TabIndex = 3;
@@ -100,7 +100,7 @@
             // _Demo3Button
             // 
             this._Demo3Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._Demo3Button.Location = new System.Drawing.Point(174, 399);
+            this._Demo3Button.Location = new System.Drawing.Point(174, 414);
             this._Demo3Button.Name = "_Demo3Button";
             this._Demo3Button.Size = new System.Drawing.Size(75, 23);
             this._Demo3Button.TabIndex = 4;
@@ -110,12 +110,10 @@
             // 
             // _Listbox
             // 
-            this._Listbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this._Listbox.FormattingEnabled = true;
             this._Listbox.Location = new System.Drawing.Point(12, 12);
             this._Listbox.Name = "_Listbox";
-            this._Listbox.Size = new System.Drawing.Size(688, 186);
+            this._Listbox.Size = new System.Drawing.Size(320, 186);
             this._Listbox.TabIndex = 6;
             // 
             // _TreeView
@@ -123,20 +121,11 @@
             this._TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this._TreeView.Location = new System.Drawing.Point(409, 204);
+            this._TreeView.Location = new System.Drawing.Point(338, 12);
             this._TreeView.Name = "_TreeView";
-            this._TreeView.Size = new System.Drawing.Size(291, 189);
+            this._TreeView.Size = new System.Drawing.Size(407, 396);
             this._TreeView.TabIndex = 7;
             this._TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this._TreeView_NodeMouseClick);
-            // 
-            // _PropertyGrid2
-            // 
-            this._PropertyGrid2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this._PropertyGrid2.Location = new System.Drawing.Point(211, 204);
-            this._PropertyGrid2.Name = "_PropertyGrid2";
-            this._PropertyGrid2.Size = new System.Drawing.Size(190, 189);
-            this._PropertyGrid2.TabIndex = 9;
             // 
             // _PropertyGrid1
             // 
@@ -144,8 +133,17 @@
                         | System.Windows.Forms.AnchorStyles.Left)));
             this._PropertyGrid1.Location = new System.Drawing.Point(12, 204);
             this._PropertyGrid1.Name = "_PropertyGrid1";
-            this._PropertyGrid1.Size = new System.Drawing.Size(190, 189);
+            this._PropertyGrid1.Size = new System.Drawing.Size(156, 204);
             this._PropertyGrid1.TabIndex = 8;
+            // 
+            // _PropertyGrid2
+            // 
+            this._PropertyGrid2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this._PropertyGrid2.Location = new System.Drawing.Point(174, 204);
+            this._PropertyGrid2.Name = "_PropertyGrid2";
+            this._PropertyGrid2.Size = new System.Drawing.Size(158, 204);
+            this._PropertyGrid2.TabIndex = 9;
             // 
             // DemoApplicationForm
             // 
@@ -153,7 +151,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CancelButton;
-            this.ClientSize = new System.Drawing.Size(712, 445);
+            this.ClientSize = new System.Drawing.Size(757, 460);
             this.Controls.Add(this._PropertyGrid1);
             this.Controls.Add(this._PropertyGrid2);
             this.Controls.Add(this._TreeView);
@@ -183,8 +181,8 @@
         private System.Windows.Forms.Button _Demo3Button;
         private System.Windows.Forms.ListBox _Listbox;
         private System.Windows.Forms.TreeView _TreeView;
-        private System.Windows.Forms.PropertyGrid _PropertyGrid2;
         private System.Windows.Forms.PropertyGrid _PropertyGrid1;
+        private System.Windows.Forms.PropertyGrid _PropertyGrid2;
     }
 }
 
