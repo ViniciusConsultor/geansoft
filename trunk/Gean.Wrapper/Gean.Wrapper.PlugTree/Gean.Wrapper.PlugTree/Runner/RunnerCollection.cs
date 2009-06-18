@@ -12,44 +12,33 @@ namespace Gean.Wrapper.PlugTree
     /// 键是类的全名，值为System.Type。
     /// 通过GetIRunObject方法可以直接获得已实例的IRun接口类型。
     /// </summary>
-    public sealed class RunnerCollection : OutList<Type>
+    public sealed class RunnerCollection : IEnumerable<KeyValuePair<string, IRun>>, IEnumerable
     {
-        private Dictionary<string, Type> Types { get; set; }
+        private Dictionary<string, IRun> _IRuns { get; set; }
 
         internal RunnerCollection()
         {
-            this.Types = new Dictionary<string, Type>();
+            this._IRuns = new Dictionary<string, IRun>();
         }
 
-        internal void Add(string classname, Type type)
-        {
-            this.Types.Add(classname, type);
-        }
-
-        internal static Type SearchRunType(string assemblyPath, string classname)
+        internal static IRun SearchRunType(string assemblyPath, string classname)
         {
             Debug.Assert(File.Exists(assemblyPath), "Gean: File not found.");
-            List<Type> typelist = new List<Type>();
-            Assembly assembly = Assembly.LoadFile(assemblyPath);
-            Type type = null;
-            try
-            {
-                type = assembly.GetType(classname, true, false);
-            }
-            catch
-            {
-                throw;
-            }
+
+            Type type = Assembly.LoadFile(assemblyPath).GetType(classname, true, false);
             if (typeof(IRun).IsAssignableFrom(type))
             {
-                return type;
+                return (IRun)type;
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
-        internal Type GetIRunType(string classname)
+        internal IRun GetIRunType(string classname)
         {
-            return this.Types[classname];
+            return this._IRuns[classname];
         }
 
         /// <summary>
@@ -59,15 +48,81 @@ namespace Gean.Wrapper.PlugTree
         /// <returns>一个已实例的IRun接口类型</returns>
         public IRun GetIRunObject(string classname)
         {
-            Type type = this.GetIRunType(classname);
-            return (IRun)Activator.CreateInstance(type);
+            IRun type = this.GetIRunType(classname);
+            return (IRun)Activator.CreateInstance(type.GetType());
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return this._IRuns.ContainsKey(key);
+        }
+
+        public bool ContainValue(IRun item)
+        {
+            return this._IRuns.ContainsValue(item);
+        }
+
+        public bool TryGetValue(string key, out IRun value)
+        {
+            return this._IRuns.TryGetValue(key, out value);
+        }
+
+        public ICollection<string> Keys
+        {
+            get { return this._IRuns.Keys; }
+        }
+
+        public ICollection<IRun> Values
+        {
+            get { return this._IRuns.Values; }
+        }
+
+        public int Count
+        {
+            get { return this._IRuns.Count; }
+        }
+
+        public IRun this[string key]
+        {
+            get
+            {
+                return this._IRuns[key];
+            }
+            internal set
+            {
+                this._IRuns[key]= value;
+            }
+        }
+
+        internal void Add(string key, IRun value)
+        {
+            this._IRuns.Add(key, value);
+        }
+
+        internal void Clear()
+        {
+            this._IRuns.Clear();
+        }
+
+        internal bool Remove(string key)
+        {
+            return this._IRuns.Remove(key);
         }
 
         #region IEnumerable 成员
 
         public IEnumerator GetEnumerator()
         {
-            return this.Types.GetEnumerator();
+            return this._IRuns.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable<KeyValuePair<string,IRun>> 成员
+
+        IEnumerator<KeyValuePair<string, IRun>> IEnumerable<KeyValuePair<string, IRun>>.GetEnumerator()
+        {
+            return this._IRuns.GetEnumerator();
         }
 
         #endregion

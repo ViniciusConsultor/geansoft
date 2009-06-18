@@ -6,23 +6,34 @@ namespace Gean.Wrapper.PlugTree
 {
     public static class PlugTree
     {
+        static RunnerCollection _Runners = new RunnerCollection();
+
+        static ConditionCollection _Conditions = new ConditionCollection();
+
+        static PlugPath _PlugPath = null;
+
+        static string[] _PlugFiles = null;
+
+
         public static RunnerCollection Runners
         {
             get { return _Runners; }
         }
-        private static RunnerCollection _Runners = null;
+
+        public static ConditionCollection Conditions
+        {
+            get { return _Conditions; }
+        }
 
         public static PlugPath PlugPath
         {
             get { return _PlugPath; }
         }
-        private static PlugPath _PlugPath = null;
 
         public static string[] PlugFiles
         {
             get { return _PlugFiles; }
         }
-        private static string[] _PlugFiles = null;
 
     }
 }
