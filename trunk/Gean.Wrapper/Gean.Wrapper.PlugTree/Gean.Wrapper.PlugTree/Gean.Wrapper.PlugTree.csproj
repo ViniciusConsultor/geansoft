@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OutList.cs" />
+    <Compile Include="ConditionCollection.cs" />
     <Compile Include="ConditionEntries.cs" />
     <Compile Include="Definers.cs" />
     <Compile Include="%24DemoService.cs" />

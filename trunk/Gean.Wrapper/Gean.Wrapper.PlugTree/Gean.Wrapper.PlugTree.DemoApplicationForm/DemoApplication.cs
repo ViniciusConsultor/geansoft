@@ -13,7 +13,7 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
     partial class DemoApplicationForm
     {
         /// <summary>
-        /// 主Demo应用方法
+        /// 主Demo应用方法：试验一个大的Plug文件的读取后PlugPath是否正确
         /// </summary>
         private void MainDemoApplication()
         {
@@ -24,7 +24,6 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
 
             this._TreeView.Nodes.Add(treenode);
             this._TreeView.ExpandAll();
-
         }
 
 
