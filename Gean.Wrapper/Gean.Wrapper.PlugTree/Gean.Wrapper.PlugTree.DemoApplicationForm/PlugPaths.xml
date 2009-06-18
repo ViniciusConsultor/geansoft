@@ -23,6 +23,9 @@
   <Path name="/aaa/bb5/ccc/ddd/eee/fff/ggg/hhh"></Path>
   <Path name="/aaa/bb5/ccc/ddd/eee/fff/ggg/hhh"></Path>
 
+  <Path name="/#####/{}{}{}[][]/AAA/BBB"></Path>
+  <Path name="/1111"></Path>
+  <Path name="/4444"></Path>
 
   <Path name="/XXX"></Path>
   <Path name="/XXX/aa"></Path>
