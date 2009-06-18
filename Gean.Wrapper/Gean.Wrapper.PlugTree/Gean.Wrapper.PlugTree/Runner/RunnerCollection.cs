@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Gean.Wrapper.PlugTree.Exceptions;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -13,11 +12,11 @@ namespace Gean.Wrapper.PlugTree
     /// 键是类的全名，值为System.Type。
     /// 通过GetIRunObject方法可以直接获得已实例的IRun接口类型。
     /// </summary>
-    public sealed class Runners : IEnumerable
+    public sealed class RunnerCollection : OutList<Type>
     {
         private Dictionary<string, Type> Types { get; set; }
 
-        internal Runners()
+        internal RunnerCollection()
         {
             this.Types = new Dictionary<string, Type>();
         }

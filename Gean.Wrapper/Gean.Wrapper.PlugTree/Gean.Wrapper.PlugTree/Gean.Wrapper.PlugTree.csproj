@@ -36,34 +36,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OutList.cs" />
-    <Compile Include="ConditionCollection.cs" />
-    <Compile Include="ConditionEntries.cs" />
-    <Compile Include="Definers.cs" />
-    <Compile Include="%24DemoService.cs" />
+    <Compile Include="Condition\Condition.cs" />
+    <Compile Include="Condition\ConditionFailedAction.cs" />
+    <Compile Include="Condition\IConditionEvaluator.cs" />
+    <Compile Include="Common\OutList.cs" />
+    <Compile Include="Condition\ConditionCollection.cs" />
+    <Compile Include="Condition\ConditionEntries.cs" />
+    <Compile Include="Common\Definers.cs" />
+    <Compile Include="%24\%24DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
-    <Compile Include="ICondition.cs" />
-    <Compile Include="IRun.cs" />
-    <Compile Include="Plug.cs" />
-    <Compile Include="PlugCollection.cs" />
-    <Compile Include="PlugPath.cs" />
-    <Compile Include="PlugPathCollection.cs" />
-    <Compile Include="Runners.cs" />
+    <Compile Include="Condition\ICondition.cs" />
+    <Compile Include="Runner\IRun.cs" />
+    <Compile Include="Plug\Plug.cs" />
+    <Compile Include="Plug\PlugCollection.cs" />
+    <Compile Include="Plug\PlugPath.cs" />
+    <Compile Include="Plug\PlugPathCollection.cs" />
+    <Compile Include="Plug\PlugTree.cs" />
+    <Compile Include="Runner\RunnerCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="%24ClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
-      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
-      <Name>Gean</Name>
-    </ProjectReference>
+    <None Include="%24\%24ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

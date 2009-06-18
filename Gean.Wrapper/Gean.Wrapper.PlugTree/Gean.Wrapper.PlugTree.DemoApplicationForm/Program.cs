@@ -15,6 +15,12 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new DemoApplicationForm());
+            Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        static void Application_Idle(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
