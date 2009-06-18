@@ -1,0 +1,231 @@
+=================================
+1 关于插件系统的文档
+=================================
+这是描述SharpDevelop插件系统的文档.如果你打算为SD写一个插件，你应该阅读一下“AddInBuildingGuide” 学习如何组织你的工程。
+本文档包括ICSharpCode.Core中通用的插件系统和SD的公共扩展点（common extensions points for SharpDevelop）.
+
+=================================
+2 AddIn Tree
+=================================
+一个插件安装包（译者注：其实就是.sdaddin文件，这个文件是由.addin和.dll压缩后把扩展名改为.sdaddin而得）一般至少包括两个文件：插件描述文件即.addin，和动态链接库.dll，当然也可能包含其他的文件和类库。
+插件描述文件包含了插件的描述信息，并且在SD启动的时候会被加载进来，根据文件的内容，SD会把它放到插件数里。
+插件数是一棵"binds them all"（译者注：不知道啥意思，估计是说绑定所有插件的意思）的树。. 它的结构像文件系统，如果你想访问节点SubNode2，就必须像这样指定节点的位置：/Path1/SubPath1/Node1/SubNode2.我们看到Node1就像一个路径，但是我们稍后就会看到路径与节点的不同。
+从现在开始，我们会把那些路径中包含定义和行为的部分称为节点。（we will just say that nodes are paths that contain definitions of behavior）.
+对于插件树最常用的一种用法是扩展菜单和Toolbar。当SD想要创建一个菜单或Toolbar的时候，它就会明确的指定插件的路径。路径 “/SharpDevelop/Workbench/MainMenu” 下包含主菜单的项。路径“/SharpDevelop /ViewContent/Browser/Toolbar” 包含Toolbar中用于导航的项 (比如Startpage, 帮助等.). 
+
+=================================
+2.1 AddIn Definition
+=================================
+插件数中的每个节点都包含一个Codon（密码子）. 在ICSharpCode.Core 中有一个AddInTreeNode的类，它包含一个Codon的属性，对于路径来说它的值是Null，对于一个节点的Codon来说它就是插件的扩展点（points to a Codon instance for nodes）.
+让我们看看如何用XML定义一个含Codon的节点吧：
+	<MenuItem id = "Build"
+		 label = "${res:XML.MainMenu.BuildMenu.BuildSolution}"
+		 shortcut = "F8"
+		 icon = "Icons.16x16.BuildCombine"
+		 class = "ICSharpCode.SharpDevelop.Project.Commands.Build"/>
+当插件树加载后，它会根据Codon中的（译者注：即上面的MenuItem）class attribute所指向的类创建一个对象，这个对象的Name属性值被设为 “MenuItem”,ID属性值设为“Build”.其他的attributes中的信息被保存在一个叫做 “Properties” 的数据包里(就像一个Hashtable).
+对于MenuItem的Codon包含的信息有：label, shortcut, icon 和当此menu被点击是要执行的类的全名称（译者注：即上面的class attribute，每个class都会实现ICommand接口，当按钮被点击时会调用接口的Run函数）。
+
+对于插件树比较重要的是把所有的插件整合在一起。例如, 插件startpage的插件文件StartPage.addin包含:
+	<Path name = "/SharpDevelop/Workbench/MainMenu/View">
+	<MenuItem id = "ShowStartPage"
+		 insertafter = "ViewItemsSeparator"
+		 insertbefore = "FullScreen"
+		 label = "${res:XML.MainMenu.ViewMenu.ShowStartPage}" 
+		 icon = "Icons.16x16.BrowserWindow"
+		 class = "ICSharpCode.StartPage.ShowStartPageCommand"/>
+	</Path>
+路径"/SharpDevelop/Workbench/MainMenu/View" 在SharpDevelop 的主插件文件（译者注：SharpDevelop.addin）和 StartPage's AddIn文件里都被定义了. 当加载这些插件文件时， ICSharpCode.Core 会把这些文件里有相同路径的内容组织在一起并插到树中。上面的codon的 insertafter and insertbefore 两个attributes是比较特别的,它们指定了这一个MenuItem将要插入的位置。
+
+=================================
+2.2 The Runtime Section
+=================================
+每个插件定义文件都包含一个定义插件对象的类，我们可以在插件文件的头部的runtime 段找到关于类定义的信息，每个Codon都会根据这个 runtime段定义的信息来创建插件对象。插件文件头部包含如下 attributes: Name, Author, Copyright, URL of the addin homepage, Description, Version. 它们的值被保存在AddIn类中的properties里面(译者注：上面提到的那个类似Hashtable的数据包)。
+The values are stored in properties of the AddIn class.
+Runtime段像这样定义的:
+	<Runtime>
+		<Import assembly = "CSharpBinding.dll"/>
+		<Import assembly = ":ICSharpCode.SharpDevelop"/>
+	</Runtime>
+Import元素的数据被保存在AddIn类里面的RunTimes属性里.AddIn类有一个函数 “CreateObject”. 当用 MenuItem的Class创建一个对象时CreateObject函数就会被调用.一般情况下, 当item被点击时CreateObject才被调用(译者注：并不是每个插件被加载时就会立即创建插件中class的对象，而是当此插件被用到时才创建的。比如MenuItem，如果你从来就不点击一下，那么这个类就不会被创建。). CreateObject 会遍历所有导入的assemblies（按照Import的顺序）来尝试创建此插件对象。 
+被导入的assemblies 只有在CreateObject 才第一次被加载进来.这对于SD的启动性能是一个很大的改进。
+CreateObject查询导入的assemblies的所有类来创建对象，当你想要使用SharpDevelop 的assembly中的类时，(不如一个通用的Command撤销等。), 你也必须导入这个assembly. 当这个assembly被多个插件文件引用时同一个 assembly不会被加载对次。既然插件可以放在任一个目录下而不是必须在一个指定的路径，那就不必明确的指定 ICSharpCode.SharpDevelop.dll的相对路径，因为有一个特别的方式来引用SD在主目录下的assemblies，当 assembly attribute以一个冒号开始 (<Import assembly = ":ICSharpCode.SharpDevelop"/& gt;), SharpDevelop 会以“Assembly.Load”的方式来加载此assembly，而不是一般的 “Assembly.LoadFrom”.这就是为什么不必须SD的assembly明确路径，但是和一般的导入方式有一点重要的区别：那就是这种情况下不需要加”.dll”扩展名。
+
+在runtime段里也可以包含doozer和condition的定义, SD会读取doozer和conditions部分的信息并注册到SD里。
+
+
+=================================
+2.3 Doozers
+=================================
+现在有这样一个问题: 一个Codon是如何变成 System.Windows.Forms.MenuStripCommand的?
+这些就是doozers完成的:Doozers是一些helper类，它们会根据codons来生成一些对象。
+下面是MenuItemDoozer的一个简化版本:
+    public class MenuItemDoozer : IDoozer
+    {
+        // More on HandleConditions in the conditions section.
+        public bool HandleConditions { get { return true; } }
+
+        public object BuildItem(object caller, Codon codon, ArrayList subItems)
+        {
+            if (codon.Properties.Contains("type"))
+                type = codon.Properties["type"];
+            else
+                type = "Command";
+            switch (type)
+            {
+                case "Separator":
+                    return new MenuSeparator(codon, caller);
+                case "CheckBox":
+                    return new MenuCheckBox(codon, caller);
+                case "Item":
+                    return new MenuCommand(codon, caller);
+                case "Command":
+                    return new MenuCommand(codon, caller);
+                case "Menu":
+                    return new Menu(codon, caller, subItems);
+                case "Builder":
+                    return codon.AddIn.CreateObject(codon.Properties["class"]);
+                default:
+                    throw new NotSupportedException(type);
+            }
+        }
+    }
+其中的类“MenuCommand”, “MenuCheckBox” 是 SharpDevelop中override系统标准的“MenuStripCommand”的类. 它们会从codon的属性里取出label, icon 和shortcut等信息。
+当一个MenuCommand被点击时，MenuCommand 会调用 “codon.AddIn.CreateObject()”来创建一个对象,把此对象转换成ICommand 接口后，再调用此接口的Run函数.
+
+How to add custom doozers
+核心的doozers会把SD直接创建加载的. 但是如果你想在你的插件里定义自己的doozer该如何做呢?要想完成这一点，你可以把你的doozer 写到<Runtime> 段里。比如:
+	 <Import assembly = 'MyAddIn.dll'>
+		 <Doozer name='MyDoozer' class = 'MyAddIn.MyDoozer'/>
+	 </Import>
+一般情况下,这个doozer (和assembly)在第一次使用时就会被加载进来。
+
+
+=================================
+2.4 Building Items in the AddIn Tree
+=================================
+这一部分将讨论插件如何创建它的扩展点，这样你的插件又可以被其他的插件扩展。
+Context menus:
+静态函数 MenuService.CreateContextMenu可以用来创建一个ContextMenuStrip.比如：
+listView.ContextMenuStrip = MenuService.CreateContextMenu(this, "/MyAddIn/SomePath/ContextMenu");
+把this作为参数传入，这样这个路径下的插件就可通过Owner属性来访问到this。在大多数情况下，它会把Owner转换成它实际的类型，这样就可访问Owner的成员了。
+Toolbars:
+Toolbars 和context menus很相似.将ToolbarService.CreateToolStrip 返回的ToolStrip添加到你的控件中,例如：
+	toolStrip = ToolbarService.CreateToolStrip(this, "/MyAddIn/SomePath/Toolbar");
+	toolStrip.GripStyle = ToolStripGripStyle.Hidden;
+	Controls.Add(toolStrip);
+参数this的使用方式和Contextmenu一样，我们可以这样使用：
+	public class GoBack : AbstractCommand
+	{
+	 public override void Run() 
+	 {
+		((HtmlViewPane)Owner).WebBrowser.GoBack();
+	 }
+	}
+Your own objects:
+定义自己的对象也同样很简单.首先你需要为你存储在插件树的对象定义一个公共接口。假设你的插件执行一些动作并且有给其它插件通知的能.我们像这样定义接口:
+public interface IActionNameListener
+{
+	void DoAction(MyDataClass data);
+}
+如果这个接口在.NET Framework或SharpDevelop中已经存在，你最后直接引用它们而不是自己从头完成。
+如果你真的创建了自己的接口, 扩展了你的插件的插件们就需要引用这个接口的assembly。不过这可能会导致版本的问题。
+你可以这样访问这些items:
+	ArrayList list = AddInTree.BuildItems("/MyAddIn/ActionName", this, false);
+	foreach (IActionNameListener obj in list) 
+	{
+		obj.DoAction(data);
+	}
+这样你就能够取到这个路径下的所有对象，这些对象的顺序也是和你在 insertbefore/insertafter 指定的顺序是一致的。第二个参数和前面的使用方式一样的。这个Owner会被传给doozer,doozer 再将它传给创建的对象。当你使用自己定义的对象时，你可以定义自己的doozer,但并非必须。ICSharpCode.Core 以经包含一个doozer，它能够利用反射根据一个类的无参构造器创建一个对象。
+
+
+=================================
+SharpDevelop（版本2.2）的启动过程
+=================================
+	
+1, Main函数中 创建   SharpDevelopHost host = new SharpDevelopHost(startup);
+2，在SharpDevelopHost  构造器中，调用ICSharpCode.SharpDevelop.Sda.CallHelper的InitSharpDevelopCore初始化内核。
+3，遍历AddInDirectory, 查找所有addin文件；
+4，调用ICSharpCode.Core.CoreStartup加载所有上一步查找到的插件文件，这样所有的插件就被加载进来了。
+4，运行所有"/Workspace/Autostart"目录下的Command。
+5，初始化WorkbenchSingleton单价对象，这部分工作在ICSharpCode.SharpDevelop.Gui.WorkbenchSingleton的InitializeWorkbench()
+完成，完成的工作大致有：
+1）加载布局文件，布局信息是每次窗口Closing事件中保存的，如果没有保存过，这是默认设置；
+2）创建Workbench窗口；
+3）初始化Workbench的工作区，现在插件开始派上用场，这里首先开始创建"/SharpDevelop/Workbench/Pads"目录下的
+所有面板(Pad)插件，接着初始化MainMenu(目录"/SharpDevelop/Workbench/MainMenu"）插件和ToolBars（目录为"/SharpDevelop/Workbench/ToolBar"）
+
+插件。
+6，至此，SD前期工作全部完成，之后就是让Form显示出来，完毕。
+
+=====================
+关于SD里的Condition
+=====================
+	
+在所有的插件被加载到指定的扩展点后，插件树就被创建完毕了，但是，我们知道，插件树创建后，每个插件在插件树的位置在就固定的，但是，如果某些情况下，我们希望一些插件不可使用或应该隐藏起来，
+
+或者说有的插件在一些特定的情况下才是有意义的，比如在Designtime下，只有我们选中了一个Component后，删除按钮才应该起作用，否则删除按钮应该是Disable的或不可见得，这种情况下我们
+
+不可能去修改插件树,那应该如何做呢？
+当然如果我们每次在选中或取消选中一个Component都去更新按钮的状态，理论上也是可以的，这里我说“理论上”，是因为我没有成功过，让我们SD中的一个实际的Codon：
+<Path name = "/SharpDevelop/Pads/ProjectBrowser/ToolBar/File">
+<ToolbarItem id      = "OpenFile"
+             icon    = "Icons.16x16.OpenFileIcon"
+             tooltip = "${res:Gui.ProjectBrowser.Open}"
+             class   = "ICSharpCode.SharpDevelop.Project.Commands.OpenFileFromProjectBrowser"/>
+</Path>
+上面的意图很简单，就是在ToolBar上放一个打开文件的一个ToolbarItem，SD启动后，你也看到这个ToolbarItem确实在呢，但问题是：这个ToolbarItem的对象是访问不到的，至少我是没有办法访问到它，因为SD中这个一个ToolbarItem只是代表一个Command，你点击它时，它就去创建它对应的Command，然后执行一下Run（）函数，而且我花了几天时间查SD的代码，也没有发现能够取到这个对象的。
+好吧，这是一个长话题，我就不多说了，不过即使能访问到，最好也不应该这样做，因为这样会使你的代码混乱。
+让我们看看SD中如何解决这个问题的吧，其实很简单，SD中定义了一个叫做ConditionEvaluator的东西，你可以根据自己的需求来控制插件的Enable或Visiable的状态，多个ConditionEvaluator进行与、或操作时还是有的麻烦的，让我们从一个简单的例子开始吧。
+
+假如我们有一开始就提到的需求：只有我们选中了一个Component后，删除按钮才应该起作用。
+三步搞定：
+第一步:
+先写一个类，实现我们的控制逻辑
+namespace AddIns
+{
+    public class DesignerHostOpenCondition : IConditionEvaluator
+    {
+        #region IConditionEvaluator Members
+
+        public bool IsValid(object caller, Condition condition)
+        {
+            ICollection result = GetSelectedComponents();
+            return result.Count >0;
+            
+        }
+	ICollection GetSelectedComponents()
+	{
+	//...
+	//your logic here...
+	}
+    }
+}
+这个类必须实现IConditionEvaluator接口，我们的代码很简单，在选择的Component个数大于0时，返回True。
+然后编译它到"HostAddin.dll"文件中。
+第二步:
+注册我们的DesignerHostOpenCondition，我们知道在每个插件中都有一个<Runtime>标签，像这样注册我们的DesignerHostOpenCondition：
+<Runtime>
+    <Import assembly = "HostAddin.dll">
+      <ConditionEvaluator name="DesignerHostOpen" class="AddIns.DesignerHostOpenCondition"/>
+    </Import>/>
+</Runtime>
+上面的XML很容易理解，这里我们给它指定一个唯一名字为“DesignerHostOpen”，这样别的地方可以引用它。
+第三步:
+使用"DesignerHostOpen"，在你需要控制的MenuItem或ToolBarItem上，如下方式使用：
+Codon如下：
+<Path name = "/SharpDevelop/Workbench/ViewContent/ContextMenu/HostControl">
+    <Condition name = "DesignerHostOpen" action="Exclude">
+       <MenuItem id    = "Delete Selected"
+                  label = "${res:Global.RemoveButtonText}"
+                  icon = "Icons.16x16.DeleteIcon"
+                  shortcut ="Delete" 
+                  class = "AddIns.DeleteCommand" />
+    </Condition>
+</Path>
+你会发现我们的MenuItem被一个<Condition> 包起来了，其实里面可以包多个项表示这个"DesignerHostOpen"对那几个Item有效。
+要注意的是其中的：action="Exclude"，action 可以有三个值，其余的两个是：Disable（控制当条件不满足时应该把MenuItem变成Disable）、None（这个没有用，SD中似乎也没有用它的，而我们指定的"Exclude"会在条件不满足时让MenuItem变成不可见。
+ok，运行程序，你就发现真的可以了。
+
+工作机制很简单，SD会挂Appliction.Idle事件，大家知道在系统没有消息处理时就会出发这个事件，
+而SD就是在这个事件里去尝试检查每个ConditionEvaluator的。
