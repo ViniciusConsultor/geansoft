@@ -56,19 +56,39 @@ namespace Gean.Wrapper.PlugTree
             {
                 _PlugFiles = Directory.GetFiles(startupPath, PLUG_FILE_EXPAND_NAME, SearchOption.AllDirectories);
             }
+
+            //本静态初始类型中初始化完成，开始扫描文件。
+            StartupService.StartScanPlugFiles();
             _AlreadyInitializes = true;
-            ScanPlugFiles();
         }
 
-        private static void ScanPlugFiles()
+        /// <summary>
+        /// 插件树架构工作的第一步：扫描所有Plug文件
+        /// </summary>
+        private static void StartScanPlugFiles()
         {
             foreach (string pathstr in _PlugFiles)//第一步，扫描指定目录下的所有Plug文件
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(pathstr);
-                ScanRunner(doc);
-                ScanPlugPath(doc);
+                if (StartupService.VerifyXmlFile(pathstr))
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(pathstr);
+
+                    //扫描该文件中所有Runner
+                    ScanRunner(doc);
+                    //扫描该文件中所有的PlugPath
+                    ScanPlugPath(doc);
+                }
+                else
+                {
+                    //TODO:通知用户该Plug未能载入
+                }
             }
+        }
+
+        private static bool VerifyXmlFile(string pathstr)
+        {
+            return true;
         }
 
         /// <summary>
