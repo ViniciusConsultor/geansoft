@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Xml;
-using Gean.Wrapper.PlugTree.Exceptions;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -13,11 +12,11 @@ namespace Gean.Wrapper.PlugTree
         private static bool _AlreadyInitializes = false;
         private static string _ApplicationPath;
 
-        public static Runners Runners
+        public static RunnerCollection Runners
         {
             get { return _Runners; }
         }
-        private static Runners _Runners = null;
+        private static RunnerCollection _Runners = null;
 
         public static PlugPath PlugPath
         {
@@ -50,7 +49,7 @@ namespace Gean.Wrapper.PlugTree
             }
             if (_Runners == null)
             {
-                _Runners = new Runners();
+                _Runners = new RunnerCollection();
             }
             if (_PlugFiles == null)
             {
@@ -59,6 +58,7 @@ namespace Gean.Wrapper.PlugTree
 
             //本静态初始类型中初始化完成，开始扫描文件。
             StartupService.StartScanPlugFiles();
+            
             _AlreadyInitializes = true;
         }
 
@@ -137,7 +137,7 @@ namespace Gean.Wrapper.PlugTree
                 //程序集中类型的名称
                 string classname = node.Attributes["class"].Value;
 
-                _Runners.Add(classname, Runners.SearchRunType(filepath, classname));
+                _Runners.Add(classname, RunnerCollection.SearchRunType(filepath, classname));
             }
         }
     }

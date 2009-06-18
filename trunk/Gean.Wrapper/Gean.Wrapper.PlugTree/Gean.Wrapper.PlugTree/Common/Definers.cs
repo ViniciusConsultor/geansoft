@@ -23,6 +23,11 @@ namespace Gean.Wrapper.PlugTree
 
         private Dictionary<string, object> _Definers = new Dictionary<string, object>();
 
+        public object this[string key]
+        {
+            get { return _Definers[key]; }
+        }
+
         /// <summary>
         /// 设置(增加)一组键与值
         /// </summary>
@@ -405,6 +410,11 @@ namespace Gean.Wrapper.PlugTree
         }
 
         #endregion
+
+        internal static Definers Parse(XmlReader reader)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public delegate void DefinersItemChangedEventHandler(object sender, DefinersItemChangedEventArgs e);
