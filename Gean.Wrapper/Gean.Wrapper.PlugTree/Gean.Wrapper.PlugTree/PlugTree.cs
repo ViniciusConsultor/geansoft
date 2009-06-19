@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace Gean.Wrapper.PlugTree
 {
     public static class PlugTree
     {
-
         static RunnerCollection _Runners = new RunnerCollection();
 
         static ConditionCollection _Conditions = new ConditionCollection();
@@ -31,6 +29,8 @@ namespace Gean.Wrapper.PlugTree
         {
             get { return _RootPath; }
         }
+
+
 
         internal static void Load(List<string> plugFiles, List<string> disabledPlugs)
         {
