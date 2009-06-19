@@ -35,6 +35,7 @@ namespace Gean.Wrapper.PlugTree
         internal static void Load(List<string> plugFiles, List<string> disabledPlugs)
         {
             throw new NotImplementedException();
+
         }
 
         internal static bool VerifyXmlFile(string pathstr)
