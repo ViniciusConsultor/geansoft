@@ -9,12 +9,12 @@ namespace Gean.Wrapper.PlugTree
     {
         string _Name;
         Definers _Definers;
-        ConditionFailedAction _Action;
+        ConditionFalseAction _Action;
 
         /// <summary>
         /// Returns the action which occurs, when this condition fails.
         /// </summary>
-        public ConditionFailedAction Action
+        public ConditionFalseAction Action
         {
             get { return _Action; }
             set { _Action = value; }
@@ -39,7 +39,7 @@ namespace Gean.Wrapper.PlugTree
         {
             this._Name = name;
             this._Definers = definers;
-            _Action = definers.Get("action", ConditionFailedAction.Exclude);
+            _Action = definers.Get("action", ConditionFalseAction.Exclude);
         }
 
         public bool IsValid(object caller)
@@ -138,20 +138,20 @@ namespace Gean.Wrapper.PlugTree
             return conditions.ToArray();
         }
 
-        public static ConditionFailedAction GetFailedAction(IEnumerable<ICondition> conditionList, object caller)
+        public static ConditionFalseAction GetFailedAction(IEnumerable<ICondition> conditionList, object caller)
         {
-            ConditionFailedAction action = ConditionFailedAction.Nothing;
+            ConditionFalseAction action = ConditionFalseAction.Nothing;
             foreach (ICondition condition in conditionList)
             {
                 if (!condition.IsValid(caller))
                 {
-                    if (condition.Action == ConditionFailedAction.Disable)
+                    if (condition.Action == ConditionFalseAction.Disable)
                     {
-                        action = ConditionFailedAction.Disable;
+                        action = ConditionFalseAction.Disable;
                     }
                     else
                     {
-                        return ConditionFailedAction.Exclude;
+                        return ConditionFalseAction.Exclude;
                     }
                 }
             }

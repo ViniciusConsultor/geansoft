@@ -16,7 +16,7 @@ namespace Gean.Wrapper.PlugTree
         /// <summary>
         /// 当一个条件失效时，返回应做的动作
         /// </summary>
-        ConditionFailedAction Action
+        ConditionFalseAction Action
         {
             get;
             set;
