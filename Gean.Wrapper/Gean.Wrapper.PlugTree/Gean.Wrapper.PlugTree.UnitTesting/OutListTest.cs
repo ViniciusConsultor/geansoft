@@ -12,7 +12,7 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
     public class OutListTest
     {
 
-
+        #region
         private TestContext testContextInstance;
 
         /// <summary>
@@ -61,14 +61,26 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
         //
         #endregion
 
+        #endregion
 
         class OutListTestClass_1 : OutList<StringPair>
         {
             public OutListTestClass_1()
             {
-                for (int i = 1; i < 100; i++)
+                for (int i = 1; i < 10; i++)
                 {
                     this.Add(new StringPair("Name" + i.ToString(), (i * 1234).ToString()));
+                }
+            }
+        }
+
+        class OutListTestClass_2 : OutList<int>
+        {
+            public OutListTestClass_2()
+            {
+                for (int i = 1; i < 10; i++)
+                {
+                    this.Add(i);
                 }
             }
         }
@@ -99,6 +111,12 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.OutValue, actual.OutValue);
             Assert.IsFalse(class1.TryGetValue("abcd", out actual));
+
+            OutListTestClass_2 class2 = new OutListTestClass_2();
+
+            int value;
+            //class2中的值是int，所以肯定没有Name属性，返回false
+            Assert.IsFalse(class2.TryGetValue("abcd", out value));
         }
     }
 }
