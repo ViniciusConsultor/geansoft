@@ -17,13 +17,13 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         /// </summary>
         private void MainDemoApplication()
         {
-            StartupService.Initializes(Application.ProductName, AppDomain.CurrentDomain.BaseDirectory);
+            //StartupService.Initializes(Application.ProductName, AppDomain.CurrentDomain.BaseDirectory);
 
-            TreeNode treenode = new TreeNode();
-            this.BuildTreeNode(StartupService.PlugPath, treenode);
+            //TreeNode treenode = new TreeNode();
+            //this.BuildTreeNode(StartupService.PlugPath, treenode);
 
-            this._TreeView.Nodes.Add(treenode);
-            this._TreeView.ExpandAll();
+            //this._TreeView.Nodes.Add(treenode);
+            //this._TreeView.ExpandAll();
         }
 
 
