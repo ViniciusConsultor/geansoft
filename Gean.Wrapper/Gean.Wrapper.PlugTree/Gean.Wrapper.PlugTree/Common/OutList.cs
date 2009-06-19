@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Reflection;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -12,6 +13,48 @@ namespace Gean.Wrapper.PlugTree
     public abstract class OutList<T> : IEnumerable<T>, IEnumerable
     {
         protected List<T> _List = new List<T>();
+
+        /// <summary>
+        /// 如果泛型T具有Name的属性，那么可以根据Name的值进行尝试Get相应的值
+        /// </summary>
+        public bool TryGetValue(string name, out T item)
+        {
+            item = default(T);
+            PropertyInfo pinfo = typeof(T).GetProperty("Name");
+            if (pinfo == null)
+            {
+                return false;
+            }
+            foreach (T t in _List)
+            {
+                string str = (string)pinfo.GetValue(t, null);
+                if (str.Equals(name))
+                {
+                    item = t;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool Contains(string name)
+        {
+            PropertyInfo pinfo = typeof(T).GetProperty("Name");
+            if (pinfo == null)
+            {
+                return false;
+            }
+
+            foreach (T item in _List)
+            {
+                string str = (string)pinfo.GetValue(item, null);
+                if (str.Equals(name))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public T this[int index]
         {

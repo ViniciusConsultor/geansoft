@@ -36,11 +36,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Condition\Condition.cs" />
-    <Compile Include="Condition\ConditionFailedAction.cs" />
+    <Compile Include="Condition\ConditionFalseAction.cs" />
     <Compile Include="Condition\IConditionEvaluator.cs" />
     <Compile Include="Common\OutList.cs" />
     <Compile Include="Condition\ConditionCollection.cs" />
@@ -49,6 +50,8 @@
     <Compile Include="%24\%24DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
+    <Compile Include="Producer\ProducerCollection.cs" />
+    <Compile Include="Producer\IProducer.cs" />
     <Compile Include="Runner\IRun.cs" />
     <Compile Include="Plug\Plug.cs" />
     <Compile Include="Plug\PlugCollection.cs" />

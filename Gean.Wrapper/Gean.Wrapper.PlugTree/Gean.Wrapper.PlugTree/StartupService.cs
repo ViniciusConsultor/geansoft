@@ -78,7 +78,7 @@ namespace Gean.Wrapper.PlugTree
         /// then it executes the <see cref="ICommand">commands</see>
         /// in <c>/Workspace/Autostart</c>.
         /// </summary>
-        public void RunInitialization()
+        public void Initialization()
         {
             PlugTree.Load(_PlugFiles, _DisabledPlugs);
 
