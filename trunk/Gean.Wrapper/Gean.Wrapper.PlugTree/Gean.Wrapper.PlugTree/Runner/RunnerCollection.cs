@@ -12,7 +12,7 @@ namespace Gean.Wrapper.PlugTree
     /// 键是类的全名，值为System.Type。
     /// 通过GetIRunObject方法可以直接获得已实例的IRun接口类型。
     /// </summary>
-    public sealed class RunnerCollection : IEnumerable<KeyValuePair<string, IRun>>, IEnumerable
+    public sealed class RunnerCollection : IEnumerable<KeyValuePair<string, IRun>>
     {
         private Dictionary<string, IRun> _IRuns { get; set; }
 
@@ -51,6 +51,8 @@ namespace Gean.Wrapper.PlugTree
             IRun type = this.GetIRunType(classname);
             return (IRun)Activator.CreateInstance(type.GetType());
         }
+
+
 
         public bool ContainsKey(string key)
         {
@@ -109,18 +111,18 @@ namespace Gean.Wrapper.PlugTree
             return this._IRuns.Remove(key);
         }
 
-        #region IEnumerable 成员
+        #region IEnumerable<KeyValuePair<string,IRun>> 成员
 
-        public IEnumerator GetEnumerator()
+        IEnumerator<KeyValuePair<string, IRun>> IEnumerable<KeyValuePair<string, IRun>>.GetEnumerator()
         {
             return this._IRuns.GetEnumerator();
         }
 
         #endregion
 
-        #region IEnumerable<KeyValuePair<string,IRun>> 成员
+        #region IEnumerable 成员
 
-        IEnumerator<KeyValuePair<string, IRun>> IEnumerable<KeyValuePair<string, IRun>>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return this._IRuns.GetEnumerator();
         }

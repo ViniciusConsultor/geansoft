@@ -10,7 +10,7 @@ namespace Gean.Wrapper.PlugTree
     /// 一个抽象集合类，他封装成只在本程序集里可以读写，而在其他程序集中仅能读取的集合类。已实现枚举。
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class OutList<T> : IEnumerable<T>, IEnumerable
+    public abstract class OutList<T> : IEnumerable<T>
     {
         protected List<T> _List = new List<T>();
 
