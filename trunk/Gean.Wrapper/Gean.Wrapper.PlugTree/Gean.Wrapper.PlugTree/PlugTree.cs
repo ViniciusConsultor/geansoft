@@ -12,6 +12,8 @@ namespace Gean.Wrapper.PlugTree
 
         static ConditionCollection _Conditions = new ConditionCollection();
 
+        static ProducerCollection _Producers = new ProducerCollection();
+
         static PlugPath _RootPath = new PlugPath("Root");
 
 
@@ -25,46 +27,38 @@ namespace Gean.Wrapper.PlugTree
             get { return _Conditions; }
         }
 
-        public static PlugPath RootPath
+        public static ProducerCollection Producers
+        {
+            get { return PlugTree._Producers; }
+        }
+
+        /// <summary>
+        /// 获取PlugTree的根路径
+        /// </summary>
+        public static PlugPath DocumentPath
         {
             get { return _RootPath; }
         }
 
 
-
         internal static void Load(List<string> plugFiles, List<string> disabledPlugs)
         {
-            throw new NotImplementedException();
-
+            foreach (string file in plugFiles)
+            {
+                if (!VerifyXmlFile(file))
+                {
+                    continue;
+                }
+                XmlDocument doc = new XmlDocument();
+                doc.Load(file);
+                PlugTree.ScanRunner(doc, file);
+                PlugTree.ScanPlugPath(doc, file);
+            }
         }
 
         internal static bool VerifyXmlFile(string pathstr)
         {
             return true;
-        }
-
-        /// <summary>
-        /// 从给定的一个XML文件中扫描所有的PlugPath
-        /// </summary>
-        /// <param name="doc">一个Plug的XML文件</param>
-        internal static void ScanPlugPath(XmlDocument doc, string docPath)
-        {
-            if (_RootPath == null)
-            {
-                _RootPath = new PlugPath("Application");
-                _RootPath.IsRoot = true;
-            }
-
-            XmlNodeList nodelist = doc.DocumentElement.SelectNodes("Path");
-            foreach (XmlNode node in nodelist)
-            {
-                if (node.NodeType != XmlNodeType.Element)
-                {
-                    continue;
-                }
-                XmlElement element = (XmlElement)node;
-                PlugPath.Install(element, _RootPath);
-            }
         }
 
         /// <summary>
@@ -106,6 +100,30 @@ namespace Gean.Wrapper.PlugTree
                 string classname = node.Attributes["class"].Value;
 
                 _Runners.Add(classname, RunnerCollection.SearchRunType(filepath, classname));
+            }
+        }
+
+        /// <summary>
+        /// 从给定的一个XML文件中扫描所有的PlugPath
+        /// </summary>
+        /// <param name="doc">一个Plug的XML文件</param>
+        internal static void ScanPlugPath(XmlDocument doc, string docPath)
+        {
+            if (_RootPath == null)
+            {
+                _RootPath = new PlugPath("Application");
+                _RootPath.IsRoot = true;
+            }
+
+            XmlNodeList nodelist = doc.DocumentElement.SelectNodes("Path");
+            foreach (XmlNode node in nodelist)
+            {
+                if (node.NodeType != XmlNodeType.Element)
+                {
+                    continue;
+                }
+                XmlElement element = (XmlElement)node;
+                PlugPath.Install(element, _RootPath);
             }
         }
 
