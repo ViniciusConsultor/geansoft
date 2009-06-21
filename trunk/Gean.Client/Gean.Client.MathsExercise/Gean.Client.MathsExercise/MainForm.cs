@@ -12,13 +12,26 @@ namespace Gean.Client.MathsExercise
 {
     public partial class MainForm : Form
     {
+        private static Random _Random = new Random(unchecked((int)DateTime.Now.Ticks));
+        private int _Count;
+        private StringBuilder _KousuanStringBuilder = new StringBuilder();
+
         public MainForm()
         {
             InitializeComponent();
             this._Count = (int)this._NumericBox.Value;
         }
 
-        private void _WorkButton_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void _AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new AboutForm()).ShowDialog(this);
+        }
+
+        private void _三个数的加减口算Button_Click(object sender, EventArgs e)
         {
             this._Count = (int)this._NumericBox.Value;
             for (int i = 0; i < _Count; i++)
@@ -76,27 +89,10 @@ namespace Gean.Client.MathsExercise
                     }
                 }//if
             }//for
-            Clipboard.Clear();
-            Clipboard.SetText(_KousuanStringBuilder.ToString());
-            MessageBox.Show("共 " + _Count + " 道口算题置入剪贴板，拷贝进Word编辑即可。");
+            this.OutputData(this._KousuanStringBuilder);
         }
 
-        private static Random _Random = new Random(unchecked((int)DateTime.Now.Ticks));
-
-        private int _Count;
-        private StringBuilder _KousuanStringBuilder = new StringBuilder();
-
-        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void _AboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            (new AboutForm()).ShowDialog(this);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void _两个数的加减口算Button_Click(object sender, EventArgs e)
         {
             this._Count = (int)this._NumericBox.Value;
             StringBuilder sb = new StringBuilder();
@@ -115,9 +111,8 @@ namespace Gean.Client.MathsExercise
                 if (aa + bb <= 100)
                 {
                     sb.Append(aa.ToString()).Append(" + ").Append(bb.ToString()).Append(" = ").Append("\r\n");
-                    continue;
                 }
-                if (aa >= bb)
+                else if (aa >= bb)
                 {
                     sb.Append(aa.ToString()).Append(" - ").Append(bb.ToString()).Append(" = ").Append("\r\n");
                 }
@@ -126,10 +121,14 @@ namespace Gean.Client.MathsExercise
                     sb.Append(bb.ToString()).Append(" - ").Append(aa.ToString()).Append(" = ").Append("\r\n");
                 }
             }
+            this.OutputData(sb);
+        }
+
+        private void OutputData(StringBuilder sb)
+        {
             Clipboard.Clear();
             Clipboard.SetText(sb.ToString());
             MessageBox.Show("共 " + _Count + " 道口算题置入剪贴板，拷贝进Word编辑即可。");
-
         }
 
         class Pair

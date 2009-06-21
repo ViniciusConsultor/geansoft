@@ -29,28 +29,32 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this._WorkButton = new System.Windows.Forms.Button();
+            this._三个数的加减口算Button = new System.Windows.Forms.Button();
             this._NumericBox = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.button1 = new System.Windows.Forms.Button();
+            this._两个数的加减口算Button = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this._NumericBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // _WorkButton
+            // _三个数的加减口算Button
             // 
-            this._WorkButton.Location = new System.Drawing.Point(193, 237);
-            this._WorkButton.Margin = new System.Windows.Forms.Padding(4);
-            this._WorkButton.Name = "_WorkButton";
-            this._WorkButton.Size = new System.Drawing.Size(142, 41);
-            this._WorkButton.TabIndex = 0;
-            this._WorkButton.Text = "开始生成";
-            this._WorkButton.UseVisualStyleBackColor = true;
-            this._WorkButton.Click += new System.EventHandler(this._WorkButton_Click);
+            this._三个数的加减口算Button.Location = new System.Drawing.Point(24, 71);
+            this._三个数的加减口算Button.Margin = new System.Windows.Forms.Padding(4);
+            this._三个数的加减口算Button.Name = "_三个数的加减口算Button";
+            this._三个数的加减口算Button.Size = new System.Drawing.Size(162, 28);
+            this._三个数的加减口算Button.TabIndex = 0;
+            this._三个数的加减口算Button.Text = "三个数的加减口算";
+            this._三个数的加减口算Button.UseVisualStyleBackColor = true;
+            this._三个数的加减口算Button.Click += new System.EventHandler(this._三个数的加减口算Button_Click);
             // 
             // _NumericBox
             // 
@@ -59,14 +63,14 @@
             0,
             0,
             0});
-            this._NumericBox.Location = new System.Drawing.Point(193, 205);
+            this._NumericBox.Location = new System.Drawing.Point(10, 24);
             this._NumericBox.Maximum = new decimal(new int[] {
             512000,
             0,
             0,
             0});
             this._NumericBox.Name = "_NumericBox";
-            this._NumericBox.Size = new System.Drawing.Size(234, 25);
+            this._NumericBox.Size = new System.Drawing.Size(428, 25);
             this._NumericBox.TabIndex = 1;
             this._NumericBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this._NumericBox.Value = new decimal(new int[] {
@@ -117,26 +121,45 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // button1
+            // _两个数的加减口算Button
             // 
-            this.button1.Location = new System.Drawing.Point(337, 89);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 39);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this._两个数的加减口算Button.Location = new System.Drawing.Point(24, 33);
+            this._两个数的加减口算Button.Name = "_两个数的加减口算Button";
+            this._两个数的加减口算Button.Size = new System.Drawing.Size(162, 28);
+            this._两个数的加减口算Button.TabIndex = 4;
+            this._两个数的加减口算Button.Text = "两个数的加减口算";
+            this._两个数的加减口算Button.UseVisualStyleBackColor = true;
+            this._两个数的加减口算Button.Click += new System.EventHandler(this._两个数的加减口算Button_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this._NumericBox);
+            this.groupBox1.Location = new System.Drawing.Point(12, 44);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(448, 62);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "出题数量：";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this._两个数的加减口算Button);
+            this.groupBox2.Controls.Add(this._三个数的加减口算Button);
+            this.groupBox2.Location = new System.Drawing.Point(12, 112);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(208, 121);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "加减法(100以内)";
             // 
             // MainForm
             // 
-            this.AcceptButton = this._WorkButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 325);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this._NumericBox);
-            this.Controls.Add(this._WorkButton);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -144,10 +167,12 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "小学生数学练习生成器";
+            this.Text = "小学生数学口算练习生成器";
             ((System.ComponentModel.ISupportInitialize)(this._NumericBox)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,14 +180,16 @@
 
         #endregion
 
-        private System.Windows.Forms.Button _WorkButton;
+        private System.Windows.Forms.Button _三个数的加减口算Button;
         private System.Windows.Forms.NumericUpDown _NumericBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _AboutToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button _两个数的加减口算Button;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
