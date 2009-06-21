@@ -8,52 +8,19 @@ namespace Gean.Wrapper.PlugTree
 {
     public class Condition : ICondition
     {
-        string _Name;
-        Definers _Definers;
-        ConditionFalseAction _Action;
-
-        /// <summary>
-        /// Returns the action which occurs, when this condition fails.
-        /// </summary>
-        public ConditionFalseAction Action
-        {
-            get { return _Action; }
-            set { _Action = value; }
-        }
-
-        public string Name
-        {
-            get { return _Name; }
-        }
-
-        public string this[string key]
-        {
-            get { return (string)_Definers[key]; }
-        }
-
-        public Definers Definers
-        {
-            get { return _Definers; }
-        }
-
         public Condition(string name, Definers definers)
         {
-            this._Name = name;
-            this._Definers = definers;
-            _Action = definers.Get("action", ConditionFalseAction.Exclude);
+            this.Name = name;
+            this.Definers = definers;
+            this.Action = definers.Get("action", ConditionFalseAction.Exclude);
         }
 
-        public bool IsValid(object caller)
+        public ConditionFalseAction Action { get; set; }
+        public Definers Definers { get; private set; }
+        public string Name { get; private set; }
+        public string this[string key]
         {
-            try
-            {
-                return true;// AddInTree.ConditionEvaluators[_Name].IsValid(caller, this);
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new PlugTreeException("Condition evaluator " + _Name + " not found!");
-            }
-
+            get { return (string)this.Definers[key]; }
         }
 
         internal static ICondition Load(Assembly assembly, string classname)
@@ -172,5 +139,17 @@ namespace Gean.Wrapper.PlugTree
             return action;
         }
 
+        public bool IsValid(object caller)
+        {
+            try
+            {
+                return true;// AddInTree.ConditionEvaluators[_Name].IsValid(caller, this);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new PlugTreeException("Condition evaluator " + this.Name + " not found!");
+            }
+
+        }
     }
 }

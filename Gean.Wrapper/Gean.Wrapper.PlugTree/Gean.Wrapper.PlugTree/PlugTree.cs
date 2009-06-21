@@ -88,9 +88,14 @@ namespace Gean.Wrapper.PlugTree
             {
                 throw new PlugTreeException("Gean: Assembly name is Error!");
             }
-            XmlNodeList nodelist = element.ChildNodes;
 
-            foreach (XmlNode node in nodelist)//在文件里扫描所有类型
+            //程序集所在路径
+            string filepath = Path.Combine(PlugTree.GetDirectoryByFilepath(docPath), assName);
+            Debug.Assert(File.Exists(filepath), "Gean: File not found.");
+            Assembly assembly = Assembly.LoadFile(filepath);
+
+            XmlNodeList nodelist = element.ChildNodes;
+            foreach (XmlNode node in nodelist)//在文件里扫描并生成所有类型(Type)
             {
                 if (node.NodeType != XmlNodeType.Element
                     && node.LocalName.Equals("Runner")
@@ -99,10 +104,6 @@ namespace Gean.Wrapper.PlugTree
                 {
                     continue;
                 }
-                //程序集所在路径
-                string filepath = Path.Combine(PlugTree.GetDirectoryByFilepath(docPath), assName);
-                Debug.Assert(File.Exists(filepath), "Gean: File not found.");
-                Assembly assembly = Assembly.LoadFile(filepath);
 
                 //程序集中类型的名称
                 string classname = node.Attributes["class"].Value;

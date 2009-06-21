@@ -52,7 +52,7 @@ namespace Gean.Wrapper.PlugTree
 
         /// <summary>
         /// 获得一个值，该值的类型是泛型，
-        /// 如果这个key不能取出值，返回这个默认值，并将这个默认值添加进Properties中去
+        /// 如果这个key不能取出值，返回这个默认值，并将这个Key与默认值成对添加进Definers中。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="key">The key.</param>
