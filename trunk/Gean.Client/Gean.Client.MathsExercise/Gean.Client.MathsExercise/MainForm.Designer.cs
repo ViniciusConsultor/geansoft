@@ -34,8 +34,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._NumericBox)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -97,9 +98,16 @@
             // _ExitToolStripMenuItem
             // 
             this._ExitToolStripMenuItem.Name = "_ExitToolStripMenuItem";
-            this._ExitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this._ExitToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this._ExitToolStripMenuItem.Text = "退出(&X)";
             this._ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
+            // _AboutToolStripMenuItem
+            // 
+            this._AboutToolStripMenuItem.Name = "_AboutToolStripMenuItem";
+            this._AboutToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this._AboutToolStripMenuItem.Text = "关于(&A)";
+            this._AboutToolStripMenuItem.Click += new System.EventHandler(this._AboutToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -109,12 +117,15 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // _AboutToolStripMenuItem
+            // button1
             // 
-            this._AboutToolStripMenuItem.Name = "_AboutToolStripMenuItem";
-            this._AboutToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this._AboutToolStripMenuItem.Text = "关于(&A)";
-            this._AboutToolStripMenuItem.Click += new System.EventHandler(this._AboutToolStripMenuItem_Click);
+            this.button1.Location = new System.Drawing.Point(337, 89);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 39);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -122,6 +133,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 325);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this._NumericBox);
             this.Controls.Add(this._WorkButton);
@@ -150,6 +162,7 @@
         private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _AboutToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
     }
 }
 
