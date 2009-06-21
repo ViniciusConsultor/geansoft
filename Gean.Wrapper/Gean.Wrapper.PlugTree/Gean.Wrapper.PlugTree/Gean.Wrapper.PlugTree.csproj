@@ -49,13 +49,14 @@
     <Compile Include="Condition\IConditionEvaluator.cs" />
     <Compile Include="Common\OutList.cs" />
     <Compile Include="Condition\ConditionCollection.cs" />
-    <Compile Include="Condition\ConditionEntries.cs" />
     <Compile Include="Common\Definers.cs" />
     <Compile Include="%24\%24DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
+    <Compile Include="Producer\Producer.cs" />
     <Compile Include="Producer\ProducerCollection.cs" />
     <Compile Include="Producer\IProducer.cs" />
+    <Compile Include="Runner\Runner.cs" />
     <Compile Include="Runner\IRun.cs" />
     <Compile Include="Plug\Plug.cs" />
     <Compile Include="Plug\PlugCollection.cs" />

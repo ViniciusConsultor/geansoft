@@ -4,5 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.PlugTree
 {
-    public class ProducerCollection : OutList<IProducer> { }
+    public class ProducerCollection : OutList<IProducer>
+    {
+    }
 }

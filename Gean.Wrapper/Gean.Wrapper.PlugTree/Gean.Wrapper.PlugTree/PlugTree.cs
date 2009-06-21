@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -90,16 +92,35 @@ namespace Gean.Wrapper.PlugTree
 
             foreach (XmlNode node in nodelist)//在文件里扫描所有类型
             {
-                if (node.NodeType != XmlNodeType.Element && node.LocalName.Equals("Runner"))
+                if (node.NodeType != XmlNodeType.Element
+                    && node.LocalName.Equals("Runner")
+                    && node.LocalName.Equals("Producer")
+                    && node.LocalName.Equals("ConditionEvaluator"))
                 {
                     continue;
                 }
                 //程序集所在路径
                 string filepath = Path.Combine(PlugTree.GetDirectoryByFilepath(docPath), assName);
+                Debug.Assert(File.Exists(filepath), "Gean: File not found.");
+                Assembly assembly = Assembly.LoadFile(filepath);
+
                 //程序集中类型的名称
                 string classname = node.Attributes["class"].Value;
-
-                _Runners.Add(classname, RunnerCollection.SearchRunType(filepath, classname));
+                switch (node.LocalName)
+                {
+                    case "Runner":
+                        _Runners.Add(classname, Runner.Load(assembly, classname));
+                        break;
+                    case "Producer":
+                        _Producers.Add(Producer.Load(assembly, classname));
+                        break;
+                    case "ConditionEvaluator":
+                        _Conditions.Add(Condition.Load(assembly, classname));
+                        break;
+                    default:
+                        Debug.Fail("\"/Runtime/Import/\"有未知的子节点");
+                        break;
+                }
             }
         }
 
