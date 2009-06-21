@@ -21,39 +21,6 @@ namespace Gean.Wrapper.PlugTree
             this._IRuns = new Dictionary<string, IRun>();
         }
 
-        internal static IRun SearchRunType(string assemblyPath, string classname)
-        {
-            Debug.Assert(File.Exists(assemblyPath), "Gean: File not found.");
-
-            Type type = Assembly.LoadFile(assemblyPath).GetType(classname, true, false);
-            if (typeof(IRun).IsAssignableFrom(type))
-            {
-                return (IRun)type;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        internal IRun GetIRunType(string classname)
-        {
-            return this._IRuns[classname];
-        }
-
-        /// <summary>
-        /// 根据类型的全名获得已实例的IRun接口类型。
-        /// </summary>
-        /// <param name="classname">类型的全名</param>
-        /// <returns>一个已实例的IRun接口类型</returns>
-        public IRun GetIRunObject(string classname)
-        {
-            IRun type = this.GetIRunType(classname);
-            return (IRun)Activator.CreateInstance(type.GetType());
-        }
-
-
-
         public bool ContainsKey(string key)
         {
             return this._IRuns.ContainsKey(key);

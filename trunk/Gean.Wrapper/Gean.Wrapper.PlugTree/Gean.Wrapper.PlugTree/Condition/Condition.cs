@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Reflection;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -53,6 +54,19 @@ namespace Gean.Wrapper.PlugTree
                 throw new PlugTreeException("Condition evaluator " + _Name + " not found!");
             }
 
+        }
+
+        internal static ICondition Load(Assembly assembly, string classname)
+        {
+            Type type = assembly.GetType(classname, true, false);
+            if (typeof(ICondition).IsAssignableFrom(type))
+            {
+                return (ICondition)type;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static ICondition Read(XmlReader reader)
@@ -157,5 +171,6 @@ namespace Gean.Wrapper.PlugTree
             }
             return action;
         }
+
     }
 }
