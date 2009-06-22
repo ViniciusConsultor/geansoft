@@ -46,7 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AngelesConditionEvaluator.cs" />
+    <Compile Include="ClippersConditionEvaluator.cs" />
+    <Compile Include="GrizzliesConditionEvaluator.cs" />
+    <Compile Include="LosConditionEvaluator.cs" />
     <Compile Include="LosProducer.cs" />
+    <Compile Include="MemphisConditionEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AngelesProducer.cs" />
     <Compile Include="ClippersProducer.cs" />

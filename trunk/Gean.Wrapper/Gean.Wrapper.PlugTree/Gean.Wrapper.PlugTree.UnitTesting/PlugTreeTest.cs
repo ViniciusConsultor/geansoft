@@ -89,6 +89,7 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
 
                 PlugTree.ScanRunTimeNode(doc, str);
                 Assert.AreEqual(PlugTree.Producers.Count, 8);
+                Assert.AreEqual(PlugTree.Conditions.Count, 5);
             }
         }
 
