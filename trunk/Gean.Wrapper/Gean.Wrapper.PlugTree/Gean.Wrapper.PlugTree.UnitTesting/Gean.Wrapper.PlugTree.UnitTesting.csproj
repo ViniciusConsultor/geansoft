@@ -50,6 +50,16 @@
       <Name>Gean.Wrapper.PlugTree</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="CaseFiles\Gean.Wrapper.PlugTree.DemoProject1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CaseFiles\RunTime.xml">
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CaseFiles\Gean.Wrapper.PlugTree.DemoProject1.gplug" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

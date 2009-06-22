@@ -1,5 +1,10 @@
 ﻿using Gean.Wrapper.PlugTree;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.IO;
+using System;
+using System.Xml;
+
 namespace Gean.Wrapper.PlugTree.UnitTesting
 {
     
@@ -34,10 +39,7 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
         //编写测试时，还可使用以下属性:
         //
         //使用 ClassInitialize 在运行类中的第一个测试前先运行代码
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
+
         //
         //使用 ClassCleanup 在运行完类中的所有测试后再运行代码
         //[ClassCleanup()]
@@ -61,14 +63,43 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
 
         #endregion
 
+        private string _BasePath;
+        private string _CaseFilePath;
+        List<string> _PlugFiles;
+
+        public PlugTreeTest()
+        {
+            _BasePath = Path.GetFullPath("..\\..\\..\\" + this.GetType().Assembly.FullName.Substring(0, this.GetType().Assembly.FullName.IndexOf(',')));
+            _CaseFilePath = Path.Combine(_BasePath, "CaseFiles\\");
+            _PlugFiles = new List<string>();
+            _PlugFiles.AddRange(PlugTree.SearchDirectory(_CaseFilePath, "*.gplug", true, true));
+        }
+
+
+        /// <summary>
+        ///ScanRunTimeNode 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ScanRunTimeNodeTest()
+        {
+            foreach (string str in _PlugFiles)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(str);
+
+                PlugTree.ScanRunTimeNode(doc, str);
+                Assert.AreEqual(PlugTree.Producers.Count, 8);
+            }
+        }
+
         /// <summary>
         ///GetDirectoryByFilepath 的测试
         ///</summary>
         [TestMethod()]
         public void GetDirectoryByFilepathTest()
         {
-            string filepath; 
-            string expected; 
+            string filepath;
+            string expected;
             string actual;
 
             filepath = @"c:\abc\abc\abc.xml";

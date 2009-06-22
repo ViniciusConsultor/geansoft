@@ -12,10 +12,14 @@
     <AssemblyName>Gean.Wrapper.PlugTree.DemoProject1</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,16 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveContentExtension.cs" />
-    <Compile Include="ActiveViewContentUntitled.cs" />
-    <Compile Include="CustomProperty.cs" />
-    <Compile Include="CustomTool.cs" />
-    <Compile Include="DialogPanel.cs" />
+    <Compile Include="LosProducer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AngelesProducer.cs" />
+    <Compile Include="ClippersProducer.cs" />
+    <Compile Include="GrizzliesProducer.cs" />
+    <Compile Include="MemphisProducer.cs" />
+    <Compile Include="OklahomaProducer.cs" />
+    <Compile Include="ThunderProducer.cs" />
+    <Compile Include="SacramentoProducer.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ICSharpCode.SharpDevelop.addin" />
     <None Include="Gean.Wrapper.PlugTree.DemoProject1.gplug" />
   </ItemGroup>
   <ItemGroup>
@@ -69,8 +75,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy ..\..\*.gplug ..\..\..\Gean.Wrapper.PlugTree.DemoApplicationForm\bin\Debug\
+    <PostBuildEvent>copy ..\..\*.gplug ..\..\..\Gean.Wrapper.PlugTree.UnitTesting\CaseFiles\
 
-copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.DemoApplicationForm\bin\Debug\</PostBuildEvent>
+copy $(TargetFileName) ..\..\..\Gean.Wrapper.PlugTree.UnitTesting\CaseFiles\</PostBuildEvent>
   </PropertyGroup>
 </Project>

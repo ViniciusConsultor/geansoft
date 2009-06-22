@@ -53,7 +53,7 @@ namespace Gean.Wrapper.PlugTree
                 }
                 XmlDocument doc = new XmlDocument();
                 doc.Load(file);
-                PlugTree.ScanRunner(doc, file);
+                PlugTree.ScanRunTimeNode(doc, file);
                 PlugTree.ScanPlugPath(doc, file);
             }
         }
@@ -79,7 +79,7 @@ namespace Gean.Wrapper.PlugTree
         ///     ＜/Import>
         /// ＜/Runtime>
         /// </example>
-        internal static void ScanRunner(XmlDocument doc, string docPath)
+        internal static void ScanRunTimeNode(XmlDocument doc, string docPath)
         {
             XmlElement element = ((XmlElement)doc.DocumentElement.SelectSingleNode("Runtime/Import"));
 
@@ -87,6 +87,10 @@ namespace Gean.Wrapper.PlugTree
             if (string.IsNullOrEmpty(assName))
             {
                 throw new PlugTreeException("Gean: Assembly name is Error!");
+            }
+            if (!assName.EndsWith(".dll"))
+            {
+                assName = assName + ".dll";
             }
 
             //程序集所在路径
@@ -97,10 +101,7 @@ namespace Gean.Wrapper.PlugTree
             XmlNodeList nodelist = element.ChildNodes;
             foreach (XmlNode node in nodelist)//在文件里扫描并生成所有类型(Type)
             {
-                if (node.NodeType != XmlNodeType.Element
-                    && node.LocalName.Equals("Runner")
-                    && node.LocalName.Equals("Producer")
-                    && node.LocalName.Equals("ConditionEvaluator"))
+                if (node.NodeType != XmlNodeType.Element)
                 {
                     continue;
                 }
@@ -109,11 +110,8 @@ namespace Gean.Wrapper.PlugTree
                 string classname = node.Attributes["class"].Value;
                 switch (node.LocalName)
                 {
-                    case "Runner":
-                        _Runners.Add(classname, Runner.Load(assembly, classname));
-                        break;
                     case "Producer":
-                        _Producers.Add(classname, Producer.Load(assembly, classname));
+                        _Producers.Add(classname, ProducerCollection.Load(assembly, classname, typeof(IProducer)));
                         break;
                     case "ConditionEvaluator":
                         _Conditions.Add(classname, Condition.Load(assembly, classname));
