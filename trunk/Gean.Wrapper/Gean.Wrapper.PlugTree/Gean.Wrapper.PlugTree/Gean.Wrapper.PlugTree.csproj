@@ -47,7 +47,6 @@
     <Compile Include="Condition\Condition.cs" />
     <Compile Include="Condition\ConditionFalseAction.cs" />
     <Compile Include="Condition\IConditionEvaluator.cs" />
-    <Compile Include="Common\OutList.cs" />
     <Compile Include="Condition\ConditionCollection.cs" />
     <Compile Include="Common\Definers.cs" />
     <Compile Include="%24\%24DemoService.cs" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.PlugTree
 {
-    public class ConditionCollection : OutList<ICondition>
+    public class ConditionCollection : ReadOnlyDictionary<ICondition>
     {
 
     }

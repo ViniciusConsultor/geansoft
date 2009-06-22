@@ -124,13 +124,6 @@ namespace Gean.Wrapper.PlugTree
         //    }
         //}
 
-
-
-
-
-
-
-
         internal static Plug Parse(XmlElement element)
         {
             Plug plug = new Plug();
