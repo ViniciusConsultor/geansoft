@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ReadOnlyList.cs" />
     <Compile Include="Condition\Condition.cs" />
     <Compile Include="Condition\ConditionFalseAction.cs" />
     <Compile Include="Condition\IConditionEvaluator.cs" />
     <Compile Include="Condition\ConditionCollection.cs" />
     <Compile Include="Common\Definers.cs" />
-    <Compile Include="%24\%24DemoService.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
     <Compile Include="Producer\Producer.cs" />
@@ -66,9 +66,10 @@
     <Compile Include="Runner\RunnerCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartupService.cs" />
+    <Compile Include="Common\TypeDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="%24\%24ClassDiagram.cd" />
+    <None Include="Condition\Condition.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

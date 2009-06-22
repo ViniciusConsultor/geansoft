@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.PlugTree
 {
-    public class ProducerCollection : ReadOnlyDictionary<IProducer>
+    public class ProducerCollection : TypeDictionary
     {
     }
 }

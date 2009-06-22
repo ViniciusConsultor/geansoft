@@ -63,7 +63,7 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
 
         #endregion
 
-        class OutListTestClass_1 : OutList<StringPair>
+        class OutListTestClass_1 : ReadOnlyList<StringPair>
         {
             public OutListTestClass_1()
             {
@@ -74,7 +74,7 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             }
         }
 
-        class OutListTestClass_2 : OutList<int>
+        class OutListTestClass_2 : ReadOnlyList<int>
         {
             public OutListTestClass_2()
             {

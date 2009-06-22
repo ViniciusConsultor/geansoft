@@ -5,19 +5,17 @@
        url         = "http://www.icsharpcode.net"
        description = "SharpDevelop main module"
        addInManagerHidden = "true">
-	
-	<Manifest>
-		<Identity name = "SharpDevelop" version = "@SharpDevelopCoreVersion"/>
-	</Manifest>
-	
 	<Runtime>
 		<Import assembly="Gean.Wrapper.PlugTree.DemoProject1.dll">
-      <Runner class="Gean.Wrapper.PlugTree.DemoProject1.ActiveContentExtension"/>
-      <Runner class="Gean.Wrapper.PlugTree.DemoProject1.ActiveViewContentUntitled"/>
-      <Runner class="Gean.Wrapper.PlugTree.DemoProject1.CustomTool"/>
-      <Runner class="Gean.Wrapper.PlugTree.DemoProject1.CustomProperty"/>
-      <Runner class="Gean.Wrapper.PlugTree.DemoProject1.DialogPanel"/>
-		</Import>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.AngelesProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.ClippersProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.GrizzliesProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.LosProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.MemphisProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.OklahomaProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.SacramentoProducer"/>
+      <Producer class="Gean.Wrapper.PlugTree.DemoProject1.ThunderProducer"/>
+    </Import>
 	</Runtime>
 	
 	<Path name = "/SharpDevelop/Workbench/Ambiences">
