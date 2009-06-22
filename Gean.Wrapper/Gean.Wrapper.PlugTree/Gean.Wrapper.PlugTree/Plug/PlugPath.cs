@@ -77,7 +77,7 @@ namespace Gean.Wrapper.PlugTree
                 {
                     continue;
                 }
-                plugs.Add(Plug.Parse((XmlElement)node));
+                plugs.Add(node.LocalName, Plug.Parse((XmlElement)node));
             }
             CheckInstallPath(ownerPath, paths, plugs);
         }

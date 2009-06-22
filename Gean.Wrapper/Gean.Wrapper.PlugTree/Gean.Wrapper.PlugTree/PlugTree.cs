@@ -113,10 +113,10 @@ namespace Gean.Wrapper.PlugTree
                         _Runners.Add(classname, Runner.Load(assembly, classname));
                         break;
                     case "Producer":
-                        _Producers.Add(Producer.Load(assembly, classname));
+                        _Producers.Add(classname, Producer.Load(assembly, classname));
                         break;
                     case "ConditionEvaluator":
-                        _Conditions.Add(Condition.Load(assembly, classname));
+                        _Conditions.Add(classname, Condition.Load(assembly, classname));
                         break;
                     default:
                         Debug.Fail("\"/Runtime/Import/\"有未知的子节点");

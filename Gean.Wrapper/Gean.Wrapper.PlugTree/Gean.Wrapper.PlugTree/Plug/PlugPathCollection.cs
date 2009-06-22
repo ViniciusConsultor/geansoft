@@ -5,5 +5,5 @@ using System.Collections;
 
 namespace Gean.Wrapper.PlugTree
 {
-    public sealed class PlugPathCollection : OutList<PlugPath> { }
+    public sealed class PlugPathCollection : ReadOnlyDictionary<PlugPath> { }
 }
