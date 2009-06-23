@@ -40,12 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Definer.cs" />
+    <Compile Include="Common\DefinerChangedEvent.cs" />
     <Compile Include="Common\ReadOnlyList.cs" />
     <Compile Include="Condition\Condition.cs" />
     <Compile Include="Condition\ConditionFalseAction.cs" />
     <Compile Include="Condition\IConditionEvaluator.cs" />
     <Compile Include="Condition\ConditionCollection.cs" />
-    <Compile Include="Common\Definers.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
     <Compile Include="Producer\Producer.cs" />

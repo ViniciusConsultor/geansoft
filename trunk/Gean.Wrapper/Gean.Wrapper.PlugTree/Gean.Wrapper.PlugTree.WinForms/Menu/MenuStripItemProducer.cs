@@ -19,7 +19,7 @@ namespace Gean.Wrapper.PlugTree.WinForms
             ToolStripMenuItem menuItem = new ToolStripMenuItem();
             menuItem.Name = _name;
             menuItem.Image = ((System.Drawing.Image)(ResourcesService.GetObject(_name)));
-            menuItem.ShortcutKeys = (Keys)plug.Definers["ShortcutKeys"]; ;
+            menuItem.ShortcutKeys = Keys.A;//(Keys)plug.Definers["ShortcutKeys"]; ;
             menuItem.ShowShortcutKeys = Boolean.Parse((string)plug.Definers["ShowShortcutKeys"]);
             menuItem.Text = (string)plug.Definers["Text"]; ;
             menuItem.ToolTipText = (string)plug.Definers["ToolTipText"]; ;
