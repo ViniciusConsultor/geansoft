@@ -50,7 +50,7 @@ namespace Gean.Wrapper.PlugTree
 
         public override string ToString()
         {
-            return string.Format("PlugPath: {0}", this.Name);
+            return string.Format("NAME:{0}", this.Name);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Gean.Wrapper.PlugTree
                 {
                     continue;
                 }
-                plugs.Add(node.LocalName, Plug.Parse((XmlElement)node));
+                plugs.Add(Plug.Parse((XmlElement)node));
             }
             CheckInstallPath(ownerPath, paths, plugs);
         }

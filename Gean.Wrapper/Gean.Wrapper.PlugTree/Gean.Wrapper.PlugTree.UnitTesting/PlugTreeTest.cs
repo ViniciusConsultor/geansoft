@@ -75,6 +75,21 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             _PlugFiles.AddRange(PlugTree.SearchDirectory(_CaseFilePath, "*.gplug", true, true));
         }
 
+        /// <summary>
+        ///ScanPlugPath 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ScanPlugPathTest()
+        {
+            foreach (string str in _PlugFiles)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(str);
+
+                PlugTree.ScanPlugPath(doc, str);
+                Assert.IsNotNull(PlugTree.DocumentPath);
+            }
+        }
 
         /// <summary>
         ///ScanRunTimeNode 的测试
@@ -123,5 +138,6 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             actual = PlugTree.GetDirectoryByFilepath(filepath);
             Assert.AreEqual(expected, actual);
         }
+
     }
 }

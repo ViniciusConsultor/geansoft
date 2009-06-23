@@ -111,9 +111,17 @@ namespace Gean.Wrapper.PlugTree
                 switch (node.LocalName)
                 {
                     case "Producer":
+                        if (_Producers.ContainsKey(classname))
+                        {
+                            break;
+                        }
                         _Producers.Add(classname, ProducerCollection.Load(assembly, classname, typeof(IProducer)));
                         break;
                     case "ConditionEvaluator":
+                        if (_Conditions.ContainsKey(classname))
+                        {
+                            break;
+                        }
                         _Conditions.Add(classname, Condition.Load(assembly, classname));
                         break;
                     default:
