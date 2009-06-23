@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Gean.Wrapper.PlugTree.WinForms")]
+[assembly: AssemblyTitle("Gean.Wrapper.PlugTree.WinForms.UnitTesting")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("nsimple.cn")]
-[assembly: AssemblyProduct("Gean.Wrapper.PlugTree.WinForms")]
+[assembly: AssemblyProduct("Gean.Wrapper.PlugTree.WinForms.UnitTesting")]
 [assembly: AssemblyCopyright("Copyright © nsimple.cn 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,20 +20,16 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("913a6942-5170-4e91-ae0d-542a078c51ec")]
+[assembly: Guid("2054afa7-8cad-4f43-8191-bd0ac4ba5a76")]
 
 // 程序集的版本信息由下面四个值组成:
 //
 //      主版本
-//      次版本 
+//      次版本
 //      内部版本号
 //      修订号
 //
-// 可以指定所有这些值，也可以使用“内部版本号”和“修订号”的默认值，
+// 可以指定所有这些值，也可以使用“修订号”和“内部版本号”的默认值，
 // 方法是按如下所示使用“*”:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Gean.Wrapper.PlugTree.WinForms.UnitTesting")]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WindowsFormsApplication1")]

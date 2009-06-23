@@ -136,5 +136,10 @@ namespace Gean.Wrapper.PlugTree
         //        action = value;
         //    }
         //}
+
+        public static ConditionFalseAction GetFailedAction(object caller)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
