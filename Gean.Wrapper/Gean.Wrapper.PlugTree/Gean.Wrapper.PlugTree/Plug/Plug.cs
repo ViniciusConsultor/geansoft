@@ -20,7 +20,20 @@ namespace Gean.Wrapper.PlugTree
         /// </summary>
         public bool Enabled { get; internal set; }
 
+        /// <summary>
+        /// 描述该路径的数据集合
+        /// </summary>
         public Definers Definers { get; private set; }
+
+        public object Tag { get; set; }
+
+        internal static Plug Parse(XmlElement element)
+        {
+            Plug plug = new Plug();
+            plug.Name = element.LocalName;
+            plug.Definers = Definers.Parse(element);
+            return plug;
+        }
 
         //Definers definers = new Definers();
         //List<Runtime> runtimes = new List<Runtime>();
@@ -123,13 +136,5 @@ namespace Gean.Wrapper.PlugTree
         //        action = value;
         //    }
         //}
-
-        internal static Plug Parse(XmlElement element)
-        {
-            Plug plug = new Plug();
-            plug.Name = element.LocalName;
-            plug.Definers = Definers.Parse(element);
-            return plug;
-        }
     }
 }

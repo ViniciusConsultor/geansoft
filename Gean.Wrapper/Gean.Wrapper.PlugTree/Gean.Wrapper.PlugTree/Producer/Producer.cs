@@ -9,5 +9,10 @@ namespace Gean.Wrapper.PlugTree
 {
     public class Producer
     {
+        internal static IProducer GetProducer(string name)
+        {
+            Type type = PlugTree.Producers[name];
+            return (IProducer)Activator.CreateInstance(type);
+        }
     }
 }
