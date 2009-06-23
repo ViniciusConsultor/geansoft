@@ -32,8 +32,14 @@ namespace Gean.Wrapper.PlugTree
 
         public PlugPath ParentPlugPath { get; private set; }
 
+        /// <summary>
+        /// 描述当前路径下的所有Plug的集合
+        /// </summary>
         public PlugCollection Plugs { get; internal set; }
 
+        /// <summary>
+        /// 描述当前路径下所有子路径的集合
+        /// </summary>
         public PlugPathCollection PlugPaths { get; internal set; }
 
         public object Tag { get; set; }

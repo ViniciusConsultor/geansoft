@@ -11,6 +11,6 @@ namespace Gean.Wrapper.PlugTree
     public interface IProducer
     {
         string Name { get; }
-        object CreateObject(object caller, Plug plug);
+        object CreateObject(Plug plug, object caller);
     }
 }

@@ -140,6 +140,19 @@ namespace Gean.Wrapper.PlugTree
             }
         }
 
+        /// <summary>
+        /// 根据Definers(描述对象的数据集合)创建其所描述的对象
+        /// </summary>
+        /// <param name="definers"></param>
+        /// <param name="plug"></param>
+        /// <param name="caller"></param>
+        /// <returns></returns>
+        public object BuildObject(Plug plug, object caller)
+        {
+            IProducer producer = Producer.GetProducer((string)this["Name"]);
+            return producer.CreateObject(plug, caller);
+        }
+
         #region 从一个保存有Properties的文件中解析Properties
 
         /// <summary>
@@ -390,18 +403,6 @@ namespace Gean.Wrapper.PlugTree
             }
         }
 
-        /// <summary>
-        /// 当Property值发生改变时
-        /// </summary>
-        public event DefinersItemChangedEventHandler DefinersItemChanged;
-        private void OnDefinersItemChanged(DefinersItemChangedEventArgs e)
-        {
-            if (DefinersItemChanged != null)
-            {
-                DefinersItemChanged(this, e);
-            }
-        }
-
         #region IEnumerable 成员
 
         public IEnumerator GetEnumerator()
@@ -415,6 +416,43 @@ namespace Gean.Wrapper.PlugTree
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// 描述该Value值可序列化，并提供反序列化的方法
+        /// </summary>
+        class SerializedValue
+        {
+            public string Content { get; private set; }
+
+            /// <summary>
+            /// 反序列化
+            /// </summary>
+            /// <typeparam name="T"></typeparam>
+            /// <returns></returns>
+            public T Deserialize<T>()
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(new StringReader(this.Content));
+            }
+
+            public SerializedValue(string content)
+            {
+                this.Content = content;
+            }
+        }
+
+        /// <summary>
+        /// 当Property值发生改变时
+        /// </summary>
+        public event DefinersItemChangedEventHandler DefinersItemChanged;
+        private void OnDefinersItemChanged(DefinersItemChangedEventArgs e)
+        {
+            if (DefinersItemChanged != null)
+            {
+                DefinersItemChanged(this, e);
+            }
+        }
+
     }
 
     public delegate void DefinersItemChangedEventHandler(object sender, DefinersItemChangedEventArgs e);
@@ -449,30 +487,4 @@ namespace Gean.Wrapper.PlugTree
             this.NewValue = newValue;
         }
     }
-
-    /// <summary>
-    /// 描述该Value值可序列化，并提供反序列化的方法
-    /// </summary>
-    internal class SerializedValue
-    {
-        public string Content { get; private set; }
-
-        /// <summary>
-        /// 反序列化
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public T Deserialize<T>()
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            return (T)serializer.Deserialize(new StringReader(this.Content));
-        }
-
-        public SerializedValue(string content)
-        {
-            this.Content = content;
-        }
-
-    }
-
 }
