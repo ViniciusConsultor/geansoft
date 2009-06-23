@@ -8,7 +8,7 @@ namespace Gean.Wrapper.PlugTree
 {
     public class Condition : ICondition
     {
-        public Condition(string name, Definers definers)
+        public Condition(string name, Definer definers)
         {
             this.Name = name;
             this.Definers = definers;
@@ -16,7 +16,7 @@ namespace Gean.Wrapper.PlugTree
         }
 
         public ConditionFalseAction Action { get; set; }
-        public Definers Definers { get; private set; }
+        public Definer Definers { get; private set; }
         public string Name { get; private set; }
         public string this[string key]
         {
@@ -38,7 +38,7 @@ namespace Gean.Wrapper.PlugTree
 
         public static ICondition Read(XmlReader reader)
         {
-            Definers definers = Definers.Parse(reader);
+            Definer definers = Definer.ReadFromAttributes(reader);
             string conditionName = (string)definers["name"];
             return new Condition(conditionName, definers);
         }

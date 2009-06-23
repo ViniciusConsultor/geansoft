@@ -23,7 +23,7 @@ namespace Gean.Wrapper.PlugTree
         /// <summary>
         /// 描述该路径的数据集合
         /// </summary>
-        public Definers Definers { get; private set; }
+        public Definer Definers { get; private set; }
 
         public object Tag { get; set; }
 
@@ -31,7 +31,7 @@ namespace Gean.Wrapper.PlugTree
         {
             Plug plug = new Plug();
             plug.Name = element.LocalName;
-            plug.Definers = Definers.Parse(element);
+            plug.Definers = Definer.ReadFromAttributes(null);//element);
             return plug;
         }
 
