@@ -12,10 +12,14 @@
     <AssemblyName>Gean.Wrapper.PlugTree</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,8 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Definer.cs" />
-    <Compile Include="Common\DefinerChangedEvent.cs" />
     <Compile Include="Common\ReadOnlyList.cs" />
     <Compile Include="Condition\Condition.cs" />
     <Compile Include="Condition\ConditionFalseAction.cs" />
@@ -67,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Condition\Condition.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

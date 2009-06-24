@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.Wrapper.PlugTree
+namespace Gean
 {
     public delegate void DefinerChangedEventHandler(object sender, DefinerChangedEventArgs e);
 
