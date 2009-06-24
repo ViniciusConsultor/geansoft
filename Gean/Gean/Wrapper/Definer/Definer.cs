@@ -8,7 +8,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Gean.Wrapper.PlugTree
+namespace Gean
 {
     /// <summary>
     /// 一个类似Hashtable的保存“定义”的集合类(数据包)。
