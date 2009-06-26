@@ -51,6 +51,9 @@
     <Compile Include="Condition\ConditionCollection.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
+    <Compile Include="PlugTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Producer\ProducerCollection.cs" />
     <Compile Include="Producer\IProducer.cs" />
     <Compile Include="Common\ReadOnlyDictionary.cs" />
