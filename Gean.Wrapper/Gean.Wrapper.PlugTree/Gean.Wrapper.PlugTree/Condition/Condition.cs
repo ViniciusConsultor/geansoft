@@ -23,17 +23,37 @@ namespace Gean.Wrapper.PlugTree
             get { return (string)this.Definers[key]; }
         }
 
-        internal static ICondition Load(Assembly assembly, string classname)
+        public bool IsValid(object caller)
         {
-            Type type = assembly.GetType(classname, true, false);
-            if (typeof(ICondition).IsAssignableFrom(type))
+            try
             {
-                return (ICondition)type;
+                return true;// AddInTree.ConditionEvaluators[_Name].IsValid(caller, this);
             }
-            else
+            catch (KeyNotFoundException)
             {
-                return null;
+                throw new PlugTreeException("Condition evaluator " + this.Name + " not found!");
             }
+
+        }
+
+        public static ConditionFalseAction GetFailedAction(IEnumerable<ICondition> conditionList, object caller)
+        {
+            ConditionFalseAction action = ConditionFalseAction.Nothing;
+            foreach (ICondition condition in conditionList)
+            {
+                if (!condition.IsValid(caller))
+                {
+                    if (condition.Action == ConditionFalseAction.Disable)
+                    {
+                        action = ConditionFalseAction.Disable;
+                    }
+                    else
+                    {
+                        return ConditionFalseAction.Exclude;
+                    }
+                }
+            }
+            return action;
         }
 
         public static ICondition Read(XmlReader reader)
@@ -117,39 +137,6 @@ namespace Gean.Wrapper.PlugTree
             //    }
             //}
             return conditions.ToArray();
-        }
-
-        public static ConditionFalseAction GetFailedAction(IEnumerable<ICondition> conditionList, object caller)
-        {
-            ConditionFalseAction action = ConditionFalseAction.Nothing;
-            foreach (ICondition condition in conditionList)
-            {
-                if (!condition.IsValid(caller))
-                {
-                    if (condition.Action == ConditionFalseAction.Disable)
-                    {
-                        action = ConditionFalseAction.Disable;
-                    }
-                    else
-                    {
-                        return ConditionFalseAction.Exclude;
-                    }
-                }
-            }
-            return action;
-        }
-
-        public bool IsValid(object caller)
-        {
-            try
-            {
-                return true;// AddInTree.ConditionEvaluators[_Name].IsValid(caller, this);
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new PlugTreeException("Condition evaluator " + this.Name + " not found!");
-            }
-
         }
     }
 }

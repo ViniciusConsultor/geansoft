@@ -4,7 +4,7 @@ using System.Text;
 using WinForms = System.Windows.Forms;
 using System.Diagnostics;
 
-namespace Gean.Src.Utility
+namespace Gean
 {
     /// <summary>
     /// 相关键盘的键(Key)封装的类

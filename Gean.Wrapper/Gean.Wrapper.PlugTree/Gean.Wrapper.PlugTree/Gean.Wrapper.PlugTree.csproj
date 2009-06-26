@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{02FCE16E-7F04-465B-BB02-57FE59257660}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -51,7 +51,6 @@
     <Compile Include="Condition\ConditionCollection.cs" />
     <Compile Include="Exceptions\PlugTreeException.cs" />
     <Compile Include="Condition\ICondition.cs" />
-    <Compile Include="Producer\Producer.cs" />
     <Compile Include="Producer\ProducerCollection.cs" />
     <Compile Include="Producer\IProducer.cs" />
     <Compile Include="Common\ReadOnlyDictionary.cs" />
@@ -59,12 +58,10 @@
     <Compile Include="Runner\IRun.cs" />
     <Compile Include="Plug\Plug.cs" />
     <Compile Include="Plug\PlugCollection.cs" />
-    <Compile Include="Plug\PlugPath.cs" />
-    <Compile Include="Plug\PlugPathCollection.cs" />
-    <Compile Include="PlugTree.cs" />
+    <Compile Include="PlugPath\PlugPath.cs" />
+    <Compile Include="PlugPath\PlugPathCollection.cs" />
     <Compile Include="Runner\RunnerCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartupService.cs" />
     <Compile Include="Common\TypeDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

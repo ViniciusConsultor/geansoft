@@ -3,7 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</ProjectGuid>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="_Resources\FilterString.Designer.cs">
