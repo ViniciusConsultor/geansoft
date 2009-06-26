@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Drawing;
 using System;
+using System.Xml;
 namespace Gean.FrameworkUnitTesting
 {
 
@@ -79,22 +80,53 @@ namespace Gean.FrameworkUnitTesting
         ///Item 的测试
         ///</summary>
         [TestMethod()]
-        public void ItemTest()
+        public void WirterTest()
         {
+            string targetfile = Path.Combine(_CaseFilePath, "DefinerObject.xml");
+            File.Delete(targetfile);
+            Assert.IsFalse(File.Exists(targetfile));
+
             Definer target = new Definer();
 
             target.Set<Font>("Font", new Font("微软雅黑", 10.5F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))));
             target.Set<string>("Google", "谷歌正在颠覆确定新产品开发和优先次序的方式，为员工开辟与高层对话的渠道，此举是由于担心优秀人才和金点子会流向初创公司。");
-            target.Set<DateTime>("Time", DateTime.Now);
+            target.Set<Pair<long, int>>("Pair", new Pair<long, int>(123456789, 123));
             target.Set<Rectangle>("Rectangle", new Rectangle(new Point(108, 108), new Size(320, 320)));
-            for (int i = 99; i < 150; i++)
+            for (int i = 1; i < 20; i++)
             {
-                target.Set<int>(i.ToString(), i * 99);
+                target.Set<int>("define" + i.ToString(), i * 99);
             }
 
-            target.Save(Path.Combine(_CaseFilePath, "Writer.xml"));
+            target.Save(targetfile);
+            Assert.IsTrue(File.Exists(targetfile));
 
-            File.Copy(Path.Combine(_CaseFilePath, "Writer.xml"), Path.Combine(_CaseFilePath, "Read.xml"));
+            XmlDocument doc = new XmlDocument();
+            doc.Load(targetfile);
+            Assert.AreEqual(23, doc.DocumentElement.ChildNodes.Count);
+        }
+
+        /// <summary>
+        ///Load 的测试
+        ///</summary>
+        [TestMethod()]
+        public void LoadTest()
+        {
+            string targetfile = Path.Combine(_CaseFilePath, "Writer.xml");
+
+            Definer target = new Definer();
+
+            target.Set<Font>("Font", new Font("微软雅黑", 10.5F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))));
+            target.Set<string>("Google", "谷歌正在颠覆确定新产品开发和优先次序的方式，为员工开辟与高层对话的渠道，此举是由于担心优秀人才和金点子会流向初创公司。");
+            target.Set<Pair<long, int>>("Pair", new Pair<long, int>(123456789, 123));
+            target.Set<Rectangle>("Rectangle", new Rectangle(new Point(108, 108), new Size(320, 320)));
+            for (int i = 1; i < 20; i++)
+            {
+                target.Set<int>("define" + i.ToString(), i * 99);
+            }
+
+            Definer actual;
+            actual = Definer.Load(targetfile);
+            Assert.AreEqual(target, actual);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace Gean
 {
@@ -9,7 +11,8 @@ namespace Gean
     /// 该结构重写了==和!=操作符。
     /// Gean:2009-06-06 11:02:08
     /// </summary>
-    public struct Pair<A, B> : IEquatable<Pair<A, B>>
+    [Serializable]
+    public struct Pair<A, B> : IEquatable<Pair<A, B>>, ISerializable
         where A : IEquatable<A>
         where B : IEquatable<B>
     {
@@ -46,6 +49,12 @@ namespace Gean
             return unchecked(27 * First.GetHashCode() + Second.GetHashCode());
         }
 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            return sb.Append(First.ToString()).Append(" | ").Append(Second.ToString()).ToString();
+        }
+
         public static bool operator ==(Pair<A, B> lhs, Pair<A, B> rhs)
         {
             return lhs.Equals(rhs);
@@ -55,5 +64,17 @@ namespace Gean
         {
             return !(lhs.Equals(rhs)); // use operator == and negate result
         }
+
+        [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info is null.");
+            }
+            info.AddValue("FirstValue", this.First);
+            info.AddValue("SecondValue", this.Second);
+        }
     }
+
 }
