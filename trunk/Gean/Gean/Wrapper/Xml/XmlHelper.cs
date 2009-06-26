@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Diagnostics;
 using System.IO;
+using System.Xml.Schema;
 
 namespace Gean.Xml
 {
@@ -398,5 +399,10 @@ namespace Gean.Xml
             return CreatNewDoucmnet(file, "root");
         }
 
+
+        public static bool VerifyXmlFile(string file, XmlSchema xmlSchema)
+        {
+            return true;
+        }
     }
 }
