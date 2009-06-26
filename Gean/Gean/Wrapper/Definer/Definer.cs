@@ -353,7 +353,7 @@ namespace Gean
                     object val = entry.Value;
                     if (val is Definer)
                     {
-                        writer.WriteStartElement("Properties");
+                        writer.WriteStartElement("Definer");
                         writer.WriteAttributeString("name", entry.Key);
                         ((Definer)val).WriteDefine(writer);
                         writer.WriteEndElement();
@@ -388,7 +388,7 @@ namespace Gean
                         writer.WriteStartElement("SerializedValue");
                         writer.WriteAttributeString("name", entry.Key);
                         XmlSerializer serializer = new XmlSerializer(val.GetType());
-                        serializer.Serialize(writer, val, null);
+                        serializer.Serialize(writer, val);
                         writer.WriteEndElement();
                     }
                 }
@@ -416,7 +416,7 @@ namespace Gean
             using (XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;
-                writer.WriteStartElement("Properties");
+                writer.WriteStartElement("Definer");
                 WriteDefine(writer);
                 writer.WriteEndElement();
             }
