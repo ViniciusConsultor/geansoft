@@ -5,11 +5,19 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Diagnostics;
 using System.Reflection;
+using System.Collections.Specialized;
 
 namespace Gean.Wrapper.PlugTree
 {
     public static class PlugTree
     {
+        static readonly string _PLUG_FILE_EXPAND_NAME = "*.gplug";
+
+        static bool IsInitializationed { get; set; }
+
+        static StringCollection _PlugFiles = new StringCollection();
+        static StringCollection _DisabledPlugs = new StringCollection();
+
         static RunnerCollection _Runners = new RunnerCollection();
 
         static ConditionCollection _Conditions = new ConditionCollection();
@@ -43,9 +51,13 @@ namespace Gean.Wrapper.PlugTree
         }
 
 
-        internal static void Load(List<string> plugFiles, List<string> disabledPlugs)
+        public static void Initialization(string plugDirectory)
         {
-            foreach (string file in plugFiles)
+            if (string.IsNullOrEmpty(plugDirectory))
+                throw new ArgumentNullException("Plug Directory is empty!");
+            _PlugFiles = UtilityFile.SearchDirectory(plugDirectory, _PLUG_FILE_EXPAND_NAME, true, true);
+
+            foreach (string file in _PlugFiles)
             {
                 if (!VerifyXmlFile(file))
                 {
@@ -56,6 +68,7 @@ namespace Gean.Wrapper.PlugTree
                 PlugTree.ScanRunTimeNode(doc, file);
                 PlugTree.ScanPlugPath(doc, file);
             }
+            PlugTree.IsInitializationed = true;
         }
 
         internal static bool VerifyXmlFile(string pathstr)
@@ -71,11 +84,10 @@ namespace Gean.Wrapper.PlugTree
         /// <example>
         /// ＜Runtime>
         ///     ＜Import assembly="Gean.Wrapper.PlugTree.DemoProject1.dll">
-        ///         ＜Runner class="Gean.Wrapper.PlugTree.DemoProject1.ActiveContentExtension"/>
-        ///         ＜Runner class="Gean.Wrapper.PlugTree.DemoProject1.ActiveViewContentUntitled"/>
-        ///         ＜Runner class="Gean.Wrapper.PlugTree.DemoProject1.CustomTool"/>
-        ///         ＜Runner class="Gean.Wrapper.PlugTree.DemoProject1.CustomProperty"/>
-        ///         ＜Runner class="Gean.Wrapper.PlugTree.DemoProject1.DialogPanel"/>
+        ///         ＜Producer class="Gean.Wrapper.PlugTree.DemoProject1.SacramentoProducer"/>
+        ///         ＜Producer class="Gean.Wrapper.PlugTree.DemoProject1.ThunderProducer"/>
+        ///         ＜ConditionEvaluator class="Gean.Wrapper.PlugTree.DemoProject1.AngelesConditionEvaluator"/>
+        ///         ＜ConditionEvaluator class="Gean.Wrapper.PlugTree.DemoProject1.ClippersConditionEvaluator"/>
         ///     ＜/Import>
         /// ＜/Runtime>
         /// </example>
@@ -88,13 +100,13 @@ namespace Gean.Wrapper.PlugTree
             {
                 throw new PlugTreeException("Gean: Assembly name is Error!");
             }
-            if (!assName.EndsWith(".dll"))
+            if (!assName.ToLowerInvariant().EndsWith(".dll"))
             {
                 assName = assName + ".dll";
             }
 
             //程序集所在路径
-            string filepath = Path.Combine(PlugTree.GetDirectoryByFilepath(docPath), assName);
+            string filepath = Path.Combine(UtilityFile.GetDirectoryByFilepath(docPath), assName);
             Debug.Assert(File.Exists(filepath), "Gean: File not found.");
             Assembly assembly = Assembly.LoadFile(filepath);
 
@@ -115,14 +127,14 @@ namespace Gean.Wrapper.PlugTree
                         {
                             break;
                         }
-                        _Producers.Add(classname, ProducerCollection.Load(assembly, classname, typeof(IProducer)));
+                        _Producers.Add(classname, UtilityType.Load(assembly, classname, typeof(IProducer)));
                         break;
                     case "ConditionEvaluator":
                         if (_Conditions.ContainsKey(classname))
                         {
                             break;
                         }
-                        _Conditions.Add(classname, Condition.Load(assembly, classname));
+                        _Conditions.Add(classname, UtilityType.Load(assembly, classname, typeof(ICondition)));
                         break;
                     default:
                         Debug.Fail("\"/Runtime/Import/\"有未知的子节点");
@@ -135,6 +147,8 @@ namespace Gean.Wrapper.PlugTree
         /// 从给定的一个XML文件中扫描所有的PlugPath
         /// </summary>
         /// <param name="doc">一个Plug的XML文件</param>
+        /// <param name="docPath"></param>
+        /// 
         internal static void ScanPlugPath(XmlDocument doc, string docPath)
         {
             if (_RootPath == null)
@@ -155,52 +169,7 @@ namespace Gean.Wrapper.PlugTree
             }
         }
 
-        /// <summary>
-        /// 从一个文件的全路径字符串中获取一个目录路径
-        /// </summary>
-        /// <param name="filepath">文件的完整路径</param>
-        /// <returns>一个代表目录的路径</returns>
-        internal static string GetDirectoryByFilepath(string filepath)
-        {
-            return filepath.Substring(0, filepath.LastIndexOf('\\') + 1);
-        }
 
-        internal static string[] SearchDirectory
-            (string directory, string filemask, bool searchSubdirectories, bool ignoreHidden)
-        {
-            List<string> collection = new List<string>();
-
-            // 当8.3型的文件名时，"*.xpt" 即 "Template.xpt~" 的处理
-            bool isExtMatch = Regex.IsMatch(filemask, @"^\*\..{3}$");
-            string ext = null;
-            string[] files = Directory.GetFiles(directory, filemask);
-            if (isExtMatch) ext = filemask.Remove(0, 1);
-
-            foreach (string file in files)
-            {
-                if (ignoreHidden && (File.GetAttributes(file) & FileAttributes.Hidden) == FileAttributes.Hidden)
-                {
-                    continue;
-                }
-                if (isExtMatch && Path.GetExtension(file) != ext) continue;
-
-                collection.Add(file);
-            }
-
-            if (searchSubdirectories)
-            {
-                string[] dirs = Directory.GetDirectories(directory);
-                foreach (string dir in dirs)
-                {
-                    if (ignoreHidden && (File.GetAttributes(dir) & FileAttributes.Hidden) == FileAttributes.Hidden)
-                    {
-                        continue;
-                    }
-                    collection.AddRange(SearchDirectory(dir, filemask, searchSubdirectories, ignoreHidden));
-                }
-            }
-            return collection.ToArray();
-        }
 
     }
 }

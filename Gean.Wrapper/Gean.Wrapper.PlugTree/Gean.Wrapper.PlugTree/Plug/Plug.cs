@@ -31,7 +31,7 @@ namespace Gean.Wrapper.PlugTree
         {
             Plug plug = new Plug();
             plug.Name = element.LocalName;
-            plug.Definers = Definer.ReadFromAttributes(null);//element);
+            plug.Definers = Definer.ReadFromAttributes(null);
             return plug;
         }
 
