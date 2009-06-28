@@ -65,7 +65,7 @@ namespace Gean.Wrapper.PlugTree
         /// 5.安装PlugPath树结构
         /// </summary>
         /// <param name="plugDirectory"></param>
-        public static void Initialization(string plugDirectory)
+        public static PlugTree Initialization(string plugDirectory)
         {
             if (string.IsNullOrEmpty(plugDirectory))
             {
@@ -94,6 +94,7 @@ namespace Gean.Wrapper.PlugTree
                 // 5.安装PlugPath树结构
                 _PlugTree.ScanPlugPath(doc);
             }
+            return _PlugTree;
         }
 
         /// <summary>

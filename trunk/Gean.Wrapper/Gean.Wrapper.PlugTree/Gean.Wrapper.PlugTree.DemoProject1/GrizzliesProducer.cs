@@ -13,9 +13,9 @@ namespace Gean.Wrapper.PlugTree.DemoProject1
             get { return this.GetType().Name; }
         }
 
-        public object CreateObject(object caller, Plug plug)
+        public object CreateObject(Plug plug, object caller)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         #endregion
