@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Collections.Specialized;
 
 namespace Gean.Wrapper.PlugTree
 {
@@ -115,7 +116,7 @@ namespace Gean.Wrapper.PlugTree
         /// </summary>
         /// <param name="element">一个描述路径的XmlElement</param>
         /// <param name="ownerPath">请输入原始路径树的根</param>
-        internal static void Install(XmlElement element, PlugPath ownerPath)
+        internal static void Install(XmlElement element, PlugPath ownerPath, StringCollection enablePlus)
         {
             string pathname = element.GetAttribute("name");
             if (string.IsNullOrEmpty(pathname))
@@ -134,7 +135,16 @@ namespace Gean.Wrapper.PlugTree
                 {
                     continue;
                 }
-                plugs.Add(Plug.Parse((XmlElement)node));
+                Plug newPlug = Plug.Parse((XmlElement)node);
+                foreach (string enablePlugName in enablePlus)//根据用户配置需求置Plug是否为可用状态
+                {
+                    if (enablePlugName.Equals(newPlug.Name))
+                    {
+                        newPlug.Enabled = false;
+                        break;
+                    }
+                }
+                plugs.Add(newPlug);
             }
             PlugPath.CheckInstallPath(ownerPath, paths, plugs);
         }

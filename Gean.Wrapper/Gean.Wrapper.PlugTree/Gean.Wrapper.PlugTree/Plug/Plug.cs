@@ -7,32 +7,57 @@ using System.Xml;
 namespace Gean.Wrapper.PlugTree
 {
     /// <summary>
-    /// 一个Plug
+    /// 一个Plug对象，一般以Xml节点保存在一个Plug文件的＜Path＞节点下，一个＜Path＞节点下
+    /// 可能保存多个该对象，在这个＜Path＞节点下的所有Plug节点会被一一解析，
+    /// 并保存入PlugCollection集合中，并绑定到PlugPath对象的PlugItems属性中。
+    /// <para>
+    /// ＜Path＞
+    ///       ＜MenuItem  id           = "File"
+	///     	    label        = "${res:XML.MainMenu.FileMenu.New.File}"
+	///     	    icon         = "Icons.16x16.NewDocumentIcon"
+	///	            shortcut     = "Control|N"
+    ///	            class        = "ICSharpCode.SharpDevelop.Commands.CreateNewFile"/>
+    ///	＜/Path＞
+    /// </para>
     /// </summary>
-    public sealed class Plug
+    public class Plug
     {
-        internal Plug() { }
-
-        public string Name { get; internal set; }
-
         /// <summary>
-        /// 该Plug是否可用
+        /// 私有化构造函数，只能通过Parse静态方法解析得到该对象
         /// </summary>
-        public bool Enabled { get; internal set; }
+        private Plug() { }
 
         /// <summary>
-        /// 描述该路径的数据集合
+        /// 该Plug的名字，一般就是描述该Plug的XmlElement的LocalName
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// 该Plug是否可用,True可用，False不可用
+        /// </summary>
+        public bool Enabled { get { return _Enabled; } internal set { this._Enabled = value; } }
+        private bool _Enabled = true;
+
+        /// <summary>
+        /// 描述该Plug的数据集合
         /// </summary>
         public Definer Definers { get; private set; }
 
-        public object Tag { get; set; }
-
+        /// <summary>
+        /// 将一个描述Plug的XmlElement节点中解析成一个Plug
+        /// </summary>
+        /// <param name="element">一个描述Plug的XmlElement节点</param>
         internal static Plug Parse(XmlElement element)
         {
             Plug plug = new Plug();
             plug.Name = element.LocalName;
-            plug.Definers = Definer.ReadFromAttributes(null);
+            plug.Definers = Definer.ReadFromAttributes(element.Attributes);
             return plug;
+        }
+
+        public static ConditionFalseAction GetFailedAction(object caller)
+        {
+            throw new NotImplementedException();
         }
 
         //Definers definers = new Definers();
@@ -136,10 +161,5 @@ namespace Gean.Wrapper.PlugTree
         //        action = value;
         //    }
         //}
-
-        public static ConditionFalseAction GetFailedAction(object caller)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
