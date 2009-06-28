@@ -65,7 +65,6 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
 
         private string _BasePath;
         private string _CaseFilePath;
-        List<string> _PlugFiles;
 
         public PlugTreeTest()
         {
@@ -73,15 +72,23 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             _CaseFilePath = Path.Combine(_BasePath, "CaseFiles\\");
         }
 
-
-
         /// <summary>
         ///Initialization 的测试
         ///</summary>
         [TestMethod()]
         public void InitializationTest()
         {
-            PlugTree.Initialization(this._CaseFilePath);
+            PlugTree pt = PlugTree.Initialization(this._CaseFilePath);
+            Assert.AreEqual(8, pt.Producers.Count);
+            Assert.AreEqual(5, pt.Conditions.Count);
+
+            PlugPath pp0;
+            pt.DocumentPath.PlugPathItems.TryGetValue("Gean", out pp0);
+            PlugPath pp1;
+            pp0.PlugPathItems.TryGetValue("MainMenu", out pp1);
+
+            Assert.IsTrue(pp1.PlugItems.Count > 1);
+            Assert.IsNotNull(pt.DocumentPath.SelectSingerPath("/Gean/MainMenu"));
         }
     }
 }

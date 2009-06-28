@@ -31,7 +31,15 @@ namespace Gean
         /// <returns>如找到返回该类型，未找到返Null</returns>
         public static Type Load(Assembly assembly, string classname, Type assignableFromType)
         {
-            Type type = assembly.GetType(classname, true, false);
+            Type type;
+            try
+            {
+                type = assembly.GetType(classname, true, false);
+            }
+            catch(Exception e)
+            {
+                throw; 
+            }
             if (assignableFromType == null)
             {
                 return type;

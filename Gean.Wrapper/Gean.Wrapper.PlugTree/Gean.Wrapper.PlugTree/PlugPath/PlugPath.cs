@@ -21,10 +21,6 @@ namespace Gean.Wrapper.PlugTree
         /// 路径的名字
         /// </summary>
         public string Name { get; internal set; }
-        /// <summary>
-        /// 一个对象，描述该PlugPath附属的对象
-        /// </summary>
-        public object Tag { get; set; }
 
         #region (PlugPath)路径相关
 
@@ -50,6 +46,31 @@ namespace Gean.Wrapper.PlugTree
         /// 描述当前路径下所有子路径的集合
         /// </summary>
         public PlugPathCollection PlugPathItems { get; internal set; }
+
+        public PlugPath SelectSingerPath(string pathstring)
+        {
+            List<string> paths = new List<string>();
+            paths.AddRange(pathstring.Split(new char[] { SPLIT_CHAR }, StringSplitOptions.RemoveEmptyEntries));
+            return this.SelectSingerPath(paths);
+        }
+
+        private PlugPath SelectSingerPath(List<string> paths)
+        {
+            foreach (PlugPath path in this.PlugPathItems)
+            {
+                if (path.Name.Equals(paths[0]))
+                {
+                    if (paths.Count == 1)
+                    {
+                        return path;
+                    }
+                    paths.RemoveAt(0);
+                    path.SelectSingerPath(paths);
+                }
+            }
+            return null;
+        }
+
 
         #endregion
 
@@ -83,19 +104,19 @@ namespace Gean.Wrapper.PlugTree
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("PathName: ").Append(this.Name);
+            sb.Append("| PathName: ").Append(this.Name);
 #if DEBUG
             if (this.HasChildPathItems)
             {
-                sb.Append("\r\n").Append("Child Path Count: ").Append(this.PlugPathItems.Count.ToString());
+                sb.Append("\r\n").Append("| Child Path Count: ").Append(this.PlugPathItems.Count.ToString());
             }
             else
             {
-                sb.Append("\r\nHas not ChildPlugPath.");
+                sb.Append("\r\n| Has not ChildPlugPath.");
             }
             if (this.HasPlug)
             {
-                sb.Append("\r\n").Append("Plug Count: ").Append(this.PlugItems.Count.ToString());
+                sb.Append("\r\n").Append("| Plug Count: ").Append(this.PlugItems.Count.ToString());
                 foreach (Plug plug in this.PlugItems)
                 {
                     sb.Append("\r\n ---").Append(plug.Name);
@@ -103,7 +124,7 @@ namespace Gean.Wrapper.PlugTree
             }
             else
             {
-                sb.Append("\r\nHas not Plug.");
+                sb.Append("\r\n| Has not Plug.");
             }
 #endif
             return sb.ToString();
@@ -204,5 +225,6 @@ namespace Gean.Wrapper.PlugTree
         }
 
         #endregion
+
     }
 }
