@@ -88,7 +88,11 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
             pp0.PlugPathItems.TryGetValue("MainMenu", out pp1);
 
             Assert.IsTrue(pp1.PlugItems.Count > 1);
-            Assert.IsNotNull(pt.DocumentPath.SelectSingerPath("/Gean/MainMenu"));
+
+            PlugPath pp2 = pt.DocumentPath.SelectSingerPath("/Gean/MainMenu");
+            Assert.IsNotNull(pp2);
+            PlugPath pp3 = pt.DocumentPath.SelectSingerPath("/SharpDevelop/Views/ProjectBrowser/ContextSpecificProperties");
+            Assert.IsNotNull(pp3);
         }
     }
 }
