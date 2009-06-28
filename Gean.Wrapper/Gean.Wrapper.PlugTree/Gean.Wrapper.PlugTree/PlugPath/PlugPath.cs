@@ -64,8 +64,11 @@ namespace Gean.Wrapper.PlugTree
                     {
                         return path;
                     }
-                    paths.RemoveAt(0);
-                    path.SelectSingerPath(paths);
+                    else
+                    {
+                        paths.RemoveAt(0);
+                        return path.SelectSingerPath(paths);
+                    }
                 }
             }
             return null;
