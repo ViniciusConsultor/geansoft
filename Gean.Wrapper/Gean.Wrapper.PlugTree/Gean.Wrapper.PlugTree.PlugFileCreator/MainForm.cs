@@ -16,6 +16,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public _mainForm()
         {
             InitializeComponent();
+            TabelLayout();
         }
 
         private void _newToolStripButton_Click(object sender, EventArgs e)
@@ -84,6 +85,27 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 
         }
 
+
+        private void TabelLayout()
+        {
+            this.SuspendLayout();
+            #region Plug的公共的一些属性的Table
+            foreach (RowStyle row in this._commonTable.RowStyles)
+            {
+                row.Height = 30;
+            }
+            foreach (Control ctr in this._commonTable.Controls)
+            {
+                if (ctr is Label)
+                    ctr.Anchor = AnchorStyles.Right;
+                if (ctr is TextBoxBase)
+                    ctr.Anchor = AnchorStyles.Left;
+            }
+            #endregion
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
         XmlDocument _plugDocument = new XmlDocument();
 
         private void CreateNewPlugFile(string file)
@@ -113,6 +135,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             }
             _plugDocument.Load(file);
         }
+
 
     }
 }
