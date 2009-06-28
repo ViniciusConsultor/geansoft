@@ -71,73 +71,17 @@ namespace Gean.Wrapper.PlugTree.UnitTesting
         {
             _BasePath = Path.GetFullPath("..\\..\\..\\" + this.GetType().Assembly.FullName.Substring(0, this.GetType().Assembly.FullName.IndexOf(',')));
             _CaseFilePath = Path.Combine(_BasePath, "CaseFiles\\");
-            _PlugFiles = new List<string>();
-            _PlugFiles.AddRange(PlugTree.SearchDirectory(_CaseFilePath, "*.gplug", true, true));
         }
+
+
 
         /// <summary>
-        ///ScanPlugPath 的测试
+        ///Initialization 的测试
         ///</summary>
         [TestMethod()]
-        public void ScanPlugPathTest()
+        public void InitializationTest()
         {
-            foreach (string str in _PlugFiles)
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(str);
-
-                PlugTree.ScanPlugPath(doc, str);
-                Assert.IsNotNull(PlugTree.DocumentPath);
-            }
+            PlugTree.Initialization(this._CaseFilePath);
         }
-
-        /// <summary>
-        ///ScanRunTimeNode 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ScanRunTimeNodeTest()
-        {
-            foreach (string str in _PlugFiles)
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(str);
-
-                PlugTree.ScanRunTimeNode(doc, str);
-                Assert.AreEqual(PlugTree.Producers.Count, 8);
-                Assert.AreEqual(PlugTree.Conditions.Count, 5);
-            }
-        }
-
-        /// <summary>
-        ///GetDirectoryByFilepath 的测试
-        ///</summary>
-        [TestMethod()]
-        public void GetDirectoryByFilepathTest()
-        {
-            string filepath;
-            string expected;
-            string actual;
-
-            filepath = @"c:\abc\abc\abc.xml";
-            expected = @"c:\abc\abc\";
-            actual = PlugTree.GetDirectoryByFilepath(filepath);
-            Assert.AreEqual(expected, actual);
-
-            filepath = @"c:\";
-            expected = @"c:\";
-            actual = PlugTree.GetDirectoryByFilepath(filepath);
-            Assert.AreEqual(expected, actual);
-
-            filepath = @"c:\abc.xml\abc.xml";
-            expected = @"c:\abc.xml\";
-            actual = PlugTree.GetDirectoryByFilepath(filepath);
-            Assert.AreEqual(expected, actual);
-
-            filepath = @"c:\abc\abc\abc\";
-            expected = @"c:\abc\abc\abc\";
-            actual = PlugTree.GetDirectoryByFilepath(filepath);
-            Assert.AreEqual(expected, actual);
-        }
-
     }
 }

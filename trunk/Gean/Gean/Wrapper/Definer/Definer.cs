@@ -254,6 +254,21 @@ namespace Gean
         /// </summary>
         /// <param name="reader">一个包含相应Xml节点信息的XmlReader</param>
         /// <returns></returns>
+        public static Definer ReadFromAttributes(XmlAttributeCollection attributes)
+        {
+            Definer definer = new Definer();
+            foreach (XmlAttribute attr in attributes)
+            {
+                definer[attr.LocalName] = attr.Value;
+            }
+            return definer;
+        }
+
+        /// <summary>
+        /// 从XML的一个有效节点的Attribute中读取相关的数据以转换成Definer。
+        /// </summary>
+        /// <param name="reader">一个包含相应Xml节点信息的XmlReader</param>
+        /// <returns></returns>
         public static Definer ReadFromAttributes(XmlReader reader)
         {
             Definer definer = new Definer();

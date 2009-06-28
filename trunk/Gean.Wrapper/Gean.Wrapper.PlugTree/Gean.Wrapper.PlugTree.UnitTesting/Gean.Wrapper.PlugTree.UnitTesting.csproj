@@ -48,9 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlugTreeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gean.Wrapper.PlugTree\Gean.Wrapper.PlugTree.csproj">
       <Project>{02FCE16E-7F04-465B-BB02-57FE59257660}</Project>
       <Name>Gean.Wrapper.PlugTree</Name>
@@ -58,6 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CaseFiles\Gean.Wrapper.PlugTree.DemoProject1.gplug" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CaseFiles\Gean.Wrapper.PlugTree.DemoProject1.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

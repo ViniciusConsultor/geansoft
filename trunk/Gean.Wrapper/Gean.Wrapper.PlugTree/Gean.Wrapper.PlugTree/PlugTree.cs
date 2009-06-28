@@ -11,6 +11,8 @@ namespace Gean.Wrapper.PlugTree
 {
     /// <summary>
     /// 本程序集的核心类型。该类型描述一个应用的插件树，以及可能用到的Runner，Producer，Condition的集合。
+    /// 本集合只能从Initialization方法单建一个实例。
+    /// Gean: 2009-06-27 22:01:59
     /// </summary>
     public class PlugTree
     {
@@ -18,10 +20,22 @@ namespace Gean.Wrapper.PlugTree
 
         StringCollection _PlugFiles = new StringCollection();
         StringCollection _DisabledPlugs = new StringCollection();
+        /// <summary>
+        /// 描述Plug的Xml文件的Schema文件
+        /// </summary>
         XmlSchema _Schema;
 
+        /// <summary>
+        /// 命令器集合
+        /// </summary>
         public RunnerCollection Runners { get; private set; }
+        /// <summary>
+        /// 条件求值器集合
+        /// </summary>
         public ConditionCollection Conditions { get; private set; }
+        /// <summary>
+        /// 对象生成器集合
+        /// </summary>
         public ProducerCollection Producers { get; private set; }
         /// <summary>
         /// 获取PlugTree的根路径
@@ -41,6 +55,16 @@ namespace Gean.Wrapper.PlugTree
         }
 
         private static PlugTree _PlugTree = null;
+        /// <summary>
+        /// PlugTree类型的初始化方法，在该方法中单建一个PlugTree实例。
+        /// 在该方法中实现了PlugTree的：
+        /// 1.从指定的目录扫描出所有的Plug文件
+        /// 2.从指定的配置文件中定义出失效的Plug集合
+        /// 3.从所有的Plug文件的“Runtime/Import”节点中扫描出所有的“对象生成器”
+        /// 4.从所有的Plug文件的“Runtime/Import”节点中扫描出所有的“条件求值器”
+        /// 5.安装PlugPath树结构
+        /// </summary>
+        /// <param name="plugDirectory"></param>
         public static void Initialization(string plugDirectory)
         {
             if (string.IsNullOrEmpty(plugDirectory))
@@ -51,23 +75,40 @@ namespace Gean.Wrapper.PlugTree
             {
                 _PlugTree = new PlugTree();
             }
+            // 1.从指定的目录扫描出所有的Plug文件
             _PlugTree._PlugFiles = UtilityFile.SearchDirectory(plugDirectory, _PLUG_FILE_EXPAND_NAME, true, true);
+            // 2.从指定的配置文件中定义出失效的Plug集合
+            _PlugTree._DisabledPlugs = LoadDisabledPlugs();
 
             foreach (string file in _PlugTree._PlugFiles)
             {
-                if (!XmlHelper.VerifyXmlFile(file, _PlugTree._Schema))
+                if (!XmlHelper.VerifyXmlFile(file, _PlugTree._Schema))//校验Plug文件是否是有效的Plug定义文件
                 {
                     continue;
                 }
                 XmlDocument doc = new XmlDocument();
                 doc.Load(file);
+                // 3.从所有的Plug文件的“Runtime/Import”节点中扫描出所有的“对象生成器”
+                // 4.从所有的Plug文件的“Runtime/Import”节点中扫描出所有的“条件求值器”
                 _PlugTree.ScanRunTimeNode(doc, file);
+                // 5.安装PlugPath树结构
                 _PlugTree.ScanPlugPath(doc);
             }
         }
 
         /// <summary>
-        /// 扫描一个给定的Plug的Xml文件中定义的实现了IRun接口的类型的描述
+        /// 从一个配置文件载入用户确认不生效的Plug
+        /// </summary>
+        /// <returns></returns>
+        private static StringCollection LoadDisabledPlugs()
+        {
+            return new StringCollection();
+        }
+
+        /// <summary>
+        /// 扫描一个Plug文件的“Runtime/Import”节点
+        /// 3.从一个Plug文件的“Runtime/Import”节点中扫描出所有的“对象生成器”
+        /// 4.从一个Plug文件的“Runtime/Import”节点中扫描出所有的“条件求值器”
         /// </summary>
         /// <param name="doc">一个给定的Plug的Xml文件</param>
         /// <param name="docPath">一个给定的Plug的Xml文件的文件路径</param>
@@ -112,14 +153,14 @@ namespace Gean.Wrapper.PlugTree
                 string classname = node.Attributes["class"].Value;
                 switch (node.LocalName)
                 {
-                    case "Producer":
+                    case "Producer"://扫描出所有的“对象生成器”
                         if (Producers.ContainsKey(classname))
                         {
                             break;
                         }
                         Producers.Add(classname, UtilityType.Load(assembly, classname, typeof(IProducer)));
                         break;
-                    case "ConditionEvaluator":
+                    case "ConditionEvaluator"://扫描出所有的“条件求值器”
                         if (Conditions.ContainsKey(classname))
                         {
                             break;
@@ -148,7 +189,7 @@ namespace Gean.Wrapper.PlugTree
                     continue;
                 }
                 XmlElement element = (XmlElement)node;
-                PlugPath.Install(element, DocumentPath);
+                PlugPath.Install(element, DocumentPath, this._DisabledPlugs);
             }
         }
     }
