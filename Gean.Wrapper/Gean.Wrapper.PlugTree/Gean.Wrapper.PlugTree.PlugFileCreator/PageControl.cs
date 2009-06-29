@@ -8,34 +8,51 @@ using System.Windows.Forms;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    public partial class Page : TabPage
+    public partial class PlugPage : UserControl
     {
-        public Page()
+        private Button button1;
+        private Button button2;
+    
+        public PlugPage()
         {
-            Initialization();
+            InitializeComponent();
         }
 
-        private void Initialization()
+        private void InitializeComponent()
         {
-            Button _saveButton = new Button();
-            Button _clearButton = new Button();
-            _clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            _clearButton.Location = new Point(182, 317);
-            _clearButton.Name = "_clearButton";
-            _clearButton.Size = new System.Drawing.Size(64, 23);
-            _clearButton.TabIndex = 1;
-            _clearButton.Text = "Clear";
-            _clearButton.UseVisualStyleBackColor = true;
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.SuspendLayout();
             // 
-            // _saveButton
+            // button1
             // 
-            _saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            _saveButton.Location = new Point(112, 317);
-            _saveButton.Name = "_saveButton";
-            _saveButton.Size = new Size(64, 23);
-            _saveButton.TabIndex = 2;
-            _saveButton.Text = "Save";
-            _saveButton.UseVisualStyleBackColor = true;
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(10, 81);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(65, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "OK";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(81, 81);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(65, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "Clear";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // PlugPage
+            // 
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.Name = "PlugPage";
+            this.Padding = new System.Windows.Forms.Padding(10, 10, 10, 15);
+            this.Size = new System.Drawing.Size(159, 122);
+            this.ResumeLayout(false);
 
         }
     }
