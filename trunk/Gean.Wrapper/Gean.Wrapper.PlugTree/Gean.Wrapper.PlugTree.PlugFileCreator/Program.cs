@@ -14,6 +14,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            MainService.Init();
             Application.Run(new _mainForm());
         }
     }
