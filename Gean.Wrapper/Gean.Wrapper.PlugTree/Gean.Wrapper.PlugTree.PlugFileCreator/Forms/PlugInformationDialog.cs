@@ -122,6 +122,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 fs.Dispose();
             }
             CoreService.PlugDocument.Load(file);
+            CoreService.PlugFile = file;
             if (!string.IsNullOrEmpty(this._parentAsseTextbox.Text))
             {
                 string pastr = (new FileInfo(this._parentAsseTextbox.Text)).Name;

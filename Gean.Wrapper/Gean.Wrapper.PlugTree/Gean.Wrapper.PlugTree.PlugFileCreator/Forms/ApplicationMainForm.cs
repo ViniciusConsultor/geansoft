@@ -30,7 +30,21 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public TreeView PathTree;
         public TreeView InformationTree;
 
-        private void 完整新建ToolStripMenuItem_Click(object sender, EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(CoreService.PlugFile))
+            {
+                if (MessageBox.Show(this, CoreService.PlugFile + "\r\n是否保存？", "保存",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    == DialogResult.Yes)
+                {
+                    CoreService.PlugDocument.Save(CoreService.PlugFile);
+                }
+            }
+            base.OnClosing(e);
+        }
+
+        private void NewPlugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitProject();
 
@@ -63,7 +77,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             }
         }
 
-        private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = "*.gplug";
@@ -75,6 +89,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             {
                 this._fileLabel.Text = ofd.FileName;
                 CoreService.PlugDocument.Load(ofd.FileName);
+                CoreService.PlugFile = ofd.FileName;
                 this.InitProject();
                 this.InformationTree.Nodes.Add(
                     new DocumentElementTreeNode(CoreService.PlugDocument.DocumentElement));
@@ -102,7 +117,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.PerformLayout();
         }
 
-        private void plugDescriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PlugDescriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }

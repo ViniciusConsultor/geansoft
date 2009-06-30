@@ -10,9 +10,10 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
     public partial class AttributeDialog : Form
     {
-        public AttributeDialog(string key, string value)
+        public AttributeDialog(string caption, string key, string value)
         {
             InitializeComponent();
+            this.Text = caption;
             this.Key = key;
             this.Value = value;
             this._attributeKeyLabel.Text = key;
@@ -25,6 +26,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         private void _okButton_Click(object sender, EventArgs e)
         {
             this.Value = this._attributeValueTextbox.Text;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 

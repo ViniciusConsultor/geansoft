@@ -23,7 +23,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             Application.Run(form);
         }
 
-
+        public static string PlugFile { get; set; }
         public static XmlDocument PlugDocument { get; set; }
         public static ApplicationMainForm MainForm { get; private set; }
 

@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this._groupBox = new System.Windows.Forms.GroupBox();
+            this._attributeValueTextbox = new System.Windows.Forms.TextBox();
+            this._attributeKeyLabel = new System.Windows.Forms.Label();
             this._okButton = new System.Windows.Forms.Button();
             this._cancelButton = new System.Windows.Forms.Button();
             this._clearButton = new System.Windows.Forms.Button();
-            this._attributeKeyLabel = new System.Windows.Forms.Label();
-            this._attributeValueTextbox = new System.Windows.Forms.TextBox();
             this._groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +46,24 @@
             this._groupBox.Size = new System.Drawing.Size(324, 112);
             this._groupBox.TabIndex = 0;
             this._groupBox.TabStop = false;
-            this._groupBox.Text = "GroupBox";
+            // 
+            // _attributeValueTextbox
+            // 
+            this._attributeValueTextbox.Location = new System.Drawing.Point(16, 33);
+            this._attributeValueTextbox.Multiline = true;
+            this._attributeValueTextbox.Name = "_attributeValueTextbox";
+            this._attributeValueTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this._attributeValueTextbox.Size = new System.Drawing.Size(290, 69);
+            this._attributeValueTextbox.TabIndex = 0;
+            // 
+            // _attributeKeyLabel
+            // 
+            this._attributeKeyLabel.AutoSize = true;
+            this._attributeKeyLabel.Location = new System.Drawing.Point(15, 18);
+            this._attributeKeyLabel.Name = "_attributeKeyLabel";
+            this._attributeKeyLabel.Size = new System.Drawing.Size(68, 13);
+            this._attributeKeyLabel.TabIndex = 0;
+            this._attributeKeyLabel.Text = "AttributeKey";
             // 
             // _okButton
             // 
@@ -79,24 +96,6 @@
             this._clearButton.UseVisualStyleBackColor = true;
             this._clearButton.Click += new System.EventHandler(this._clearButton_Click);
             // 
-            // _attributeKeyLabel
-            // 
-            this._attributeKeyLabel.AutoSize = true;
-            this._attributeKeyLabel.Location = new System.Drawing.Point(15, 18);
-            this._attributeKeyLabel.Name = "_attributeKeyLabel";
-            this._attributeKeyLabel.Size = new System.Drawing.Size(68, 13);
-            this._attributeKeyLabel.TabIndex = 0;
-            this._attributeKeyLabel.Text = "AttributeKey";
-            // 
-            // _attributeValueTextbox
-            // 
-            this._attributeValueTextbox.Location = new System.Drawing.Point(16, 33);
-            this._attributeValueTextbox.Multiline = true;
-            this._attributeValueTextbox.Name = "_attributeValueTextbox";
-            this._attributeValueTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._attributeValueTextbox.Size = new System.Drawing.Size(290, 69);
-            this._attributeValueTextbox.TabIndex = 0;
-            // 
             // AttributeDialog
             // 
             this.AcceptButton = this._okButton;
@@ -114,6 +113,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AttributeDialog";
             this._groupBox.ResumeLayout(false);
             this._groupBox.PerformLayout();
