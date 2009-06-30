@@ -27,7 +27,11 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 
         void editMenu_Click(object sender, EventArgs e)
         {
-            
+            string key = CoreService.MainForm.InformationTree.SelectedNode.Text;
+            string value = CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text;
+            AttributeDialog dialog = new AttributeDialog(key, value);
+            dialog.StartPosition = FormStartPosition.CenterParent;
+            dialog.ShowDialog(this);
         }
 
         void deleteMenu_Click(object sender, EventArgs e)

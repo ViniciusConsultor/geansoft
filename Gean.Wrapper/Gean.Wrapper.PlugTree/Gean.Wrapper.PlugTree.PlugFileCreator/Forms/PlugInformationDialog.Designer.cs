@@ -1,6 +1,6 @@
 ﻿namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    partial class PlugInitDialog
+    partial class PlugInformationDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -73,7 +73,7 @@
             this._cancelButton.Location = new System.Drawing.Point(491, 356);
             this._cancelButton.Name = "_cancelButton";
             this._cancelButton.Size = new System.Drawing.Size(75, 23);
-            this._cancelButton.TabIndex = 0;
+            this._cancelButton.TabIndex = 1;
             this._cancelButton.Text = "Cancel";
             this._cancelButton.UseVisualStyleBackColor = true;
             this._cancelButton.Click += new System.EventHandler(this._cancelButton_Click);
@@ -114,7 +114,7 @@
             this._parentAsseButton.Location = new System.Drawing.Point(490, 16);
             this._parentAsseButton.Name = "_parentAsseButton";
             this._parentAsseButton.Size = new System.Drawing.Size(55, 24);
-            this._parentAsseButton.TabIndex = 28;
+            this._parentAsseButton.TabIndex = 0;
             this._parentAsseButton.Text = "打开...";
             this._parentAsseButton.UseVisualStyleBackColor = true;
             this._parentAsseButton.Click += new System.EventHandler(this._parentAsseButton_Click);
@@ -140,7 +140,7 @@
             this._descriptionTextbox.Name = "_descriptionTextbox";
             this._descriptionTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this._descriptionTextbox.Size = new System.Drawing.Size(419, 77);
-            this._descriptionTextbox.TabIndex = 26;
+            this._descriptionTextbox.TabIndex = 7;
             // 
             // label7
             // 
@@ -161,7 +161,7 @@
             this._emailTextbox.Location = new System.Drawing.Point(126, 180);
             this._emailTextbox.Name = "_emailTextbox";
             this._emailTextbox.Size = new System.Drawing.Size(419, 21);
-            this._emailTextbox.TabIndex = 24;
+            this._emailTextbox.TabIndex = 6;
             // 
             // label6
             // 
@@ -182,7 +182,7 @@
             this._homesiteTextbox.Location = new System.Drawing.Point(126, 153);
             this._homesiteTextbox.Name = "_homesiteTextbox";
             this._homesiteTextbox.Size = new System.Drawing.Size(419, 21);
-            this._homesiteTextbox.TabIndex = 22;
+            this._homesiteTextbox.TabIndex = 5;
             // 
             // label5
             // 
@@ -203,7 +203,7 @@
             this._authorTextbox.Location = new System.Drawing.Point(126, 126);
             this._authorTextbox.Name = "_authorTextbox";
             this._authorTextbox.Size = new System.Drawing.Size(419, 21);
-            this._authorTextbox.TabIndex = 20;
+            this._authorTextbox.TabIndex = 4;
             // 
             // label4
             // 
@@ -257,7 +257,7 @@
             this._copyrightTextbox.Location = new System.Drawing.Point(126, 99);
             this._copyrightTextbox.Name = "_copyrightTextbox";
             this._copyrightTextbox.Size = new System.Drawing.Size(419, 21);
-            this._copyrightTextbox.TabIndex = 13;
+            this._copyrightTextbox.TabIndex = 3;
             // 
             // _versionTextbox
             // 
@@ -267,7 +267,7 @@
             this._versionTextbox.Location = new System.Drawing.Point(126, 72);
             this._versionTextbox.Name = "_versionTextbox";
             this._versionTextbox.Size = new System.Drawing.Size(419, 21);
-            this._versionTextbox.TabIndex = 12;
+            this._versionTextbox.TabIndex = 2;
             // 
             // _namespaceTextbox
             // 
@@ -277,7 +277,7 @@
             this._namespaceTextbox.Location = new System.Drawing.Point(126, 45);
             this._namespaceTextbox.Name = "_namespaceTextbox";
             this._namespaceTextbox.Size = new System.Drawing.Size(419, 21);
-            this._namespaceTextbox.TabIndex = 15;
+            this._namespaceTextbox.TabIndex = 1;
             // 
             // _parentAsseTextbox
             // 
@@ -296,7 +296,7 @@
             this._clearButton.Location = new System.Drawing.Point(304, 356);
             this._clearButton.Name = "_clearButton";
             this._clearButton.Size = new System.Drawing.Size(75, 23);
-            this._clearButton.TabIndex = 0;
+            this._clearButton.TabIndex = 2;
             this._clearButton.Text = "Clear";
             this._clearButton.UseVisualStyleBackColor = true;
             this._clearButton.Click += new System.EventHandler(this._clearButton_Click);
@@ -316,7 +316,7 @@
             this._plugPlaceButton.Location = new System.Drawing.Point(502, 318);
             this._plugPlaceButton.Name = "_plugPlaceButton";
             this._plugPlaceButton.Size = new System.Drawing.Size(64, 24);
-            this._plugPlaceButton.TabIndex = 30;
+            this._plugPlaceButton.TabIndex = 3;
             this._plugPlaceButton.Text = "浏览...";
             this._plugPlaceButton.UseVisualStyleBackColor = true;
             this._plugPlaceButton.Click += new System.EventHandler(this._plugPlaceButton_Click);
@@ -332,7 +332,7 @@
             this._plugPlaceTextbox.Size = new System.Drawing.Size(411, 21);
             this._plugPlaceTextbox.TabIndex = 29;
             // 
-            // PlugInitDialog
+            // PlugInformationDialog
             // 
             this.AcceptButton = this._okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -349,7 +349,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "PlugInitDialog";
+            this.Name = "PlugInformationDialog";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

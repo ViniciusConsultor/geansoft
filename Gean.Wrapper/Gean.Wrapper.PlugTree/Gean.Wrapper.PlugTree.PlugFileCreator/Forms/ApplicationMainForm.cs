@@ -11,30 +11,56 @@ using System.Xml;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    public partial class _mainForm : Form
+    public partial class ApplicationMainForm : Form
     {
-        public _mainForm()
+        public ApplicationMainForm()
         {
             InitializeComponent();
+
+            this.InformationTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
+            this.ProducerTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
+            this.ConditionTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
+            this.PathTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
+
             TabelLayout();
         }
+
+        public TreeView ProducerTree;
+        public TreeView ConditionTree;
+        public TreeView PathTree;
+        public TreeView InformationTree;
 
         private void 完整新建ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             InitProject();
 
-            PlugInitDialog dialog = new PlugInitDialog();
+            PlugInformationDialog dialog = new PlugInformationDialog();
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 this._fileLabel.Text = dialog.FileName;
-                this._runtimeTree.Nodes.Add(new DocumentElementTreeNode(MainService.PlugDocument.DocumentElement));
+                this.InformationTree.Nodes.Add(new DocumentElementTreeNode(CoreService.PlugDocument.DocumentElement));
             }
         }
 
         private void InitProject()
         {
-            this._runtimeTree.Nodes.Clear();
-            this._pathTree.Nodes.Clear();
+            this.ConditionTree.Nodes.Clear();
+            this.InformationTree.Nodes.Clear();
+            this.PathTree.Nodes.Clear();
+            this.ProducerTree.Nodes.Clear();
+        }
+
+        private void TreeView_MouseDown(object sender, MouseEventArgs e)
+        {
+            TreeView tv = (TreeView)sender;
+            if (e.Button == MouseButtons.Right)
+            {
+                TreeNode tn = tv.GetNodeAt(e.X, e.Y);
+                if (tn != null)
+                {
+                    tv.SelectedNode = tn;
+                }
+            }
         }
 
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
@@ -48,9 +74,10 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             if (ofd.ShowDialog(this) == DialogResult.OK)
             {
                 this._fileLabel.Text = ofd.FileName;
-                MainService.PlugDocument.Load(ofd.FileName);
+                CoreService.PlugDocument.Load(ofd.FileName);
                 this.InitProject();
-                this._runtimeTree.Nodes.Add(new DocumentElementTreeNode(MainService.PlugDocument.DocumentElement));
+                this.InformationTree.Nodes.Add(
+                    new DocumentElementTreeNode(CoreService.PlugDocument.DocumentElement));
             }
 
         }
