@@ -10,9 +10,9 @@ using System.Xml;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    public partial class PlugInitDialog : Form
+    public partial class PlugInformationDialog : Form
     {
-        public PlugInitDialog()
+        public PlugInformationDialog()
         {
             InitializeComponent();
         }
@@ -121,27 +121,27 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 fs.Close();
                 fs.Dispose();
             }
-            MainService.PlugDocument.Load(file);
+            CoreService.PlugDocument.Load(file);
             if (!string.IsNullOrEmpty(this._parentAsseTextbox.Text))
             {
                 string pastr = (new FileInfo(this._parentAsseTextbox.Text)).Name;
-                MainService.PlugDocument.DocumentElement.SetAttribute("parentAssembly", pastr);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("parentAssembly", pastr);
             }
             if (!string.IsNullOrEmpty(this._namespaceTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("namespace", this._namespaceTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("namespace", this._namespaceTextbox.Text);
             if (!string.IsNullOrEmpty(this._versionTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("version", this._versionTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("version", this._versionTextbox.Text);
             if (!string.IsNullOrEmpty(this._copyrightTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("copyright", this._copyrightTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("copyright", this._copyrightTextbox.Text);
             if (!string.IsNullOrEmpty(this._authorTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("author", this._authorTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("author", this._authorTextbox.Text);
             if (!string.IsNullOrEmpty(this._homesiteTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("homesite", this._homesiteTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("homesite", this._homesiteTextbox.Text);
             if (!string.IsNullOrEmpty(this._emailTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("email", this._emailTextbox.Text);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("email", this._emailTextbox.Text);
             if (!string.IsNullOrEmpty(this._descriptionTextbox.Text))
-                MainService.PlugDocument.DocumentElement.SetAttribute("description", this._descriptionTextbox.Text);
-            MainService.PlugDocument.Save(file);
+                CoreService.PlugDocument.DocumentElement.SetAttribute("description", this._descriptionTextbox.Text);
+            CoreService.PlugDocument.Save(file);
         }
 
         private void _clearButton_Click(object sender, EventArgs e)

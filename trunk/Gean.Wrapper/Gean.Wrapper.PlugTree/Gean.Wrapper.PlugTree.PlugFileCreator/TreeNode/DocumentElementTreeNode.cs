@@ -21,7 +21,9 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 nameNode.Nodes.Add(valueNode);
                 this.Nodes.Add(nameNode);
             }
-            this.ContextMenuStrip = new DocumentElementContextMenu(element);
+            this.Expand();
+            DocumentElementContextMenu cm = new DocumentElementContextMenu(element);
+            this.ContextMenuStrip = cm;
         }
     }
 }

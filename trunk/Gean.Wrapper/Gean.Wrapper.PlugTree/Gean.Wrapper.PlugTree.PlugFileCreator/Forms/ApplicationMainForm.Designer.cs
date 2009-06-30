@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    partial class _mainForm
+    partial class ApplicationMainForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(_mainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApplicationMainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建NToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,13 +49,23 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this._fileLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this._runtimeTree = new System.Windows.Forms.TreeView();
-            this._pathTree = new System.Windows.Forms.TreeView();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.InformationTree = new System.Windows.Forms.TreeView();
+            this.PathTree = new System.Windows.Forms.TreeView();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.ProducerTree = new System.Windows.Forms.TreeView();
+            this.ConditionTree = new System.Windows.Forms.TreeView();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -107,7 +117,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             // 从程序集新建AToolStripMenuItem
             // 
             this.从程序集新建AToolStripMenuItem.Name = "从程序集新建AToolStripMenuItem";
-            this.从程序集新建AToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.从程序集新建AToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
             this.从程序集新建AToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.从程序集新建AToolStripMenuItem.Text = "从程序集新建";
             // 
@@ -116,7 +126,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.打开OToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("打开OToolStripMenuItem.Image")));
             this.打开OToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.打开OToolStripMenuItem.Name = "打开OToolStripMenuItem";
-            this.打开OToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.打开OToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
             this.打开OToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.打开OToolStripMenuItem.Text = "打开(&O)";
             this.打开OToolStripMenuItem.Click += new System.EventHandler(this.打开OToolStripMenuItem_Click);
@@ -207,36 +217,86 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._runtimeTree);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this._pathTree);
+            this.splitContainer1.Panel2.Controls.Add(this.PathTree);
             this.splitContainer1.Size = new System.Drawing.Size(632, 399);
-            this.splitContainer1.SplitterDistance = 129;
-            this.splitContainer1.TabIndex = 5;
+            this.splitContainer1.SplitterDistance = 406;
+            this.splitContainer1.TabIndex = 3;
             // 
-            // _runtimeTree
+            // splitContainer2
             // 
-            this._runtimeTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._runtimeTree.Location = new System.Drawing.Point(0, 0);
-            this._runtimeTree.Name = "_runtimeTree";
-            this._runtimeTree.Size = new System.Drawing.Size(632, 129);
-            this._runtimeTree.TabIndex = 0;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.InformationTree);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
+            this.splitContainer2.Size = new System.Drawing.Size(406, 399);
+            this.splitContainer2.SplitterDistance = 99;
+            this.splitContainer2.TabIndex = 6;
+            // 
+            // _informationTree
+            // 
+            this.InformationTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.InformationTree.Location = new System.Drawing.Point(0, 0);
+            this.InformationTree.Name = "_informationTree";
+            this.InformationTree.Size = new System.Drawing.Size(406, 99);
+            this.InformationTree.TabIndex = 0;
             // 
             // _pathTree
             // 
-            this._pathTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._pathTree.Location = new System.Drawing.Point(0, 0);
-            this._pathTree.Name = "_pathTree";
-            this._pathTree.Size = new System.Drawing.Size(632, 266);
-            this._pathTree.TabIndex = 0;
+            this.PathTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PathTree.Location = new System.Drawing.Point(0, 0);
+            this.PathTree.Name = "_pathTree";
+            this.PathTree.Size = new System.Drawing.Size(222, 399);
+            this.PathTree.TabIndex = 1;
             // 
-            // _mainForm
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.ProducerTree);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.ConditionTree);
+            this.splitContainer3.Size = new System.Drawing.Size(406, 296);
+            this.splitContainer3.SplitterDistance = 204;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // _producerTree
+            // 
+            this.ProducerTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProducerTree.Location = new System.Drawing.Point(0, 0);
+            this.ProducerTree.Name = "_producerTree";
+            this.ProducerTree.Size = new System.Drawing.Size(204, 296);
+            this.ProducerTree.TabIndex = 0;
+            // 
+            // _conditionTree
+            // 
+            this.ConditionTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ConditionTree.Location = new System.Drawing.Point(0, 0);
+            this.ConditionTree.Name = "_conditionTree";
+            this.ConditionTree.Size = new System.Drawing.Size(198, 296);
+            this.ConditionTree.TabIndex = 0;
+            // 
+            // ApplicationMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -247,9 +307,10 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "_mainForm";
+            this.Name = "ApplicationMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Plug File Creator";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -257,6 +318,12 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,8 +350,8 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         private ToolStripMenuItem 关于AToolStripMenuItem;
         private ToolStripStatusLabel _fileLabel;
         private SplitContainer splitContainer1;
-        private TreeView _runtimeTree;
-        private TreeView _pathTree;
+        private SplitContainer splitContainer2;
+        private SplitContainer splitContainer3;
     }
 }
 
