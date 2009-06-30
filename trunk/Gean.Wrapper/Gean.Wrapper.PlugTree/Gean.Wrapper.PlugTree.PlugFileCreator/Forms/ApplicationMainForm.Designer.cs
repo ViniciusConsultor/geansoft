@@ -112,7 +112,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.完整新建ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.完整新建ToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.完整新建ToolStripMenuItem.Text = "完整新建";
-            this.完整新建ToolStripMenuItem.Click += new System.EventHandler(this.完整新建ToolStripMenuItem_Click);
+            this.完整新建ToolStripMenuItem.Click += new System.EventHandler(this.NewPlugToolStripMenuItem_Click);
             // 
             // 从程序集新建AToolStripMenuItem
             // 
@@ -129,7 +129,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.打开OToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
             this.打开OToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.打开OToolStripMenuItem.Text = "打开(&O)";
-            this.打开OToolStripMenuItem.Click += new System.EventHandler(this.打开OToolStripMenuItem_Click);
+            this.打开OToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 

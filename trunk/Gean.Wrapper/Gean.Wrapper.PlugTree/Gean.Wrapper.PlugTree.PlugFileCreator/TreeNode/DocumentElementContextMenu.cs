@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
@@ -12,10 +13,8 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         ToolStripMenuItem deleteMenu = new ToolStripMenuItem("删除");
         ToolStripMenuItem editMenu = new ToolStripMenuItem("修改");
 
-        public XmlElement Element { get; private set; }
-        public DocumentElementContextMenu(XmlElement element)
+        public DocumentElementContextMenu()
         {
-            this.Element = element;
             this.Items.Add(addMenu);
             this.Items.Add(deleteMenu);
             this.Items.Add(editMenu);
@@ -29,9 +28,15 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         {
             string key = CoreService.MainForm.InformationTree.SelectedNode.Text;
             string value = CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text;
-            AttributeDialog dialog = new AttributeDialog(key, value);
+            AttributeDialog dialog = new AttributeDialog(key, key, value);
             dialog.StartPosition = FormStartPosition.CenterParent;
-            dialog.ShowDialog(this);
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                XmlAttribute attr = CoreService.PlugDocument.DocumentElement.Attributes[key];
+                Debug.Assert(attr != null, "XmlAttribute(" + key + ") is null!");
+                attr.InnerText = dialog.Value;
+                CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text = dialog.Value;
+            }
         }
 
         void deleteMenu_Click(object sender, EventArgs e)
