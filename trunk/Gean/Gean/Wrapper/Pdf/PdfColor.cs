@@ -7,7 +7,7 @@ namespace Gean.Pdf
     /// <summary>
     /// The Color to be used while drawing
     /// </summary>
-    public struct PdfColorSpec
+    public struct PdfColor
     {
         private double red1;
         private double green1;
@@ -15,7 +15,7 @@ namespace Gean.Pdf
         public string red;
         public string green;
         public string blue;
-        public PdfColorSpec(uint R, uint G, uint B)
+        public PdfColor(uint R, uint G, uint B)
         {
             //Convert in the range 0.0 to 1.0
             red1 = R; green1 = G; blue1 = B;

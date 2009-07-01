@@ -32,13 +32,12 @@ namespace Gean.Pdf
         /// <summary>
         /// Get the Content Dictionary
         /// </summary>
-        public byte[] GetContentDict(long filePos, out int size)
+        public byte[] GetContentBytes(long filePos, out int size)
         {
             contentDict = string.Format("{0} 0 obj<</Length {1}>>stream\r\n{2}\nendstream\rendobj\r",
                 this.objectNum, contentStream.Length, contentStream);
 
             return GetUTF8Bytes(contentDict, filePos, out size);
-
         }
 
     }
