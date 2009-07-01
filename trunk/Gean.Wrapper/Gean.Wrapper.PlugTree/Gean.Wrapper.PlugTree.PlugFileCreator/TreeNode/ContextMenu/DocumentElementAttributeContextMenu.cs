@@ -7,14 +7,18 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    class DocumentElementContextMenu : ElementContextMenu
+    class DocumentElementAttributeContextMenu : ElementContextMenu
     {
+        protected override void MenuItemBuilder()
+        {
+            //
+        }
+
         protected override void viewMenu_Click(object sender, EventArgs e)
         {
             string key = CoreService.MainForm.InformationTree.SelectedNode.Text;
             string value = CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text;
             AttributeDialog dialog = new AttributeDialog(key, key, value);
-            dialog.StartPosition = FormStartPosition.CenterParent;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 XmlAttribute attr = CoreService.PlugDocument.DocumentElement.Attributes[key];
@@ -22,11 +26,6 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 attr.InnerText = dialog.Value;
                 CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text = dialog.Value;
             }
-        }
-
-        protected override void MenuItemBuilder()
-        {
-            //throw new NotImplementedException();
         }
     }
 }

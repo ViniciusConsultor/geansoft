@@ -11,19 +11,20 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public DocumentElementTreeNode(XmlElement element)
             : base(element.LocalName)
         {
-            DocumentElementContextMenu cm = new DocumentElementContextMenu();
+            DocumentElementContextMenu decm = new DocumentElementContextMenu();
+            DocumentElementAttributeContextMenu deacom = new DocumentElementAttributeContextMenu();
             foreach (XmlAttribute attr in element.Attributes)
             {
                 TreeNode nameNode = new TreeNode();
                 nameNode.Text = attr.LocalName;
-                nameNode.ContextMenuStrip = cm;
+                nameNode.ContextMenuStrip = deacom;
 
                 TreeNode valueNode = new TreeNode();
                 valueNode.Text = attr.Value;
                 nameNode.Nodes.Add(valueNode);
                 this.Nodes.Add(nameNode);
             }
-            this.ContextMenuStrip = cm;
+            this.ContextMenuStrip = decm;
             this.Expand();
         }
     }
