@@ -7,24 +7,9 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    class DocumentElementContextMenu : ContextMenuStrip
+    class DocumentElementContextMenu : ElementContextMenu
     {
-        ToolStripMenuItem addMenu = new ToolStripMenuItem("增加");
-        ToolStripMenuItem deleteMenu = new ToolStripMenuItem("删除");
-        ToolStripMenuItem editMenu = new ToolStripMenuItem("修改");
-
-        public DocumentElementContextMenu()
-        {
-            this.Items.Add(addMenu);
-            this.Items.Add(deleteMenu);
-            this.Items.Add(editMenu);
-
-            addMenu.Click += new EventHandler(addMenu_Click);
-            deleteMenu.Click += new EventHandler(deleteMenu_Click);
-            editMenu.Click += new EventHandler(editMenu_Click);
-        }
-
-        void editMenu_Click(object sender, EventArgs e)
+        protected override void viewMenu_Click(object sender, EventArgs e)
         {
             string key = CoreService.MainForm.InformationTree.SelectedNode.Text;
             string value = CoreService.MainForm.InformationTree.SelectedNode.Nodes[0].Text;
@@ -39,14 +24,9 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             }
         }
 
-        void deleteMenu_Click(object sender, EventArgs e)
+        protected override void MenuItemBuilder()
         {
-            throw new NotImplementedException();
-        }
-
-        void addMenu_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
