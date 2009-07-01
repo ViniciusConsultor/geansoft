@@ -51,12 +51,6 @@
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\CatalogDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\PdfBase.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\InfoDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\internal.cs" />
-    <Compile Include="Wrapper\Pdf\PdfDocument.cs" />
-    <Compile Include="Wrapper\Pdf\PdfTextAndTables.cs" />
     <Compile Include="_Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,13 +96,6 @@
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Wrapper\Pdf\Dictionary\PageTreeDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\PageDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\ContentDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\Dictionary\FontDictionary.cs" />
-    <Compile Include="Wrapper\Pdf\PdfColorSpec.cs" />
-    <Compile Include="Wrapper\Pdf\PdfPageSize.cs" />
-    <Compile Include="Wrapper\Pdf\PdfTableParams.cs" />
     <None Include="Wrapper\Xml\AbstractXml.cd" />
   </ItemGroup>
   <ItemGroup>

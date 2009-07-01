@@ -21,7 +21,7 @@ namespace Gean.Pdf
         private uint textX, textY;
         private string tableStream;
         private uint tableWidth;
-        private PdfColorSpec cColor;
+        private PdfColor cColor;
         private string textStream;
 
         private uint[] TimesRomanWidth ={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,250,333,408,500,
@@ -44,7 +44,7 @@ namespace Gean.Pdf
         /// <summary>
         /// Set the parameters of the table
         /// </summary>
-        public bool SetParams(PdfTableParams table, PdfColorSpec cellColor, TextAlignByTable alignment, uint cellPadding)
+        public bool SetParams(PdfTableParams table, PdfColor cellColor, TextAlignByTable alignment, uint cellPadding)
         {
             if ((table.yPos > (pSize.yHeight - pSize.topMargin)) ||
                 (tableWidth > (pSize.xWidth - (pSize.leftMargin + pSize.rightMargin))))
@@ -340,7 +340,7 @@ namespace Gean.Pdf
         /// Call to end the Table Creation and Get the Stream Data
         /// </summary>
         /// <returns></returns>
-        public string EndTable(PdfColorSpec lineColor)
+        public string EndTable(PdfColor lineColor)
         {
             string tableCode;
             string rect = null;
