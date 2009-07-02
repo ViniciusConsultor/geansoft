@@ -7,15 +7,10 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    class DocumentElementContextMenu : ElementContextMenu
+    class RootCtMenu : ElementContextMenu
     {
-        protected override void viewMenu_Click(object sender, EventArgs e)
-        {
-        }
-
         protected override void MenuItemBuilder()
         {
-            this.viewMenu.Enabled = false;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 this._fileLabel.Text = dialog.FileName;
-                this.InformationTree.Nodes.Add(new DocumentElementTreeNode(CoreService.PlugDocument.DocumentElement));
+                this.InformationTree.Nodes.Add(new RootNode(CoreService.PlugDocument.DocumentElement));
             }
         }
 
@@ -66,13 +66,13 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 
         private void TreeView_MouseDown(object sender, MouseEventArgs e)
         {
-            TreeView tv = (TreeView)sender;
+            TreeView treeview = (TreeView)sender;
             if (e.Button == MouseButtons.Right)
             {
-                TreeNode tn = tv.GetNodeAt(e.X, e.Y);
+                TreeNode tn = treeview.GetNodeAt(e.X, e.Y);
                 if (tn != null)
                 {
-                    tv.SelectedNode = tn;
+                    treeview.SelectedNode = tn;
                 }
             }
         }
@@ -91,8 +91,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 CoreService.PlugDocument.Load(ofd.FileName);
                 CoreService.PlugFile = ofd.FileName;
                 this.InitProject();
-                this.InformationTree.Nodes.Add(
-                    new DocumentElementTreeNode(CoreService.PlugDocument.DocumentElement));
+                this.InformationTree.Nodes.Add(new RootNode(CoreService.PlugDocument.DocumentElement));
             }
 
         }

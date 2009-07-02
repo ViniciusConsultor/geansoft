@@ -105,7 +105,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 xtw.Formatting = Formatting.Indented;
                 xtw.WriteStartDocument();
                 {
-                    xtw.WriteStartElement("DocumentElement");
+                    xtw.WriteStartElement("Root");
                     {
                         xtw.WriteStartElement("Runtime");
                         xtw.WriteEndElement();

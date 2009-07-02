@@ -43,7 +43,7 @@
             this._groupBox.Controls.Add(this._attributeKeyLabel);
             this._groupBox.Location = new System.Drawing.Point(12, 10);
             this._groupBox.Name = "_groupBox";
-            this._groupBox.Size = new System.Drawing.Size(324, 112);
+            this._groupBox.Size = new System.Drawing.Size(365, 112);
             this._groupBox.TabIndex = 0;
             this._groupBox.TabStop = false;
             // 
@@ -53,7 +53,7 @@
             this._attributeValueTextbox.Multiline = true;
             this._attributeValueTextbox.Name = "_attributeValueTextbox";
             this._attributeValueTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._attributeValueTextbox.Size = new System.Drawing.Size(290, 69);
+            this._attributeValueTextbox.Size = new System.Drawing.Size(336, 69);
             this._attributeValueTextbox.TabIndex = 0;
             // 
             // _attributeKeyLabel
@@ -67,7 +67,7 @@
             // 
             // _okButton
             // 
-            this._okButton.Location = new System.Drawing.Point(180, 130);
+            this._okButton.Location = new System.Drawing.Point(221, 130);
             this._okButton.Name = "_okButton";
             this._okButton.Size = new System.Drawing.Size(75, 23);
             this._okButton.TabIndex = 0;
@@ -78,7 +78,7 @@
             // _cancelButton
             // 
             this._cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._cancelButton.Location = new System.Drawing.Point(261, 130);
+            this._cancelButton.Location = new System.Drawing.Point(302, 130);
             this._cancelButton.Name = "_cancelButton";
             this._cancelButton.Size = new System.Drawing.Size(75, 23);
             this._cancelButton.TabIndex = 1;
@@ -102,7 +102,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._cancelButton;
-            this.ClientSize = new System.Drawing.Size(348, 166);
+            this.ClientSize = new System.Drawing.Size(389, 166);
             this.ControlBox = false;
             this.Controls.Add(this._cancelButton);
             this.Controls.Add(this._clearButton);
