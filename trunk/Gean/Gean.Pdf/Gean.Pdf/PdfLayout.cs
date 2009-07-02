@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Drawing;
 
 namespace Gean.Pdf
 {
@@ -44,7 +45,7 @@ namespace Gean.Pdf
         /// <summary>
         /// Set the parameters of the table
         /// </summary>
-        public bool SetParams(PdfTableParams table, PdfColor cellColor, TextAlignByTable alignment, uint cellPadding)
+        public bool SetParams(PdfTableParams table, PdfColor cellColor, PdfTableTextAlign alignment, uint cellPadding)
         {
             if ((table.Y > (pSize.Height - pSize.Top)) ||
                 (tableWidth > (pSize.Width - (pSize.Left + pSize.Right))))
@@ -54,13 +55,13 @@ namespace Gean.Pdf
             tableWidth = table.Width;
             switch (alignment)
             {
-                case (TextAlignByTable.LeftAlign):
+                case (PdfTableTextAlign.Left):
                     tableX = pSize.Left;
                     break;
-                case (TextAlignByTable.CenterAlign):
+                case (PdfTableTextAlign.Center):
                     tableX = (pSize.Width - (pSize.Left + pSize.Right) - tableWidth) / 2;
                     break;
-                case (TextAlignByTable.RightAlign):
+                case (PdfTableTextAlign.Right):
                     tableX = pSize.Width - (pSize.Right + tableWidth);
                     break;
             }
@@ -151,6 +152,76 @@ namespace Gean.Pdf
             }
             return text;
         }
+
+        private SizeF GetStringLength(string text, Font font)
+        {
+            Graphics g = Graphics.FromHwnd(new IntPtr());
+            return g.MeasureString(text, font);
+            //string infoString = "";  // enough space for one line of output
+            //int ascent;             // font family ascent in design units
+            //float ascentPixel;      // ascent converted to pixels
+            //int descent;            // font family descent in design units
+            //float descentPixel;     // descent converted to pixels
+            //int lineSpacing;        // font family line spacing in design units
+            //float lineSpacingPixel; // line spacing converted to pixels
+
+            //PointF pointF = new PointF(10, 10);
+            //SolidBrush solidBrush = new SolidBrush(Color.Black);
+
+            //// Display the font size in pixels.
+            //infoString = "font.Size returns " + font.Size + ".";
+            //e.Graphics.DrawString(infoString, font, solidBrush, pointF);
+
+            //// Move down one line.
+            //pointF.Y += font.Height;
+
+            //// Display the font family em height in design units.
+            //infoString = "fontFamily.GetEmHeight() returns " +
+            //   fontFamily.GetEmHeight(FontStyle.Regular) + ".";
+            //e.Graphics.DrawString(infoString, font, solidBrush, pointF);
+
+            //// Move down two lines.
+            //pointF.Y += 2 * font.Height;
+
+            //// Display the ascent in design units and pixels.
+            //ascent = fontFamily.GetCellAscent(FontStyle.Regular);
+
+            //// 14.484375 = 16.0 * 1854 / 2048
+            //ascentPixel =
+            //   font.Size * ascent / fontFamily.GetEmHeight(FontStyle.Regular);
+            //infoString = "The ascent is " + ascent + " design units, " + ascentPixel +
+            //   " pixels.";
+            //e.Graphics.DrawString(infoString, font, solidBrush, pointF);
+
+            //// Move down one line.
+            //pointF.Y += font.Height;
+
+            //// Display the descent in design units and pixels.
+            //descent = fontFamily.GetCellDescent(FontStyle.Regular);
+
+            //// 3.390625 = 16.0 * 434 / 2048
+            //descentPixel =
+            //   font.Size * descent / fontFamily.GetEmHeight(FontStyle.Regular);
+            //infoString = "The descent is " + descent + " design units, " +
+            //   descentPixel + " pixels.";
+            //e.Graphics.DrawString(infoString, font, solidBrush, pointF);
+
+            //// Move down one line.
+            //pointF.Y += font.Height;
+
+            //// Display the line spacing in design units and pixels.
+            //lineSpacing = fontFamily.GetLineSpacing(FontStyle.Regular);
+
+            //// 18.398438 = 16.0 * 2355 / 2048
+            //lineSpacingPixel =
+            //font.Size * lineSpacing / fontFamily.GetEmHeight(FontStyle.Regular);
+            //infoString = "The line spacing is " + lineSpacing + " design units, " +
+            //   lineSpacingPixel + " pixels.";
+            //e.Graphics.DrawString(infoString, font, solidBrush, pointF);
+
+
+
+        }
         /// <summary>
         /// Get the length of the string in points
         /// </summary>
@@ -159,14 +230,16 @@ namespace Gean.Pdf
         /// <returns></returns>
         private uint GetStringLength(string text, uint fontSize)
         {
-            char[] cArray = text.ToCharArray();
-            uint cWidth = 0;
-            foreach (char c in cArray)
-            {
-                cWidth += TimesRomanWidth[c];
-            }
-            uint k = (cWidth * fontSize / 1000);
-            return (cWidth * fontSize / 1000);
+            //return 10;
+            return Convert.ToUInt32( this.GetStringLength(text, new Font("Arial", fontSize)).Width);
+            //char[] cArray = text.ToCharArray();
+            //uint cWidth = 0;
+            //foreach (char c in cArray)
+            //{
+            //    cWidth += TimesRomanWidth[c];
+            //}
+            //uint k = (cWidth * fontSize / 1000);
+            //return (cWidth * fontSize / 1000);
         }
         /// <summary>
         /// Add One row to the table
@@ -177,7 +250,7 @@ namespace Gean.Pdf
         /// <param name="alignment"></param>
         /// <param name="rowText"></param>
         /// <returns></returns>
-        public bool AddRow(bool textWrap, uint fontSize, string fontName, TextAlignByTable[] alignment, params string[] rowText)
+        public bool AddRow(bool textWrap, uint fontSize, string fontName, PdfTableTextAlign[] alignment, params string[] rowText)
         {
             if (rowText.Length > numColumn)
                 return false;
@@ -212,13 +285,13 @@ namespace Gean.Pdf
                         {
                             switch (alignment[column])
                             {
-                                case (TextAlignByTable.LeftAlign):
+                                case (PdfTableTextAlign.Left):
                                     x = startX - colWidth[column] + cPadding;
                                     break;
-                                case (TextAlignByTable.CenterAlign):
+                                case (PdfTableTextAlign.Center):
                                     x = startX - (colWidth[column] + GetStringLength(text[column][lines], fontSize)) / 2;
                                     break;
-                                case (TextAlignByTable.RightAlign):
+                                case (PdfTableTextAlign.Right):
                                     x = startX - GetStringLength(text[column][lines], fontSize) - cPadding;
                                     break;
                             };
@@ -264,13 +337,13 @@ namespace Gean.Pdf
                     {
                         switch (alignment[column])
                         {
-                            case (TextAlignByTable.LeftAlign):
+                            case (PdfTableTextAlign.Left):
                                 x = startX - colWidth[column] + cPadding;
                                 break;
-                            case (TextAlignByTable.CenterAlign):
+                            case (PdfTableTextAlign.Center):
                                 x = startX - (colWidth[column] + GetStringLength(rowText[column], fontSize)) / 2;
                                 break;
-                            case (TextAlignByTable.RightAlign):
+                            case (PdfTableTextAlign.Right):
                                 x = startX - GetStringLength(rowText[column], fontSize) - cPadding;
                                 break;
                         };
@@ -303,7 +376,7 @@ namespace Gean.Pdf
         /// start the Page Text element at the X Y position
         /// </summary>
         /// <returns></returns>
-        public void AddText(uint X, uint Y, string text, uint fontSize, string fontName, TextAlignByTable alignment)
+        public void AddText(uint X, uint Y, string text, uint fontSize, string fontName, PdfTableTextAlign alignment)
         {
             Exception invalidPoints = new Exception("The X Y cordinate outof Page Boundary");
             if (X > pSize.Width || Y > pSize.Height)
@@ -311,13 +384,13 @@ namespace Gean.Pdf
             uint startX = 0;
             switch (alignment)
             {
-                case (TextAlignByTable.LeftAlign):
+                case (PdfTableTextAlign.Left):
                     startX = X;
                     break;
-                case (TextAlignByTable.CenterAlign):
+                case (PdfTableTextAlign.Center):
                     startX = X - (GetStringLength(text, fontSize)) / 2;
                     break;
-                case (TextAlignByTable.RightAlign):
+                case (PdfTableTextAlign.Right):
                     startX = X - GetStringLength(text, fontSize);
                     break;
             };
@@ -395,8 +468,10 @@ namespace Gean.Pdf
     /// <summary>
     /// Used with the Text inside a Table
     /// </summary>
-    public enum TextAlignByTable
+    public enum PdfTableTextAlign
     {
-        LeftAlign, CenterAlign, RightAlign
+        Left,
+        Center,
+        Right
     }
 }
