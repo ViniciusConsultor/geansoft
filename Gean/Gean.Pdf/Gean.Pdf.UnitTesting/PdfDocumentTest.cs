@@ -1,6 +1,7 @@
 ﻿using Gean.Pdf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System;
 namespace Gean.FrameworkUnitTesting
 {
 
@@ -120,8 +121,8 @@ namespace Gean.FrameworkUnitTesting
             PdfLayout textAndtable = new PdfLayout(pSize);
 
             //Add text to the page
-            string str = "Create a Text And Table Object that present the elements in the page";
-            textAndtable.AddText(100, 150, str, 15, "Arial", TextAlignByTable.CenterAlign);
+            string str = DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString();
+            textAndtable.AddText(100, 150, str, 40, "Arial", PdfTableTextAlign.Center);
 
             //Create the array for alignment value.
 
@@ -129,9 +130,9 @@ namespace Gean.FrameworkUnitTesting
 
             //of the table, here we have two columns
 
-            TextAlignByTable[] align = new TextAlignByTable[2];
-            align[0] = TextAlignByTable.LeftAlign;
-            align[1] = TextAlignByTable.LeftAlign;
+            PdfTableTextAlign[] align = new PdfTableTextAlign[2];
+            align[0] = PdfTableTextAlign.Left;
+            align[1] = PdfTableTextAlign.Left;
 
             //Specify the color for the cell and the line
 
@@ -147,7 +148,7 @@ namespace Gean.FrameworkUnitTesting
 
             //Set the parameters of this table
 
-            textAndtable.SetParams(table, cellColor, TextAlignByTable.CenterAlign, 3);
+            textAndtable.SetParams(table, cellColor, PdfTableTextAlign.Center, 3);
             textAndtable.AddRow(false, 10, "T1", align, "First Column", "Second Column");
             textAndtable.AddRow(false, 10, "T1", align, "Second Row", "Second Row");
 
