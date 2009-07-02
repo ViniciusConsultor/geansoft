@@ -11,16 +11,8 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public ElementContextMenu()
         {
             this.MenuItemBuilder();
-            this.Items.Add(new ToolStripSeparator());
-            this.Items.Add(viewMenu);
-            viewMenu.Click += new EventHandler(viewMenu_Click);
         }
 
         abstract protected void MenuItemBuilder();
-
-
-        protected ToolStripMenuItem viewMenu = new ToolStripMenuItem("View(&V)");
-        abstract protected void viewMenu_Click(object sender, EventArgs e);
-
     }
 }

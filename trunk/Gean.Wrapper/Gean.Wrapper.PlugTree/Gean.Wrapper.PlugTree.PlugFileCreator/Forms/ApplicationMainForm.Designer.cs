@@ -51,10 +51,10 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.InformationTree = new System.Windows.Forms.TreeView();
-            this.PathTree = new System.Windows.Forms.TreeView();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.ProducerTree = new System.Windows.Forms.TreeView();
             this.ConditionTree = new System.Windows.Forms.TreeView();
+            this.PathTree = new System.Windows.Forms.TreeView();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -244,24 +244,16 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer2.Size = new System.Drawing.Size(406, 399);
-            this.splitContainer2.SplitterDistance = 99;
+            this.splitContainer2.SplitterDistance = 127;
             this.splitContainer2.TabIndex = 6;
             // 
-            // _informationTree
+            // InformationTree
             // 
             this.InformationTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.InformationTree.Location = new System.Drawing.Point(0, 0);
-            this.InformationTree.Name = "_informationTree";
-            this.InformationTree.Size = new System.Drawing.Size(406, 99);
+            this.InformationTree.Name = "InformationTree";
+            this.InformationTree.Size = new System.Drawing.Size(406, 127);
             this.InformationTree.TabIndex = 0;
-            // 
-            // _pathTree
-            // 
-            this.PathTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PathTree.Location = new System.Drawing.Point(0, 0);
-            this.PathTree.Name = "_pathTree";
-            this.PathTree.Size = new System.Drawing.Size(222, 399);
-            this.PathTree.TabIndex = 1;
             // 
             // splitContainer3
             // 
@@ -276,25 +268,33 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.ConditionTree);
-            this.splitContainer3.Size = new System.Drawing.Size(406, 296);
+            this.splitContainer3.Size = new System.Drawing.Size(406, 268);
             this.splitContainer3.SplitterDistance = 204;
             this.splitContainer3.TabIndex = 0;
             // 
-            // _producerTree
+            // ProducerTree
             // 
             this.ProducerTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProducerTree.Location = new System.Drawing.Point(0, 0);
-            this.ProducerTree.Name = "_producerTree";
-            this.ProducerTree.Size = new System.Drawing.Size(204, 296);
+            this.ProducerTree.Name = "ProducerTree";
+            this.ProducerTree.Size = new System.Drawing.Size(204, 268);
             this.ProducerTree.TabIndex = 0;
             // 
-            // _conditionTree
+            // ConditionTree
             // 
             this.ConditionTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ConditionTree.Location = new System.Drawing.Point(0, 0);
-            this.ConditionTree.Name = "_conditionTree";
-            this.ConditionTree.Size = new System.Drawing.Size(198, 296);
+            this.ConditionTree.Name = "ConditionTree";
+            this.ConditionTree.Size = new System.Drawing.Size(198, 268);
             this.ConditionTree.TabIndex = 0;
+            // 
+            // PathTree
+            // 
+            this.PathTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PathTree.Location = new System.Drawing.Point(0, 0);
+            this.PathTree.Name = "PathTree";
+            this.PathTree.Size = new System.Drawing.Size(222, 399);
+            this.PathTree.TabIndex = 1;
             // 
             // ApplicationMainForm
             // 
