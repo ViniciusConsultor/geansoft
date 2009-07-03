@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    class RootAttributeCtMenu : ElementContextMenu
+    class RootAttributeCtMenu : BaseContextMenu
     {
         protected override void MenuItemBuilder()
         {

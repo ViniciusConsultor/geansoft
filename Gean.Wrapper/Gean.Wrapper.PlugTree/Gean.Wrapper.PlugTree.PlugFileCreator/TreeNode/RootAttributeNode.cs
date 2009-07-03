@@ -8,8 +8,8 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
     class RootAttributeNode : TreeNode
     {
-        public RootAttributeNode(XmlAttribute attr)
-            : base(attr.LocalName + " | " + attr.Value)
+        public RootAttributeNode(XmlNode node)
+            : base(node.LocalName + " | " + node.Value)
         {
             RootAttributeCtMenu menu = new RootAttributeCtMenu();
             this.ContextMenuStrip = menu;

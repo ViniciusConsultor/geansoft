@@ -11,12 +11,12 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public RootNode(XmlElement element)
             : base(element.LocalName)
         {
-            RootCtMenu menu = new RootCtMenu();
             foreach (XmlAttribute attr in element.Attributes)
             {
                 RootAttributeNode node = new RootAttributeNode(attr);
                 this.Nodes.Add(node);
             }
+            RootCtMenu menu = new RootCtMenu();
             this.ContextMenuStrip = menu;
             this.Expand();
         }
