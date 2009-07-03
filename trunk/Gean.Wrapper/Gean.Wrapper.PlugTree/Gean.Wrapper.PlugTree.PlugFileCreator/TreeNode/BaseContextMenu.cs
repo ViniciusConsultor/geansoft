@@ -5,10 +5,10 @@ using System.Windows.Forms;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    abstract class ElementContextMenu : ContextMenuStrip
+    abstract class BaseContextMenu : ContextMenuStrip
     {
 
-        public ElementContextMenu()
+        public BaseContextMenu()
         {
             this.MenuItemBuilder();
         }

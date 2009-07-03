@@ -16,6 +16,33 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         {
             InitializeComponent();
         }
+        public PlugInformationDialog(XmlElement element)
+        {
+            InitializeComponent();
+
+            this.FileName = CoreService.PlugFile;
+
+            this._authorTextbox.Text = this.GetAttribute(element, "author");
+            this._copyrightTextbox.Text = this.GetAttribute(element, "copyright");
+            this._descriptionTextbox.Text = this.GetAttribute(element, "description");
+            this._emailTextbox.Text = this.GetAttribute(element, "email");
+            this._homesiteTextbox.Text = this.GetAttribute(element, "homesite");
+            this._namespaceTextbox.Text = this.GetAttribute(element, "namespace");
+            this._parentAsseTextbox.Text = this.GetAttribute(element, "parentAssembly");
+            this._versionTextbox.Text = this.GetAttribute(element, "version");
+
+            this._plugPlaceTextbox.Text = CoreService.PlugFile;
+        }
+
+        private string GetAttribute(XmlElement element, string attributeName)
+        {
+            string value = element.GetAttribute(attributeName);
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
+            return " ";
+        }
 
         public string FileName { get; private set; }
 
@@ -46,11 +73,20 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         {
             if (VerifyInput())
             {
-                string file = Path.Combine(this._plugPlaceTextbox.Text, this._namespaceTextbox.Text + ".gplug");
-                this.CreateNewPlugFile(file);
-                MessageBox.Show(this, file + " has already Created!", "Create", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                if (CoreService.PlugDocument.DocumentElement == null)
+                {
+                    string file = Path.Combine(this._plugPlaceTextbox.Text, this._namespaceTextbox.Text + ".gplug");
+                    this.CreateNewPlugFile(file);
+                    MessageBox.Show(this, file + " has already Created!", "Create", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    CoreService.PlugDocument.Save(CoreService.PlugFile);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
         }
 
@@ -98,7 +134,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 
         private void CreateNewPlugFile(string file)
         {
-            File.Delete(file);
+            //File.Delete(file);
             using (FileStream fs = File.Create(file))
             {
                 XmlTextWriter xtw = new XmlTextWriter(fs, Encoding.UTF8);
