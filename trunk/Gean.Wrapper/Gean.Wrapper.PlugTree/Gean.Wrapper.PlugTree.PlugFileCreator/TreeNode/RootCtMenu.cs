@@ -19,6 +19,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         void item_Click(object sender, EventArgs e)
         {
             PlugInformationDialog dialog = new PlugInformationDialog(CoreService.PlugDocument.DocumentElement);
+            dialog.StartPosition = FormStartPosition.CenterScreen;
             dialog.ShowDialog(this);
         }
     }

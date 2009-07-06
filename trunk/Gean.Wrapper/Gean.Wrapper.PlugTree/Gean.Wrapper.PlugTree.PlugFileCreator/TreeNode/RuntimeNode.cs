@@ -11,6 +11,15 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
         public RuntimeNode(XmlNode node)
             : base(node.LocalName)
         {
+            TreeNode treenode = new TreeNode();
+
+            foreach (XmlNode xmlnode in node.ChildNodes)
+            {
+                if (xmlnode.NodeType == XmlNodeType.Element)
+                {
+
+                }
+            }
 
         }
     }
