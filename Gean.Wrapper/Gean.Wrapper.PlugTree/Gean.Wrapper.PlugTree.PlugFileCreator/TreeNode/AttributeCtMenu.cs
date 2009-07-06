@@ -7,8 +7,14 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.PlugTree.PlugFileCreator
 {
-    class RootAttributeCtMenu : BaseContextMenu
+    class AttributeCtMenu : BaseContextMenu
     {
+        protected XmlElement _CurrElement;
+        public AttributeCtMenu(XmlElement element)
+            : base()
+        {
+            this._CurrElement = element;
+        }
         protected override void MenuItemBuilder()
         {
             ToolStripMenuItem deleteMenu = new ToolStripMenuItem("Delete(&D)");
@@ -29,7 +35,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             string value = pair[1].Trim();
 
             CoreService.MainForm.InformationTree.Nodes[0].Nodes.RemoveAt(i);
-            CoreService.PlugDocument.DocumentElement.Attributes.RemoveNamedItem(key);
+            this._CurrElement.Attributes.RemoveNamedItem(key);
         }
 
         protected virtual void viewMenu_Click(object sender, EventArgs e)
@@ -40,7 +46,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
             AttributeDialog dialog = new AttributeDialog(key, key, value);
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                XmlAttribute attr = CoreService.PlugDocument.DocumentElement.Attributes[key];
+                XmlAttribute attr = this._CurrElement.Attributes[key];
                 Debug.Assert(attr != null, "XmlAttribute(" + key + ") is null!");
                 attr.InnerText = dialog.Value;
                 CoreService.MainForm.InformationTree.SelectedNode.Text = key + " | " + dialog.Value;

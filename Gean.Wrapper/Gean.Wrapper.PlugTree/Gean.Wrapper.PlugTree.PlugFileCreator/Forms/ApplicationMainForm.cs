@@ -15,14 +15,14 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
     {
         public ApplicationMainForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.InformationTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
             this.ProducerTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
             this.ConditionTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
             this.PathTree.MouseClick += new MouseEventHandler(TreeView_MouseDown);
 
-            TabelLayout();
+            this.TabelLayout();
         }
 
         public TreeView ProducerTree;
@@ -46,22 +46,34 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
 
         private void NewPlugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitProject();
+            this.InitProject();
 
             PlugInformationDialog dialog = new PlugInformationDialog();
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 this._fileLabel.Text = dialog.FileName;
-                this.InformationTree.Nodes.Add(new RootNode(CoreService.PlugDocument.DocumentElement));
+                LoadFileForPlug();
             }
+        }
+
+        private void LoadFileForPlug()
+        {
+            this.InformationTree.Nodes.Add(new RootNode(CoreService.PlugDocument.DocumentElement));
+
+            XmlElement element = (XmlElement)CoreService.PlugDocument.DocumentElement.SelectSingleNode("Runtime");
+            this.ProducerTree.Nodes.Add(new RuntimeNode(element));
+            this.ConditionTree.Nodes.Add(new RuntimeNode(element));
+
+            element = (XmlElement)CoreService.PlugDocument.DocumentElement.SelectSingleNode("Plug");
+            this.PathTree.Nodes.Add(new PlugNode(element));
         }
 
         private void InitProject()
         {
-            this.ConditionTree.Nodes.Clear();
             this.InformationTree.Nodes.Clear();
-            this.PathTree.Nodes.Clear();
             this.ProducerTree.Nodes.Clear();
+            this.ConditionTree.Nodes.Clear();
+            this.PathTree.Nodes.Clear();
         }
 
         private void TreeView_MouseDown(object sender, MouseEventArgs e)
@@ -91,7 +103,7 @@ namespace Gean.Wrapper.PlugTree.PlugFileCreator
                 CoreService.PlugDocument.Load(ofd.FileName);
                 CoreService.PlugFile = ofd.FileName;
                 this.InitProject();
-                this.InformationTree.Nodes.Add(new RootNode(CoreService.PlugDocument.DocumentElement));
+                LoadFileForPlug();
             }
 
         }
