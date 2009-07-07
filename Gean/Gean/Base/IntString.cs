@@ -7,6 +7,11 @@ namespace Gean
     [Serializable]
     public class IntString
     {
+        public IntString(ulong i)
+        {
+            this.Value = i;
+            this.Digit = IntString.GetDigit(i);
+        }
         public IntString()
         {
             this.Value = 0;
