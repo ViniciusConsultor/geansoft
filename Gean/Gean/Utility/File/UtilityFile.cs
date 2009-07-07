@@ -60,16 +60,6 @@ namespace Gean
         }
 
         /// <summary>
-        /// 从一个文件的全路径字符串中获取一个目录路径
-        /// </summary>
-        /// <param name="filepath">文件的完整路径</param>
-        /// <returns>一个代表目录的路径</returns>
-        public static string GetDirectoryByFilepath(string filepath)
-        {
-            return filepath.Substring(0, filepath.LastIndexOf(PATH_SPLIT_CHAR) + 1);
-        }
-
-        /// <summary>
         /// 检查文件名是否规范(windows)
         /// </summary>
         public static bool IsValidFileName(string fileName)
@@ -116,6 +106,7 @@ namespace Gean
         }
 
         /// <summary>
+        /// 检查目录名是否规范
         /// Checks that a single directory name (not the full path) is valid.
         /// </summary>
         public static bool IsValidDirectoryName(string name)
