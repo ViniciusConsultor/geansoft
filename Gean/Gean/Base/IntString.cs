@@ -10,7 +10,7 @@ namespace Gean
         public IntString(ulong i)
         {
             this.Value = i;
-            this.Digit = IntString.GetDigit(i);
+            this.Digit = IntString.GetDigit((long)i);
         }
         public IntString()
         {
@@ -72,7 +72,7 @@ namespace Gean
         }
         public string ToString(uint digit)
         {
-            uint n = IntString.GetDigit(this.Value);
+            uint n = IntString.GetDigit((long)this.Value);
             if (n > digit)
             {
                 this.Digit = n;
@@ -90,7 +90,12 @@ namespace Gean
             return sb.ToString();
         }
 
-        public static uint GetDigit(ulong value)
+        /// <summary>
+        /// 判断一个整数的位数。如：324有3位数，34530有5位数
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static uint GetDigit(long value)
         {
             uint numlen = 0;
             long flag = 0;
