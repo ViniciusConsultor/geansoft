@@ -267,6 +267,7 @@
             this._numericUpDown.Name = "_numericUpDown";
             this._numericUpDown.Size = new System.Drawing.Size(119, 21);
             this._numericUpDown.TabIndex = 15;
+            this._numericUpDown.ValueChanged += new System.EventHandler(this._numericUpDown_ValueChanged);
             // 
             // label1
             // 
