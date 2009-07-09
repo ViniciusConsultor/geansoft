@@ -41,7 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this._nameRuleComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this._targetTextBox = new System.Windows.Forms.TextBox();
+            this._ruleTextBox = new System.Windows.Forms.TextBox();
             this._clearButton = new System.Windows.Forms.Button();
             this._cancelButton = new System.Windows.Forms.Button();
             this._okButton = new System.Windows.Forms.Button();
@@ -133,6 +133,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 24);
             this.splitContainer2.Name = "splitContainer2";
             // 
@@ -140,6 +141,7 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer2.Panel1.Padding = new System.Windows.Forms.Padding(12);
+            this.splitContainer2.Panel1MinSize = 290;
             // 
             // splitContainer2.Panel2
             // 
@@ -154,7 +156,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this._nameRuleComboBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this._targetTextBox);
+            this.groupBox1.Controls.Add(this._ruleTextBox);
             this.groupBox1.Controls.Add(this._clearButton);
             this.groupBox1.Controls.Add(this._cancelButton);
             this.groupBox1.Controls.Add(this._okButton);
@@ -185,7 +187,7 @@
             this._nameRuleComboBox.Location = new System.Drawing.Point(15, 193);
             this._nameRuleComboBox.Name = "_nameRuleComboBox";
             this._nameRuleComboBox.Size = new System.Drawing.Size(232, 21);
-            this._nameRuleComboBox.TabIndex = 0;
+            this._nameRuleComboBox.TabIndex = 3;
             // 
             // label2
             // 
@@ -196,13 +198,14 @@
             this.label2.TabIndex = 18;
             this.label2.Text = "目标文件名:";
             // 
-            // _targetTextBox
+            // _ruleTextBox
             // 
-            this._targetTextBox.Location = new System.Drawing.Point(15, 48);
-            this._targetTextBox.Name = "_targetTextBox";
-            this._targetTextBox.Size = new System.Drawing.Size(232, 21);
-            this._targetTextBox.TabIndex = 17;
-            this._targetTextBox.Text = "MN##BV__##__AB$$CD";
+            this._ruleTextBox.Location = new System.Drawing.Point(15, 48);
+            this._ruleTextBox.Name = "_ruleTextBox";
+            this._ruleTextBox.Size = new System.Drawing.Size(232, 21);
+            this._ruleTextBox.TabIndex = 0;
+            this._ruleTextBox.Text = "MN##BV__##__AB$$CD";
+            this._ruleTextBox.TextChanged += new System.EventHandler(this.RuleChanged);
             // 
             // _clearButton
             // 
@@ -213,7 +216,7 @@
             this._clearButton.TabIndex = 9;
             this._clearButton.Text = "重置";
             this._clearButton.UseVisualStyleBackColor = true;
-            this._clearButton.Click += new System.EventHandler(this._clearButton_Click);
+            this._clearButton.Click += new System.EventHandler(this.Clear);
             // 
             // _cancelButton
             // 
@@ -225,7 +228,7 @@
             this._cancelButton.TabIndex = 10;
             this._cancelButton.Text = "取消";
             this._cancelButton.UseVisualStyleBackColor = true;
-            this._cancelButton.Click += new System.EventHandler(this._cancelButton_Click);
+            this._cancelButton.Click += new System.EventHandler(this.Cancel);
             // 
             // _okButton
             // 
@@ -236,7 +239,7 @@
             this._okButton.TabIndex = 11;
             this._okButton.Text = "开始改名";
             this._okButton.UseVisualStyleBackColor = true;
-            this._okButton.Click += new System.EventHandler(this._okButton_Click);
+            this._okButton.Click += new System.EventHandler(this.BeginRename);
             // 
             // radioButton2
             // 
@@ -256,7 +259,7 @@
             this._numRadioButton.Location = new System.Drawing.Point(15, 83);
             this._numRadioButton.Name = "_numRadioButton";
             this._numRadioButton.Size = new System.Drawing.Size(97, 17);
-            this._numRadioButton.TabIndex = 12;
+            this._numRadioButton.TabIndex = 1;
             this._numRadioButton.TabStop = true;
             this._numRadioButton.Text = "使用数字替换";
             this._numRadioButton.UseVisualStyleBackColor = true;
@@ -264,10 +267,15 @@
             // _numericUpDown
             // 
             this._numericUpDown.Location = new System.Drawing.Point(15, 143);
+            this._numericUpDown.Maximum = new decimal(new int[] {
+            -727379969,
+            232,
+            0,
+            0});
             this._numericUpDown.Name = "_numericUpDown";
             this._numericUpDown.Size = new System.Drawing.Size(119, 21);
-            this._numericUpDown.TabIndex = 15;
-            this._numericUpDown.ValueChanged += new System.EventHandler(this._numericUpDown_ValueChanged);
+            this._numericUpDown.TabIndex = 2;
+            this._numericUpDown.ValueChanged += new System.EventHandler(this.NumberValueChanged);
             // 
             // label1
             // 
@@ -296,6 +304,7 @@
             this._namesListView.TabIndex = 0;
             this._namesListView.UseCompatibleStateImageBehavior = false;
             this._namesListView.View = System.Windows.Forms.View.Details;
+            this._namesListView.Resize += new System.EventHandler(this.ListViewResized);
             // 
             // _sourceColumnHeader
             // 
@@ -345,7 +354,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(498, 25);
-            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // _folderToolStripButton
@@ -355,7 +364,7 @@
             this._folderToolStripButton.Name = "_folderToolStripButton";
             this._folderToolStripButton.Size = new System.Drawing.Size(87, 22);
             this._folderToolStripButton.Text = "指定文件夹";
-            this._folderToolStripButton.Click += new System.EventHandler(this._folderToolStripButton_Click);
+            this._folderToolStripButton.Click += new System.EventHandler(this.SelectFolder_SetListView);
             // 
             // toolStripSeparator1
             // 
@@ -370,7 +379,7 @@
             this._backToolStripButton.Name = "_backToolStripButton";
             this._backToolStripButton.Size = new System.Drawing.Size(23, 22);
             this._backToolStripButton.Text = "重新载入指定文件夹";
-            this._backToolStripButton.Click += new System.EventHandler(this._backToolStripButton_Click);
+            this._backToolStripButton.Click += new System.EventHandler(this.ResetCurrValue);
             // 
             // 过滤
             // 
@@ -382,7 +391,7 @@
             // 
             this._filterToolStripComboBox.Name = "_filterToolStripComboBox";
             this._filterToolStripComboBox.Size = new System.Drawing.Size(100, 25);
-            this._filterToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this._filterToolStripComboBox_SelectedIndexChanged);
+            this._filterToolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.OnlyViewFilterItem);
             // 
             // toolStripSeparator2
             // 
@@ -396,7 +405,7 @@
             this._onlyViewSelectToolStripButton.Name = "_onlyViewSelectToolStripButton";
             this._onlyViewSelectToolStripButton.Size = new System.Drawing.Size(99, 22);
             this._onlyViewSelectToolStripButton.Text = "仅显示选择项";
-            this._onlyViewSelectToolStripButton.Click += new System.EventHandler(this._onlyViewSelectToolStripButton_Click);
+            this._onlyViewSelectToolStripButton.Click += new System.EventHandler(this.OnlyViewSelectItem);
             // 
             // ApplicationMainForm
             // 
@@ -461,7 +470,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox _nameRuleComboBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox _targetTextBox;
+        private System.Windows.Forms.TextBox _ruleTextBox;
         private System.Windows.Forms.Button _clearButton;
         private System.Windows.Forms.Button _cancelButton;
         private System.Windows.Forms.Button _okButton;

@@ -53,7 +53,7 @@ namespace Gean.Client.SimpRename
 
             ListViewSubItem item = new ListViewSubItem();
             item.Name = "Target";
-            item.Text = this.GetTargetName();
+            item.Text = this.GetModifiedName();
             list.Add(item);
 
             list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.ReadOnly));
@@ -65,13 +65,21 @@ namespace Gean.Client.SimpRename
             return list.ToArray();
         }
 
-        public void RenamePreview(int targetNum)
+        public void RenamePreview(int targetNum, string rule)
         {
             this.TargetNumber = targetNum;
-            this.SubItems["Target"].Text = this.GetTargetName();
+            this.RuleString = rule;
+            ListViewSubItem item = new ListViewSubItem();
+            item.Name = "Target";
+            item.Text = this.GetModifiedName();
+            this.SubItems[this.SubItems.IndexOfKey("Target")] = item;
         }
+        /*上述方法如果以通过改变ListViewSubitem内部值的方法，但却无法引发刷新，why?
+        this.TargetNumber = targetNum;
+        string modifiedName = this.GetModifiedName();
+        this.SubItems["Target"].Text = modifiedName;*/
 
-        private string GetTargetName()
+        private string GetModifiedName()
         {
             string before = this.RuleString.Substring(0, RuleString.LastIndexOf(RULE) - 1);
 
@@ -97,7 +105,7 @@ namespace Gean.Client.SimpRename
             /// <param name="digit">指定位数，如：000005是6位</param>
             /// <param name="number">指定的一个整数</param>
             /// <returns></returns>
-            internal static string IntToString(int digit, int number)
+            public static string IntToString(int digit, int number)
             {
                 string value = string.Empty;
                 int n = Helper.GetDigit(number);
@@ -122,7 +130,7 @@ namespace Gean.Client.SimpRename
             /// </summary>
             /// <param name="value"></param>
             /// <returns></returns>
-            internal static int GetDigit(long value)
+            public static int GetDigit(long value)
             {
                 int numlen = 0;
                 long flag = 0;
@@ -149,7 +157,7 @@ namespace Gean.Client.SimpRename
                 return numlen;
             }
 
-            internal static ListViewSubItem GetAttributeViewItem(FileAttributes currAttribute, FileAttributes fileAttributes)
+            public static ListViewSubItem GetAttributeViewItem(FileAttributes currAttribute, FileAttributes fileAttributes)
             {
                 ListViewSubItem subitem = new ListViewSubItem();
                 if ((currAttribute & fileAttributes) == fileAttributes)
