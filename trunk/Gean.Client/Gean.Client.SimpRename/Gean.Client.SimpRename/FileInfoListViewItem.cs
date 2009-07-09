@@ -45,6 +45,7 @@ namespace Gean.Client.SimpRename
 
         public string RuleString { get; private set; }
         public int TargetNumber { get; private set; }
+        public string TargetFileName { get; private set; }
 
         private ListViewSubItem[] SubItemCreator()
         {
@@ -64,7 +65,7 @@ namespace Gean.Client.SimpRename
             return list.ToArray();
         }
 
-        private void RenamePreview(int targetNum)
+        public void RenamePreview(int targetNum)
         {
             this.TargetNumber = targetNum;
             this.SubItems["Target"].Text = this.GetTargetName();
@@ -73,7 +74,7 @@ namespace Gean.Client.SimpRename
         private string GetTargetName()
         {
             string before = this.RuleString.Substring(0, RuleString.LastIndexOf(RULE) - 1);
-            
+
             string serialPlace;
             serialPlace = this.RuleString.Substring(this.RuleString.LastIndexOf(RULE) - 1);
             serialPlace = serialPlace.Substring(0, serialPlace.LastIndexOf(RULE) + 1);
@@ -84,10 +85,11 @@ namespace Gean.Client.SimpRename
             StringBuilder sb = new StringBuilder();
             sb.Append(before).Append(replaceString).Append(end).Append(this.ExtensionName);
 
-            return sb.ToString();
+            this.TargetFileName = sb.ToString();
+            return this.TargetFileName;
         }
 
-        class Helper
+        static class Helper
         {
             /// <summary>
             /// 将指定的一个整数转换成指定位数的字符串
@@ -156,7 +158,6 @@ namespace Gean.Client.SimpRename
                     subitem.Text = string.Empty;
                 return subitem;
             }
-
         }
     }
 }
