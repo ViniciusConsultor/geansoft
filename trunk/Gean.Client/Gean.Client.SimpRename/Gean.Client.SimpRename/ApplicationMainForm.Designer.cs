@@ -236,6 +236,7 @@
             this._okButton.TabIndex = 11;
             this._okButton.Text = "开始改名";
             this._okButton.UseVisualStyleBackColor = true;
+            this._okButton.Click += new System.EventHandler(this._okButton_Click);
             // 
             // radioButton2
             // 
@@ -367,7 +368,7 @@
             this._backToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._backToolStripButton.Name = "_backToolStripButton";
             this._backToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this._backToolStripButton.Text = "toolStripButton1";
+            this._backToolStripButton.Text = "重新载入指定文件夹";
             this._backToolStripButton.Click += new System.EventHandler(this._backToolStripButton_Click);
             // 
             // 过滤
