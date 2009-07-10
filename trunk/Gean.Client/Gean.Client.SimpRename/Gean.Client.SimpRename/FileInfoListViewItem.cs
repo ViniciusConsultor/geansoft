@@ -4,13 +4,13 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Gean.Client.SimpRename
 {
     class FileInfoListViewItem : ListViewItem
     {
         protected FileInfo FileInfo { get; set; }
-        private const string RULE = "#";
 
         public string FullName
         {
@@ -29,83 +29,125 @@ namespace Gean.Client.SimpRename
             get { return this.FileInfo.Extension; }
         }
 
-        public FileInfoListViewItem(string filename, string ruleString, int targetNum) :
-            this(new FileInfo(filename), ruleString, targetNum) { }
+        public FileInfoListViewItem(string filename, string ruleString, int serialNum) :
+            this(new FileInfo(filename), ruleString, serialNum) { }
 
-        public FileInfoListViewItem(FileInfo fileInfo, string ruleString, int targetNum)
+        public FileInfoListViewItem(FileInfo fileInfo, string ruleString, int serialNum)
         {
-            Debug.Assert(!string.IsNullOrEmpty(ruleString), "Rename RULE is None!");
             this.FileInfo = fileInfo;
             this.RuleString = ruleString;
-            this.TargetNumber = targetNum;
+            this.CurrSerialNumber = serialNum;
             this.Text = this.FileInfo.Name;
+            this.PreviewFileName = Helper.BuildNewFileName(this.RuleString, this.CurrSerialNumber, this.ExtensionName);
             this.Checked = true;
-            this.SubItems.AddRange(this.SubItemCreator());
+
+            ListViewSubItem[] items = Helper.BuildSubItems(this.FileInfo, this.PreviewFileName);
+            this.SubItems.AddRange(items);
         }
 
         public string RuleString { get; private set; }
-        public int TargetNumber { get; private set; }
-        public string TargetFileName { get; private set; }
+        /// <summary>
+        /// 获取该ListViewItem绑定的文件的改名编号
+        /// </summary>
+        public int CurrSerialNumber { get; private set; }
+        /// <summary>
+        /// 获取根据规则能够生成的文件名(预览，未实际改名)
+        /// </summary>
+        public string PreviewFileName { get; private set; }
 
-        private ListViewSubItem[] SubItemCreator()
+        public override string ToString()
         {
-            List<ListViewSubItem> list = new List<ListViewSubItem>();
-
-            ListViewSubItem item = new ListViewSubItem();
-            item.Name = "Target";
-            item.Text = this.GetModifiedName();
-            list.Add(item);
-
-            list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.ReadOnly));
-            list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.Hidden));
-            list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.System));
-            list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.Archive));
-            list.Add(Helper.GetAttributeViewItem(this.FileInfo.Attributes, FileAttributes.Compressed));
-
-            return list.ToArray();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("|SourceFile info:  |").Append(this.FullName).Append("\r\n");
+            sb.Append("|Preview FileName: |").Append(this.PreviewFileName);
+            return sb.ToString();
         }
 
-        public void RenamePreview(int targetNum, string rule)
+        /// <summary>
+        /// 当更改了当前实例的改名规则或当前绑定编号的前提下，预览文件名必然也会发生变化。
+        /// 本方法实现重新生成预览文件名，并重新绑定相应的ListViewSubItem。
+        /// </summary>
+        public void ResetListViewSubItem(string rule, int serialNum)
         {
-            this.TargetNumber = targetNum;
             this.RuleString = rule;
+            this.CurrSerialNumber = serialNum;
+            this.PreviewFileName = Helper.BuildNewFileName(rule, serialNum, this.ExtensionName);
+
             ListViewSubItem item = new ListViewSubItem();
             item.Name = "Target";
-            item.Text = this.GetModifiedName();
+            item.Text = this.PreviewFileName;
             this.SubItems[this.SubItems.IndexOfKey("Target")] = item;
         }
-        /*上述方法如果以通过改变ListViewSubitem内部值的方法，但却无法引发刷新，why?
+        /*上述方法如果以通过改变ListViewSubitem内部值的方法，但却无法引发刷新(界面显示的变化)，why?
         this.TargetNumber = targetNum;
         string modifiedName = this.GetModifiedName();
         this.SubItems["Target"].Text = modifiedName;*/
 
-        private string GetModifiedName()
-        {
-            string before = this.RuleString.Substring(0, RuleString.LastIndexOf(RULE) - 1);
-
-            string serialPlace;
-            serialPlace = this.RuleString.Substring(this.RuleString.LastIndexOf(RULE) - 1);
-            serialPlace = serialPlace.Substring(0, serialPlace.LastIndexOf(RULE) + 1);
-
-            string replaceString = Helper.IntToString(serialPlace.Length, this.TargetNumber);
-            string end = this.RuleString.Substring(before.Length + serialPlace.Length);
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append(before).Append(replaceString).Append(end).Append(this.ExtensionName);
-
-            this.TargetFileName = sb.ToString();
-            return this.TargetFileName;
-        }
-
         static class Helper
         {
+            /// <summary>
+            /// 转义字符
+            /// </summary>
+            const string ESC = "\\";
+            /// <summary>
+            /// 数字替代符
+            /// </summary>
+            const string NUM_RULE = "#";
+            /// <summary>
+            /// 字符替代符
+            /// </summary>
+            const string CHAR_RULE = "?";
+
+            /// <summary>
+            /// 根据指定的System.IO.FileInfo生成相应的SubItem集合，一般用来添加到ListView的一个Item中去
+            /// </summary>
+            /// <param name="fileInfo">指定的System.IO.FileInfo</param>
+            /// <param name="previewFileName">根据规则生成的预览的文件名</param>
+            /// <returns></returns>
+            public static ListViewSubItem[] BuildSubItems(FileInfo fileInfo, string previewFileName)
+            {
+                List<ListViewSubItem> list = new List<ListViewSubItem>();
+
+                ListViewSubItem item = new ListViewSubItem();
+                item.Name = "Target";
+                item.Text = previewFileName;
+                list.Add(item);
+
+                list.Add(Helper.GetAttributeViewItem(fileInfo.Attributes, FileAttributes.ReadOnly));
+                list.Add(Helper.GetAttributeViewItem(fileInfo.Attributes, FileAttributes.Hidden));
+                list.Add(Helper.GetAttributeViewItem(fileInfo.Attributes, FileAttributes.System));
+                list.Add(Helper.GetAttributeViewItem(fileInfo.Attributes, FileAttributes.Archive));
+                list.Add(Helper.GetAttributeViewItem(fileInfo.Attributes, FileAttributes.Compressed));
+
+                return list.ToArray();
+            }
+
+            /// <summary>
+            /// 根据指定的规则、编号生成新的文件名
+            /// </summary>
+            /// <param name="rule">规则字符串</param>
+            /// <param name="serial">当前编号</param>
+            /// <param name="extensionName">当前扩展名</param>
+            /// <returns></returns>
+            public static string BuildNewFileName(string rule, int serial, string extensionName)
+            {
+                Regex regex = new Regex(@"\#\#*");
+                
+                MatchCollection matches = regex.Matches(rule);
+                GroupCollection groups = matches[matches.Count - 1].Groups;
+                
+                string replaceString = Helper.IntToString(groups[0].Length, serial);
+
+                return regex.Replace(rule, replaceString) + extensionName;
+            }
+
             /// <summary>
             /// 将指定的一个整数转换成指定位数的字符串
             /// </summary>
             /// <param name="digit">指定位数，如：000005是6位</param>
             /// <param name="number">指定的一个整数</param>
             /// <returns></returns>
-            public static string IntToString(int digit, int number)
+            static string IntToString(int digit, int number)
             {
                 string value = string.Empty;
                 int n = Helper.GetDigit(number);
@@ -126,11 +168,11 @@ namespace Gean.Client.SimpRename
             }
 
             /// <summary>
-            /// 判断一个整数的位数。如：324有3位数，34530有5位数
+            /// 判断一个指定的整数的位数。如：324有3位数，34530有5位数
             /// </summary>
-            /// <param name="value"></param>
+            /// <param name="value">一个指定的整数</param>
             /// <returns></returns>
-            public static int GetDigit(long value)
+            static int GetDigit(long value)
             {
                 int numlen = 0;
                 long flag = 0;
@@ -142,8 +184,10 @@ namespace Gean.Client.SimpRename
                         numlen++;
                         break;
                     }
-                    x = (long)value / (long)Math.Pow(10, numlen);//例子123/10=12,12%10=2这样就可以把某位数取出
+                    //例: 123/10=12, 12%10=2 这样就可以把某位数取出
+                    x = (long)value / (long)Math.Pow(10, numlen);
                     flag = x % 10;
+
                     if (flag == 0 && x < 10)
                     {
                         flag = -1;
@@ -152,12 +196,12 @@ namespace Gean.Client.SimpRename
                     {
                         numlen++;
                     }
-                }
-                while (flag != -1);
+                } while (flag != -1);
+
                 return numlen;
             }
 
-            public static ListViewSubItem GetAttributeViewItem(FileAttributes currAttribute, FileAttributes fileAttributes)
+            static ListViewSubItem GetAttributeViewItem(FileAttributes currAttribute, FileAttributes fileAttributes)
             {
                 ListViewSubItem subitem = new ListViewSubItem();
                 if ((currAttribute & fileAttributes) == fileAttributes)

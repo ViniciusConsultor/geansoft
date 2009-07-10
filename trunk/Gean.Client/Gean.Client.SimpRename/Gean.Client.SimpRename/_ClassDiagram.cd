@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Client.SimpRename.FileInfoListViewItem">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Gean.Client.SimpRename.FileInfoListViewItem.Helper">
+        <TypeIdentifier>
+          <NewMemberFileName>FileInfoListViewItem.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAEAAAAAQAAAASAAAAAAGAAAABAEAA=</HashCode>
+      <FileName>FileInfoListViewItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.SimpRename.ApplicationMainForm">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <Members>
+      <Field Name="_archiveAttributeColumnHeader" Hidden="true" />
+      <Field Name="_backToolStripButton" Hidden="true" />
+      <Field Name="_cancelButton" Hidden="true" />
+      <Field Name="_clearButton" Hidden="true" />
+      <Field Name="_compressedAttributeColumnHeader" Hidden="true" />
+      <Field Name="_exitToolStripMenuItem" Hidden="true" />
+      <Field Name="_extensionNames" Hidden="true" />
+      <Field Name="_fileToolStripMenuItem" Hidden="true" />
+      <Field Name="_filterToolStripComboBox" Hidden="true" />
+      <Field Name="_folderToolStripButton" Hidden="true" />
+      <Field Name="_helpToolStripMenuItem" Hidden="true" />
+      <Field Name="_hiddenAttributeColumnHeader" Hidden="true" />
+      <Field Name="_longName" Hidden="true" />
+      <Field Name="_mainPath" Hidden="true" />
+      <Field Name="_nameRuleComboBox" Hidden="true" />
+      <Field Name="_namesListView" Hidden="true" />
+      <Field Name="_numericUpDown" Hidden="true" />
+      <Field Name="_numRadioButton" Hidden="true" />
+      <Field Name="_okButton" Hidden="true" />
+      <Field Name="_onlyViewSelectToolStripButton" Hidden="true" />
+      <Field Name="_pathToolStripStatusLabel" Hidden="true" />
+      <Field Name="_readOnlyAttributeColumnHeader" Hidden="true" />
+      <Field Name="_ruleString" Hidden="true" />
+      <Field Name="_ruleTextBox" Hidden="true" />
+      <Field Name="_sourceColumnHeader" Hidden="true" />
+      <Field Name="_systemAttributeColumnHeader" Hidden="true" />
+      <Field Name="_targetColumnHeader" Hidden="true" />
+      <Field Name="aboutToolStripMenuItem" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="EXTENSION_NONE" Hidden="true" />
+      <Field Name="groupBox1" Hidden="true" />
+      <Field Name="label1" Hidden="true" />
+      <Field Name="label2" Hidden="true" />
+      <Field Name="label3" Hidden="true" />
+      <Field Name="menuStrip1" Hidden="true" />
+      <Field Name="radioButton2" Hidden="true" />
+      <Field Name="RULE" Hidden="true" />
+      <Field Name="splitContainer2" Hidden="true" />
+      <Field Name="statusStrip1" Hidden="true" />
+      <Field Name="toolStrip1" Hidden="true" />
+      <Field Name="toolStripSeparator1" Hidden="true" />
+      <Field Name="toolStripSeparator2" Hidden="true" />
+      <Field Name="过滤" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Gean.Client.SimpRename.ApplicationMainForm.Helper">
+        <TypeIdentifier>
+          <NewMemberFileName>ApplicationMainForm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AwgwUAsAQKIEJBMEAEKGFSACjIAAAwkgACAGIDBIABM=</HashCode>
+      <FileName>ApplicationMainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

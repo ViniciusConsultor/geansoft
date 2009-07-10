@@ -204,7 +204,6 @@
             this._ruleTextBox.Name = "_ruleTextBox";
             this._ruleTextBox.Size = new System.Drawing.Size(232, 21);
             this._ruleTextBox.TabIndex = 0;
-            this._ruleTextBox.Text = "MN##BV__##__AB$$CD";
             this._ruleTextBox.TextChanged += new System.EventHandler(this.RuleChanged);
             // 
             // _clearButton
