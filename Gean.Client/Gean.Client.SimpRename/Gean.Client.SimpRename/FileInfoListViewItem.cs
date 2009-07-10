@@ -38,7 +38,8 @@ namespace Gean.Client.SimpRename
             this.RuleString = ruleString;
             this.CurrSerialNumber = serialNum;
             this.Text = this.FileInfo.Name;
-            this.PreviewFileName = Helper.BuildNewFileName(this.RuleString, this.CurrSerialNumber, this.ExtensionName);
+            if (!string.IsNullOrEmpty(ruleString))
+                this.PreviewFileName = Helper.BuildNewFileName(this.RuleString, this.CurrSerialNumber, this.ExtensionName);
             this.Checked = true;
 
             ListViewSubItem[] items = Helper.BuildSubItems(this.FileInfo, this.PreviewFileName);
@@ -123,7 +124,8 @@ namespace Gean.Client.SimpRename
             }
 
             /// <summary>
-            /// 根据指定的规则、编号生成新的文件名
+            /// 根据指定的规则、编号生成新的文件名(使用正则的方式)。
+            /// 已进行单元测试。
             /// </summary>
             /// <param name="rule">规则字符串</param>
             /// <param name="serial">当前编号</param>
@@ -131,14 +133,24 @@ namespace Gean.Client.SimpRename
             /// <returns></returns>
             public static string BuildNewFileName(string rule, int serial, string extensionName)
             {
-                Regex regex = new Regex(@"\#\#*");
+                string tgstring = rule;
+                Regex regex = new Regex(@"##*");
                 
                 MatchCollection matches = regex.Matches(rule);
+                if (matches == null || matches.Count <= 0)
+                {
+                    return string.Empty;
+                }
                 GroupCollection groups = matches[matches.Count - 1].Groups;
                 
                 string replaceString = Helper.IntToString(groups[0].Length, serial);
 
-                return regex.Replace(rule, replaceString) + extensionName;
+                //无法使用正则的替换功能，因为会经常出现“abc__##__###__####__xyz”这种现象时，
+                //我们只会将最后的4位的替换符替换成预览名的。
+                tgstring = tgstring.Remove(groups[0].Index, groups[0].Length);
+                tgstring = tgstring.Insert(groups[0].Index, replaceString) + extensionName;
+
+                return tgstring;
             }
 
             /// <summary>

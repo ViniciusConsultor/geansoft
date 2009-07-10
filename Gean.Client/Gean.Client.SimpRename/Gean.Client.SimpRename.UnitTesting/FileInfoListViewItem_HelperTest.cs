@@ -96,38 +96,21 @@ namespace Gean.Client.SimpRename.UnitTesting
             expected = "abc__0__xyz.doc";
             actual = FileInfoListViewItem_Accessor.Helper.BuildNewFileName(rule, serial, extensionName);
             Assert.AreEqual(expected, actual);
+
+            rule = "abc__#__xyz";
+            serial = 99;
+            extensionName = ".doc";
+            expected = "abc__99__xyz.doc";
+            actual = FileInfoListViewItem_Accessor.Helper.BuildNewFileName(rule, serial, extensionName);
+            Assert.AreEqual(expected, actual);
+
+            rule = "abc__##__###__####__xyz";
+            serial = 123456;
+            extensionName = ".doc";
+            expected = "abc__##__###__123456__xyz.doc";
+            actual = FileInfoListViewItem_Accessor.Helper.BuildNewFileName(rule, serial, extensionName);
+            Assert.AreEqual(expected, actual);
         }
-
-        ///// <summary>
-        /////IntToString 的测试
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Gean.Client.SimpRename.exe")]
-        //public void IntToStringTest()
-        //{
-        //    int digit = 0; // TODO: 初始化为适当的值
-        //    int number = 0; // TODO: 初始化为适当的值
-        //    string expected = string.Empty; // TODO: 初始化为适当的值
-        //    string actual;
-        //    actual = FileInfoListViewItem_Accessor.Helper.IntToString(digit, number);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("验证此测试方法的正确性。");
-        //}
-
-        ///// <summary>
-        /////GetDigit 的测试
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Gean.Client.SimpRename.exe")]
-        //public void GetDigitTest()
-        //{
-        //    long value = 0; // TODO: 初始化为适当的值
-        //    int expected = 0; // TODO: 初始化为适当的值
-        //    int actual;
-        //    actual = FileInfoListViewItem_Accessor.Helper.GetDigit(value);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("验证此测试方法的正确性。");
-        //}
 
     }
 }
