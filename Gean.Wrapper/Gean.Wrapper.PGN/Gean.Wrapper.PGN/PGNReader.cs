@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Gean.Wrapper.PGN
 {
@@ -164,6 +165,129 @@ namespace Gean.Wrapper.PGN
         {
             return unchecked(27 * this.PGNDefiner.GetHashCode() + this.Record.GetHashCode());
         }
+    }
+
+    public class ChessStep
+    {
+        public int SerialNumber { get; set; }
+        public Chessman WhiteChessman { get; set; }
+        public Chessman BlackChessman { get; set; }
+        public StepAction WhiteStepAction { get; set; }
+        public StepAction BlackStepAction { get; set; }
+
+        public ChessStep(int number, 
+            Chessman white_chessman, Chessman black_chessman,
+            StepAction white_action, StepAction black_action)
+        {
+            this.SerialNumber = number;
+            this.WhiteChessman = white_chessman;
+            this.BlackChessman = black_chessman;
+            this.WhiteStepAction = white_action;
+            this.BlackStepAction = black_action;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this.SerialNumber.ToString()).Append('.');
+            sb.Append(' ');
+            if (this.WhiteChessman.Man != ChessmanDescription.Pawn)
+            {
+                sb.Append(this.WhiteChessman.ToSimpleString());
+            }
+            sb.Append(this.WhiteStepAction.ToString());
+            sb.Append(' ');
+            if (this.BlackChessman.Man != ChessmanDescription.Pawn)
+            {
+                sb.Append(this.BlackChessman.ToSimpleString());
+            }
+            sb.Append(this.BlackStepAction.ToString());
+            sb.Append(' ');
+            return sb.ToString();
+        }
+    }
+
+    public class StepAction
+    {
+
+        class X
+        {
+
+        }
+        class Y
+        {
+
+        }
+    
+    }
+
+    public class Chessman
+    {
+        public ChessmanDescription Man { get; set; }
+        public Chessman(ChessmanDescription man)
+        {
+            this.Man = man;
+        }
+        public override string ToString()
+        {
+            return this.Man.ToString();
+        }
+        public string ToSimpleString()
+        {
+            switch (this.Man)
+            {
+                case ChessmanDescription.Rook:
+                    return "R";
+                case ChessmanDescription.Knight:
+                    return "N";
+                case ChessmanDescription.Bishop:
+                    return "B";
+                case ChessmanDescription.Queen:
+                    return "Q";
+                case ChessmanDescription.King:
+                    return "K";
+                case ChessmanDescription.Pawn:
+                    return "P";
+                default:
+                    Debug.Fail(this.Man.ToString());
+                    return string.Empty;
+            }
+        }
+    }
+
+    public enum ChessBoth
+    {
+        White, Black,
+    }
+
+    public enum ChessmanDescription
+    {
+        /// <summary>
+        /// 车
+        /// </summary>
+        Rook,
+        /// <summary>
+        /// 马((中古时代的)武士, 骑士)
+        /// </summary>
+        Knight,
+        /// <summary>
+        /// 象((基督教某些教派管辖大教区的)主教)
+        /// </summary>
+        Bishop,
+        /// <summary>
+        /// 皇后
+        /// </summary>
+        Queen,
+        /// <summary>
+        /// 王
+        /// </summary>
+        King,
+        /// <summary>
+        /// 兵
+        /// </summary>
+        Pawn
+
+        //中文简称王后车象马兵英文简称K Q R B N P
     }
 }
 
