@@ -1,21 +1,20 @@
-﻿using Gean.Wrapper.PGN;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Diagnostics;
-using Gean.Wrapper.Chess;
 
-namespace Gean.Wrapper.PGN.UnitTesting
+namespace Gean.Wrapper.Chess.UnitTesting
 {
-    
-    
+
+
     /// <summary>
-    ///这是 PGNReader_HelperTest 的测试类，旨在
-    ///包含所有 PGNReader_HelperTest 单元测试
+    ///这是 ChessPGNReader_HelperTest 的测试类，旨在
+    ///包含所有 ChessPGNReader_HelperTest 单元测试
     ///</summary>
     [TestClass()]
     public class ChessPGNReader_HelperTest
     {
         #region MyRegion
+
         private TestContext testContextInstance;
 
         /// <summary>
@@ -65,6 +64,7 @@ namespace Gean.Wrapper.PGN.UnitTesting
         #endregion
 
 
+
         #endregion
 
         private string _BasePath;
@@ -76,23 +76,23 @@ namespace Gean.Wrapper.PGN.UnitTesting
             _CaseFilePath = Path.Combine(_BasePath, "CaseFiles\\");
         }
 
-        ///// <summary>
-        /////GetPGNsByTextReader 的测试
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Gean.Wrapper.PGN.dll")]
-        //public void GetPGNsByTextReaderTest()
-        //{
-        //    string filepath = Path.Combine(_CaseFilePath, "_Test.pgn");
-        //    Debug.Assert(File.Exists(filepath), "");
-        //    TextReader reader = new StreamReader(filepath);
-        //    ChessPGNReader[] expected = null; // TODO: 初始化为适当的值
-        //    ChessPGNReader[] actual;
-        //    actual = ChessPGNReader_Accessor.Helper.GetPGNsByTextReader(reader);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("验证此测试方法的正确性。");
-        //}
 
+        /// <summary>
+        ///GetPGNsByTextReader 的测试
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("Gean.Wrapper.Chess.dll")]
+        public void GetPGNsByTextReaderTest()
+        {
+            string filepath = Path.Combine(_CaseFilePath, "_Test.pgn");
+            Debug.Assert(File.Exists(filepath), "");
+            TextReader reader = new StreamReader(filepath);
+            ChessRecord[] expected = null; 
+            ChessRecord[] actual;
+            actual = ChessPGNReader_Accessor.Helper.GetPGNsByTextReader(reader);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
 
         /// <summary>
         ///ParseLine 的测试

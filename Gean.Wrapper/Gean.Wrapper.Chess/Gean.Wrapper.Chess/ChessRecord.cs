@@ -25,24 +25,25 @@ namespace Gean.Wrapper.Chess
     /// 1/2-1/2
     /// </example>
     /// </summary>
-    public class ChessPGNRecord
+    public class ChessRecord
     {
-        public Definer PGNDefiner { get; set; }
-        public StringBuilder Record { get; set; }
-        public ChessPGNRecord()
+        public Definer Definer { get; set; }
+        public ChessStepSequence Sequence { get; set; }
+        internal StringBuilder SequenceString { get; set; }
+        public ChessRecord()
         {
-            this.PGNDefiner = new Definer();
-            this.Record = new StringBuilder();
+            this.Definer = new Definer();
+            this.SequenceString = new StringBuilder();
         }
 
         public override bool Equals(object obj)
         {
-            ChessPGNRecord pr = obj as ChessPGNRecord;
-            if (!pr.PGNDefiner.Equals(this.PGNDefiner))
+            ChessRecord pr = obj as ChessRecord;
+            if (!pr.Definer.Equals(this.Definer))
             {
                 return false;
             }
-            if (!pr.Record.Equals(this.Record))
+            if (!pr.SequenceString.Equals(this.SequenceString))
             {
                 return false;
             }
@@ -50,7 +51,7 @@ namespace Gean.Wrapper.Chess
         }
         public override int GetHashCode()
         {
-            return unchecked(27 * this.PGNDefiner.GetHashCode() + this.Record.GetHashCode());
+            return unchecked(27 * this.Definer.GetHashCode() + this.SequenceString.GetHashCode());
         }
     }
 }
