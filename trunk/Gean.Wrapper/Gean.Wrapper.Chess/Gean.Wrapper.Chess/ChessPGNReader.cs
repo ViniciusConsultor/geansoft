@@ -13,7 +13,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置一个PGN文件中所有的单局棋记录的集合
         /// </summary>
-        protected ChessPGNRecord[] PGNRecordArray { get; set; }
+        protected ChessRecord[] PGNRecordArray { get; set; }
 
         public ChessPGNReader()
         { }
@@ -35,12 +35,12 @@ namespace Gean.Wrapper.Chess
 
         static class Helper
         {
-            public static ChessPGNRecord[] GetPGNsByTextReader(TextReader reader)
+            public static ChessRecord[] GetPGNsByTextReader(TextReader reader)
             {
-                List<ChessPGNRecord> records = new List<ChessPGNRecord>();
+                List<ChessRecord> records = new List<ChessRecord>();
                 List<StringBuilder> sbs = new List<StringBuilder>();
 
-                ChessPGNRecord record = new ChessPGNRecord();
+                ChessRecord record = new ChessRecord();
 
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -48,13 +48,13 @@ namespace Gean.Wrapper.Chess
                     line = line.Trim();
                     if (line.Equals(string.Empty))
                     {
-                        if (record.PGNDefiner != null && !string.IsNullOrEmpty(record.Record.ToString()))
+                        if (record.Definer != null && !string.IsNullOrEmpty(record.SequenceString.ToString()))
                         {
                             records.Add(record);
                         }
                         if (records.Contains(record))
                         {
-                            record = new ChessPGNRecord();
+                            record = new ChessRecord();
                         }
                     }
                     else
@@ -62,11 +62,11 @@ namespace Gean.Wrapper.Chess
                         if (Regex.IsMatch(line, @"\[.*\]"))
                         {
                             StringPair sp = ParseLine(line);
-                            record.PGNDefiner.Set<string>(sp.Key, sp.Value);
+                            record.Definer.Set<string>(sp.Key, sp.Value);
                         }
                         else
                         {
-                            record.Record.Append(line);
+                            record.SequenceString.Append(line);
                         }
                     }
                 }
