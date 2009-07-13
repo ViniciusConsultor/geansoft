@@ -4,14 +4,16 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessStepAction
+    public struct ChessStepAction
     {
+        public X x { get; set; }
+        public Y y { get; set; }
 
-        class X
+        public class X
         {
 
         }
-        class Y
+        public class Y
         {
 
         }
