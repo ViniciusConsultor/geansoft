@@ -73,9 +73,6 @@ namespace Gean.Wrapper.Chess
         {
             throw new NotImplementedException();
         }
-
-        public abstract bool LimitGrid(int x, int y);
-
     }
 
 }
