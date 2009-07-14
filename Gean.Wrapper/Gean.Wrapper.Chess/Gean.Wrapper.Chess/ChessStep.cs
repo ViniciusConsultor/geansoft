@@ -5,32 +5,32 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 描述棋局中的单方的一步棋。
+    /// 描述棋局中的单方的一步棋。如："Nc6"代表马走到c6格
     /// 对于这步棋，绑定了一个注释的集合，一个变招的集合（变招也是每一步棋的集合）。
     /// </summary>
     public class ChessStep
     {
-        public Chessman Chessman { get; set; }
-        public ChessStepAction StepAction { get; set; }
+        public ChessmanBase Chessman { get; set; }
+        public ChessboardGrid BindingGrid { get; set; }
         public ChessCommentCollection Comments { get; set; }
-        public ChessStepSequenceCollection ChoiceSteps { get; set; }
+        public ChessStepPairSequenceCollection ChoiceSteps { get; set; }
 
-        public ChessStep(Chessman chessman, ChessStepAction action)
+        public ChessStep(ChessmanBase chessman, ChessboardGrid action)
         {
             this.Comments = new ChessCommentCollection();
-            this.ChoiceSteps = new ChessStepSequenceCollection();
+            this.ChoiceSteps = new ChessStepPairSequenceCollection();
             this.Chessman = chessman;
-            this.StepAction = action;
+            this.BindingGrid = action;
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            if (this.Chessman.Man != ChessmanWord.Pawn)
+            if (this.Chessman.ChessmanItem != Enums.ChessmanItem.Pawn)//如果是“兵”，不打印
             {
                 sb.Append(this.Chessman.ToSimpleString());
             }
-            sb.Append(this.StepAction.ToString());
+            sb.Append(this.BindingGrid.ToString());
             sb.Append(' ');
             if (this.Comments.Count > 0)//如果有注释，打印注释
             {
@@ -45,7 +45,7 @@ namespace Gean.Wrapper.Chess
             if (this.ChoiceSteps.Count > 0)//如果有变招，打印变招字符串
             {
                 sb.Append("{");
-                foreach (ChessStepSequence step in this.ChoiceSteps)
+                foreach (ChessStepPairSequence step in this.ChoiceSteps)
                 {
                     sb.Append(step.ToString()).Append(' ');
                 }

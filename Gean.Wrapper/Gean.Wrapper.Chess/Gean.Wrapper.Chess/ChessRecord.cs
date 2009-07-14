@@ -28,7 +28,7 @@ namespace Gean.Wrapper.Chess
     public class ChessRecord
     {
         public Definer Definer { get; set; }
-        public ChessStepSequence Sequence { get; set; }
+        public ChessStepPairSequence Sequence { get; set; }
         internal StringBuilder SequenceString { get; set; }
         public ChessRecord()
         {
