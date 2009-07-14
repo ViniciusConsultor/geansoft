@@ -9,7 +9,7 @@ namespace Gean.Wrapper.Chess
     /// （集合,集合的元素为<see>ChessStepPair</see>）。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
-    public class ChessStepSequence : IList<ChessStepPair>
+    public class ChessStepPairSequence : IList<ChessStepPair>
     {
         List<ChessStepPair> steps = new List<ChessStepPair>();
 

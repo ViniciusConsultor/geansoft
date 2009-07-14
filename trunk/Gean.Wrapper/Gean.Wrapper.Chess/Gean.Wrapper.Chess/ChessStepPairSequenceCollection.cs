@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessStepSequenceCollection : IList<ChessStepSequence>
+    public class ChessStepPairSequenceCollection : IList<ChessStepPairSequence>
     {
         #region IList<ChessStepSequence> 成员
 
-        public int IndexOf(ChessStepSequence item)
+        public int IndexOf(ChessStepPairSequence item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, ChessStepSequence item)
+        public void Insert(int index, ChessStepPairSequence item)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +23,7 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public ChessStepSequence this[int index]
+        public ChessStepPairSequence this[int index]
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Gean.Wrapper.Chess
 
         #region ICollection<ChessStepSequence> 成员
 
-        public void Add(ChessStepSequence item)
+        public void Add(ChessStepPairSequence item)
         {
             throw new NotImplementedException();
         }
@@ -49,12 +49,12 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public bool Contains(ChessStepSequence item)
+        public bool Contains(ChessStepPairSequence item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(ChessStepSequence[] array, int arrayIndex)
+        public void CopyTo(ChessStepPairSequence[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -69,7 +69,7 @@ namespace Gean.Wrapper.Chess
             get { throw new NotImplementedException(); }
         }
 
-        public bool Remove(ChessStepSequence item)
+        public bool Remove(ChessStepPairSequence item)
         {
             throw new NotImplementedException();
         }
@@ -78,7 +78,7 @@ namespace Gean.Wrapper.Chess
 
         #region IEnumerable<ChessStepSequence> 成员
 
-        public IEnumerator<ChessStepSequence> GetEnumerator()
+        public IEnumerator<ChessStepPairSequence> GetEnumerator()
         {
             throw new NotImplementedException();
         }
