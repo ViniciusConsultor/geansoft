@@ -5,8 +5,7 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 描述一局棋所有成对的“每步棋”的序列
-    /// （集合,集合的元素为<see>ChessStepPair</see>）。
+    /// 描述一个棋招序列（IList集合,集合的元素为<see>ChessStepPair</see>）。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
     public class ChessStepPairSequence : IList<ChessStepPair>

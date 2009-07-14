@@ -5,7 +5,9 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 描述成对的<see>ChessStep</see>,它代表着双方各走了一步棋，同时它拥有棋局中的对“步数”的编号。
+    /// 描述一个棋招。
+    /// 棋招的定义是成对的<see>ChessStep</see>,它代表着双方各走了一步棋，
+    /// 同时它拥有棋局中的对“步数”的编号。
     /// </summary>
     public class ChessStepPair
     {
