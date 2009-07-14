@@ -8,9 +8,9 @@ namespace Gean.Wrapper.Chess
     {
 
         /// <summary>
-        /// 黑棋，白棋
+        /// 棋子的战方：黑棋，白棋
         /// </summary>
-        public enum ChessmanType
+        public enum ChessmanSide
         {
             White, Black,
         }
@@ -28,18 +28,18 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="ct"></param>
         /// <returns></returns>
-        public static ChessmanType GetOtherType(ChessmanType ct)
+        public static ChessmanSide GetOtherSide(ChessmanSide ct)
         {
-            if (ct == ChessmanType.Black) return ChessmanType.White;
-            return ChessmanType.Black;
+            if (ct == ChessmanSide.Black) return ChessmanSide.White;
+            return ChessmanSide.Black;
         }
 
         /// <summary>
-        /// 棋子的枚举。
+        /// 棋子类型的枚举。
         /// 车Rook，马Knight，象Bishop，后Queen，王King，兵Pawn。
         /// 中文简称王后车象马兵英文简称K Q R B N P
         /// </summary>
-        public enum ChessmanItem
+        public enum ChessmanType
         {
             /// <summary>
             /// 车

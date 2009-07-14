@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
+    /// <summary>
+    /// 描述棋招序列的集合，一般应用为一局棋的变招。
+    /// （IList集合,集合的元素为<see>ChessStepPairSequence</see>）
+    /// </summary>
     public class ChessStepPairSequenceCollection : IList<ChessStepPairSequence>
     {
         #region IList<ChessStepSequence> 成员

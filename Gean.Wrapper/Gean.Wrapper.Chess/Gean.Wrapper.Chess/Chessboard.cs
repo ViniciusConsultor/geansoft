@@ -11,21 +11,17 @@ namespace Gean.Wrapper.Chess
     public class Chessboard
     {
         private ChessboardGrid[,] _boardGrids = new ChessboardGrid[8, 8];
+        private ChessmanBase[] _chessmans = new ChessmanBase[32];
 
-        public Chessboard()
+        public Chessboard():
+            this(Helper.GetIntegratedChessman())
+        {
+
+        }
+        public Chessboard(ChessmanBase[] chessmans)
         {
             this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// 获取指定坐标的棋格
-        /// </summary>
-        /// <param name="x">指定坐标的x轴</param>
-        /// <param name="y">指定坐标的y轴</param>
-        /// <returns></returns>
-        public ChessboardGrid GetGrid(int x, int y)
-        {
-            return this._boardGrids[x, y];
+            this.InitializeChessmans(chessmans);
         }
 
         /// <summary>
@@ -39,7 +35,8 @@ namespace Gean.Wrapper.Chess
                 {
                     _boardGrids[x, y] = new ChessboardGrid(
                         new ChessboardGrid.AxisX(x),
-                        new ChessboardGrid.AxisY(y));
+                        new ChessboardGrid.AxisY(y),
+                        this);
                     if ((y % 2) == 0)
                         if ((x % 2) == 0)
                             _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.White;
@@ -51,6 +48,34 @@ namespace Gean.Wrapper.Chess
                         else
                             _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.White;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 初始化棋盘中的所有棋子
+        /// </summary>
+        /// <param name="chessmans"></param>
+        private void InitializeChessmans(ChessmanBase[] chessmans)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取指定坐标的棋格
+        /// </summary>
+        /// <param name="x">指定坐标的x轴</param>
+        /// <param name="y">指定坐标的y轴</param>
+        /// <returns></returns>
+        public ChessboardGrid GetGrid(int x, int y)
+        {
+            return this._boardGrids[x, y];
+        }
+
+        static class Helper
+        {
+            internal static ChessmanBase[] GetIntegratedChessman()
+            {
+                throw new NotImplementedException();
             }
         }
     }
