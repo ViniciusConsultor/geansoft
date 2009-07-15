@@ -20,5 +20,10 @@ namespace Gean.Wrapper.Chess
         {
             return "P";
         }
+
+        public override ChessboardGrid[] GetGridsByPath()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

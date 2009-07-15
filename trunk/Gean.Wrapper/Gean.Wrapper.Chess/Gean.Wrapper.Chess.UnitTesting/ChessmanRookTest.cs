@@ -5,14 +5,14 @@ namespace Gean.Wrapper.Chess.UnitTesting
     
     
     /// <summary>
-    ///这是 Chessboard_HelperTest 的测试类，旨在
-    ///包含所有 Chessboard_HelperTest 单元测试
+    ///这是 ChessmanRookTest 的测试类，旨在
+    ///包含所有 ChessmanRookTest 单元测试
     ///</summary>
     [TestClass()]
-    public class Chessboard_HelperTest
+    public class ChessmanRookTest
     {
-
         #region MyRegion
+        
         private TestContext testContextInstance;
 
         /// <summary>
@@ -61,22 +61,39 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //
         #endregion
 
-
         #endregion
 
+        /// <summary>
+        ///GetGridsByPath 的测试
+        ///</summary>
+        [TestMethod()]
+        public void GetGridsByPathTest()
+        {
+            ChessboardGrid[] expected = null;
+            ChessboardGrid[] actual;
 
+            Chessboard board = new Chessboard();
 
+            ChessboardGrid currGrid = board.GetGrid(6, 6);
+            ChessmanRook rook = new ChessmanRook(currGrid, Enums.ChessmanSide.Black);
 
-        ///// <summary>
-        /////GetIntegratedChessman 的测试
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Gean.Wrapper.Chess.dll")]
-        //public void GetIntegratedChessmanTest()
-        //{
-        //    Chessboard board = new Chessboard(); // TODO: 初始化为适当的值
+            ChessboardGrid leftGrid = board.GetGrid(3, 6);
+            ChessboardGrid rightGrid = board.GetGrid(8, 6);
+            ChessboardGrid topGrid = board.GetGrid(6, 2);
+            ChessboardGrid bottonGrid = board.GetGrid(6, 8);
 
-        //    Assert.Inconclusive("验证此测试方法的正确性。");
-        //}
+            ChessmanPawn pawn1 = new ChessmanPawn(leftGrid, Enums.ChessmanSide.White);
+            ChessmanPawn pawn2 = new ChessmanPawn(rightGrid, Enums.ChessmanSide.White);
+            ChessmanPawn pawn3 = new ChessmanPawn(topGrid, Enums.ChessmanSide.White);
+            ChessmanPawn pawn4 = new ChessmanPawn(bottonGrid, Enums.ChessmanSide.White);
+
+            pawn1.RegistChessman(leftGrid);
+            pawn2.RegistChessman(rightGrid);
+            pawn3.RegistChessman(topGrid);
+            pawn4.RegistChessman(bottonGrid);
+
+            actual = rook.GetGridsByPath();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

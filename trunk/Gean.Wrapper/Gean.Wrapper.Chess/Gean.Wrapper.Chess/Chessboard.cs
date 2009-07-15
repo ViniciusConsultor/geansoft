@@ -61,6 +61,88 @@ namespace Gean.Wrapper.Chess
         {
             return this._boardGrids[x - 1, y - 1];
         }
+        /// <summary>
+        /// 获取指定坐标字符串的棋格
+        /// </summary>
+        /// <param name="step">指定坐标字符串</param>
+        /// <returns></returns>
+        public ChessboardGrid GetGrid(string step)
+        {
+            if (string.IsNullOrEmpty(step))
+            {
+                throw new ArgumentNullException(step);
+            }
+            if (step.Length != 2)
+            {
+                throw new ArgumentException(step);
+            }
+            char[] chars = step.ToLowerInvariant().ToCharArray();
+            int x; 
+            switch (chars[0])
+            {
+                #region case
+                case 'a':
+                    x = 1;
+                    break;
+                case 'b':
+                    x = 2;
+                    break;
+                case 'c':
+                    x = 3;
+                    break;
+                case 'd':
+                    x = 4;
+                    break;
+                case 'e':
+                    x = 5;
+                    break;
+                case 'f':
+                    x = 6;
+                    break;
+                case 'g':
+                    x = 7;
+                    break;
+                case 'h':
+                    x = 8;
+                    break;
+                default:
+                    x = -1;
+                    break;
+                #endregion
+            }
+            int y = Convert.ToInt32(chars[1]);
+            return this.GetGrid(x, y);
+        }
+
+        /// <summary>
+        /// 获取指定的棋子所能到达的棋格。
+        /// TODO:该方法代码未完成。
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        /// <returns>能到达的棋格</returns>
+        public ChessboardGrid[] GetUsableGrids(ChessmanBase chessman)
+        {
+            List<ChessboardGrid> grids = new List<ChessboardGrid>();
+            switch (chessman.ChessmanType)
+            {
+                case Enums.ChessmanType.Rook:
+                    //grids.AddRange(Helper.GetRookGrid(this, chessman.GridOwner, chessman.ChessmanType, chessman.ChessmanSide));
+                    break;
+                case Enums.ChessmanType.Knight:
+                    break;
+                case Enums.ChessmanType.Bishop:
+                    break;
+                case Enums.ChessmanType.Queen:
+                    break;
+                case Enums.ChessmanType.King:
+                    break;
+                case Enums.ChessmanType.Pawn:
+                    break;
+                default:
+                    break;
+            }
+            return grids.ToArray();
+        }
 
         static class Helper
         {

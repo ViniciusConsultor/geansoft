@@ -26,5 +26,43 @@ namespace Gean.Wrapper.Chess
         {
             return "R";
         }
+
+        public override ChessboardGrid[] GetGridsByPath()
+        {
+            List<ChessboardGrid> grids = new List<ChessboardGrid>();
+            int x = this.GridOwner.X.X;
+            int y = this.GridOwner.Y.Y;
+
+            for (int i = x - 1; i >= 1; i--)//当前点向左
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(i, y);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = x + 1; i <= 8; i++)//当前点向右
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(i, y);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = y - 1; i >= 1; i--)//当前点向下
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(x, i);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = y + 1; i <= 8; i++)//当前点向上
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(x, i);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            return grids.ToArray();
+        }
+
     }
 }

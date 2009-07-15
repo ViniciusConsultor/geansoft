@@ -19,6 +19,7 @@ namespace Gean.Wrapper.Chess
         {
             //设置该棋子的名字的前缀是实例该棋子时，该棋子的坐标，后缀是该棋子
             this.ChessmanType = type;
+            this.GridOwner = sourceGrid;
             this._name = sourceGrid.ToString() + " - " + this.ChessmanType.ToString();
             this.InitializeComponent();
         }
@@ -75,8 +76,7 @@ namespace Gean.Wrapper.Chess
             {
                 ChessmanMoveEventArgs e = new ChessmanMoveEventArgs(this.GridOwner, grid, this);
                 OnMoving(e);//注册移动前事件
-                this.GridOwner = grid;
-                this.GridOwner.ChessmanOwner = this;
+                this.RegistChessman(grid);
                 OnMoved(e);//注册移动后事件
                 return true;
             }
@@ -85,6 +85,8 @@ namespace Gean.Wrapper.Chess
 
         internal void RegistChessman(ChessboardGrid grid)
         {
+            if (this.GridOwner != null)
+                this.GridOwner.ChessmanOwner = null;
             this.GridOwner = grid;
             this.GridOwner.ChessmanOwner = this;
         }
@@ -92,6 +94,12 @@ namespace Gean.Wrapper.Chess
 
         public abstract void InitializeComponent();
         public abstract string ToSimpleString();
+        /// <summary>
+        /// 根据国际象棋规则计算当前棋子的可达路径
+        /// </summary>
+        /// <returns></returns>
+        public abstract ChessboardGrid[] GetGridsByPath();
+
 
         #region custom event
 
