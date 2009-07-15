@@ -123,10 +123,10 @@ namespace Gean.Wrapper.Chess
             {
                 this._x = 0;
                 this._word = 'z';
-                if (x < 1 || x > 8)
+                if (x >= 0 && x <= 7)
                 {
-                    this._x = x;
-                    switch (x)
+                    this._x = x + 1;
+                    switch (this._x)
                     {
                         case 1:
                             this._word = 'a';
@@ -216,7 +216,7 @@ namespace Gean.Wrapper.Chess
 
             public AxisY(int y)
             {
-                this._y = y;
+                this._y = y + 1;
             }
 
             public override string ToString()
