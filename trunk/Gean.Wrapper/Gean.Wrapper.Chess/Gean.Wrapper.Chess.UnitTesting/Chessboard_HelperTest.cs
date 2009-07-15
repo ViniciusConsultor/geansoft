@@ -72,10 +72,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         public void GetIntegratedChessmanTest()
         {
             Chessboard board = new Chessboard(); // TODO: 初始化为适当的值
-            ChessmanBase[] expected = null; // TODO: 初始化为适当的值
-            ChessmanBase[] actual;
-            actual = Chessboard_Accessor.Helper.GetIntegratedChessman(board);
-            Assert.AreEqual(expected, actual);
+
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
     }

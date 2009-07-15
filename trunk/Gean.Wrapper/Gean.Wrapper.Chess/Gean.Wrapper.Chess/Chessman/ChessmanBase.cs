@@ -18,8 +18,8 @@ namespace Gean.Wrapper.Chess
         public ChessmanBase(ChessboardGrid sourceGrid, Enums.ChessmanType type)
         {
             //设置该棋子的名字的前缀是实例该棋子时，该棋子的坐标，后缀是该棋子
-            this._name = sourceGrid.ToString() + " - " + this.ChessmanType.ToString();
             this.ChessmanType = type;
+            this._name = sourceGrid.ToString() + " - " + this.ChessmanType.ToString();
             this.InitializeComponent();
         }
         public override string ToString()
