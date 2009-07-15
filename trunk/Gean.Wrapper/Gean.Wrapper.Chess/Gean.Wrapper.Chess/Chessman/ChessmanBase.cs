@@ -83,6 +83,13 @@ namespace Gean.Wrapper.Chess
             return false;
         }
 
+        internal void RegistChessman(ChessboardGrid grid)
+        {
+            this.GridOwner = grid;
+            this.GridOwner.ChessmanOwner = this;
+        }
+
+
         public abstract void InitializeComponent();
         public abstract string ToSimpleString();
 
