@@ -1,5 +1,6 @@
 ﻿using Gean.Wrapper.Chess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
     
@@ -69,31 +70,50 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void GetGridsByPathTest()
         {
-            ChessboardGrid[] expected = null;
+            List<ChessboardGrid> expected = new List<ChessboardGrid>();
             ChessboardGrid[] actual;
 
             Chessboard board = new Chessboard();
 
-            ChessboardGrid currGrid = board.GetGrid(6, 6);
+            ChessboardGrid currGrid = board.GetGrid(6, 3);
             ChessmanRook rook = new ChessmanRook(currGrid, Enums.ChessmanSide.Black);
 
-            ChessboardGrid leftGrid = board.GetGrid(3, 6);
-            ChessboardGrid rightGrid = board.GetGrid(8, 6);
-            ChessboardGrid topGrid = board.GetGrid(6, 2);
-            ChessboardGrid bottonGrid = board.GetGrid(6, 8);
+            ChessboardGrid leftGrid = board.GetGrid(3, 3);
+            ChessboardGrid rightGrid = board.GetGrid(8, 3);
+            ChessboardGrid topGrid = board.GetGrid(6, 7);
 
             ChessmanPawn pawn1 = new ChessmanPawn(leftGrid, Enums.ChessmanSide.White);
             ChessmanPawn pawn2 = new ChessmanPawn(rightGrid, Enums.ChessmanSide.White);
             ChessmanPawn pawn3 = new ChessmanPawn(topGrid, Enums.ChessmanSide.White);
-            ChessmanPawn pawn4 = new ChessmanPawn(bottonGrid, Enums.ChessmanSide.White);
 
             pawn1.RegistChessman(leftGrid);
             pawn2.RegistChessman(rightGrid);
             pawn3.RegistChessman(topGrid);
-            pawn4.RegistChessman(bottonGrid);
+
+            for (int i = 2; i < 9; i++)
+            {
+                if (i==3)
+                    continue;
+                expected.Add(board.GetGrid(6, i));
+            }
+            for (int i = 3; i < 9; i++)
+            {
+                if (i == 3)
+                    continue;
+                ChessboardGrid buildGrid = board.GetGrid(i, 3);
+                if (!expected.Contains(buildGrid))
+                {
+                    expected.Add(buildGrid);
+                }
+            }
 
             actual = rook.GetGridsByPath();
-            Assert.AreEqual(expected, actual);
+
+            foreach (ChessboardGrid item in actual)
+            {
+                Assert.IsTrue(expected.Contains(item), item.ToString());
+            }
+            Assert.AreEqual(actual.Length, expected.Count);
         }
     }
 }
