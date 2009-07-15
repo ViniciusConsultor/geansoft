@@ -28,9 +28,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="ct"></param>
         /// <returns></returns>
-        public static ChessmanSide GetOtherSide(ChessmanSide ct)
+        public static ChessmanSide GetOtherSide(ChessmanSide side)
         {
-            if (ct == ChessmanSide.Black) return ChessmanSide.White;
+            if (side == ChessmanSide.Black) 
+                return ChessmanSide.White;
             return ChessmanSide.Black;
         }
 
