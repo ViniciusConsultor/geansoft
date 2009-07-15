@@ -11,17 +11,17 @@ namespace Gean.Wrapper.Chess
     public class Chessboard
     {
         private ChessboardGrid[,] _boardGrids = new ChessboardGrid[8, 8];
-        private ChessmanBase[] _chessmans = new ChessmanBase[32];
+        private ChessmanBase[] _chessmans;
 
-        public Chessboard():
-            this(Helper.GetIntegratedChessman())
+        public Chessboard()
         {
-
+            this.InitializeComponent();
+            this._chessmans = Helper.GetIntegratedChessman(this);
         }
         public Chessboard(ChessmanBase[] chessmans)
         {
             this.InitializeComponent();
-            this.InitializeChessmans(chessmans);
+            this._chessmans = chessmans;
         }
 
         /// <summary>
@@ -39,14 +39,14 @@ namespace Gean.Wrapper.Chess
                         this);
                     if ((y % 2) == 0)
                         if ((x % 2) == 0)
-                            _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.White;
+                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
                         else
-                            _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.Black;
+                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.Black;
                     else
                         if ((x % 2) == 0)
-                            _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.Black;
+                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.Black;
                         else
-                            _boardGrids[x, y].ChessboardGridType = Enums.ChessboardGridType.White;
+                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
                 }
             }
         }
@@ -73,9 +73,86 @@ namespace Gean.Wrapper.Chess
 
         static class Helper
         {
-            internal static ChessmanBase[] GetIntegratedChessman()
+            internal static ChessmanBase[] GetIntegratedChessman(Chessboard board)
             {
-                throw new NotImplementedException();
+                ChessmanBase[] chessmans = new ChessmanBase[32];
+                int i = 1;
+
+                #region 兵
+                for (; i <= 8; i++)//初始化黑兵
+                {
+                    chessmans[i] = new ChessmanPawn(board.GetGrid(i, 7), Enums.ChessmanSide.Black);
+                }
+                for (; i <= 16; i++)//初始化白兵
+                {
+                    chessmans[i] = new ChessmanPawn(board.GetGrid(i, 2), Enums.ChessmanSide.White);
+                }
+                #endregion
+
+                #region 车
+                //白格黑车
+                chessmans[i] = new ChessmanRook(board.GetGrid(1, 8), Enums.ChessmanSide.Black);
+                i++;
+                //黑格黑车
+                chessmans[i] = new ChessmanRook(board.GetGrid(8, 8), Enums.ChessmanSide.Black);
+                i++;
+                //黑格白车
+                chessmans[i] = new ChessmanRook(board.GetGrid(1, 1), Enums.ChessmanSide.White);
+                i++;
+                //白格白车
+                chessmans[i] = new ChessmanRook(board.GetGrid(8, 1), Enums.ChessmanSide.White);
+                i++;
+                #endregion
+
+                #region 马
+                //黑格黑马
+                chessmans[i] = new ChessmanKnight(board.GetGrid(2, 8), Enums.ChessmanSide.Black);
+                i++;
+                //白格黑马
+                chessmans[i] = new ChessmanKnight(board.GetGrid(7, 8), Enums.ChessmanSide.Black);
+                i++;
+                //白格白马
+                chessmans[i] = new ChessmanKnight(board.GetGrid(2, 1), Enums.ChessmanSide.White);
+                i++;
+                //黑格白马
+                chessmans[i] = new ChessmanKnight(board.GetGrid(7, 1), Enums.ChessmanSide.White);
+                i++;
+                #endregion
+
+                #region 象
+                //白格黑象
+                chessmans[i] = new ChessmanBishop(board.GetGrid(3, 8), Enums.ChessmanSide.Black);
+                i++;
+                //黑格黑象
+                chessmans[i] = new ChessmanBishop(board.GetGrid(6, 8), Enums.ChessmanSide.Black);
+                i++;
+                //黑格白象
+                chessmans[i] = new ChessmanBishop(board.GetGrid(3, 1), Enums.ChessmanSide.White);
+                i++;
+                //白格白象
+                chessmans[i] = new ChessmanBishop(board.GetGrid(6, 1), Enums.ChessmanSide.White);
+                i++;
+                #endregion
+
+                #region 后
+                //黑后
+                chessmans[i] = new ChessmanQueen(board.GetGrid(4, 8), Enums.ChessmanSide.Black);
+                i++;
+                //白后
+                chessmans[i] = new ChessmanQueen(board.GetGrid(4, 1), Enums.ChessmanSide.White);
+                i++;
+                #endregion
+
+                #region 王
+                //黑王
+                chessmans[i] = new ChessmanRook(board.GetGrid(5, 8), Enums.ChessmanSide.Black);
+                i++;
+                //白王
+                chessmans[i] = new ChessmanRook(board.GetGrid(5, 1), Enums.ChessmanSide.White);
+                i++;
+                #endregion
+
+                return chessmans;
             }
         }
     }

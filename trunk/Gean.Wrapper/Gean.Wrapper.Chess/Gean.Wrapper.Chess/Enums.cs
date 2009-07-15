@@ -18,7 +18,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 黑格，白格
         /// </summary>
-        public enum ChessboardGridType
+        public enum ChessboardGridSide
         {
             Black, White,
         }

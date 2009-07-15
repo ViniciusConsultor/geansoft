@@ -13,14 +13,13 @@ namespace Gean.Wrapper.Chess
     public class ChessmanRook : ChessmanBase
     {
         public ChessmanRook(ChessboardGrid grid, Enums.ChessmanSide side)
-            : base(grid, side, Enums.ChessmanType.Rook)
+            : base(grid, Enums.ChessmanType.Rook)
         {
-
+            this.ChessmanSide = side;
         }
 
         public override void InitializeComponent()
         {
-            throw new NotImplementedException();
         }
 
         public override string ToSimpleString()
