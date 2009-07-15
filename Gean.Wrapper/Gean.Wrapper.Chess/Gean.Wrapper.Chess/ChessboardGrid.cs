@@ -11,7 +11,7 @@ namespace Gean.Wrapper.Chess
     {
         public AxisX X { get; set; }
         public AxisY Y { get; set; }
-        public Enums.ChessboardGridType ChessboardGridType { get; set; }
+        public Enums.ChessboardGridSide ChessboardGridSide { get; set; }
 
         internal ChessboardGrid(int x, int y, Chessboard board)
             : this(new AxisX(x), new AxisY(y), board) { }
@@ -49,7 +49,12 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         internal bool IsUsable(ChessmanBase chessmanBase)
         {
-            return true;
+            return true;//TODO:判断棋子落入该棋格是否符合规则
+        }
+
+        public override string ToString()
+        {
+            return "Grid:" + this.X.ToString() + this.Y.ToString();
         }
 
         /// <summary>
@@ -79,6 +84,7 @@ namespace Gean.Wrapper.Chess
             }
         }
 
+        #region custom event
 
         /// <summary>
         /// 在该棋格中出现落子时发生
@@ -90,14 +96,16 @@ namespace Gean.Wrapper.Chess
                 PlayEvent(this, e);
         }
         public delegate void PlayEventHandler(object sender, PlayEventArgs e);
-        public class PlayEventArgs : EventArgs
+        public class PlayEventArgs : ChessmanEventArgs
         {
-            public ChessmanBase Chessman { get; set; }
-            public PlayEventArgs(ChessmanBase chessman)
+            public PlayEventArgs(ChessmanBase man)
+                : base(man)
             {
-                this.Chessman = chessman;
+
             }
         }
+
+        #endregion
 
         /// <summary>
         /// 棋盘的X轴
