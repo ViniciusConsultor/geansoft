@@ -70,6 +70,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         public void ChessboardConstructorTest()
         {
             Chessboard target = new Chessboard();
+            target.InitializeChessmans();
             Assert.IsNotNull(target);
 
             for (int x = 1; x <= 8; x++)//所有的格子ChessboardGrid类都应实例化
@@ -83,7 +84,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             {
                 for (int x = 1; x <= 8; x++)
                 {
-                    Assert.IsNotNull(target.GetGrid(x, y).ChessmanOwner);
+                    Assert.IsNotNull(target.GetGrid(x, y).ChessmanOwner, target.GetGrid(x, y).ToString());
                 }
             }
             for (int y = 7; y <= 8; y++)//第7，8行的格子中应有棋子

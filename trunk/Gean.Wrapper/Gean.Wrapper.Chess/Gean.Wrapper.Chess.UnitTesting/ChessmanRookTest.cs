@@ -77,8 +77,18 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             ChessboardGrid currGrid  = board.GetGrid(6, 3);
             ChessmanRook rook = new ChessmanRook(currGrid, Enums.ChessmanSide.Black);
-            Assert.IsNotNull(rook.GridOwner.Parent.GetGrid(6, 2).ChessmanOwner);
-            Assert.IsNotNull(rook.GridOwner.Parent.GetGrid(6, 3).ChessmanOwner);
+            rook.RegistChessman(currGrid);
+
+            ChessboardGrid testGrid;
+
+            testGrid = rook.GridOwner.Parent.GetGrid(6, 1);
+            Assert.IsNull(testGrid.ChessmanOwner);
+            testGrid = rook.GridOwner.Parent.GetGrid(6, 4);
+            Assert.IsNull(testGrid.ChessmanOwner);
+            testGrid = rook.GridOwner.Parent.GetGrid(6, 2);
+            Assert.IsNull(testGrid.ChessmanOwner);
+            testGrid = rook.GridOwner.Parent.GetGrid(6, 3);
+            Assert.IsNotNull(testGrid.ChessmanOwner);
 
             ChessboardGrid leftGrid  = board.GetGrid(3, 3);
             ChessboardGrid rightGrid = board.GetGrid(8, 3);
@@ -92,15 +102,15 @@ namespace Gean.Wrapper.Chess.UnitTesting
             pawn2.RegistChessman(rightGrid);
             pawn3.RegistChessman(topGrid);
 
-            for (int i = 2; i < 9; i++)
+            for (int i = 1; i < 8; i++)
             {
-                if (i==3)
+                if (i == 3)
                     continue;
                 expected.Add(board.GetGrid(6, i));
             }
             for (int i = 3; i < 9; i++)
             {
-                if (i == 3)
+                if (i == 6)
                     continue;
                 ChessboardGrid buildGrid = board.GetGrid(i, 3);
                 if (!expected.Contains(buildGrid))
