@@ -82,16 +82,16 @@ namespace Gean.Wrapper.Chess.UnitTesting
         ///</summary>
         [TestMethod()]
         [DeploymentItem("Gean.Wrapper.Chess.dll")]
+        //从一个有3个记录的文件读出三条记录
         public void GetPGNsByTextReaderTest()
         {
             string filepath = Path.Combine(_CaseFilePath, "_Test.pgn");
             Debug.Assert(File.Exists(filepath), "");
             TextReader reader = new StreamReader(filepath);
-            ChessRecord[] expected = null; 
+            ChessRecord[] expected = new ChessRecord[3]; 
             ChessRecord[] actual;
             actual = ChessPGNReader_Accessor.Helper.GetPGNsByTextReader(reader);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
+            Assert.AreEqual(expected.Length, actual.Length);
         }
 
         /// <summary>

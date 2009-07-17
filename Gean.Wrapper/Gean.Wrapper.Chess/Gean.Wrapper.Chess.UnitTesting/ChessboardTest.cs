@@ -5,14 +5,14 @@ namespace Gean.Wrapper.Chess.UnitTesting
     
     
     /// <summary>
-    ///这是 Chessboard_HelperTest 的测试类，旨在
-    ///包含所有 Chessboard_HelperTest 单元测试
+    ///这是 ChessboardTest 的测试类，旨在
+    ///包含所有 ChessboardTest 单元测试
     ///</summary>
     [TestClass()]
-    public class Chessboard_HelperTest
+    public class ChessboardTest
     {
-
         #region MyRegion
+
         private TestContext testContextInstance;
 
         /// <summary>
@@ -61,22 +61,45 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //
         #endregion
 
-
         #endregion
 
+        /// <summary>
+        ///Chessboard 构造函数 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ChessboardConstructorTest()
+        {
+            Chessboard target = new Chessboard();
+            Assert.IsNotNull(target);
 
-
-
-        ///// <summary>
-        /////GetIntegratedChessman 的测试
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Gean.Wrapper.Chess.dll")]
-        //public void GetIntegratedChessmanTest()
-        //{
-        //    Chessboard board = new Chessboard(); // TODO: 初始化为适当的值
-
-        //    Assert.Inconclusive("验证此测试方法的正确性。");
-        //}
+            for (int x = 1; x <= 8; x++)//所有的格子ChessboardGrid类都应实例化
+            {
+                for (int y = 1; y <= 8; y++)
+                {
+                    Assert.IsNotNull(target.GetGrid(x, y));
+                }
+            }
+            for (int y = 1; y <= 2; y++)//第1，2行的格子中应有棋子
+            {
+                for (int x = 1; x <= 8; x++)
+                {
+                    Assert.IsNotNull(target.GetGrid(x, y).ChessmanOwner);
+                }
+            }
+            for (int y = 7; y <= 8; y++)//第7，8行的格子中应有棋子
+            {
+                for (int x = 1; x <= 8; x++)
+                {
+                    Assert.IsNotNull(target.GetGrid(x, y).ChessmanOwner);
+                }
+            }
+            for (int y = 3; y <= 6; y++)//从第3行到第6行的格子中棋子应为Null
+            {
+                for (int x = 1; x <= 8; x++)
+                {
+                    Assert.IsNull(target.GetGrid(x, y).ChessmanOwner);
+                }
+            }
+        }
     }
 }

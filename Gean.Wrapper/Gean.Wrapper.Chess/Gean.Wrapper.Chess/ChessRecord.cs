@@ -6,6 +6,7 @@ namespace Gean.Wrapper.Chess
 {
     /// <summary>
     /// 描述一局棋的记录，该记录可能与更多的棋局记录保存在一个PGN文件中
+    /// </summary>
     /// <example>
     /// [Event "WCh"]
     /// [Site "Bonn GER"]
@@ -24,7 +25,6 @@ namespace Gean.Wrapper.Chess
     /// 27. Rxa1 Rd5 28. Rc1 Rd7 29. Rc5 Ra7 30. Rc7 Rxc7 31. Bxc7 Bc2 32. Bxa5 Bxb3
     /// 1/2-1/2
     /// </example>
-    /// </summary>
     public class ChessRecord
     {
         public Definer Definer { get; set; }
