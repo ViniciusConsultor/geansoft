@@ -8,48 +8,55 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 一个描述棋盘的类
     /// </summary>
-    public class Chessboard
+    public class Chessboard : IEnumerable<ChessboardGrid>
     {
         private ChessboardGrid[,] _boardGrids = new ChessboardGrid[8, 8];
-        private ChessmanBase[] _chessmans;
+        private ChessmanCollection _chessmans = new ChessmanCollection();
 
         public Chessboard()
         {
-            this.InitializeGrid();
-        }
-        public Chessboard(ChessmanBase[] chessmans)
-        {
-            this.InitializeGrid();
-            this._chessmans = chessmans;
+            this.SetGrid();
         }
 
         /// <summary>
         /// 初始化组件（棋盘，即初始化整个棋盘的每个棋格）
         /// </summary>
-        private void InitializeGrid()
+        private void SetGrid()
         {
             for (int x = 0; x < _boardGrids.GetLength(0); x++)
             {
                 for (int y = 0; y < _boardGrids.GetLength(1); y++)
                 {
-                    _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, this);
                     if ((y % 2) == 0)
+                    {
                         if ((x % 2) == 0)
-                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
+                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.White);
                         else
-                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.Black;
+                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.Black);
+                    }
                     else
+                    {
                         if ((x % 2) == 0)
-                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.Black;
+                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.Black);
                         else
-                            _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
+                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.White);
+                    }
                 }
             }
         }
 
-        public void InitializeChessmans()
+        internal void SetChessmans()
         {
-            this._chessmans = Helper.GetIntegratedChessmans(this);
+            this.SetChessmans(Utility.GetOpenningsChessmans());
+        }
+
+        internal void SetChessmans(IEnumerable<ChessmanState> chessmans)
+        {
+            //this._chessmans.AddRange(chessmans);
+            //foreach (ChessmanBase man in chessmans)
+            //{
+            //    //man.RegistGrid(man.GridOwner);
+            //}
         }
 
         /// <summary>
@@ -63,24 +70,22 @@ namespace Gean.Wrapper.Chess
             return this._boardGrids[x - 1, y - 1];
         }
         /// <summary>
+        /// 获取指定坐标的棋格
+        /// </summary>
+        /// <param name="square">指定坐标</param>
+        /// <returns></returns>
+        public ChessboardGrid GetGrid(Square square)
+        {
+            return this.GetGrid(square.X, square.Y);
+        }
+        /// <summary>
         /// 获取指定坐标字符串的棋格
         /// </summary>
         /// <param name="step">指定坐标字符串</param>
         /// <returns></returns>
-        public ChessboardGrid GetGrid(string step)
+        public ChessboardGrid GetGrid(string square)
         {
-            if (string.IsNullOrEmpty(step))
-            {
-                throw new ArgumentNullException(step);
-            }
-            if (step.Length != 2)
-            {
-                throw new ArgumentException(step);
-            }
-            char[] chars = step.ToLowerInvariant().ToCharArray();
-            int x = Utility.CharToInt(chars[0]);
-            int y = Convert.ToInt32(chars[1]);
-            return this.GetGrid(x, y);
+            return this.GetGrid(Square.Parse(square));
         }
 
         /// <summary>
@@ -89,7 +94,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <returns>能到达的棋格</returns>
-        public ChessboardGrid[] GetUsableGrids(ChessmanBase chessman)
+        public ChessboardGrid[] GetUsableGrids(Chessman chessman)
         {
             List<ChessboardGrid> grids = new List<ChessboardGrid>();
             switch (chessman.ChessmanType)
@@ -113,132 +118,132 @@ namespace Gean.Wrapper.Chess
             return grids.ToArray();
         }
 
+        public ChessboardGrid[] GetGridsByStep(ChessStep step)
+        {
+            List<ChessboardGrid> grids = new List<ChessboardGrid>();
+            return grids.ToArray();
+        }
+
+        /// <summary>
+        /// 将棋子绑定到指定的棋格中
+        /// </summary>
+        /// <param name="grid"></param>
+        public void ChessmanBind(Chessman man, ChessboardGrid oldGrid, ChessboardGrid newGrid)
+        {
+            if (man == null)
+                throw new ArgumentOutOfRangeException(man.ToString());
+            ChessmanMoveEventArgs e = new ChessmanMoveEventArgs(man, oldGrid, newGrid);
+
+            //注册移动前事件
+            OnMoving(e);
+            //if (this.GridOwner != null)
+            //    this.GridOwner.ChessmanOwner = null;
+            //this.GridOwner = grid;
+            //this.GridOwner.ChessmanOwner = this;
+            //注册移动后事件
+            OnMoved(e);
+        }
+
+        #region IEnumerable<ChessboardGrid> 成员
+
+        public IEnumerator<ChessboardGrid> GetEnumerator()
+        {
+            return (IEnumerator<ChessboardGrid>)this._boardGrids.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable 成员
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this._boardGrids.GetEnumerator();
+        }
+
+        #endregion
+
         static class Helper
         {
-            /// <summary>
-            /// 获取整套棋子，并注册在棋盘
-            /// </summary>
-            /// <param name="board">需被注册到的棋盘</param>
-            /// <returns></returns>
-            internal static ChessmanBase[] GetIntegratedChessmans(Chessboard board)
+        }
+
+        #region custom event
+
+        /// <summary>
+        /// 在棋子被移动后发生
+        /// </summary>
+        public event MovedEventHandler MovedEvent;
+        protected virtual void OnMoved(ChessmanMoveEventArgs e)
+        {
+            if (MovedEvent != null)
+                MovedEvent(this, e);
+        }
+        public delegate void MovedEventHandler(object sender, ChessmanMoveEventArgs e);
+
+        /// <summary>
+        /// 在棋子被移动前发生
+        /// </summary>
+        public event MovingEventHandler MovingEvent;
+        protected virtual void OnMoving(ChessmanMoveEventArgs e)
+        {
+            if (MovingEvent != null)
+                MovingEvent(this, e);
+        }
+        public delegate void MovingEventHandler(object sender, ChessmanMoveEventArgs e);
+
+        /// <summary>
+        /// 包含棋子移动事件的数据
+        /// </summary>
+        public class ChessmanMoveEventArgs : ChessmanEventArgs
+        {
+            public ChessboardGrid OldGrid { get; set; }
+            public ChessboardGrid NewGrid { get; set; }
+            public ChessmanMoveEventArgs(Chessman chessman, ChessboardGrid oldGrid, ChessboardGrid newGrid)
+                : base(chessman)
             {
-                ChessmanBase[] chessmans = new ChessmanBase[32];
-                ChessboardGrid grid;
-
-                int i = 1;
-
-                #region  - 兵 -
-                for (; i <= 8; i++)//初始化黑兵
-                {
-                    grid = board.GetGrid(i, 7);
-                    chessmans[i - 1] = new ChessmanPawn(grid, Enums.ChessmanSide.Black);
-                    chessmans[i - 1].RegistChessman(grid);
-                }
-                for (; i <= 16; i++)//初始化白兵
-                {
-                    grid = board.GetGrid(i - 8, 2);
-                    chessmans[i - 1] = new ChessmanPawn(grid, Enums.ChessmanSide.White);
-                    chessmans[i - 1].RegistChessman(grid);
-                }
-                #endregion
-
-                #region - 车 -
-                //白格黑车
-                grid = board.GetGrid(1, 8);
-                chessmans[i - 1] = new ChessmanRook(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //黑格黑车
-                grid = board.GetGrid(8, 8);
-                chessmans[i - 1] = new ChessmanRook(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //黑格白车
-                grid = board.GetGrid(1, 1);
-                chessmans[i - 1] = new ChessmanRook(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白格白车
-                grid = board.GetGrid(8, 1);
-                chessmans[i - 1] = new ChessmanRook(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                #endregion
-
-                #region - 马 -
-                //黑格黑马
-                grid = board.GetGrid(2, 8);
-                chessmans[i - 1] = new ChessmanKnight(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白格黑马
-                grid = board.GetGrid(7, 8);
-                chessmans[i - 1] = new ChessmanKnight(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白格白马
-                grid = board.GetGrid(2, 1);
-                chessmans[i - 1] = new ChessmanKnight(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //黑格白马
-                grid = board.GetGrid(7, 1);
-                chessmans[i - 1] = new ChessmanKnight(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                #endregion
-
-                #region - 象 -
-                //白格黑象
-                grid = board.GetGrid(3,8);
-                chessmans[i - 1] = new ChessmanBishop(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //黑格黑象
-                grid = board.GetGrid(6,8);
-                chessmans[i - 1] = new ChessmanBishop(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //黑格白象
-                grid = board.GetGrid(3,1);
-                chessmans[i - 1] = new ChessmanBishop(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白格白象
-                grid = board.GetGrid(6,1);
-                chessmans[i - 1] = new ChessmanBishop(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                #endregion
-
-                #region - 后 -
-                //黑后
-                grid = board.GetGrid(4, 8);
-                chessmans[i - 1] = new ChessmanQueen(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白后
-                grid = board.GetGrid(4, 1);
-                chessmans[i - 1] = new ChessmanQueen(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                #endregion
-
-                #region - 王 -
-                //黑王
-                grid = board.GetGrid(5, 8);
-                chessmans[i - 1] = new ChessmanKing(grid, Enums.ChessmanSide.Black);
-                chessmans[i - 1].RegistChessman(grid);
-                i++;
-                //白王
-                grid = board.GetGrid(5, 1);
-                chessmans[i - 1] = new ChessmanKing(grid, Enums.ChessmanSide.White);
-                chessmans[i - 1].RegistChessman(grid);
-                #endregion
-
-                return chessmans;
+                this.OldGrid = oldGrid;
+                this.NewGrid = newGrid;
             }
         }
 
+        #endregion
     }
 }
+/*
+        public override ChessboardGrid[] GetGridsByPath()
+        {
+            List<ChessboardGrid> grids = new List<ChessboardGrid>();
+            int x = this.GridOwner.Square.X;
+            int y = this.GridOwner.Square.Y;
+
+            for (int i = x - 1; i >= Utility.LEFT; i--)//当前点向左
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(i, y);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = x + 1; i <= Utility.RIGHT; i++)//当前点向右
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(i, y);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = y - 1; i >= Utility.FOOTER; i--)//当前点向下
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(x, i);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            for (int i = y + 1; i <= Utility.TOP; i++)//当前点向上
+            {
+                ChessboardGrid gr = this.GridOwner.Parent.GetGrid(x, i);
+                grids.Add(gr);
+                if (gr.ChessmanOwner != null)
+                    break;
+            }
+            return grids.ToArray();
+        }
+
+*/

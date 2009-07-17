@@ -14,7 +14,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的棋子
         /// </summary>
-        public ChessmanBase Chessman { get; set; }
+        public Chessman Chessman { get; set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -29,7 +29,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessStepPairSequenceCollection ChoiceSteps { get; set; }
 
-        public ChessStep(ChessmanBase chessman, ChessboardGrid grid)
+        public ChessStep(Chessman chessman, ChessboardGrid grid)
         {
             this.Comments = new ChessCommentCollection();
             this.ChoiceSteps = new ChessStepPairSequenceCollection();
@@ -65,8 +65,34 @@ namespace Gean.Wrapper.Chess
                 }
                 sb.Remove(sb.Length - 1, 1).Append("}");
             }
-            sb.Append(' ');
+            sb.AppendLine();
             return sb.ToString();
         }
+
+        public static bool Parse(string str, out Square square, out Enums.ChessmanType manType)
+        {
+            if (string.IsNullOrEmpty(str) || str.Length < 2)
+                throw new ArgumentOutOfRangeException(str);
+
+            square = new Square();
+            manType = Enums.ChessmanType.Nothing;
+            if (!char.IsUpper(str, 0))
+            {
+                manType = Enums.ParseChessmanType(str[0]);
+            }
+            else
+            {
+
+            }
+            return true;
+        }
+
     }
 }
+
+/*
+正式的记谱法是先写棋子的字母.再写由哪格走到哪格.
+例如Ng1-f3.表示马由g1格走到f3格.也有简略记谱法是只写目的地.没有来源地.
+如Rd3.表示有车走到d3格.当有两个同样棋子可以到达同一个目的地时.则写出来源地的行或者列.如Rad3.
+如果吃掉对方的棋子.则在两个位置之间加上x.如Bb5xc6或Bxc6. 
+*/

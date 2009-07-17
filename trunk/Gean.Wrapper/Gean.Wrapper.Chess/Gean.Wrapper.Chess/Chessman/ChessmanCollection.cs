@@ -4,25 +4,18 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    /// <summary>
-    /// 描述棋招序列的集合，一般应用为一局棋的变招。
-    /// （IList集合,集合的元素为<see>ChessStepPairSequence</see>）
-    /// </summary>
-    public class ChessStepPairSequenceCollection : IList<ChessStepPairSequence>
+    public class ChessmanCollection : IList<Chessman>
     {
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        List<Chessman> _chessmans = new List<Chessman>();
 
-        #region IList<ChessStepSequence> 成员
+        #region IList<ChessmanBase> 成员
 
-        public int IndexOf(ChessStepPairSequence item)
+        public int IndexOf(Chessman item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, ChessStepPairSequence item)
+        public void Insert(int index, Chessman item)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +25,7 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public ChessStepPairSequence this[int index]
+        public Chessman this[int index]
         {
             get
             {
@@ -46,11 +39,16 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region ICollection<ChessStepSequence> 成员
+        #region ICollection<ChessmanBase> 成员
 
-        public void Add(ChessStepPairSequence item)
+        public void Add(Chessman item)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<Chessman> chessmans)
+        {
+            this._chessmans.AddRange(chessmans);
         }
 
         public void Clear()
@@ -58,12 +56,12 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public bool Contains(ChessStepPairSequence item)
+        public bool Contains(Chessman item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(ChessStepPairSequence[] array, int arrayIndex)
+        public void CopyTo(Chessman[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -78,16 +76,16 @@ namespace Gean.Wrapper.Chess
             get { throw new NotImplementedException(); }
         }
 
-        public bool Remove(ChessStepPairSequence item)
+        public bool Remove(Chessman item)
         {
             throw new NotImplementedException();
         }
 
         #endregion
 
-        #region IEnumerable<ChessStepSequence> 成员
+        #region IEnumerable<ChessmanBase> 成员
 
-        public IEnumerator<ChessStepPairSequence> GetEnumerator()
+        public IEnumerator<Chessman> GetEnumerator()
         {
             throw new NotImplementedException();
         }
@@ -98,7 +96,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this._chessmans.GetEnumerator();
         }
 
         #endregion

@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    class ChessmanKing : ChessmanBase
+    class ChessmanKing : Chessman
     {
-        public ChessmanKing(ChessboardGrid grid, Enums.ChessmanSide side)
-            : base(grid, Enums.ChessmanType.King)
+        public ChessmanKing(Enums.ChessmanSide side)
+            : base(Enums.ChessmanType.King, side)
         {
             this.ChessmanSide = side;
         }
@@ -19,11 +19,6 @@ namespace Gean.Wrapper.Chess
         public override string ToSimpleString()
         {
             return "K";
-        }
-
-        public override ChessboardGrid[] GetGridsByPath()
-        {
-            throw new NotImplementedException();
         }
     }
 }
