@@ -15,19 +15,18 @@ namespace Gean.Wrapper.Chess
 
         public Chessboard()
         {
-            this.InitializeComponent();
-            this._chessmans = Helper.GetIntegratedChessmans(this);
+            this.InitializeGrid();
         }
         public Chessboard(ChessmanBase[] chessmans)
         {
-            this.InitializeComponent();
+            this.InitializeGrid();
             this._chessmans = chessmans;
         }
 
         /// <summary>
         /// 初始化组件（棋盘，即初始化整个棋盘的每个棋格）
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeGrid()
         {
             for (int x = 0; x < _boardGrids.GetLength(0); x++)
             {
@@ -46,6 +45,11 @@ namespace Gean.Wrapper.Chess
                             _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
                 }
             }
+        }
+
+        public void InitializeChessmans()
+        {
+            this._chessmans = Helper.GetIntegratedChessmans(this);
         }
 
         /// <summary>
@@ -111,6 +115,11 @@ namespace Gean.Wrapper.Chess
 
         static class Helper
         {
+            /// <summary>
+            /// 获取整套棋子，并注册在棋盘
+            /// </summary>
+            /// <param name="board">需被注册到的棋盘</param>
+            /// <returns></returns>
             internal static ChessmanBase[] GetIntegratedChessmans(Chessboard board)
             {
                 ChessmanBase[] chessmans = new ChessmanBase[32];
@@ -118,7 +127,7 @@ namespace Gean.Wrapper.Chess
 
                 int i = 1;
 
-                #region 兵
+                #region  - 兵 -
                 for (; i <= 8; i++)//初始化黑兵
                 {
                     grid = board.GetGrid(i, 7);
@@ -133,7 +142,7 @@ namespace Gean.Wrapper.Chess
                 }
                 #endregion
 
-                #region 车
+                #region - 车 -
                 //白格黑车
                 grid = board.GetGrid(1, 8);
                 chessmans[i - 1] = new ChessmanRook(grid, Enums.ChessmanSide.Black);
@@ -156,7 +165,7 @@ namespace Gean.Wrapper.Chess
                 i++;
                 #endregion
 
-                #region 马
+                #region - 马 -
                 //黑格黑马
                 grid = board.GetGrid(2, 8);
                 chessmans[i - 1] = new ChessmanKnight(grid, Enums.ChessmanSide.Black);
@@ -179,7 +188,7 @@ namespace Gean.Wrapper.Chess
                 i++;
                 #endregion
 
-                #region 象
+                #region - 象 -
                 //白格黑象
                 grid = board.GetGrid(3,8);
                 chessmans[i - 1] = new ChessmanBishop(grid, Enums.ChessmanSide.Black);
@@ -202,7 +211,7 @@ namespace Gean.Wrapper.Chess
                 i++;
                 #endregion
 
-                #region 后
+                #region - 后 -
                 //黑后
                 grid = board.GetGrid(4, 8);
                 chessmans[i - 1] = new ChessmanQueen(grid, Enums.ChessmanSide.Black);
@@ -215,7 +224,7 @@ namespace Gean.Wrapper.Chess
                 i++;
                 #endregion
 
-                #region 王
+                #region - 王 -
                 //黑王
                 grid = board.GetGrid(5, 8);
                 chessmans[i - 1] = new ChessmanKing(grid, Enums.ChessmanSide.Black);
