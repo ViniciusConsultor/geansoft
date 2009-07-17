@@ -25,5 +25,12 @@ namespace Gean.Wrapper.Chess
             this.White = white;
             this.Black = black;
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this.Number).Append(". ").Append(this.White).Append(' ').Append(this.Black);
+            return sb.ToString();
+        }
     }
 }

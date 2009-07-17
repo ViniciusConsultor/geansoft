@@ -16,11 +16,10 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("///");
+            sb.Append("//");
             sb.Append(this.UserID);
-            sb.Append(':');
-            sb.Append(this.Comment);
-            sb.Append(@"\\\");
+            sb.Append(" : ");
+            sb.AppendLine(this.Comment);
             return sb.ToString();
         }
     }

@@ -73,7 +73,45 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 兵
             /// </summary>
-            Pawn
+            Pawn,
+            /// <summary>
+            /// 嘛也不是
+            /// </summary>
+            Nothing
+        }
+
+        /// <summary>
+        /// 返回将指定的字符解析出的棋子类型
+        /// </summary>
+        /// <param name="c">指定的字符</param>
+        /// <returns></returns>
+        public static Enums.ChessmanType ParseChessmanType(char c)
+        {
+            Enums.ChessmanType manType;
+            switch (c)
+            {
+                case 'O'://王车易位
+                    manType = Enums.ChessmanType.Nothing;
+                    break;
+                case 'K':
+                    manType = Enums.ChessmanType.King;
+                    break;
+                case 'Q':
+                    manType = Enums.ChessmanType.Queen;
+                    break;
+                case 'R':
+                    manType = Enums.ChessmanType.Rook;
+                    break;
+                case 'N':
+                    manType = Enums.ChessmanType.Knight;
+                    break;
+                case 'B':
+                    manType = Enums.ChessmanType.Bishop;
+                    break;
+                default:
+                    throw new ChessStepParseException(c.ToString());
+            }
+            return manType;
         }
 
     }

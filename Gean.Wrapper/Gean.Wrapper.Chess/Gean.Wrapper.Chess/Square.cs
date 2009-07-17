@@ -6,7 +6,7 @@ using System.Drawing;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 一种国际象棋棋格的表示方法。类似Point的一个类，多一些与返回字母的方法。
+    /// 一种国际象棋棋格的坐标表示方法。类似Point的一个类，比Point多一些与返回字母的方法。
     /// </summary>
     public struct Square
     {
@@ -54,8 +54,6 @@ namespace Gean.Wrapper.Chess
             this._x = x;
             this._y = y;
         }
-
-        public string Name { get { return this.ToString(); } }
 
         /// <summary>
         /// 获取该棋格坐标点的有效性
@@ -144,6 +142,18 @@ namespace Gean.Wrapper.Chess
                 return true;
             else
                 return false;
+        }
+
+        public static Square Parse(string square)
+        {
+            if (string.IsNullOrEmpty(square))
+                throw new ArgumentOutOfRangeException("Square IsNullOrEmpty!");
+            if (square.Length != 2)
+                throw new ArgumentOutOfRangeException("\"" + square + "\" is OutOfRange!");
+            int x; int y;
+            x = Utility.CharToInt(square[0]);
+            y = Convert.ToInt32(square[1]);
+            return new Square(x, y);
         }
     }
 }

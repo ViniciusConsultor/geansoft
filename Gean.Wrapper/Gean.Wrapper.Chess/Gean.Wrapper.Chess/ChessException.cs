@@ -15,4 +15,16 @@ namespace Gean.Wrapper.Chess
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
     }
+
+    [global::System.Serializable]
+    public class ChessStepParseException : ChessException
+    {
+        public ChessStepParseException() { }
+        public ChessStepParseException(string message) : base(message) { }
+        public ChessStepParseException(string message, Exception inner) : base(message, inner) { }
+        protected ChessStepParseException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
 }

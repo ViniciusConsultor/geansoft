@@ -4,25 +4,18 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    /// <summary>
-    /// 描述棋招序列的集合，一般应用为一局棋的变招。
-    /// （IList集合,集合的元素为<see>ChessStepPairSequence</see>）
-    /// </summary>
-    public class ChessStepPairSequenceCollection : IList<ChessStepPairSequence>
+    public class SquareCollection : IList<Square>
     {
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        List<Square> _squares = new List<Square>();
 
-        #region IList<ChessStepSequence> 成员
+        #region IList<Square> 成员
 
-        public int IndexOf(ChessStepPairSequence item)
+        public int IndexOf(Square item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, ChessStepPairSequence item)
+        public void Insert(int index, Square item)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +25,7 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public ChessStepPairSequence this[int index]
+        public Square this[int index]
         {
             get
             {
@@ -46,9 +39,9 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region ICollection<ChessStepSequence> 成员
+        #region ICollection<Square> 成员
 
-        public void Add(ChessStepPairSequence item)
+        public void Add(Square item)
         {
             throw new NotImplementedException();
         }
@@ -58,12 +51,12 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public bool Contains(ChessStepPairSequence item)
+        public bool Contains(Square item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(ChessStepPairSequence[] array, int arrayIndex)
+        public void CopyTo(Square[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -78,16 +71,16 @@ namespace Gean.Wrapper.Chess
             get { throw new NotImplementedException(); }
         }
 
-        public bool Remove(ChessStepPairSequence item)
+        public bool Remove(Square item)
         {
             throw new NotImplementedException();
         }
 
         #endregion
 
-        #region IEnumerable<ChessStepSequence> 成员
+        #region IEnumerable<Square> 成员
 
-        public IEnumerator<ChessStepPairSequence> GetEnumerator()
+        public IEnumerator<Square> GetEnumerator()
         {
             throw new NotImplementedException();
         }

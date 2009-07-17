@@ -9,43 +9,43 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessboardGrid
     {
-        public Square Square { get; set; }
-        public Enums.ChessboardGridSide ChessboardGridSide { get; set; }
-
-        internal ChessboardGrid(int x, int y, Chessboard board)
-            : this(new Square(x, y), board) { }
-
-        internal ChessboardGrid(Square square, Chessboard board)
+        internal ChessboardGrid(int x, int y, Enums.ChessboardGridSide side)
+            : this(new Square(x, y), side) { }
+        internal ChessboardGrid(Square square, Enums.ChessboardGridSide side)
         {
             this.Square = square;
-            this.Parent = board;
+            this.Side = side;
         }
 
         /// <summary>
-        /// 获取设置该棋格的父容器（棋盘）
+        /// 返回与设置该棋格的坐标
         /// </summary>
-        public Chessboard Parent { get; private set; }
+        public Square Square { get; internal set; }
+        /// <summary>
+        /// 黑格,白格
+        /// </summary>
+        public Enums.ChessboardGridSide Side { get; internal set; }
 
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
-        public ChessmanBase ChessmanOwner 
+        public Chessman OwnedChessman 
         {
-            get { return this._chessmanOwner; }
+            get { return this._ownedChessman; }
             set
             {
-                this._chessmanOwner = value;
+                this._ownedChessman = value;
                 OnPlay(new PlayEventArgs(value));//注册落子事件
             }
         }
-        private ChessmanBase _chessmanOwner;
+        private Chessman _ownedChessman = null;
 
         /// <summary>
         /// 判断指定的棋子是否能够落入该棋格
         /// </summary>
         /// <param name="chessmanBase">指定的棋子</param>
         /// <returns></returns>
-        internal bool IsUsable(ChessmanBase chessmanBase)
+        internal bool IsUsable(Chessman chessmanBase)
         {
             return true;//TODO:判断棋子落入该棋格是否符合规则
         }
@@ -61,7 +61,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="type">指定的棋子类型</param>
         /// <param name="side">指定的棋子的战方</param>
         /// <returns></returns>
-        internal ChessmanBase FindMovableChessman(Enums.ChessmanType type, Enums.ChessmanSide side)
+        internal Chessman FindMovableChessman(Enums.ChessmanType type, Enums.ChessmanSide side)
         {
             switch (type)
             {
@@ -96,7 +96,7 @@ namespace Gean.Wrapper.Chess
         public delegate void PlayEventHandler(object sender, PlayEventArgs e);
         public class PlayEventArgs : ChessmanEventArgs
         {
-            public PlayEventArgs(ChessmanBase man)
+            public PlayEventArgs(Chessman man)
                 : base(man)
             {
 
