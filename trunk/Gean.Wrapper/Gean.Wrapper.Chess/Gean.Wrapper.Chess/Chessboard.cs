@@ -33,10 +33,7 @@ namespace Gean.Wrapper.Chess
             {
                 for (int y = 0; y < _boardGrids.GetLength(1); y++)
                 {
-                    _boardGrids[x, y] = new ChessboardGrid(
-                        new ChessboardGrid.AxisX(x),
-                        new ChessboardGrid.AxisY(y),
-                        this);
+                    _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, this);
                     if ((y % 2) == 0)
                         if ((x % 2) == 0)
                             _boardGrids[x, y].ChessboardGridSide = Enums.ChessboardGridSide.White;
@@ -77,46 +74,14 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentException(step);
             }
             char[] chars = step.ToLowerInvariant().ToCharArray();
-            int x; 
-            switch (chars[0])
-            {
-                #region case
-                case 'a':
-                    x = 1;
-                    break;
-                case 'b':
-                    x = 2;
-                    break;
-                case 'c':
-                    x = 3;
-                    break;
-                case 'd':
-                    x = 4;
-                    break;
-                case 'e':
-                    x = 5;
-                    break;
-                case 'f':
-                    x = 6;
-                    break;
-                case 'g':
-                    x = 7;
-                    break;
-                case 'h':
-                    x = 8;
-                    break;
-                default:
-                    x = -1;
-                    break;
-                #endregion
-            }
+            int x = Utility.CharToInt(chars[0]);
             int y = Convert.ToInt32(chars[1]);
             return this.GetGrid(x, y);
         }
 
         /// <summary>
         /// 获取指定的棋子所能到达的棋格。
-        /// TODO:该方法代码未完成。
+        /// TODO:该方法代码未完成。不要使用该方法。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <returns>能到达的棋格</returns>

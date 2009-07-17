@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Gean.Wrapper.Chess
+{
+    static class Utility
+    {
+        /// <summary>
+        /// 顶部边界
+        /// </summary>
+        public const int TOP    = 8;
+        /// <summary>
+        /// 脚部边界
+        /// </summary>
+        public const int FOOTER = 1;
+        /// <summary>
+        /// 左部边界
+        /// </summary>
+        public const int LEFT   = 1;
+        /// <summary>
+        /// 右部边界
+        /// </summary>
+        public const int RIGHT  = 8;
+
+        /// <summary>
+        /// 将指定的棋盘横坐标字符转换成整型数字
+        /// </summary>
+        /// <param name="c">指定的棋盘横坐标字符</param>
+        /// <returns>
+        /// 如果返回值为-1，则输入值是非棋盘横坐标字符。
+        /// 坐标值遵循象棋规则将从1开始。
+        /// </returns>
+        static public int CharToInt(char c)
+        {
+            if (char.IsUpper(c))
+            {
+                string str = Convert.ToString(c);
+                str = str.ToLowerInvariant();
+                c = Convert.ToChar(str);
+            }
+            switch (c)
+            {
+                #region case
+                case 'a':
+                    return 1;
+                case 'b':
+                    return 2;
+                case 'c':
+                    return 3;
+                case 'd':
+                    return 4;
+                case 'e':
+                    return 5;
+                case 'f':
+                    return 6;
+                case 'g':
+                    return 7;
+                case 'h':
+                    return 8;
+                default:
+                    return -1;
+                #endregion
+            }
+        }
+
+        /// <summary>
+        /// 将指定的棋盘横坐标字符转换成整型数字
+        /// </summary>
+        /// <param name="str">指定的棋盘横坐标字符</param>
+        /// <returns>
+        /// 如果返回值为-1，则输入值是非棋盘横坐标字符。
+        /// 坐标值遵循象棋规则将从1开始。
+        /// </returns>
+        static public int StringToInt(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return -1;
+            }
+            if (str.Length > 1)
+            {
+                return -1;
+            }
+            return Utility.CharToInt(Convert.ToChar(str.ToLowerInvariant()));
+        }
+
+        /// <summary>
+        /// 将指定的坐标值转换成字符
+        /// </summary>
+        static public char IntToChar(int i)
+        {
+            if (i >= 1 && i <= 8)
+            {
+                #region switch
+                switch (i)
+                {
+                    case 1:
+                        return 'a';
+                    case 2:
+                        return 'b';
+                    case 3:
+                        return 'c';
+                    case 4:
+                        return 'd';
+                    case 5:
+                        return 'e';
+                    case 6:
+                        return 'f';
+                    case 7:
+                        return 'g';
+                    case 8:
+                        return 'h';
+                    default:
+                        return '*';
+                }
+                #endregion
+            }
+            return '*';
+        }
+
+        /// <summary>
+        /// 将指定的坐标值转换成字符
+        /// </summary>
+        static public string IntToString(int i)
+        {
+            return Utility.IntToChar(i).ToString();
+        }
+    }
+}

@@ -75,16 +75,18 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             Chessboard board = new Chessboard();
 
-            ChessboardGrid currGrid = board.GetGrid(6, 3);
+            ChessboardGrid currGrid  = board.GetGrid(6, 3);
             ChessmanRook rook = new ChessmanRook(currGrid, Enums.ChessmanSide.Black);
+            Assert.IsNotNull(rook.GridOwner.Parent.GetGrid(6, 2).ChessmanOwner);
+            Assert.IsNotNull(rook.GridOwner.Parent.GetGrid(6, 3).ChessmanOwner);
 
-            ChessboardGrid leftGrid = board.GetGrid(3, 3);
+            ChessboardGrid leftGrid  = board.GetGrid(3, 3);
             ChessboardGrid rightGrid = board.GetGrid(8, 3);
-            ChessboardGrid topGrid = board.GetGrid(6, 7);
+            ChessboardGrid topGrid   = board.GetGrid(6, 7);
 
-            ChessmanPawn pawn1 = new ChessmanPawn(leftGrid, Enums.ChessmanSide.White);
+            ChessmanPawn pawn1 = new ChessmanPawn(leftGrid,  Enums.ChessmanSide.White);
             ChessmanPawn pawn2 = new ChessmanPawn(rightGrid, Enums.ChessmanSide.White);
-            ChessmanPawn pawn3 = new ChessmanPawn(topGrid, Enums.ChessmanSide.White);
+            ChessmanPawn pawn3 = new ChessmanPawn(topGrid,   Enums.ChessmanSide.White);
 
             pawn1.RegistChessman(leftGrid);
             pawn2.RegistChessman(rightGrid);

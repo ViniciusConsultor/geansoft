@@ -9,17 +9,15 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessboardGrid
     {
-        public AxisX X { get; set; }
-        public AxisY Y { get; set; }
+        public Square Square { get; set; }
         public Enums.ChessboardGridSide ChessboardGridSide { get; set; }
 
         internal ChessboardGrid(int x, int y, Chessboard board)
-            : this(new AxisX(x), new AxisY(y), board) { }
+            : this(new Square(x, y), board) { }
 
-        internal ChessboardGrid(AxisX x, AxisY y, Chessboard board)
+        internal ChessboardGrid(Square square, Chessboard board)
         {
-            this.X = x;
-            this.Y = y;
+            this.Square = square;
             this.Parent = board;
         }
 
@@ -54,7 +52,7 @@ namespace Gean.Wrapper.Chess
 
         public override string ToString()
         {
-            return "Grid:" + this.X.ToString() + this.Y.ToString();
+            return "Grid: " + this.Square.ToString();
         }
 
         /// <summary>
@@ -107,6 +105,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        /*
         /// <summary>
         /// 棋盘的X轴
         /// </summary>
@@ -224,6 +223,6 @@ namespace Gean.Wrapper.Chess
                 return this._y.ToString();
             }
         }
-
+        */
     }
 }

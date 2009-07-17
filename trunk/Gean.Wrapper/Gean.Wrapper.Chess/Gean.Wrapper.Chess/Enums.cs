@@ -16,6 +16,16 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
+        /// 获取棋的另一战方
+        /// </summary>
+        public static ChessmanSide GetOtherSide(ChessmanSide side)
+        {
+            if (side == ChessmanSide.Black) 
+                return ChessmanSide.White;
+            return ChessmanSide.Black;
+        }
+
+        /// <summary>
         /// 黑格，白格
         /// </summary>
         public enum ChessboardGridSide
@@ -24,15 +34,13 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
-        /// 获取另一方
+        /// 获取棋格的另一方
         /// </summary>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        public static ChessmanSide GetOtherSide(ChessmanSide side)
+        public static ChessboardGridSide GetOtherGridSide(ChessboardGridSide side)
         {
-            if (side == ChessmanSide.Black) 
-                return ChessmanSide.White;
-            return ChessmanSide.Black;
+            if (side == ChessboardGridSide.Black)
+                return ChessboardGridSide.White;
+            return ChessboardGridSide.Black;
         }
 
         /// <summary>
@@ -67,7 +75,6 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Pawn
         }
-
 
     }
 }
