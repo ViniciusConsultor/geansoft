@@ -27,4 +27,16 @@ namespace Gean.Wrapper.Chess
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
     }
+
+    [global::System.Serializable]
+    public class ChessmanMovedException : ChessException
+    {
+        public ChessmanMovedException() { }
+        public ChessmanMovedException(string message) : base(message) { }
+        public ChessmanMovedException(string message, Exception inner) : base(message, inner) { }
+        protected ChessmanMovedException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
 }

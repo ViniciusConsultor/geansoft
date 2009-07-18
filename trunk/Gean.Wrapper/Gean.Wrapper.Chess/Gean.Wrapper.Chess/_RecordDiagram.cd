@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Gean.Wrapper.Chess.ChessmanBase" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAEAABAAAAEgAIAgAECAAACIIAABAgAAAgAAAA=</HashCode>
-      <FileName>Chessman\ChessmanBase.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanBishop" Collapsed="true">
     <Position X="1.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanBishop.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanKing" Collapsed="true">
     <Position X="1.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanKing.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanKnight" Collapsed="true">
     <Position X="1.5" Y="1.25" Width="1.5" />
+    <InheritanceLine Type="Gean.Wrapper.Chess.Chessman" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="1.009" />
+        <Point X="1.25" Y="1.562" />
+        <Point X="1.5" Y="1.562" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanKnight.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanPawn" Collapsed="true">
     <Position X="1.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanPawn.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanQueen" Collapsed="true">
     <Position X="1.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanQueen.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessmanRook" Collapsed="true">
     <Position X="1.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Chessman\ChessmanRook.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -55,12 +55,42 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Class Name="Gean.Wrapper.Chess.Chessboard.Helper" Collapsed="true">
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.KilledEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.KillingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.ChessboardFinishedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.Chessboard.ChessboardEventArgs" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Chessboard.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Delegate Name="Gean.Wrapper.Chess.Chessboard.MovedEventHandler" Collapsed="true">
+      <Class Name="Gean.Wrapper.Chess.Chessboard.ChessmanMoveEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.ChessboardOpeningEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.Chessboard.ChessmanKillEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.ChessboardOpenedEventHandler" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Chessboard.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -70,14 +100,19 @@
           <NewMemberFileName>Chessboard.cs</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
-      <Class Name="Gean.Wrapper.Chess.Chessboard.ChessmanMoveEventArgs" Collapsed="true">
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.MovedEventHandler" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Chessboard.cs</NewMemberFileName>
         </TypeIdentifier>
-      </Class>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.Chessboard.ChessboardFinishingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Chessboard.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIBACAQAQARQAAAwAAAAEAEAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAACJAITACSAIAAREAAAgAEAAEAEgAeAQIAAA=</HashCode>
       <FileName>Chessboard.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -88,7 +123,12 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Delegate Name="Gean.Wrapper.Chess.ChessboardGrid.PlayEventHandler" Collapsed="true">
+      <Delegate Name="Gean.Wrapper.Chess.ChessboardGrid.PlayBeforeEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessboardGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessboardGrid.PlayAfterEventHandler" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ChessboardGrid.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -100,7 +140,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAIAAAAAAIAAIAEAAAAQAABAAAAAAAAACBgAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAAABAAgIEGAAAAAAQIAAAAAAAAACAgAAAAAAA=</HashCode>
       <FileName>ChessboardGrid.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -115,7 +155,7 @@
     <Position X="1" Y="6" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ChessmanEventArgs.cs</FileName>
+      <FileName>Chessman\ChessmanEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessStep" Collapsed="true">
@@ -148,10 +188,17 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="Gean.Wrapper.Chess.Chessman" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEgAIAgAACAAACIMAABAAABAAAAIA=</HashCode>
+      <FileName>Chessman\Chessman.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="Gean.Wrapper.Chess.Square" Collapsed="true">
     <Position X="8.5" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAgAEgIIAQAAAYEgAAAAAQAAAAAAIAgAAAAAAAAYiA=</HashCode>
+      <HashCode>AAAgAEgIIAQAAAYEgAAAAAAAAAAAAIAgAAAAAAAAYiA=</HashCode>
       <FileName>Square.cs</FileName>
     </TypeIdentifier>
   </Struct>

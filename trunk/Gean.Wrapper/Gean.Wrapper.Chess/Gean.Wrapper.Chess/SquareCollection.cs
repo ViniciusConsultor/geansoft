@@ -8,6 +8,17 @@ namespace Gean.Wrapper.Chess
     {
         List<Square> _squares = new List<Square>();
 
+        /// <summary>
+        /// 返回位于 SquareCollection 开始处的(最近发生的) Square 但不将其移除。
+        /// </summary>
+        /// <returns></returns>
+        public Square Peek()
+        {
+            if (_squares.Count == 0)
+                return new Square();
+            return _squares[_squares.Count - 1];
+        }
+
         #region IList<Square> 成员
 
         public int IndexOf(Square item)

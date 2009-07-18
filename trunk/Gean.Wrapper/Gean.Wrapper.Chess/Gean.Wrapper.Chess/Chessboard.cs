@@ -15,13 +15,31 @@ namespace Gean.Wrapper.Chess
 
         public Chessboard()
         {
-            this.SetGrid();
+            this.SetBoardGrid();
         }
 
         /// <summary>
-        /// 初始化组件（棋盘，即初始化整个棋盘的每个棋格）
+        /// 获取棋盘的棋局是否是开局状态。
+        /// 当棋格全部实例化，棋子全部实例化并落入指定棋格后，该值为False。
         /// </summary>
-        private void SetGrid()
+        public bool IsOpennings
+        {
+            get { return this._isOpennings; }
+        }
+        private bool _isOpennings = true;
+
+        /// <summary>
+        /// 获取指定坐标值的棋格
+        /// </summary>
+        public ChessboardGrid this[int x, int y]
+        {
+            get { return this.GetGrid(x, y); }
+        }
+
+        /// <summary>
+        /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
+        /// </summary>
+        private void SetBoardGrid()
         {
             for (int x = 0; x < _boardGrids.GetLength(0); x++)
             {
@@ -45,18 +63,73 @@ namespace Gean.Wrapper.Chess
             }
         }
 
-        internal void SetChessmans()
+        internal void SetOpenningsChessmans()
         {
-            this.SetChessmans(Utility.GetOpenningsChessmans());
+            this.SetOpenningsChessmans(ChessmanCollection.GetOpennings().ToArray());
         }
 
-        internal void SetChessmans(IEnumerable<ChessmanState> chessmans)
+        internal void SetOpenningsChessmans(IEnumerable<Chessman> chessmans)
         {
-            //this._chessmans.AddRange(chessmans);
-            //foreach (ChessmanBase man in chessmans)
-            //{
-            //    //man.RegistGrid(man.GridOwner);
-            //}
+            this._chessmans.AddRange(chessmans);
+            foreach (Chessman man in chessmans)
+            {
+                this.SetGridOwnedChessman(man, man.Squares[0]);
+            }
+            this._isOpennings = false;
+        }
+
+        /// <summary>
+        /// 设置指定的棋格拥有的棋子。(下棋的动作:移动棋子到指定的棋格,在初始化时,可以理解为是摆棋)
+        /// </summary>
+        /// <param name="newSquare">棋子将被移动到的指定棋格的坐标</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="ChessmanMovedException"></exception>
+        public void SetGridOwnedChessman(Chessman man, Square newSquare)
+        {
+            if (man == null)
+                throw new ArgumentOutOfRangeException("Chessman:chessman is Null.");
+            if (newSquare == null)
+                throw new ArgumentOutOfRangeException("Square:newSquare is Null.");
+            Square oldSquare = man.Squares.Peek();
+
+            ChessboardGrid oldGrid = this.GetGrid(oldSquare);
+            ChessboardGrid newGrid = this.GetGrid(newSquare);
+            if (newGrid.OwnedChessman != Chessman.Empty)
+            {
+                if (newGrid.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
+                {
+                    throw new ChessmanMovedException(
+                        string.Format("{0} and {1} is same Side, cannot move!",
+                        newGrid.OwnedChessman.ToString(), man.ToString()));
+                }
+            }
+
+            ChessmanMoveEventArgs e = new ChessmanMoveEventArgs(man, man.Squares.Peek(), newSquare);
+
+            //注册移动前事件
+            OnMoving(e);
+
+            man.Squares.Add(newSquare);
+            if (!this._isOpennings)//非初始化棋局时，将棋子的历史棋格的棋子状态置为空
+                this.GetGrid(oldSquare).OwnedChessman = Chessman.Empty;
+
+            if (newGrid.OwnedChessman != Chessman.Empty)
+            {
+                //注册棋子即将被杀死的事件
+                OnKilling(new ChessmanKillEventArgs(man, newGrid));
+
+                //新棋格中如有棋子，置该棋子为杀死状态
+                newGrid.OwnedChessman.IsKilled = true;
+
+                //注册棋子被杀死后的事件
+                OnKilled(new ChessmanKillEventArgs(man, newGrid));
+            }
+
+            //绑定新棋格拥有的棋子
+            this.GetGrid(newSquare).OwnedChessman = man;
+            
+            //注册移动后事件
+            OnMoved(e);
         }
 
         /// <summary>
@@ -124,26 +197,6 @@ namespace Gean.Wrapper.Chess
             return grids.ToArray();
         }
 
-        /// <summary>
-        /// 将棋子绑定到指定的棋格中
-        /// </summary>
-        /// <param name="grid"></param>
-        public void ChessmanBind(Chessman man, ChessboardGrid oldGrid, ChessboardGrid newGrid)
-        {
-            if (man == null)
-                throw new ArgumentOutOfRangeException(man.ToString());
-            ChessmanMoveEventArgs e = new ChessmanMoveEventArgs(man, oldGrid, newGrid);
-
-            //注册移动前事件
-            OnMoving(e);
-            //if (this.GridOwner != null)
-            //    this.GridOwner.ChessmanOwner = null;
-            //this.GridOwner = grid;
-            //this.GridOwner.ChessmanOwner = this;
-            //注册移动后事件
-            OnMoved(e);
-        }
-
         #region IEnumerable<ChessboardGrid> 成员
 
         public IEnumerator<ChessboardGrid> GetEnumerator()
@@ -162,50 +215,140 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        static class Helper
-        {
-        }
-
         #region custom event
+
+        /// <summary>
+        /// 在棋子被移动的时候发生
+        /// </summary>
+        public event MovingEventHandler ChessmanMovingEvent;
+        protected virtual void OnMoving(ChessmanMoveEventArgs e)
+        {
+            if (ChessmanMovingEvent != null)
+                ChessmanMovingEvent(this, e);
+        }
+        public delegate void MovingEventHandler(object sender, ChessmanMoveEventArgs e);
 
         /// <summary>
         /// 在棋子被移动后发生
         /// </summary>
-        public event MovedEventHandler MovedEvent;
+        public event MovedEventHandler ChessmanMovedEvent;
         protected virtual void OnMoved(ChessmanMoveEventArgs e)
         {
-            if (MovedEvent != null)
-                MovedEvent(this, e);
+            if (ChessmanMovedEvent != null)
+                ChessmanMovedEvent(this, e);
         }
         public delegate void MovedEventHandler(object sender, ChessmanMoveEventArgs e);
-
-        /// <summary>
-        /// 在棋子被移动前发生
-        /// </summary>
-        public event MovingEventHandler MovingEvent;
-        protected virtual void OnMoving(ChessmanMoveEventArgs e)
-        {
-            if (MovingEvent != null)
-                MovingEvent(this, e);
-        }
-        public delegate void MovingEventHandler(object sender, ChessmanMoveEventArgs e);
 
         /// <summary>
         /// 包含棋子移动事件的数据
         /// </summary>
         public class ChessmanMoveEventArgs : ChessmanEventArgs
         {
-            public ChessboardGrid OldGrid { get; set; }
-            public ChessboardGrid NewGrid { get; set; }
-            public ChessmanMoveEventArgs(Chessman chessman, ChessboardGrid oldGrid, ChessboardGrid newGrid)
+            public Square OldSquare { get; set; }
+            public Square NewSquare { get; set; }
+            public ChessmanMoveEventArgs(Chessman chessman, Square oldSquare, Square newSquare)
                 : base(chessman)
             {
-                this.OldGrid = oldGrid;
-                this.NewGrid = newGrid;
+                this.OldSquare = oldSquare;
+                this.NewSquare = newSquare;
+            }
+        }
+
+        /// <summary>
+        /// 在棋局开始的时候发生
+        /// </summary>
+        public event ChessboardOpeningEventHandler ChessboardOpeningEvent;
+        protected virtual void OnChessboardOpening(ChessboardEventArgs e)
+        {
+            if (ChessboardOpeningEvent != null)
+                ChessboardOpeningEvent(this, e);
+        }
+        public delegate void ChessboardOpeningEventHandler(object sender, ChessboardEventArgs e);
+
+        /// <summary>
+        /// 在棋局开始后发生
+        /// </summary>
+        public event ChessboardOpenedEventHandler ChessboardOpenedEvent;
+        protected virtual void OnChessboardOpened(ChessboardEventArgs e)
+        {
+            if (ChessboardOpenedEvent != null)
+                ChessboardOpenedEvent(this, e);
+        }
+        public delegate void ChessboardOpenedEventHandler(object sender, ChessboardEventArgs e);
+
+        /// <summary>
+        /// 在棋局结束的时候发生
+        /// </summary>
+        public event ChessboardFinishingEventHandler ChessboardFinishingEvent;
+        protected virtual void OnChessboardFinishing(ChessboardEventArgs e)
+        {
+            if (ChessboardFinishingEvent != null)
+                ChessboardFinishingEvent(this, e);
+        }
+        public delegate void ChessboardFinishingEventHandler(object sender, ChessboardEventArgs e);
+
+        /// <summary>
+        /// 在棋局结束后发生
+        /// </summary>
+        public event ChessboardFinishedEventHandler ChessboardFinishedEvent;
+        protected virtual void OnChessboardFinished(ChessboardEventArgs e)
+        {
+            if (ChessboardFinishedEvent != null)
+                ChessboardFinishedEvent(this, e);
+        }
+        public delegate void ChessboardFinishedEventHandler(object sender, ChessboardEventArgs e);
+
+        public class ChessboardEventArgs : EventArgs
+        {
+            public Chessboard Chessboard { get; private set; }
+            public ChessboardEventArgs(Chessboard board)
+            {
+                this.Chessboard = board;
+            }
+        }
+
+        /// <summary>
+        /// 在该棋子被杀死后发生
+        /// </summary>
+        public event KilledEventHandler KilledEvent;
+        protected virtual void OnKilled(ChessmanKillEventArgs e)
+        {
+            if (KilledEvent != null)
+                KilledEvent(this, e);
+        }
+        public delegate void KilledEventHandler(object sender, ChessmanKillEventArgs e);
+
+        /// <summary>
+        /// 在该棋子正在被杀死（也可理解为，即将被杀死时）发生
+        /// </summary>
+        public event KillingEventHandler KillingEvent;
+        protected virtual void OnKilling(ChessmanKillEventArgs e)
+        {
+            if (KillingEvent != null)
+                KillingEvent(this, e);
+        }
+        public delegate void KillingEventHandler(object sender, ChessmanKillEventArgs e);
+
+        /// <summary>
+        /// 包含棋子杀死事件的数据
+        /// </summary>
+        public class ChessmanKillEventArgs : ChessmanEventArgs
+        {
+            /// <summary>
+            /// 被杀死的棋子所在棋格
+            /// </summary>
+            public ChessboardGrid CurrGrid { get; private set; }
+            /// <param name="man">被杀死的棋子</param>
+            /// <param name="currGrid">被杀死的棋子所在棋格</param>
+            public ChessmanKillEventArgs(Chessman man, ChessboardGrid currGrid)
+                : base(man)
+            {
+                this.CurrGrid = currGrid;
             }
         }
 
         #endregion
+
     }
 }
 /*
