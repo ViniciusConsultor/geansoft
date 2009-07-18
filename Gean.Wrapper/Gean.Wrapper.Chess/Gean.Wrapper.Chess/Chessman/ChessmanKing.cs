@@ -4,12 +4,28 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    class ChessmanKing : Chessman
+    public class ChessmanKing : Chessman
     {
-        public ChessmanKing(Enums.ChessmanSide side)
+        internal ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)
         {
-            this.ChessmanSide = side;
+            Square square = new Square();
+            switch (side)
+            {
+                case Enums.ChessmanSide.White:
+                    square = new Square(5, 1);
+                    break;
+                case Enums.ChessmanSide.Black:
+                    square = new Square(5, 8);
+                    break;
+            }
+            this.Squares.Add(square);
+        }
+
+        internal ChessmanKing(Enums.ChessmanSide side, Square square)
+            : base(Enums.ChessmanType.King, side)
+        {
+            this.Squares.Add(square);
         }
 
         public override void InitializeComponent()

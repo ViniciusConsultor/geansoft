@@ -34,8 +34,9 @@ namespace Gean.Wrapper.Chess
             get { return this._ownedChessman; }
             set
             {
+                OnPlayBefore(new PlayEventArgs(value));//注册落子前事件
                 this._ownedChessman = value;
-                OnPlay(new PlayEventArgs(value));//注册落子事件
+                OnPlayAfter(new PlayEventArgs(value));//注册落子后事件
             }
         }
         private Chessman _ownedChessman = null;
@@ -85,15 +86,28 @@ namespace Gean.Wrapper.Chess
         #region custom event
 
         /// <summary>
-        /// 在该棋格中出现落子时发生
+        /// 在该棋格中拥有的棋子发生变化的时候(变化前、即将发生变化)发生。
+        /// (包括该在棋格落子和移走该棋格拥有的棋子)
         /// </summary>
-        public event PlayEventHandler PlayEvent;
-        protected virtual void OnPlay(PlayEventArgs e)
+        public event PlayBeforeEventHandler PlayBeforeEvent;
+        protected virtual void OnPlayBefore(PlayEventArgs e)
         {
-            if (PlayEvent != null) 
-                PlayEvent(this, e);
+            if (PlayBeforeEvent != null) 
+                PlayBeforeEvent(this, e);
         }
-        public delegate void PlayEventHandler(object sender, PlayEventArgs e);
+        public delegate void PlayBeforeEventHandler(object sender, PlayEventArgs e);
+
+        /// <summary>
+        /// 在该棋格中拥有的棋子发生变化后发生(包括该在棋格落子和移走该棋格拥有的棋子)
+        /// </summary>
+        public event PlayAfterEventHandler PlayAfterEvent;
+        protected virtual void OnPlayAfter(PlayEventArgs e)
+        {
+            if (PlayAfterEvent != null)
+                PlayAfterEvent(this, e);
+        }
+        public delegate void PlayAfterEventHandler(object sender, PlayEventArgs e);
+
         public class PlayEventArgs : ChessmanEventArgs
         {
             public PlayEventArgs(Chessman man)
