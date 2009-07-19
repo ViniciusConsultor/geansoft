@@ -75,5 +75,33 @@ namespace Gean.Wrapper.Chess.UnitTesting
         29.Rxc7 Rd8     30.Bd4 Ne5      31.Bxe5 Rxf1+   32.Qxf1 Rd1+
         33.Kxd1 Qxf1# 0–1 
         */
+
+        ///<summary>
+        ///Parse 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParseTest()
+        {
+            string str = string.Empty;
+            Enums.ChessmanSide manSide = Enums.ChessmanSide.Black;
+            ChessStep expected;
+            ChessStep actual;
+
+            str = "O-O";
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.KingSide);
+            actual = ChessStep.Parse(str, manSide);
+            Assert.AreEqual(expected, actual);
+
+            str = "O-O-O";
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.QueenSide);
+            actual = ChessStep.Parse(str, manSide);
+            Assert.AreEqual(expected, actual);
+
+            str = "O - O - O";
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.QueenSide);
+            actual = ChessStep.Parse(str, manSide);
+            Assert.AreEqual(expected, actual);
+
+        }
     }
 }

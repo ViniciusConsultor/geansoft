@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml;
 //using Gean.Resources;
 using Microsoft.Win32;
+using Gean.Resources;
 
 namespace Gean
 {
