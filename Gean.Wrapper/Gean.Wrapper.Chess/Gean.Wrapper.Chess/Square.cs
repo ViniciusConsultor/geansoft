@@ -54,6 +54,24 @@ namespace Gean.Wrapper.Chess
             this._x = x;
             this._y = y;
         }
+        /// <summary>
+        /// 一种国际象棋棋格的表示方法
+        /// </summary>
+        /// <param name="c">棋格的横坐标的字符</param>
+        /// <param name="y">棋格的纵坐标</param>
+        public Square(char c, int y)
+        {
+            int i = Utility.CharToInt(c);
+            #region Exception
+            if (!Square.Check(i, y))
+            {
+                throw new ArgumentOutOfRangeException("坐标值超限！");
+            }
+            #endregion
+            this._x = 0; this._y = 0;
+            this._x = i;
+            this._y = y;
+        }
 
         /// <summary>
         /// 获取该棋格坐标点的有效性
@@ -152,7 +170,7 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException("\"" + square + "\" is OutOfRange!");
             int x; int y;
             x = Utility.CharToInt(square[0]);
-            y = Convert.ToInt32(square[1]);
+            y = Convert.ToInt32(square.Substring(1));
             return new Square(x, y);
         }
     }

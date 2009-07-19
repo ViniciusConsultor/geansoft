@@ -11,6 +11,11 @@ namespace Gean.Wrapper.Chess
     public abstract class Chessman
     {
         /// <summary>
+        /// 表示棋子为空(null)时。此变量为只读。
+        /// </summary>
+        public static readonly Chessman Empty = null;
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="type">棋子类型</param>
@@ -20,6 +25,91 @@ namespace Gean.Wrapper.Chess
             this.ChessmanSide = side;
             this.Squares = new SquareCollection();
             this.InitializeComponent();
+        }
+
+        #region override
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Chessman: ");
+            sb.Append(this.ChessmanSide.ToString());
+            sb.Append(',');
+            sb.Append(this.ChessmanType.ToString());
+            return sb.ToString();
+        }
+        public override bool Equals(object obj)
+        {
+            Chessman man = obj as Chessman;
+            if (man.ChessmanType != this.ChessmanType)
+            {
+                return false;
+            }
+            if (man.ChessmanSide != this.ChessmanSide)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return unchecked(17 * this.ChessmanSide.GetHashCode() ^ this.ChessmanType.GetHashCode());
+        }
+        #endregion
+
+        /// <summary>
+        /// 棋子的战方
+        /// </summary>
+        public Enums.ChessmanSide ChessmanSide { get; protected set; }
+        /// <summary>
+        /// 棋子的类型
+        /// </summary>
+        public Enums.ChessmanType ChessmanType { get; private set; }
+        /// <summary>
+        /// 该棋子走过的路线(坐标的集合)
+        /// </summary>
+        public SquareCollection Squares { get; set; }
+
+        /// <summary>
+        /// 获取或设置该棋子是否已被杀死
+        /// </summary>
+        public virtual bool IsKilled { get; internal set; }
+
+        public abstract void InitializeComponent();
+        public abstract string ToSimpleString();
+
+        public static ChessmanCollection GetOpennings()
+        {
+            ChessmanCollection chessmans = new ChessmanCollection();
+
+            //兵
+            for (int i = Utility.LEFT; i <= Utility.RIGHT; i++)
+            {
+                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
+                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
+            }
+            //王
+            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
+            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
+            //后
+            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
+            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
+            //车
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
+            //马
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
+            //象
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
+
+            return chessmans;
         }
 
         /// <summary>
@@ -61,61 +151,6 @@ namespace Gean.Wrapper.Chess
                 return true;
             return false;
         }
-
-        #region override
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Chessman: ");
-            sb.Append(this.ChessmanSide.ToString());
-            sb.Append(',');
-            sb.Append(this.ChessmanType.ToString());
-            return sb.ToString();
-        }
-        public override bool Equals(object obj)
-        {
-            Chessman man = obj as Chessman;
-            if (man.ChessmanType != this.ChessmanType)
-            {
-                return false;
-            }
-            if (man.ChessmanSide != this.ChessmanSide)
-            {
-                return false;
-            }
-            return true;
-        }
-        public override int GetHashCode()
-        {
-            return unchecked(17 * this.ChessmanSide.GetHashCode() ^ this.ChessmanType.GetHashCode());
-        }
-        #endregion
-
-        /// <summary>
-        /// 表示棋子为空(null)时。此变量为只读。
-        /// </summary>
-        public static readonly Chessman Empty = null;
-
-        /// <summary>
-        /// 棋子的战方
-        /// </summary>
-        public Enums.ChessmanSide ChessmanSide { get; protected set; }
-        /// <summary>
-        /// 棋子的类型
-        /// </summary>
-        public Enums.ChessmanType ChessmanType { get; private set; }
-        /// <summary>
-        /// 该棋子走过的路线(坐标的集合)
-        /// </summary>
-        public SquareCollection Squares { get; set; }
-
-        /// <summary>
-        /// 获取或设置该棋子是否已被杀死
-        /// </summary>
-        public virtual bool IsKilled { get; internal set; }
-
-        public abstract void InitializeComponent();
-        public abstract string ToSimpleString();
 
         /// <summary>
         /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
