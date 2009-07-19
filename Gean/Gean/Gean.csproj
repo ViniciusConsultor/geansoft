@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\IntString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
+    <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="_Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,9 +95,6 @@
     <Compile Include="Wrapper\Xml\AbstractXmlNode.cs" />
     <Compile Include="Wrapper\Xml\XmlHelper.cs" />
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Wrapper\Xml\AbstractXml.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="_Resources\FilterString.resx">
