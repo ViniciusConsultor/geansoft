@@ -104,39 +104,5 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取正式棋局的全部棋子
         /// </summary>
-        public static ChessmanCollection GetOpennings()
-        {
-            ChessmanCollection chessmans = new ChessmanCollection();
-
-            //兵
-            for (int i = Utility.LEFT; i <= Utility.RIGHT; i++)
-            {
-                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
-                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
-            }
-            //王
-            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
-            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
-            //后
-            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
-            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
-            //车
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
-            //马
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
-            //象
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessboardGridSide.Black));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.Black));
-
-            return chessmans;
-        }
     }
 }

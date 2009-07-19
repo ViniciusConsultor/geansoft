@@ -44,6 +44,8 @@
     <Compile Include="ChessboardTest.cs" />
     <Compile Include="ChessmanRookTest.cs" />
     <Compile Include="ChessPGNReader_HelperTest.cs" />
+    <Compile Include="ChessStepTest.cs" />
+    <Compile Include="EnumsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SquareTest.cs" />
   </ItemGroup>

@@ -6,6 +6,53 @@ namespace Gean.Wrapper.Chess
 {
     public class Enums
     {
+        /// <summary>
+        /// 王车易位
+        /// </summary>
+        public enum Castling
+        { 
+            /// <summary>
+            /// 王车短易位
+            /// </summary>
+            KingSide,
+            /// <summary>
+            /// 王车长易位
+            /// </summary>
+            QueenSide,
+            /// <summary>
+            /// 嘛也不是
+            /// </summary>
+            None,
+        }
+
+        /// <summary>
+        /// 辅助的棋招的动作说明
+        /// </summary>
+        public enum AccessorialAction
+        {
+            /// <summary>
+            /// 普通棋招
+            /// </summary>
+            General = 1,
+            /// <summary>
+            /// 有棋被杀死
+            /// </summary>
+            Kill = 2,
+            /// <summary>
+            /// 将军
+            /// </summary>
+            Check = 4,
+            /// <summary>
+            /// 杀棋并将军
+            /// </summary>
+            KillAndCheck = Kill | Check,
+        }
+
+        public static AccessorialAction GetFlag(AccessorialAction value, AccessorialAction flag)
+        {
+            value = value & (AccessorialAction.KillAndCheck ^ flag);
+            return value;
+        }
 
         /// <summary>
         /// 棋子的战方：黑棋，白棋
