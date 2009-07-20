@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Gean.UI.ChessControl
 {
-    public partial class ChessBoardControl : Control
+    public class ChessBoardControl : Control
     {
         public ChessBoardControl()
         {
