@@ -37,33 +37,35 @@
             // _splitContainer
             // 
             this._splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._splitContainer.Location = new System.Drawing.Point(12, 12);
+            this._splitContainer.Location = new System.Drawing.Point(10, 11);
             this._splitContainer.Name = "_splitContainer";
             // 
             // _splitContainer.Panel1
             // 
             this._splitContainer.Panel1.Controls.Add(this._propertyGrid);
-            this._splitContainer.Size = new System.Drawing.Size(608, 421);
-            this._splitContainer.SplitterDistance = 202;
+            this._splitContainer.Size = new System.Drawing.Size(612, 423);
+            this._splitContainer.SplitterDistance = 203;
+            this._splitContainer.SplitterWidth = 3;
             this._splitContainer.TabIndex = 0;
             // 
             // _propertyGrid
             // 
             this._propertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._propertyGrid.Font = new System.Drawing.Font("Tahoma", 8F);
             this._propertyGrid.Location = new System.Drawing.Point(0, 0);
             this._propertyGrid.Name = "_propertyGrid";
-            this._propertyGrid.Size = new System.Drawing.Size(202, 421);
+            this._propertyGrid.Size = new System.Drawing.Size(203, 423);
             this._propertyGrid.TabIndex = 0;
             // 
             // DemoMainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 445);
             this.Controls.Add(this._splitContainer);
-            this.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Name = "DemoMainForm";
-            this.Padding = new System.Windows.Forms.Padding(12);
+            this.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
             this.ShowIcon = false;
             this.Text = "DemoMainForm";
             this._splitContainer.Panel1.ResumeLayout(false);
