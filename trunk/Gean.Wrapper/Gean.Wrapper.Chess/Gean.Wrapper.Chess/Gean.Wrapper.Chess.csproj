@@ -68,7 +68,7 @@
     <Compile Include="ChessStepPairSequenceCollection.cs" />
     <Compile Include="ChessException.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Square.cs" />
+    <Compile Include="ChessSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SquareCollection.cs" />
     <Compile Include="Utility.cs" />

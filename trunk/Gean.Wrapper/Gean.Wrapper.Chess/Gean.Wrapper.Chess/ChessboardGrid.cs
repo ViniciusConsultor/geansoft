@@ -10,8 +10,8 @@ namespace Gean.Wrapper.Chess
     public class ChessboardGrid
     {
         internal ChessboardGrid(int x, int y, Enums.ChessboardGridSide side)
-            : this(new Square(x, y), side) { }
-        internal ChessboardGrid(Square square, Enums.ChessboardGridSide side)
+            : this(new ChessSquare(x, y), side) { }
+        internal ChessboardGrid(ChessSquare square, Enums.ChessboardGridSide side)
         {
             this.Square = square;
             this.Side = side;
@@ -20,7 +20,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 返回与设置该棋格的坐标
         /// </summary>
-        public Square Square { get; internal set; }
+        public ChessSquare Square { get; internal set; }
         /// <summary>
         /// 黑格,白格
         /// </summary>

@@ -9,20 +9,20 @@ namespace Gean.Wrapper.Chess
         internal ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)
         {
-            Square square = new Square();
+            ChessSquare square = new ChessSquare();
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    square = new Square(5, 1);
+                    square = new ChessSquare(5, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    square = new Square(5, 8);
+                    square = new ChessSquare(5, 8);
                     break;
             }
             this.Squares.Add(square);
         }
 
-        internal ChessmanKing(Enums.ChessmanSide side, Square square)
+        internal ChessmanKing(Enums.ChessmanSide side, ChessSquare square)
             : base(Enums.ChessmanType.King, side)
         {
             this.Squares.Add(square);

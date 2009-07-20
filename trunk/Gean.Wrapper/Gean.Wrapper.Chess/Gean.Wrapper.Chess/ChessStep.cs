@@ -22,11 +22,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public Square TargetSquare { get; set; }
+        public ChessSquare TargetSquare { get; set; }
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public Square SourceSquare { get; set; }
+        public ChessSquare SourceSquare { get; set; }
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
@@ -60,7 +60,7 @@ namespace Gean.Wrapper.Chess
             this.ChoiceSteps = new ChessStepPairSequenceCollection();
         }
 
-        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, Square targetSquare, Square sourceSquare, Enums.AccessorialAction action)
+        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, ChessSquare targetSquare, ChessSquare sourceSquare, Enums.AccessorialAction action)
         {
             this.ChessmanType = manType;
             this.ChessmanSide = manSide;
@@ -136,8 +136,8 @@ namespace Gean.Wrapper.Chess
             str = str.Trim();
 
             Enums.ChessmanType manType = Enums.ChessmanType.Nothing;
-            Square sourceSquare = new Square();
-            Square targetSquare = new Square();
+            ChessSquare sourceSquare = new ChessSquare();
+            ChessSquare targetSquare = new ChessSquare();
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
 
             //针对尾部标记符进行一些操作
@@ -189,7 +189,7 @@ namespace Gean.Wrapper.Chess
                         else
                             action = Enums.AccessorialAction.Kill;
                     }
-                    targetSquare = Square.Parse(str.Substring(n, 2));
+                    targetSquare = ChessSquare.Parse(str.Substring(n, 2));
                 }
                 #endregion
             }
@@ -200,10 +200,10 @@ namespace Gean.Wrapper.Chess
                 switch (str.Length)
                 {
                     case 2:
-                        targetSquare = Square.Parse(str);
+                        targetSquare = ChessSquare.Parse(str);
                         break;
                     case 4:
-                        targetSquare = Square.Parse(str.Substring(str.IndexOf('x')));
+                        targetSquare = ChessSquare.Parse(str.Substring(str.IndexOf('x')));
                         break;
                     default:
                         break;

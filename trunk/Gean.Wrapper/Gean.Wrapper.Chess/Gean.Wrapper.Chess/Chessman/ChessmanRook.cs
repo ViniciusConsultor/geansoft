@@ -18,7 +18,7 @@ namespace Gean.Wrapper.Chess
             this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 1, 8));
         }
 
-        internal ChessmanRook(Enums.ChessmanSide side, Square square)
+        internal ChessmanRook(Enums.ChessmanSide side, ChessSquare square)
             : base(Enums.ChessmanType.Rook, side)
         {
             this.Squares.Add(square);

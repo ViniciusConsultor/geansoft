@@ -155,9 +155,9 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
         /// </summary>
-        internal static Square GetOpenningsSquare(Enums.ChessmanSide side, Enums.ChessboardGridSide gridSide, int left, int right)
+        internal static ChessSquare GetOpenningsSquare(Enums.ChessmanSide side, Enums.ChessboardGridSide gridSide, int left, int right)
         {
-            Square square = new Square();
+            ChessSquare square = new ChessSquare();
             switch (side)
             {
                 case Enums.ChessmanSide.White:
@@ -165,10 +165,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessboardGridSide.Black:
-                                square = new Square(left, 1);
+                                square = new ChessSquare(left, 1);
                                 break;
                             case Enums.ChessboardGridSide.White:
-                                square = new Square(right, 1);
+                                square = new ChessSquare(right, 1);
                                 break;
                         }
                         break;
@@ -178,10 +178,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessboardGridSide.Black:
-                                square = new Square(right, 8);
+                                square = new ChessSquare(right, 8);
                                 break;
                             case Enums.ChessboardGridSide.White:
-                                square = new Square(left, 8);
+                                square = new ChessSquare(left, 8);
                                 break;
                         }
                         break;

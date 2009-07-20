@@ -92,13 +92,13 @@ namespace Gean.Wrapper.Chess
         /// <param name="newSquare">棋子将被移动到的指定棋格的坐标</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ChessmanMovedException"></exception>
-        public ChessStep SetGridOwnedChessman(Chessman man, Square newSquare)
+        public ChessStep SetGridOwnedChessman(Chessman man, ChessSquare newSquare)
         {
             if (man == null)
                 throw new ArgumentOutOfRangeException("Chessman:chessman is Null.");
             if (newSquare == null)
                 throw new ArgumentOutOfRangeException("Square:newSquare is Null.");
-            Square oldSquare = man.Squares.Peek();
+            ChessSquare oldSquare = man.Squares.Peek();
 
             ChessboardGrid oldGrid = this.GetGrid(oldSquare);
             ChessboardGrid newGrid = this.GetGrid(newSquare);
@@ -164,7 +164,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="square">指定坐标</param>
         /// <returns></returns>
-        public ChessboardGrid GetGrid(Square square)
+        public ChessboardGrid GetGrid(ChessSquare square)
         {
             return this.GetGrid(square.X, square.Y);
         }
@@ -175,7 +175,7 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         public ChessboardGrid GetGrid(string square)
         {
-            return this.GetGrid(Square.Parse(square));
+            return this.GetGrid(ChessSquare.Parse(square));
         }
 
         /// <summary>
@@ -317,9 +317,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public class ChessmanMoveEventArgs : ChessmanEventArgs
         {
-            public Square OldSquare { get; set; }
-            public Square NewSquare { get; set; }
-            public ChessmanMoveEventArgs(Chessman chessman, Square oldSquare, Square newSquare)
+            public ChessSquare OldSquare { get; set; }
+            public ChessSquare NewSquare { get; set; }
+            public ChessmanMoveEventArgs(Chessman chessman, ChessSquare oldSquare, ChessSquare newSquare)
                 : base(chessman)
             {
                 this.OldSquare = oldSquare;

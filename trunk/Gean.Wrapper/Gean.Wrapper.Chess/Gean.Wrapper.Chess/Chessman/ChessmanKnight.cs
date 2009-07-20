@@ -12,7 +12,7 @@ namespace Gean.Wrapper.Chess
             this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 2, 7));
         }
 
-        internal ChessmanKnight(Enums.ChessmanSide side, Square square)
+        internal ChessmanKnight(Enums.ChessmanSide side, ChessSquare square)
             : base(Enums.ChessmanType.Knight, side)
         {
             this.Squares.Add(square);

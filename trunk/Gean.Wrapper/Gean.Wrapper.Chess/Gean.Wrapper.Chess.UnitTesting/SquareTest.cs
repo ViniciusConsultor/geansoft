@@ -71,18 +71,18 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ToStringTest()
         {
-            Square target = new Square(3, 4);
+            ChessSquare target = new ChessSquare(3, 4);
             string expected = "c4";
 
             string actual = target.ToString();
             Assert.AreEqual(expected, actual);
 
-            target = new Square(8, 8);
+            target = new ChessSquare(8, 8);
             expected = "h8";
             actual = target.ToString();
             Assert.AreEqual(expected, actual);
 
-            target = new Square(1, 1);
+            target = new ChessSquare(1, 1);
             expected = "a1";
             actual = target.ToString();
             Assert.AreEqual(expected, actual);
@@ -100,32 +100,32 @@ namespace Gean.Wrapper.Chess.UnitTesting
             bool actual;
 
             expected = false;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
 
             x = 9; y = 9;
             expected = false;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
 
             x = -1; y = -1;
             expected = false;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
 
             x = 1; y = 1;
             expected = true;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
 
             x = 8; y = 8;
             expected = true;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
 
             x = 2; y = 7;
             expected = true;
-            actual = Square.Check(x, y);
+            actual = ChessSquare.Check(x, y);
             Assert.AreEqual(expected, actual);
         }
 
@@ -137,25 +137,25 @@ namespace Gean.Wrapper.Chess.UnitTesting
         {
             int x = 4; 
             int y = 4; 
-            Square target = new Square(x, y);
+            ChessSquare target = new ChessSquare(x, y);
             Assert.IsNotNull(target);
 
-            try { target = new Square(0, 0); }
+            try { target = new ChessSquare(0, 0); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
 
-            try { target = new Square(9, 9); }
+            try { target = new ChessSquare(9, 9); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
 
-            try { target = new Square(-1, -1); }
+            try { target = new ChessSquare(-1, -1); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
 
-            try { target = new Square(-2, 10); }
+            try { target = new ChessSquare(-2, 10); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
 
-            try { target = new Square(4, 10); }
+            try { target = new ChessSquare(4, 10); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
             
-            try { target = new Square(-9, 5); }
+            try { target = new ChessSquare(-9, 5); }
             catch (Exception e) { Assert.IsInstanceOfType(e, typeof(ArgumentOutOfRangeException)); }
         }
     }
