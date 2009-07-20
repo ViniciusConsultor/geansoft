@@ -102,6 +102,10 @@ namespace Gean.Wrapper.Chess.UnitTesting
             actual = ChessStep.Parse(str, manSide);
             Assert.AreEqual(expected, actual);
 
+            str = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.Queen, new Square('h', 3), new Square(), Enums.AccessorialAction.KillAndCheck);
+            actual = ChessStep.Parse(str, manSide);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

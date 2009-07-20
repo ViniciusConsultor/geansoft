@@ -6,12 +6,24 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessRecordFlag : IEnumerable<string>
     {
-        private Dictionary<string, string> _flags = new Dictionary<string, string>();
+        private static Dictionary<string, string> _flags = new Dictionary<string, string>();
 
         public ChessRecordFlag()
         {
-            _flags.Add("Move", this.Move);
-            //_flags.to
+            if (_flags.Count <= 0)
+            {
+                _flags.Add("Move", this.Move);
+                _flags.Add("Capture", this.Capture);
+                _flags.Add("Check", this.Check);
+                _flags.Add("DoubleCheck", this.DoubleCheck);
+                _flags.Add("Checkmate", this.Checkmate);
+                _flags.Add("EnPassant", this.EnPassant);
+                _flags.Add("Favorable", this.Favorable);
+                _flags.Add("FavorablePro", this.FavorablePro);
+                _flags.Add("Misestimate", this.Misestimate);
+                _flags.Add("MisestimatePro", this.MisestimatePro);
+                _flags.Add("UnknownConsequences", this.UnknownConsequences);
+            }
         }
 
 /* 简易评论标记符
@@ -22,48 +34,48 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 目标格坐标前：走子
         /// </summary>
-        private string Move = "-";
+        public string Move { get { return "-"; } }
         /// <summary>
         /// 目标格坐标前：吃子
         /// </summary>
-        private string Capture = "x";
+        public string Capture { get { return "x"; } }
         /// <summary>
         /// 目标格坐标后：将军
         /// </summary>
-        private string Check = "+";
+        public string Check { get { return "+"; } }
         /// <summary>
         /// 目标格坐标后：双将
         /// </summary>
-        private string DoubleCheck = "++";
+        public string DoubleCheck { get { return "++"; } }
         /// <summary>
         /// 目标格坐标后：将死
         /// </summary>
-        private string Checkmate = "x";
+        public string Checkmate { get { return "x"; } }
         /// <summary>
         /// 目标格坐标后：吃过路兵
         /// </summary>
-        private string EnPassant = "e.p.";
+        public string EnPassant { get { return "e.p."; } }
 
         /// <summary>
         /// 好棋。有利的棋招
         /// </summary>
-        private string Favorable = "!";
+        public string Favorable { get { return "!"; } }
         /// <summary>
         /// 好棋。非常有利的棋招
         /// </summary>
-        private string FavorablePro = "!!";
+        public string FavorablePro { get { return "!!"; } }
         /// <summary>
         /// 昏招
         /// </summary>
-        private string Misestimate = "?";
+        public string Misestimate { get { return "?"; } }
         /// <summary>
         /// 严重的昏招
         /// </summary>
-        private string MisestimatePro = "??";
+        public string MisestimatePro { get { return "??"; } }
         /// <summary>
         /// 后果不明的棋招
         /// </summary>
-        private string UnknownConsequences = "!?";
+        public string UnknownConsequences { get { return "!?"; } }
 
 
         #region IEnumerable<string> 成员
