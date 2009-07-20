@@ -9,14 +9,14 @@ namespace Gean.Wrapper.Chess
         internal ChessmanQueen(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.Queen, side)
         {
-            ChessSquare square = new ChessSquare();
+            ChessSquare square = null;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    square = new ChessSquare(4, 1);
+                    square = new ChessSquare(4, 1, Enums.ChessSquareSide.Black);
                     break;
                 case Enums.ChessmanSide.Black:
-                    square = new ChessSquare(4, 8);
+                    square = new ChessSquare(4, 8, Enums.ChessSquareSide.White);
                     break;
             }
             this.Squares.Add(square);

@@ -6,7 +6,7 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanBishop : Chessman
     {
-        internal ChessmanBishop(Enums.ChessmanSide side, Enums.ChessboardGridSide gridSide)
+        internal ChessmanBishop(Enums.ChessmanSide side, Enums.ChessSquareSide gridSide)
             : base(Enums.ChessmanType.Bishop, side)
         {
             this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 3, 6));

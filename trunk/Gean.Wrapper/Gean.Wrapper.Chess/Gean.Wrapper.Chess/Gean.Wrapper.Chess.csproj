@@ -46,20 +46,37 @@
     <Compile Include="ChessGame.cs" />
     <Compile Include="ChessComment.cs" />
     <Compile Include="ChessCommentCollection.cs" />
-    <Compile Include="Chessman\ChessmanEventArgs.cs" />
-    <Compile Include="Chessman\Chessman.cs" />
-    <Compile Include="Chessman\ChessmanBishop.cs" />
-    <Compile Include="Chessman\ChessmanCollection.cs" />
-    <Compile Include="Chessman\ChessmanKing.cs" />
-    <Compile Include="Chessman\ChessmanKnight.cs" />
-    <Compile Include="Chessman\ChessmanPawn.cs" />
-    <Compile Include="Chessman\ChessmanQueen.cs" />
-    <Compile Include="Chessman\ChessmanRook.cs" />
+    <Compile Include="Chessman\Chessman.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanBishop.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanCollection.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanKing.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanKnight.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanPawn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanQueen.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chessman\ChessmanRook.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ChessRecord.cs" />
     <Compile Include="ChessPGNWriter.cs" />
     <Compile Include="ChessRecordFlag.cs" />
     <Compile Include="ChessStep.cs" />
-    <Compile Include="ChessboardGrid.cs" />
     <Compile Include="ChessPGNReader.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,18 +87,11 @@
     <Compile Include="Enums.cs" />
     <Compile Include="ChessSquare.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SquareCollection.cs" />
+    <Compile Include="ChessSquareCollection.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\_ChessboardExcle.xls" />
-    <None Include="Resources\_Chessman.ai" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\_Chessboard.jpg" />
-    <Content Include="Resources\_Chessman.jpg" />
-    <Content Include="Resources\_ChessRecord.txt" />
-    <Content Include="Resources\_English.txt" />
+    <None Include="_ChessboardExcle.xls" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
