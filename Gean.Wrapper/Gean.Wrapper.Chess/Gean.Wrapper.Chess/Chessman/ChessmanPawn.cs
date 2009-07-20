@@ -9,15 +9,29 @@ namespace Gean.Wrapper.Chess
         internal ChessmanPawn(Enums.ChessmanSide side, int column)
             : base(Enums.ChessmanType.Pawn, side)
         {
-            ChessSquare square = new ChessSquare();
+            ChessSquare square = null;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    square = new ChessSquare(column, 2);
-                    break;
+                    {
+                        Enums.ChessSquareSide squareSide = Enums.ChessSquareSide.White;
+                        if (column % 2 != 0)
+                        {
+                            squareSide = Enums.ChessSquareSide.Black;
+                        }
+                        square = new ChessSquare(column, 2, squareSide);
+                        break;
+                    }
                 case Enums.ChessmanSide.Black:
-                    square = new ChessSquare(column, 7);
-                    break;
+                    {
+                        Enums.ChessSquareSide squareSide = Enums.ChessSquareSide.Black;
+                        if (column % 2 != 0)
+                        {
+                            squareSide = Enums.ChessSquareSide.White;
+                        }
+                        square = new ChessSquare(column, 7, squareSide);
+                        break;
+                    }
             }
             this.Squares.Add(square);
         }

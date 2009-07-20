@@ -75,7 +75,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 黑格，白格
         /// </summary>
-        public enum ChessboardGridSide
+        public enum ChessSquareSide
         {
             Black, White,
         }
@@ -83,11 +83,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取棋格的另一方
         /// </summary>
-        public static ChessboardGridSide GetOtherGridSide(ChessboardGridSide side)
+        public static ChessSquareSide GetOtherGridSide(ChessSquareSide side)
         {
-            if (side == ChessboardGridSide.Black)
-                return ChessboardGridSide.White;
-            return ChessboardGridSide.Black;
+            if (side == ChessSquareSide.Black)
+                return ChessSquareSide.White;
+            return ChessSquareSide.Black;
         }
 
         /// <summary>

@@ -136,8 +136,8 @@ namespace Gean.Wrapper.Chess
             str = str.Trim();
 
             Enums.ChessmanType manType = Enums.ChessmanType.Nothing;
-            ChessSquare sourceSquare = new ChessSquare();
-            ChessSquare targetSquare = new ChessSquare();
+            ChessSquare sourceSquare;// = new ChessSquare();
+            ChessSquare targetSquare;// = new ChessSquare();
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
 
             //针对尾部标记符进行一些操作
@@ -189,7 +189,7 @@ namespace Gean.Wrapper.Chess
                         else
                             action = Enums.AccessorialAction.Kill;
                     }
-                    targetSquare = ChessSquare.Parse(str.Substring(n, 2));
+                    //targetSquare = ChessSquare.Parse(str.Substring(n, 2));
                 }
                 #endregion
             }
@@ -200,10 +200,10 @@ namespace Gean.Wrapper.Chess
                 switch (str.Length)
                 {
                     case 2:
-                        targetSquare = ChessSquare.Parse(str);
+                        //targetSquare = ChessSquare.Parse(str);
                         break;
                     case 4:
-                        targetSquare = ChessSquare.Parse(str.Substring(str.IndexOf('x')));
+                        //targetSquare = ChessSquare.Parse(str.Substring(str.IndexOf('x')));
                         break;
                     default:
                         break;
@@ -213,9 +213,9 @@ namespace Gean.Wrapper.Chess
 
             //return new ChessStep
             if (castling == Enums.Castling.None)
-                return new ChessStep(manSide, manType, sourceSquare, targetSquare, action);
+                return null;//new ChessStep(manSide, manType, sourceSquare, targetSquare, action);
             else
-                return new ChessStep(manSide, castling);
+                return null;//new ChessStep(manSide, castling);
         }
 
     }

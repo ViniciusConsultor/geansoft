@@ -8,14 +8,14 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 这是描述一盘棋局的类
     /// </summary>
-    public class ChessGame : IEnumerable<ChessboardGrid>
+    public class ChessGame : IEnumerable<ChessSquare>
     {
-        private ChessboardGrid[,] _boardGrids = new ChessboardGrid[8, 8];
+        private ChessSquare[,] _squares = new ChessSquare[8, 8];
         private ChessmanCollection _chessmans = new ChessmanCollection();
 
         public ChessGame()
         {
-            this.SetBoardGrid();
+            this.SetSquare();
         }
 
         /// <summary>
@@ -31,33 +31,33 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取指定坐标值的棋格
         /// </summary>
-        public ChessboardGrid this[int x, int y]
+        public ChessSquare this[int x, int y]
         {
-            get { return this.GetGrid(x, y); }
+            get { return this.GetSquare(x, y); }
         }
 
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        private void SetBoardGrid()
+        private void SetSquare()
         {
-            for (int x = 0; x < _boardGrids.GetLength(0); x++)
+            for (int x = 0; x < _squares.GetLength(0); x++)
             {
-                for (int y = 0; y < _boardGrids.GetLength(1); y++)
+                for (int y = 0; y < _squares.GetLength(1); y++)
                 {
                     if ((y % 2) == 0)
                     {
                         if ((x % 2) == 0)
-                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.White);
+                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.White);
                         else
-                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.Black);
+                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.Black);
                     }
                     else
                     {
                         if ((x % 2) == 0)
-                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.Black);
+                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.Black);
                         else
-                            _boardGrids[x, y] = new ChessboardGrid(x + 1, y + 1, Enums.ChessboardGridSide.White);
+                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.White);
                     }
                 }
             }
@@ -79,7 +79,7 @@ namespace Gean.Wrapper.Chess
             this._chessmans.AddRange(chessmans);
             foreach (Chessman man in chessmans)
             {
-                this.SetGridOwnedChessman(man, man.Squares.Peek());
+                this.SetSquareOwnedChessman(man, man.Squares.Peek());
             }
             this._isOpennings = false;//棋子设置完毕，将开局判断设置为false
             //注册开局设置结束事件
@@ -92,7 +92,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="newSquare">棋子将被移动到的指定棋格的坐标</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ChessmanMovedException"></exception>
-        public ChessStep SetGridOwnedChessman(Chessman man, ChessSquare newSquare)
+        public ChessStep SetSquareOwnedChessman(Chessman man, ChessSquare newSquare)
         {
             if (man == null)
                 throw new ArgumentOutOfRangeException("Chessman:chessman is Null.");
@@ -100,8 +100,8 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException("Square:newSquare is Null.");
             ChessSquare oldSquare = man.Squares.Peek();
 
-            ChessboardGrid oldGrid = this.GetGrid(oldSquare);
-            ChessboardGrid newGrid = this.GetGrid(newSquare);
+            ChessSquare oldGrid = this.GetSquare(oldSquare);
+            ChessSquare newGrid = this.GetSquare(newSquare);
             if (newGrid.OwnedChessman != Chessman.Empty)
             {
                 if (newGrid.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
@@ -120,7 +120,7 @@ namespace Gean.Wrapper.Chess
             if (!this._isOpennings)//非初始化棋局时
             {
                 man.Squares.Add(newSquare);
-                this.GetGrid(oldSquare).OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
+                this.GetSquare(oldSquare).OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
             }
 
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
@@ -139,7 +139,7 @@ namespace Gean.Wrapper.Chess
             }
 
             //绑定新棋格拥有的棋子
-            this.GetGrid(newSquare).OwnedChessman = man;
+            this.GetSquare(newSquare).OwnedChessman = man;
             
             //注册移动后事件
             OnMoved(e);
@@ -155,54 +155,45 @@ namespace Gean.Wrapper.Chess
         /// <param name="x">指定坐标的x轴</param>
         /// <param name="y">指定坐标的y轴</param>
         /// <returns></returns>
-        public ChessboardGrid GetGrid(int x, int y)
+        public ChessSquare GetSquare(int x, int y)
         {
-            return this._boardGrids[x - 1, y - 1];
+            return this._squares[x - 1, y - 1];
         }
         /// <summary>
         /// 获取指定坐标的棋格
         /// </summary>
         /// <param name="square">指定坐标</param>
         /// <returns></returns>
-        public ChessboardGrid GetGrid(ChessSquare square)
+        public ChessSquare GetSquare(ChessSquare square)
         {
-            return this.GetGrid(square.X, square.Y);
-        }
-        /// <summary>
-        /// 获取指定坐标字符串的棋格
-        /// </summary>
-        /// <param name="step">指定坐标字符串</param>
-        /// <returns></returns>
-        public ChessboardGrid GetGrid(string square)
-        {
-            return this.GetGrid(ChessSquare.Parse(square));
+            return this.GetSquare(square.X, square.Y);
         }
 
         /// <summary>
         /// 获取所有黑色棋格
         /// </summary>
-        public ChessboardGrid[] GetBlackGrids()
+        public ChessSquare[] GetBlackSquares()
         {
-            List<ChessboardGrid> grids = new List<ChessboardGrid>();
-            foreach (ChessboardGrid grid in this)
+            List<ChessSquare> squares = new List<ChessSquare>();
+            foreach (ChessSquare square in this)
             {
-                if (grid.Side == Enums.ChessboardGridSide.Black)
-                    grids.Add(grid);
+                if (square.ChessSquareSide == Enums.ChessSquareSide.Black)
+                    squares.Add(square);
             }
-            return grids.ToArray();
+            return squares.ToArray();
         }
         /// <summary>
         /// 获取所有白色棋格
         /// </summary>
-        public ChessboardGrid[] GetWhiteGrids()
+        public ChessSquare[] GetWhiteSquares()
         {
-            List<ChessboardGrid> grids = new List<ChessboardGrid>();
-            foreach (ChessboardGrid grid in this)
+            List<ChessSquare> squares = new List<ChessSquare>();
+            foreach (ChessSquare square in this)
             {
-                if (grid.Side == Enums.ChessboardGridSide.White)
-                    grids.Add(grid);
+                if (square.ChessSquareSide == Enums.ChessSquareSide.White)
+                    squares.Add(square);
             }
-            return grids.ToArray();
+            return squares.ToArray();
         }
 
         /// <summary>
@@ -233,48 +224,11 @@ namespace Gean.Wrapper.Chess
             return mans.ToArray();
         }
 
-        /// <summary>
-        /// 获取指定的棋子所能到达的棋格。
-        /// TODO:该方法代码未完成。不要使用该方法。
-        /// </summary>
-        /// <param name="chessman">指定的棋子</param>
-        /// <returns>能到达的棋格</returns>
-        public ChessboardGrid[] GetUsableGrids(Chessman chessman)
-        {
-            List<ChessboardGrid> grids = new List<ChessboardGrid>();
-            switch (chessman.ChessmanType)
-            {
-                case Enums.ChessmanType.Rook:
-                    //grids.AddRange(Helper.GetRookGrid(this, chessman.GridOwner, chessman.ChessmanType, chessman.ChessmanSide));
-                    break;
-                case Enums.ChessmanType.Knight:
-                    break;
-                case Enums.ChessmanType.Bishop:
-                    break;
-                case Enums.ChessmanType.Queen:
-                    break;
-                case Enums.ChessmanType.King:
-                    break;
-                case Enums.ChessmanType.Pawn:
-                    break;
-                default:
-                    break;
-            }
-            return grids.ToArray();
-        }
+        #region IEnumerable<ChessSquare> 成员
 
-        public bool GetChessmanByStep(ChessStep step, out Chessman chessman, out ChessboardGrid sourceGrid)
+        public IEnumerator<ChessSquare> GetEnumerator()
         {
-            chessman = new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessboardGridSide.White);
-            sourceGrid = new ChessboardGrid(1, 1, Enums.ChessboardGridSide.White);
-            return true;
-        }
-
-        #region IEnumerable<ChessboardGrid> 成员
-
-        public IEnumerator<ChessboardGrid> GetEnumerator()
-        {
-            return (IEnumerator<ChessboardGrid>)this._boardGrids.GetEnumerator();
+            return (IEnumerator<ChessSquare>)this._squares.GetEnumerator();
         }
 
         #endregion
@@ -283,7 +237,7 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._boardGrids.GetEnumerator();
+            return this._squares.GetEnumerator();
         }
 
         #endregion
@@ -421,10 +375,10 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 被杀死的棋子所在棋格
             /// </summary>
-            public ChessboardGrid CurrGrid { get; private set; }
+            public ChessSquare CurrGrid { get; private set; }
             /// <param name="man">被杀死的棋子</param>
             /// <param name="currGrid">被杀死的棋子所在棋格</param>
-            public ChessmanKillEventArgs(Chessman man, ChessboardGrid currGrid)
+            public ChessmanKillEventArgs(Chessman man, ChessSquare currGrid)
                 : base(man)
             {
                 this.CurrGrid = currGrid;
@@ -432,7 +386,6 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
-
     }
 }
 /*

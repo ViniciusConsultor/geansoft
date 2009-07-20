@@ -77,7 +77,6 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public string UnknownConsequences { get { return "!?"; } }
 
-
         #region IEnumerable<string> 成员
 
         public IEnumerator<string> GetEnumerator()

@@ -8,40 +8,14 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 一种国际象棋棋格的坐标表示方法。类似Point的一个类，比Point多一些与返回字母的方法。
     /// </summary>
-    public struct ChessSquare
+    public class ChessSquare
     {
-        /// <summary>
-        /// 棋格的横坐标
-        /// </summary>
-        public int X
-        {
-            get { return this._x; }
-        }
-        private int _x;
-
-        /// <summary>
-        /// 棋格的横坐标的字母表示法。
-        /// </summary>
-        public char CharX
-        {
-            get { return Utility.IntToChar(this._x); }
-        }
-
-        /// <summary>
-        /// 棋格的纵坐标
-        /// </summary>
-        public int Y
-        {
-            get { return this._y; }
-        }
-        private int _y;
-
         /// <summary>
         /// 一种国际象棋棋格的表示方法
         /// </summary>
         /// <param name="x">棋格的横坐标</param>
         /// <param name="y">棋格的纵坐标</param>
-        public ChessSquare(int x, int y)
+        public ChessSquare(int x, int y, Enums.ChessSquareSide side)
         {
             #region Exception
             if (!ChessSquare.Check(x, y))
@@ -50,27 +24,50 @@ namespace Gean.Wrapper.Chess
             }
             #endregion
 
-            this._x = 0; this._y = 0;
-            this._x = x;
-            this._y = y;
+            this.X = x;
+            this.Y = y;
+            this.ChessSquareSide = side;
         }
         /// <summary>
         /// 一种国际象棋棋格的表示方法
         /// </summary>
         /// <param name="c">棋格的横坐标的字符</param>
         /// <param name="y">棋格的纵坐标</param>
-        public ChessSquare(char c, int y)
+        public ChessSquare(char c, int y, Enums.ChessSquareSide side)
         {
             int i = Utility.CharToInt(c);
+
             #region Exception
             if (!ChessSquare.Check(i, y))
             {
                 throw new ArgumentOutOfRangeException("坐标值超限！");
             }
             #endregion
-            this._x = 0; this._y = 0;
-            this._x = i;
-            this._y = y;
+
+            this.X = i;
+            this.Y = y;
+            this.ChessSquareSide = side;
+        }
+
+        /// <summary>
+        /// 棋格的横坐标
+        /// </summary>
+        public int X { get; internal set; }
+        /// <summary>
+        /// 棋格的纵坐标
+        /// </summary>
+        public int Y { get; internal set; }
+        /// <summary>
+        /// 黑格,白格
+        /// </summary>
+        public Enums.ChessSquareSide ChessSquareSide { get; internal set; }
+
+        /// <summary>
+        /// 棋格的横坐标的字母表示法。
+        /// </summary>
+        public char CharX
+        {
+            get { return Utility.IntToChar(this.X); }
         }
 
         /// <summary>
@@ -80,7 +77,7 @@ namespace Gean.Wrapper.Chess
         {
             get
             {
-                return ChessSquare.Check(this._x, this._y);
+                return ChessSquare.Check(this.X, this.Y);
             }
         }
 
@@ -91,10 +88,25 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         public Rectangle GetRectangle(int width)
         {
-            Point point = new Point((_x - 1) * width, (8 - _y) * width);
+            Point point = new Point((X - 1) * width, (8 - Y) * width);
             Size size = new Size(width, width);
             return new Rectangle(point, size);
         }
+
+        /// <summary>
+        /// 获取或设置当前格子中拥有的棋子
+        /// </summary>
+        public Chessman OwnedChessman
+        {
+            get { return this._ownedChessman; }
+            set
+            {
+                OnPlayBefore(new PlayEventArgs(value));//注册落子前事件
+                this._ownedChessman = value;
+                OnPlayAfter(new PlayEventArgs(value));//注册落子后事件
+            }
+        }
+        private Chessman _ownedChessman = null;
 
         /// <summary>
         /// 用指定的值设置棋格的横坐标
@@ -102,7 +114,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="x">一个整数值，不能小于1，且不能大于8</param>
         public void SetX(int x)
         {
-            this._x = x;
+            this.X = x;
         }
         /// <summary>
         /// 用指定的值设置棋格的横坐标
@@ -110,7 +122,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="c">一个字母，是一个不能小于a,大于h的字母</param>
         public void SetX(char c)
         {
-            this._x = Utility.CharToInt(c);
+            this.X = Utility.CharToInt(c);
         }
         /// <summary>
         /// 用指定的值设置棋格的纵坐标
@@ -118,13 +130,13 @@ namespace Gean.Wrapper.Chess
         /// <param name="x">一个整数值，不能小于1，且不能大于8</param>
         public void SetY(int i)
         {
-            this._y = i;
+            this.Y = i;
         }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(this.CharX).Append(this._y);
+            sb.Append(this.CharX).Append(this.Y);
             return sb.ToString();
         }
 
@@ -139,7 +151,7 @@ namespace Gean.Wrapper.Chess
         }
         public override int GetHashCode()
         {
-            return unchecked((this._x.GetHashCode() ^ this._y.GetHashCode()) * 27);
+            return unchecked((this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.ChessSquareSide.GetHashCode()) * 17);
         }
 
         public static bool operator !=(ChessSquare a, ChessSquare b)
@@ -162,7 +174,7 @@ namespace Gean.Wrapper.Chess
                 return false;
         }
 
-        public static ChessSquare Parse(string square)
+        public static ChessSquare Parse(string square, Enums.ChessSquareSide squareSide)
         {
             if (string.IsNullOrEmpty(square))
                 throw new ArgumentOutOfRangeException("Square IsNullOrEmpty!");
@@ -171,7 +183,43 @@ namespace Gean.Wrapper.Chess
             int x; int y;
             x = Utility.CharToInt(square[0]);
             y = Convert.ToInt32(square.Substring(1));
-            return new ChessSquare(x, y);
+            return new ChessSquare(x, y, squareSide);
         }
+
+        #region custom event
+
+        /// <summary>
+        /// 在该棋格中拥有的棋子发生变化的时候(变化前、即将发生变化)发生。
+        /// (包括该在棋格落子和移走该棋格拥有的棋子)
+        /// </summary>
+        public event PlayBeforeEventHandler PlayBeforeEvent;
+        protected virtual void OnPlayBefore(PlayEventArgs e)
+        {
+            if (PlayBeforeEvent != null)
+                PlayBeforeEvent(this, e);
+        }
+        public delegate void PlayBeforeEventHandler(object sender, PlayEventArgs e);
+
+        /// <summary>
+        /// 在该棋格中拥有的棋子发生变化后发生(包括该在棋格落子和移走该棋格拥有的棋子)
+        /// </summary>
+        public event PlayAfterEventHandler PlayAfterEvent;
+        protected virtual void OnPlayAfter(PlayEventArgs e)
+        {
+            if (PlayAfterEvent != null)
+                PlayAfterEvent(this, e);
+        }
+        public delegate void PlayAfterEventHandler(object sender, PlayEventArgs e);
+
+        public class PlayEventArgs : ChessmanEventArgs
+        {
+            public PlayEventArgs(Chessman man)
+                : base(man)
+            {
+
+            }
+        }
+
+        #endregion
     }
 }

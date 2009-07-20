@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class SquareCollection : IList<ChessSquare>
+    public class ChessSquareCollection : IList<ChessSquare>
     {
         List<ChessSquare> _squares = new List<ChessSquare>();
 
@@ -15,7 +15,7 @@ namespace Gean.Wrapper.Chess
         public ChessSquare Peek()
         {
             if (_squares.Count == 0)
-                return new ChessSquare();
+                return null;
             return _squares[_squares.Count - 1];
         }
 
