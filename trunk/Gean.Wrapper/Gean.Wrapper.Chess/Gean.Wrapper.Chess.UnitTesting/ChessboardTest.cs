@@ -69,7 +69,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ChessboardConstructorTest()
         {
-            Chessboard target = new Chessboard();
+            ChessGame target = new ChessGame();
             //target.InitializeChessmans();
             Assert.IsNotNull(target);
             /*

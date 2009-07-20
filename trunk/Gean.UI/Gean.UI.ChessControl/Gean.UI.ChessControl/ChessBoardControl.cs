@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace Gean.UI.ChessControl
 {
     public class ChessBoardControl : Control
@@ -14,6 +15,6 @@ namespace Gean.UI.ChessControl
         {
         }
 
-        
+
     }
 }
