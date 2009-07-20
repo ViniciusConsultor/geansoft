@@ -6,14 +6,14 @@ using System.Collections;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 一个描述棋盘的类
+    /// 这是描述一盘棋局的类
     /// </summary>
-    public class Chessboard : IEnumerable<ChessboardGrid>
+    public class ChessGame : IEnumerable<ChessboardGrid>
     {
         private ChessboardGrid[,] _boardGrids = new ChessboardGrid[8, 8];
         private ChessmanCollection _chessmans = new ChessmanCollection();
 
-        public Chessboard()
+        public ChessGame()
         {
             this.SetBoardGrid();
         }
@@ -384,8 +384,8 @@ namespace Gean.Wrapper.Chess
 
         public class ChessboardEventArgs : EventArgs
         {
-            public Chessboard Chessboard { get; private set; }
-            public ChessboardEventArgs(Chessboard board)
+            public ChessGame Chessboard { get; private set; }
+            public ChessboardEventArgs(ChessGame board)
             {
                 this.Chessboard = board;
             }
