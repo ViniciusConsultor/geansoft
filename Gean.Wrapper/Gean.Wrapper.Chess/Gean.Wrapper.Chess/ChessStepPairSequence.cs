@@ -10,35 +10,29 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessStepPairSequence : IList<ChessStepPair>
     {
-        List<ChessStepPair> steps = new List<ChessStepPair>();
+        List<ChessStepPair> _steps = new List<ChessStepPair>();
 
         #region IList<ChessStepPair> 成员
 
         public int IndexOf(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return _steps.IndexOf(item);
         }
 
         public void Insert(int index, ChessStepPair item)
         {
-            throw new NotImplementedException();
+            _steps.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _steps.RemoveAt(index);
         }
 
         public ChessStepPair this[int index]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _steps[index]; }
+            set { _steps[index] = value; }
         }
 
         #endregion
@@ -47,37 +41,37 @@ namespace Gean.Wrapper.Chess
 
         public void Add(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            _steps.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _steps.Clear();
         }
 
         public bool Contains(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return _steps.Contains(item);
         }
 
         public void CopyTo(ChessStepPair[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _steps.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { throw new NotImplementedException(); }
+            get { return _steps.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return _steps.Remove(item);
         }
 
         #endregion
@@ -86,7 +80,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<ChessStepPair> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _steps.GetEnumerator();
         }
 
         #endregion
@@ -95,7 +89,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _steps.GetEnumerator();
         }
 
         #endregion

@@ -55,6 +55,9 @@ namespace Gean.Wrapper.Chess
         {
             this._castling = castling;
             this.ChessmanSide = manSide;
+
+            this.Comments = new ChessCommentCollection();
+            this.ChoiceSteps = new ChessStepPairSequenceCollection();
         }
 
         public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, Square targetSquare, Square sourceSquare, Enums.AccessorialAction action)
@@ -72,32 +75,32 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            //if (this.Chessman.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
-            //{
-            //    sb.Append(this.Chessman.ToSimpleString());
-            //}
-            //sb.Append(this.TargetSquare.ToString());
-            //sb.Append(' ');
-            //if (this.Comments.Count > 0)//如果有注释，打印注释
-            //{
-            //    sb.Append("(");
-            //    foreach (ChessComment comment in this.Comments)
-            //    {
-            //        sb.Append(comment.ToString()).Append(' ');
-            //    }
-            //    sb.Remove(sb.Length - 1, 1).Append(")");
-            //}
-            //sb.Append(' ');
-            //if (this.ChoiceSteps.Count > 0)//如果有变招，打印变招字符串
-            //{
-            //    sb.Append("{");
-            //    foreach (ChessStepPairSequence step in this.ChoiceSteps)
-            //    {
-            //        sb.Append(step.ToString()).Append(' ');
-            //    }
-            //    sb.Remove(sb.Length - 1, 1).Append("}");
-            //}
-            //sb.AppendLine();
+            if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+            {
+                sb.Append(this.ChessmanType.ToString());
+            }
+            sb.Append(this.TargetSquare.ToString());
+            sb.Append(' ');
+            if (this.Comments.Count > 0)//如果有注释，打印注释
+            {
+                sb.Append("(");
+                foreach (ChessComment comment in this.Comments)
+                {
+                    sb.Append(comment.ToString()).Append(' ');
+                }
+                sb.Remove(sb.Length - 1, 1).Append(")");
+            }
+            sb.Append(' ');
+            if (this.ChoiceSteps.Count > 0)//如果有变招，打印变招字符串
+            {
+                sb.Append("{");
+                foreach (ChessStepPairSequence step in this.ChoiceSteps)
+                {
+                    sb.Append(step.ToString()).Append(' ');
+                }
+                sb.Remove(sb.Length - 1, 1).Append("}");
+            }
+            sb.AppendLine();
             return sb.ToString();
         }
 
@@ -119,10 +122,10 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (step.ChessmanType != this.ChessmanType)
                 return false;
-            if (step.ChoiceSteps != this.ChoiceSteps)
-                return false;
-            if (step.Comments != this.Comments)
-                return false;
+            //if (step.ChoiceSteps != this.ChoiceSteps)
+            //    return false;
+            //if (step.Comments != this.Comments)
+            //    return false;
             return true;
         }
 
@@ -130,15 +133,28 @@ namespace Gean.Wrapper.Chess
         {
             if (string.IsNullOrEmpty(str) || str.Length < 2)
                 throw new ArgumentOutOfRangeException(str);
+            str = str.Trim();
 
             Enums.ChessmanType manType = Enums.ChessmanType.Nothing;
             Square sourceSquare = new Square();
             Square targetSquare = new Square();
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
 
-            if (str.EndsWith("+"))
-                action = Enums.AccessorialAction.Check;
-            str = str.TrimEnd('+');
+            //针对尾部标记符进行一些操作
+            ChessRecordFlag flags = new ChessRecordFlag();
+            string endString = string.Empty;
+            foreach (string flagword in flags)
+            {
+                if (str.EndsWith(flagword))
+                {
+                    if (flagword.Equals("+"))
+                        action = Enums.AccessorialAction.Check;
+                    endString = flagword;
+                    int i = str.LastIndexOf(flagword);
+                    str = str.Substring(0, i);
+                    break;
+                }
+            }
 
             Enums.Castling castling = Enums.Castling.None;
             int n = 0;
