@@ -4,29 +4,29 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class SquareCollection : IList<Square>
+    public class SquareCollection : IList<ChessSquare>
     {
-        List<Square> _squares = new List<Square>();
+        List<ChessSquare> _squares = new List<ChessSquare>();
 
         /// <summary>
         /// 返回位于 SquareCollection 开始处的(最近发生的) Square 但不将其移除。
         /// </summary>
         /// <returns></returns>
-        public Square Peek()
+        public ChessSquare Peek()
         {
             if (_squares.Count == 0)
-                return new Square();
+                return new ChessSquare();
             return _squares[_squares.Count - 1];
         }
 
         #region IList<Square> 成员
 
-        public int IndexOf(Square item)
+        public int IndexOf(ChessSquare item)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int index, Square item)
+        public void Insert(int index, ChessSquare item)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +36,7 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public Square this[int index]
+        public ChessSquare this[int index]
         {
             get
             {
@@ -52,7 +52,7 @@ namespace Gean.Wrapper.Chess
 
         #region ICollection<Square> 成员
 
-        public void Add(Square item)
+        public void Add(ChessSquare item)
         {
             throw new NotImplementedException();
         }
@@ -62,12 +62,12 @@ namespace Gean.Wrapper.Chess
             throw new NotImplementedException();
         }
 
-        public bool Contains(Square item)
+        public bool Contains(ChessSquare item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(Square[] array, int arrayIndex)
+        public void CopyTo(ChessSquare[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -82,7 +82,7 @@ namespace Gean.Wrapper.Chess
             get { throw new NotImplementedException(); }
         }
 
-        public bool Remove(Square item)
+        public bool Remove(ChessSquare item)
         {
             throw new NotImplementedException();
         }
@@ -91,7 +91,7 @@ namespace Gean.Wrapper.Chess
 
         #region IEnumerable<Square> 成员
 
-        public IEnumerator<Square> GetEnumerator()
+        public IEnumerator<ChessSquare> GetEnumerator()
         {
             throw new NotImplementedException();
         }

@@ -8,7 +8,7 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 一种国际象棋棋格的坐标表示方法。类似Point的一个类，比Point多一些与返回字母的方法。
     /// </summary>
-    public struct Square
+    public struct ChessSquare
     {
         /// <summary>
         /// 棋格的横坐标
@@ -41,10 +41,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="x">棋格的横坐标</param>
         /// <param name="y">棋格的纵坐标</param>
-        public Square(int x, int y)
+        public ChessSquare(int x, int y)
         {
             #region Exception
-            if (!Square.Check(x, y))
+            if (!ChessSquare.Check(x, y))
             {
                 throw new ArgumentOutOfRangeException("坐标值超限！");
             }
@@ -59,11 +59,11 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="c">棋格的横坐标的字符</param>
         /// <param name="y">棋格的纵坐标</param>
-        public Square(char c, int y)
+        public ChessSquare(char c, int y)
         {
             int i = Utility.CharToInt(c);
             #region Exception
-            if (!Square.Check(i, y))
+            if (!ChessSquare.Check(i, y))
             {
                 throw new ArgumentOutOfRangeException("坐标值超限！");
             }
@@ -80,7 +80,7 @@ namespace Gean.Wrapper.Chess
         {
             get
             {
-                return Square.Check(this._x, this._y);
+                return ChessSquare.Check(this._x, this._y);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Gean.Wrapper.Chess
 
         public override bool Equals(object obj)
         {
-            Square grid = (Square)obj;
+            ChessSquare grid = (ChessSquare)obj;
             if (!grid.X.Equals(this.X))
                 return false;
             if (!grid.Y.Equals(this.Y))
@@ -142,11 +142,11 @@ namespace Gean.Wrapper.Chess
             return unchecked((this._x.GetHashCode() ^ this._y.GetHashCode()) * 27);
         }
 
-        public static bool operator !=(Square a, Square b)
+        public static bool operator !=(ChessSquare a, ChessSquare b)
         {
             return !a.Equals(b);
         }
-        public static bool operator ==(Square a, Square b)
+        public static bool operator ==(ChessSquare a, ChessSquare b)
         {
             return a.Equals(b);
         }
@@ -162,7 +162,7 @@ namespace Gean.Wrapper.Chess
                 return false;
         }
 
-        public static Square Parse(string square)
+        public static ChessSquare Parse(string square)
         {
             if (string.IsNullOrEmpty(square))
                 throw new ArgumentOutOfRangeException("Square IsNullOrEmpty!");
@@ -171,7 +171,7 @@ namespace Gean.Wrapper.Chess
             int x; int y;
             x = Utility.CharToInt(square[0]);
             y = Convert.ToInt32(square.Substring(1));
-            return new Square(x, y);
+            return new ChessSquare(x, y);
         }
     }
 }
