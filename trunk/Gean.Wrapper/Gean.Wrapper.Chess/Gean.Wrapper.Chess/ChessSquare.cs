@@ -15,7 +15,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="x">棋格的横坐标</param>
         /// <param name="y">棋格的纵坐标</param>
-        public ChessSquare(int x, int y, Enums.ChessSquareSide side)
+        public ChessSquare(int x, int y)
         {
             #region Exception
             if (!ChessSquare.Check(x, y))
@@ -26,42 +26,19 @@ namespace Gean.Wrapper.Chess
 
             this.X = x;
             this.Y = y;
-            this.ChessSquareSide = side;
+            this.SquareSide = ChessSquare.GetSquareSide(x, y);
         }
         /// <summary>
         /// 一种国际象棋棋格的表示方法
         /// </summary>
         /// <param name="c">棋格的横坐标的字符</param>
         /// <param name="y">棋格的纵坐标</param>
-        public ChessSquare(char c, int y, Enums.ChessSquareSide side)
-        {
-            int i = Utility.CharToInt(c);
-
-            #region Exception
-            if (!ChessSquare.Check(i, y))
-            {
-                throw new ArgumentOutOfRangeException("坐标值超限！");
-            }
-            #endregion
-
-            this.X = i;
-            this.Y = y;
-            this.ChessSquareSide = side;
-        }
+        public ChessSquare(char c, int y) : this(Utility.CharToInt(c), y) { }
 
         /// <summary>
         /// 棋格的横坐标
         /// </summary>
         public int X { get; internal set; }
-        /// <summary>
-        /// 棋格的纵坐标
-        /// </summary>
-        public int Y { get; internal set; }
-        /// <summary>
-        /// 黑格,白格
-        /// </summary>
-        public Enums.ChessSquareSide ChessSquareSide { get; internal set; }
-
         /// <summary>
         /// 棋格的横坐标的字母表示法。
         /// </summary>
@@ -69,16 +46,21 @@ namespace Gean.Wrapper.Chess
         {
             get { return Utility.IntToChar(this.X); }
         }
+        /// <summary>
+        /// 棋格的纵坐标
+        /// </summary>
+        public int Y { get; internal set; }
+        /// <summary>
+        /// 黑格,白格
+        /// </summary>
+        public Enums.ChessSquareSide SquareSide { get; internal set; }
 
         /// <summary>
         /// 获取该棋格坐标点的有效性
         /// </summary>
         public bool IsAvailability
         {
-            get
-            {
-                return ChessSquare.Check(this.X, this.Y);
-            }
+            get { return ChessSquare.Check(this.X, this.Y); }
         }
 
         /// <summary>
@@ -139,19 +121,18 @@ namespace Gean.Wrapper.Chess
             sb.Append(this.CharX).Append(this.Y);
             return sb.ToString();
         }
-
         public override bool Equals(object obj)
         {
-            ChessSquare grid = (ChessSquare)obj;
-            if (!grid.X.Equals(this.X))
+            ChessSquare square = (ChessSquare)obj;
+            if (!square.X.Equals(this.X))
                 return false;
-            if (!grid.Y.Equals(this.Y))
+            if (!square.Y.Equals(this.Y))
                 return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked((this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.ChessSquareSide.GetHashCode()) * 17);
+            return unchecked((this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.SquareSide.GetHashCode()) * 17);
         }
 
         public static bool operator !=(ChessSquare a, ChessSquare b)
@@ -161,6 +142,27 @@ namespace Gean.Wrapper.Chess
         public static bool operator ==(ChessSquare a, ChessSquare b)
         {
             return a.Equals(b);
+        }
+
+        /// <summary>
+        /// 根据坐标值判断该格是黑格还是白格
+        /// </summary>
+        private static Enums.ChessSquareSide GetSquareSide(int x, int y)
+        {
+            if ((y % 2) == 0)
+            {
+                if ((x % 2) == 0)
+                    return Enums.ChessSquareSide.White;
+                else
+                    return Enums.ChessSquareSide.Black;
+            }
+            else
+            {
+                if ((x % 2) == 0)
+                    return Enums.ChessSquareSide.Black;
+                else
+                    return Enums.ChessSquareSide.White;
+            }
         }
 
         /// <summary>
@@ -174,16 +176,16 @@ namespace Gean.Wrapper.Chess
                 return false;
         }
 
-        public static ChessSquare Parse(string square, Enums.ChessSquareSide squareSide)
+        public static ChessSquare Parse(string square)
         {
             if (string.IsNullOrEmpty(square))
                 throw new ArgumentOutOfRangeException("Square IsNullOrEmpty!");
             if (square.Length != 2)
                 throw new ArgumentOutOfRangeException("\"" + square + "\" is OutOfRange!");
-            int x; int y;
-            x = Utility.CharToInt(square[0]);
-            y = Convert.ToInt32(square.Substring(1));
-            return new ChessSquare(x, y, squareSide);
+
+            int x = Utility.CharToInt(square[0]);
+            int y = Convert.ToInt32(square.Substring(1));
+            return new ChessSquare(x, y);
         }
 
         #region custom event

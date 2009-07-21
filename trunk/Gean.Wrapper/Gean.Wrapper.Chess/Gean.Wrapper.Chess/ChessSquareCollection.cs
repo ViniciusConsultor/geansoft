@@ -19,6 +19,19 @@ namespace Gean.Wrapper.Chess
             return _squares[_squares.Count - 1];
         }
 
+        /// <summary>
+        /// 移除并返回位于 ChessSquareCollection 开始处(最近发生的) Square 的对象。
+        /// </summary>
+        /// <returns></returns>
+        public ChessSquare Dequeue()
+        {
+            if (_squares.Count == 0)
+                return null;
+            ChessSquare sq = this.Peek();
+            _squares.RemoveAt(this._squares.Count - 1);
+            return sq;
+        }
+
         #region IList<Square> 成员
 
         public int IndexOf(ChessSquare item)

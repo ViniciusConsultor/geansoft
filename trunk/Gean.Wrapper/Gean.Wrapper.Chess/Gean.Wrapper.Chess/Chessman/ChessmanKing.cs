@@ -13,10 +13,10 @@ namespace Gean.Wrapper.Chess
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    square = new ChessSquare(5, 1, Enums.ChessSquareSide.White);
+                    square = new ChessSquare(5, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    square = new ChessSquare(5, 8, Enums.ChessSquareSide.Black);
+                    square = new ChessSquare(5, 8);
                     break;
             }
             this.Squares.Add(square);

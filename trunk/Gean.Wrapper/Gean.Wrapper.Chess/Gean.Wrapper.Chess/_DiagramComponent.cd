@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Wrapper.Chess.ChessGame">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <NestedTypes>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.GameStartedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.MovingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGame.ChessGameEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.GameStartingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGame.ChessmanKillEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Gean.Wrapper.Chess.ChessGame.ChessmanMoveEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.MovedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.GameStoppingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.SetOpenningsFinishedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.KilledEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.GameStoppedEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.KillingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAIAAAgGIhCqBAACCJAgAMAgQAAEAAEAMgISAQIAEA=</HashCode>
+      <FileName>ChessGame.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessSquare">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <NestedTypes>
+      <Delegate Name="Gean.Wrapper.Chess.ChessSquare.PlayBeforeEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessSquare.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessSquare.PlayAfterEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessSquare.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessSquare.PlayEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessSquare.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAgAUgAIBEAAAcGgAAAAAQIEAAAAIAgAAAAAAAAYiA=</HashCode>
+      <FileName>ChessSquare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessSquareCollection">
+    <Position X="5.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AGIAAEAAAAAEABAQCAAABAQAAAAABAAACAAAAABQIEA=</HashCode>
+      <FileName>ChessSquareCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

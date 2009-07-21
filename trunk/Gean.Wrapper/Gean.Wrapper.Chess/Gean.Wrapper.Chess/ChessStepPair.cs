@@ -19,7 +19,7 @@ namespace Gean.Wrapper.Chess
         {
             if (number <= 0)
             {
-                throw new ArgumentException(number.ToString() + " cannot <=0");
+                throw new ArgumentException(number.ToString() + " cannot <= 0");
             }
             this.Number = number;
             this.White = white;

@@ -15,7 +15,7 @@ namespace Gean.Wrapper.Chess
 
         public ChessGame()
         {
-            this.SetSquare();
+            this.LoadSquares();//初始化所有的棋格
         }
 
         /// <summary>
@@ -39,26 +39,13 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        private void SetSquare()
+        private void LoadSquares()
         {
             for (int x = 0; x < _squares.GetLength(0); x++)
             {
                 for (int y = 0; y < _squares.GetLength(1); y++)
                 {
-                    if ((y % 2) == 0)
-                    {
-                        if ((x % 2) == 0)
-                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.White);
-                        else
-                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.Black);
-                    }
-                    else
-                    {
-                        if ((x % 2) == 0)
-                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.Black);
-                        else
-                            _squares[x, y] = new ChessSquare(x + 1, y + 1, Enums.ChessSquareSide.White);
-                    }
+                    _squares[x, y] = new ChessSquare(x + 1, y + 1);
                 }
             }
         }
@@ -66,15 +53,14 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 初始化开局棋子(32个棋子)
         /// </summary>
-        internal void SetOpenningsChessmans()
+        internal void LoadOpenningsChessmans()
         {
-            this.SetOpenningsChessmans(Chessman.GetOpennings().ToArray());
+            this.LoadOpenningsChessmans(Chessman.GetOpennings().ToArray());
         }
-
         /// <summary>
         /// 初始化指定的开局棋子集合，该方法一般使用场合为残局类，中盘类棋局
         /// </summary>
-        internal void SetOpenningsChessmans(IEnumerable<Chessman> chessmans)
+        internal void LoadOpenningsChessmans(IEnumerable<Chessman> chessmans)
         {
             this._chessmans.AddRange(chessmans);
             foreach (Chessman man in chessmans)
@@ -83,7 +69,7 @@ namespace Gean.Wrapper.Chess
             }
             this._isOpennings = false;//棋子设置完毕，将开局判断设置为false
             //注册开局设置结束事件
-            OnSetOpenningsFinished(new ChessboardEventArgs(this));
+            OnSetOpenningsFinished(new ChessGameEventArgs(this));
         }
 
         /// <summary>
@@ -95,20 +81,18 @@ namespace Gean.Wrapper.Chess
         public ChessStep SetSquareOwnedChessman(Chessman man, ChessSquare newSquare)
         {
             if (man == null)
-                throw new ArgumentOutOfRangeException("Chessman:chessman is Null.");
+                throw new ArgumentOutOfRangeException("Chessman: chessman is Null.");
             if (newSquare == null)
-                throw new ArgumentOutOfRangeException("Square:newSquare is Null.");
-            ChessSquare oldSquare = man.Squares.Peek();
+                throw new ArgumentOutOfRangeException("Square: newSquare is Null.");
 
-            ChessSquare oldGrid = this.GetSquare(oldSquare);
-            ChessSquare newGrid = this.GetSquare(newSquare);
-            if (newGrid.OwnedChessman != Chessman.Empty)
+            ChessSquare oldSquare = man.Squares.Peek();
+            if (newSquare.OwnedChessman != Chessman.Empty)
             {
-                if (newGrid.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
+                if (newSquare.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
                 {
                     throw new ChessmanMovedException(
                         string.Format("{0} and {1} is same Side, cannot move!",
-                        newGrid.OwnedChessman.ToString(), man.ToString()));
+                                        newSquare.OwnedChessman.ToString(), man.ToString()));
                 }
             }
 
@@ -120,26 +104,26 @@ namespace Gean.Wrapper.Chess
             if (!this._isOpennings)//非初始化棋局时
             {
                 man.Squares.Add(newSquare);
-                this.GetSquare(oldSquare).OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
+                oldSquare.OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
             }
 
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
 
-            if (newGrid.OwnedChessman != Chessman.Empty)
+            if (newSquare.OwnedChessman != Chessman.Empty)
             {
                 //注册棋子即将被杀死的事件
-                OnKilling(new ChessmanKillEventArgs(man, newGrid));
+                OnKilling(new ChessmanKillEventArgs(man, newSquare));
 
                 //新棋格中如有棋子，置该棋子为杀死状态
-                newGrid.OwnedChessman.IsKilled = true;
+                newSquare.OwnedChessman.IsKilled = true;
                 action = Enums.AccessorialAction.Kill;
 
                 //注册棋子被杀死后的事件
-                OnKilled(new ChessmanKillEventArgs(man, newGrid));
+                OnKilled(new ChessmanKillEventArgs(man, newSquare));
             }
 
             //绑定新棋格拥有的棋子
-            this.GetSquare(newSquare).OwnedChessman = man;
+            newSquare.OwnedChessman = man;
             
             //注册移动后事件
             OnMoved(e);
@@ -164,9 +148,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="square">指定坐标</param>
         /// <returns></returns>
-        public ChessSquare GetSquare(ChessSquare square)
+        public ChessSquare GetSquare(char c, int y)
         {
-            return this.GetSquare(square.X, square.Y);
+            return this.GetSquare(Utility.CharToInt(c), y);
         }
 
         /// <summary>
@@ -177,7 +161,7 @@ namespace Gean.Wrapper.Chess
             List<ChessSquare> squares = new List<ChessSquare>();
             foreach (ChessSquare square in this)
             {
-                if (square.ChessSquareSide == Enums.ChessSquareSide.Black)
+                if (square.SquareSide == Enums.ChessSquareSide.Black)
                     squares.Add(square);
             }
             return squares.ToArray();
@@ -190,7 +174,7 @@ namespace Gean.Wrapper.Chess
             List<ChessSquare> squares = new List<ChessSquare>();
             foreach (ChessSquare square in this)
             {
-                if (square.ChessSquareSide == Enums.ChessSquareSide.White)
+                if (square.SquareSide == Enums.ChessSquareSide.White)
                     squares.Add(square);
             }
             return squares.ToArray();
@@ -222,6 +206,11 @@ namespace Gean.Wrapper.Chess
                     mans.Add(man);
             }
             return mans.ToArray();
+        }
+
+        public string ToPGNString()
+        {
+            return string.Empty;
         }
 
         #region IEnumerable<ChessSquare> 成员
@@ -284,64 +273,64 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 在棋局开始的时候发生
         /// </summary>
-        public event ChessboardOpeningEventHandler ChessboardOpeningEvent;
-        protected virtual void OnChessboardOpening(ChessboardEventArgs e)
+        public event GameStartingEventHandler GameStartingEvent;
+        protected virtual void OnGameStarting(ChessGameEventArgs e)
         {
-            if (ChessboardOpeningEvent != null)
-                ChessboardOpeningEvent(this, e);
+            if (GameStartingEvent != null)
+                GameStartingEvent(this, e);
         }
-        public delegate void ChessboardOpeningEventHandler(object sender, ChessboardEventArgs e);
+        public delegate void GameStartingEventHandler(object sender, ChessGameEventArgs e);
 
         /// <summary>
         /// 在棋局开始后发生
         /// </summary>
-        public event ChessboardOpenedEventHandler ChessboardOpenedEvent;
-        protected virtual void OnChessboardOpened(ChessboardEventArgs e)
+        public event GameStartedEventHandler GameStartedEvent;
+        protected virtual void OnGameStarted(ChessGameEventArgs e)
         {
-            if (ChessboardOpenedEvent != null)
-                ChessboardOpenedEvent(this, e);
+            if (GameStartedEvent != null)
+                GameStartedEvent(this, e);
         }
-        public delegate void ChessboardOpenedEventHandler(object sender, ChessboardEventArgs e);
+        public delegate void GameStartedEventHandler(object sender, ChessGameEventArgs e);
 
         /// <summary>
         /// 在棋局结束的时候发生
         /// </summary>
-        public event ChessboardFinishingEventHandler ChessboardFinishingEvent;
-        protected virtual void OnChessboardFinishing(ChessboardEventArgs e)
+        public event GameStoppingEventHandler GameStoppingEvent;
+        protected virtual void OnGameStopping(ChessGameEventArgs e)
         {
-            if (ChessboardFinishingEvent != null)
-                ChessboardFinishingEvent(this, e);
+            if (GameStoppingEvent != null)
+                GameStoppingEvent(this, e);
         }
-        public delegate void ChessboardFinishingEventHandler(object sender, ChessboardEventArgs e);
+        public delegate void GameStoppingEventHandler(object sender, ChessGameEventArgs e);
 
         /// <summary>
         /// 在棋局结束后发生
         /// </summary>
-        public event ChessboardFinishedEventHandler ChessboardFinishedEvent;
-        protected virtual void OnChessboardFinished(ChessboardEventArgs e)
+        public event GameStoppedEventHandler GameStoppedEvent;
+        protected virtual void OnGameStopped(ChessGameEventArgs e)
         {
-            if (ChessboardFinishedEvent != null)
-                ChessboardFinishedEvent(this, e);
+            if (GameStoppedEvent != null)
+                GameStoppedEvent(this, e);
         }
-        public delegate void ChessboardFinishedEventHandler(object sender, ChessboardEventArgs e);
+        public delegate void GameStoppedEventHandler(object sender, ChessGameEventArgs e);
 
         /// <summary>
         /// 在开局设置完毕时发生
         /// </summary>
         public event SetOpenningsFinishedEventHandler SetOpenningsFinishedEvent;
-        protected virtual void OnSetOpenningsFinished(ChessboardEventArgs e)
+        protected virtual void OnSetOpenningsFinished(ChessGameEventArgs e)
         {
             if (SetOpenningsFinishedEvent != null)
                 SetOpenningsFinishedEvent(this, e);
         }
-        public delegate void SetOpenningsFinishedEventHandler(object sender, ChessboardEventArgs e);
+        public delegate void SetOpenningsFinishedEventHandler(object sender, ChessGameEventArgs e);
 
-        public class ChessboardEventArgs : EventArgs
+        public class ChessGameEventArgs : EventArgs
         {
-            public ChessGame Chessboard { get; private set; }
-            public ChessboardEventArgs(ChessGame board)
+            public ChessGame ChessGame { get; private set; }
+            public ChessGameEventArgs(ChessGame game)
             {
-                this.Chessboard = board;
+                this.ChessGame = game;
             }
         }
 
