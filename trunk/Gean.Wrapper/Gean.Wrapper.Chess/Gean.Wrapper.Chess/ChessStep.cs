@@ -12,6 +12,10 @@ namespace Gean.Wrapper.Chess
     public class ChessStep
     {
         /// <summary>
+        /// 获取或设置一步棋的动作说明
+        /// </summary>
+        public Enums.AccessorialAction Action { get; set; }
+        /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; set; }
@@ -27,10 +31,6 @@ namespace Gean.Wrapper.Chess
         /// 获取或设置该步棋的源棋格
         /// </summary>
         public ChessSquare SourceSquare { get; set; }
-        /// <summary>
-        /// 获取或设置一步棋的动作说明
-        /// </summary>
-        public Enums.AccessorialAction Action { get; set; }
 
         /// <summary>
         /// 获取或设置该棋步是“王车易位”
@@ -49,18 +49,18 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的变招集合
         /// </summary>
-        public ChessStepPairSequenceCollection ChoiceSteps { get; set; }
+        public ChessStepPairSequence ChoiceSteps { get; set; }
 
+        public ChessStep(Enums.ChessmanSide manSide) : this(manSide, Enums.Castling.None) { }
         public ChessStep(Enums.ChessmanSide manSide, Enums.Castling castling)
         {
             this._castling = castling;
             this.ChessmanSide = manSide;
 
             this.Comments = new ChessCommentCollection();
-            this.ChoiceSteps = new ChessStepPairSequenceCollection();
+            this.ChoiceSteps = new ChessStepPairSequence();
         }
-
-        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, ChessSquare targetSquare, ChessSquare sourceSquare, Enums.AccessorialAction action)
+        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, ChessSquare sourceSquare, ChessSquare targetSquare, Enums.AccessorialAction action)
         {
             this.ChessmanType = manType;
             this.ChessmanSide = manSide;
@@ -69,11 +69,21 @@ namespace Gean.Wrapper.Chess
             this.Action = action;
 
             this.Comments = new ChessCommentCollection();
-            this.ChoiceSteps = new ChessStepPairSequenceCollection();
+            this.ChoiceSteps = new ChessStepPairSequence();
         }
 
         public override string ToString()
         {
+            if (this._castling != Enums.Castling.None)
+            {
+                switch (this._castling)
+                {
+                    case Enums.Castling.KingSide:
+                        return "O-O";
+                    case Enums.Castling.QueenSide:
+                        return "O-O-O";
+                }
+            }
             StringBuilder sb = new StringBuilder();
             if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
             {
@@ -84,7 +94,7 @@ namespace Gean.Wrapper.Chess
             if (this.Comments.Count > 0)//如果有注释，打印注释
             {
                 sb.Append("(");
-                foreach (ChessComment comment in this.Comments)
+                foreach (KeyValuePair<int, ChessComment> comment in this.Comments)
                 {
                     sb.Append(comment.ToString()).Append(' ');
                 }
@@ -94,7 +104,7 @@ namespace Gean.Wrapper.Chess
             if (this.ChoiceSteps.Count > 0)//如果有变招，打印变招字符串
             {
                 sb.Append("{");
-                foreach (ChessStepPairSequence step in this.ChoiceSteps)
+                foreach (ChessStepPair step in this.ChoiceSteps)
                 {
                     sb.Append(step.ToString()).Append(' ');
                 }
@@ -106,9 +116,12 @@ namespace Gean.Wrapper.Chess
 
         public override int GetHashCode()
         {
-            return unchecked(
-                this.Action.GetHashCode() ^ this.Castling.GetHashCode() ^ this.ChessmanSide.GetHashCode() ^
-                this.ChessmanType.GetHashCode() ^ this.ChoiceSteps.GetHashCode() ^ this.Comments.GetHashCode());
+            return unchecked
+                (17 *
+                this.Action.GetHashCode() ^ this.Castling.GetHashCode() ^
+                this.ChessmanSide.GetHashCode() ^ this.ChessmanType.GetHashCode() ^ 
+                this.ChoiceSteps.GetHashCode() ^ this.Comments.GetHashCode()
+                );
         }
 
         public override bool Equals(object obj)
@@ -217,7 +230,6 @@ namespace Gean.Wrapper.Chess
             else
                 return null;//new ChessStep(manSide, castling);
         }
-
     }
 }
 

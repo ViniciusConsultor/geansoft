@@ -1,1 +1,33 @@
- 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Wrapper.Chess.ChessRecord">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAgAAAAAgAAAAAAIAAAAAAAAEAAAA=</HashCode>
+      <FileName>ChessRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessStep">
+    <Position X="2.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAEAAEgEAAAAAAAACCIIAAAAAAAIAAIAU=</HashCode>
+      <FileName>ChessStep.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessStepPair">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAEAEAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChessStepPair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessStepPairSequence" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AGIAIEAAAAAAABAQCAAABAQAAAAAAAAACAAAAABQIAA=</HashCode>
+      <FileName>ChessStepPairSequence.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

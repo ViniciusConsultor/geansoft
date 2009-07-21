@@ -82,7 +82,6 @@
     </Compile>
     <Compile Include="ChessStepPairSequence.cs" />
     <Compile Include="ChessStepPair.cs" />
-    <Compile Include="ChessStepPairSequenceCollection.cs" />
     <Compile Include="ChessException.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="ChessSquare.cs" />
