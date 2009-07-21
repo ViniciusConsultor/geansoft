@@ -165,10 +165,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessSquareSide.Black:
-                                square = new ChessSquare(left, 1, gridSide);
+                                square = new ChessSquare(left, 1);
                                 break;
                             case Enums.ChessSquareSide.White:
-                                square = new ChessSquare(right, 1, gridSide);
+                                square = new ChessSquare(right, 1);
                                 break;
                         }
                         break;
@@ -178,10 +178,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessSquareSide.Black:
-                                square = new ChessSquare(right, 8, gridSide);
+                                square = new ChessSquare(right, 8);
                                 break;
                             case Enums.ChessSquareSide.White:
-                                square = new ChessSquare(left, 8, gridSide);
+                                square = new ChessSquare(left, 8);
                                 break;
                         }
                         break;

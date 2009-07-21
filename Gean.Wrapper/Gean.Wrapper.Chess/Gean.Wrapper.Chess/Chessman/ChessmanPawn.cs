@@ -14,22 +14,12 @@ namespace Gean.Wrapper.Chess
             {
                 case Enums.ChessmanSide.White:
                     {
-                        Enums.ChessSquareSide squareSide = Enums.ChessSquareSide.White;
-                        if (column % 2 != 0)
-                        {
-                            squareSide = Enums.ChessSquareSide.Black;
-                        }
-                        square = new ChessSquare(column, 2, squareSide);
+                        square = new ChessSquare(column, 2);
                         break;
                     }
                 case Enums.ChessmanSide.Black:
                     {
-                        Enums.ChessSquareSide squareSide = Enums.ChessSquareSide.Black;
-                        if (column % 2 != 0)
-                        {
-                            squareSide = Enums.ChessSquareSide.White;
-                        }
-                        square = new ChessSquare(column, 7, squareSide);
+                        square = new ChessSquare(column, 7);
                         break;
                     }
             }

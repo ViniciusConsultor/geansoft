@@ -92,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="_ChessboardExcle.xls" />
+    <None Include="_DiagramComponent.cd" />
+    <None Include="_DiagramPGN.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
