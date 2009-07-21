@@ -94,7 +94,7 @@ namespace Gean.Wrapper.Chess
             if (this.Comments.Count > 0)//如果有注释，打印注释
             {
                 sb.Append("(");
-                foreach (KeyValuePair<int, ChessComment> comment in this.Comments)
+                foreach (ChessComment comment in this.Comments)
                 {
                     sb.Append(comment.ToString()).Append(' ');
                 }

@@ -4,117 +4,85 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessCommentCollection : IDictionary<int, ChessComment>
+    public class ChessCommentCollection : IList<ChessComment>
     {
-        private Dictionary<int, ChessComment> _comments = new Dictionary<int, ChessComment>();
+        List<ChessComment> _comments = new List<ChessComment>();
 
-        public void Add(string comment)
+        #region IList<ChessComment> 成员
+
+        public int IndexOf(ChessComment item)
         {
-            ChessComment chesscomment = new ChessComment(string.Empty, comment);
-            this.Add(chesscomment);
-        }
-        public void Add(ChessComment comment)
-        {
-            int i = this.Keys.Count + 1;
-            while (this.ContainsKey(i))
-                i++;
-            _comments.Add(i, comment);
+            throw new NotImplementedException();
         }
 
-        #region IDictionary<int,ChessComment> 成员
-
-        public void Add(int key, ChessComment value)
+        public void Insert(int index, ChessComment item)
         {
-            _comments.Add(key, value);
+            throw new NotImplementedException();
         }
 
-        public bool ContainsKey(int key)
+        public void RemoveAt(int index)
         {
-            return _comments.ContainsKey(key);
+            throw new NotImplementedException();
         }
 
-        public ICollection<int> Keys
+        public ChessComment this[int index]
         {
-            get { return _comments.Keys; }
-        }
-
-        public bool Remove(int key)
-        {
-            return _comments.Remove(key);
-        }
-
-        public bool TryGetValue(int key, out ChessComment value)
-        {
-            return _comments.TryGetValue(key, out value);
-        }
-
-        public ICollection<ChessComment> Values
-        {
-            get { return _comments.Values; }
-        }
-
-        public ChessComment this[int key]
-        {
-            get { return _comments[key]; }
-            set { _comments[key] = value; }
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
 
-        #region ICollection<KeyValuePair<int,ChessComment>> 成员
+        #region ICollection<ChessComment> 成员
 
-        public void Add(KeyValuePair<int, ChessComment> item)
+        public void Add(ChessComment item)
         {
-            _comments.Add(item.Key, item.Value);
+            throw new NotImplementedException();
         }
 
         public void Clear()
         {
-            _comments.Clear();
+            throw new NotImplementedException();
         }
 
-        public bool Contains(KeyValuePair<int, ChessComment> item)
+        public bool Contains(ChessComment item)
         {
-            if (_comments.ContainsKey(item.Key) && _comments.ContainsValue(item.Value))
-                return true;
-            else
-                return false;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// 拷贝指定的键值对数组，但未实现拷贝到指定的位置。
-        /// 请使用该方法时注意。
-        /// </summary>
-        /// <param name="array">指定的键值对数组</param>
-        /// <param name="arrayIndex">指定的位置</param>
-        public void CopyTo(KeyValuePair<int, ChessComment>[] array, int arrayIndex)
+        public void CopyTo(ChessComment[] array, int arrayIndex)
         {
-            foreach (var item in array)
-                _comments.Add(item.Key, item.Value);
+            throw new NotImplementedException();
         }
 
         public int Count
         {
-            get { return _comments.Count; }
+            get { throw new NotImplementedException(); }
         }
 
         public bool IsReadOnly
         {
-            get { return false; }
+            get { throw new NotImplementedException(); }
         }
 
-        public bool Remove(KeyValuePair<int, ChessComment> item)
+        public bool Remove(ChessComment item)
         {
-            return _comments.Remove(item.Key);
+            throw new NotImplementedException();
         }
 
         #endregion
 
-        #region IEnumerable<KeyValuePair<int,ChessComment>> 成员
+        #region IEnumerable<ChessComment> 成员
 
-        public IEnumerator<KeyValuePair<int, ChessComment>> GetEnumerator()
+        public IEnumerator<ChessComment> GetEnumerator()
         {
-            return _comments.GetEnumerator();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -123,7 +91,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _comments.GetEnumerator();
+            throw new NotImplementedException();
         }
 
         #endregion
