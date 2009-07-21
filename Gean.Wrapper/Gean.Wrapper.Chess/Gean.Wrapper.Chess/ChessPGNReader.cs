@@ -48,7 +48,7 @@ namespace Gean.Wrapper.Chess
                     line = line.Trim();
                     if (line.Equals(string.Empty))
                     {
-                        if (record.Definer != null && !string.IsNullOrEmpty(record.SequenceString.ToString()))
+                        if (record.Definer != null && !string.IsNullOrEmpty(record.Sequence.ToString()))
                         {
                             records.Add(record);
                         }
@@ -66,7 +66,7 @@ namespace Gean.Wrapper.Chess
                         }
                         else
                         {
-                            record.SequenceString.Append(line);
+                            //record.Sequence.Append(line);
                         }
                     }
                 }

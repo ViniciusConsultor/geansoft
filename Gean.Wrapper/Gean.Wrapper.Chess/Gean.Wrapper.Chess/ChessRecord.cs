@@ -29,11 +29,11 @@ namespace Gean.Wrapper.Chess
     {
         public Definer Definer { get; set; }
         public ChessStepPairSequence Sequence { get; set; }
-        internal StringBuilder SequenceString { get; set; }
+
         public ChessRecord()
         {
             this.Definer = new Definer();
-            this.SequenceString = new StringBuilder();
+            this.Sequence = new ChessStepPairSequence();
         }
 
         public override bool Equals(object obj)
@@ -43,7 +43,7 @@ namespace Gean.Wrapper.Chess
             {
                 return false;
             }
-            if (!pr.SequenceString.Equals(this.SequenceString))
+            if (!pr.Sequence.Equals(this.Sequence))
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Gean.Wrapper.Chess
         }
         public override int GetHashCode()
         {
-            return unchecked(27 * this.Definer.GetHashCode() + this.SequenceString.GetHashCode());
+            return unchecked(27 * this.Definer.GetHashCode() + this.Sequence.GetHashCode());
         }
     }
 }

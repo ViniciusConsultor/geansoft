@@ -13,20 +13,25 @@ namespace Gean.Wrapper.Chess
         private ChessSquare[,] _squares = new ChessSquare[8, 8];
         private ChessmanCollection _chessmans = new ChessmanCollection();
 
+        /// <summary>
+        /// 获取棋盘的棋局是否是开局状态。
+        /// 当棋格全部实例化，棋子全部实例化并落入指定棋格后，该值将被设置为False。
+        /// </summary>
+        private bool _isOpennings = true;
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public ChessGame()
         {
             this.LoadSquares();//初始化所有的棋格
+            this.Record = new ChessRecord();
         }
 
         /// <summary>
-        /// 获取棋盘的棋局是否是开局状态。
-        /// 当棋格全部实例化，棋子全部实例化并落入指定棋格后，该值为False。
+        /// 获取本局棋的记录
         /// </summary>
-        public bool IsOpennings
-        {
-            get { return this._isOpennings; }
-        }
-        private bool _isOpennings = true;
+        public ChessRecord Record { get; private set; }
 
         /// <summary>
         /// 获取指定坐标值的棋格
@@ -51,21 +56,23 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
-        /// 初始化开局棋子(32个棋子)
+        /// 初始化开局棋子(32个棋子)。
+        /// Opennings：n. 开局
         /// </summary>
-        internal void LoadOpenningsChessmans()
+        internal void LoadOpennings()
         {
-            this.LoadOpenningsChessmans(Chessman.GetOpennings().ToArray());
+            this.LoadOpennings(Chessman.GetOpennings().ToArray());
         }
         /// <summary>
         /// 初始化指定的开局棋子集合，该方法一般使用场合为残局类，中盘类棋局
+        /// Opennings：n. 开局
         /// </summary>
-        internal void LoadOpenningsChessmans(IEnumerable<Chessman> chessmans)
+        internal void LoadOpennings(IEnumerable<Chessman> chessmans)
         {
             this._chessmans.AddRange(chessmans);
             foreach (Chessman man in chessmans)
             {
-                this.SetSquareOwnedChessman(man, man.Squares.Peek());
+                this.Play(man, man.Squares.Peek());
             }
             this._isOpennings = false;//棋子设置完毕，将开局判断设置为false
             //注册开局设置结束事件
@@ -78,7 +85,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="newSquare">棋子将被移动到的指定棋格的坐标</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ChessmanMovedException"></exception>
-        public ChessStep SetSquareOwnedChessman(Chessman man, ChessSquare newSquare)
+        public ChessStep Play(Chessman man, ChessSquare newSquare)
         {
             if (man == null)
                 throw new ArgumentOutOfRangeException("Chessman: chessman is Null.");
@@ -129,7 +136,7 @@ namespace Gean.Wrapper.Chess
             OnMoved(e);
 
             //生成一个棋步
-            ChessStep step = new ChessStep(man.ChessmanSide, man.ChessmanType, newSquare, oldSquare, action);
+            ChessStep step = new ChessStep(man.ChessmanSide, man.ChessmanType, oldSquare, newSquare, action);
             return step;
         }
 

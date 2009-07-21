@@ -71,7 +71,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessSquare">
-    <Position X="3.75" Y="0.5" Width="1.75" />
+    <Position X="3.5" Y="0.5" Width="1.75" />
     <NestedTypes>
       <Delegate Name="Gean.Wrapper.Chess.ChessSquare.PlayBeforeEventHandler" Collapsed="true">
         <TypeIdentifier>
@@ -95,7 +95,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessSquareCollection">
-    <Position X="5.75" Y="0.5" Width="1.75" />
+    <Position X="5.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AGIAAEAAAAAEABAQCAAABAQAAAAABAAACAAAAABQIEA=</HashCode>
       <FileName>ChessSquareCollection.cs</FileName>

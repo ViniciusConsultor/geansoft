@@ -26,6 +26,7 @@ namespace Gean.Wrapper.Chess
 
             this.X = x;
             this.Y = y;
+            this.CharX = Utility.IntToChar(x);
             this.SquareSide = ChessSquare.GetSquareSide(x, y);
         }
         /// <summary>
@@ -42,10 +43,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋格的横坐标的字母表示法。
         /// </summary>
-        public char CharX
-        {
-            get { return Utility.IntToChar(this.X); }
-        }
+        public char CharX { get; private set; }
         /// <summary>
         /// 棋格的纵坐标
         /// </summary>
