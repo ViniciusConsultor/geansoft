@@ -42,10 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessCommentTest.cs" />
+    <Compile Include="ChessStepPairTest.cs" />
     <Compile Include="ChessStepTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gean.Wrapper.Chess\Gean.Wrapper.Chess.csproj">
       <Project>{29FCFFF2-14E3-4741-99A9-3FCC041F6207}</Project>
       <Name>Gean.Wrapper.Chess</Name>
