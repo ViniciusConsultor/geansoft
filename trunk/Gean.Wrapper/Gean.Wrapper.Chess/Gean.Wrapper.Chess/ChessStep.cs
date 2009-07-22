@@ -14,23 +14,23 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
-        public Enums.AccessorialAction Action { get; set; }
+        public Enums.AccessorialAction Action { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
-        public Enums.ChessmanType ChessmanType { get; set; }
-        /// <summary>
-        /// 获取或设置该步棋的战方
-        /// </summary>
-        public Enums.ChessmanSide ChessmanSide { get; set; }
+        public Enums.ChessmanType ChessmanType { get; internal set; }
+        ///// <summary>
+        ///// 获取或设置该步棋的战方
+        ///// </summary>
+        //public Enums.ChessmanSide ChessmanSide { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public ChessSquare TargetSquare { get; set; }
+        public ChessSquare TargetSquare { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessSquare SourceSquare { get; set; }
+        public ChessSquare SourceSquare { get; internal set; }
 
         /// <summary>
         /// 获取或设置该棋步是“王车易位”
@@ -38,107 +38,122 @@ namespace Gean.Wrapper.Chess
         public Enums.Castling Castling 
         {
             get { return this._castling; }
-            set { this._castling = value; } 
+            internal set { this._castling = value; } 
         }
         private Enums.Castling _castling = Enums.Castling.None;
 
         /// <summary>
-        /// 获取或设置该步棋的注释集合
+        /// 获取或设置该步棋的注释的索引集合
         /// </summary>
-        public ChessCommentCollection Comments { get; set; }
-        /// <summary>
-        /// 获取或设置该步棋的变招集合
-        /// </summary>
-        public ChessStepPairSequence ChoiceSteps { get; set; }
-
-        public ChessStep(Enums.ChessmanSide manSide) : this(manSide, Enums.Castling.None) { }
-        public ChessStep(Enums.ChessmanSide manSide, Enums.Castling castling)
+        public int[] CommentIndexs
         {
-            this._castling = castling;
-            this.ChessmanSide = manSide;
-
-            this.Comments = new ChessCommentCollection();
-            this.ChoiceSteps = new ChessStepPairSequence();
+            get { return this._commentIndexs.ToArray(); }
         }
-        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType manType, ChessSquare sourceSquare, ChessSquare targetSquare, Enums.AccessorialAction action)
+        private List<int> _commentIndexs = new List<int>();
+
+        /// <summary>
+        /// 获取或设置该步棋的变招的索引集合
+        /// </summary>
+        public int[] ChoiceStepsIndexs
+        { 
+            get { return this._choiceStepIndexs.ToArray(); } 
+        }
+        private List<int> _choiceStepIndexs = new List<int>();
+
+        public ChessStep() : this(Enums.Castling.None) { }
+        public ChessStep(Enums.Castling castling) 
+            : this(castling, Enums.ChessmanType.None, Enums.AccessorialAction.None, new ChessSquare(0, 0), new ChessSquare(0, 0))
         {
+            //this
+        }
+        public ChessStep(Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
+            : this(Enums.Castling.None, manType, action, sourceSquare, targetSquare) 
+        {
+            //this
+        }
+        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
+        {
+            this.Action = action;
             this.ChessmanType = manType;
-            this.ChessmanSide = manSide;
+
             this.TargetSquare = targetSquare;
             this.SourceSquare = sourceSquare;
-            this.Action = action;
-
-            this.Comments = new ChessCommentCollection();
-            this.ChoiceSteps = new ChessStepPairSequence();
         }
 
         public override string ToString()
         {
-            if (this._castling != Enums.Castling.None)
-            {
-                switch (this._castling)
-                {
-                    case Enums.Castling.KingSide:
-                        return "O-O";
-                    case Enums.Castling.QueenSide:
-                        return "O-O-O";
-                }
-            }
             StringBuilder sb = new StringBuilder();
-            if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+            switch (this._castling)
             {
-                sb.Append(this.ChessmanType.ToString());
+                #region case
+                case Enums.Castling.KingSide://短易位
+                    sb.Append("O-O");
+                    break;
+                case Enums.Castling.QueenSide://长易位
+                    sb.Append("O-O-O");
+                    break;
+                case Enums.Castling.None://不是易位
+                    {
+                        if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+                        {
+                            sb.Append(this.ChessmanType.ToString());
+                        }
+                        sb.Append(this.TargetSquare.ToString());
+                        sb.Append(' ');
+                        break;
+                    }
+                #endregion
             }
-            sb.Append(this.TargetSquare.ToString());
-            sb.Append(' ');
-            if (this.Comments.Count > 0)//如果有注释，打印注释
+            if (this._commentIndexs.Count > 0)//如果有注释，打印注释
             {
-                sb.Append("(");
-                foreach (ChessComment comment in this.Comments)
+                sb.Append('(');
+                foreach (int index in _commentIndexs)
                 {
-                    sb.Append(comment.ToString()).Append(' ');
+                    sb.Append(index.ToString()).Append(',');
                 }
-                sb.Remove(sb.Length - 1, 1).Append(")");
+                sb.Remove(sb.Length - 1, 1).Append(')');
             }
-            sb.Append(' ');
-            if (this.ChoiceSteps.Count > 0)//如果有变招，打印变招字符串
+            if (this.ChoiceStepsIndexs.Length > 0)//如果有变招，打印变招字符串
             {
-                sb.Append("{");
-                foreach (ChessStepPair step in this.ChoiceSteps)
+                sb.Append("[");
+                foreach (int index in this.ChoiceStepsIndexs)
                 {
-                    sb.Append(step.ToString()).Append(' ');
+                    sb.Append(index.ToString()).Append(',');
                 }
-                sb.Remove(sb.Length - 1, 1).Append("}");
+                sb.Remove(sb.Length - 1, 1).Append("]");
             }
-            sb.AppendLine();
             return sb.ToString();
         }
 
         public override int GetHashCode()
         {
             return unchecked
-                (17 *
-                this.Action.GetHashCode() ^ this.Castling.GetHashCode() ^
-                this.ChessmanSide.GetHashCode() ^ this.ChessmanType.GetHashCode() ^ 
-                this.ChoiceSteps.GetHashCode() ^ this.Comments.GetHashCode()
+                (3 *
+                this.Action.GetHashCode() +
+                this.ChessmanType.GetHashCode() +
+                this.TargetSquare.GetHashCode() + this.SourceSquare.GetHashCode() +
+                this.Castling.GetHashCode() +
+                this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
                 );
         }
 
         public override bool Equals(object obj)
         {
             ChessStep step = (ChessStep)obj;
-            if (step.Castling != this.Castling)
-                return false;
             if (step.Action != this.Action)
-                return false;
-            if (step.ChessmanSide != this.ChessmanSide)
                 return false;
             if (step.ChessmanType != this.ChessmanType)
                 return false;
-            //if (step.ChoiceSteps != this.ChoiceSteps)
-            //    return false;
-            //if (step.Comments != this.Comments)
-            //    return false;
+            if (step.TargetSquare != this.TargetSquare)
+                return false;
+            if (step.SourceSquare != this.SourceSquare)
+                return false;
+            if (step.Castling != this.Castling)
+                return false;
+            if (step.ChoiceStepsIndexs != this.ChoiceStepsIndexs)
+                return false;
+            if (step.CommentIndexs != this.CommentIndexs)
+                return false;
             return true;
         }
 
@@ -148,7 +163,7 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException(str);
             str = str.Trim();
 
-            Enums.ChessmanType manType = Enums.ChessmanType.Nothing;
+            Enums.ChessmanType manType = Enums.ChessmanType.None;
             ChessSquare sourceSquare;// = new ChessSquare();
             ChessSquare targetSquare;// = new ChessSquare();
             Enums.AccessorialAction action = Enums.AccessorialAction.General;

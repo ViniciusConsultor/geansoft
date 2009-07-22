@@ -31,6 +31,10 @@ namespace Gean.Wrapper.Chess
         public enum AccessorialAction
         {
             /// <summary>
+            /// 嘛也不是
+            /// </summary>
+            None = 0,
+            /// <summary>
             /// 普通棋招
             /// </summary>
             General = 1,
@@ -59,7 +63,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessmanSide
         {
-            White, Black,
+            White, Black, None
         }
 
         /// <summary>
@@ -77,7 +81,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessSquareSide
         {
-            Black, White,
+            Black, White, None
         }
 
         /// <summary>
@@ -124,7 +128,7 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 嘛也不是
             /// </summary>
-            Nothing
+            None
         }
 
         /// <summary>
@@ -138,7 +142,7 @@ namespace Gean.Wrapper.Chess
             switch (c)
             {
                 case 'O'://王车易位
-                    manType = Enums.ChessmanType.Nothing;
+                    manType = Enums.ChessmanType.None;
                     break;
                 case 'K':
                     manType = Enums.ChessmanType.King;

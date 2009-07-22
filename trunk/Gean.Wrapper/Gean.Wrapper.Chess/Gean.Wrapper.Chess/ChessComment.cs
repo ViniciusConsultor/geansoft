@@ -47,7 +47,7 @@ namespace Gean.Wrapper.Chess
         }
         public override int GetHashCode()
         {
-            return unchecked(17 * Number.GetHashCode() ^ UserID.GetHashCode() ^ Comment.GetHashCode());
+            return unchecked(3 * Number.GetHashCode() + UserID.GetHashCode() + Comment.GetHashCode());
         }
         public override bool Equals(object obj)
         {
@@ -68,46 +68,13 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         public static ChessComment Parse(string value)
         {
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException("Comment cannot is NullOrEmpty!");
-            if (!value.StartsWith("#"))
-                throw new FormatException(value + " -> # ???");
-
-            string[] commentArray = value.Split(new char[] { '#' }, 3, StringSplitOptions.RemoveEmptyEntries);
-
-            if (commentArray.Length == 1)
-            {
-                return new ChessComment(commentArray[0], Math.Abs(value.GetHashCode() + commentArray.GetHashCode()));
-            }
-            int n = 0;//递增数组元素的个数
-            int number = 0;
-            try
-            { 
-                number = Convert.ToInt32(commentArray[n].Trim());
-                n++;
-            }
-            catch//如果解析失败，给出一个int值以便正确运行
-            { number = Math.Abs(value.GetHashCode() ^ commentArray.GetHashCode()); }
-
-            string comment = "";
-            if (commentArray.Length == 2)
-            {
-                return new ChessComment(commentArray[n], number);
-            }
-
-            string email = "";
-            if (commentArray.Length == 3)
-            {
-                string strExp = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";//一般规则，非严谨的邮址验证规则
-                Regex r = new Regex(strExp);
-                Match m = r.Match(commentArray[n]);
-                if (m.Success)
-                {
-                    email = commentArray[n];
-                }
-                comment = commentArray[++n];
-            }
+            char flag = '#';
+            int number;
+            string comment;
+            string email;
+            Utility.ParseAppendantString(value, flag, out number, out email, out comment);
             return new ChessComment(email, comment, number);
         }
+
     }
 }

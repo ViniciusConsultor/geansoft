@@ -136,7 +136,7 @@ namespace Gean.Wrapper.Chess
             OnMoved(e);
 
             //生成一个棋步
-            ChessStep step = new ChessStep(man.ChessmanSide, man.ChessmanType, oldSquare, newSquare, action);
+            ChessStep step = new ChessStep(Enums.Castling.None, man.ChessmanType, action, oldSquare, newSquare);
             return step;
         }
 
