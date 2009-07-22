@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Gean.Wrapper.Chess
 {
@@ -115,5 +116,66 @@ namespace Gean.Wrapper.Chess
             return Utility.IntToChar(i).ToString();
         }
 
+        /// <summary>
+        /// 解析棋局记录中的附属字符串：评论，变招等
+        /// </summary>
+        /// <param name="value">附属字符串</param>
+        /// <param name="flag">用于表明字符串类型的标记符，评论是#，变招是%</param>
+        /// <param name="number">编号</param>
+        /// <param name="username">用户名，应是一个有效的邮件地址</param>
+        /// <param name="record">实体字符串</param>
+        static public void ParseAppendantString(string value, char flag, out int number, out string username, out string record)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException("Comment cannot is NullOrEmpty!");
+            if (!value.StartsWith(flag.ToString()))
+                throw new FormatException(value + " -> " + flag + " ???");
+
+            string[] commentArray = value.Split(new char[] { flag }, 3, StringSplitOptions.RemoveEmptyEntries);
+
+            number = 0;
+            record = "";
+            username = "";
+
+            if (commentArray.Length > 1)
+            {
+                try
+                {
+                    number = Convert.ToInt32(commentArray[0].Trim());
+                }
+                catch//如果解析失败，给出一个int值以便正确运行
+                {
+                    number = Math.Abs(value.GetHashCode() ^ commentArray.GetHashCode());
+                }
+            }
+            switch (commentArray.Length)
+            {
+                case 1:
+                    {
+                        number = Math.Abs(value.GetHashCode() + commentArray.GetHashCode());
+                        record = commentArray[0];
+                        break;
+                    }
+                case 2:
+                    {
+                        record = commentArray[1];
+                        break;
+                    }
+                case 3:
+                    {
+                        string strExp = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";//一般规则，非严谨的邮址验证规则
+                        Regex r = new Regex(strExp);
+                        Match m = r.Match(commentArray[1]);
+                        if (m.Success)
+                        {
+                            username = commentArray[1];
+                        }
+                        record = commentArray[2];
+                        break;
+                    }
+                default:
+                    throw new FormatException(value);
+            }
+        }
     }
 }

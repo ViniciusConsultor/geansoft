@@ -10,6 +10,8 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessSquare
     {
+        public static ChessSquare Empty = null;
+
         /// <summary>
         /// 一种国际象棋棋格的表示方法
         /// </summary>
@@ -131,15 +133,6 @@ namespace Gean.Wrapper.Chess
         public override int GetHashCode()
         {
             return unchecked((this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.SquareSide.GetHashCode()) * 17);
-        }
-
-        public static bool operator !=(ChessSquare a, ChessSquare b)
-        {
-            return !a.Equals(b);
-        }
-        public static bool operator ==(ChessSquare a, ChessSquare b)
-        {
-            return a.Equals(b);
         }
 
         /// <summary>

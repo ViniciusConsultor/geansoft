@@ -27,13 +27,15 @@ namespace Gean.Wrapper.Chess
     /// </example>
     public class ChessRecord
     {
-        public Definer Definer { get; set; }
-        public ChessStepPairSequence Sequence { get; set; }
+        public Definer Definer { get; internal set; }
+        public ChessStepPairSequence Sequence { get; internal set; }
+        public ChessCommentCollection Comments { get; internal set; }
 
         public ChessRecord()
         {
             this.Definer = new Definer();
             this.Sequence = new ChessStepPairSequence();
+            this.Comments = new ChessCommentCollection();
         }
 
         public override bool Equals(object obj)

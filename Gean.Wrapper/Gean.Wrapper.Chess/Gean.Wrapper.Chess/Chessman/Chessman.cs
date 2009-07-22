@@ -132,7 +132,7 @@ namespace Gean.Wrapper.Chess
                     return new ChessmanRook(manSide, gridSide);
                 case Enums.ChessmanType.Pawn:
                     return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.Nothing:
+                case Enums.ChessmanType.None:
                     return new ChessmanRook(manSide, gridSide);
                 default:
                     throw new ArgumentOutOfRangeException(manType.ToString());
