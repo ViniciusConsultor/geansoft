@@ -106,6 +106,12 @@ namespace Gean.Wrapper.Chess.UnitTesting
                 Enums.ChessmanType.Queen, Enums.AccessorialAction.KillAndCheck, ChessSquare.Empty, new ChessSquare('h', 3));
             actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
+
+            value = "b5+";
+            expected = new ChessStep(
+                Enums.ChessmanType.Pawn, Enums.AccessorialAction.Check, ChessSquare.Empty, new ChessSquare('b', 5));
+            actual = ChessStep.Parse(value);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

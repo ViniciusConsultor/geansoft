@@ -158,27 +158,36 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="c">指定的字符</param>
         /// <returns></returns>
-        public static Enums.ChessmanType ParseChessmanType(char c)
+        public static Enums.ChessmanType StringToChessmanType(char c)
         {
+            return Enums.StringToChessmanType(c.ToString());
+        }
+        public static Enums.ChessmanType StringToChessmanType(string c)
+        {
+            if (string.IsNullOrEmpty(c))
+                throw new ArgumentNullException("Cannot Null or Empty");
+            if (c.Length != 1)
+                throw new FormatException(c);
+
             Enums.ChessmanType manType;
-            switch (c)
+            switch (c.ToUpperInvariant())
             {
-                case 'O'://王车易位
+                case "O"://王车易位
                     manType = Enums.ChessmanType.None;
                     break;
-                case 'K':
+                case "K":
                     manType = Enums.ChessmanType.King;
                     break;
-                case 'Q':
+                case "Q":
                     manType = Enums.ChessmanType.Queen;
                     break;
-                case 'R':
+                case "R":
                     manType = Enums.ChessmanType.Rook;
                     break;
-                case 'N':
+                case "N":
                     manType = Enums.ChessmanType.Knight;
                     break;
-                case 'B':
+                case "B":
                     manType = Enums.ChessmanType.Bishop;
                     break;
                 default:

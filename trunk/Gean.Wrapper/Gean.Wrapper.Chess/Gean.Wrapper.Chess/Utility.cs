@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
@@ -177,5 +178,7 @@ namespace Gean.Wrapper.Chess
                     throw new FormatException(value);
             }
         }
+
+
     }
 }

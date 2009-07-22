@@ -126,16 +126,27 @@ namespace Gean.Wrapper.Chess
         }
         public override bool Equals(object obj)
         {
+            if (obj == null)
+                return false;
+
             ChessSquare square = (ChessSquare)obj;
+            if (!square.SquareSide.Equals(this.SquareSide))
+                return false;
             if (!square.X.Equals(this.X))
                 return false;
             if (!square.Y.Equals(this.Y))
+                return false;
+            if (!UtilityEquals.PairEquals(this.OwnedChessman, square.OwnedChessman))
                 return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked((this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.SquareSide.GetHashCode()) * 17);
+            return unchecked((
+                this.X.GetHashCode() + 
+                this.Y.GetHashCode() +
+                this.SquareSide.GetHashCode()) * 3
+                );
         }
 
         /// <summary>

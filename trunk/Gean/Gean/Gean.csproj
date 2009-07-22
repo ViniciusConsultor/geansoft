@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\UtilityEquals.cs" />
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
