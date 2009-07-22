@@ -10,7 +10,10 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessSquare
     {
-        public static ChessSquare Empty = null;
+        /// <summary>
+        /// 返回一个为空的值。该变量为只读。
+        /// </summary>
+        public static readonly ChessSquare Empty = null;
 
         /// <summary>
         /// 一种国际象棋棋格的表示方法
