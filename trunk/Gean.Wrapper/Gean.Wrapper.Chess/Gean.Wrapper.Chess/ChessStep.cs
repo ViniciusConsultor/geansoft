@@ -176,6 +176,10 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException(value);
             value = value.Trim();
 
+            #region 解析注释与变招的索引
+
+            #endregion
+
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
             ChessSquare square = ChessSquare.Empty;
