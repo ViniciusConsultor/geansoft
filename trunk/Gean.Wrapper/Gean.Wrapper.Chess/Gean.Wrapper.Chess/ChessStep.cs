@@ -11,6 +11,9 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessStep
     {
+
+        #region Property
+
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
@@ -19,10 +22,6 @@ namespace Gean.Wrapper.Chess
         /// 获取或设置该步棋的棋子类型
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; internal set; }
-        ///// <summary>
-        ///// 获取或设置该步棋的战方
-        ///// </summary>
-        //public Enums.ChessmanSide ChessmanSide { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -60,6 +59,10 @@ namespace Gean.Wrapper.Chess
         }
         private List<int> _choiceStepIndexs = new List<int>();
 
+        #endregion
+
+        #region 构造函数
+
         public ChessStep() : this(Enums.Castling.None) { }
         public ChessStep(Enums.Castling castling)
             : this(castling, Enums.ChessmanType.None, Enums.AccessorialAction.None, ChessSquare.Empty, ChessSquare.Empty)
@@ -67,7 +70,7 @@ namespace Gean.Wrapper.Chess
             //this
         }
         public ChessStep(Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
-            : this(Enums.Castling.None, manType, action, sourceSquare, targetSquare) 
+            : this(Enums.Castling.None, manType, action, sourceSquare, targetSquare)
         {
             //this
         }
@@ -81,6 +84,10 @@ namespace Gean.Wrapper.Chess
             this.TargetSquare = targetSquare;
             this.SourceSquare = sourceSquare;
         }
+
+        #endregion
+
+        #region override
 
         public override string ToString()
         {
@@ -158,6 +165,10 @@ namespace Gean.Wrapper.Chess
                 return false;
             return true;
         }
+
+        #endregion
+
+        #region static Parse
 
         public static ChessStep Parse(string value)
         {
@@ -246,6 +257,9 @@ namespace Gean.Wrapper.Chess
             else
                 return new ChessStep(castling);
         }
+
+        #endregion
+
     }
 }
 
