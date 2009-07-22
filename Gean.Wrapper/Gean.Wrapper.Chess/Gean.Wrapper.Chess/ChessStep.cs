@@ -142,20 +142,20 @@ namespace Gean.Wrapper.Chess
         public override bool Equals(object obj)
         {
             ChessStep step = (ChessStep)obj;
-            if (step.Castling != this.Castling)
+
+            if (this.Castling       != step.Castling)       return false;
+            if (this.ChessmanType   != step.ChessmanType)   return false;
+            if (this.Action         != step.Action)         return false;
+
+            if (!UtilityEquals.PairEquals(this.TargetSquare, step.TargetSquare))
                 return false;
-            if (step.ChessmanType != this.ChessmanType)
+            if (!UtilityEquals.PairEquals(this.SourceSquare, step.SourceSquare))
                 return false;
-            if (step.Action != this.Action)
+
+            if (!UtilityEquals.ListEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
                 return false;
-            if (step.TargetSquare != this.TargetSquare)
+            if (!UtilityEquals.ListEquals(this.CommentIndexs, step.CommentIndexs))
                 return false;
-            if (step.SourceSquare != this.SourceSquare)
-                return false;
-            //if (step.ChoiceStepsIndexs != this.ChoiceStepsIndexs)
-            //    return false;
-            //if (step.CommentIndexs != this.CommentIndexs)
-            //    return false;
             return true;
         }
 
@@ -208,7 +208,7 @@ namespace Gean.Wrapper.Chess
                 }
                 else
                 {
-                    manType = Enums.ParseChessmanType(value[n]);
+                    manType = Enums.StringToChessmanType(value[n]);
                     n++;
                     if (value[n] == 'x')
                     {

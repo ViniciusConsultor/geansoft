@@ -37,12 +37,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\Gean\Gean\Wrapper\Definer\Definer.cs">
-      <Link>Definer\Definer.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\Gean\Gean\Wrapper\Definer\DefinerChangedEvent.cs">
-      <Link>Definer\DefinerChangedEvent.cs</Link>
-    </Compile>
     <Compile Include="ChessGame.cs" />
     <Compile Include="ChessComment.cs" />
     <Compile Include="ChessCommentCollection.cs" />
@@ -93,6 +87,12 @@
     <None Include="_ChessboardExcle.xls" />
     <None Include="_DiagramComponent.cd" />
     <None Include="_DiagramPGN.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

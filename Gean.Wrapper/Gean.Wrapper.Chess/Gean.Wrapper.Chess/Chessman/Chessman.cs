@@ -39,15 +39,10 @@ namespace Gean.Wrapper.Chess
         }
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
             Chessman man = obj as Chessman;
-            if (man.ChessmanType != this.ChessmanType)
-            {
-                return false;
-            }
-            if (man.ChessmanSide != this.ChessmanSide)
-            {
-                return false;
-            }
+            if (man.ChessmanType != this.ChessmanType) return false;
+            if (man.ChessmanSide != this.ChessmanSide) return false;
             return true;
         }
         public override int GetHashCode()
