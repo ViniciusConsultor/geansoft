@@ -131,6 +131,28 @@ namespace Gean.Wrapper.Chess
             None
         }
 
+        public static string ChessmanTypeToString(ChessmanType type)
+        {
+            switch (type)
+            {
+                case ChessmanType.Rook:
+                    return "R";
+                case ChessmanType.Knight:
+                    return "N";
+                case ChessmanType.Bishop:
+                    return "B";
+                case ChessmanType.Queen:
+                    return "Q";
+                case ChessmanType.King:
+                    return "K";
+                case ChessmanType.Pawn:
+                    return "P";
+                case ChessmanType.None:
+                default:
+                    return "";
+            }
+        }
+
         /// <summary>
         /// 返回将指定的字符解析出的棋子类型
         /// </summary>

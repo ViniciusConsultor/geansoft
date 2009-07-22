@@ -40,7 +40,7 @@ namespace Gean.Wrapper.Chess
             get { return this._castling; }
             internal set { this._castling = value; } 
         }
-        private Enums.Castling _castling = Enums.Castling.None;
+        private Enums.Castling _castling;
 
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
@@ -61,8 +61,8 @@ namespace Gean.Wrapper.Chess
         private List<int> _choiceStepIndexs = new List<int>();
 
         public ChessStep() : this(Enums.Castling.None) { }
-        public ChessStep(Enums.Castling castling) 
-            : this(castling, Enums.ChessmanType.None, Enums.AccessorialAction.None, new ChessSquare(0, 0), new ChessSquare(0, 0))
+        public ChessStep(Enums.Castling castling)
+            : this(castling, Enums.ChessmanType.None, Enums.AccessorialAction.None, ChessSquare.Empty, ChessSquare.Empty)
         {
             //this
         }
@@ -73,6 +73,8 @@ namespace Gean.Wrapper.Chess
         }
         public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
         {
+            this._castling = castling;
+
             this.Action = action;
             this.ChessmanType = manType;
 
@@ -96,7 +98,7 @@ namespace Gean.Wrapper.Chess
                     {
                         if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
                         {
-                            sb.Append(this.ChessmanType.ToString());
+                            sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
                         }
                         sb.Append(this.TargetSquare.ToString());
                         sb.Append(' ');
@@ -122,7 +124,7 @@ namespace Gean.Wrapper.Chess
                 }
                 sb.Remove(sb.Length - 1, 1).Append("]");
             }
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
 
         public override int GetHashCode()
@@ -140,46 +142,45 @@ namespace Gean.Wrapper.Chess
         public override bool Equals(object obj)
         {
             ChessStep step = (ChessStep)obj;
-            if (step.Action != this.Action)
+            if (step.Castling != this.Castling)
                 return false;
             if (step.ChessmanType != this.ChessmanType)
+                return false;
+            if (step.Action != this.Action)
                 return false;
             if (step.TargetSquare != this.TargetSquare)
                 return false;
             if (step.SourceSquare != this.SourceSquare)
                 return false;
-            if (step.Castling != this.Castling)
-                return false;
-            if (step.ChoiceStepsIndexs != this.ChoiceStepsIndexs)
-                return false;
-            if (step.CommentIndexs != this.CommentIndexs)
-                return false;
+            //if (step.ChoiceStepsIndexs != this.ChoiceStepsIndexs)
+            //    return false;
+            //if (step.CommentIndexs != this.CommentIndexs)
+            //    return false;
             return true;
         }
 
-        public static ChessStep Parse(string str, Enums.ChessmanSide manSide)
+        public static ChessStep Parse(string value)
         {
-            if (string.IsNullOrEmpty(str) || str.Length < 2)
-                throw new ArgumentOutOfRangeException(str);
-            str = str.Trim();
+            if (string.IsNullOrEmpty(value) || value.Length < 2)
+                throw new ArgumentOutOfRangeException(value);
+            value = value.Trim();
 
-            Enums.ChessmanType manType = Enums.ChessmanType.None;
-            ChessSquare sourceSquare;// = new ChessSquare();
-            ChessSquare targetSquare;// = new ChessSquare();
             Enums.AccessorialAction action = Enums.AccessorialAction.General;
+            Enums.ChessmanType manType = Enums.ChessmanType.None;
+            ChessSquare square = ChessSquare.Empty;
 
             //针对尾部标记符进行一些操作
             ChessRecordFlag flags = new ChessRecordFlag();
             string endString = string.Empty;
             foreach (string flagword in flags)
             {
-                if (str.EndsWith(flagword))
+                if (value.EndsWith(flagword))
                 {
-                    if (flagword.Equals("+"))
+                    if (flagword.Equals("+"))//Qh5+
                         action = Enums.AccessorialAction.Check;
                     endString = flagword;
-                    int i = str.LastIndexOf(flagword);
-                    str = str.Substring(0, i);
+                    int i = value.LastIndexOf(flagword);
+                    value = value.Substring(0, i);
                     break;
                 }
             }
@@ -187,13 +188,13 @@ namespace Gean.Wrapper.Chess
             Enums.Castling castling = Enums.Castling.None;
             int n = 0;
 
-            if (char.IsUpper(str, 0))
+            if (char.IsUpper(value, 0))
             {//首字母是大写的
                 #region Upper
-                if (str[0] == 'O')
+                if (value[0] == 'O')
                 {
-                    str = str.Trim().Replace(" ", string.Empty);
-                    switch (str.Length)
+                    value = value.Trim().Replace(" ", string.Empty);
+                    switch (value.Length)
                     {
                         case 3://O-O 短易位
                             castling = Enums.Castling.KingSide;
@@ -207,9 +208,9 @@ namespace Gean.Wrapper.Chess
                 }
                 else
                 {
-                    manType = Enums.ParseChessmanType(str[n]);
+                    manType = Enums.ParseChessmanType(value[n]);
                     n++;
-                    if (str[n] == 'x')
+                    if (value[n] == 'x')
                     {
                         n++;
                         if (action == Enums.AccessorialAction.Check)
@@ -217,7 +218,7 @@ namespace Gean.Wrapper.Chess
                         else
                             action = Enums.AccessorialAction.Kill;
                     }
-                    //targetSquare = ChessSquare.Parse(str.Substring(n, 2));
+                    square = ChessSquare.Parse(value.Substring(n, 2));
                 }
                 #endregion
             }
@@ -225,13 +226,13 @@ namespace Gean.Wrapper.Chess
             {//c5 dxc5 dxc5+ 首字母是小写的，一般就是“兵”的动作
                 #region Lower
                 manType = Enums.ChessmanType.Pawn;
-                switch (str.Length)
+                switch (value.Length)
                 {
                     case 2:
-                        //targetSquare = ChessSquare.Parse(str);
+                        square = ChessSquare.Parse(value);
                         break;
                     case 4:
-                        //targetSquare = ChessSquare.Parse(str.Substring(str.IndexOf('x')));
+                        square = ChessSquare.Parse(value.Substring(value.IndexOf('x')));
                         break;
                     default:
                         break;
@@ -241,9 +242,9 @@ namespace Gean.Wrapper.Chess
 
             //return new ChessStep
             if (castling == Enums.Castling.None)
-                return null;//new ChessStep(manSide, manType, sourceSquare, targetSquare, action);
+                return new ChessStep(manType, action, ChessSquare.Empty, square);
             else
-                return null;//new ChessStep(manSide, castling);
+                return new ChessStep(castling);
         }
     }
 }

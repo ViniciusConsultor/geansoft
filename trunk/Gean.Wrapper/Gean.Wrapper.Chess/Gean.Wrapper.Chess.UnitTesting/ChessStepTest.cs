@@ -82,29 +82,29 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ParseTest()
         {
-            string str = string.Empty;
-            Enums.ChessmanSide manSide = Enums.ChessmanSide.Black;
+            string value = string.Empty;
             ChessStep expected;
             ChessStep actual;
 
-            str = "O-O";
-            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.KingSide);
-            actual = ChessStep.Parse(str, manSide);
+            value = "O-O";
+            expected = new ChessStep(Enums.Castling.KingSide);
+            actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 
-            str = "O-O-O";
-            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.QueenSide);
-            actual = ChessStep.Parse(str, manSide);
+            value = "O-O-O";
+            expected = new ChessStep(Enums.Castling.QueenSide);
+            actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 
-            str = "O - O - O";
-            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.Castling.QueenSide);
-            actual = ChessStep.Parse(str, manSide);
+            value = "O - O - O";
+            expected = new ChessStep(Enums.Castling.QueenSide);
+            actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 
-            str = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
-            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.Queen, new ChessSquare('h', 3), new ChessSquare(), Enums.AccessorialAction.KillAndCheck);
-            actual = ChessStep.Parse(str, manSide);
+            value = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
+            expected = new ChessStep(
+                Enums.ChessmanType.Queen, Enums.AccessorialAction.KillAndCheck, ChessSquare.Empty, new ChessSquare('h', 3));
+            actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
         }
     }
