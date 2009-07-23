@@ -76,6 +76,40 @@ namespace Gean.Wrapper.Chess.UnitTesting
         33.Kxd1 Qxf1# 0–1 
         */
 
+        /// <summary>
+        ///ToString 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ToStringTest()
+        {
+            ChessStep target = null;
+            string expected = null;
+            string actual = null;
+
+            target = new ChessStep(Enums.ChessmanType.Rook, Enums.AccessorialAction.KillAndCheck, new ChessSquare('e', 3), new ChessSquare('e', 5));
+            target.CommentIndexs.Add(11);
+            target.CommentIndexs.Add(12);
+            target.CommentIndexs.Add(13);
+            target.ChoiceStepsIndexs.Add(34);
+            target.ChoiceStepsIndexs.Add(35);
+            target.ChoiceStepsIndexs.Add(36);
+            target.ChoiceStepsIndexs.Add(37);
+            
+            expected = "Rxe5+(11,12,13)[34,35,36,37]";
+            actual = target.ToString();
+            Assert.AreEqual(expected, actual);
+
+            target = new ChessStep(Enums.ChessmanType.Pawn, Enums.AccessorialAction.KillAndCheck, new ChessSquare('f', 2), new ChessSquare('g', 3));
+            target.CommentIndexs.Add(11);
+            target.ChoiceStepsIndexs.Add(34);
+            target.ChoiceStepsIndexs.Add(35);
+
+            expected = "fxg3+(11)[34,35]";
+            actual = target.ToString();
+            Assert.AreEqual(expected, actual);
+
+        }
+
         ///<summary>
         ///Parse 的测试
         ///</summary>
@@ -87,10 +121,15 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep actual;
 
             value = "Rxb4+(33,35,36)[12,13,14,15]";
-            expected = new ChessStep(
-                Enums.ChessmanType.Rook, Enums.AccessorialAction.Kill,
-                ChessSquare.Empty, new ChessSquare('b', 4));
-            
+            expected = new ChessStep
+                (Enums.ChessmanType.Rook, Enums.AccessorialAction.KillAndCheck, ChessSquare.Empty, new ChessSquare('b', 4));
+            expected.CommentIndexs.Add(33);
+            expected.CommentIndexs.Add(35);
+            expected.CommentIndexs.Add(36);
+            expected.ChoiceStepsIndexs.Add(12);
+            expected.ChoiceStepsIndexs.Add(13);
+            expected.ChoiceStepsIndexs.Add(14);
+            expected.ChoiceStepsIndexs.Add(15);
             actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 
@@ -122,5 +161,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Assert.AreEqual(expected, actual);
 
         }
+
+
     }
 }
