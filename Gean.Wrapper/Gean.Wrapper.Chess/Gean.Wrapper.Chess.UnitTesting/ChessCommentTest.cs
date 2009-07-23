@@ -1,5 +1,6 @@
 ﻿using Gean.Wrapper.Chess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
     
@@ -62,7 +63,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         #endregion
 
         #endregion
-        
+       
         ///<summary>
         ///Parse 的测试
         ///</summary>
