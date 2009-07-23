@@ -41,13 +41,17 @@ namespace Gean.Wrapper.Chess
         {
             if (obj == null) return false;
             Chessman man = obj as Chessman;
-            if (man.ChessmanType != this.ChessmanType) return false;
-            if (man.ChessmanSide != this.ChessmanSide) return false;
+            if (man.ChessmanType != this.ChessmanType) 
+                return false;
+            if (man.ChessmanSide != this.ChessmanSide) 
+                return false;
+            if (!UtilityEquals.EnumerableEquals(this.Squares, man.Squares)) 
+                return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked(17 * this.ChessmanSide.GetHashCode() ^ this.ChessmanType.GetHashCode());
+            return unchecked(7 * (this.ChessmanSide.GetHashCode() + this.ChessmanType.GetHashCode()));
         }
         #endregion
 
