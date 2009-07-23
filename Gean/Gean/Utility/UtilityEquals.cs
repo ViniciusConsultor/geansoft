@@ -35,7 +35,7 @@ namespace Gean
                 IEnumerator e2 = b.GetEnumerator();
                 for (int i = 0; e1.MoveNext() && e2.MoveNext(); i++)
                 {
-                    if (!e1.Equals(e2.Current))
+                    if (!e1.Current.Equals(e2.Current))
                         return false;
                 }
             }
