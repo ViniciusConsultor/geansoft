@@ -86,6 +86,14 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep expected;
             ChessStep actual;
 
+            value = "Rxb4+(33,35,36)[12,13,14,15]";
+            expected = new ChessStep(
+                Enums.ChessmanType.Rook, Enums.AccessorialAction.Kill,
+                ChessSquare.Empty, new ChessSquare('b', 4));
+            
+            actual = ChessStep.Parse(value);
+            Assert.AreEqual(expected, actual);
+
             value = "O-O";
             expected = new ChessStep(Enums.Castling.KingSide);
             actual = ChessStep.Parse(value);
@@ -112,6 +120,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
                 Enums.ChessmanType.Pawn, Enums.AccessorialAction.Check, ChessSquare.Empty, new ChessSquare('b', 5));
             actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
+
         }
     }
 }

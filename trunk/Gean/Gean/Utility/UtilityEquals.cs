@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Gean
 {
@@ -20,27 +21,57 @@ namespace Gean
             return true;
         }
 
-        static public bool ListEquals<T>(IList<T> array1, IList<T> array2)
+        static public bool EnumerableEquals<T>(IEnumerable<T> a, IEnumerable<T> b)
         {
-            if (!Object.ReferenceEquals(array1.GetType(), array2.GetType())) return false;
-            if ((array1 == null) && (array2 == null))
+            if (!Object.ReferenceEquals(a.GetType(), b.GetType())) return false;
+            if ((a == null) && (b == null))
                 return true;
             else
             {
-                if ((array1 != null) && (array2 == null)) return false;
-                if ((array1 == null) && (array2 != null)) return false;
+                if ((a != null) && (b == null)) return false;
+                if ((a == null) && (b != null)) return false;
                 //至此，a与b均不应是Null值
-                if (array1.Count != array2.Count) return false;
-                object v1, v2;
-                for (int i = 0; i < array1.Count; i++)
+                IEnumerator e1 = a.GetEnumerator();
+                IEnumerator e2 = b.GetEnumerator();
+                for (int i = 0; e1.MoveNext() && e2.MoveNext(); i++)
                 {
-                    v1 = (object)array1[i];
-                    v2 = (object)array2[i];
-                    if (!v1.Equals(v2))
+                    if (!e1.Equals(e2.Current))
                         return false;
                 }
             }
             return true;
-        } 
+        }
+
+        public static bool CollectionsEquals<T>(ICollection<T> a, ICollection<T> b, IComparer<T> comparer)
+        {
+            if (!object.ReferenceEquals(a, b))
+            {
+                if ((a == null) || (b == null))
+                {
+                    return false;
+                }
+                if (a.Count != b.Count)
+                {
+                    return false;
+                }
+                IEnumerator e1 = a.GetEnumerator();
+                IEnumerator e2 = b.GetEnumerator();
+                for (int i = 0; e1.MoveNext() && e2.MoveNext(); i++)
+                {
+                    if (0 != comparer.Compare((T)e1.Current, (T)e2.Current))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return true;
+        }
+
+        public static void CollectionsEquals<T>(ICollection<T> expected, ICollection<T> actual)
+        {
+            CollectionsEquals(expected, actual, null);
+        }
+
     }
 }

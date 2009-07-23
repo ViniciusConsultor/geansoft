@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
@@ -44,20 +45,20 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
         /// </summary>
-        public int[] CommentIndexs
+        public IndexList CommentIndexs
         {
-            get { return this._commentIndexs.ToArray(); }
+            get { return this._commentIndexs; }
         }
-        private List<int> _commentIndexs = new List<int>();
+        private IndexList _commentIndexs = new IndexList();
 
         /// <summary>
         /// 获取或设置该步棋的变招的索引集合
         /// </summary>
-        public int[] ChoiceStepsIndexs
+        public IndexList ChoiceStepsIndexs
         { 
-            get { return this._choiceStepIndexs.ToArray(); } 
+            get { return this._choiceStepIndexs; } 
         }
-        private List<int> _choiceStepIndexs = new List<int>();
+        private IndexList _choiceStepIndexs = new IndexList();
 
         #endregion
 
@@ -122,7 +123,7 @@ namespace Gean.Wrapper.Chess
                 }
                 sb.Remove(sb.Length - 1, 1).Append(')');
             }
-            if (this.ChoiceStepsIndexs.Length > 0)//如果有变招，打印变招字符串
+            if (this._choiceStepIndexs.Count > 0)//如果有变招，打印变招字符串
             {
                 sb.Append("[");
                 foreach (int index in this.ChoiceStepsIndexs)
@@ -159,9 +160,9 @@ namespace Gean.Wrapper.Chess
             if (!UtilityEquals.PairEquals(this.SourceSquare, step.SourceSquare))
                 return false;
 
-            if (!UtilityEquals.ListEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
+            if (!UtilityEquals.EnumerableEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
                 return false;
-            if (!UtilityEquals.ListEquals(this.CommentIndexs, step.CommentIndexs))
+            if (!UtilityEquals.EnumerableEquals(this.CommentIndexs, step.CommentIndexs))
                 return false;
             return true;
         }
@@ -176,7 +177,18 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException(value);
             value = value.Trim();
 
+            string comments_choices = "";
+
             #region 解析注释与变招的索引
+
+            if ((value.IndexOf('(') >= 0) || (value.IndexOf('[') >= 0))
+            {
+                int x = value.IndexOf('(');
+                int y = value.IndexOf('[');
+                int i = x > y ? x : y;
+                value = value.Substring(0, i);
+                comments_choices = value.Substring(i);
+            }
 
             #endregion
 
@@ -264,6 +276,63 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        public class IndexList : IEnumerable<int>
+        {
+            List<int> _indexs = new List<int>();
+
+            public int this[int index]
+            {
+                get { return _indexs[index]; }
+            }
+
+            public int IndexOf(int item)
+            {
+                return _indexs.IndexOf(item);
+            }
+
+            public void Add(int item)
+            {
+                _indexs.Add(item);
+            }
+
+            public void Clear()
+            {
+                _indexs.Clear();
+            }
+
+            public void RemoveAt(int index)
+            {
+                _indexs.RemoveAt(index);
+            }
+
+            public bool Remove(int item)
+            {
+                return _indexs.Remove(item);
+            }
+
+            public int Count
+            {
+                get { return _indexs.Count; }
+            }
+
+            #region IEnumerable<int> 成员
+
+            public IEnumerator<int> GetEnumerator()
+            {
+                return _indexs.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IEnumerable 成员
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _indexs.GetEnumerator();
+            }
+
+            #endregion
+        }
     }
 }
 
