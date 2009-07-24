@@ -70,10 +70,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Record\ChessRecord.cs" />
-    <Compile Include="Record\ChessPGNWriter.cs" />
+    <Compile Include="PGN\ChessPGNWriter.cs" />
     <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="Record\ChessPGNReader.cs">
+    <Compile Include="PGN\ChessPGNReader.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game\ChessStepPairSequence.cs" />
