@@ -214,7 +214,7 @@ namespace Gean.Wrapper.Chess
             ChessSquare square = ChessSquare.Empty;
 
             //针对尾部标记符进行一些操作
-            ChessRecordFlag flags = new ChessRecordFlag();
+            ChessStepFlag flags = new ChessStepFlag();
             string endString = string.Empty;
             foreach (string flagword in flags)
             {
