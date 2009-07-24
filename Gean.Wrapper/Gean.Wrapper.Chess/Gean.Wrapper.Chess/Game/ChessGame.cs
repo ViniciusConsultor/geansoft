@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Drawing;
 
 namespace Gean.Wrapper.Chess
 {
@@ -61,16 +62,16 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         internal void LoadOpennings()
         {
-            this.LoadOpennings(Chessman.GetOpennings().ToArray());
+            this.LoadOpennings(ChessmanBase.GetOpennings().ToArray());
         }
         /// <summary>
         /// 初始化指定的开局棋子集合，该方法一般使用场合为残局类，中盘类棋局
         /// Opennings：n. 开局
         /// </summary>
-        internal void LoadOpennings(IEnumerable<Chessman> chessmans)
+        internal void LoadOpennings(IEnumerable<ChessmanBase> chessmans)
         {
             this._chessmans.AddRange(chessmans);
-            foreach (Chessman man in chessmans)
+            foreach (ChessmanBase man in chessmans)
             {
                 this.Play(man, man.Squares.Peek());
             }
@@ -85,7 +86,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="newSquare">棋子将被移动到的指定棋格的坐标</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ChessmanMovedException"></exception>
-        public ChessStep Play(Chessman man, ChessSquare newSquare)
+        public ChessStep Play(ChessmanBase man, ChessSquare newSquare)
         {
             if (man == null)
                 throw new ArgumentOutOfRangeException("Chessman: chessman is Null.");
@@ -93,7 +94,7 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException("Square: newSquare is Null.");
 
             ChessSquare oldSquare = man.Squares.Peek();
-            if (newSquare.OwnedChessman != Chessman.Empty)
+            if (newSquare.OwnedChessman != ChessmanBase.Empty)
             {
                 if (newSquare.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
                 {
@@ -111,12 +112,12 @@ namespace Gean.Wrapper.Chess
             if (!this._isOpennings)//非初始化棋局时
             {
                 man.Squares.Add(newSquare);
-                oldSquare.OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
+                oldSquare.OwnedChessman = ChessmanBase.Empty;//将棋子的历史棋格的棋子状态置为空
             }
 
             Enums.ActionDescription action = Enums.ActionDescription.General;
 
-            if (newSquare.OwnedChessman != Chessman.Empty)
+            if (newSquare.OwnedChessman != ChessmanBase.Empty)
             {
                 //注册棋子即将被杀死的事件
                 OnKilling(new ChessmanKillEventArgs(man, newSquare));
@@ -187,13 +188,29 @@ namespace Gean.Wrapper.Chess
             return squares.ToArray();
         }
 
+        public void GetRectangles(float width, out RectangleF[] white, out RectangleF[] black)
+        {
+            List<RectangleF> w = new List<RectangleF>();
+            List<RectangleF> b = new List<RectangleF>();
+            foreach (ChessSquare square in this._squares)
+            {
+                int i = square.X + square.Y;
+                if (i % 2 == 0)
+                    b.Add(square.GetRectangle(width));
+                else
+                    w.Add(square.GetRectangle(width));
+            }
+            white = w.ToArray();
+            black = b.ToArray();
+        }
+
         /// <summary>
         /// 获取所有活着的棋子
         /// </summary>
-        public Chessman[] GetLivingChessmans()
+        public ChessmanBase[] GetLivingChessmans()
         {
             ChessmanCollection mans = new ChessmanCollection();
-            foreach (Chessman man in this._chessmans)
+            foreach (ChessmanBase man in this._chessmans)
             {
                 if (man.IsKilled == false)
                     mans.Add(man);
@@ -204,10 +221,10 @@ namespace Gean.Wrapper.Chess
         /// 获取所有被杀死的棋子
         /// </summary>
         /// <returns></returns>
-        public Chessman[] GetKilledChessmans()
+        public ChessmanBase[] GetKilledChessmans()
         {
             ChessmanCollection mans = new ChessmanCollection();
-            foreach (Chessman man in this._chessmans)
+            foreach (ChessmanBase man in this._chessmans)
             {
                 if (man.IsKilled == true)
                     mans.Add(man);
@@ -269,7 +286,7 @@ namespace Gean.Wrapper.Chess
         {
             public ChessSquare OldSquare { get; set; }
             public ChessSquare NewSquare { get; set; }
-            public ChessmanMoveEventArgs(Chessman chessman, ChessSquare oldSquare, ChessSquare newSquare)
+            public ChessmanMoveEventArgs(ChessmanBase chessman, ChessSquare oldSquare, ChessSquare newSquare)
                 : base(chessman)
             {
                 this.OldSquare = oldSquare;
@@ -374,7 +391,7 @@ namespace Gean.Wrapper.Chess
             public ChessSquare CurrGrid { get; private set; }
             /// <param name="man">被杀死的棋子</param>
             /// <param name="currGrid">被杀死的棋子所在棋格</param>
-            public ChessmanKillEventArgs(Chessman man, ChessSquare currGrid)
+            public ChessmanKillEventArgs(ChessmanBase man, ChessSquare currGrid)
                 : base(man)
             {
                 this.CurrGrid = currGrid;

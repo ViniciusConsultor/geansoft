@@ -71,17 +71,17 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="width">指定的宽度</param>
         /// <returns></returns>
-        public Rectangle GetRectangle(int width)
+        public RectangleF GetRectangle(float width)
         {
-            Point point = new Point((X - 1) * width, (8 - Y) * width);
-            Size size = new Size(width, width);
-            return new Rectangle(point, size);
+            PointF point = new PointF((X - 1) * width, (8 - Y) * width);
+            SizeF size = new SizeF(width, width);
+            return new RectangleF(point, size);
         }
 
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
-        public Chessman OwnedChessman
+        public ChessmanBase OwnedChessman
         {
             get { return this._ownedChessman; }
             set
@@ -91,7 +91,7 @@ namespace Gean.Wrapper.Chess
                 OnPlayAfter(new PlayEventArgs(value));//注册落子后事件
             }
         }
-        private Chessman _ownedChessman = null;
+        private ChessmanBase _ownedChessman = null;
 
         /// <summary>
         /// 用指定的值设置棋格的横坐标
@@ -216,7 +216,7 @@ namespace Gean.Wrapper.Chess
 
         public class PlayEventArgs : ChessmanEventArgs
         {
-            public PlayEventArgs(Chessman man)
+            public PlayEventArgs(ChessmanBase man)
                 : base(man)
             {
 
