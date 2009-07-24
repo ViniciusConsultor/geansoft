@@ -46,7 +46,6 @@ namespace Gean.UI.ChessControl
 
             wh = wh - offset * 2;
 
-            //Rectangle rect = new Rectangle(new Point(offset, offset), new Size(wh, wh));
             foreach (RectangleF rect in _whiteRectangle)
                 g.FillRectangle(Brushes.WhiteSmoke, rect);
             foreach (RectangleF rect in _blackRectangle)
