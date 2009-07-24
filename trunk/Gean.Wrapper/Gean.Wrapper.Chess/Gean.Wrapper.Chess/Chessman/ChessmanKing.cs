@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessmanKing : Chessman
+    public class ChessmanKing : ChessmanBase
     {
         internal ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)

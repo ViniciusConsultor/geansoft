@@ -6,8 +6,8 @@ namespace Gean.Wrapper.Chess
 {
     public abstract class ChessmanEventArgs : EventArgs
     {
-        public Chessman Chessman { get; set; }
-        public ChessmanEventArgs(Chessman chessman)
+        public ChessmanBase Chessman { get; set; }
+        public ChessmanEventArgs(ChessmanBase chessman)
         {
             this.Chessman = chessman;
         }
