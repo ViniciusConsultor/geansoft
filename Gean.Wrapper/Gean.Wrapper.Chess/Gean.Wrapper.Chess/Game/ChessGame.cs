@@ -188,22 +188,6 @@ namespace Gean.Wrapper.Chess
             return squares.ToArray();
         }
 
-        public void GetRectangles(float width, out RectangleF[] white, out RectangleF[] black)
-        {
-            List<RectangleF> w = new List<RectangleF>();
-            List<RectangleF> b = new List<RectangleF>();
-            foreach (ChessSquare square in this._squares)
-            {
-                int i = square.X + square.Y;
-                if (i % 2 == 0)
-                    b.Add(square.GetRectangle(width));
-                else
-                    w.Add(square.GetRectangle(width));
-            }
-            white = w.ToArray();
-            black = b.ToArray();
-        }
-
         /// <summary>
         /// 获取所有活着的棋子
         /// </summary>

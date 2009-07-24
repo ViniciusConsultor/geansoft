@@ -68,6 +68,7 @@
             this.Padding = new System.Windows.Forms.Padding(10, 11, 10, 11);
             this.ShowIcon = false;
             this.Text = "DemoMainForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this._splitContainer.Panel1.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);

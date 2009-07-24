@@ -67,18 +67,6 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
-        /// 按指定的宽度返回该Grid描述的棋格的矩形。
-        /// </summary>
-        /// <param name="width">指定的宽度</param>
-        /// <returns></returns>
-        public RectangleF GetRectangle(float width)
-        {
-            PointF point = new PointF((X - 1) * width, (8 - Y) * width);
-            SizeF size = new SizeF(width, width);
-            return new RectangleF(point, size);
-        }
-
-        /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
         public ChessmanBase OwnedChessman
