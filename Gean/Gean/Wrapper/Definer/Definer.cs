@@ -21,7 +21,7 @@ namespace Gean
     /// </summary>
     public class Definer : IEnumerable
     {
-        private Dictionary<string, object> definer = new Dictionary<string, object>();
+        private Dictionary<string, object> _definer = new Dictionary<string, object>();
 
         public string this[string key]
         {
@@ -33,10 +33,10 @@ namespace Gean
         {
             get
             {
-                lock (definer)
+                lock (_definer)
                 {
                     List<string> ret = new List<string>();
-                    foreach (KeyValuePair<string, object> property in definer)
+                    foreach (KeyValuePair<string, object> property in _definer)
                     {
                         ret.Add(property.Key);
                     }
@@ -47,22 +47,22 @@ namespace Gean
 
         public object Get(string key)
         {
-            lock (definer)
+            lock (_definer)
             {
                 object val;
-                definer.TryGetValue(key, out val);
+                _definer.TryGetValue(key, out val);
                 return val;
             }
         }
 
         public T Get<T>(string key, T defaultValue)
         {
-            lock (definer)
+            lock (_definer)
             {
                 object o;
-                if (!definer.TryGetValue(key, out o))
+                if (!_definer.TryGetValue(key, out o))
                 {
-                    definer.Add(key, defaultValue);
+                    _definer.Add(key, defaultValue);
                     return defaultValue;
                 }
 
@@ -78,7 +78,7 @@ namespace Gean
                         //MessageService.ShowWarning("Error loading property '" + property + "': " + ex.Message);
                         o = defaultValue;
                     }
-                    definer[key] = o; // store for future look up
+                    _definer[key] = o; // store for future look up
                 }
                 else if (o is ArrayList && typeof(T).IsArray)
                 {
@@ -102,7 +102,7 @@ namespace Gean
                         //MessageService.ShowWarning("Error loading property '" + property + "': " + ex.Message);
                         o = defaultValue;
                     }
-                    definer[key] = o; // store for future look up
+                    _definer[key] = o; // store for future look up
                 }
                 else if (!(o is string) && typeof(T) == typeof(string))
                 {
@@ -127,7 +127,7 @@ namespace Gean
                         //MessageService.ShowWarning("Error loading property '" + property + "': " + ex.Message);
                         o = defaultValue;
                     }
-                    definer[key] = o; // store for future look up
+                    _definer[key] = o; // store for future look up
                 }
                 try
                 {
@@ -144,16 +144,16 @@ namespace Gean
         public void Set<T>(string key, T value)
         {
             T oldValue = default(T);
-            lock (definer)
+            lock (_definer)
             {
-                if (!definer.ContainsKey(key))
+                if (!_definer.ContainsKey(key))
                 {
-                    definer.Add(key, value);
+                    _definer.Add(key, value);
                 }
                 else
                 {
                     oldValue = Get<T>(key, value);
-                    definer[key] = value;
+                    _definer[key] = value;
                 }
             }
             OnDefinerChanged(new DefinerChangedEventArgs(this, key, oldValue, value));
@@ -161,9 +161,9 @@ namespace Gean
 
         public bool Contains(string key)
         {
-            lock (definer)
+            lock (_definer)
             {
-                return definer.ContainsKey(key);
+                return _definer.ContainsKey(key);
             }
         }
 
@@ -171,36 +171,36 @@ namespace Gean
         {
             get
             {
-                lock (definer)
+                lock (_definer)
                 {
-                    return definer.Count;
+                    return _definer.Count;
                 }
             }
         }
 
         public bool Remove(string key)
         {
-            lock (definer)
+            lock (_definer)
             {
-                return definer.Remove(key);
+                return _definer.Remove(key);
             }
         }
 
         public bool TryGetValue(string key, out object value)
         {
-            lock (this.definer)
+            lock (this._definer)
             {
-                return this.definer.TryGetValue(key, out value);
+                return this._definer.TryGetValue(key, out value);
             }
         }
 
         public override string ToString()
         {
-            lock (definer)
+            lock (_definer)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("[Definer:{");
-                foreach (KeyValuePair<string, object> entry in definer)
+                foreach (KeyValuePair<string, object> entry in _definer)
                 {
                     sb.Append(entry.Key);
                     sb.Append("=");
@@ -214,7 +214,7 @@ namespace Gean
 
         public IEnumerator GetEnumerator()
         {
-            return this.definer.GetEnumerator();
+            return this._definer.GetEnumerator();
         }
 
         #region 从XML文件或节点中读取数据的方法
@@ -307,21 +307,21 @@ namespace Gean
                             propertyName = reader.GetAttribute(0);
                             Definer p = new Definer();
                             p.ReadXmlAttributes(reader, "Definer");
-                            definer[propertyName] = p;
+                            _definer[propertyName] = p;
                         }
                         else if (propertyName == "Array")
                         {
                             propertyName = reader.GetAttribute(0);
-                            definer[propertyName] = ReadArray(reader);
+                            _definer[propertyName] = ReadArray(reader);
                         }
                         else if (propertyName == "SerializedValue")
                         {
                             propertyName = reader.GetAttribute(0);
-                            definer[propertyName] = new SerializedValue(reader.ReadInnerXml());
+                            _definer[propertyName] = new SerializedValue(reader.ReadInnerXml());
                         }
                         else
                         {
-                            definer[propertyName] = reader.HasAttributes ? reader.GetAttribute(0) : null;
+                            _definer[propertyName] = reader.HasAttributes ? reader.GetAttribute(0) : null;
                         }
                         break;
                 }
@@ -359,9 +359,9 @@ namespace Gean
 
         public void WriteDefine(XmlWriter writer)
         {
-            lock (definer)
+            lock (_definer)
             {
-                List<KeyValuePair<string, object>> sortedProperties = new List<KeyValuePair<string, object>>(definer);
+                List<KeyValuePair<string, object>> sortedProperties = new List<KeyValuePair<string, object>>(_definer);
                 sortedProperties.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.Key, b.Key));
                 foreach (KeyValuePair<string, object> entry in sortedProperties)
                 {

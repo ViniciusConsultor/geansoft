@@ -179,6 +179,29 @@ namespace Gean.Wrapper.Chess
             }
         }
 
+        /// <summary>
+        /// 棋局记录中的一些辅助项的生成
+        /// </summary>
+        /// <param name="flag"></param>
+        /// <param name="number"></param>
+        /// <param name="userID"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        static public string AccessorialItemToString(char flag, int number, string userID, string value)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(flag);
+            sb.Append(number.ToString());
+            sb.Append(flag);
+            if (!string.IsNullOrEmpty(userID))
+            {
+                sb.Append(userID);
+                sb.Append(flag);
+            }
+            sb.AppendLine(value);
+            return sb.ToString();
+        }
+
         static public ChessStep.IndexList IndexParse(string value, char flagA, char flagB)
         {
             ChessStep.IndexList indexs = new ChessStep.IndexList();
@@ -192,5 +215,6 @@ namespace Gean.Wrapper.Chess
             }
             return indexs;
         }
+
     }
 }

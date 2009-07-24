@@ -41,19 +41,17 @@ namespace Gean.Wrapper.Chess
         public override bool Equals(object obj)
         {
             ChessRecord pr = obj as ChessRecord;
-            if (!pr.Definer.Equals(this.Definer))
-            {
+            if (!UtilityEquals.EnumerableEquals(this.Definer, pr.Definer))
                 return false;
-            }
-            if (!pr.Sequence.Equals(this.Sequence))
-            {
+            if (!UtilityEquals.CollectionsEquals<ChessStepPair>(this.Sequence, pr.Sequence))
                 return false;
-            }
+            if (!UtilityEquals.CollectionsEquals<ChessComment>(this.Comments, pr.Comments))
+                return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked(27 * this.Definer.GetHashCode() + this.Sequence.GetHashCode());
+            return unchecked(7 * (this.Definer.GetHashCode() + this.Sequence.GetHashCode()));
         }
     }
 }

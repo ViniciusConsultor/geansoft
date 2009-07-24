@@ -33,17 +33,7 @@ namespace Gean.Wrapper.Chess
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("#");
-            sb.Append(this.Number.ToString());
-            sb.Append("#");
-            if (!string.IsNullOrEmpty(this.UserID))
-            {
-                sb.Append(this.UserID);
-                sb.Append("#");
-            }
-            sb.AppendLine(this.Comment);
-            return sb.ToString();
+            return Utility.AccessorialItemToString('#', this.Number, this.UserID, this.Comment);
         }
         public override int GetHashCode()
         {
