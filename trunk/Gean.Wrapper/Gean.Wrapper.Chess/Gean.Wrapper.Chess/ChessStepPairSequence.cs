@@ -12,6 +12,9 @@ namespace Gean.Wrapper.Chess
     {
         List<ChessStepPair> _steps = new List<ChessStepPair>();
 
+        public int Number { get; set; }
+        public string UserId { get; set; }
+
         #region IList<ChessStepPair> 成员
 
         public int IndexOf(ChessStepPair item)
@@ -93,5 +96,21 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        internal string SequenceToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (ChessStepPair pair in this._steps)
+            {
+                sb.Append(pair.ToString());
+            }
+            return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return Utility.AccessorialItemToString('&', this.Number, this.UserId, this.SequenceToString());
+        }
+
     }
 }

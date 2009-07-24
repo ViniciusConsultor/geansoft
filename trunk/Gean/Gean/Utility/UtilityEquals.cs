@@ -21,7 +21,7 @@ namespace Gean
             return true;
         }
 
-        static public bool EnumerableEquals<T>(IEnumerable<T> a, IEnumerable<T> b)
+        static public bool EnumerableEquals(IEnumerable a, IEnumerable b)
         {
             if (!Object.ReferenceEquals(a.GetType(), b.GetType())) return false;
             if ((a == null) && (b == null))
@@ -68,9 +68,9 @@ namespace Gean
             return true;
         }
 
-        public static void CollectionsEquals<T>(ICollection<T> expected, ICollection<T> actual)
+        public static bool CollectionsEquals<T>(ICollection<T> expected, ICollection<T> actual)
         {
-            CollectionsEquals(expected, actual, null);
+            return CollectionsEquals(expected, actual, null);
         }
 
     }
