@@ -187,7 +187,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="userID"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        static public string AccessorialItemToString(char flag, int number, string userID, string value)
+        static public string BylawItemToString(char flag, int number, string userID, string value)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(flag);

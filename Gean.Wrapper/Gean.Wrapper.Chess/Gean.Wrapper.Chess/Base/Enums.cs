@@ -28,7 +28,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 辅助的棋招的动作说明
         /// </summary>
-        public enum AccessorialAction
+        public enum ActionDescription
         {
             /// <summary>
             /// 嘛也不是
@@ -52,9 +52,9 @@ namespace Gean.Wrapper.Chess
             KillAndCheck = Kill | Check,
         }
 
-        public static AccessorialAction GetFlag(AccessorialAction value, AccessorialAction flag)
+        public static ActionDescription GetFlag(ActionDescription value, ActionDescription flag)
         {
-            value = value & (AccessorialAction.KillAndCheck ^ flag);
+            value = value & (ActionDescription.KillAndCheck ^ flag);
             return value;
         }
 
