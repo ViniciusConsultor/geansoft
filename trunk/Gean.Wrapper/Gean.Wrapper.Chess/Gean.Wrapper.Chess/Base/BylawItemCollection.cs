@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessCommentCollection : IList<ChessComment>
+    public abstract class BylawItemCollection : IList<BylawItem>
     {
-        List<ChessComment> _comments = new List<ChessComment>();
+        List<BylawItem> _values = new List<BylawItem>();
 
         /// <summary>
         /// 返回所有评论的编号
@@ -16,7 +17,7 @@ namespace Gean.Wrapper.Chess
             get
             {
                 List<int> indexs = new List<int>();
-                foreach (var item in _comments)
+                foreach (var item in _values)
                     indexs.Add(item.Number);
                 return indexs.ToArray();
             }
@@ -30,7 +31,7 @@ namespace Gean.Wrapper.Chess
             get
             {
                 List<string> userIdList = new List<string>();
-                foreach (var item in _comments)
+                foreach (var item in _values)
                 {
                     if (!string.IsNullOrEmpty(item.UserID))
                     {
@@ -44,69 +45,67 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 返回所有的评论的编号
         /// </summary>
-        public string[] Comments
+        public string[] Values
         {
             get
             {
-                List<string> commentList = new List<string>();
-                foreach (var item in _comments)
-                {
-                    commentList.Add(item.Comment);
-                }
-                return commentList.ToArray();
+                List<string> values = new List<string>();
+                foreach (var item in _values)
+                    values.Add(item.BylawValue);
+                return values.ToArray();
             }
         }
 
-        #region IList<ChessComment> 成员
+        #region IList<BylawItem> 成员
 
-        public int IndexOf(ChessComment item)
+        public int IndexOf(BylawItem item)
         {
-            return _comments.IndexOf(item);
+            return _values.IndexOf(item);
         }
 
-        public void Insert(int index, ChessComment item)
+        public void Insert(int index, BylawItem item)
         {
-            _comments.Insert(index, item);
+            _values.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            _comments.RemoveAt(index);
+            _values.RemoveAt(index);
         }
 
-        public ChessComment this[int index]
+        public BylawItem this[int index]
         {
-            get { return _comments[index]; }
-            set { _comments[index] = value; }
+            get { return _values[index]; }
+            set { _values[index] = value; }
         }
 
         #endregion
 
-        #region ICollection<ChessComment> 成员
+        #region ICollection<BylawItem> 成员
 
-        public void Add(ChessComment item)
+        public void Add(BylawItem item)
         {
-            _comments.Add(item);
+            _values.Add(item);
         }
 
         public void Clear()
         {
-            _comments.Clear();
+            _values.Clear();
         }
 
-        public bool Contains(ChessComment item)
+        public bool Contains(BylawItem item)
         {
-            return _comments.Contains(item);
+            return _values.Contains(item);
         }
 
-        public void CopyTo(ChessComment[] array, int arrayIndex)
+        public void CopyTo(BylawItem[] array, int arrayIndex)
         {
-            _comments.CopyTo(array, arrayIndex);
+            _values.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return _comments.Count; }
+            get { return _values.Count; }
         }
 
         public bool IsReadOnly
@@ -114,27 +113,27 @@ namespace Gean.Wrapper.Chess
             get { return false; }
         }
 
-        public bool Remove(ChessComment item)
+        public bool Remove(BylawItem item)
         {
-            return _comments.Remove(item);
+            return _values.Remove(item);
         }
 
         #endregion
 
-        #region IEnumerable<ChessComment> 成员
+        #region IEnumerable<BylawItem> 成员
 
-        public IEnumerator<ChessComment> GetEnumerator()
+        public IEnumerator<BylawItem> GetEnumerator()
         {
-            return _comments.GetEnumerator();
+            return _values.GetEnumerator();
         }
 
         #endregion
 
         #region IEnumerable 成员
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return _comments.GetEnumerator();
+            return _values.GetEnumerator();
         }
 
         #endregion

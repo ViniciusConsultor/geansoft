@@ -114,7 +114,7 @@ namespace Gean.Wrapper.Chess
                 oldSquare.OwnedChessman = Chessman.Empty;//将棋子的历史棋格的棋子状态置为空
             }
 
-            Enums.AccessorialAction action = Enums.AccessorialAction.General;
+            Enums.ActionDescription action = Enums.ActionDescription.General;
 
             if (newSquare.OwnedChessman != Chessman.Empty)
             {
@@ -123,7 +123,7 @@ namespace Gean.Wrapper.Chess
 
                 //新棋格中如有棋子，置该棋子为杀死状态
                 newSquare.OwnedChessman.IsKilled = true;
-                action = Enums.AccessorialAction.Kill;
+                action = Enums.ActionDescription.Kill;
 
                 //注册棋子被杀死后的事件
                 OnKilled(new ChessmanKillEventArgs(man, newSquare));

@@ -142,11 +142,7 @@ namespace Gean.Wrapper.Chess
         }
         public override int GetHashCode()
         {
-            return unchecked((
-                this.X.GetHashCode() + 
-                this.Y.GetHashCode() +
-                this.SquareSide.GetHashCode()) * 3
-                );
+            return unchecked((X.GetHashCode() + Y.GetHashCode() + SquareSide.GetHashCode()) * 3);
         }
 
         /// <summary>

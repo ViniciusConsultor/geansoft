@@ -17,7 +17,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
-        public Enums.AccessorialAction Action { get; internal set; }
+        public Enums.ActionDescription Action { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
@@ -67,16 +67,16 @@ namespace Gean.Wrapper.Chess
 
         public ChessStep() : this(Enums.Castling.None) { }
         public ChessStep(Enums.Castling castling)
-            : this(castling, Enums.ChessmanType.None, Enums.AccessorialAction.None, ChessSquare.Empty, ChessSquare.Empty)
+            : this(castling, Enums.ChessmanType.None, Enums.ActionDescription.None, ChessSquare.Empty, ChessSquare.Empty)
         {
             //this
         }
-        public ChessStep(Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
+        public ChessStep(Enums.ChessmanType manType, Enums.ActionDescription action, ChessSquare sourceSquare, ChessSquare targetSquare)
             : this(Enums.Castling.None, manType, action, sourceSquare, targetSquare)
         {
             //this
         }
-        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.AccessorialAction action, ChessSquare sourceSquare, ChessSquare targetSquare)
+        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.ActionDescription action, ChessSquare sourceSquare, ChessSquare targetSquare)
         {
             this._castling = castling;
 
@@ -109,7 +109,7 @@ namespace Gean.Wrapper.Chess
                         {
                             sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
                         }
-                        if (Enums.GetFlag(this.Action, Enums.AccessorialAction.Check) == Enums.AccessorialAction.Kill)
+                        if (Enums.GetFlag(this.Action, Enums.ActionDescription.Check) == Enums.ActionDescription.Kill)
                         {
                             if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
@@ -119,7 +119,7 @@ namespace Gean.Wrapper.Chess
                         }
                         sb.Append(this.TargetSquare.ToString());
                         //有将军的动作，打印'+'
-                        if (Enums.GetFlag(this.Action, Enums.AccessorialAction.Kill) == Enums.AccessorialAction.Check)
+                        if (Enums.GetFlag(this.Action, Enums.ActionDescription.Kill) == Enums.ActionDescription.Check)
                         {
                             sb.Append('+');
                         }
@@ -209,7 +209,7 @@ namespace Gean.Wrapper.Chess
 
             #endregion
 
-            Enums.AccessorialAction action = Enums.AccessorialAction.General;
+            Enums.ActionDescription action = Enums.ActionDescription.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
             ChessSquare square = ChessSquare.Empty;
 
@@ -222,7 +222,7 @@ namespace Gean.Wrapper.Chess
                 if (value.EndsWith(flagword))
                 {
                     if (flagword.Equals("+"))//Qh5+
-                        action = Enums.AccessorialAction.Check;
+                        action = Enums.ActionDescription.Check;
                     endString = flagword;
                     int i = value.LastIndexOf(flagword);
                     value = value.Substring(0, i);
@@ -259,10 +259,10 @@ namespace Gean.Wrapper.Chess
                     if (value[n] == 'x')
                     {
                         n++;
-                        if (action == Enums.AccessorialAction.Check)
-                            action = Enums.AccessorialAction.KillAndCheck;
+                        if (action == Enums.ActionDescription.Check)
+                            action = Enums.ActionDescription.KillAndCheck;
                         else
-                            action = Enums.AccessorialAction.Kill;
+                            action = Enums.ActionDescription.Kill;
                     }
                     square = ChessSquare.Parse(value.Substring(n, 2));
                 }

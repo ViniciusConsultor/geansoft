@@ -76,19 +76,19 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             comment = "#ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD";
             actual = ChessComment.Parse(comment);
-            Assert.AreEqual(comment.Substring(1), actual.Comment);
+            Assert.AreEqual(comment.Substring(1), actual.BylawValue);
             Assert.AreEqual("", actual.UserID);
             Assert.IsTrue(actual.Number > 0 && actual.Number < int.MaxValue);
 
             comment = "#324234#ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD";
             actual = ChessComment.Parse(comment);
-            Assert.AreEqual("ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD", actual.Comment);
+            Assert.AreEqual("ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD", actual.BylawValue);
             Assert.AreEqual("", actual.UserID);
             Assert.AreEqual(324234, actual.Number);
 
             comment = "#324234#*************#ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD";
             actual = ChessComment.Parse(comment);
-            Assert.AreEqual("ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD", actual.Comment);
+            Assert.AreEqual("ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD_ABCD", actual.BylawValue);
             Assert.AreEqual("", actual.UserID);
             Assert.AreEqual(324234, actual.Number);
 
