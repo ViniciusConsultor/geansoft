@@ -71,7 +71,7 @@
     </Compile>
     <Compile Include="Record\ChessRecord.cs" />
     <Compile Include="Record\ChessPGNWriter.cs" />
-    <Compile Include="Record\ChessRecordFlag.cs" />
+    <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
     <Compile Include="Record\ChessPGNReader.cs">
       <SubType>Code</SubType>

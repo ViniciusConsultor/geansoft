@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessRecordFlag : IEnumerable<string>
+    public class ChessStepFlag : IEnumerable<string>
     {
         private static Dictionary<string, string> _flags = new Dictionary<string, string>();
 
-        public ChessRecordFlag()
+        public ChessStepFlag()
         {
             if (_flags.Count <= 0)
             {
