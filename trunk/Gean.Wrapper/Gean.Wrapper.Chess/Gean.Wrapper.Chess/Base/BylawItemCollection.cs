@@ -34,9 +34,7 @@ namespace Gean.Wrapper.Chess
                 foreach (var item in _values)
                 {
                     if (!string.IsNullOrEmpty(item.UserID))
-                    {
                         userIdList.Add(item.UserID);
-                    }
                 }
                 return userIdList.ToArray();
             }
@@ -137,5 +135,13 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (BylawItem item in _values)
+                sb.AppendLine(item.ToString());
+            return sb.ToString();
+        }
     }
 }
