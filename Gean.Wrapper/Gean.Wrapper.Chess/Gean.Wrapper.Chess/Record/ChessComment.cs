@@ -13,7 +13,6 @@ namespace Gean.Wrapper.Chess
         public ChessComment(string userId, string comment, int number)
             : base(number, userId, comment, '#')
         {
-
         }
 
         /// <summary>
@@ -26,9 +25,9 @@ namespace Gean.Wrapper.Chess
             char flag = '#';
             int number;
             string comment;
-            string email;
-            Utility.ParseAppendantString(value, flag, out number, out email, out comment);
-            return new ChessComment(email, comment, number);
+            string userId;
+            Utility.ParseAppendantString(value, flag, out number, out userId, out comment);
+            return new ChessComment(userId, comment, number);
         }
     }
 }
