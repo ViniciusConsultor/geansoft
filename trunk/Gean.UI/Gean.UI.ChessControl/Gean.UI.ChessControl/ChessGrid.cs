@@ -7,6 +7,9 @@ namespace Gean.UI.ChessControl
 {
     public class ChessGrid
     {
+        /// <summary>
+        /// 该实体棋格的实际矩形
+        /// </summary>
         public Rectangle InnerRect
         {
             get { return _innerRect; }
@@ -17,28 +20,27 @@ namespace Gean.UI.ChessControl
         public int SquareY { get; private set; }
 
         public ChessGrid(int x, int y, int width, int height, int squareX, int squareY)
-            : this(x, y, width, height)
+            : this(new Point(x, y), new Size(width, height), squareX, squareY)
         {
-            this.SetSquare(squareX, squareY);
         }
+
         public ChessGrid(int x, int y, int width, int height)
-            : this(new Point(x, y), new Size(width, height)) { }
+            : this(new Point(x, y), new Size(width, height), 0, 0)
+        { 
+        }
+
         public ChessGrid(Point location, Size size)
+            : this(location, size, 0, 0)
+        {
+        }
+
+        public ChessGrid(Point location, Size size, int squareX, int squareY)
         {
             _innerRect.Location = location;
             _innerRect.Size = size;
-        }
-        public ChessGrid(Point location, Size size, int squareX, int squareY)
-            : this(location, size)
-        {
             this.SetSquare(squareX, squareY);
         }
 
-        private void SetSquare(int squareX, int squareY)
-        {
-            this.SquareX = squareX;
-            this.SquareY = 9 - squareY;
-        }
 
         #region Inner Rectangle
         public Point Location 
@@ -139,6 +141,12 @@ namespace Gean.UI.ChessControl
             this._innerRect.Offset(x, y);
         }
         #endregion
+
+        private void SetSquare(int squareX, int squareY)
+        {
+            this.SquareX = squareX;
+            this.SquareY = 9 - squareY;
+        }
 
         public override bool Equals(object obj)
         {

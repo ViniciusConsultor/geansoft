@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace Gean.UI.ChessControl
 {
@@ -55,8 +56,8 @@ namespace Gean.UI.ChessControl
                         g.DrawRectangle(Pens.Black, rid.InnerRect);
                     }
 #if DEBUG
-                    g.DrawString(IntToChar(rid.SquareX) + "," + rid.SquareY,
-                        new Font("Tahoma", 8.25F), Brushes.Red, rid.Location);
+                    g.DrawString(rid.SquareX + "," + rid.SquareY,
+                        new Font("Tahoma", 8.25F), Brushes.Black, rid.Location);
 #endif
                 }
             }
@@ -65,6 +66,10 @@ namespace Gean.UI.ChessControl
                 g.FillRectangle(Brushes.Tomato, _targetGrid.InnerRect);
                 g.DrawRectangle(Pens.Black, _targetGrid.InnerRect);
             }
+#if DEBUG
+            Assembly ass = this.GetType().Assembly;
+            g.DrawString("Debug: " + ass.ToString(), new Font("Consolas", 9.5F), Brushes.White, this.Location);
+#endif
         }
 
         private void GetGridSize(Size size, out int width, out int height, out int offsetX, out int offsetY)
@@ -141,9 +146,9 @@ namespace Gean.UI.ChessControl
             }
         }
 
+#if DEBUG
         private void DebugDisplay(ChessGrid rid)
         {
-#if DEBUG
             Graphics g = this.CreateGraphics();
             g.FillRectangle(Brushes.Tomato, rid.InnerRect);
             g.DrawRectangle(Pens.Black, rid.InnerRect);
@@ -157,9 +162,8 @@ namespace Gean.UI.ChessControl
             this.Invalidate(left, false);
             this.Invalidate(right, false);
             this.Invalidate(bottom, false);
-#endif
         }
-
+#endif
 
         public event ChessPlayedEventHandler ChessPlayedEvent;
         protected virtual void OnChessPlayed(ChessPlayedEventArgs e)
@@ -178,42 +182,6 @@ namespace Gean.UI.ChessControl
                 this.NewGrid = newGrid;
             }
         }
-
-#if DEBUG
-        /// <summary>
-        /// 将指定的坐标值转换成字符
-        /// </summary>
-        static char IntToChar(int i)
-        {
-            if (i >= 1 && i <= 8)
-            {
-                #region switch
-                switch (i)
-                {
-                    case 1:
-                        return 'a';
-                    case 2:
-                        return 'b';
-                    case 3:
-                        return 'c';
-                    case 4:
-                        return 'd';
-                    case 5:
-                        return 'e';
-                    case 6:
-                        return 'f';
-                    case 7:
-                        return 'g';
-                    case 8:
-                        return 'h';
-                    default:
-                        return '*';
-                }
-                #endregion
-            }
-            return '*';
-        }
-#endif
     }
 
 }
