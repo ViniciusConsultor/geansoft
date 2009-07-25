@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
-using System.Drawing;
 
 namespace Gean.Wrapper.Chess
 {
