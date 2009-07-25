@@ -20,6 +20,13 @@ namespace Gean.UI.ChessControl.Demo
 
             this._splitContainer.Panel2.Controls.Add(_board);
             this._board.Dock = DockStyle.Fill;
+            this._board.ChessPlayedEvent += new ChessBoard.ChessPlayedEventHandler(_board_ChessPlayedEvent);
+        }
+
+        void _board_ChessPlayedEvent(object sender, ChessBoard.ChessPlayedEventArgs e)
+        {
+            this._actionListBox.Items.Add(e.OldGrid.SquareX.ToString() + "," + e.OldGrid.SquareY.ToString() + " -> " +
+                e.NewGrid.SquareX.ToString() + "," + e.NewGrid.SquareY.ToString());
         }
 
         protected override void OnLoad(EventArgs e)
