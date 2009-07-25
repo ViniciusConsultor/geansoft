@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
@@ -16,16 +14,16 @@ namespace Gean.UI.ChessControl
             this.BackColor = Color.NavajoWhite;
         }
 
-        private Rectangle _currRect = Rectangle.Empty;
+        private ChessGrid _currRect = null;
+        private ChessGrid _targetRect = null;
+        private int _rectWidth = 0;
+        private int _rectHeight = 0;
 
-        public Rectangle[,] Rectangles
+        public ChessGrid[,] Rectangles
         {
             get { return _rectangles; }
         }
-        private Rectangle[,] _rectangles = new Rectangle[8, 8];
-
-        int rectWidth = 0;
-        int rectHeight = 0;
+        private ChessGrid[,] _rectangles = new ChessGrid[8, 8];
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
@@ -37,25 +35,30 @@ namespace Gean.UI.ChessControl
         {
             int offsetX = 0;
             int offsetY = 0;
-            this.GetGridSize(this.Size, out rectWidth, out rectHeight, out offsetX, out offsetY);
+            this.GetGridSize(this.Size, out _rectWidth, out _rectHeight, out offsetX, out offsetY);
 
             for (int x = 1; x <= this._rectangles.GetLength(0); x++)
             {
                 for (int y = 1; y <= this._rectangles.GetLength(1); y++)
                 {
-                    Rectangle rect = this.GetRectangle(x, y, rectWidth, rectHeight, offsetX, offsetY);
+                    ChessGrid rect = this.GetRectangle(x, y, _rectWidth, _rectHeight, offsetX, offsetY);
                     this._rectangles[x - 1, y - 1] = rect;
                     if ((x + y) % 2 == 0)
                     {
-                        g.FillRectangle(Brushes.Gray, rect);
-                        g.DrawRectangle(Pens.Black, rect);
+                        g.FillRectangle(Brushes.Gray, rect.InnerRect);
+                        g.DrawRectangle(Pens.Black, rect.InnerRect);
                     }
                     else
                     {
-                        g.FillRectangle(Brushes.WhiteSmoke, rect);
-                        g.DrawRectangle(Pens.Black, rect);
+                        g.FillRectangle(Brushes.WhiteSmoke, rect.InnerRect);
+                        g.DrawRectangle(Pens.Black, rect.InnerRect);
                     }
                 }
+            }
+            if (_targetRect != null)
+            {
+                g.FillRectangle(Brushes.Tomato, _targetRect.InnerRect);
+                g.DrawRectangle(Pens.Black, _targetRect.InnerRect);
             }
         }
 
@@ -77,16 +80,17 @@ namespace Gean.UI.ChessControl
             }
         }
 
-        private Rectangle GetRectangle(int x, int y, int width, int height, int offsetX, int offsetY)
+        private ChessGrid GetRectangle(int x, int y, int width, int height, int offsetX, int offsetY)
         {
             Point point = new Point((x - 1) * width + offsetX, (y - 1) * height + offsetY);
             Size size = new Size(width, height);
-            return new Rectangle(point, size);
+            return new ChessGrid(point, size);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+            _targetRect = null;
             for (int x = 0; x < _rectangles.GetLength(0); x++)
             {
                 for (int y = 0; y < _rectangles.GetLength(1); y++)
@@ -100,44 +104,44 @@ namespace Gean.UI.ChessControl
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            _currRect = Rectangle.Empty;
+            _currRect = null;
             for (int x = 0; x < _rectangles.GetLength(0); x++)
             {
                 for (int y = 0; y < _rectangles.GetLength(1); y++)
                 {
                     if (_rectangles[x, y].Contains(e.Location))
                     {
+                        _targetRect = _rectangles[x, y];
                         Graphics g = this.CreateGraphics();
-                        g.FillRectangle(Brushes.Maroon, _rectangles[x, y]);
-                        g.DrawRectangle(Pens.Black, _rectangles[x, y]);
+                        g.FillRectangle(Brushes.Tomato, _rectangles[x, y].InnerRect);
+                        g.DrawRectangle(Pens.Black, _rectangles[x, y].InnerRect);
                         this.InvalidateRectangles(_rectangles[x, y].Location);
                     }
                 }
             }
-
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (_currRect != Rectangle.Empty)
+            if (_currRect != null)
             {
-                int offset = rectWidth / 2;
+                int offset = _rectWidth / 2;
                 Graphics g = this.CreateGraphics();
                 Point newPoint = new Point(e.Location.X - offset, e.Location.Y - offset);
-                _currRect = new Rectangle(newPoint, new Size(rectWidth, rectHeight));
-                g.FillRectangle(Brushes.GreenYellow, _currRect);
-                g.DrawRectangle(Pens.Black, _currRect);
+                _currRect = new ChessGrid(newPoint, new Size(_rectWidth, _rectHeight));
+                g.FillRectangle(Brushes.GreenYellow, _currRect.InnerRect);
+                g.DrawRectangle(Pens.Black, _currRect.InnerRect);
                 this.InvalidateRectangles(newPoint);
             }
         }
 
-        private void InvalidateRectangles(Point point)
+        protected virtual void InvalidateRectangles(Point point)
         {
             Rectangle top = new Rectangle(0, 0, Width, point.Y);
-            Rectangle left = new Rectangle(0, point.Y, point.X, rectHeight + 1);
-            Rectangle right = new Rectangle(point.X + rectWidth + 1, point.Y, Width - point.Y - rectWidth, rectHeight + 1);
-            Rectangle bottom = new Rectangle(0, point.Y + rectHeight + 1, Width, Height - point.Y - rectHeight);
+            Rectangle left = new Rectangle(0, point.Y, point.X, _rectHeight + 1);
+            Rectangle right = new Rectangle(point.X + _rectWidth + 1, point.Y, Width - point.Y - _rectWidth, _rectHeight + 1);
+            Rectangle bottom = new Rectangle(0, point.Y + _rectHeight + 1, Width, Height - point.Y - _rectHeight);
             this.Invalidate(top, false);
             this.Invalidate(left, false);
             this.Invalidate(right, false);
