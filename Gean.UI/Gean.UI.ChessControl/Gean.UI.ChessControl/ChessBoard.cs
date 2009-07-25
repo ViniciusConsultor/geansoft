@@ -11,7 +11,7 @@ namespace Gean.UI.ChessControl
         public ChessBoard()
         {
             this.DoubleBuffered = true;
-            this.BackColor = Color.NavajoWhite;
+            this.BackColor = Color.SaddleBrown;
         }
 
         private ChessGrid _currRect = null;
@@ -41,18 +41,23 @@ namespace Gean.UI.ChessControl
             {
                 for (int y = 1; y <= this._rectangles.GetLength(1); y++)
                 {
-                    ChessGrid rect = this.GetRectangle(x, y, _rectWidth, _rectHeight, offsetX, offsetY);
-                    this._rectangles[x - 1, y - 1] = rect;
+                    ChessGrid rid = this.GetRectangle
+                        (x, y, _rectWidth, _rectHeight, offsetX, offsetY, x, y);
+                    this._rectangles[x - 1, y - 1] = rid;
                     if ((x + y) % 2 == 0)
                     {
-                        g.FillRectangle(Brushes.Gray, rect.InnerRect);
-                        g.DrawRectangle(Pens.Black, rect.InnerRect);
+                        g.FillRectangle(Brushes.Gray, rid.InnerRect);
+                        g.DrawRectangle(Pens.Black, rid.InnerRect);
                     }
                     else
                     {
-                        g.FillRectangle(Brushes.WhiteSmoke, rect.InnerRect);
-                        g.DrawRectangle(Pens.Black, rect.InnerRect);
+                        g.FillRectangle(Brushes.WhiteSmoke, rid.InnerRect);
+                        g.DrawRectangle(Pens.Black, rid.InnerRect);
                     }
+#if DEBUG
+                    g.DrawString(IntToChar(rid.SquareX) + "," + rid.SquareY,
+                        new Font("Tahoma", 8.25F), Brushes.Red, rid.Location);
+#endif
                 }
             }
             if (_targetRect != null)
@@ -80,11 +85,12 @@ namespace Gean.UI.ChessControl
             }
         }
 
-        private ChessGrid GetRectangle(int x, int y, int width, int height, int offsetX, int offsetY)
+        private ChessGrid GetRectangle
+            (int x, int y, int width, int height, int offsetX, int offsetY, int squareX, int squareY)
         {
             Point point = new Point((x - 1) * width + offsetX, (y - 1) * height + offsetY);
             Size size = new Size(width, height);
-            return new ChessGrid(point, size);
+            return new ChessGrid(point, size, squareX, squareY);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -147,6 +153,42 @@ namespace Gean.UI.ChessControl
             this.Invalidate(right, false);
             this.Invalidate(bottom, false);
         }
+
+#if DEBUG
+        /// <summary>
+        /// 将指定的坐标值转换成字符
+        /// </summary>
+        static char IntToChar(int i)
+        {
+            if (i >= 1 && i <= 8)
+            {
+                #region switch
+                switch (i)
+                {
+                    case 1:
+                        return 'a';
+                    case 2:
+                        return 'b';
+                    case 3:
+                        return 'c';
+                    case 4:
+                        return 'd';
+                    case 5:
+                        return 'e';
+                    case 6:
+                        return 'f';
+                    case 7:
+                        return 'g';
+                    case 8:
+                        return 'h';
+                    default:
+                        return '*';
+                }
+                #endregion
+            }
+            return '*';
+        }
+#endif
     }
 
 }
