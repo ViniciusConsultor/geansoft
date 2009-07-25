@@ -27,7 +27,7 @@ namespace Gean.Xml
 #if DEBUG   
                 throw new FileNotFoundException("Xml File isn't Exists!");
 #else
-                this._XmlNode = XmlHelper.CreatNewDoucmnet(this.FilePath, "root");//如果文件不存在，建立这个文件
+                this.BaseXmlNode = XmlHelper.CreatNewDoucmnet(this.FilePath, "root");//如果文件不存在，建立这个文件
 #endif
             }
             else
