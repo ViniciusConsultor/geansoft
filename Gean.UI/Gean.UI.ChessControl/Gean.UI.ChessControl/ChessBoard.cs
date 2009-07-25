@@ -14,10 +14,10 @@ namespace Gean.UI.ChessControl
             this.BackColor = Color.SaddleBrown;
         }
 
-        private ChessGrid _currRect = null;
-        private ChessGrid _targetRect = null;
-        private int _rectWidth = 0;
-        private int _rectHeight = 0;
+        private ChessGrid _currGrid = null;
+        private ChessGrid _targetGrid = null;
+        private int _GridWidth = 0;
+        private int _GridHeight = 0;
 
         public ChessGrid[,] Rectangles
         {
@@ -35,14 +35,14 @@ namespace Gean.UI.ChessControl
         {
             int offsetX = 0;
             int offsetY = 0;
-            this.GetGridSize(this.Size, out _rectWidth, out _rectHeight, out offsetX, out offsetY);
+            this.GetGridSize(this.Size, out _GridWidth, out _GridHeight, out offsetX, out offsetY);
 
             for (int x = 1; x <= this._rectangles.GetLength(0); x++)
             {
                 for (int y = 1; y <= this._rectangles.GetLength(1); y++)
                 {
                     ChessGrid rid = this.GetRectangle
-                        (x, y, _rectWidth, _rectHeight, offsetX, offsetY, x, y);
+                        (x, y, _GridWidth, _GridHeight, offsetX, offsetY, x, y);
                     this._rectangles[x - 1, y - 1] = rid;
                     if ((x + y) % 2 == 0)
                     {
@@ -60,10 +60,10 @@ namespace Gean.UI.ChessControl
 #endif
                 }
             }
-            if (_targetRect != null)
+            if (_targetGrid != null)
             {
-                g.FillRectangle(Brushes.Tomato, _targetRect.InnerRect);
-                g.DrawRectangle(Pens.Black, _targetRect.InnerRect);
+                g.FillRectangle(Brushes.Tomato, _targetGrid.InnerRect);
+                g.DrawRectangle(Pens.Black, _targetGrid.InnerRect);
             }
         }
 
@@ -96,13 +96,13 @@ namespace Gean.UI.ChessControl
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            _targetRect = null;
+            _targetGrid = null;
             for (int x = 0; x < _rectangles.GetLength(0); x++)
             {
                 for (int y = 0; y < _rectangles.GetLength(1); y++)
                 {
                     if (_rectangles[x, y].Contains(e.Location))
-                        _currRect = _rectangles[x, y];
+                        _currGrid = _rectangles[x, y];
                 }
             }
         }
@@ -110,18 +110,20 @@ namespace Gean.UI.ChessControl
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            _currRect = null;
+            ChessGrid tempGrid = _currGrid;
+            _currGrid = null;
             for (int x = 0; x < _rectangles.GetLength(0); x++)
             {
                 for (int y = 0; y < _rectangles.GetLength(1); y++)
                 {
                     if (_rectangles[x, y].Contains(e.Location))
                     {
-                        _targetRect = _rectangles[x, y];
-                        Graphics g = this.CreateGraphics();
-                        g.FillRectangle(Brushes.Tomato, _rectangles[x, y].InnerRect);
-                        g.DrawRectangle(Pens.Black, _rectangles[x, y].InnerRect);
-                        this.InvalidateRectangles(_rectangles[x, y].Location);
+                        _targetGrid = _rectangles[x, y];
+
+                        this.DebugDisplay(_targetGrid);
+
+                        //注册棋子移动事件
+                        OnChessPlayed(new ChessPlayedEventArgs(tempGrid, _targetGrid));
                     }
                 }
             }
@@ -130,28 +132,51 @@ namespace Gean.UI.ChessControl
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (_currRect != null)
+            if (_currGrid != null)
             {
-                int offset = _rectWidth / 2;
-                Graphics g = this.CreateGraphics();
+                int offset = _GridWidth / 2;
                 Point newPoint = new Point(e.Location.X - offset, e.Location.Y - offset);
-                _currRect = new ChessGrid(newPoint, new Size(_rectWidth, _rectHeight));
-                g.FillRectangle(Brushes.GreenYellow, _currRect.InnerRect);
-                g.DrawRectangle(Pens.Black, _currRect.InnerRect);
-                this.InvalidateRectangles(newPoint);
+                _currGrid = new ChessGrid(newPoint, new Size(_GridWidth, _GridHeight));
+                this.DebugDisplay(_currGrid);
             }
         }
 
-        protected virtual void InvalidateRectangles(Point point)
+        private void DebugDisplay(ChessGrid rid)
         {
-            Rectangle top = new Rectangle(0, 0, Width, point.Y);
-            Rectangle left = new Rectangle(0, point.Y, point.X, _rectHeight + 1);
-            Rectangle right = new Rectangle(point.X + _rectWidth + 1, point.Y, Width - point.Y - _rectWidth, _rectHeight + 1);
-            Rectangle bottom = new Rectangle(0, point.Y + _rectHeight + 1, Width, Height - point.Y - _rectHeight);
+#if DEBUG
+            Graphics g = this.CreateGraphics();
+            g.FillRectangle(Brushes.Tomato, rid.InnerRect);
+            g.DrawRectangle(Pens.Black, rid.InnerRect);
+
+            Point pt = rid.Location;
+            Rectangle top = new Rectangle(0, 0, Width, pt.Y);
+            Rectangle left = new Rectangle(0, pt.Y, pt.X, _GridHeight + 1);
+            Rectangle right = new Rectangle(pt.X + _GridWidth + 1, pt.Y, Width - pt.Y - _GridWidth, _GridHeight + 1);
+            Rectangle bottom = new Rectangle(0, pt.Y + _GridHeight + 1, Width, Height - pt.Y - _GridHeight);
             this.Invalidate(top, false);
             this.Invalidate(left, false);
             this.Invalidate(right, false);
             this.Invalidate(bottom, false);
+#endif
+        }
+
+
+        public event ChessPlayedEventHandler ChessPlayedEvent;
+        protected virtual void OnChessPlayed(ChessPlayedEventArgs e)
+        {
+            if (ChessPlayedEvent != null)
+                ChessPlayedEvent(this, e);
+        }
+        public delegate void ChessPlayedEventHandler(object sender, ChessPlayedEventArgs e);
+        public class ChessPlayedEventArgs : EventArgs
+        {
+            public ChessGrid OldGrid { get; private set; }
+            public ChessGrid NewGrid { get; private set; }
+            public ChessPlayedEventArgs(ChessGrid oldGrid, ChessGrid newGrid)
+            {
+                this.OldGrid = oldGrid;
+                this.NewGrid = newGrid;
+            }
         }
 
 #if DEBUG
