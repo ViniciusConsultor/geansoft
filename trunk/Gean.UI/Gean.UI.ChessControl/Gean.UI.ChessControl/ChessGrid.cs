@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using System.ComponentModel;
 
 namespace Gean.UI.ChessControl
 {
@@ -14,19 +13,31 @@ namespace Gean.UI.ChessControl
         }
         private Rectangle _innerRect = new Rectangle();
 
+        public int SquareX { get; private set; }
+        public int SquareY { get; private set; }
 
-
+        public ChessGrid(int x, int y, int width, int height, int squareX, int squareY)
+            : this(x, y, width, height)
+        {
+            this.SetSquare(squareX, squareY);
+        }
+        public ChessGrid(int x, int y, int width, int height)
+            : this(new Point(x, y), new Size(width, height)) { }
         public ChessGrid(Point location, Size size)
         {
             _innerRect.Location = location;
             _innerRect.Size = size;
         }
-        public ChessGrid(int x, int y, int width, int height)
+        public ChessGrid(Point location, Size size, int squareX, int squareY)
+            : this(location, size)
         {
-            _innerRect.X = x;
-            _innerRect.Y = y;
-            _innerRect.Width = width;
-            _innerRect.Height = height;
+            this.SetSquare(squareX, squareY);
+        }
+
+        private void SetSquare(int squareX, int squareY)
+        {
+            this.SquareX = squareX;
+            this.SquareY = 9 - squareY;
         }
 
         #region Inner Rectangle
@@ -144,7 +155,6 @@ namespace Gean.UI.ChessControl
         {
             return _innerRect.ToString();
         }
-
 
     }
 }
