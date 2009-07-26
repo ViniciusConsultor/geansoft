@@ -60,86 +60,86 @@ namespace Gean.UI.ChessControl {
             }
         }
         
-        internal static System.Drawing.Bitmap bb {
+        internal static System.Drawing.Bitmap black_bishop {
             get {
-                object obj = ResourceManager.GetObject("bb", resourceCulture);
+                object obj = ResourceManager.GetObject("black_bishop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap bk {
+        internal static System.Drawing.Bitmap black_king {
             get {
-                object obj = ResourceManager.GetObject("bk", resourceCulture);
+                object obj = ResourceManager.GetObject("black_king", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap bn {
+        internal static System.Drawing.Bitmap black_knight {
             get {
-                object obj = ResourceManager.GetObject("bn", resourceCulture);
+                object obj = ResourceManager.GetObject("black_knight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap bp {
+        internal static System.Drawing.Bitmap black_pawn {
             get {
-                object obj = ResourceManager.GetObject("bp", resourceCulture);
+                object obj = ResourceManager.GetObject("black_pawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap bq {
+        internal static System.Drawing.Bitmap black_queen {
             get {
-                object obj = ResourceManager.GetObject("bq", resourceCulture);
+                object obj = ResourceManager.GetObject("black_queen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap br {
+        internal static System.Drawing.Bitmap black_rook {
             get {
-                object obj = ResourceManager.GetObject("br", resourceCulture);
+                object obj = ResourceManager.GetObject("black_rook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wb {
+        internal static System.Drawing.Bitmap white_bishop {
             get {
-                object obj = ResourceManager.GetObject("wb", resourceCulture);
+                object obj = ResourceManager.GetObject("white_bishop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wk {
+        internal static System.Drawing.Bitmap white_king {
             get {
-                object obj = ResourceManager.GetObject("wk", resourceCulture);
+                object obj = ResourceManager.GetObject("white_king", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wn {
+        internal static System.Drawing.Bitmap white_knight {
             get {
-                object obj = ResourceManager.GetObject("wn", resourceCulture);
+                object obj = ResourceManager.GetObject("white_knight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wp {
+        internal static System.Drawing.Bitmap white_pawn {
             get {
-                object obj = ResourceManager.GetObject("wp", resourceCulture);
+                object obj = ResourceManager.GetObject("white_pawn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wq {
+        internal static System.Drawing.Bitmap white_queen {
             get {
-                object obj = ResourceManager.GetObject("wq", resourceCulture);
+                object obj = ResourceManager.GetObject("white_queen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap wr {
+        internal static System.Drawing.Bitmap white_rook {
             get {
-                object obj = ResourceManager.GetObject("wr", resourceCulture);
+                object obj = ResourceManager.GetObject("white_rook", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

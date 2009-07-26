@@ -61,10 +61,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wr;
+                                man.BackgroundImage = ChessmanResource.white_rook;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.br;
+                                man.BackgroundImage = ChessmanResource.black_rook;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
@@ -75,10 +75,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wn;
+                                man.BackgroundImage = ChessmanResource.white_knight;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.bn;
+                                man.BackgroundImage = ChessmanResource.black_knight;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
@@ -89,10 +89,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wb;
+                                man.BackgroundImage = ChessmanResource.white_bishop;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.bb;
+                                man.BackgroundImage = ChessmanResource.black_bishop;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
@@ -103,10 +103,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wq;
+                                man.BackgroundImage = ChessmanResource.white_queen;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.bq;
+                                man.BackgroundImage = ChessmanResource.black_queen;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
@@ -117,10 +117,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wk;
+                                man.BackgroundImage = ChessmanResource.white_king;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.bk;
+                                man.BackgroundImage = ChessmanResource.black_king;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
@@ -131,10 +131,10 @@ namespace Gean.UI.ChessControl
                         switch (man.ChessmanSide)
                         {
                             case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessmanResource.wp;
+                                man.BackgroundImage = ChessmanResource.white_pawn;
                                 break;
                             case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessmanResource.bp;
+                                man.BackgroundImage = ChessmanResource.black_pawn;
                                 break;
                             case Enums.ChessmanSide.None:
                             default:
