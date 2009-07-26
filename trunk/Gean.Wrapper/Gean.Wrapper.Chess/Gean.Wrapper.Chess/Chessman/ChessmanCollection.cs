@@ -4,28 +4,28 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessmanCollection : IList<ChessmanBase>
+    public class ChessmanCollection : IList<Chessman>
     {
-        List<ChessmanBase> _chessmans = new List<ChessmanBase>();
+        List<Chessman> _chessmans = new List<Chessman>();
 
-        public void AddRange(IEnumerable<ChessmanBase> chessmans)
+        public void AddRange(IEnumerable<Chessman> chessmans)
         {
             this._chessmans.AddRange(chessmans);
             this._chessmans.TrimExcess();
         }
-        public ChessmanBase[] ToArray()
+        public Chessman[] ToArray()
         {
             return _chessmans.ToArray();
         }
 
         #region IList<ChessmanBase> 成员
 
-        public int IndexOf(ChessmanBase item)
+        public int IndexOf(Chessman item)
         {
             return _chessmans.IndexOf(item);
         }
 
-        public void Insert(int index, ChessmanBase item)
+        public void Insert(int index, Chessman item)
         {
             _chessmans.Insert(index, item);
         }
@@ -35,7 +35,7 @@ namespace Gean.Wrapper.Chess
             _chessmans.RemoveAt(index);
         }
 
-        public ChessmanBase this[int index]
+        public Chessman this[int index]
         {
             get { return _chessmans[index]; }
             set { _chessmans[index] = value; }
@@ -45,7 +45,7 @@ namespace Gean.Wrapper.Chess
 
         #region ICollection<ChessmanBase> 成员
 
-        public void Add(ChessmanBase item)
+        public void Add(Chessman item)
         {
             _chessmans.Add(item);
             _chessmans.TrimExcess();
@@ -56,12 +56,12 @@ namespace Gean.Wrapper.Chess
             _chessmans.Clear();
         }
 
-        public bool Contains(ChessmanBase item)
+        public bool Contains(Chessman item)
         {
             return _chessmans.Contains(item);
         }
 
-        public void CopyTo(ChessmanBase[] array, int arrayIndex)
+        public void CopyTo(Chessman[] array, int arrayIndex)
         {
             _chessmans.CopyTo(array, arrayIndex);
         }
@@ -76,7 +76,7 @@ namespace Gean.Wrapper.Chess
             get { return false; }
         }
 
-        public bool Remove(ChessmanBase item)
+        public bool Remove(Chessman item)
         {
             return _chessmans.Remove(item);
         }
@@ -85,7 +85,7 @@ namespace Gean.Wrapper.Chess
 
         #region IEnumerable<ChessmanBase> 成员
 
-        public IEnumerator<ChessmanBase> GetEnumerator()
+        public IEnumerator<Chessman> GetEnumerator()
         {
             return _chessmans.GetEnumerator();
         }
@@ -100,9 +100,5 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
-
-        /// <summary>
-        /// 获取正式棋局的全部棋子
-        /// </summary>
     }
 }

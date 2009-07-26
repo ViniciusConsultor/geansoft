@@ -20,7 +20,7 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-        #region PUBLIC
+        #region = PUBLIC =
 
         /// <summary>
         /// 设置棋格的背景图片
@@ -37,30 +37,131 @@ namespace Gean.UI.ChessControl
             }
         }
 
-        
-        public void ChessGameBinding()
+        /// <summary>
+        /// 载入棋局
+        /// </summary>
+        public ChessGame LoadGame()
         {
             this._ChessGame = new ChessGame();
             this._ChessGame.GameStartedEvent += new ChessGame.GameStartedEventHandler(ChessGame_GameStartedEvent);
             this._ChessGame.LoadOpennings();
+
+            return this._ChessGame;
         }
 
-        void ChessGame_GameStartedEvent(object sender, ChessGame.ChessGameEventArgs e)
+        public void SetChessmanImage()
         {
-            ChessmanBase[] mans = e.ChessGame.GetLivingChessmans();
-            Graphics g = this.CreateGraphics();
-            foreach (ChessmanBase man in mans)
+            if (this._ChessGame == null)
+                return;
+            foreach (Chessman man in this._ChessGame.Chessmans)
             {
-                ChessSquare square = man.Squares.Peek();
-                foreach (ChessGrid grid in this._Grids)
+                switch (man.ChessmanType)
                 {
-                    if (grid.Square.X == square.X && grid.Square.Y == square.Y)
-                    {
-                        Point pt = new Point(grid.Location.X, grid.Location.Y + 35);
-                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, pt);
-                    }
+                    case Enums.ChessmanType.Rook:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wr;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.br;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.Knight:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wn;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.bn;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.Bishop:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wb;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.bb;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.Queen:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wq;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.bq;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.King:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wk;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.bk;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.Pawn:
+                        switch (man.ChessmanSide)
+                        {
+                            case Enums.ChessmanSide.White:
+                                man.BackgroundImage = ChessmanResource.wp;
+                                break;
+                            case Enums.ChessmanSide.Black:
+                                man.BackgroundImage = ChessmanResource.bp;
+                                break;
+                            case Enums.ChessmanSide.None:
+                            default:
+                                break;
+                        }
+                        break;
+                    case Enums.ChessmanType.None:
+                    default:
+                        break;
                 }
             }
+        }
+        public void SetChessmanImage(Image[] images)
+        {
+            foreach (var item in images)
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region Event Method
+
+        private void ChessGame_GameStartedEvent(object sender, ChessGame.ChessGameEventArgs e)
+        {
+            this.Invalidate();
         }
 
         #endregion
@@ -116,31 +217,60 @@ namespace Gean.UI.ChessControl
                     if ((x + y) % 2 == 0)
                     {
                         if (this._hasGridImage)
-                            g.DrawImage(this._whiteGridImage, rid.InnerRect);
+                            g.DrawImage(this._whiteGridImage, rid.OwnedRectangle);
                         else
-                            g.FillRectangle(Brushes.WhiteSmoke, rid.InnerRect);
-                        g.DrawRectangle(Pens.Black, rid.InnerRect);
+                            g.FillRectangle(Brushes.WhiteSmoke, rid.OwnedRectangle);
+                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
 #if DEBUG
-                        g.DrawString(rid.Square.ToString(), new Font("Arial", 8F), Brushes.Black, rid.Location);
+                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.Black, rid.Location);
 #endif
                     }
                     else
                     {
                         if (this._hasGridImage)
-                            g.DrawImage(this._blackGridImage, rid.InnerRect);
+                            g.DrawImage(this._blackGridImage, rid.OwnedRectangle);
                         else
-                            g.FillRectangle(Brushes.Gray, rid.InnerRect);
-                        g.DrawRectangle(Pens.Black, rid.InnerRect);
+                            g.FillRectangle(Brushes.Gray, rid.OwnedRectangle);
+                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
 #if DEBUG
-                        g.DrawString(rid.Square.ToString(), new Font("Arial", 8F), Brushes.White, rid.Location);
+                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.White, rid.Location);
 #endif
                     }
                 }
             }
+
+
+
+            if (this._ChessGame != null)
+            {
+                foreach (Chessman man in this._ChessGame.Chessmans)
+                {
+                    if (man.IsKilled)
+                        continue;
+                    ChessSquare square = man.Squares.Peek();
+                    ChessGrid rid = this._Grids[square.X - 1, 8 - square.Y];
+                    int offset = 10;
+                    Rectangle rect = new Rectangle();
+                    rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
+                    rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
+                    if (man.BackgroundImage != null)
+                        g.DrawImage(man.BackgroundImage, rect);
+#if DEBUG
+                    else
+                        g.DrawString(man.ToSimpleString(), 
+                                        new Font("Arial Black", 15F),
+                                        Brushes.Red, 
+                                        rid.OwnedRectangle);
+#endif
+                }
+            }
+
+
+
             if (_targetGrid != null)
             {
-                g.FillRectangle(Brushes.Tomato, _targetGrid.InnerRect);
-                g.DrawRectangle(Pens.Black, _targetGrid.InnerRect);
+                g.FillRectangle(Brushes.Tomato, _targetGrid.OwnedRectangle);
+                g.DrawRectangle(Pens.Black, _targetGrid.OwnedRectangle);
             }
 #if DEBUG
             string ver = this.GetType().Assembly.ToString();
@@ -155,7 +285,7 @@ namespace Gean.UI.ChessControl
         {
             Point point = new Point((x - 1) * width + offsetX, (y - 1) * height + offsetY);
             Size size = new Size(width, height);
-            return new ChessGrid(point, size, new ChessSquare(squareX, 9 - squareY));
+            return new ChessGrid(squareX, 9 - squareY, point, size); //new ChessSquare(squareX, 9 - squareY));
         }
 
         private void GetGridSize(Size size, out int width, out int height, out int offsetX, out int offsetY)
@@ -193,7 +323,7 @@ namespace Gean.UI.ChessControl
                         if (_Grids[x, y].Contains(e.Location))
                         {
                             _sourceGrid = _Grids[x, y];
-                            _currRect = _Grids[x, y].InnerRect;
+                            _currRect = _Grids[x, y].OwnedRectangle;
                             return;
                         }
                     }//for y
@@ -214,7 +344,7 @@ namespace Gean.UI.ChessControl
                         if (_Grids[x, y].Contains(e.Location))
                         {
                             _targetGrid = _Grids[x, y];
-                            this.InvalidateBoard(_targetGrid.InnerRect);
+                            this.InvalidateBoard(_targetGrid.OwnedRectangle);
                             //注册棋子移动事件
                             OnChessPlayed(new ChessPlayedEventArgs(_sourceGrid, _targetGrid));
                             return;
