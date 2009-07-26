@@ -68,7 +68,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
-        public ChessmanBase OwnedChessman
+        public Chessman OwnedChessman
         {
             get { return this._ownedChessman; }
             set
@@ -78,7 +78,7 @@ namespace Gean.Wrapper.Chess
                 OnPlayAfter(new PlayEventArgs(value));//注册落子后事件
             }
         }
-        private ChessmanBase _ownedChessman = null;
+        private Chessman _ownedChessman = null;
 
         /// <summary>
         /// 用指定的值设置棋格的横坐标
@@ -203,7 +203,7 @@ namespace Gean.Wrapper.Chess
 
         public class PlayEventArgs : ChessmanEventArgs
         {
-            public PlayEventArgs(ChessmanBase man)
+            public PlayEventArgs(Chessman man)
                 : base(man)
             {
 

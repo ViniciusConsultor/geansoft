@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BylawItem.cs" />
@@ -39,7 +40,7 @@
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />
     <Compile Include="Record\ChessCommentCollection.cs" />
-    <Compile Include="Chessman\ChessmanBase.cs">
+    <Compile Include="Chessman\Chessman.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Chessman\ChessmanBishop.cs">

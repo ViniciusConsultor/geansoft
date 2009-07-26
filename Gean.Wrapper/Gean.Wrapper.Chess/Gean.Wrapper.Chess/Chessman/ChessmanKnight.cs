@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessmanKnight : ChessmanBase
+    public class ChessmanKnight : Chessman
     {
         internal ChessmanKnight(Enums.ChessmanSide side, Enums.ChessSquareSide gridSide)
             : base(Enums.ChessmanType.Knight, side)
         {
-            this.Squares.Add(ChessmanBase.GetOpenningsSquare(side, gridSide, 2, 7));
+            this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 2, 7));
         }
 
         internal ChessmanKnight(Enums.ChessmanSide side, ChessSquare square)

@@ -37,7 +37,7 @@ namespace Gean.UI.ChessControl.Demo
         {
             ChessGrid oldrid = e.OldGrid;
             ChessGrid newrid = e.NewGrid;
-            this._actionListBox.Items.Add(oldrid.Square.ToString() + "  ->  " + newrid.Square.ToString());
+            this._actionListBox.Items.Add(oldrid.ToString() + "  ->  " + newrid.ToString());
         }
 
         protected override void OnLoad(EventArgs e)
@@ -48,7 +48,8 @@ namespace Gean.UI.ChessControl.Demo
 
         private void _openingsMenuButton_Click(object sender, EventArgs e)
         {
-            this._board.ChessGameBinding();
+            this._board.LoadGame();
+            this._board.SetChessmanImage();
         }
     }
 }

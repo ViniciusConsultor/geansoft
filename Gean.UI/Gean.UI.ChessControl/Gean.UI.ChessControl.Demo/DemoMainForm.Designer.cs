@@ -107,8 +107,8 @@
             this._openingsMenuButton.Image = ((System.Drawing.Image)(resources.GetObject("_openingsMenuButton.Image")));
             this._openingsMenuButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._openingsMenuButton.Name = "_openingsMenuButton";
-            this._openingsMenuButton.Size = new System.Drawing.Size(67, 22);
-            this._openingsMenuButton.Text = "开局(&O)";
+            this._openingsMenuButton.Size = new System.Drawing.Size(66, 22);
+            this._openingsMenuButton.Text = "开局(&C)";
             this._openingsMenuButton.Click += new System.EventHandler(this._openingsMenuButton_Click);
             // 
             // DemoMainForm
