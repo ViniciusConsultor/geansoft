@@ -39,29 +39,23 @@ namespace Gean.Wrapper.Chess
 
         public int IndexOf(ChessSquare item)
         {
-            throw new NotImplementedException();
+            return _squares.IndexOf(item);
         }
 
         public void Insert(int index, ChessSquare item)
         {
-            throw new NotImplementedException();
+            _squares.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            _squares.RemoveAt(index);
         }
 
         public ChessSquare this[int index]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return _squares[index]; }
+            set { _squares[index] = value; }
         }
 
         #endregion
@@ -70,37 +64,37 @@ namespace Gean.Wrapper.Chess
 
         public void Add(ChessSquare item)
         {
-            throw new NotImplementedException();
+            _squares.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _squares.Clear();
         }
 
         public bool Contains(ChessSquare item)
         {
-            throw new NotImplementedException();
+            return _squares.Contains(item);
         }
 
         public void CopyTo(ChessSquare[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _squares.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { throw new NotImplementedException(); }
+            get { return _squares.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(ChessSquare item)
         {
-            throw new NotImplementedException();
+            return _squares.Remove(item);
         }
 
         #endregion
@@ -109,7 +103,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<ChessSquare> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _squares.GetEnumerator();
         }
 
         #endregion
@@ -118,7 +112,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _squares.GetEnumerator();
         }
 
         #endregion

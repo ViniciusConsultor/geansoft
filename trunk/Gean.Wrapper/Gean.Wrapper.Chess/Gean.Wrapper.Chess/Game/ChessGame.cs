@@ -59,7 +59,7 @@ namespace Gean.Wrapper.Chess
         /// 初始化开局棋子(32个棋子)。
         /// Opennings：n. 开局
         /// </summary>
-        internal void LoadOpennings()
+        public void LoadOpennings()
         {
             this.LoadOpennings(ChessmanBase.GetOpennings().ToArray());
         }
@@ -67,8 +67,9 @@ namespace Gean.Wrapper.Chess
         /// 初始化指定的开局棋子集合，该方法一般使用场合为残局类，中盘类棋局
         /// Opennings：n. 开局
         /// </summary>
-        internal void LoadOpennings(IEnumerable<ChessmanBase> chessmans)
+        public void LoadOpennings(IEnumerable<ChessmanBase> chessmans)
         {
+            OnGameStarting(new ChessGameEventArgs(this));
             this._chessmans.AddRange(chessmans);
             foreach (ChessmanBase man in chessmans)
             {
@@ -77,6 +78,7 @@ namespace Gean.Wrapper.Chess
             this._isOpennings = false;//棋子设置完毕，将开局判断设置为false
             //注册开局设置结束事件
             OnSetOpenningsFinished(new ChessGameEventArgs(this));
+            OnGameStarted(new ChessGameEventArgs(this));
         }
 
         /// <summary>

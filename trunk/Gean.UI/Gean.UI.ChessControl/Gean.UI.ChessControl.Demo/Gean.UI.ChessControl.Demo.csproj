@@ -84,6 +84,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean.Wrapper\Gean.Wrapper.Chess\Gean.Wrapper.Chess\Gean.Wrapper.Chess.csproj">
+      <Project>{29FCFFF2-14E3-4741-99A9-3FCC041F6207}</Project>
+      <Name>Gean.Wrapper.Chess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gean.UI.ChessControl\Gean.UI.ChessControl.csproj">
       <Project>{7929E6E5-574E-4E12-84C7-8B6DA8C28530}</Project>
       <Name>Gean.UI.ChessControl</Name>
@@ -100,6 +104,18 @@
     <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 002.jpg" />
     <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 003.jpg" />
     <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 004.jpg" />
+    <Content Include="DemoFile\Chessman\black_bishop.png" />
+    <Content Include="DemoFile\Chessman\black_king.png" />
+    <Content Include="DemoFile\Chessman\black_knight.png" />
+    <Content Include="DemoFile\Chessman\black_pawn.png" />
+    <Content Include="DemoFile\Chessman\black_queen.png" />
+    <Content Include="DemoFile\Chessman\black_rook.png" />
+    <Content Include="DemoFile\Chessman\white_bishop.png" />
+    <Content Include="DemoFile\Chessman\white_king.png" />
+    <Content Include="DemoFile\Chessman\white_knight.png" />
+    <Content Include="DemoFile\Chessman\white_pawn.png" />
+    <Content Include="DemoFile\Chessman\white_queen.png" />
+    <Content Include="DemoFile\Chessman\white_rook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using Gean.Wrapper.Chess;
 
 namespace Gean.UI.ChessControl
 {
@@ -16,29 +17,28 @@ namespace Gean.UI.ChessControl
         }
         private Rectangle _innerRect = new Rectangle();
 
-        public int SquareX { get; private set; }
-        public int SquareY { get; private set; }
+        public ChessSquare Square { get; private set; }
 
         public ChessGrid(int x, int y, int width, int height, int squareX, int squareY)
-            : this(new Point(x, y), new Size(width, height), squareX, squareY)
+            : this(new Point(x, y), new Size(width, height), new ChessSquare(squareX, squareY))
         {
         }
 
         public ChessGrid(int x, int y, int width, int height)
-            : this(new Point(x, y), new Size(width, height), 0, 0)
+            : this(new Point(x, y), new Size(width, height), new ChessSquare(0, 0))
         { 
         }
 
         public ChessGrid(Point location, Size size)
-            : this(location, size, 0, 0)
+            : this(location, size, new ChessSquare(0, 0))
         {
         }
 
-        public ChessGrid(Point location, Size size, int squareX, int squareY)
+        public ChessGrid(Point location, Size size, ChessSquare square)
         {
             _innerRect.Location = location;
             _innerRect.Size = size;
-            this.SetSquare(squareX, squareY);
+            Square = square;
         }
 
 
@@ -141,12 +141,6 @@ namespace Gean.UI.ChessControl
             this._innerRect.Offset(x, y);
         }
         #endregion
-
-        private void SetSquare(int squareX, int squareY)
-        {
-            this.SquareX = squareX;
-            this.SquareY = 9 - squareY;
-        }
 
         public override bool Equals(object obj)
         {
