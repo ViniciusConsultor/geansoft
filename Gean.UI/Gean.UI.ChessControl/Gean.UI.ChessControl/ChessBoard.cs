@@ -24,6 +24,17 @@ namespace Gean.UI.ChessControl
         #region = PUBLIC =
 
         /// <summary>
+        /// 载入棋局
+        /// </summary>
+        public ChessGame LoadGame()
+        {
+            this._ChessGame = new ChessGame();
+            this._ChessGame.GameStartedEvent += new ChessGame.GameStartedEventHandler(ChessGame_GameStartedEvent);
+            this._ChessGame.LoadOpennings();
+            return this._ChessGame;
+        }
+
+        /// <summary>
         /// 设置棋格的背景图片
         /// </summary>
         /// <param name="white">白棋格的背景图片</param>
@@ -36,18 +47,6 @@ namespace Gean.UI.ChessControl
             {
                 this._hasGridImage = true;
             }
-        }
-
-        /// <summary>
-        /// 载入棋局
-        /// </summary>
-        public ChessGame LoadGame()
-        {
-            this._ChessGame = new ChessGame();
-            this._ChessGame.GameStartedEvent += new ChessGame.GameStartedEventHandler(ChessGame_GameStartedEvent);
-            this._ChessGame.LoadOpennings();
-
-            return this._ChessGame;
         }
 
         /// <summary>
@@ -157,13 +156,13 @@ namespace Gean.UI.ChessControl
         /// 设置棋子的背景图片
         /// </summary>
         /// <param name="images">背景图片集合</param>
-        //public void SetChessmanImage(Dictionary<Enums.)
-        //{
-        //    foreach (var item in images)
-        //    {
-
-        //    }
-        //}
+        public void SetChessmanImage(ChessmanImages images)
+        {
+            foreach (Chessman man in this._ChessGame.Chessmans)
+            {
+                man.BackgroundImage = images[man.ChessmanSide, man.ChessmanType];
+            }
+        }
 
         #endregion
 
