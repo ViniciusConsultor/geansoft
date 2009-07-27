@@ -61,7 +61,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子的战方：黑棋，白棋
         /// </summary>
-        public enum ChessmanSide
+        public enum ChessmanSide : byte
         {
             White, Black, None
         }

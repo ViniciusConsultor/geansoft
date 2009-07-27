@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Gean.Wrapper.Chess;
+using System.Collections.Generic;
 
 namespace Gean.UI.ChessControl
 {
@@ -49,6 +50,9 @@ namespace Gean.UI.ChessControl
             return this._ChessGame;
         }
 
+        /// <summary>
+        /// 设置默认的棋子图片
+        /// </summary>
         public void SetChessmanImage()
         {
             if (this._ChessGame == null)
@@ -57,6 +61,7 @@ namespace Gean.UI.ChessControl
             {
                 switch (man.ChessmanType)
                 {
+                    #region case
                     case Enums.ChessmanType.Rook:
                         switch (man.ChessmanSide)
                         {
@@ -144,16 +149,21 @@ namespace Gean.UI.ChessControl
                     case Enums.ChessmanType.None:
                     default:
                         break;
+                    #endregion
                 }
             }
         }
-        public void SetChessmanImage(Image[] images)
-        {
-            foreach (var item in images)
-            {
+        /// <summary>
+        /// 设置棋子的背景图片
+        /// </summary>
+        /// <param name="images">背景图片集合</param>
+        //public void SetChessmanImage(Dictionary<Enums.)
+        //{
+        //    foreach (var item in images)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         #endregion
 
@@ -249,7 +259,7 @@ namespace Gean.UI.ChessControl
                         continue;
                     ChessSquare square = man.Squares.Peek();
                     ChessGrid rid = this._Grids[square.X - 1, 8 - square.Y];
-                    int offset = 10;
+                    int offset = (int)(this._GridWidth * 0.2);//棋子填充比棋格小20%，以保证美观
                     Rectangle rect = new Rectangle();
                     rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
                     rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
@@ -257,10 +267,7 @@ namespace Gean.UI.ChessControl
                         g.DrawImage(man.BackgroundImage, rect);
 #if DEBUG
                     else
-                        g.DrawString(man.ToSimpleString(), 
-                                        new Font("Arial Black", 15F),
-                                        Brushes.Red, 
-                                        rid.OwnedRectangle);
+                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, rect);
 #endif
                 }
             }
