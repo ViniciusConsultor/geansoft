@@ -211,67 +211,17 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 画一个棋盘，该方法仅在 OnPaintBackground(PaintEventArgs pevent) 中被使用。
         /// </summary>
-        private void PaintChessboard(Graphics g)
+        protected virtual void PaintChessboard(Graphics g)
         {
-            int offsetX = 0;
-            int offsetY = 0;
-            this.GetGridSize(this.Size, out _GridWidth, out _GridHeight, out offsetX, out offsetY);
+            int offsetBoardX = 0;
+            int offsetBoardY = 0;
 
-            for (int x = 1; x <= this._Grids.GetLength(0); x++)
-            {
-                for (int y = 1; y <= this._Grids.GetLength(1); y++)
-                {
-                    ChessGrid rid = this.GetRectangle(x, y, _GridWidth, _GridHeight, offsetX, offsetY, x, y);
-                    this._Grids[x - 1, y - 1] = rid;
-                    if ((x + y) % 2 == 0)
-                    {
-                        if (this._hasGridImage)
-                            g.DrawImage(this._whiteGridImage, rid.OwnedRectangle);
-                        else
-                            g.FillRectangle(Brushes.WhiteSmoke, rid.OwnedRectangle);
-                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
-#if DEBUG
-                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.Black, rid.Location);
-#endif
-                    }
-                    else
-                    {
-                        if (this._hasGridImage)
-                            g.DrawImage(this._blackGridImage, rid.OwnedRectangle);
-                        else
-                            g.FillRectangle(Brushes.Gray, rid.OwnedRectangle);
-                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
-#if DEBUG
-                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.White, rid.Location);
-#endif
-                    }
-                }
-            }
-
-
-
-            if (this._ChessGame != null)
-            {
-                foreach (Chessman man in this._ChessGame.Chessmans)
-                {
-                    if (man.IsKilled)
-                        continue;
-                    ChessSquare square = man.Squares.Peek();
-                    ChessGrid rid = this._Grids[square.X - 1, 8 - square.Y];
-                    int offset = (int)(this._GridWidth * 0.2);//棋子填充比棋格小20%，以保证美观
-                    Rectangle rect = new Rectangle();
-                    rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
-                    rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
-                    if (man.BackgroundImage != null)
-                        g.DrawImage(man.BackgroundImage, rect);
-#if DEBUG
-                    else
-                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, rect);
-#endif
-                }
-            }
-
-
+            //根据当前的Board的大小形状确定棋格的高宽，坐标并返回这些值
+            ChessBoard.GetGridSize(this.Size, out offsetBoardX, out offsetBoardY, out _GridWidth, out _GridHeight);
+            //绘制所有的棋格
+            ChessBoard.PaintChessGrid(g, this._Grids, _GridWidth, _GridHeight, offsetBoardX, offsetBoardY, this._whiteGridImage, this._blackGridImage, this._hasGridImage);
+            //绘制棋子
+            ChessBoard.PaintChessmanImage(g, this._ChessGame, this._Grids, this._GridWidth);
 
             if (_targetGrid != null)
             {
@@ -287,28 +237,86 @@ namespace Gean.UI.ChessControl
 #endif
         }
 
-        private ChessGrid GetRectangle(int x, int y, int width, int height, int offsetX, int offsetY, int squareX, int squareY)
+        private static void PaintChessGrid(Graphics g, ChessGrid[,] grids, int width, int height, int offsetBoardX, int offsetBoardY, Image white, Image black, bool hasImage)
         {
-            Point point = new Point((x - 1) * width + offsetX, (y - 1) * height + offsetY);
+            for (int x = 1; x <= grids.GetLength(0); x++)
+            {
+                for (int y = 1; y <= grids.GetLength(1); y++)
+                {
+                    ChessGrid rid = ChessBoard.GetRectangle(x, y, width, height, offsetBoardX, offsetBoardY, x, y);
+                    grids[x - 1, y - 1] = rid;
+                    if ((x + y) % 2 == 0)
+                    {
+                        if (hasImage)
+                            g.DrawImage(white, rid.OwnedRectangle);
+                        else
+                            g.FillRectangle(Brushes.WhiteSmoke, rid.OwnedRectangle);
+                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
+#if DEBUG
+                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.Black, rid.Location);
+#endif
+                    }
+                    else
+                    {
+                        if (hasImage)
+                            g.DrawImage(black, rid.OwnedRectangle);
+                        else
+                            g.FillRectangle(Brushes.Gray, rid.OwnedRectangle);
+                        g.DrawRectangle(Pens.Black, rid.OwnedRectangle);
+#if DEBUG
+                        g.DrawString(rid.ToString(), new Font("Arial", 8F), Brushes.White, rid.Location);
+#endif
+                    }
+                }
+            }
+        }
+
+        private static void PaintChessmanImage(Graphics g, ChessGame game, ChessGrid[,] grids, int width)
+        {
+            if (game != null)
+            {
+                foreach (Chessman man in game.Chessmans)
+                {
+                    if (man.IsKilled)
+                        continue;
+                    ChessSquare square = man.Squares.Peek();
+                    ChessGrid rid = grids[square.X - 1, 8 - square.Y];
+                    int offset = (int)(width * 0.2);//棋子填充比棋格小20%，以保证美观
+                    Rectangle rect = new Rectangle();
+                    rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
+                    rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
+                    if (man.BackgroundImage != null)
+                        g.DrawImage(man.BackgroundImage, rect);
+#if DEBUG
+                    else
+                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, rect);
+#endif
+                }
+            }
+        }
+
+        private static ChessGrid GetRectangle(int x, int y, int width, int height, int offsetBoardX, int offsetBoardY, int squareX, int squareY)
+        {
+            Point point = new Point((x - 1) * width + offsetBoardX, (y - 1) * height + offsetBoardY);
             Size size = new Size(width, height);
             return new ChessGrid(squareX, 9 - squareY, point, size); //new ChessSquare(squareX, 9 - squareY));
         }
 
-        private void GetGridSize(Size size, out int width, out int height, out int offsetX, out int offsetY)
+        private static void GetGridSize(Size size, out int offsetBoardX, out int offsetBoardY, out int width, out int height)
         {
             if (size.Height <= size.Width)
             {
                 width = (int)(size.Height / 10);
                 height = width;
-                offsetX = (int)((size.Width - (width * 8)) / 2);
-                offsetY = width;
+                offsetBoardX = (int)((size.Width - (width * 8)) / 2);
+                offsetBoardY = width;
             }
             else
             {
                 width = (int)(size.Width / 10);
                 height = width;
-                offsetX = width;
-                offsetY = (int)((size.Height - (width * 8)) / 2);
+                offsetBoardX = width;
+                offsetBoardY = (int)((size.Height - (width * 8)) / 2);
             }
         }
 
@@ -422,6 +430,9 @@ namespace Gean.UI.ChessControl
 
         #region event
 
+        /// <summary>
+        /// 当下棋(移动棋子)后执行
+        /// </summary>
         public event ChessPlayedEventHandler ChessPlayedEvent;
         protected virtual void OnChessPlayed(ChessPlayedEventArgs e)
         {
@@ -429,6 +440,7 @@ namespace Gean.UI.ChessControl
                 ChessPlayedEvent(this, e);
         }
         public delegate void ChessPlayedEventHandler(object sender, ChessPlayedEventArgs e);
+
         public class ChessPlayedEventArgs : EventArgs
         {
             public ChessGrid OldGrid { get; private set; }
