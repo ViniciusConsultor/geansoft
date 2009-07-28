@@ -24,7 +24,7 @@ namespace Gean.Wrapper.Chess
         {
             this.ChessmanType = type;
             this.ChessmanSide = side;
-            this.ChessGrids = new ChessGirdCollection();
+            this.ChessSteps = new ChessStepCollection();
             this.InitializeComponent();
         }
 
@@ -46,7 +46,7 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (man.ChessmanSide != this.ChessmanSide) 
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.ChessGrids, man.ChessGrids)) 
+            if (!UtilityEquals.EnumerableEquals(this.ChessSteps, man.ChessSteps)) 
                 return false;
             return true;
         }
@@ -65,9 +65,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; private set; }
         /// <summary>
-        /// 该棋子走过的路线(坐标的集合)
+        /// 该棋子的棋步<see cref="ChessStep"/>的集合
         /// </summary>
-        public ChessGirdCollection ChessGrids { get; set; }
+        public ChessStepCollection ChessSteps { get; set; }
 
         public Image BackgroundImage { get; set; }
 

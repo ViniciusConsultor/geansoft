@@ -7,25 +7,6 @@ namespace Gean.Wrapper.Chess
     public class Enums
     {
         /// <summary>
-        /// 王车易位
-        /// </summary>
-        public enum Castling
-        {
-            /// <summary>
-            /// 嘛也不是
-            /// </summary>
-            None = 0,
-            /// <summary>
-            /// 王车短易位
-            /// </summary>
-            KingSide,
-            /// <summary>
-            /// 王车长易位
-            /// </summary>
-            QueenSide,
-        }
-
-        /// <summary>
         /// 棋招动作枚举
         /// </summary>
         public enum Action
@@ -47,13 +28,17 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Check = 4,
             /// <summary>
-            /// 王车易位
+            /// 王车短易位
             /// </summary>
-            Castling = 8,
+            KingSideCastling = 8,
+            /// <summary>
+            /// 王车长易位
+            /// </summary>
+            QueenSideCastling = 16,
             /// <summary>
             /// 开局摆棋
             /// </summary>
-            Opennings =16,
+            Opennings = 32,
             /// <summary>
             /// 杀棋并将军
             /// </summary>
@@ -65,18 +50,6 @@ namespace Gean.Wrapper.Chess
             value = value & (Action.KillAndCheck ^ flag);
             return value;
         }
-
-        public class ActionGridPair
-        {
-            public ChessGrid Grid { get; private set; }
-            public Enums.Action Action { get; private set; }
-            public ActionGridPair(ChessGrid rid, Enums.Action action)
-            {
-                this.Grid = rid;
-                this.Action = action;
-            }
-        }
-
 
         /// <summary>
         /// 棋子的战方：黑棋，白棋
