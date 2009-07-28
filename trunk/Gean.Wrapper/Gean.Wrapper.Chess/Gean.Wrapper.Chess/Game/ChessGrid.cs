@@ -94,7 +94,7 @@ namespace Gean.Wrapper.Chess
 
             #region 从源棋格中动子（即从源棋格中移除该棋子）
            
-            ChessGrid sourceGrid = chessman.ChessGrids.Peek();
+            ChessGrid sourceGrid = chessman.ChessGrids.Peek().Grid;
             //1.注册动子前事件
             OnMoveOutBefore(new MoveEventArgs(chessman));
             //2.动子
@@ -117,11 +117,11 @@ namespace Gean.Wrapper.Chess
             else//本棋格中有棋子
             {
                 //1.注册棋子即将被杀死事件
-                OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek(), chessman));
+                OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek().Grid, chessman));
                 //2.移除被杀死的棋子
                 this.MoveOut(true);
                 //3.注册棋子被杀死后的事件
-                OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek(), chessman));
+                OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek().Grid, chessman));
                 //4.注册落子前事件
                 OnMoveInBefore(new MoveEventArgs(chessman));
                 //5.落子
@@ -132,8 +132,8 @@ namespace Gean.Wrapper.Chess
             #endregion
 
             #region 全部动作执行完毕，将棋格对象插入到堆栈的顶部
-            
-            chessman.ChessGrids.Push(this);
+
+            chessman.ChessGrids.Push(new ChessGirdCollection.GridAndAction(this, Enums.Action.General));
             
             #endregion
             
