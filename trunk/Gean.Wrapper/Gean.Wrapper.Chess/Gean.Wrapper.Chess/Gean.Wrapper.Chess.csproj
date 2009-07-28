@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Base\BylawItem.cs" />
     <Compile Include="Base\BylawItemCollection.cs" />
+    <Compile Include="Base\ChessPath.cs" />
     <Compile Include="JavaGUIBoard.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />

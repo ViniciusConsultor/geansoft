@@ -63,7 +63,7 @@ namespace Gean.Wrapper.Chess
             this.LoadOpennings(Chessman.GetOpennings().ToArray());
         }
         /// <summary>
-        /// 初始化指定的开局棋子集合，该方法一般使用场合为残局类，中盘类棋局
+        /// 初始化指定的开局棋子集合，直接使用该方法一般的场合为残局类，中盘类棋局
         /// Opennings：n. 开局
         /// </summary>
         public void LoadOpennings(IEnumerable<Chessman> chessmans)
@@ -73,7 +73,7 @@ namespace Gean.Wrapper.Chess
 
             foreach (Chessman man in chessmans)
             {
-                //this.Play(man, man.ChessGrids.Peek().Grid);
+                man.ChessSteps.Peek().TargetGrid.MoveIn(man, Enums.Action.Opennings);
             }
 
             //棋子设置完毕，将开局判断设置为false
@@ -84,57 +84,6 @@ namespace Gean.Wrapper.Chess
             //注册棋局开始后事件
             OnGameStarted(new ChessGameEventArgs(this));
         }
-
-        //public ChessStep Play(Chessman man, int gridX, int gridY)
-        //{
-        //    return this.Play(man, this.GetGrid(gridX, gridY));
-        //}
-        ///// <summary>
-        ///// 设置指定的棋格拥有的棋子。(下棋的动作:移动棋子到指定的棋格,在初始化时,可以理解为是摆棋)
-        ///// </summary>
-        ///// <param name="newpoint">棋子将被移动到的指定棋格的坐标</param>
-        ///// <exception cref="ArgumentOutOfRangeException"></exception>
-        ///// <exception cref="ChessmanMovedException"></exception>
-        //public ChessStep Play(Chessman man, ChessGrid newGrid)
-        //{
-        //    if (man == null)
-        //        throw new ArgumentNullException("Chessman: chessman is Null.");
-        //    if (newGrid == null)
-        //        throw new ArgumentNullException("point: newpoint is Null.");
-
-        //    ChessGrid oldGrid = man.ChessGrids.Peek().Grid;
-        //    if (newGrid.OwnedChessman != Chessman.NullOrEmpty)
-        //    {
-        //        if (newGrid.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
-        //        {
-        //            throw new ChessmanException(
-        //                string.Format("{0} and {1} is same Side, cannot move!",
-        //                                newGrid.OwnedChessman.ToString(), man.ToString()));
-        //        }
-        //    }
-
-        //    if (!this._isOpennings)//非初始化棋局时
-        //    {
-        //        man.ChessGrids.Push(newGrid);
-        //        //oldGrid.MoveOut(false);//将棋子的历史棋格的棋子状态置为空
-        //    }
-
-        //    Enums.Action action = Enums.Action.General;
-
-        //    if (newGrid.OwnedChessman != Chessman.NullOrEmpty)
-        //    {
-        //        //新棋格中如有棋子，置该棋子为杀死状态
-        //        newGrid.OwnedChessman.IsKilled = true;
-        //        action = Enums.Action.Kill;
-        //    }
-
-        //    //绑定新棋格拥有的棋子
-        //    newGrid.MoveIn(man);
-            
-        //    //生成一个棋步
-        //    ChessStep step = new ChessStep(Enums.Castling.None, man.ChessmanType, action, oldGrid, newGrid);
-        //    return step;
-        //}
 
         /// <summary>
         /// 获取指定坐标的棋格(坐标是象棋规则的1-8)
@@ -198,11 +147,6 @@ namespace Gean.Wrapper.Chess
                     mans.Add(human);
             }
             return mans.ToArray();
-        }
-
-        public string ToPGNString()
-        {
-            return "PGN string...";
         }
 
         #region IEnumerable<Chesspoint> 成员
