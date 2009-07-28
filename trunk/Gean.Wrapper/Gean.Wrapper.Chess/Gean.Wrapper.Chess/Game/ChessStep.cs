@@ -211,7 +211,7 @@ namespace Gean.Wrapper.Chess
 
             Enums.ActionDescription action = Enums.ActionDescription.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
-            ChessGrid point = ChessGrid.Empty;
+            ChessGrid rid = ChessGrid.Empty;
 
             //针对尾部标记符进行一些操作
             ChessStepFlag flags = new ChessStepFlag();
@@ -264,7 +264,7 @@ namespace Gean.Wrapper.Chess
                         else
                             action = Enums.ActionDescription.Kill;
                     }
-                    point = ChessGrid.Parse(value.Substring(n, 2));
+                    rid = ChessGrid.Parse(value.Substring(n, 2));
                 }
                 #endregion
             }
@@ -275,10 +275,10 @@ namespace Gean.Wrapper.Chess
                 switch (value.Length)
                 {
                     case 2:
-                        point = ChessGrid.Parse(value);
+                        rid = ChessGrid.Parse(value);
                         break;
                     case 4:
-                        point = ChessGrid.Parse(value.Substring(value.IndexOf('x')));
+                        rid = ChessGrid.Parse(value.Substring(value.IndexOf('x')));
                         break;
                     default:
                         break;
@@ -287,7 +287,7 @@ namespace Gean.Wrapper.Chess
             }
             ChessStep step = null;
             if (castling == Enums.Castling.None)
-                step = new ChessStep(manType, action, ChessGrid.Empty, point);
+                step = new ChessStep(manType, action, ChessGrid.Empty, rid);
             else
                 step = new ChessStep(castling);
             step.CommentIndexs = comments;

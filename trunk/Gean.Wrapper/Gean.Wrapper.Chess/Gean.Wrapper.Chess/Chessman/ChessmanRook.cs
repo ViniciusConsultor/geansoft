@@ -15,13 +15,13 @@ namespace Gean.Wrapper.Chess
         internal ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.ChessGrids.Add(Chessman.GetOpenningspoint(side, gridSide, 1, 8));
+            this.ChessGrids.Push(Chessman.GetOpenningspoint(side, gridSide, 1, 8));
         }
 
-        internal ChessmanRook(Enums.ChessmanSide side, ChessGrid point)
+        internal ChessmanRook(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.ChessGrids.Add(point);
+            this.ChessGrids.Push(rid);
         }
 
         public override void InitializeComponent()

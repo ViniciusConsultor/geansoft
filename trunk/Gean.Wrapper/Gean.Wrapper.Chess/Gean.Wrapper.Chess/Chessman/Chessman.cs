@@ -117,8 +117,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 简单工厂模式，创建不同类型的棋子类
         /// </summary>
-        public static Chessman Create
-            (Enums.ChessmanType manType, Enums.ChessmanSide manSide, Enums.ChessGridSide gridSide)
+        public static Chessman Create(Enums.ChessmanType manType, Enums.ChessmanSide manSide, Enums.ChessGridSide gridSide)
         {
             switch (manType)
             {
@@ -159,7 +158,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         internal static ChessGrid GetOpenningspoint(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
         {
-            ChessGrid point = null;
+            ChessGrid rid = null;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
@@ -167,10 +166,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessGridSide.Black:
-                                point = new ChessGrid(left, 1);
+                                rid = new ChessGrid(left, 1);
                                 break;
                             case Enums.ChessGridSide.White:
-                                point = new ChessGrid(right, 1);
+                                rid = new ChessGrid(right, 1);
                                 break;
                         }
                         break;
@@ -180,16 +179,16 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessGridSide.Black:
-                                point = new ChessGrid(right, 8);
+                                rid = new ChessGrid(right, 8);
                                 break;
                             case Enums.ChessGridSide.White:
-                                point = new ChessGrid(left, 8);
+                                rid = new ChessGrid(left, 8);
                                 break;
                         }
                         break;
                     }
             }
-            return point;
+            return rid;
         }
     }
 }

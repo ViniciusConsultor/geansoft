@@ -7,55 +7,90 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 坐标集合，一般是应用在棋子类型中，表示一个棋子绑定的路径，该路径由一个一个的坐标组成
     /// </summary>
-    public class ChessGirdCollection : IList<ChessGrid>
+    public class ChessGirdCollection : Stack<ChessGrid>
     {
-        List<ChessGrid> _points = new List<ChessGrid>();
+    }
+}
+/*
+        List<ChessGrid> _chessGrids = new List<ChessGrid>();
 
         /// <summary>
-        /// 返回位于 pointCollection 开始处的(最近发生的) ChessGrid 但不将其移除。
+        /// 返回位于 ChessGirdCollection 开始处的(最近发生的) ChessGrid 但不将其移除。
         /// </summary>
         /// <returns></returns>
         public ChessGrid Peek()
         {
-            if (_points.Count == 0)
+            if (_chessGrids.Count == 0)
                 return null;
-            return _points[_points.Count - 1];
+            return _chessGrids[_chessGrids.Count - 1];
+        }
+        
+        /// <summary>
+        /// 返回位于 ChessGirdCollection 开始处的(最近发生的)两个 ChessGrid 但不将其移除。
+        /// </summary>
+        /// <returns></returns>
+        public ChessGrid[] PeekPair()
+        {
+            ChessGrid[] rids = new ChessGrid[2];
+            if (_chessGrids.Count < 2)
+                return null;
+            rids[1] = _chessGrids[_chessGrids.Count - 1];
+            rids[0] = _chessGrids[_chessGrids.Count - 2];
+            return rids;
         }
 
         /// <summary>
-        /// 移除并返回位于 ChesspointCollection 开始处(最近发生的) ChessGrid 的对象。
+        /// 移除并返回位于 ChessGirdCollection 开始处(最近发生的) ChessGrid 的对象。
         /// </summary>
         /// <returns></returns>
         public ChessGrid Dequeue()
         {
-            if (_points.Count == 0)
+            if (_chessGrids.Count == 0)
                 return null;
             ChessGrid sq = this.Peek();
-            _points.RemoveAt(this._points.Count - 1);
+            _chessGrids.RemoveAt(this._chessGrids.Count - 1);
             return sq;
+        }
+
+        /// <summary>
+        /// 将 ChessGirdCollection 的元素复制到新数组中。
+        /// </summary>
+        /// <returns></returns>
+        public ChessGrid[] ToArray()
+        {
+            return _chessGrids.ToArray();
+        }
+
+        /// <summary>
+        /// 将指定集合的元素添加到 ChessGirdCollection 的末尾。
+        /// </summary>
+        /// <param name="rids">指定集合</param>
+        public void AddRange(IEnumerable<ChessGrid> rids)
+        {
+            this._chessGrids.AddRange(rids);
         }
 
         #region IList<ChessGrid> 成员
 
         public int IndexOf(ChessGrid item)
         {
-            return _points.IndexOf(item);
+            return _chessGrids.IndexOf(item);
         }
 
         public void Insert(int index, ChessGrid item)
         {
-            _points.Insert(index, item);
+            _chessGrids.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            _points.RemoveAt(index);
+            _chessGrids.RemoveAt(index);
         }
 
         public ChessGrid this[int index]
         {
-            get { return _points[index]; }
-            set { _points[index] = value; }
+            get { return _chessGrids[index]; }
+            set { _chessGrids[index] = value; }
         }
 
         #endregion
@@ -64,27 +99,27 @@ namespace Gean.Wrapper.Chess
 
         public void Add(ChessGrid item)
         {
-            _points.Add(item);
+            _chessGrids.Add(item);
         }
 
         public void Clear()
         {
-            _points.Clear();
+            _chessGrids.Clear();
         }
 
         public bool Contains(ChessGrid item)
         {
-            return _points.Contains(item);
+            return _chessGrids.Contains(item);
         }
 
         public void CopyTo(ChessGrid[] array, int arrayIndex)
         {
-            _points.CopyTo(array, arrayIndex);
+            _chessGrids.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return _points.Count; }
+            get { return _chessGrids.Count; }
         }
 
         public bool IsReadOnly
@@ -94,7 +129,7 @@ namespace Gean.Wrapper.Chess
 
         public bool Remove(ChessGrid item)
         {
-            return _points.Remove(item);
+            return _chessGrids.Remove(item);
         }
 
         #endregion
@@ -103,7 +138,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<ChessGrid> GetEnumerator()
         {
-            return _points.GetEnumerator();
+            return _chessGrids.GetEnumerator();
         }
 
         #endregion
@@ -112,9 +147,10 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _points.GetEnumerator();
+            return _chessGrids.GetEnumerator();
         }
 
         #endregion
     }
 }
+*/
