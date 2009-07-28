@@ -116,16 +116,16 @@ namespace Gean.Wrapper.Chess
             if (!this._isOpennings)//非初始化棋局时
             {
                 man.ChessGrids.Push(newGrid);
-                oldGrid.MoveOut(false);//将棋子的历史棋格的棋子状态置为空
+                //oldGrid.MoveOut(false);//将棋子的历史棋格的棋子状态置为空
             }
 
-            Enums.ActionDescription action = Enums.ActionDescription.General;
+            Enums.Action action = Enums.Action.General;
 
             if (newGrid.OwnedChessman != Chessman.NullOrEmpty)
             {
                 //新棋格中如有棋子，置该棋子为杀死状态
                 newGrid.OwnedChessman.IsKilled = true;
-                action = Enums.ActionDescription.Kill;
+                action = Enums.Action.Kill;
             }
 
             //绑定新棋格拥有的棋子

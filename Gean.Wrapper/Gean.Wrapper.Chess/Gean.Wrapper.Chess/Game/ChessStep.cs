@@ -17,7 +17,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
-        public Enums.ActionDescription Action { get; internal set; }
+        public Enums.Action Action { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
@@ -25,11 +25,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public ChessGrid Targetpoint { get; internal set; }
+        public ChessGrid TargetGrid { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessGrid Sourcepoint { get; internal set; }
+        public ChessGrid SourceGrid { get; internal set; }
 
         /// <summary>
         /// 获取或设置该棋步是“王车易位”
@@ -63,28 +63,28 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region 构造函数
+        #region ctor
 
         public ChessStep() : this(Enums.Castling.None) { }
         public ChessStep(Enums.Castling castling)
-            : this(castling, Enums.ChessmanType.None, Enums.ActionDescription.None, ChessGrid.Empty, ChessGrid.Empty)
+            : this(castling, Enums.ChessmanType.None, Enums.Action.None, ChessGrid.Empty, ChessGrid.Empty)
         {
             //this
         }
-        public ChessStep(Enums.ChessmanType manType, Enums.ActionDescription action, ChessGrid sourcepoint, ChessGrid targetpoint)
+        public ChessStep(Enums.ChessmanType manType, Enums.Action action, ChessGrid sourcepoint, ChessGrid targetpoint)
             : this(Enums.Castling.None, manType, action, sourcepoint, targetpoint)
         {
             //this
         }
-        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.ActionDescription action, ChessGrid sourcepoint, ChessGrid targetpoint)
+        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.Action action, ChessGrid sourcepoint, ChessGrid targetpoint)
         {
             this._castling = castling;
 
             this.Action = action;
             this.ChessmanType = manType;
 
-            this.Targetpoint = targetpoint;
-            this.Sourcepoint = sourcepoint;
+            this.TargetGrid = targetpoint;
+            this.SourceGrid = sourcepoint;
         }
 
         #endregion
@@ -109,17 +109,17 @@ namespace Gean.Wrapper.Chess
                         {
                             sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
                         }
-                        if (Enums.GetFlag(this.Action, Enums.ActionDescription.Check) == Enums.ActionDescription.Kill)
+                        if (Enums.GetFlag(this.Action, Enums.Action.Check) == Enums.Action.Kill)
                         {
                             if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
-                                sb.Append(this.Sourcepoint.PointCharX);
+                                sb.Append(this.SourceGrid.PointCharX);
                             }
                             sb.Append('x');
                         }
-                        sb.Append(this.Targetpoint.ToString());
+                        sb.Append(this.TargetGrid.ToString());
                         //有将军的动作，打印'+'
-                        if (Enums.GetFlag(this.Action, Enums.ActionDescription.Kill) == Enums.ActionDescription.Check)
+                        if (Enums.GetFlag(this.Action, Enums.Action.Kill) == Enums.Action.Check)
                         {
                             sb.Append('+');
                         }
@@ -154,7 +154,7 @@ namespace Gean.Wrapper.Chess
                 (3 *
                 this.Action.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
-                this.Targetpoint.GetHashCode() + this.Sourcepoint.GetHashCode() +
+                this.TargetGrid.GetHashCode() + this.SourceGrid.GetHashCode() +
                 this.Castling.GetHashCode() +
                 this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
                 );
@@ -168,9 +168,9 @@ namespace Gean.Wrapper.Chess
             if (this.ChessmanType   != step.ChessmanType)   return false;
             if (this.Action         != step.Action)         return false;
 
-            if (!UtilityEquals.PairEquals(this.Targetpoint, step.Targetpoint))
+            if (!UtilityEquals.PairEquals(this.TargetGrid, step.TargetGrid))
                 return false;
-            if (!UtilityEquals.PairEquals(this.Sourcepoint, step.Sourcepoint))
+            if (!UtilityEquals.PairEquals(this.SourceGrid, step.SourceGrid))
                 return false;
 
             if (!UtilityEquals.EnumerableEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
@@ -209,7 +209,7 @@ namespace Gean.Wrapper.Chess
 
             #endregion
 
-            Enums.ActionDescription action = Enums.ActionDescription.General;
+            Enums.Action action = Enums.Action.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
             ChessGrid rid = ChessGrid.Empty;
 
@@ -222,7 +222,7 @@ namespace Gean.Wrapper.Chess
                 if (value.EndsWith(flagword))
                 {
                     if (flagword.Equals("+"))//Qh5+
-                        action = Enums.ActionDescription.Check;
+                        action = Enums.Action.Check;
                     endString = flagword;
                     int i = value.LastIndexOf(flagword);
                     value = value.Substring(0, i);
@@ -259,10 +259,10 @@ namespace Gean.Wrapper.Chess
                     if (value[n] == 'x')
                     {
                         n++;
-                        if (action == Enums.ActionDescription.Check)
-                            action = Enums.ActionDescription.KillAndCheck;
+                        if (action == Enums.Action.Check)
+                            action = Enums.Action.KillAndCheck;
                         else
-                            action = Enums.ActionDescription.Kill;
+                            action = Enums.Action.Kill;
                     }
                     rid = ChessGrid.Parse(value.Substring(n, 2));
                 }

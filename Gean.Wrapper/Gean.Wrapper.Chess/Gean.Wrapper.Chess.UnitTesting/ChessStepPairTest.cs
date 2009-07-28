@@ -69,8 +69,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             value = "4.Qh5+ Ke7";
             expected = new ChessStepPair(4,
-                new ChessStep(Enums.ChessmanType.Queen, Enums.ActionDescription.Check, ChessGrid.Empty, new ChessGrid('h', 5)),
-                new ChessStep(Enums.ChessmanType.King, Enums.ActionDescription.General, ChessGrid.Empty, new ChessGrid('e', 7)));
+                new ChessStep(Enums.ChessmanType.Queen, Enums.Action.Check, ChessGrid.Empty, new ChessGrid('h', 5)),
+                new ChessStep(Enums.ChessmanType.King, Enums.Action.General, ChessGrid.Empty, new ChessGrid('e', 7)));
             actual = ChessStepPair.Parse(value);
             Assert.AreEqual(expected, actual);
         }
