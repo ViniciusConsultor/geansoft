@@ -10,14 +10,14 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Knight, side)
         {
             ChessGrid rid = Chessman.GetOpenningsGrid(side, gridSide, 2, 7);
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
             this.ChessSteps.Push(step);
         }
 
         internal ChessmanKnight(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Knight, side)
         {
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
             this.ChessSteps.Push(step);
         }
 
