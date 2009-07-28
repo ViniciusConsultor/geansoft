@@ -9,23 +9,23 @@ namespace Gean.Wrapper.Chess
         internal ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)
         {
-            ChessSquare square = null;
+            ChessGrid point = null;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    square = new ChessSquare(5, 1);
+                    point = new ChessGrid(5, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    square = new ChessSquare(5, 8);
+                    point = new ChessGrid(5, 8);
                     break;
             }
-            this.Squares.Add(square);
+            this.ChessGrids.Add(point);
         }
 
-        internal ChessmanKing(Enums.ChessmanSide side, ChessSquare square)
+        internal ChessmanKing(Enums.ChessmanSide side, ChessGrid point)
             : base(Enums.ChessmanType.King, side)
         {
-            this.Squares.Add(square);
+            this.ChessGrids.Add(point);
         }
 
         public override void InitializeComponent()

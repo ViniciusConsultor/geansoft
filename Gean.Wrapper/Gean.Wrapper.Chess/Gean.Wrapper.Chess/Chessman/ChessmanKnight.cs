@@ -6,16 +6,16 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanKnight : Chessman
     {
-        internal ChessmanKnight(Enums.ChessmanSide side, Enums.ChessSquareSide gridSide)
+        internal ChessmanKnight(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Knight, side)
         {
-            this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 2, 7));
+            this.ChessGrids.Add(Chessman.GetOpenningspoint(side, gridSide, 2, 7));
         }
 
-        internal ChessmanKnight(Enums.ChessmanSide side, ChessSquare square)
+        internal ChessmanKnight(Enums.ChessmanSide side, ChessGrid point)
             : base(Enums.ChessmanType.Knight, side)
         {
-            this.Squares.Add(square);
+            this.ChessGrids.Add(point);
         }
 
         public override void InitializeComponent()

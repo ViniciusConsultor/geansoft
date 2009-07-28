@@ -68,10 +68,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Record\ChessRecord.cs" />
-    <Compile Include="PGN\ChessPGNWriter.cs" />
+    <Compile Include="Record\PGN\ChessPGNWriter.cs" />
     <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="PGN\ChessPGNReader.cs">
+    <Compile Include="Record\PGN\ChessPGNReader.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game\ChessStepPairSequence.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="Game\ChessException.cs" />
     <Compile Include="Record\ChessChoicesCollection.cs" />
     <Compile Include="Base\Enums.cs" />
-    <Compile Include="Game\ChessSquare.cs" />
+    <Compile Include="Game\ChessGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Chessman\ChessSquareCollection.cs" />
     <Compile Include="Base\Utility.cs" />
@@ -89,6 +89,9 @@
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Gean.Wrapper.Chess.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

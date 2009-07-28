@@ -24,7 +24,7 @@ namespace Gean.Wrapper.Chess
         {
             this.ChessmanType = type;
             this.ChessmanSide = side;
-            this.Squares = new ChessSquareCollection();
+            this.ChessGrids = new ChessGirdCollection();
             this.InitializeComponent();
         }
 
@@ -46,7 +46,7 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (man.ChessmanSide != this.ChessmanSide) 
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.Squares, man.Squares)) 
+            if (!UtilityEquals.EnumerableEquals(this.ChessGrids, man.ChessGrids)) 
                 return false;
             return true;
         }
@@ -67,7 +67,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 该棋子走过的路线(坐标的集合)
         /// </summary>
-        public ChessSquareCollection Squares { get; set; }
+        public ChessGirdCollection ChessGrids { get; set; }
 
         public Image BackgroundImage { get; set; }
 
@@ -96,20 +96,20 @@ namespace Gean.Wrapper.Chess
             chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
             chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
             //车
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessSquareSide.Black));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessSquareSide.Black));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
             //马
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessSquareSide.Black));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessSquareSide.Black));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
             //象
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessSquareSide.Black));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessSquareSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessSquareSide.Black));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
 
             return chessmans;
         }
@@ -118,7 +118,7 @@ namespace Gean.Wrapper.Chess
         /// 简单工厂模式，创建不同类型的棋子类
         /// </summary>
         public static Chessman Create
-            (Enums.ChessmanType manType, Enums.ChessmanSide manSide, Enums.ChessSquareSide gridSide)
+            (Enums.ChessmanType manType, Enums.ChessmanSide manSide, Enums.ChessGridSide gridSide)
         {
             switch (manType)
             {
@@ -157,20 +157,20 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
         /// </summary>
-        internal static ChessSquare GetOpenningsSquare(Enums.ChessmanSide side, Enums.ChessSquareSide gridSide, int left, int right)
+        internal static ChessGrid GetOpenningspoint(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
         {
-            ChessSquare square = null;
+            ChessGrid point = null;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
                     {
                         switch (gridSide)
                         {
-                            case Enums.ChessSquareSide.Black:
-                                square = new ChessSquare(left, 1);
+                            case Enums.ChessGridSide.Black:
+                                point = new ChessGrid(left, 1);
                                 break;
-                            case Enums.ChessSquareSide.White:
-                                square = new ChessSquare(right, 1);
+                            case Enums.ChessGridSide.White:
+                                point = new ChessGrid(right, 1);
                                 break;
                         }
                         break;
@@ -179,17 +179,17 @@ namespace Gean.Wrapper.Chess
                     {
                         switch (gridSide)
                         {
-                            case Enums.ChessSquareSide.Black:
-                                square = new ChessSquare(right, 8);
+                            case Enums.ChessGridSide.Black:
+                                point = new ChessGrid(right, 8);
                                 break;
-                            case Enums.ChessSquareSide.White:
-                                square = new ChessSquare(left, 8);
+                            case Enums.ChessGridSide.White:
+                                point = new ChessGrid(left, 8);
                                 break;
                         }
                         break;
                     }
             }
-            return square;
+            return point;
         }
     }
 }

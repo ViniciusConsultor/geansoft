@@ -7,84 +7,84 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 坐标集合，一般是应用在棋子类型中，表示一个棋子绑定的路径，该路径由一个一个的坐标组成
     /// </summary>
-    public class ChessSquareCollection : IList<ChessSquare>
+    public class ChessGirdCollection : IList<ChessGrid>
     {
-        List<ChessSquare> _squares = new List<ChessSquare>();
+        List<ChessGrid> _points = new List<ChessGrid>();
 
         /// <summary>
-        /// 返回位于 SquareCollection 开始处的(最近发生的) Square 但不将其移除。
+        /// 返回位于 pointCollection 开始处的(最近发生的) point 但不将其移除。
         /// </summary>
         /// <returns></returns>
-        public ChessSquare Peek()
+        public ChessGrid Peek()
         {
-            if (_squares.Count == 0)
+            if (_points.Count == 0)
                 return null;
-            return _squares[_squares.Count - 1];
+            return _points[_points.Count - 1];
         }
 
         /// <summary>
-        /// 移除并返回位于 ChessSquareCollection 开始处(最近发生的) Square 的对象。
+        /// 移除并返回位于 ChesspointCollection 开始处(最近发生的) point 的对象。
         /// </summary>
         /// <returns></returns>
-        public ChessSquare Dequeue()
+        public ChessGrid Dequeue()
         {
-            if (_squares.Count == 0)
+            if (_points.Count == 0)
                 return null;
-            ChessSquare sq = this.Peek();
-            _squares.RemoveAt(this._squares.Count - 1);
+            ChessGrid sq = this.Peek();
+            _points.RemoveAt(this._points.Count - 1);
             return sq;
         }
 
-        #region IList<Square> 成员
+        #region IList<point> 成员
 
-        public int IndexOf(ChessSquare item)
+        public int IndexOf(ChessGrid item)
         {
-            return _squares.IndexOf(item);
+            return _points.IndexOf(item);
         }
 
-        public void Insert(int index, ChessSquare item)
+        public void Insert(int index, ChessGrid item)
         {
-            _squares.Insert(index, item);
+            _points.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            _squares.RemoveAt(index);
+            _points.RemoveAt(index);
         }
 
-        public ChessSquare this[int index]
+        public ChessGrid this[int index]
         {
-            get { return _squares[index]; }
-            set { _squares[index] = value; }
+            get { return _points[index]; }
+            set { _points[index] = value; }
         }
 
         #endregion
 
-        #region ICollection<Square> 成员
+        #region ICollection<point> 成员
 
-        public void Add(ChessSquare item)
+        public void Add(ChessGrid item)
         {
-            _squares.Add(item);
+            _points.Add(item);
         }
 
         public void Clear()
         {
-            _squares.Clear();
+            _points.Clear();
         }
 
-        public bool Contains(ChessSquare item)
+        public bool Contains(ChessGrid item)
         {
-            return _squares.Contains(item);
+            return _points.Contains(item);
         }
 
-        public void CopyTo(ChessSquare[] array, int arrayIndex)
+        public void CopyTo(ChessGrid[] array, int arrayIndex)
         {
-            _squares.CopyTo(array, arrayIndex);
+            _points.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return _squares.Count; }
+            get { return _points.Count; }
         }
 
         public bool IsReadOnly
@@ -92,18 +92,18 @@ namespace Gean.Wrapper.Chess
             get { return false; }
         }
 
-        public bool Remove(ChessSquare item)
+        public bool Remove(ChessGrid item)
         {
-            return _squares.Remove(item);
+            return _points.Remove(item);
         }
 
         #endregion
 
-        #region IEnumerable<Square> 成员
+        #region IEnumerable<point> 成员
 
-        public IEnumerator<ChessSquare> GetEnumerator()
+        public IEnumerator<ChessGrid> GetEnumerator()
         {
-            return _squares.GetEnumerator();
+            return _points.GetEnumerator();
         }
 
         #endregion
@@ -112,7 +112,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return _squares.GetEnumerator();
+            return _points.GetEnumerator();
         }
 
         #endregion

@@ -17,24 +17,36 @@ namespace Gean.Wrapper.Chess
     }
 
     [global::System.Serializable]
-    public class ChessStepParseException : ChessException
+    public class ChessRecordException : ChessException
     {
-        public ChessStepParseException() { }
-        public ChessStepParseException(string message) : base(message) { }
-        public ChessStepParseException(string message, Exception inner) : base(message, inner) { }
-        protected ChessStepParseException(
+        public ChessRecordException() { }
+        public ChessRecordException(string message) : base(message) { }
+        public ChessRecordException(string message, Exception inner) : base(message, inner) { }
+        protected ChessRecordException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
     }
 
     [global::System.Serializable]
-    public class ChessmanMovedException : ChessException
+    public class ChessmanException : ChessException
     {
-        public ChessmanMovedException() { }
-        public ChessmanMovedException(string message) : base(message) { }
-        public ChessmanMovedException(string message, Exception inner) : base(message, inner) { }
-        protected ChessmanMovedException(
+        public ChessmanException() { }
+        public ChessmanException(string message) : base(message) { }
+        public ChessmanException(string message, Exception inner) : base(message, inner) { }
+        protected ChessmanException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
+
+    [global::System.Serializable]
+    public class ChessGridException : ChessException
+    {
+        public ChessGridException() { }
+        public ChessGridException(string message) : base(message) { }
+        public ChessGridException(string message, Exception inner) : base(message, inner) { }
+        protected ChessGridException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
