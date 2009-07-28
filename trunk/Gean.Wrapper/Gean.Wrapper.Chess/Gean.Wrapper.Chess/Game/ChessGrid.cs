@@ -70,14 +70,42 @@ namespace Gean.Wrapper.Chess
 
         /// <summary>
         /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
+        /// 重点方法。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         public bool MoveIn(Chessman chessman)
         {
+
+            #region 做一些动子落子前的条件判断
+
             if (Chessman.IsNullOrEmpty(chessman))//指定的棋子为空
                 throw new ArgumentNullException();
+            bool hasChessman = Chessman.IsNullOrEmpty(this.OwnedChessman);
+            if (!hasChessman)
+            {  
+                if (this.OwnedChessman.ChessmanSide == chessman.ChessmanSide)
+                {
+                    Debug.Fail("Chessman cannot SAME side!");
+                    return false;
+                }
+            }
 
-            if (Chessman.IsNullOrEmpty(chessman))//本棋格中无棋子
+            #endregion
+
+            #region 从源棋格中动子（即从源棋格中移除该棋子）
+           
+            ChessGrid sourceGrid = chessman.ChessGrids.Peek();
+            //1.注册动子前事件
+            OnMoveOutBefore(new MoveEventArgs(chessman));
+            //2.动子
+            sourceGrid.MoveOut(false);
+            //3.注册动子后事件
+            OnMoveOutAfter(new MoveEventArgs(chessman));
+
+            #endregion
+
+            #region 落子
+            if (hasChessman)//本棋格中无棋子
             {
                 //1.注册落子前事件
                 OnMoveInBefore(new MoveEventArgs(chessman));
@@ -88,11 +116,6 @@ namespace Gean.Wrapper.Chess
             }
             else//本棋格中有棋子
             {
-                if (this.OwnedChessman.ChessmanSide == chessman.ChessmanSide)
-                {
-                    Debug.Fail("Chessman cannot SAME side!");
-                    return false;
-                }
                 //1.注册棋子即将被杀死事件
                 OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek(), chessman));
                 //2.移除被杀死的棋子
@@ -106,13 +129,25 @@ namespace Gean.Wrapper.Chess
                 //6.注册落子后事件
                 OnMoveInAfter(new MoveEventArgs(chessman));
             }
+            #endregion
+
+            #region 全部动作执行完毕，将棋格对象插入到堆栈的顶部
+            
+            chessman.ChessGrids.Push(this);
+            
+            #endregion
+            
             return true;
         }
 
         /// <summary>
         /// 将本棋格的棋子移除(已注册移除事件)。
         /// </summary>
-        public void MoveOut(bool isKill)
+        /// <param name="isKill">
+        /// 是否是杀招，true 时指被移除的棋是被杀死，false 时指被移除
+        /// 的棋仅为“动子”，该棋子还将被移到其他的棋格。
+        /// </param>
+        private void MoveOut(bool isKill)
         {
             if (!Chessman.IsNullOrEmpty(this.OwnedChessman))//本棋格中无棋子
             {
@@ -127,7 +162,7 @@ namespace Gean.Wrapper.Chess
 
                 //注册动子后事件
                 if (isKill)//如果移除的棋子是被杀死，将不再激活移除事件
-                    OnMoveOutBefore(new MoveEventArgs(man));
+                    OnMoveOutAfter(new MoveEventArgs(man));
             }
         }
 
@@ -419,20 +454,20 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 被杀的棋所在的棋格
             /// </summary>
-            public ChessGrid CurrGrid { get; private set; }
+            public ChessGrid KilledGrid { get; private set; }
             /// <summary>
             /// 被杀的棋
             /// </summary>
-            public Chessman CurrChessman { get; private set; }
+            public Chessman KilledChessman { get; private set; }
 
             /// <summary>
-            /// 杀棋的棋来路所在的棋格（杀棋的棋的源棋格）
+            /// 杀棋的棋来路所在的棋格(杀招的执行者(棋)所在棋格)
             /// </summary>
-            public ChessGrid SourceGrid { get; private set; }
+            public ChessGrid ExecuteGrid { get; private set; }
             /// <summary>
-            /// 杀棋的棋
+            /// 杀棋的棋(杀招的执行者)
             /// </summary>
-            public Chessman SourceChessman { get; private set; }
+            public Chessman ExecuteChessman { get; private set; }
 
             /// <summary>
             /// 包含棋子杀死事件的数据
@@ -441,12 +476,12 @@ namespace Gean.Wrapper.Chess
             /// <param name="currChessman">被杀的棋</param>
             /// <param name="sourceGrid">杀棋的棋来路所在的棋格（杀棋的棋的源棋格）</param>
             /// <param name="sourceChessman">杀棋的棋</param>
-            public ChessmanKillEventArgs(ChessGrid currGrid, Chessman currChessman, ChessGrid sourceGrid, Chessman sourceChessman)
+            public ChessmanKillEventArgs(ChessGrid killedGrid, Chessman killedChessman, ChessGrid executeGrid, Chessman executeChessman)
             {
-                this.CurrGrid = currGrid;
-                this.CurrChessman = currChessman;
-                this.SourceGrid = sourceGrid;
-                this.SourceChessman = sourceChessman;
+                this.KilledGrid = killedGrid;
+                this.KilledChessman = killedChessman;
+                this.ExecuteGrid = executeGrid;
+                this.ExecuteChessman = executeChessman;
             }
         }
 

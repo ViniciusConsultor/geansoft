@@ -10,7 +10,11 @@ namespace Gean.Wrapper.Chess
         /// 王车易位
         /// </summary>
         public enum Castling
-        { 
+        {
+            /// <summary>
+            /// 嘛也不是
+            /// </summary>
+            None = 0,
             /// <summary>
             /// 王车短易位
             /// </summary>
@@ -19,16 +23,12 @@ namespace Gean.Wrapper.Chess
             /// 王车长易位
             /// </summary>
             QueenSide,
-            /// <summary>
-            /// 嘛也不是
-            /// </summary>
-            None,
         }
 
         /// <summary>
-        /// 辅助的棋招的动作说明
+        /// 棋招动作枚举
         /// </summary>
-        public enum ActionDescription
+        public enum Action
         {
             /// <summary>
             /// 嘛也不是
@@ -47,14 +47,18 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Check = 4,
             /// <summary>
+            /// 王车易位
+            /// </summary>
+            Castling = 8,
+            /// <summary>
             /// 杀棋并将军
             /// </summary>
             KillAndCheck = Kill | Check,
         }
 
-        public static ActionDescription GetFlag(ActionDescription value, ActionDescription flag)
+        public static Action GetFlag(Action value, Action flag)
         {
-            value = value & (ActionDescription.KillAndCheck ^ flag);
+            value = value & (Action.KillAndCheck ^ flag);
             return value;
         }
 
@@ -63,7 +67,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessmanSide : byte
         {
-            White, Black, None
+            None = 0, White, Black,
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public static ChessmanSide GetOtherSide(ChessmanSide side)
         {
-            if (side == ChessmanSide.Black) 
+            if (side == ChessmanSide.Black)
                 return ChessmanSide.White;
             return ChessmanSide.Black;
         }
@@ -81,7 +85,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessGridSide
         {
-            Black, White, None
+            None = 0, Black, White,
         }
 
         /// <summary>
@@ -101,6 +105,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessmanType
         {
+            /// <summary>
+            /// 嘛也不是
+            /// </summary>
+            None = 0,
             /// <summary>
             /// 车
             /// </summary>
@@ -125,10 +133,6 @@ namespace Gean.Wrapper.Chess
             /// 兵
             /// </summary>
             Pawn,
-            /// <summary>
-            /// 嘛也不是
-            /// </summary>
-            None
         }
 
         public static string ChessmanTypeToString(ChessmanType type)
