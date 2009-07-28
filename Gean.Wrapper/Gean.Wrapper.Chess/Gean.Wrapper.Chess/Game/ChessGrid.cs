@@ -281,14 +281,14 @@ namespace Gean.Wrapper.Chess
             if (obj == null)
                 return false;
 
-            ChessGrid point = (ChessGrid)obj;
-            if (!point.GridSide.Equals(this.GridSide))
+            ChessGrid rid = (ChessGrid)obj;
+            if (!rid.GridSide.Equals(this.GridSide))
                 return false;
-            if (!point.PointX.Equals(this.PointX))
+            if (!rid.PointX.Equals(this.PointX))
                 return false;
-            if (!point.PointY.Equals(this.PointY))
+            if (!rid.PointY.Equals(this.PointY))
                 return false;
-            if (!UtilityEquals.PairEquals(this.OwnedChessman, point.OwnedChessman))
+            if (!UtilityEquals.PairEquals(this.OwnedChessman, rid.OwnedChessman))
                 return false;
             return true;
         }

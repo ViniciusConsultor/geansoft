@@ -115,7 +115,7 @@ namespace Gean.Wrapper.Chess
 
             if (!this._isOpennings)//非初始化棋局时
             {
-                man.ChessGrids.Add(newGrid);
+                man.ChessGrids.Push(newGrid);
                 oldGrid.MoveOut(false);//将棋子的历史棋格的棋子状态置为空
             }
 
@@ -162,10 +162,10 @@ namespace Gean.Wrapper.Chess
         public ChessGrid[] GetBlackGrids()
         {
             List<ChessGrid> points = new List<ChessGrid>();
-            foreach (ChessGrid point in this)
+            foreach (ChessGrid rid in this)
             {
-                if (point.GridSide == Enums.ChessGridSide.Black)
-                    points.Add(point);
+                if (rid.GridSide == Enums.ChessGridSide.Black)
+                    points.Add(rid);
             }
             return points.ToArray();
         }
@@ -175,10 +175,10 @@ namespace Gean.Wrapper.Chess
         public ChessGrid[] GetWhiteGrids()
         {
             List<ChessGrid> points = new List<ChessGrid>();
-            foreach (ChessGrid point in this)
+            foreach (ChessGrid rid in this)
             {
-                if (point.GridSide == Enums.ChessGridSide.White)
-                    points.Add(point);
+                if (rid.GridSide == Enums.ChessGridSide.White)
+                    points.Add(rid);
             }
             return points.ToArray();
         }
