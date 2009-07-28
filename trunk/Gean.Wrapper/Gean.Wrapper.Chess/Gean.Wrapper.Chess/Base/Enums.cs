@@ -79,7 +79,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 黑格，白格
         /// </summary>
-        public enum ChessSquareSide
+        public enum ChessGridSide
         {
             Black, White, None
         }
@@ -87,11 +87,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取棋格的另一方
         /// </summary>
-        public static ChessSquareSide GetOtherGridSide(ChessSquareSide side)
+        public static ChessGridSide GetOtherGridSide(ChessGridSide side)
         {
-            if (side == ChessSquareSide.Black)
-                return ChessSquareSide.White;
-            return ChessSquareSide.Black;
+            if (side == ChessGridSide.Black)
+                return ChessGridSide.White;
+            return ChessGridSide.Black;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Gean.Wrapper.Chess
                     manType = Enums.ChessmanType.Bishop;
                     break;
                 default:
-                    throw new ChessStepParseException(c.ToString());
+                    throw new ChessRecordException(c.ToString());
             }
             return manType;
         }

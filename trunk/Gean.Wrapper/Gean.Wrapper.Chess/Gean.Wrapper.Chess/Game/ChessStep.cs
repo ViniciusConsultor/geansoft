@@ -25,11 +25,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public ChessSquare TargetSquare { get; internal set; }
+        public ChessGrid Targetpoint { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessSquare SourceSquare { get; internal set; }
+        public ChessGrid Sourcepoint { get; internal set; }
 
         /// <summary>
         /// 获取或设置该棋步是“王车易位”
@@ -67,24 +67,24 @@ namespace Gean.Wrapper.Chess
 
         public ChessStep() : this(Enums.Castling.None) { }
         public ChessStep(Enums.Castling castling)
-            : this(castling, Enums.ChessmanType.None, Enums.ActionDescription.None, ChessSquare.Empty, ChessSquare.Empty)
+            : this(castling, Enums.ChessmanType.None, Enums.ActionDescription.None, ChessGrid.Empty, ChessGrid.Empty)
         {
             //this
         }
-        public ChessStep(Enums.ChessmanType manType, Enums.ActionDescription action, ChessSquare sourceSquare, ChessSquare targetSquare)
-            : this(Enums.Castling.None, manType, action, sourceSquare, targetSquare)
+        public ChessStep(Enums.ChessmanType manType, Enums.ActionDescription action, ChessGrid sourcepoint, ChessGrid targetpoint)
+            : this(Enums.Castling.None, manType, action, sourcepoint, targetpoint)
         {
             //this
         }
-        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.ActionDescription action, ChessSquare sourceSquare, ChessSquare targetSquare)
+        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.ActionDescription action, ChessGrid sourcepoint, ChessGrid targetpoint)
         {
             this._castling = castling;
 
             this.Action = action;
             this.ChessmanType = manType;
 
-            this.TargetSquare = targetSquare;
-            this.SourceSquare = sourceSquare;
+            this.Targetpoint = targetpoint;
+            this.Sourcepoint = sourcepoint;
         }
 
         #endregion
@@ -113,11 +113,11 @@ namespace Gean.Wrapper.Chess
                         {
                             if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
-                                sb.Append(this.SourceSquare.CharX);
+                                sb.Append(this.Sourcepoint.PointCharX);
                             }
                             sb.Append('x');
                         }
-                        sb.Append(this.TargetSquare.ToString());
+                        sb.Append(this.Targetpoint.ToString());
                         //有将军的动作，打印'+'
                         if (Enums.GetFlag(this.Action, Enums.ActionDescription.Kill) == Enums.ActionDescription.Check)
                         {
@@ -154,7 +154,7 @@ namespace Gean.Wrapper.Chess
                 (3 *
                 this.Action.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
-                this.TargetSquare.GetHashCode() + this.SourceSquare.GetHashCode() +
+                this.Targetpoint.GetHashCode() + this.Sourcepoint.GetHashCode() +
                 this.Castling.GetHashCode() +
                 this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
                 );
@@ -168,9 +168,9 @@ namespace Gean.Wrapper.Chess
             if (this.ChessmanType   != step.ChessmanType)   return false;
             if (this.Action         != step.Action)         return false;
 
-            if (!UtilityEquals.PairEquals(this.TargetSquare, step.TargetSquare))
+            if (!UtilityEquals.PairEquals(this.Targetpoint, step.Targetpoint))
                 return false;
-            if (!UtilityEquals.PairEquals(this.SourceSquare, step.SourceSquare))
+            if (!UtilityEquals.PairEquals(this.Sourcepoint, step.Sourcepoint))
                 return false;
 
             if (!UtilityEquals.EnumerableEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
@@ -211,7 +211,7 @@ namespace Gean.Wrapper.Chess
 
             Enums.ActionDescription action = Enums.ActionDescription.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
-            ChessSquare square = ChessSquare.Empty;
+            ChessGrid point = ChessGrid.Empty;
 
             //针对尾部标记符进行一些操作
             ChessStepFlag flags = new ChessStepFlag();
@@ -264,7 +264,7 @@ namespace Gean.Wrapper.Chess
                         else
                             action = Enums.ActionDescription.Kill;
                     }
-                    square = ChessSquare.Parse(value.Substring(n, 2));
+                    point = ChessGrid.Parse(value.Substring(n, 2));
                 }
                 #endregion
             }
@@ -275,10 +275,10 @@ namespace Gean.Wrapper.Chess
                 switch (value.Length)
                 {
                     case 2:
-                        square = ChessSquare.Parse(value);
+                        point = ChessGrid.Parse(value);
                         break;
                     case 4:
-                        square = ChessSquare.Parse(value.Substring(value.IndexOf('x')));
+                        point = ChessGrid.Parse(value.Substring(value.IndexOf('x')));
                         break;
                     default:
                         break;
@@ -287,7 +287,7 @@ namespace Gean.Wrapper.Chess
             }
             ChessStep step = null;
             if (castling == Enums.Castling.None)
-                step = new ChessStep(manType, action, ChessSquare.Empty, square);
+                step = new ChessStep(manType, action, ChessGrid.Empty, point);
             else
                 step = new ChessStep(castling);
             step.CommentIndexs = comments;

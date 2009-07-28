@@ -12,16 +12,16 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessmanRook : Chessman
     {
-        internal ChessmanRook(Enums.ChessmanSide side, Enums.ChessSquareSide gridSide)
+        internal ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.Squares.Add(Chessman.GetOpenningsSquare(side, gridSide, 1, 8));
+            this.ChessGrids.Add(Chessman.GetOpenningspoint(side, gridSide, 1, 8));
         }
 
-        internal ChessmanRook(Enums.ChessmanSide side, ChessSquare square)
+        internal ChessmanRook(Enums.ChessmanSide side, ChessGrid point)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.Squares.Add(square);
+            this.ChessGrids.Add(point);
         }
 
         public override void InitializeComponent()

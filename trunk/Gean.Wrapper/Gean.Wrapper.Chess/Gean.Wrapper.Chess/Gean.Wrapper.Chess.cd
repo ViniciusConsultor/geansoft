@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Wrapper.Chess.ChessGrid">
+    <Position X="2.5" Y="0.5" Width="2.5" />
+    <NestedTypes>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.MoveOutBeforeEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.MoveOutAfterEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.MoveInBeforeEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.MoveInAfterEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGrid.MoveEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.KilledEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGrid.KillingEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGrid.ChessmanKillEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Game\ChessGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>DAAgYEhAKgTAgCEEhAIMIAEIBAgAAIAEoAgAAAAAABA=</HashCode>
+      <FileName>Game\ChessGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

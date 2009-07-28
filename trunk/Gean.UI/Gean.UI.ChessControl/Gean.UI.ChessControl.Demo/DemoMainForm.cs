@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using Gean.Wrapper.Chess;
 
 namespace Gean.UI.ChessControl.Demo
 {
