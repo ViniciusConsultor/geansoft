@@ -133,7 +133,7 @@ namespace Gean.Wrapper.Chess
 
             #region 全部动作执行完毕，将棋格对象插入到堆栈的顶部
 
-            chessman.ChessGrids.Push(new ChessGirdCollection.GridAndAction(this, Enums.Action.General));
+            chessman.ChessGrids.Push(new Enums.ActionGridPair(this, Enums.Action.General));
             
             #endregion
             

@@ -19,13 +19,13 @@ namespace Gean.Wrapper.Chess
                     rid = new ChessGrid(4, 8);
                     break;
             }
-            this.ChessGrids.Push(new ChessGirdCollection.GridAndAction(rid, Enums.Action.Opennings));
+            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
         }
 
         internal ChessmanQueen(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Queen, side)
         {
-            this.ChessGrids.Push(new ChessGirdCollection.GridAndAction(rid, Enums.Action.Opennings));
+            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
         }
 
         public override void InitializeComponent()
