@@ -66,6 +66,18 @@ namespace Gean.Wrapper.Chess
             return value;
         }
 
+        public class ActionGridPair
+        {
+            public ChessGrid Grid { get; private set; }
+            public Enums.Action Action { get; private set; }
+            public ActionGridPair(ChessGrid rid, Enums.Action action)
+            {
+                this.Grid = rid;
+                this.Action = action;
+            }
+        }
+
+
         /// <summary>
         /// 棋子的战方：黑棋，白棋
         /// </summary>
