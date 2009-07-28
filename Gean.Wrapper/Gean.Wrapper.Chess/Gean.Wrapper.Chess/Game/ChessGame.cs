@@ -10,14 +10,7 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessGame : IEnumerable<ChessGrid>
     {
-        private ChessGrid[,] _points = new ChessGrid[8, 8];
-
-        public ChessmanCollection Chessmans
-        {
-            get { return _chessmans; }
-            set { _chessmans = value; }
-        }
-        private ChessmanCollection _chessmans = new ChessmanCollection();
+        private ChessGrid[,] _chessGrids = new ChessGrid[8, 8];
 
         /// <summary>
         /// 获取棋盘的棋局是否是开局状态。
@@ -30,7 +23,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessGame()
         {
-            this.Loadpoints();//初始化所有的棋格
+            this.LoadGrids();//初始化所有的棋格
             this.Record = new ChessRecord();
         }
 
@@ -40,23 +33,23 @@ namespace Gean.Wrapper.Chess
         public ChessRecord Record { get; private set; }
 
         /// <summary>
-        /// 获取指定坐标值的棋格
+        /// 获取指定坐标值的棋格(坐标是象棋规则的1-8)
         /// </summary>
         public ChessGrid this[int x, int y]
         {
-            get { return this.Getpoint(x, y); }
+            get { return this._chessGrids[x - 1, y - 1]; }
         }
 
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        private void Loadpoints()
+        private void LoadGrids()
         {
-            for (int x = 0; x < _points.GetLength(0); x++)
+            for (int x = 0; x < _chessGrids.GetLength(0); x++)
             {
-                for (int y = 0; y < _points.GetLength(1); y++)
+                for (int y = 0; y < _chessGrids.GetLength(1); y++)
                 {
-                    _points[x, y] = new ChessGrid(x + 1, y + 1);
+                    _chessGrids[x, y] = new ChessGrid(x + 1, y + 1);
                 }
             }
         }
@@ -75,89 +68,98 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public void LoadOpennings(IEnumerable<Chessman> chessmans)
         {
+            //注册棋局即将开始事件
             OnGameStarting(new ChessGameEventArgs(this));
-            this._chessmans.AddRange(chessmans);
+
             foreach (Chessman man in chessmans)
             {
                 this.Play(man, man.ChessGrids.Peek());
             }
-            this._isOpennings = false;//棋子设置完毕，将开局判断设置为false
-            //注册开局设置结束事件
-            OnSetOpenningsFinished(new ChessGameEventArgs(this));
+
+            //棋子设置完毕，将开局判断设置为false
+            this._isOpennings = false;
+
+            //注册棋局开局设置结束事件
+            OnSetOpenningsFinished(new ChessGameEventArgs(this)); 
+            //注册棋局开始后事件
             OnGameStarted(new ChessGameEventArgs(this));
         }
 
+        public ChessStep Play(Chessman man, int gridX, int gridY)
+        {
+            return this.Play(man, this.GetGrid(gridX, gridY));
+        }
         /// <summary>
         /// 设置指定的棋格拥有的棋子。(下棋的动作:移动棋子到指定的棋格,在初始化时,可以理解为是摆棋)
         /// </summary>
         /// <param name="newpoint">棋子将被移动到的指定棋格的坐标</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ChessmanMovedException"></exception>
-        public ChessStep Play(Chessman man, ChessGrid newpoint)
+        public ChessStep Play(Chessman man, ChessGrid newGrid)
         {
             if (man == null)
-                throw new ArgumentOutOfRangeException("Chessman: chessman is Null.");
-            if (newpoint == null)
-                throw new ArgumentOutOfRangeException("point: newpoint is Null.");
+                throw new ArgumentNullException("Chessman: chessman is Null.");
+            if (newGrid == null)
+                throw new ArgumentNullException("point: newpoint is Null.");
 
-            ChessGrid oldpoint = man.ChessGrids.Peek();
-            if (newpoint.OwnedChessman != Chessman.Empty)
+            ChessGrid oldGrid = man.ChessGrids.Peek();
+            if (newGrid.OwnedChessman != Chessman.NullOrEmpty)
             {
-                if (newpoint.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
+                if (newGrid.OwnedChessman.ChessmanSide == man.ChessmanSide)//新棋格拥有的棋子与将要移动棋子是一样的战方时
                 {
                     throw new ChessmanException(
                         string.Format("{0} and {1} is same Side, cannot move!",
-                                        newpoint.OwnedChessman.ToString(), man.ToString()));
+                                        newGrid.OwnedChessman.ToString(), man.ToString()));
                 }
             }
 
             if (!this._isOpennings)//非初始化棋局时
             {
-                man.ChessGrids.Add(newpoint);
-                oldpoint.MoveOut();//将棋子的历史棋格的棋子状态置为空
+                man.ChessGrids.Add(newGrid);
+                oldGrid.MoveOut(false);//将棋子的历史棋格的棋子状态置为空
             }
 
             Enums.ActionDescription action = Enums.ActionDescription.General;
 
-            if (newpoint.OwnedChessman != Chessman.Empty)
+            if (newGrid.OwnedChessman != Chessman.NullOrEmpty)
             {
                 //新棋格中如有棋子，置该棋子为杀死状态
-                newpoint.OwnedChessman.IsKilled = true;
+                newGrid.OwnedChessman.IsKilled = true;
                 action = Enums.ActionDescription.Kill;
             }
 
             //绑定新棋格拥有的棋子
-            newpoint.MoveIn(man);
+            newGrid.MoveIn(man);
             
             //生成一个棋步
-            ChessStep step = new ChessStep(Enums.Castling.None, man.ChessmanType, action, oldpoint, newpoint);
+            ChessStep step = new ChessStep(Enums.Castling.None, man.ChessmanType, action, oldGrid, newGrid);
             return step;
         }
 
         /// <summary>
-        /// 获取指定坐标的棋格
+        /// 获取指定坐标的棋格(坐标是象棋规则的1-8)
         /// </summary>
         /// <param name="x">指定坐标的x轴</param>
         /// <param name="y">指定坐标的y轴</param>
         /// <returns></returns>
-        public ChessGrid Getpoint(int x, int y)
+        public ChessGrid GetGrid(int x, int y)
         {
-            return this._points[x - 1, y - 1];
+            return this[x, y];
         }
         /// <summary>
-        /// 获取指定坐标的棋格
+        /// 获取指定坐标的棋格(坐标是象棋规则的1-8)
         /// </summary>
         /// <param name="point">指定坐标</param>
         /// <returns></returns>
-        public ChessGrid Getpoint(char c, int y)
+        public ChessGrid GetGrid(char c, int y)
         {
-            return this.Getpoint(Utility.CharToInt(c), y);
+            return this.GetGrid(Utility.CharToInt(c), y);
         }
 
         /// <summary>
         /// 获取所有黑色棋格
         /// </summary>
-        public ChessGrid[] GetBlackpoints()
+        public ChessGrid[] GetBlackGrids()
         {
             List<ChessGrid> points = new List<ChessGrid>();
             foreach (ChessGrid point in this)
@@ -170,7 +172,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取所有白色棋格
         /// </summary>
-        public ChessGrid[] GetWhitepoints()
+        public ChessGrid[] GetWhiteGrids()
         {
             List<ChessGrid> points = new List<ChessGrid>();
             foreach (ChessGrid point in this)
@@ -187,38 +189,27 @@ namespace Gean.Wrapper.Chess
         public Chessman[] GetLivingChessmans()
         {
             ChessmanCollection mans = new ChessmanCollection();
-            foreach (Chessman man in this._chessmans)
+            foreach (ChessGrid rid in this._chessGrids)
             {
-                if (man.IsKilled == false)
-                    mans.Add(man);
-            }
-            return mans.ToArray();
-        }
-        /// <summary>
-        /// 获取所有被杀死的棋子
-        /// </summary>
-        /// <returns></returns>
-        public Chessman[] GetKilledChessmans()
-        {
-            ChessmanCollection mans = new ChessmanCollection();
-            foreach (Chessman man in this._chessmans)
-            {
-                if (man.IsKilled == true)
-                    mans.Add(man);
+                Chessman human = rid.OwnedChessman;
+                if (human == Chessman.NullOrEmpty)
+                    continue;
+                if (human.IsKilled == false)
+                    mans.Add(human);
             }
             return mans.ToArray();
         }
 
         public string ToPGNString()
         {
-            return string.Empty;
+            return "PGN string...";
         }
 
         #region IEnumerable<Chesspoint> 成员
 
         public IEnumerator<ChessGrid> GetEnumerator()
         {
-            return (IEnumerator<ChessGrid>)this._points.GetEnumerator();
+            return (IEnumerator<ChessGrid>)this._chessGrids.GetEnumerator();
         }
 
         #endregion
@@ -227,7 +218,7 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this._points.GetEnumerator();
+            return this._chessGrids.GetEnumerator();
         }
 
         #endregion

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
 using System.Diagnostics;
+using System.Drawing;
+using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
@@ -67,54 +66,79 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region chessman
+        #region === Move ===
 
         /// <summary>
-        /// 获取或设置当前格子中拥有的棋子
-        /// </summary>
-        public Chessman OwnedChessman { get; private set; }
-
-        /// <summary>
-        /// 将指定的棋子移到本棋格，实际都是调用this.SetOwnedChessman方法(已注册落子事件)。
+        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         public bool MoveIn(Chessman chessman)
         {
-            if (chessman == null)
+            if (Chessman.IsNullOrEmpty(chessman))//指定的棋子为空
                 throw new ArgumentNullException();
-            if (this.OwnedChessman == null)//本棋格中无棋子
+
+            if (Chessman.IsNullOrEmpty(chessman))//本棋格中无棋子
             {
-                OnMoveInBefore(new MoveEventArgs(chessman));//注册落子前事件
+                //1.注册落子前事件
+                OnMoveInBefore(new MoveEventArgs(chessman));
+                //2.落子
                 this.OwnedChessman = chessman;
-                OnMoveInAfter(new MoveEventArgs(chessman));//注册落子后事件
+                //3.注册落子后事件
+                OnMoveInAfter(new MoveEventArgs(chessman));
             }
             else//本棋格中有棋子
             {
                 if (this.OwnedChessman.ChessmanSide == chessman.ChessmanSide)
                 {
-                    Debug.Fail("ChessmanSide isn't same!");
+                    Debug.Fail("Chessman cannot SAME side!");
                     return false;
                 }
+                //1.注册棋子即将被杀死事件
                 OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek(), chessman));
-                OnMoveInBefore(new MoveEventArgs(chessman));//注册落子前事件
-                this.OwnedChessman = chessman;
-                OnMoveInAfter(new MoveEventArgs(chessman));//注册落子后事件
+                //2.移除被杀死的棋子
+                this.MoveOut(true);
+                //3.注册棋子被杀死后的事件
                 OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek(), chessman));
+                //4.注册落子前事件
+                OnMoveInBefore(new MoveEventArgs(chessman));
+                //5.落子
+                this.OwnedChessman = chessman;
+                //6.注册落子后事件
+                OnMoveInAfter(new MoveEventArgs(chessman));
             }
             return true;
         }
+
         /// <summary>
-        /// 将本棋格的棋子移除，实际都是调用this.SetOwnedChessman方法(已注册移除事件)。
+        /// 将本棋格的棋子移除(已注册移除事件)。
         /// </summary>
-        public void MoveOut()
+        public void MoveOut(bool isKill)
         {
-            if (this.OwnedChessman != null)//本棋格中无棋子
+            if (!Chessman.IsNullOrEmpty(this.OwnedChessman))//本棋格中无棋子
             {
-                OnMoveOutBefore(new MoveEventArgs(Chessman.Empty));//注册动子前事件
-                this.OwnedChessman = Chessman.Empty;
-                OnMoveOutBefore(new MoveEventArgs(Chessman.Empty));//注册动子后事件
+                Chessman man = this.OwnedChessman;//棋格中的棋子
+
+                //注册动子前事件
+                if (isKill)//如果移除的棋子是被杀死，将不再激活移除事件
+                    OnMoveOutBefore(new MoveEventArgs(man));
+
+                //移除棋子
+                this.OwnedChessman = Chessman.NullOrEmpty;
+
+                //注册动子后事件
+                if (isKill)//如果移除的棋子是被杀死，将不再激活移除事件
+                    OnMoveOutBefore(new MoveEventArgs(man));
             }
         }
+
+        #endregion
+
+        #region OwnedChessman
+
+        /// <summary>
+        /// 获取或设置当前格子中拥有的棋子
+        /// </summary>
+        public Chessman OwnedChessman { get; private set; }
 
         #endregion
 
@@ -309,10 +333,7 @@ namespace Gean.Wrapper.Chess
 
         #region custom event
 
-        /* 动子与落子
-         * 动子（MoveOut）
-         * 落子（MoveIn）
-         */
+        #region 动子事件，落子事件
 
         /// <summary>
         /// 在该棋格即将动子前发生
@@ -364,8 +385,9 @@ namespace Gean.Wrapper.Chess
                 : base(man) { }
         }
 
-        /*棋子被杀
-         */
+        #endregion
+
+        #region 棋子被杀事件
 
         /// <summary>
         /// 在该棋子被杀死后发生
@@ -428,6 +450,7 @@ namespace Gean.Wrapper.Chess
             }
         }
 
+        #endregion
 
         #endregion
 

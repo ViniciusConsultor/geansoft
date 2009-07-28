@@ -14,7 +14,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 表示棋子为空(null)时。此变量为只读。
         /// </summary>
-        public static readonly Chessman Empty = null;
+        public static readonly Chessman NullOrEmpty = null;
 
         /// <summary>
         /// 构造函数
@@ -149,7 +149,7 @@ namespace Gean.Wrapper.Chess
         {
             if (chessman == null)
                 return true;
-            if (chessman == Chessman.Empty)
+            if (chessman == Chessman.NullOrEmpty)
                 return true;
             return false;
         }

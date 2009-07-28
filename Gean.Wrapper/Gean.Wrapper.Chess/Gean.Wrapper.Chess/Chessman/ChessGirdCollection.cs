@@ -12,7 +12,7 @@ namespace Gean.Wrapper.Chess
         List<ChessGrid> _points = new List<ChessGrid>();
 
         /// <summary>
-        /// 返回位于 pointCollection 开始处的(最近发生的) point 但不将其移除。
+        /// 返回位于 pointCollection 开始处的(最近发生的) ChessGrid 但不将其移除。
         /// </summary>
         /// <returns></returns>
         public ChessGrid Peek()
@@ -23,7 +23,7 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
-        /// 移除并返回位于 ChesspointCollection 开始处(最近发生的) point 的对象。
+        /// 移除并返回位于 ChesspointCollection 开始处(最近发生的) ChessGrid 的对象。
         /// </summary>
         /// <returns></returns>
         public ChessGrid Dequeue()
@@ -35,7 +35,7 @@ namespace Gean.Wrapper.Chess
             return sq;
         }
 
-        #region IList<point> 成员
+        #region IList<ChessGrid> 成员
 
         public int IndexOf(ChessGrid item)
         {
@@ -60,7 +60,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region ICollection<point> 成员
+        #region ICollection<ChessGrid> 成员
 
         public void Add(ChessGrid item)
         {
@@ -99,7 +99,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region IEnumerable<point> 成员
+        #region IEnumerable<ChessGrid> 成员
 
         public IEnumerator<ChessGrid> GetEnumerator()
         {
