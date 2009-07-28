@@ -86,7 +86,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             string expected = null;
             string actual = null;
 
-            target = new ChessStep(Enums.ChessmanType.Rook, Enums.ActionDescription.KillAndCheck, new ChessSquare('e', 3), new ChessSquare('e', 5));
+            target = new ChessStep(Enums.ChessmanType.Rook, Enums.ActionDescription.KillAndCheck, new ChessGrid('e', 3), new ChessGrid('e', 5));
             target.CommentIndexs.Add(11);
             target.CommentIndexs.Add(12);
             target.CommentIndexs.Add(13);
@@ -99,7 +99,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             actual = target.ToString();
             Assert.AreEqual(expected, actual);
 
-            target = new ChessStep(Enums.ChessmanType.Pawn, Enums.ActionDescription.KillAndCheck, new ChessSquare('f', 2), new ChessSquare('g', 3));
+            target = new ChessStep(Enums.ChessmanType.Pawn, Enums.ActionDescription.KillAndCheck, new ChessGrid('f', 2), new ChessGrid('g', 3));
             target.CommentIndexs.Add(11);
             target.ChoiceStepsIndexs.Add(34);
             target.ChoiceStepsIndexs.Add(35);
@@ -122,7 +122,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             value = "Rxb4+(33,35,36)[12,13,14,15]";
             expected = new ChessStep
-                (Enums.ChessmanType.Rook, Enums.ActionDescription.KillAndCheck, ChessSquare.Empty, new ChessSquare('b', 4));
+                (Enums.ChessmanType.Rook, Enums.ActionDescription.KillAndCheck, ChessGrid.Empty, new ChessGrid('b', 4));
             expected.CommentIndexs.Add(33);
             expected.CommentIndexs.Add(35);
             expected.CommentIndexs.Add(36);
@@ -150,13 +150,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             value = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
             expected = new ChessStep(
-                Enums.ChessmanType.Queen, Enums.ActionDescription.KillAndCheck, ChessSquare.Empty, new ChessSquare('h', 3));
+                Enums.ChessmanType.Queen, Enums.ActionDescription.KillAndCheck, ChessGrid.Empty, new ChessGrid('h', 3));
             actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 
             value = "b5+";
             expected = new ChessStep(
-                Enums.ChessmanType.Pawn, Enums.ActionDescription.Check, ChessSquare.Empty, new ChessSquare('b', 5));
+                Enums.ChessmanType.Pawn, Enums.ActionDescription.Check, ChessGrid.Empty, new ChessGrid('b', 5));
             actual = ChessStep.Parse(value);
             Assert.AreEqual(expected, actual);
 

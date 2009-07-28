@@ -2,8 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
+    
+    
+    /// <summary>
+    ///这是 ChessGameTest 的测试类，旨在
+    ///包含所有 ChessGameTest 单元测试
+    ///</summary>
     [TestClass()]
-    public class ChessStepPairTest
+    public class ChessGameTest
     {
         #region
 
@@ -58,21 +64,37 @@ namespace Gean.Wrapper.Chess.UnitTesting
         #endregion
 
         /// <summary>
-        ///Parse 的测试
+        ///GetGrid 的测试
         ///</summary>
         [TestMethod()]
-        public void ParseTest()
+        public void GetGridTest()
         {
-            string value; 
-            ChessStepPair expected; 
-            ChessStepPair actual;
+            ChessGame target = new ChessGame();
 
-            value = "4.Qh5+ Ke7";
-            expected = new ChessStepPair(4,
-                new ChessStep(Enums.ChessmanType.Queen, Enums.ActionDescription.Check, ChessGrid.Empty, new ChessGrid('h', 5)),
-                new ChessStep(Enums.ChessmanType.King, Enums.ActionDescription.General, ChessGrid.Empty, new ChessGrid('e', 7)));
-            actual = ChessStepPair.Parse(value);
+            int x = 0; 
+            int y = 0; 
+
+            ChessGrid expected = null;
+            ChessGrid actual = null;
+
+            x = 1;
+            y = 1;
+            expected = new ChessGrid(x, y);
+            actual = target.GetGrid(x, y);
             Assert.AreEqual(expected, actual);
+
+            x = 8;
+            y = 8;
+            expected = new ChessGrid(x, y);
+            actual = target.GetGrid(x, y);
+            Assert.AreEqual(expected, actual);
+
+            x = 3;
+            y = 6;
+            expected = new ChessGrid(x, y);
+            actual = target.GetGrid(x, y);
+            Assert.AreEqual(expected, actual);
+
         }
     }
 }
