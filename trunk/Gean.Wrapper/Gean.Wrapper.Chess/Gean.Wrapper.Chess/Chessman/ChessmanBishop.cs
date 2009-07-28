@@ -10,13 +10,15 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Bishop, side)
         {
             ChessGrid rid = Chessman.GetOpenningsGrid(side, gridSide, 3, 6);
-            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            this.ChessSteps.Push(step);
         }
 
         internal ChessmanBishop(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            this.ChessSteps.Push(step);
         }
 
         public override void InitializeComponent()

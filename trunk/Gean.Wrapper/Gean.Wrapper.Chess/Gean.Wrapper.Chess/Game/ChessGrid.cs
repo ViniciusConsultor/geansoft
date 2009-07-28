@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Gean.Wrapper.Chess
 {
@@ -75,12 +76,11 @@ namespace Gean.Wrapper.Chess
         /// <param name="chessman">指定的棋子</param>
         public bool MoveIn(Chessman chessman)
         {
-
-            #region 做一些动子落子前的条件判断
-
             if (Chessman.IsNullOrEmpty(chessman))//指定的棋子为空
                 throw new ArgumentNullException();
+
             bool hasChessman = Chessman.IsNullOrEmpty(this.OwnedChessman);
+
             if (!hasChessman)
             {  
                 if (this.OwnedChessman.ChessmanSide == chessman.ChessmanSide)
@@ -90,11 +90,11 @@ namespace Gean.Wrapper.Chess
                 }
             }
 
-            #endregion
+            Enums.Action action = Enums.Action.General;
 
-            #region 从源棋格中动子（即从源棋格中移除该棋子）
+            #region 动子（即从源棋格中移除该棋子）
            
-            ChessGrid sourceGrid = chessman.ChessGrids.Peek().Grid;
+            ChessGrid sourceGrid = chessman.ChessSteps.Peek().TargetGrid;
             //1.注册动子前事件
             OnMoveOutBefore(new MoveEventArgs(chessman));
             //2.动子
@@ -104,7 +104,8 @@ namespace Gean.Wrapper.Chess
 
             #endregion
 
-            #region 落子
+            #region 落子（即将棋子置入指定的棋格）
+
             if (hasChessman)//本棋格中无棋子
             {
                 //1.注册落子前事件
@@ -117,11 +118,11 @@ namespace Gean.Wrapper.Chess
             else//本棋格中有棋子
             {
                 //1.注册棋子即将被杀死事件
-                OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek().Grid, chessman));
+                OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
                 //2.移除被杀死的棋子
                 this.MoveOut(true);
                 //3.注册棋子被杀死后的事件
-                OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessGrids.Peek().Grid, chessman));
+                OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
                 //4.注册落子前事件
                 OnMoveInBefore(new MoveEventArgs(chessman));
                 //5.落子
@@ -129,14 +130,11 @@ namespace Gean.Wrapper.Chess
                 //6.注册落子后事件
                 OnMoveInAfter(new MoveEventArgs(chessman));
             }
+
             #endregion
 
-            #region 全部动作执行完毕，将棋格对象插入到堆栈的顶部
+            //chessman.ChessGrids.Push(new ChessStep(
 
-            chessman.ChessGrids.Push(new Enums.ActionGridPair(this, Enums.Action.General));
-            
-            #endregion
-            
             return true;
         }
 

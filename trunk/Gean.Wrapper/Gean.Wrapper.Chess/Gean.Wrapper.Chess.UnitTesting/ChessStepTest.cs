@@ -76,6 +76,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
         33.Kxd1 Qxf1# 0–1 
         */
 
+        /*
+
         /// <summary>
         ///ToString 的测试
         ///</summary>
@@ -162,6 +164,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         }
 
-
+        */
     }
 }

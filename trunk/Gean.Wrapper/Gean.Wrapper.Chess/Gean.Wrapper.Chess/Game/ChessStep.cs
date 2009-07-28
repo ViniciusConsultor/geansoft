@@ -7,7 +7,7 @@ namespace Gean.Wrapper.Chess
 {
     /// <summary>
     /// 描述棋局中的单方的一步棋。如："Nc6"代表马走到c6格。
-    /// 两方各一步棋组成一个棋招（<see>ChessStepPair</see>）。
+    /// 两方各一步棋组成一个棋招<see>ChessStepPair</see>。
     /// 对于这步棋，绑定了一个注释的集合，一个变招的集合（变招也是每一步棋的集合）。
     /// </summary>
     public class ChessStep
@@ -21,7 +21,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
-        public Enums.ChessmanType ChessmanType { get; internal set; }
+        public Chessman Chessman { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -30,61 +30,27 @@ namespace Gean.Wrapper.Chess
         /// 获取或设置该步棋的源棋格
         /// </summary>
         public ChessGrid SourceGrid { get; internal set; }
-
-        /// <summary>
-        /// 获取或设置该棋步是“王车易位”
-        /// </summary>
-        public Enums.Castling Castling 
-        {
-            get { return this._castling; }
-            internal set { this._castling = value; } 
-        }
-        private Enums.Castling _castling;
-
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
         /// </summary>
-        public IndexList CommentIndexs
-        {
-            get { return this._commentIndexs; }
-            internal set { this._commentIndexs = value; }
-        }
-        private IndexList _commentIndexs = new IndexList();
-
+        public IndexList CommentIndexs { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的变招的索引集合
         /// </summary>
-        public IndexList ChoiceStepsIndexs
-        { 
-            get { return this._choiceStepIndexs; }
-            internal set { this._choiceStepIndexs = value; }
-        }
-        private IndexList _choiceStepIndexs = new IndexList();
+        public IndexList ChoiceStepsIndexs { get; internal set; }
 
         #endregion
 
         #region ctor
 
-        public ChessStep() : this(Enums.Castling.None) { }
-        public ChessStep(Enums.Castling castling)
-            : this(castling, Enums.ChessmanType.None, Enums.Action.None, ChessGrid.Empty, ChessGrid.Empty)
+        public ChessStep(Enums.Action action, Chessman chessman, ChessGrid sourceGrid, ChessGrid targetGrid)
         {
-            //this
-        }
-        public ChessStep(Enums.ChessmanType manType, Enums.Action action, ChessGrid sourcepoint, ChessGrid targetpoint)
-            : this(Enums.Castling.None, manType, action, sourcepoint, targetpoint)
-        {
-            //this
-        }
-        public ChessStep(Enums.Castling castling, Enums.ChessmanType manType, Enums.Action action, ChessGrid sourcepoint, ChessGrid targetpoint)
-        {
-            this._castling = castling;
-
             this.Action = action;
-            this.ChessmanType = manType;
-
-            this.TargetGrid = targetpoint;
-            this.SourceGrid = sourcepoint;
+            this.Chessman = chessman;
+            this.TargetGrid = targetGrid;
+            this.SourceGrid = sourceGrid;
+            this.CommentIndexs = new IndexList();
+            this.ChoiceStepsIndexs = new IndexList();
         }
 
         #endregion
@@ -94,24 +60,30 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            switch (this._castling)
+            switch (this.Action)
             {
                 #region case
-                case Enums.Castling.KingSide://短易位
+                case Enums.Action.KingSideCastling://短易位
                     sb.Append("O-O");
                     break;
-                case Enums.Castling.QueenSide://长易位
+                case Enums.Action.QueenSideCastling://长易位
                     sb.Append("O-O-O");
                     break;
-                case Enums.Castling.None://不是易位
+                //不是易位
+                case Enums.Action.Check:
+                case Enums.Action.General:
+                case Enums.Action.Kill:
+                case Enums.Action.KillAndCheck:
+                case Enums.Action.Opennings:
+                case Enums.Action.None:
                     {
-                        if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+                        if (this.Chessman.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
                         {
-                            sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
+                            sb.Append(Enums.ChessmanTypeToString(this.Chessman.ChessmanType));
                         }
                         if (Enums.GetFlag(this.Action, Enums.Action.Check) == Enums.Action.Kill)
                         {
-                            if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
+                            if (this.Chessman.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
                                 sb.Append(this.SourceGrid.PointCharX);
                             }
@@ -127,16 +99,16 @@ namespace Gean.Wrapper.Chess
                     }
                 #endregion
             }
-            if (this._commentIndexs.Count > 0)//如果有注释，打印注释
+            if (this.CommentIndexs.Count > 0)//如果有注释，打印注释
             {
                 sb.Append('(');
-                foreach (int index in _commentIndexs)
+                foreach (int index in CommentIndexs)
                 {
                     sb.Append(index.ToString()).Append(',');
                 }
                 sb.Remove(sb.Length - 1, 1).Append(')');
             }
-            if (this._choiceStepIndexs.Count > 0)//如果有变招，打印变招字符串
+            if (this.ChoiceStepsIndexs.Count > 0)//如果有变招，打印变招字符串
             {
                 sb.Append("[");
                 foreach (int index in this.ChoiceStepsIndexs)
@@ -151,28 +123,25 @@ namespace Gean.Wrapper.Chess
         public override int GetHashCode()
         {
             return unchecked
-                (3 *
+                (3 * (
                 this.Action.GetHashCode() +
-                this.ChessmanType.GetHashCode() +
+                this.Chessman.GetHashCode() +
                 this.TargetGrid.GetHashCode() + this.SourceGrid.GetHashCode() +
-                this.Castling.GetHashCode() +
                 this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
-                );
+                ));
         }
 
         public override bool Equals(object obj)
         {
             ChessStep step = (ChessStep)obj;
-
-            if (this.Castling       != step.Castling)       return false;
-            if (this.ChessmanType   != step.ChessmanType)   return false;
-            if (this.Action         != step.Action)         return false;
-
+            if (this.Action != step.Action) 
+                return false;
+            if (!UtilityEquals.PairEquals(this.Chessman, step.Chessman))
+                return false;
             if (!UtilityEquals.PairEquals(this.TargetGrid, step.TargetGrid))
                 return false;
             if (!UtilityEquals.PairEquals(this.SourceGrid, step.SourceGrid))
                 return false;
-
             if (!UtilityEquals.EnumerableEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
                 return false;
             if (!UtilityEquals.EnumerableEquals(this.CommentIndexs, step.CommentIndexs))
@@ -231,7 +200,6 @@ namespace Gean.Wrapper.Chess
                 #endregion
             }
 
-            Enums.Castling castling = Enums.Castling.None;
             int n = 0;
 
             if (char.IsUpper(value, 0))
@@ -243,10 +211,10 @@ namespace Gean.Wrapper.Chess
                     switch (value.Length)
                     {
                         case 3://O-O 短易位
-                            castling = Enums.Castling.KingSide;
+                            action = Enums.Action.KingSideCastling;
                             break;
                         case 5://O-O-O 长易位
-                            castling = Enums.Castling.QueenSide;
+                            action = Enums.Action.QueenSideCastling;
                             break;
                         default:
                             break;
@@ -285,11 +253,7 @@ namespace Gean.Wrapper.Chess
                 }
                 #endregion
             }
-            ChessStep step = null;
-            if (castling == Enums.Castling.None)
-                step = new ChessStep(manType, action, ChessGrid.Empty, rid);
-            else
-                step = new ChessStep(castling);
+            ChessStep step = new ChessStep(action, Chessman.NullOrEmpty, ChessGrid.Empty, rid);
             step.CommentIndexs = comments;
             step.ChoiceStepsIndexs = choices;
             return step;

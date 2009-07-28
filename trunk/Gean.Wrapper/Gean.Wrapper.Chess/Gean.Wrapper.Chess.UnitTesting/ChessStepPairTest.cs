@@ -57,6 +57,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
+        /*
         /// <summary>
         ///Parse 的测试
         ///</summary>
@@ -74,5 +75,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
             actual = ChessStepPair.Parse(value);
             Assert.AreEqual(expected, actual);
         }
+        */
     }
 }

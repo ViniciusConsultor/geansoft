@@ -23,13 +23,15 @@ namespace Gean.Wrapper.Chess
                         break;
                     }
             }
-            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            this.ChessSteps.Push(step);
         }
 
         internal ChessmanPawn(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Pawn, side)
         {
-            this.ChessGrids.Push(new Enums.ActionGridPair(rid, Enums.Action.Opennings));
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            this.ChessSteps.Push(step);
         }
 
         public override void InitializeComponent()
