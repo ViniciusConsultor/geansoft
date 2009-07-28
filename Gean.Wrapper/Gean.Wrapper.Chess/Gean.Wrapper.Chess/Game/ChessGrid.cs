@@ -70,74 +70,83 @@ namespace Gean.Wrapper.Chess
         #region === Move ===
 
         /// <summary>
-        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
+        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。棋子的战方应在调用该方法之前进行判断。
         /// 重点方法。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        public bool MoveIn(Chessman chessman)
+        /// <param name="action">该棋步的动作</param>
+        public bool MoveIn(Chessman chessman, Enums.Action action)
         {
-            if (Chessman.IsNullOrEmpty(chessman))//指定的棋子为空
+            //指定的棋子为空或动作为空
+            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.None)
                 throw new ArgumentNullException();
 
-            bool hasChessman = Chessman.IsNullOrEmpty(this.OwnedChessman);
-
-            if (!hasChessman)
-            {  
-                if (this.OwnedChessman.ChessmanSide == chessman.ChessmanSide)
-                {
-                    Debug.Fail("Chessman cannot SAME side!");
-                    return false;
-                }
-            }
-
-            Enums.Action action = Enums.Action.General;
-
-            #region 动子（即从源棋格中移除该棋子）
-           
             ChessGrid sourceGrid = chessman.ChessSteps.Peek().TargetGrid;
-            //1.注册动子前事件
-            OnMoveOutBefore(new MoveEventArgs(chessman));
-            //2.动子
-            sourceGrid.MoveOut(false);
-            //3.注册动子后事件
-            OnMoveOutAfter(new MoveEventArgs(chessman));
 
-            #endregion
-
-            #region 落子（即将棋子置入指定的棋格）
-
-            if (hasChessman)//本棋格中无棋子
+            switch (action)
             {
-                //1.注册落子前事件
-                OnMoveInBefore(new MoveEventArgs(chessman));
-                //2.落子
-                this.OwnedChessman = chessman;
-                //3.注册落子后事件
-                OnMoveInAfter(new MoveEventArgs(chessman));
-            }
-            else//本棋格中有棋子
-            {
-                //1.注册棋子即将被杀死事件
-                OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
-                //2.移除被杀死的棋子
-                this.MoveOut(true);
-                //3.注册棋子被杀死后的事件
-                OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
-                //4.注册落子前事件
-                OnMoveInBefore(new MoveEventArgs(chessman));
-                //5.落子
-                this.OwnedChessman = chessman;
-                //6.注册落子后事件
-                OnMoveInAfter(new MoveEventArgs(chessman));
+                case Enums.Action.General:
+                case Enums.Action.Check:
+                    this.MoveInByGeneral(chessman);
+                    break;
+                case Enums.Action.Kill:
+                case Enums.Action.KillAndCheck:
+                    this.MoveInByKillAction(chessman);
+                    break;
+                case Enums.Action.KingSideCastling:
+                    break;
+                case Enums.Action.QueenSideCastling:
+                    break;
+                case Enums.Action.Opennings://仅开局摆棋，不激活任何相关事件
+                    this.OwnedChessman = chessman;
+                    break;
+                case Enums.Action.None:
+                default:
+                    Debug.Fail("\" " + action.ToString() + " \" isn't FAIL action.");
+                    break;
             }
 
-            #endregion
-
-            ChessStep step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
-            //将棋步注册到该棋子的棋步集合中
-            chessman.ChessSteps.Push(step);
-
+            if (action != Enums.Action.Opennings)//开局摆棋，不需重复绑定Step(在棋子初始化时已绑定)
+            {
+                ChessStep step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
+                //将棋步注册到该棋子的棋步集合中
+                chessman.ChessSteps.Push(step);
+            }
             return true;
+        }
+
+        /// <summary>
+        /// 对指定的棋子执行的动子并落子的方法(含“杀棋”动作和“杀棋并将军”)
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        private void MoveInByKillAction(Chessman chessman)
+        {
+            //1.注册棋子即将被杀死事件
+            OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
+            //2.移除被杀死的棋子
+            this.MoveOut(true);
+            //3.注册棋子被杀死后的事件
+            OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
+
+            //4.调用落子方法
+            this.MoveInByGeneral(chessman);
+        }
+
+        /// <summary>
+        /// 对指定的棋子执行的动子并落子的方法(含一般性的“将军”)
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        private void MoveInByGeneral(Chessman chessman)
+        {
+            //1.动子（即从源棋格中移除该棋子）
+            chessman.ChessSteps.Peek().TargetGrid.MoveOut(false);
+
+            //2.注册落子前事件
+            OnMoveInBefore(new MoveEventArgs(chessman));
+            //3.落子
+            this.OwnedChessman = chessman;
+            //4.注册落子后事件
+            OnMoveInAfter(new MoveEventArgs(chessman));
         }
 
         /// <summary>
@@ -149,21 +158,18 @@ namespace Gean.Wrapper.Chess
         /// </param>
         private void MoveOut(bool isKill)
         {
-            if (!Chessman.IsNullOrEmpty(this.OwnedChessman))//本棋格中无棋子
-            {
-                Chessman man = this.OwnedChessman;//棋格中的棋子
+            Chessman man = this.OwnedChessman;//棋格中的棋子
 
-                //注册动子前事件
-                if (isKill)//如果移除的棋子是被杀死，将不再激活移除事件
-                    OnMoveOutBefore(new MoveEventArgs(man));
+            //注册动子前事件
+            if (!isKill)//如果移除的棋子是被杀死，将不再激活移除事件
+                OnMoveOutBefore(new MoveEventArgs(man));
 
-                //移除棋子
-                this.OwnedChessman = Chessman.NullOrEmpty;
+            //移除棋子
+            this.OwnedChessman = Chessman.NullOrEmpty;
 
-                //注册动子后事件
-                if (isKill)//如果移除的棋子是被杀死，将不再激活移除事件
-                    OnMoveOutAfter(new MoveEventArgs(man));
-            }
+            //注册动子后事件
+            if (!isKill)//如果移除的棋子是被杀死，将不再激活移除事件
+                OnMoveOutAfter(new MoveEventArgs(man));
         }
 
         #endregion
@@ -488,6 +494,5 @@ namespace Gean.Wrapper.Chess
         #endregion
 
         #endregion
-
     }
 }
