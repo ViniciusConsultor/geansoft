@@ -51,6 +51,10 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Castling = 8,
             /// <summary>
+            /// 开局摆棋
+            /// </summary>
+            Opennings =16,
+            /// <summary>
             /// 杀棋并将军
             /// </summary>
             KillAndCheck = Kill | Check,

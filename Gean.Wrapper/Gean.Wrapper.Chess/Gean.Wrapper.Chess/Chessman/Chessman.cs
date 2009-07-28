@@ -156,7 +156,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
         /// </summary>
-        internal static ChessGrid GetOpenningspoint(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
+        internal static ChessGrid GetOpenningsGrid(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
         {
             ChessGrid rid = null;
             switch (side)
