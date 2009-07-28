@@ -133,7 +133,9 @@ namespace Gean.Wrapper.Chess
 
             #endregion
 
-            //chessman.ChessGrids.Push(new ChessStep(
+            ChessStep step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
+            //将棋步注册到该棋子的棋步集合中
+            chessman.ChessSteps.Push(step);
 
             return true;
         }

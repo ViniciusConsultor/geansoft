@@ -21,7 +21,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
-        public Chessman Chessman { get; internal set; }
+        public Enums.ChessmanType ChessmanType { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -43,10 +43,10 @@ namespace Gean.Wrapper.Chess
 
         #region ctor
 
-        public ChessStep(Enums.Action action, Chessman chessman, ChessGrid sourceGrid, ChessGrid targetGrid)
+        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessGrid sourceGrid, ChessGrid targetGrid)
         {
             this.Action = action;
-            this.Chessman = chessman;
+            this.ChessmanType = chessmanType;
             this.TargetGrid = targetGrid;
             this.SourceGrid = sourceGrid;
             this.CommentIndexs = new IndexList();
@@ -77,13 +77,13 @@ namespace Gean.Wrapper.Chess
                 case Enums.Action.Opennings:
                 case Enums.Action.None:
                     {
-                        if (this.Chessman.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+                        if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
                         {
-                            sb.Append(Enums.ChessmanTypeToString(this.Chessman.ChessmanType));
+                            sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
                         }
                         if (Enums.GetFlag(this.Action, Enums.Action.Check) == Enums.Action.Kill)
                         {
-                            if (this.Chessman.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
+                            if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
                                 sb.Append(this.SourceGrid.PointCharX);
                             }
@@ -125,7 +125,7 @@ namespace Gean.Wrapper.Chess
             return unchecked
                 (3 * (
                 this.Action.GetHashCode() +
-                this.Chessman.GetHashCode() +
+                this.ChessmanType.GetHashCode() +
                 this.TargetGrid.GetHashCode() + this.SourceGrid.GetHashCode() +
                 this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
                 ));
@@ -134,9 +134,9 @@ namespace Gean.Wrapper.Chess
         public override bool Equals(object obj)
         {
             ChessStep step = (ChessStep)obj;
-            if (this.Action != step.Action) 
+            if (this.Action != step.Action)
                 return false;
-            if (!UtilityEquals.PairEquals(this.Chessman, step.Chessman))
+            if (this.ChessmanType != step.ChessmanType)
                 return false;
             if (!UtilityEquals.PairEquals(this.TargetGrid, step.TargetGrid))
                 return false;
@@ -253,7 +253,7 @@ namespace Gean.Wrapper.Chess
                 }
                 #endregion
             }
-            ChessStep step = new ChessStep(action, Chessman.NullOrEmpty, ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(action, manType, ChessGrid.Empty, rid);
             step.CommentIndexs = comments;
             step.ChoiceStepsIndexs = choices;
             return step;

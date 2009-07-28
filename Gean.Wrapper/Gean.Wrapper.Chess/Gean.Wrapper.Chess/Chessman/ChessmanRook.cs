@@ -16,14 +16,14 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Rook, side)
         {
             ChessGrid rid = Chessman.GetOpenningsGrid(side, gridSide, 1, 8);
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
             this.ChessSteps.Push(step);
         }
 
         internal ChessmanRook(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Rook, side)
         {
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this, ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
             this.ChessSteps.Push(step);
         }
 
