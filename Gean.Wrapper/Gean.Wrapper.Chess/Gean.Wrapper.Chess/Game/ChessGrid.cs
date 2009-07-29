@@ -269,39 +269,15 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋格在棋盘上的横坐标
         /// </summary>
-        public int PointX { get; internal set; }
+        public int PointX { get; private set; }
+        /// <summary>
+        /// 棋格在棋盘上的纵坐标
+        /// </summary>
+        public int PointY { get; private set; }
         /// <summary>
         /// 棋格在棋盘上的横坐标的字母表示法。
         /// </summary>
         public char PointCharX { get; private set; }
-        /// <summary>
-        /// 棋格在棋盘上的纵坐标
-        /// </summary>
-        public int PointY { get; internal set; }
-        /// <summary>
-        /// 用指定的值设置棋格的横坐标
-        /// </summary>
-        /// <param name="x">一个整数值，不能小于1，且不能大于8</param>
-        public void SetPointX(int pointX)
-        {
-            this.PointX = pointX;
-        }
-        /// <summary>
-        /// 用指定的值设置棋格的横坐标
-        /// </summary>
-        /// <param name="c">一个字母，是一个不能小于a,大于h的字母</param>
-        public void SetPointX(char pointCharX)
-        {
-            this.PointX = Utility.CharToInt(pointCharX);
-        }
-        /// <summary>
-        /// 用指定的值设置棋格的纵坐标
-        /// </summary>
-        /// <param name="x">一个整数值，不能小于1，且不能大于8</param>
-        public void SetPointY(int pointY)
-        {
-            this.PointY = pointY;
-        }
 
         #endregion
 
@@ -366,6 +342,13 @@ namespace Gean.Wrapper.Chess
         #endregion
 
         #region static
+
+        private static Rectangle GetRectangle(int x, int y, int length, int offsetBoardX, int offsetBoardY, int pointX, int pointY)
+        {
+            Point point = new Point((x - 1) * length + offsetBoardX, (y - 1) * length + offsetBoardY);
+            Size size = new Size(length, length);
+            return new Rectangle(point, size);
+        }
 
         /// <summary>
         /// 返回一个为空的值。该变量为只读。

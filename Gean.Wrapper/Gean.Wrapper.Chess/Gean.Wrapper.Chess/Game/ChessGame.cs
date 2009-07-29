@@ -17,7 +17,6 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessGame()
         {
-            this.LoadGrids();//初始化所有的棋格
             this.Record = new ChessRecord();
         }
 
@@ -48,7 +47,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        protected virtual void LoadGrids()
+        public virtual ChessGrid[,] LoadGrids()
         {
             for (int x = 0; x < _chessGrids.GetLength(0); x++)
             {
@@ -57,6 +56,7 @@ namespace Gean.Wrapper.Chess
                     _chessGrids[x, y] = new ChessGrid(x + 1, y + 1);
                 }
             }
+            return this._chessGrids;
         }
 
         /// <summary>

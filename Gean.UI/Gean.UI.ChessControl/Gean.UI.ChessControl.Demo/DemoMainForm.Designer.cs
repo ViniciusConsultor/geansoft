@@ -109,7 +109,6 @@
             this._openingsMenuButton.Name = "_openingsMenuButton";
             this._openingsMenuButton.Size = new System.Drawing.Size(66, 22);
             this._openingsMenuButton.Text = "开局(&C)";
-            this._openingsMenuButton.Click += new System.EventHandler(this._openingsMenuButton_Click);
             // 
             // DemoMainForm
             // 
