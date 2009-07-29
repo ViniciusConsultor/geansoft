@@ -7,6 +7,59 @@ using System.Collections.Generic;
 namespace Gean.UI.ChessControl
 {
     /// <summary>
+    /// 国际象棋棋盘控件
+    /// </summary>
+    public class ChessBoard : Control
+    {
+        /// <summary>
+        /// 棋盘上所有的棋格(8*8)
+        /// </summary>
+        protected ChessGrid[,] ChessGrids { get; private set; }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ChessBoard()
+        {
+            this.DoubleBuffered = true;
+            this.BackColor = Color.Peru;
+            this.HasGridImage = false;
+        }
+
+        public ChessGame OwnedChessGame { get; private set; }
+
+        public void LoadGame()
+        {
+            this.OwnedChessGame = new ChessGame();
+            this.ChessGrids = this.OwnedChessGame.LoadGrids();
+        }
+
+        protected bool HasGridImage { get; private set; }
+        protected Image WhiteGridImage { get; private set; }
+        protected Image BlackGridImage { get; private set; }
+
+        /// <summary>
+        /// 设置棋格的背景图片
+        /// </summary>
+        /// <param name="white">白棋格的背景图片</param>
+        /// <param name="black">黑棋格的背景图片</param>
+        public void SetGridImage(Image white, Image black)
+        {
+            this.WhiteGridImage = white;
+            this.BlackGridImage = black;
+            if (white != null && black != null)
+            {
+                this.HasGridImage = true;
+            }
+        }
+
+    }
+
+}
+
+/*
+{
+    /// <summary>
     /// 棋盘控件
     /// </summary>
     public class ChessBoard : Control
@@ -283,7 +336,7 @@ namespace Gean.UI.ChessControl
                 {
                     if (man.IsKilled)
                         continue;
-                    ChessGrid point = man.ChessGrids.Peek();
+                    ChessGrid point = man.ChessSteps.Peek().TargetGrid;
                     ChessGrid rid = grids[point.PointX - 1, 8 - point.PointY];
                     int offset = (int)(width * 0.2);//棋子填充比棋格小20%，以保证美观
                     Rectangle rect = new Rectangle();
@@ -360,8 +413,8 @@ namespace Gean.UI.ChessControl
                         if (_chessGrids[x, y].RectangleContains(e.Location))
                         {
                             _targetGrid = _chessGrids[x, y];
-                            _targetGrid.MoveIn(_sourceGrid.OwnedChessman);
-                            _sourceGrid.MoveOut();
+                            //_targetGrid.MoveIn(_sourceGrid.OwnedChessman);
+                            //_sourceGrid.MoveOut();
                             this.InvalidateBoard(_targetGrid.OwnedRectangle);
                             //注册棋子移动事件
                             OnChessPlayed(new ChessPlayedEventArgs(_sourceGrid, _targetGrid));
@@ -461,3 +514,4 @@ namespace Gean.UI.ChessControl
         #endregion
     }
 }
+*/

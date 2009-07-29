@@ -30,27 +30,15 @@ namespace Gean.UI.ChessControl.Demo
             Image white = Image.FromFile(Path.Combine(_whiteDir, "BoardGrid - White - 001.jpg"));
             Image black = Image.FromFile(Path.Combine(_blackDir, "BoardGrid - Black - 001.jpg"));
 
-            this._board.SetGridImage(white, black);
-            this._board.ChessPlayedEvent += new ChessBoard.ChessPlayedEventHandler(_board_ChessPlayedEvent);
-        }
+            ChessSerivce.Initialize();
+            ChessSerivce.InitializeChessmanImage();
 
-        void _board_ChessPlayedEvent(object sender, ChessBoard.ChessPlayedEventArgs e)
-        {
-            ChessGrid oldrid = e.OldGrid;
-            ChessGrid newrid = e.NewGrid;
-            this._actionListBox.Items.Add(oldrid.ToString() + "  ->  " + newrid.ToString());
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             this._propertyGrid.SelectedObject = this._board; 
-        }
-
-        private void _openingsMenuButton_Click(object sender, EventArgs e)
-        {
-            this._board.LoadGame();
-            this._board.SetChessmanImage();
         }
     }
 }
