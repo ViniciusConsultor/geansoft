@@ -10,19 +10,18 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessStepPairSequence : BylawItem, IList<ChessStepPair>
     {
-        public ChessStepPairSequence()
-            : this("", "", 0)
-        {
-
-        }
         public ChessStepPairSequence(string userId, string sequence, int number)
             : base(number, userId, sequence, '#')
         {
         }
 
-        private List<ChessStepPair> _steps = new List<ChessStepPair>();
+        protected List<ChessStepPair> _steps = new List<ChessStepPair>();
 
-        internal string SequenceToString()
+        public override string ToString()
+        {
+            return Utility.BylawItemToString('&', this.Number, this.UserID, this.SequenceToString());
+        }
+        protected string SequenceToString()
         {
             StringBuilder sb = new StringBuilder();
             foreach (ChessStepPair pair in this._steps)
@@ -30,11 +29,6 @@ namespace Gean.Wrapper.Chess
                 sb.Append(pair.ToString()).Append(' ');
             }
             return sb.ToString();
-        }
-
-        public override string ToString()
-        {
-            return Utility.BylawItemToString('&', this.Number, this.UserID, this.SequenceToString());
         }
 
         #region IList<ChessStepPair> 成员

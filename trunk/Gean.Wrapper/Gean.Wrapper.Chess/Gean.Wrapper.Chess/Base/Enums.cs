@@ -24,7 +24,8 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Kill = 2,
             /// <summary>
-            /// 将军
+            /// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
+            /// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
             /// </summary>
             Check = 4,
             /// <summary>

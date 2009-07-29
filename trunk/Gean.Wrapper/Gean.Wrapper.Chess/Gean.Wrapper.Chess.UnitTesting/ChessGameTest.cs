@@ -80,19 +80,19 @@ namespace Gean.Wrapper.Chess.UnitTesting
             x = 1;
             y = 1;
             expected = new ChessGrid(x, y);
-            actual = target.GetGrid(x, y);
+            actual = target[x, y];
             Assert.AreEqual(expected, actual);
 
             x = 8;
             y = 8;
             expected = new ChessGrid(x, y);
-            actual = target.GetGrid(x, y);
+            actual = target[x, y];
             Assert.AreEqual(expected, actual);
 
             x = 3;
             y = 6;
             expected = new ChessGrid(x, y);
-            actual = target.GetGrid(x, y);
+            actual = target[x, y];
             Assert.AreEqual(expected, actual);
 
         }
