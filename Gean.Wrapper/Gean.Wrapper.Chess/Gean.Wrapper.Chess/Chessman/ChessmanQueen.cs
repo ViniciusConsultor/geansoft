@@ -6,7 +6,7 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanQueen : Chessman
     {
-        internal ChessmanQueen(Enums.ChessmanSide side)
+        public ChessmanQueen(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.Queen, side)
         {
             ChessGrid rid = null;
@@ -23,7 +23,7 @@ namespace Gean.Wrapper.Chess
             this.ChessSteps.Push(step);
         }
 
-        internal ChessmanQueen(Enums.ChessmanSide side, ChessGrid rid)
+        public ChessmanQueen(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Queen, side)
         {
             ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);

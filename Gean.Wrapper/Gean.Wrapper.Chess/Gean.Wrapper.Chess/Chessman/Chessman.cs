@@ -79,67 +79,6 @@ namespace Gean.Wrapper.Chess
         public abstract void InitializeComponent();
         public abstract string ToSimpleString();
 
-        public static ChessmanCollection GetOpennings()
-        {
-            ChessmanCollection chessmans = new ChessmanCollection();
-
-            //兵
-            for (int i = Utility.LEFT; i <= Utility.RIGHT; i++)
-            {
-                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
-                chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
-            }
-            //王
-            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
-            chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
-            //后
-            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
-            chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
-            //车
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //马
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //象
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-
-            return chessmans;
-        }
-
-        /// <summary>
-        /// 简单工厂模式，创建不同类型的棋子类
-        /// </summary>
-        public static Chessman Create(Enums.ChessmanType manType, Enums.ChessmanSide manSide, Enums.ChessGridSide gridSide)
-        {
-            switch (manType)
-            {
-                case Enums.ChessmanType.Rook:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.Knight:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.Bishop:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.Queen:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.King:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.Pawn:
-                    return new ChessmanRook(manSide, gridSide);
-                case Enums.ChessmanType.None:
-                    return new ChessmanRook(manSide, gridSide);
-                default:
-                    throw new ArgumentOutOfRangeException(manType.ToString());
-            }
-        }
-
         /// <summary>
         /// 指示指定的 Chessman 对象是 null 还是 Chessman.Empty。
         /// </summary>

@@ -65,7 +65,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public virtual void LoadOpennings()
         {
-            this.LoadOpennings(Chessman.GetOpennings().ToArray());
+            //this.LoadOpennings(Chessman.GetOpennings().ToArray());
         }
         /// <summary>
         /// 初始化指定的开局棋子集合，直接使用该方法一般的场合为残局类，中盘类棋局
