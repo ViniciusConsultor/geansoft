@@ -10,14 +10,14 @@ namespace Gean.Wrapper.Chess
     public class ChessRecord
     {
         public Definer Definer { get; internal set; }
-        public ChessStepPairSequence Sequence { get; internal set; }
+        public ChessSequence Sequence { get; internal set; }
         public ChessCommentCollection Comments { get; internal set; }
         public ChessChoicesCollection Choices { get; internal set; }
 
         public ChessRecord()
         {
             this.Definer = new Definer();
-            this.Sequence = new ChessStepPairSequence();
+            this.Sequence = new ChessSequence();
             this.Comments = new ChessCommentCollection();
             this.Choices = new ChessChoicesCollection();
         }
@@ -53,6 +53,14 @@ namespace Gean.Wrapper.Chess
             sb.AppendLine(this.Choices.ToString());
             sb.AppendLine().AppendLine();
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// 生成PGN棋谱记录
+        /// </summary>
+        public string ToPGNString()
+        {
+            throw new System.NotImplementedException();
         }
 
     }

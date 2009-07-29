@@ -7,11 +7,14 @@ using System.Collections.Generic;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 一种针对国际象棋棋格的坐标表示方法的具体描述类型。
-    /// 该类型组合了Rectangle类型和一个似Point的类型。
+    /// 一个针对国际象棋棋格的具体似Point描述类型。
+    /// 该类型
+    /// 1.组合了一个Rectangle类型;
+    /// 2.声明了动子和落子方法;
+    /// 3.注册了棋子的动子、落子、杀子事件。
     /// Gean: 2009-07-28 11:55:01
     /// </summary>
-    public class ChessGrid
+    public sealed class ChessGrid
     {
 
         #region ctor
@@ -25,7 +28,7 @@ namespace Gean.Wrapper.Chess
         public ChessGrid(int pointX, int pointY, Rectangle rect)
         {
             #region Exception
-            if (!ChessGrid.Check(pointX, pointY))
+            if (!ChessGrid.Verify(pointX, pointY))
             {
                 throw new ArgumentOutOfRangeException("坐标值超限！");
             }
@@ -70,32 +73,36 @@ namespace Gean.Wrapper.Chess
         #region === Move ===
 
         /// <summary>
-        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。棋子的战方应在调用该方法之前进行判断。
+        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
+        /// 1.棋子的战方应在调用该方法之前进行判断;
+        /// 2.该棋子是否能够落入指定的棋格应在调用该方法之前进行判断;
         /// 重点方法。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="action">该棋步的动作</param>
-        public bool MoveIn(Chessman chessman, Enums.Action action)
+        public ChessStep MoveIn(Chessman chessman, Enums.Action action)
         {
             //指定的棋子为空或动作为空
             if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.None)
                 throw new ArgumentNullException();
-
-            ChessGrid sourceGrid = chessman.ChessSteps.Peek().TargetGrid;
+            ChessStep step = chessman.ChessSteps.Peek();
+            ChessGrid sourceGrid = step.TargetGrid;
 
             switch (action)
             {
                 case Enums.Action.General:
                 case Enums.Action.Check:
-                    this.MoveInByGeneral(chessman);
+                    this.MoveInByGeneralAction(chessman);
                     break;
                 case Enums.Action.Kill:
                 case Enums.Action.KillAndCheck:
                     this.MoveInByKillAction(chessman);
                     break;
                 case Enums.Action.KingSideCastling:
+                    this.MoveInByKingSideCastlingAction();
                     break;
                 case Enums.Action.QueenSideCastling:
+                    this.MoveInByQueenSideCastlingAction();
                     break;
                 case Enums.Action.Opennings://仅开局摆棋，不激活任何相关事件
                     this.OwnedChessman = chessman;
@@ -106,13 +113,13 @@ namespace Gean.Wrapper.Chess
                     break;
             }
 
-            if (action != Enums.Action.Opennings)//开局摆棋，不需重复绑定Step(在棋子初始化时已绑定)
+            if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
             {
-                ChessStep step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
+                step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
                 //将棋步注册到该棋子的棋步集合中
                 chessman.ChessSteps.Push(step);
             }
-            return true;
+            return step;
         }
 
         /// <summary>
@@ -129,14 +136,14 @@ namespace Gean.Wrapper.Chess
             OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
 
             //4.调用落子方法
-            this.MoveInByGeneral(chessman);
+            this.MoveInByGeneralAction(chessman);
         }
 
         /// <summary>
-        /// 对指定的棋子执行的动子并落子的方法(含一般性的“将军”)
+        /// 对指定的棋子执行的动子并落子的一般性方法(含“将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByGeneral(Chessman chessman)
+        private void MoveInByGeneralAction(Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
             chessman.ChessSteps.Peek().TargetGrid.MoveOut(false);
@@ -147,6 +154,24 @@ namespace Gean.Wrapper.Chess
             this.OwnedChessman = chessman;
             //4.注册落子后事件
             OnMoveInAfter(new MoveEventArgs(chessman));
+        }
+
+        /// <summary>
+        /// 长易位(后侧)
+        /// </summary>
+        /// <param name="chessman"></param>
+        private void MoveInByQueenSideCastlingAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 短易位(王侧)
+        /// </summary>
+        /// <param name="chessman"></param>
+        private void MoveInByKingSideCastlingAction()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -174,7 +199,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region OwnedChessman
+        #region Owned Chessman
 
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
@@ -350,7 +375,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 检查指定的一双整数值是否符合棋盘坐标值的限制
         /// </summary>
-        public static bool Check(int x, int y)
+        public static bool Verify(int x, int y)
         {
             if (((x >= 1 && x <= 8)) && ((y >= 1 && y <= 8)))
                 return true;
@@ -380,7 +405,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋格即将动子前发生
         /// </summary>
         public event MoveOutBeforeEventHandler MoveOutBeforeEvent;
-        protected virtual void OnMoveOutBefore(MoveEventArgs e)
+        private void OnMoveOutBefore(MoveEventArgs e)
         {
             if (MoveOutBeforeEvent != null)
                 MoveOutBeforeEvent(this, e);
@@ -391,7 +416,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋格动子后发生
         /// </summary>
         public event MoveOutAfterEventHandler MoveOutAfterEvent;
-        protected virtual void OnMoveOutAfter(MoveEventArgs e)
+        private void OnMoveOutAfter(MoveEventArgs e)
         {
             if (MoveOutAfterEvent != null)
                 MoveOutAfterEvent(this, e);
@@ -402,7 +427,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋格中即将落子的时候发生。
         /// </summary>
         public event MoveInBeforeEventHandler MoveInBeforeEvent;
-        protected virtual void OnMoveInBefore(MoveEventArgs e)
+        private void OnMoveInBefore(MoveEventArgs e)
         {
             if (MoveInBeforeEvent != null)
                 MoveInBeforeEvent(this, e);
@@ -413,7 +438,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋格中落子后发生
         /// </summary>
         public event MoveInAfterEventHandler MoveInAfterEvent;
-        protected virtual void OnMoveInAfter(MoveEventArgs e)
+        private void OnMoveInAfter(MoveEventArgs e)
         {
             if (MoveInAfterEvent != null)
                 MoveInAfterEvent(this, e);
@@ -434,7 +459,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋子被杀死后发生
         /// </summary>
         public event KilledEventHandler KilledEvent;
-        protected virtual void OnKilled(ChessmanKillEventArgs e)
+        private void OnKilled(ChessmanKillEventArgs e)
         {
             if (KilledEvent != null)
                 KilledEvent(this, e);
@@ -445,7 +470,7 @@ namespace Gean.Wrapper.Chess
         /// 在该棋子正在被杀死（也可理解为，即将被杀死时）发生
         /// </summary>
         public event KillingEventHandler KillingEvent;
-        protected virtual void OnKilling(ChessmanKillEventArgs e)
+        private void OnKilling(ChessmanKillEventArgs e)
         {
             if (KillingEvent != null)
                 KillingEvent(this, e);
@@ -494,5 +519,6 @@ namespace Gean.Wrapper.Chess
         #endregion
 
         #endregion
+
     }
 }
