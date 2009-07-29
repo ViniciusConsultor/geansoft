@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Base\BylawItem.cs" />
     <Compile Include="Base\BylawItemCollection.cs" />
+    <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
     <Compile Include="Game\ChessSequence.cs" />
     <Compile Include="JavaGUIBoard.cs" />
@@ -49,9 +50,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Chessman\ChessmanBishop.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Chessman\ChessmanCollection.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Chessman\ChessmanEventArgs.cs">

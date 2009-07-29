@@ -24,21 +24,18 @@ namespace Gean.UI.ChessControl.Demo
             this._board.BringToFront();
             this._splitContainer.Panel2.Controls.Add(_board);
 
-            this._whiteDir = Path.Combine(_demoFile, @"ChessBoardGrid\White");
-            this._blackDir = Path.Combine(_demoFile, @"ChessBoardGrid\Black");
-
-            Image white = Image.FromFile(Path.Combine(_whiteDir, "BoardGrid - White - 001.jpg"));
-            Image black = Image.FromFile(Path.Combine(_blackDir, "BoardGrid - Black - 001.jpg"));
-
-            ChessSerivce.Initialize();
-            ChessSerivce.InitializeChessmanImage();
-
+            ChessBoardHelper.Initialize();
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             this._propertyGrid.SelectedObject = this._board; 
+        }
+
+        private void _openingsMenuButton_Click(object sender, EventArgs e)
+        {
+            ChessBoardHelper.ChangeBoardImage(ChessResource.board_02);
         }
     }
 }

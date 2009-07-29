@@ -12,7 +12,7 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessmanRook : Chessman
     {
-        internal ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
+        public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
             ChessGrid rid = Chessman.GetOpenningsGrid(side, gridSide, 1, 8);
@@ -20,7 +20,7 @@ namespace Gean.Wrapper.Chess
             this.ChessSteps.Push(step);
         }
 
-        internal ChessmanRook(Enums.ChessmanSide side, ChessGrid rid)
+        public ChessmanRook(Enums.ChessmanSide side, ChessGrid rid)
             : base(Enums.ChessmanType.Rook, side)
         {
             ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
