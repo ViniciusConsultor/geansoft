@@ -13,8 +13,6 @@ namespace Gean.UI.ChessControl.Demo
     public partial class DemoMainForm : Form
     {
         private string _demoFile = Path.GetDirectoryName(@"..\..\DemoFile\");
-        private string _whiteDir = "";
-        private string _blackDir = "";
         private ChessBoard _board = new ChessBoard();
 
         public DemoMainForm()
@@ -24,7 +22,6 @@ namespace Gean.UI.ChessControl.Demo
             this._board.BringToFront();
             this._splitContainer.Panel2.Controls.Add(_board);
 
-            ChessBoardHelper.Initialize();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -35,7 +32,30 @@ namespace Gean.UI.ChessControl.Demo
 
         private void _openingsMenuButton_Click(object sender, EventArgs e)
         {
-            ChessBoardHelper.ChangeBoardImage(ChessResource.board_02);
+
         }
     }
+
+    static class First
+    {
+        /// <summary>
+        /// 应用程序的主入口点。
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            Initialize();
+
+            Application.Run(new DemoMainForm());
+        }
+
+        private static void Initialize()
+        {
+            ChessBoardHelper.Initialize();
+        }
+    }
+
 }
