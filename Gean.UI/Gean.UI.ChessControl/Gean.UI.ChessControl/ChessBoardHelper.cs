@@ -24,11 +24,11 @@ namespace Gean.UI.ChessControl
 
         #region Board Image
 
-        private static Image BoardImage { get; set; }
+        internal static Image BoardImage { get; private set; }
 
         private static void InitializeBoardImage()
         {
-            ChessBoardHelper.WhiteGridImage = ChessResource.board_02;
+            ChessBoardHelper.BoardImage = ChessResource.board_01;
             OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardHelper.BoardImage));
         }
 
@@ -65,8 +65,8 @@ namespace Gean.UI.ChessControl
 
         #region Grid Image
 
-        private static Image WhiteGridImage { get; set; }
-        private static Image BlackGridImage { get; set; }
+        internal static Image WhiteGridImage { get; private set; }
+        internal static Image BlackGridImage { get; private set; }
 
         private static void InitializeGridImages()
         {

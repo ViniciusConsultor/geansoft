@@ -14,7 +14,12 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 棋盘上所有的棋格(8*8)
         /// </summary>
-        protected ChessGrid[,] ChessGrids { get; private set; }
+        protected virtual Rectangle[,] ChessRectangles { get; private set; }
+        protected virtual bool HasGridImage
+        {
+            get { return ChessBoardHelper.BoardImage != null; }
+        }
+        public ChessGame OwnedChessGame { get; private set; }
 
         /// <summary>
         /// 构造函数
@@ -22,30 +27,174 @@ namespace Gean.UI.ChessControl
         public ChessBoard()
         {
             this.DoubleBuffered = true;
-            this.BackColor = Color.Peru;
-            this.HasGridImage = false;
+            this.ChessRectangles = new Rectangle[8, 8];
+            if (this.HasGridImage)
+                this.BackgroundImage = ChessBoardHelper.BoardImage;
+            else
+                this.BackColor = Color.Peru;
+
+            ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
             ChessBoardHelper.BoardImageChangedEvent += new ChessBoardHelper.BoardImageChangedEventHandler(ChessBoardHelper_BoardImageChangedEvent);
+            ChessBoardHelper.GridImagesChangedEvent += new ChessBoardHelper.GridImagesChangedEventHandler(ChessBoardHelper_GridImagesChangedEvent);
+            ChessBoardHelper.ChessmanImagesChangedEvent += new ChessBoardHelper.ChessmanImagesChangedEventHandler(ChessBoardHelper_ChessmanImagesChangedEvent);
+            ChessBoardHelper.ChessmansChangedEvent += new ChessBoardHelper.ChessmansChangedEventHandler(ChessBoardHelper_ChessmansChangedEvent);
         }
-
-        protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
-        {
-            this.BackgroundImage = e.BoardImage;
-            this.Invalidate();
-        }
-
-
-        public ChessGame OwnedChessGame { get; private set; }
 
         public void LoadGame()
         {
             this.OwnedChessGame = new ChessGame();
-            this.ChessGrids = this.OwnedChessGame.LoadGrids();
         }
 
-        protected bool HasGridImage { get; private set; }
+        /// <summary>
+        /// 棋盘左上角X坐标
+        /// </summary>
+        protected int _XofPanel = 0;
+        /// <summary>
+        /// 棋盘左上角Y坐标
+        /// </summary>
+        protected int _YofPanel = 0;
+        /// <summary>
+        /// 矩形宽度
+        /// </summary>
+        protected int _rectangleWidth = 0;
+        /// <summary>
+        /// 矩形高度
+        /// </summary>
+        protected int _rectangleHeight = 0;
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
+        }
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            base.OnPaintBackground(pevent);
+            Graphics g = pevent.Graphics;
 
+            ChessBoard.PaintChessBoard
+                (g, this.ChessRectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
+
+        }
+
+        protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
+        {
+            if (this.HasGridImage)
+                this.BackgroundImage = ChessBoardHelper.BoardImage;
+            else
+                this.BackColor = Color.Peru;
+            this.Invalidate();
+        }
+
+        protected virtual void ChessBoardHelper_ChessmansChangedEvent(ChessBoardHelper.ChessmansChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        protected virtual void ChessBoardHelper_GridImagesChangedEvent(ChessBoardHelper.GridImagesChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        protected virtual void ChessBoardHelper_ChessmanImagesChangedEvent(ChessBoardHelper.ChessmanImagesChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        #region static
+
+        /// <summary>
+        /// 仅供棋盘绘制时声明的矩形变量。防止反复在OnPaint事件中声明造成内存碎片。
+        /// </summary>
+        protected static Rectangle _currRect = Rectangle.Empty;
+
+        /// <summary>
+        /// 绘制棋盘
+        /// </summary>
+        /// <param name="g">Graphics</param>
+        /// <param name="rectangles">64个棋格矩形集合</param>
+        /// <param name="hasGridImage">是否有棋格矩形背景图片</param>
+        /// <param name="XofPanel">棋盘左上角X坐标</param>
+        /// <param name="YofPanel">棋盘左上角Y坐标</param>
+        /// <param name="rectangleWidth">矩形宽度</param>
+        /// <param name="rectangleHeight">矩形高度</param>
+        private static void PaintChessBoard
+            (Graphics g, Rectangle[,] rectangles, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
+        {
+            for (int x = 1; x <= rectangles.GetLength(0); x++)
+            {
+                for (int y = 1; y <= rectangles.GetLength(1); y++)
+                {
+                    _currRect = ChessBoard.GetRectangle(x, y, XofPanel, YofPanel, rectangleWidth, rectangleHeight);
+                    rectangles[x - 1, y - 1] = _currRect;
+                    if ((x + y) % 2 == 0)
+                    {
+                        g.DrawImage(ChessBoardHelper.WhiteGridImage, _currRect);
+                        g.DrawRectangle(Pens.Black, _currRect);
+#if DEBUG
+                        g.DrawString(string.Format("{0},{1}", x, y), new Font("Arial", 6.5F), Brushes.Black, _currRect.Location);
+#endif
+                    }
+                    else
+                    {
+                        g.DrawImage(ChessBoardHelper.BlackGridImage, _currRect);
+                        g.DrawRectangle(Pens.Black, _currRect);
+#if DEBUG
+                        g.DrawString(string.Format("{0},{1}", x, y), new Font("Arial", 6.5F), Brushes.White, _currRect.Location);
+#endif
+                    }
+                }
+            }
+            _currRect = Rectangle.Empty;
+        }
+
+        /// <summary>
+        /// 根据棋盘棋格位置计算出实际棋格的绝对位置信息
+        /// </summary>
+        /// <param name="x">棋格X坐标</param>
+        /// <param name="y">棋格Y坐标</param>
+        /// <param name="XofPanel">棋盘左上角X坐标</param>
+        /// <param name="YofPanel">棋盘左上角Y坐标</param>
+        /// <param name="rectangleWidth">矩形宽度</param>
+        /// <param name="rectangleHeight">矩形高度</param>
+        /// <returns></returns>
+        private static Rectangle GetRectangle
+            (int x, int y, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
+        {
+            Point point = new Point((x - 1) * rectangleWidth + XofPanel, (y - 1) * rectangleHeight + YofPanel);
+            Size size = new Size(rectangleWidth, rectangleHeight);
+            return new Rectangle(point, size);
+        }
+
+        /// <summary>
+        /// 根据桌面的尺寸获取棋格的相关尺寸信息
+        /// </summary>
+        /// <param name="panelSize">桌面大小</param>
+        /// <param name="offsetPanelX">棋盘在桌面的左上角的X坐标</param>
+        /// <param name="offsetPanelY">棋盘在桌面的左上角的Y坐标</param>
+        /// <param name="rectangleWidth">棋盘矩形的宽度</param>
+        /// <param name="rectangleHeight">棋盘矩形的高度</param>
+        private static void GetRectangleSize
+            (Size panelSize, out int XofPanel, out int YofPanel, out int rectangleWidth, out int rectangleHeight)
+        {
+            if (panelSize.Height <= panelSize.Width)
+            {
+                rectangleWidth = (int)(panelSize.Height / 10);
+                rectangleHeight = rectangleWidth;
+                XofPanel = (int)((panelSize.Width - (rectangleWidth * 8)) / 2);
+                YofPanel = rectangleWidth;
+            }
+            else
+            {
+                rectangleWidth = (int)(panelSize.Width / 10);
+                rectangleHeight = rectangleWidth;
+                XofPanel = rectangleWidth;
+                YofPanel = (int)((panelSize.Height - (rectangleWidth * 8)) / 2);
+            }
+        }
+
+        #endregion
     }
 
 }
@@ -80,137 +229,7 @@ namespace Gean.UI.ChessControl
             return this._ownedChessGame;
         }
 
-        /// <summary>
-        /// 设置棋格的背景图片
-        /// </summary>
-        /// <param name="white">白棋格的背景图片</param>
-        /// <param name="black">黑棋格的背景图片</param>
-        public void SetGridImage(Image white, Image black)
-        {
-            this._whiteGridImage = white;
-            this._blackGridImage = black;
-            if (white != null && black != null)
-            {
-                this._hasGridImage = true;
-            }
-        }
 
-        /// <summary>
-        /// 设置默认的棋子图片
-        /// </summary>
-        public void SetChessmanImage()
-        {
-            if (this._ownedChessGame == null)
-                return;
-            foreach (Chessman man in this._ownedChessGame.Chessmans)
-            {
-                switch (man.ChessmanType)
-                {
-                    #region case
-                    case Enums.ChessmanType.Rook:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_rook;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_rook;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.Knight:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_knight;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_knight;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.Bishop:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_bishop;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_bishop;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.Queen:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_queen;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_queen;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.King:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_king;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_king;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.Pawn:
-                        switch (man.ChessmanSide)
-                        {
-                            case Enums.ChessmanSide.White:
-                                man.BackgroundImage = ChessResource.white_pawn;
-                                break;
-                            case Enums.ChessmanSide.Black:
-                                man.BackgroundImage = ChessResource.black_pawn;
-                                break;
-                            case Enums.ChessmanSide.None:
-                            default:
-                                break;
-                        }
-                        break;
-                    case Enums.ChessmanType.None:
-                    default:
-                        break;
-                    #endregion
-                }
-            }
-        }
-        /// <summary>
-        /// 设置棋子的背景图片
-        /// </summary>
-        /// <param name="images">背景图片集合</param>
-        public void SetChessmanImage(ChessmanImages images)
-        {
-            foreach (Chessman man in this._ownedChessGame.Chessmans)
-            {
-                man.BackgroundImage = images[man.ChessmanSide, man.ChessmanType];
-            }
-        }
-
-        #endregion
 
         #region Event Method
 
