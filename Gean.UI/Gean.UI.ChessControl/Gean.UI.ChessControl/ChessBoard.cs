@@ -15,11 +15,17 @@ namespace Gean.UI.ChessControl
         /// 棋盘上所有的棋格(8*8)
         /// </summary>
         protected virtual Rectangle[,] ChessRectangles { get; private set; }
-        protected virtual bool HasGridImage
-        {
-            get { return ChessBoardHelper.BoardImage != null; }
-        }
         public ChessGame OwnedChessGame { get; private set; }
+        public Enums.ChessmanSide CurrChessSide { get; private set; }
+
+        /// <summary>
+        /// 获取或设置鼠标置入棋格后棋格高亮显示。true高亮，false无高亮。
+        /// </summary>
+        public bool EnableGridHighlight { get; set; }
+        /// <summary>
+        /// 获取或设置选中棋子后，该棋子可能的行棋路径高亮显示。true高亮，false无高亮。
+        /// </summary>
+        public bool EnablePathHighlight { get; set; }
 
         /// <summary>
         /// 构造函数
@@ -27,11 +33,9 @@ namespace Gean.UI.ChessControl
         public ChessBoard()
         {
             this.DoubleBuffered = true;
+            this.BackColor = Color.Chocolate;
+            this.BackgroundImage = ChessBoardHelper.BoardImage;
             this.ChessRectangles = new Rectangle[8, 8];
-            if (this.HasGridImage)
-                this.BackgroundImage = ChessBoardHelper.BoardImage;
-            else
-                this.BackColor = Color.Peru;
 
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
@@ -46,6 +50,9 @@ namespace Gean.UI.ChessControl
         public void LoadGame()
         {
             this.OwnedChessGame = new ChessGame();
+            this.CurrChessSide = Enums.ChessmanSide.White;
+            this.InitializeChessmans();
+            this.RegisterChessmans(this.Chessmans);
         }
         /// <summary>
         /// 载入新棋局
@@ -53,14 +60,19 @@ namespace Gean.UI.ChessControl
         /// <param name="chessmans">指定的棋子集合，可能是残局或中盘棋局</param>
         public void LoadGame(IEnumerable<Chessman> chessmans)
         {
-            this.LoadGame();
-            this.ChangeChessmans(chessmans);
-            this.Invalidate();
+            this.OwnedChessGame = new ChessGame();
+            this.CurrChessSide = Enums.ChessmanSide.White;
+            this.InitializeChessmans(chessmans);
+            this.RegisterChessmans(this.Chessmans);
         }
 
         #region Chessman List
 
         protected List<Chessman> Chessmans { get; private set; }
+
+        /// <summary>
+        /// 初始化默认棋子集合（32个棋子）
+        /// </summary>
         protected virtual void InitializeChessmans()
         {
             this.Chessmans = new List<Chessman>(32);
@@ -93,19 +105,27 @@ namespace Gean.UI.ChessControl
             this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
             this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
             #endregion
-            this.Chessmans.TrimExcess();
+            this.Invalidate();
         }
 
         /// <summary>
-        /// 更换棋子集合
+        /// 初始化棋子集合
         /// </summary>
-        /// <param name="images">棋子集合</param>
-        protected virtual void ChangeChessmans(IEnumerable<Chessman> chessmans)
+        /// <param name="images">一个指定棋子集合</param>
+        protected virtual void InitializeChessmans(IEnumerable<Chessman> chessmans)
         {
-            this.Chessmans.Clear();
+            this.Chessmans = new List<Chessman>(32);
             this.Chessmans.AddRange(chessmans);
             this.Chessmans.TrimExcess();
+            this.Invalidate();
         }
+
+        protected virtual void RegisterChessmans(IEnumerable<Chessman> chessmans)
+        {
+            foreach (Chessman man in chessmans)
+                man.ChessSteps.Peek().TargetGrid.MoveIn(man, Enums.Action.Opennings);
+        }
+
 
         #endregion
 
@@ -131,19 +151,46 @@ namespace Gean.UI.ChessControl
             base.OnResize(e);
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
         }
-        protected override void OnPaintBackground(PaintEventArgs pevent)
+        protected override void OnPaintBackground(PaintEventArgs pe)
         {
-            base.OnPaintBackground(pevent);
-            Graphics g = pevent.Graphics;
-            ChessBoard.PaintChessBoard(g, this.ChessRectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
+            base.OnPaintBackground(pe);
+            Graphics g = pe.Graphics;
+            ChessBoard.PaintChessBoardGrid(g, this.ChessRectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
+            if (this.OwnedChessGame != null && this.Chessmans != null)
+            {
+                ChessBoard.PaintChessmanImage(g, this.Chessmans, this);
+            }
+        }
+
+        private ChessGrid _enterGrid;
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (this.OwnedChessGame == null)
+                return;
+            for (int x = 1; x <= 8; x++)
+            {
+                for (int y = 1; y <= 8; y++)
+                {
+                    Rectangle rect = this.ChessRectangles[x - 1, y - 1];
+                    if (!rect.Contains(e.Location))
+                        continue;
+                    _enterGrid = this.OwnedChessGame[x, y];
+                    if (Chessman.IsNullOrEmpty(_enterGrid.OwnedChessman))
+                        continue;
+                    Graphics g = this.CreateGraphics();
+                    g.DrawString(_enterGrid.OwnedChessman.ToSimpleString(), new Font("Arial", 12F), Brushes.Black, rect.Location);
+                }
+            }
+        }
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
         }
 
         protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
         {
-            if (this.HasGridImage)
-                this.BackgroundImage = ChessBoardHelper.BoardImage;
-            else
-                this.BackColor = Color.Peru;
+            this.BackgroundImage = e.BoardImage;
             this.Invalidate();
         }
         protected virtual void ChessBoardHelper_GridImagesChangedEvent(ChessBoardHelper.GridImagesChangedEventArgs e)
@@ -160,7 +207,15 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 仅供棋盘绘制时声明的矩形变量。防止反复在OnPaint事件中声明造成内存碎片。
         /// </summary>
-        protected static Rectangle _currRect = Rectangle.Empty;
+        private static Rectangle _currRect = Rectangle.Empty;
+        /// <summary>
+        /// 仅供棋盘绘制时声明的棋子背景图片Image变量。防止反复在OnPaint事件中声明造成内存碎片。
+        /// </summary>
+        private static Image _currManImage;
+        /// <summary>
+        /// 仅供棋盘绘制时声明棋子背景图片的矩形变量。防止反复在OnPaint事件中声明造成内存碎片。
+        /// </summary>
+        private static Rectangle _currManRect;
 
         /// <summary>
         /// 绘制棋盘
@@ -172,12 +227,12 @@ namespace Gean.UI.ChessControl
         /// <param name="YofPanel">棋盘左上角Y坐标</param>
         /// <param name="rectangleWidth">矩形宽度</param>
         /// <param name="rectangleHeight">矩形高度</param>
-        private static void PaintChessBoard
+        private static void PaintChessBoardGrid
             (Graphics g, Rectangle[,] rectangles, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
         {
-            for (int x = 1; x <= rectangles.GetLength(0); x++)
+            for (int x = 1; x <= 8; x++)
             {
-                for (int y = 1; y <= rectangles.GetLength(1); y++)
+                for (int y = 1; y <= 8; y++)
                 {
                     _currRect = ChessBoard.GetRectangle(x, y, XofPanel, YofPanel, rectangleWidth, rectangleHeight);
                     rectangles[x - 1, y - 1] = _currRect;
@@ -202,28 +257,40 @@ namespace Gean.UI.ChessControl
             _currRect = Rectangle.Empty;
         }
 
-        private static void PaintChessmanImage(Graphics g, ChessGame game, ChessGrid[,] grids, int width)
+        /// <summary>
+        /// 用指定的棋子图片集合绘制棋子
+        /// </summary>
+        /// <param name="g">Graphics</param>
+        /// <param name="chessmans">指定的棋子图片集合</param>
+        /// <param name="board">传递引用的ChessBoard类型</param>
+        private static void PaintChessmanImage(Graphics g, List<Chessman> chessmans, ChessBoard board)
         {
-            if (game != null)
+            foreach (Chessman man in chessmans)
             {
-//                foreach (Chessman man in game.Chessmans)
-//                {
-//                    if (man.IsKilled)
-//                        continue;
-//                    ChessGrid point = man.ChessSteps.Peek().TargetGrid;
-//                    ChessGrid rid = grids[point.PointX - 1, 8 - point.PointY];
-//                    int offset = (int)(width * 0.2);//棋子填充比棋格小20%，以保证美观
-//                    Rectangle rect = new Rectangle();
-//                    rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
-//                    rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
-//                    if (man.BackgroundImage != null)
-//                        g.DrawImage(man.BackgroundImage, rect);
-//#if DEBUG
-//                    else
-//                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, rect);
-//#endif
-//                }
+                if (man.IsKilled)
+                    continue;
+
+                ChessGrid chessGrid = man.ChessSteps.Peek().TargetGrid;
+                ChessBoard.GetChessmanRectangle(board, chessGrid);
+                _currManImage = ChessBoardHelper.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
+                g.DrawImage(_currManImage, _currManRect);
+
             }
+            _currManRect = Rectangle.Empty;
+            _currManImage = null;
+        }
+
+        /// <summary>
+        /// 获取棋子将绘制的矩形(棋子填充比棋格小15%，以保证美观)
+        /// </summary>
+        /// <param name="board">传递引用的ChessBoard类型</param>
+        /// <param name="chessGrid">ChessGrid</param>
+        private static void GetChessmanRectangle(ChessBoard board, ChessGrid chessGrid)
+        {
+            int offset = (int)(board._rectangleWidth * 0.15);//棋子填充比棋格小20%，以保证美观
+            Rectangle rectangle = board.ChessRectangles[chessGrid.PointX - 1, chessGrid.PointY - 1];
+            _currManRect.Location = new Point(rectangle.X + offset, rectangle.Y + offset);
+            _currManRect.Size = new Size(rectangle.Width - offset * 2, rectangle.Height - offset * 2);
         }
 
         /// <summary>

@@ -161,7 +161,7 @@ namespace Gean.Wrapper.Chess
         private void MoveOut(bool isKill)
         {
             Chessman man = this.OwnedChessman;//棋格中的棋子
-
+            man.IsKilled = isKill;//置该棋子的死活棋开关为“被杀死”状态
             //注册动子前事件
             if (!isKill)//如果移除的棋子是被杀死，将不再激活移除事件
                 OnMoveOutBefore(new MoveEventArgs(man));
