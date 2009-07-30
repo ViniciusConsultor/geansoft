@@ -169,6 +169,12 @@ namespace Gean.UI.ChessControl
             OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardHelper.ChessmanImages));
         }
 
+        internal static Image GetChessmanImage(Enums.ChessmanSide chessmanSide, Enums.ChessmanType chessmanType)
+        {
+            ChessmanState state = new ChessmanState(chessmanSide, chessmanType);
+            return ChessmanImages[state];
+        }
+
         /// <summary>
         /// 更换棋子的背景图片集合
         /// </summary>
@@ -202,7 +208,6 @@ namespace Gean.UI.ChessControl
         }
 
         #endregion
-
 
     }
 }

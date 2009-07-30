@@ -20,7 +20,7 @@ namespace Gean.UI.ChessControl.Demo
             InitializeComponent();
             this._board.Dock = DockStyle.Fill;
             this._board.BringToFront();
-            this._splitContainer.Panel2.Controls.Add(_board);
+            this._splitContainer.Panel1.Controls.Add(_board);
 
         }
 
@@ -30,9 +30,23 @@ namespace Gean.UI.ChessControl.Demo
             this._propertyGrid.SelectedObject = this._board; 
         }
 
-        private void _openingsMenuButton_Click(object sender, EventArgs e)
+        private void 开局ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this._board.LoadGame();
+        }
 
+        private void 有棋测试ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this._actionListBox.Items.Clear();
+            for (int x = 1; x <= 8; x++)
+            {
+                for (int y = 1; y <= 8; y++)
+                {
+                    this._actionListBox.Items.Add(x.ToString() + " " + y.ToString());
+                    if (this._board.OwnedChessGame[x, y].OwnedChessman != null)
+                        this._actionListBox.Items.Add("  +!!!!!! " + x.ToString() + " " + y.ToString() + " !!!!!!");
+                }
+            }
         }
     }
 

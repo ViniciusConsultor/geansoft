@@ -17,6 +17,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessGame()
         {
+            this.LoadGrids();
             this.Record = new ChessRecord();
         }
 
