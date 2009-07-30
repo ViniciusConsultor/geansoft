@@ -38,13 +38,76 @@ namespace Gean.UI.ChessControl
             ChessBoardHelper.BoardImageChangedEvent += new ChessBoardHelper.BoardImageChangedEventHandler(ChessBoardHelper_BoardImageChangedEvent);
             ChessBoardHelper.GridImagesChangedEvent += new ChessBoardHelper.GridImagesChangedEventHandler(ChessBoardHelper_GridImagesChangedEvent);
             ChessBoardHelper.ChessmanImagesChangedEvent += new ChessBoardHelper.ChessmanImagesChangedEventHandler(ChessBoardHelper_ChessmanImagesChangedEvent);
-            ChessBoardHelper.ChessmansChangedEvent += new ChessBoardHelper.ChessmansChangedEventHandler(ChessBoardHelper_ChessmansChangedEvent);
         }
 
+        /// <summary>
+        /// 载入新棋局
+        /// </summary>
         public void LoadGame()
         {
             this.OwnedChessGame = new ChessGame();
         }
+        /// <summary>
+        /// 载入新棋局
+        /// </summary>
+        /// <param name="chessmans">指定的棋子集合，可能是残局或中盘棋局</param>
+        public void LoadGame(IEnumerable<Chessman> chessmans)
+        {
+            this.LoadGame();
+            this.ChangeChessmans(chessmans);
+            this.Invalidate();
+        }
+
+        #region Chessman List
+
+        protected List<Chessman> Chessmans { get; private set; }
+        protected virtual void InitializeChessmans()
+        {
+            this.Chessmans = new List<Chessman>(32);
+            #region
+            //兵
+            for (int i = 1; i <= 8; i++)
+            {
+                this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
+                this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
+            }
+            //王
+            this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
+            this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
+            //后
+            this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
+            this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
+            //车
+            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            //马
+            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            //象
+            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            #endregion
+            this.Chessmans.TrimExcess();
+        }
+
+        /// <summary>
+        /// 更换棋子集合
+        /// </summary>
+        /// <param name="images">棋子集合</param>
+        protected virtual void ChangeChessmans(IEnumerable<Chessman> chessmans)
+        {
+            this.Chessmans.Clear();
+            this.Chessmans.AddRange(chessmans);
+            this.Chessmans.TrimExcess();
+        }
+
+        #endregion
 
         /// <summary>
         /// 棋盘左上角X坐标
@@ -72,10 +135,7 @@ namespace Gean.UI.ChessControl
         {
             base.OnPaintBackground(pevent);
             Graphics g = pevent.Graphics;
-
-            ChessBoard.PaintChessBoard
-                (g, this.ChessRectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
-
+            ChessBoard.PaintChessBoard(g, this.ChessRectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
         }
 
         protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
@@ -86,20 +146,13 @@ namespace Gean.UI.ChessControl
                 this.BackColor = Color.Peru;
             this.Invalidate();
         }
-
-        protected virtual void ChessBoardHelper_ChessmansChangedEvent(ChessBoardHelper.ChessmansChangedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
         protected virtual void ChessBoardHelper_GridImagesChangedEvent(ChessBoardHelper.GridImagesChangedEventArgs e)
         {
-            //throw new NotImplementedException();
+            this.Invalidate();
         }
-
         protected virtual void ChessBoardHelper_ChessmanImagesChangedEvent(ChessBoardHelper.ChessmanImagesChangedEventArgs e)
         {
-            //throw new NotImplementedException();
+            this.Invalidate();
         }
 
         #region static
@@ -147,6 +200,30 @@ namespace Gean.UI.ChessControl
                 }
             }
             _currRect = Rectangle.Empty;
+        }
+
+        private static void PaintChessmanImage(Graphics g, ChessGame game, ChessGrid[,] grids, int width)
+        {
+            if (game != null)
+            {
+//                foreach (Chessman man in game.Chessmans)
+//                {
+//                    if (man.IsKilled)
+//                        continue;
+//                    ChessGrid point = man.ChessSteps.Peek().TargetGrid;
+//                    ChessGrid rid = grids[point.PointX - 1, 8 - point.PointY];
+//                    int offset = (int)(width * 0.2);//棋子填充比棋格小20%，以保证美观
+//                    Rectangle rect = new Rectangle();
+//                    rect.Location = new Point(rid.OwnedRectangle.X + offset, rid.OwnedRectangle.Y + offset);
+//                    rect.Size = new Size(rid.OwnedRectangle.Width - offset * 2, rid.OwnedRectangle.Height - offset * 2);
+//                    if (man.BackgroundImage != null)
+//                        g.DrawImage(man.BackgroundImage, rect);
+//#if DEBUG
+//                    else
+//                        g.DrawString(man.ToSimpleString(), new Font("Arial Black", 15F), Brushes.Red, rect);
+//#endif
+//                }
+            }
         }
 
         /// <summary>
