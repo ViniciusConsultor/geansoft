@@ -8,11 +8,9 @@ namespace Gean.Wrapper.Chess
 {
     /// <summary>
     /// 一个针对国际象棋棋格的具体似Point描述类型。
-    /// 该类型
-    /// 1.组合了一个Rectangle类型;
-    /// 2.声明了动子和落子方法;
-    /// 3.注册了棋子的动子、落子、杀子事件。
-    /// Gean: 2009-07-28 11:55:01
+    /// 1.声明了动子和落子方法;
+    /// 2.注册了棋子的动子、落子、杀子事件。
+    /// Gean: 2009-07-30 18:18:37
     /// </summary>
     public sealed class ChessGrid
     {
@@ -24,8 +22,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="pointX">棋格的横坐标</param>
         /// <param name="pointY">棋格的纵坐标</param>
-        /// <param name="Rectangle">棋格的实际计算机矩形</param>
-        public ChessGrid(int pointX, int pointY, Rectangle rect)
+        public ChessGrid(int pointX, int pointY)
         {
             #region Exception
             if (!ChessGrid.Verify(pointX, pointY))
@@ -38,27 +35,7 @@ namespace Gean.Wrapper.Chess
             this.PointY = pointY;
             this.PointCharX = Utility.IntToChar(pointY);
             this.GridSide = ChessGrid.GetGridSide(pointY, pointY);
-
-            this.OwnedRectangle = rect;
         }
-
-        /// <summary>
-        /// 一种国际象棋棋格的表示方法
-        /// </summary>
-        /// <param name="pointX">棋格的横坐标</param>
-        /// <param name="pointY">棋格的纵坐标</param>
-        /// <param name="location">棋格的实际计算机坐标对</param>
-        /// <param name="size">棋格的实际计算机长宽值</param>
-        public ChessGrid(int pointX, int pointY, Point location, Size size)
-            : this(pointX, pointY, new Rectangle(location, size)) { }
-
-        /// <summary>
-        /// 一种国际象棋棋格的表示方法
-        /// </summary>
-        /// <param name="x">棋格的横坐标</param>
-        /// <param name="y">棋格的纵坐标</param>
-        internal ChessGrid(int pointX, int pointY)
-            : this(pointX, pointY, Rectangle.Empty) { }
 
         /// <summary>
         /// 一种国际象棋棋格的表示方法
@@ -66,7 +43,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="c">棋格的横坐标的字符</param>
         /// <param name="y">棋格的纵坐标</param>
         internal ChessGrid(char c, int pointY)
-            : this(Utility.CharToInt(c), pointY, Rectangle.Empty) { }
+            : this(Utility.CharToInt(c), pointY) { }
 
         #endregion
 
@@ -208,62 +185,6 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region Inner Rectangle
-
-        /// <summary>
-        /// 该实体棋格的实际矩形
-        /// </summary>
-        public Rectangle OwnedRectangle { get; private set; }
-        public Point RectangleLocation
-        {
-            get { return this.OwnedRectangle.Location; }
-        }
-        public Size RectangleSize
-        {
-            get { return this.OwnedRectangle.Size; }
-        }
-        public int RectangleX
-        {
-            get { return this.OwnedRectangle.X; }
-        }
-        public int RectangleY
-        {
-            get { return this.OwnedRectangle.Y; }
-        }
-        public int RectangleHeight
-        {
-            get { return this.OwnedRectangle.Height; }
-        }
-        public int RectangleWidth
-        {
-            get { return this.OwnedRectangle.Width; }
-        }
-        /// <summary>
-        /// 获取 x 坐标，该坐标是此 Rectangle 结构的 Rectangle.X 与 Rectangle.Width 属性值之和。
-        /// </summary>
-        public int RectangleRight
-        {
-            get { return this.OwnedRectangle.Right; }
-        }
-        /// <summary>
-        /// 获取 y 坐标，该坐标是此 Rectangle 结构的 Rectangle.Y 与 Rectangle.Height 属性值之和。
-        /// </summary>
-        public int RectangleBottom
-        {
-            get { return this.OwnedRectangle.Bottom; }
-        }
-
-        public bool RectangleContains(Point pt)
-        {
-            return this.OwnedRectangle.Contains(pt);
-        }
-        public bool RectangleContains(int x, int y)
-        {
-            return this.OwnedRectangle.Contains(x, y);
-        }
-
-        #endregion
-
         #region Grid Point
 
         /// <summary>
@@ -342,13 +263,6 @@ namespace Gean.Wrapper.Chess
         #endregion
 
         #region static
-
-        private static Rectangle GetRectangle(int x, int y, int length, int offsetBoardX, int offsetBoardY, int pointX, int pointY)
-        {
-            Point point = new Point((x - 1) * length + offsetBoardX, (y - 1) * length + offsetBoardY);
-            Size size = new Size(length, length);
-            return new Rectangle(point, size);
-        }
 
         /// <summary>
         /// 返回一个为空的值。该变量为只读。
@@ -505,3 +419,58 @@ namespace Gean.Wrapper.Chess
 
     }
 }
+/*#region Inner Rectangle
+
+/// <summary>
+/// 该实体棋格的实际矩形
+/// </summary>
+public Rectangle OwnedRectangle { get; private set; }
+public Point RectangleLocation
+{
+    get { return this.OwnedRectangle.Location; }
+}
+public Size RectangleSize
+{
+    get { return this.OwnedRectangle.Size; }
+}
+public int RectangleX
+{
+    get { return this.OwnedRectangle.X; }
+}
+public int RectangleY
+{
+    get { return this.OwnedRectangle.Y; }
+}
+public int RectangleHeight
+{
+    get { return this.OwnedRectangle.Height; }
+}
+public int RectangleWidth
+{
+    get { return this.OwnedRectangle.Width; }
+}
+/// <summary>
+/// 获取 x 坐标，该坐标是此 Rectangle 结构的 Rectangle.X 与 Rectangle.Width 属性值之和。
+/// </summary>
+public int RectangleRight
+{
+    get { return this.OwnedRectangle.Right; }
+}
+/// <summary>
+/// 获取 y 坐标，该坐标是此 Rectangle 结构的 Rectangle.Y 与 Rectangle.Height 属性值之和。
+/// </summary>
+public int RectangleBottom
+{
+    get { return this.OwnedRectangle.Bottom; }
+}
+
+public bool RectangleContains(Point pt)
+{
+    return this.OwnedRectangle.Contains(pt);
+}
+public bool RectangleContains(int x, int y)
+{
+    return this.OwnedRectangle.Contains(x, y);
+}
+
+#endregion*/

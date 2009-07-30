@@ -14,12 +14,9 @@ namespace Gean.UI.ChessControl
         public static void Initialize()
         {
             ChessBoardHelper.ChessmanImages = new Dictionary<ChessmanState, Image>(12);
-            ChessBoardHelper.Chessmans = new List<Chessman>(32);
             ChessBoardHelper.InitializeBoardImage();
             ChessBoardHelper.InitializeGridImages();
             ChessBoardHelper.InitializeChessmanImages();
-            ChessBoardHelper.InitializeChessmans();
-            ChessBoardHelper.Chessmans.TrimExcess();
         }
 
         #region Board Image
@@ -206,77 +203,6 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-        #region Chessman List
-
-        private static List<Chessman> Chessmans { get; set; }
-
-        private static void InitializeChessmans()
-        {
-            //兵
-            for (int i = 1; i <= 8; i++)
-            {
-                ChessBoardHelper.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
-                ChessBoardHelper.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
-            }
-            //王
-            ChessBoardHelper.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
-            //后
-            ChessBoardHelper.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
-            //车
-            ChessBoardHelper.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            ChessBoardHelper.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //马
-            ChessBoardHelper.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            ChessBoardHelper.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //象
-            ChessBoardHelper.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            ChessBoardHelper.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            ChessBoardHelper.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-
-            //注册棋子集合更换事件
-            OnChessmansChanged(new ChessmansChangedEventArgs(ChessBoardHelper.Chessmans));
-        }
-
-        /// <summary>
-        /// 更换棋子集合
-        /// </summary>
-        /// <param name="images">棋子集合</param>
-        public static void ChangeChessmans(IEnumerable<Chessman> chessmans)
-        {
-            ChessBoardHelper.Chessmans.Clear();
-            ChessBoardHelper.Chessmans.AddRange(chessmans);
-
-            //注册棋子集合更换事件
-            OnChessmansChanged(new ChessmansChangedEventArgs(ChessBoardHelper.Chessmans));
-        }
-
-        /// <summary>
-        /// 在棋子集合发生更换时发生
-        /// </summary>
-        public static event ChessmansChangedEventHandler ChessmansChangedEvent;
-        private static void OnChessmansChanged(ChessmansChangedEventArgs e)
-        {
-            if (ChessmansChangedEvent != null)
-                ChessmansChangedEvent(e);
-        }
-        public delegate void ChessmansChangedEventHandler(ChessmansChangedEventArgs e);
-        public class ChessmansChangedEventArgs : EventArgs
-        {
-            public List<Chessman> Chessmans { get; private set; }
-            public ChessmansChangedEventArgs(List<Chessman> chessmans)
-            {
-                this.Chessmans = chessmans;
-            }
-        }
-
-        #endregion
 
     }
 }

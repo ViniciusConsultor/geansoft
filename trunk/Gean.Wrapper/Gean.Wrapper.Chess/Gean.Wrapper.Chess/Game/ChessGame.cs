@@ -59,35 +59,6 @@ namespace Gean.Wrapper.Chess
             return this._chessGrids;
         }
 
-        /// <summary>
-        /// 初始化开局棋子(32个棋子)。
-        /// Opennings：n. 开局
-        /// </summary>
-        public virtual void LoadOpennings()
-        {
-            //this.LoadOpennings(Chessman.GetOpennings().ToArray());
-        }
-        /// <summary>
-        /// 初始化指定的开局棋子集合，直接使用该方法一般的场合为残局类，中盘类棋局
-        /// Opennings：n. 开局
-        /// </summary>
-        public virtual void LoadOpennings(IEnumerable<Chessman> chessmans)
-        {
-            //注册棋局即将开始事件
-            OnGameStarting(new ChessGameEventArgs(this));
-
-            foreach (Chessman man in chessmans)
-            {
-                ChessStep step = man.ChessSteps.Peek();
-                step.TargetGrid.MoveIn(man, Enums.Action.Opennings);
-            }
-
-            //注册棋局开局设置结束事件
-            OnSetOpenningsFinished(new ChessGameEventArgs(this)); 
-            //注册棋局开始后事件
-            OnGameStarted(new ChessGameEventArgs(this));
-        }
-
         #region IEnumerable<Chesspoint> 成员
 
         public IEnumerator<ChessGrid> GetEnumerator()
