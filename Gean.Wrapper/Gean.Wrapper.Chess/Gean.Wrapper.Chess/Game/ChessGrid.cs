@@ -57,23 +57,23 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="action">该棋步的动作</param>
-        public ChessStep MoveIn(Chessman chessman, Enums.Action action)
+        public ChessStep MoveIn(ChessGame game, Chessman chessman, Enums.Action action)
         {
             //指定的棋子为空或动作为空
             if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.None)
                 throw new ArgumentNullException();
-            ChessStep step = chessman.ChessSteps.Peek();
-            ChessGrid sourceGrid = step.TargetGrid;
+            ChessPoint sourcePoint = chessman.ChessPoints.Peek();
+            ChessPoint targetPoint = ChessPoint.Empty;
 
             switch (action)
             {
                 case Enums.Action.General:
                 case Enums.Action.Check:
-                    this.MoveInByGeneralAction(chessman);
+                    this.MoveInByGeneralAction(game, chessman);
                     break;
                 case Enums.Action.Kill:
                 case Enums.Action.KillAndCheck:
-                    this.MoveInByKillAction(chessman);
+                    this.MoveInByKillAction(game, chessman);
                     break;
                 case Enums.Action.KingSideCastling:
                     this.MoveInByKingSideCastlingAction();
@@ -92,38 +92,39 @@ namespace Gean.Wrapper.Chess
 
             if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
             {
-                step = new ChessStep(action, chessman.ChessmanType, sourceGrid, this);
                 //将棋步注册到该棋子的棋步集合中
-                chessman.ChessSteps.Push(step);
+                targetPoint = new ChessPoint(this.PointX, this.PointY);
+                chessman.ChessPoints.Push(new ChessPoint(this.PointX, this.PointY));
             }
-            return step;
+            return new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
         }
 
         /// <summary>
         /// 对指定的棋子执行的动子并落子的方法(含“杀棋”动作和“杀棋并将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByKillAction(Chessman chessman)
+        private void MoveInByKillAction(ChessGame game, Chessman chessman)
         {
             //1.注册棋子即将被杀死事件
-            OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
+            OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessPoints.Peek(), chessman));
             //2.移除被杀死的棋子
             this.MoveOut(true);
             //3.注册棋子被杀死后的事件
-            OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessSteps.Peek().TargetGrid, chessman));
+            OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessPoints.Peek(), chessman));
 
             //4.调用落子方法
-            this.MoveInByGeneralAction(chessman);
+            this.MoveInByGeneralAction(game, chessman);
         }
 
         /// <summary>
         /// 对指定的棋子执行的动子并落子的一般性方法(含“将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByGeneralAction(Chessman chessman)
+        private void MoveInByGeneralAction(ChessGame game, Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
-            chessman.ChessSteps.Peek().TargetGrid.MoveOut(false);
+            ChessPoint point = chessman.ChessPoints.Peek();
+            game[point.X,point.Y].MoveOut(false);
 
             //2.注册落子前事件
             OnMoveInBefore(new MoveEventArgs(chessman));
@@ -391,7 +392,7 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 杀棋的棋来路所在的棋格(杀招的执行者(棋)所在棋格)
             /// </summary>
-            public ChessGrid ExecuteGrid { get; private set; }
+            public ChessPoint ExecutePoint { get; private set; }
             /// <summary>
             /// 杀棋的棋(杀招的执行者)
             /// </summary>
@@ -404,11 +405,11 @@ namespace Gean.Wrapper.Chess
             /// <param name="currChessman">被杀的棋</param>
             /// <param name="sourceGrid">杀棋的棋来路所在的棋格（杀棋的棋的源棋格）</param>
             /// <param name="sourceChessman">杀棋的棋</param>
-            public ChessmanKillEventArgs(ChessGrid killedGrid, Chessman killedChessman, ChessGrid executeGrid, Chessman executeChessman)
+            public ChessmanKillEventArgs(ChessGrid killedGrid, Chessman killedChessman, ChessPoint executePoint, Chessman executeChessman)
             {
                 this.KilledGrid = killedGrid;
                 this.KilledChessman = killedChessman;
-                this.ExecuteGrid = executeGrid;
+                this.ExecutePoint = executePoint;
                 this.ExecuteChessman = executeChessman;
             }
         }

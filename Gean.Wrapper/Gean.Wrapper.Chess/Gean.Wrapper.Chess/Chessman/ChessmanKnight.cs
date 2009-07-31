@@ -9,16 +9,14 @@ namespace Gean.Wrapper.Chess
         public ChessmanKnight(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Knight, side)
         {
-            ChessGrid rid = Chessman.GetOpenningsGrid(side, gridSide, 2, 7);
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
-            this.ChessSteps.Push(step);
+            ChessPoint point = Chessman.GetOpenningsPoint(side, gridSide, 2, 7);
+            this.ChessPoints.Push(point);
         }
 
-        public ChessmanKnight(Enums.ChessmanSide side, ChessGrid rid)
+        public ChessmanKnight(Enums.ChessmanSide side, ChessPoint point)
             : base(Enums.ChessmanType.Knight, side)
         {
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
-            this.ChessSteps.Push(step);
+            this.ChessPoints.Push(point);
         }
 
         public override void InitializeComponent()

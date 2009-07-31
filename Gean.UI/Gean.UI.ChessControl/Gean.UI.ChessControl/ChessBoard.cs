@@ -68,7 +68,7 @@ namespace Gean.UI.ChessControl
 
         #region Chessman List
 
-        protected List<Chessman> Chessmans { get; private set; }
+        internal virtual List<Chessman> Chessmans { get; private set; }
 
         /// <summary>
         /// 初始化默认棋子集合（32个棋子）
@@ -123,9 +123,11 @@ namespace Gean.UI.ChessControl
         protected virtual void RegisterChessmans(IEnumerable<Chessman> chessmans)
         {
             foreach (Chessman man in chessmans)
-                man.ChessSteps.Peek().TargetGrid.MoveIn(man, Enums.Action.Opennings);
+            {
+                ChessPoint point = man.ChessPoints.Peek();
+                this.OwnedChessGame[point.X, point.Y].MoveIn(this.OwnedChessGame, man, Enums.Action.Opennings);
+            }
         }
-
 
         #endregion
 
@@ -168,6 +170,21 @@ namespace Gean.UI.ChessControl
             base.OnMouseMove(e);
             if (this.OwnedChessGame == null)
                 return;
+            //foreach (Chessman man in this.Chessmans)
+            //{
+            //    if (man.IsKilled)
+            //        continue;
+            //    ChessGrid rid = man.ChessSteps.Peek().TargetGrid;
+            //    int x = rid.PointX;
+            //    int y = rid.PointX;
+            //    if (this.ChessRectangles[x - 1, y - 1].Contains(e.Location))
+            //    {
+            //        Graphics g = this.CreateGraphics();
+            //        Font font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            //        g.DrawString(man.ToSimpleString(), font,
+            //                     Brushes.Red, this.ChessRectangles[x - 1, y - 1].Location);
+            //    }
+            //}
             for (int x = 1; x <= 8; x++)
             {
                 for (int y = 1; y <= 8; y++)
@@ -178,8 +195,12 @@ namespace Gean.UI.ChessControl
                     _enterGrid = this.OwnedChessGame[x, y];
                     if (Chessman.IsNullOrEmpty(_enterGrid.OwnedChessman))
                         continue;
+
                     Graphics g = this.CreateGraphics();
-                    g.DrawString(_enterGrid.OwnedChessman.ToSimpleString(), new Font("Arial", 12F), Brushes.Black, rect.Location);
+                    Font font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    string str = string.Format("{0}:{1},{2}",
+                        _enterGrid.OwnedChessman.ToSimpleString(), x.ToString(), y.ToString());
+                    g.DrawString(str, font, Brushes.Red, this.ChessRectangles[x - 1, y - 1].Location);
                 }
             }
         }
@@ -230,9 +251,9 @@ namespace Gean.UI.ChessControl
         private static void PaintChessBoardGrid
             (Graphics g, Rectangle[,] rectangles, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
         {
-            for (int x = 1; x <= 8; x++)
+            for (int y = 1; y <= 8; y++)
             {
-                for (int y = 1; y <= 8; y++)
+                for (int x = 1; x <= 8; x++)
                 {
                     _currRect = ChessBoard.GetRectangle(x, y, XofPanel, YofPanel, rectangleWidth, rectangleHeight);
                     rectangles[x - 1, y - 1] = _currRect;
@@ -269,8 +290,8 @@ namespace Gean.UI.ChessControl
             {
                 if (man.IsKilled)
                     continue;
-
-                ChessGrid chessGrid = man.ChessSteps.Peek().TargetGrid;
+                ChessPoint point = man.ChessPoints.Peek();
+                ChessGrid chessGrid = board.OwnedChessGame[point.X, point.Y];
                 ChessBoard.GetChessmanRectangle(board, chessGrid);
                 _currManImage = ChessBoardHelper.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
                 g.DrawImage(_currManImage, _currManRect);
