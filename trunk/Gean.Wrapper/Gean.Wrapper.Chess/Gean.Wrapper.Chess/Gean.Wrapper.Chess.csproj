@@ -41,6 +41,7 @@
     <Compile Include="Base\BylawItemCollection.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
+    <Compile Include="Game\ChessPoint.cs" />
     <Compile Include="Game\ChessSequence.cs" />
     <Compile Include="JavaGUIBoard.cs" />
     <Compile Include="Game\ChessGame.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Base\Enums.cs" />
     <Compile Include="Game\ChessGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Chessman\ChessStepCollection.cs" />
+    <Compile Include="Game\ChessPointCollection.cs" />
     <Compile Include="Base\Utility.cs" />
     <Compile Include="Record\PGN\PGNLex.cs" />
   </ItemGroup>

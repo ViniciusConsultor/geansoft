@@ -9,25 +9,23 @@ namespace Gean.Wrapper.Chess
         public ChessmanQueen(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.Queen, side)
         {
-            ChessGrid rid = null;
+            ChessPoint point = ChessPoint.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    rid = new ChessGrid(4, 1);
+                    point = new ChessPoint(4, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    rid = new ChessGrid(4, 8);
+                    point = new ChessPoint(4, 8);
                     break;
             }
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
-            this.ChessSteps.Push(step);
+            this.ChessPoints.Push(point);
         }
 
-        public ChessmanQueen(Enums.ChessmanSide side, ChessGrid rid)
+        public ChessmanQueen(Enums.ChessmanSide side, ChessPoint point)
             : base(Enums.ChessmanType.Queen, side)
         {
-            ChessStep step = new ChessStep(Enums.Action.Opennings, this.ChessmanType, ChessGrid.Empty, rid);
-            this.ChessSteps.Push(step);
+            this.ChessPoints.Push(point);
         }
 
         public override void InitializeComponent()

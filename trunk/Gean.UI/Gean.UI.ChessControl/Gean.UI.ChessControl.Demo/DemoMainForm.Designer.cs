@@ -34,8 +34,8 @@
             this._propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开局ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.有棋测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
             this._rightSplitContainer.Panel1.SuspendLayout();
@@ -112,14 +112,6 @@
             this.开局ToolStripMenuItem.Text = "开局";
             this.开局ToolStripMenuItem.Click += new System.EventHandler(this.开局ToolStripMenuItem_Click);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 423);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(632, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
             // 有棋测试ToolStripMenuItem
             // 
             this.有棋测试ToolStripMenuItem.Name = "有棋测试ToolStripMenuItem";
@@ -127,6 +119,14 @@
             this.有棋测试ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.有棋测试ToolStripMenuItem.Text = "有棋测试";
             this.有棋测试ToolStripMenuItem.Click += new System.EventHandler(this.有棋测试ToolStripMenuItem_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 423);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(632, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // DemoMainForm
             // 
@@ -141,7 +141,6 @@
             this.Name = "DemoMainForm";
             this.ShowIcon = false;
             this.Text = "DemoMainForm";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this._splitContainer.Panel2.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
             this._rightSplitContainer.Panel1.ResumeLayout(false);
