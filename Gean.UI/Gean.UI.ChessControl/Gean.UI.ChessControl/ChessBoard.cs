@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Gean.Wrapper.Chess;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 
 namespace Gean.UI.ChessControl
 {
@@ -162,30 +163,46 @@ namespace Gean.UI.ChessControl
             {
                 ChessBoard.PaintChessmanImage(g, this.Chessmans, this);
             }
+            g.Flush();
         }
 
+        private Rectangle _enterRect;
         private ChessGrid _enterGrid;
+        private int _enterX = 0;
+        private int _enterY = 0;
+        private Rectangle _enterXYRect;
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             if (this.OwnedChessGame == null)
                 return;
+            Graphics g = this.CreateGraphics();
+            bool alreadyDraw = false;
             for (int x = 1; x <= 8; x++)
             {
                 for (int y = 1; y <= 8; y++)
                 {
-                    Rectangle rect = this.ChessRectangles[x - 1, y - 1];
-                    if (!rect.Contains(e.Location))
+                    _enterRect = this.ChessRectangles[x - 1, y - 1];
+                    if (!_enterRect.Contains(e.Location))
                         continue;
-                    _enterGrid = this.OwnedChessGame[x, y];
-                    if (Chessman.IsNullOrEmpty(_enterGrid.OwnedChessman))
-                        continue;
+                    
+                    if ((_enterX == x) && (_enterY == y))//鼠标还在矩形里
+                    {
+                        Console.WriteLine("x:" + x.ToString() + "y:" + x.ToString());
+                        _enterGrid = this.OwnedChessGame[x, y];
+                        if (Chessman.IsNullOrEmpty(_enterGrid.OwnedChessman))
+                            continue;
 
-                    Graphics g = this.CreateGraphics();
-                    Font font = new Font("Tahoma", 9F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
-                    string str = string.Format("{0}:{1},{2}",
-                        _enterGrid.OwnedChessman.ToSimpleString(), x.ToString(), y.ToString());
-                    g.DrawString(str, font, Brushes.Red, this.ChessRectangles[x - 1, y - 1].Location);
+                        g.DrawRectangle(Pens.Yellow, _enterRect);
+                        g.DrawRectangle(Pens.Yellow, _enterRect.X + 1, _enterRect.Y + 1, _enterRect.Width - 2, _enterRect.Height - 2);
+                        g.Flush();
+                        alreadyDraw = true;
+                    }
+                    else 
+                    {
+                        _enterX = x; _enterY = y;
+                        _enterXYRect = _enterRect;
+                    }
                 }
             }
         }
