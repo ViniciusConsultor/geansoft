@@ -170,21 +170,6 @@ namespace Gean.UI.ChessControl
             base.OnMouseMove(e);
             if (this.OwnedChessGame == null)
                 return;
-            //foreach (Chessman man in this.Chessmans)
-            //{
-            //    if (man.IsKilled)
-            //        continue;
-            //    ChessGrid rid = man.ChessSteps.Peek().TargetGrid;
-            //    int x = rid.PointX;
-            //    int y = rid.PointX;
-            //    if (this.ChessRectangles[x - 1, y - 1].Contains(e.Location))
-            //    {
-            //        Graphics g = this.CreateGraphics();
-            //        Font font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
-            //        g.DrawString(man.ToSimpleString(), font,
-            //                     Brushes.Red, this.ChessRectangles[x - 1, y - 1].Location);
-            //    }
-            //}
             for (int x = 1; x <= 8; x++)
             {
                 for (int y = 1; y <= 8; y++)
@@ -251,13 +236,13 @@ namespace Gean.UI.ChessControl
         private static void PaintChessBoardGrid
             (Graphics g, Rectangle[,] rectangles, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
         {
-            for (int y = 1; y <= 8; y++)
+            for (int x = 1; x <= 8; x++)
             {
-                for (int x = 1; x <= 8; x++)
+                for (int y = 1; y <= 8; y++)
                 {
                     _currRect = ChessBoard.GetRectangle(x, y, XofPanel, YofPanel, rectangleWidth, rectangleHeight);
                     rectangles[x - 1, y - 1] = _currRect;
-                    if ((x + y) % 2 == 0)
+                    if ((x + y) % 2 != 0)
                     {
                         g.DrawImage(ChessBoardHelper.WhiteGridImage, _currRect);
                         g.DrawRectangle(Pens.Black, _currRect);
@@ -327,7 +312,7 @@ namespace Gean.UI.ChessControl
         private static Rectangle GetRectangle
             (int x, int y, int XofPanel, int YofPanel, int rectangleWidth, int rectangleHeight)
         {
-            Point point = new Point((x - 1) * rectangleWidth + XofPanel, (y - 1) * rectangleHeight + YofPanel);
+            Point point = new Point((x - 1) * rectangleWidth + XofPanel, (8 - y) * rectangleHeight + YofPanel);
             Size size = new Size(rectangleWidth, rectangleHeight);
             return new Rectangle(point, size);
         }
