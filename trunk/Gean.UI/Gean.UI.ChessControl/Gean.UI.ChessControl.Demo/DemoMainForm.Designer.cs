@@ -34,7 +34,6 @@
             this._propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开局ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.有棋测试ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
@@ -96,8 +95,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.开局ToolStripMenuItem,
-            this.有棋测试ToolStripMenuItem});
+            this.开局ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(632, 24);
@@ -111,14 +109,6 @@
             this.开局ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.开局ToolStripMenuItem.Text = "开局";
             this.开局ToolStripMenuItem.Click += new System.EventHandler(this.开局ToolStripMenuItem_Click);
-            // 
-            // 有棋测试ToolStripMenuItem
-            // 
-            this.有棋测试ToolStripMenuItem.Name = "有棋测试ToolStripMenuItem";
-            this.有棋测试ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.有棋测试ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.有棋测试ToolStripMenuItem.Text = "有棋测试";
-            this.有棋测试ToolStripMenuItem.Click += new System.EventHandler(this.有棋测试ToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -141,6 +131,7 @@
             this.Name = "DemoMainForm";
             this.ShowIcon = false;
             this.Text = "DemoMainForm";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this._splitContainer.Panel2.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
             this._rightSplitContainer.Panel1.ResumeLayout(false);
@@ -162,7 +153,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem 开局ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 有棋测试ToolStripMenuItem;
     }
 }
 

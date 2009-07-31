@@ -119,7 +119,6 @@ namespace Gean.Wrapper.Chess
             }
             return sb.ToString().Trim();
         }
-
         public override int GetHashCode()
         {
             return unchecked
@@ -130,9 +129,11 @@ namespace Gean.Wrapper.Chess
                 this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
                 ));
         }
-
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+
             ChessStep step = (ChessStep)obj;
             if (this.Action != step.Action)
                 return false;
