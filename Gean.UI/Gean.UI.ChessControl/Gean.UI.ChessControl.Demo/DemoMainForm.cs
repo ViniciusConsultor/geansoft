@@ -22,6 +22,12 @@ namespace Gean.UI.ChessControl.Demo
             this._board.BringToFront();
             this._splitContainer.Panel1.Controls.Add(_board);
 
+            this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
+        }
+
+        void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)
+        {
+            this._actionListBox.Items.Add(e.ChessStep);//.ToString());
         }
 
         protected override void OnLoad(EventArgs e)
@@ -35,19 +41,6 @@ namespace Gean.UI.ChessControl.Demo
             this._board.LoadGame();
         }
 
-        private void 有棋测试ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this._actionListBox.Items.Clear();
-            for (int x = 1; x <= 8; x++)
-            {
-                for (int y = 1; y <= 8; y++)
-                {
-                    this._actionListBox.Items.Add(x.ToString() + " " + y.ToString());
-                    if (this._board.OwnedChessGame[x, y].OwnedChessman != null)
-                        this._actionListBox.Items.Add("  +!!!!!! " + x.ToString() + " " + y.ToString() + " !!!!!!");
-                }
-            }
-        }
     }
 
     static class First
