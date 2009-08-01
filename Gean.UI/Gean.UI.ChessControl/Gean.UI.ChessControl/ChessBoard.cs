@@ -12,21 +12,8 @@ namespace Gean.UI.ChessControl
     /// </summary>
     public class ChessBoard : Control
     {
-        /// <summary>
-        /// 棋盘上所有的棋格(8*8)
-        /// </summary>
-        protected virtual Rectangle[,] OwnedRectangles { get; private set; }
-        public ChessGame OwnedChessGame { get; private set; }
-        public Enums.ChessmanSide CurrChessSide { get; private set; }
 
-        /// <summary>
-        /// 获取或设置鼠标置入棋格后棋格高亮显示。true高亮，false无高亮。
-        /// </summary>
-        public bool EnableGridHighlight { get; set; }
-        /// <summary>
-        /// 获取或设置选中棋子后，该棋子可能的行棋路径高亮显示。true高亮，false无高亮。
-        /// </summary>
-        public bool EnablePathHighlight { get; set; }
+        #region ctor
 
         /// <summary>
         /// 构造函数
@@ -37,6 +24,8 @@ namespace Gean.UI.ChessControl
             this.BackColor = Color.Chocolate;
             this.BackgroundImage = ChessBoardHelper.BoardImage;
             this.OwnedRectangles = new Rectangle[8, 8];
+            this.KeyChessPoint = new ChessPoint(1, 1);
+            this.ViewKeyRectangle = false;
 
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
@@ -45,10 +34,66 @@ namespace Gean.UI.ChessControl
             ChessBoardHelper.ChessmanImagesChangedEvent += new ChessBoardHelper.ChessmanImagesChangedEventHandler(ChessBoardHelper_ChessmanImagesChangedEvent);
         }
 
+        #endregion
+
+        #region Private and Protected
+
+        /// <summary>
+        /// 获取此棋盘上所拥有的所有的棋格矩形(8*8)
+        /// </summary>
+        protected virtual Rectangle[,] OwnedRectangles { get; private set; }
+
+        /// <summary>
+        /// 获取此棋盘上所拥有的棋子集合，默认初始化为通常的32枚棋子
+        /// </summary>
+        protected virtual List<Chessman> Chessmans { get; private set; }
+
+        protected virtual ChessPoint KeyChessPoint { get; private set; }
+
+        protected virtual bool ViewKeyRectangle { get; private set; }
+
+        /// <summary>
+        /// 棋盘左上角X坐标
+        /// </summary>
+        protected int _XofPanel = 0;
+        /// <summary>
+        /// 棋盘左上角Y坐标
+        /// </summary>
+        protected int _YofPanel = 0;
+        /// <summary>
+        /// 矩形宽度
+        /// </summary>
+        protected int _rectangleWidth = 0;
+        /// <summary>
+        /// 矩形高度
+        /// </summary>
+        protected int _rectangleHeight = 0;
+
+        #endregion
+
+        #region Pivotal Properties
+
+        /// <summary>
+        /// 获取此棋盘所拥有(包含)的ChessGame
+        /// </summary>
+        public virtual ChessGame OwnedChessGame { get; private set; }
+        /// <summary>
+        /// 获取此棋盘当前的战方
+        /// </summary>
+        public virtual Enums.ChessmanSide CurrChessSide { get; private set; }
+        /// <summary>
+        /// 获取已选择的棋子所在的棋格坐标
+        /// </summary>
+        public virtual ChessPoint SelectedChessPoint { get; private set; }
+        
+        #endregion
+
+        #region Pivotal Public Method
+
         /// <summary>
         /// 载入新棋局
         /// </summary>
-        public void LoadGame()
+        public virtual void LoadGame()
         {
             this.OwnedChessGame = new ChessGame();
             this.CurrChessSide = Enums.ChessmanSide.White;
@@ -58,8 +103,8 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 载入新棋局
         /// </summary>
-        /// <param name="chessmans">指定的棋子集合，可能是残局或中盘棋局</param>
-        public void LoadGame(IEnumerable<Chessman> chessmans)
+        /// <param name="chessmans">指定的棋子集合，一般是指残局或中盘棋局</param>
+        public virtual void LoadGame(IEnumerable<Chessman> chessmans)
         {
             this.OwnedChessGame = new ChessGame();
             this.CurrChessSide = Enums.ChessmanSide.White;
@@ -67,9 +112,9 @@ namespace Gean.UI.ChessControl
             this.RegisterChessmans(this.Chessmans);
         }
 
-        #region Chessman List
+        #endregion
 
-        internal virtual List<Chessman> Chessmans { get; private set; }
+        #region Chessman List Protected Method
 
         /// <summary>
         /// 初始化默认棋子集合（32个棋子）
@@ -121,6 +166,10 @@ namespace Gean.UI.ChessControl
             this.Invalidate();
         }
 
+        /// <summary>
+        /// 注册所有棋子当相应的棋格
+        /// </summary>
+        /// <param name="chessmans"></param>
         protected virtual void RegisterChessmans(IEnumerable<Chessman> chessmans)
         {
             foreach (Chessman man in chessmans)
@@ -132,22 +181,7 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-        /// <summary>
-        /// 棋盘左上角X坐标
-        /// </summary>
-        protected int _XofPanel = 0;
-        /// <summary>
-        /// 棋盘左上角Y坐标
-        /// </summary>
-        protected int _YofPanel = 0;
-        /// <summary>
-        /// 矩形宽度
-        /// </summary>
-        protected int _rectangleWidth = 0;
-        /// <summary>
-        /// 矩形高度
-        /// </summary>
-        protected int _rectangleHeight = 0;
+        #region override
 
         protected override void OnResize(EventArgs e)
         {
@@ -162,15 +196,90 @@ namespace Gean.UI.ChessControl
             if (this.OwnedChessGame != null && this.Chessmans != null)
             {
                 ChessBoard.PaintChessmanImage(g, this.Chessmans, this);
+                ChessBoard.PaintSelectedChessPoint(g, this);
             }
             g.Flush();
         }
 
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+            if (this.OwnedChessGame == null) return;
+
+            switch (e.KeyCode)
+            {
+                #region 方向控制
+                case Keys.Down:
+                    if (this.KeyChessPoint.Y > 1)
+                    {
+                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X, this.KeyChessPoint.Y - 1);
+                        this.SetSelectedPointByKey();
+                    }
+                    break;
+                case Keys.Up:
+                    if (this.KeyChessPoint.Y < 8)
+                    {
+                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X, this.KeyChessPoint.Y + 1);
+                        this.SetSelectedPointByKey();
+                    }
+                    break;
+                case Keys.Left:
+                    if (this.KeyChessPoint.X > 1)
+                    {
+                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X - 1, this.KeyChessPoint.Y);
+                        this.SetSelectedPointByKey();
+                    }
+                    break;
+                case Keys.Right:
+                    if (this.KeyChessPoint.Y < 8)
+                    {
+                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X + 1, this.KeyChessPoint.Y);
+                        this.SetSelectedPointByKey();
+                    }
+                    break;
+                #endregion
+
+                #region 选择
+                case Keys.Space:
+                    this.ViewKeyRectangle = true;
+                    this.SetSelectedPointByKey();
+                    break;
+                case Keys.Enter:
+                    break;
+                case Keys.Escape:
+                    this.ViewKeyRectangle = false;
+                    break;
+                #endregion
+
+                #region 棋子快捷键
+                case Keys.P:
+                    break;
+                case Keys.R:
+                    break;
+                case Keys.N:
+                    break;
+                case Keys.B:
+                    break;
+                case Keys.K:
+                    break;
+                case Keys.Q:
+                    break;
+                #endregion
+
+                default:
+                    break;
+            }
+            this.Invalidate();
+        }
+
         #region OnMouse
 
-        private ChessPoint _sourcePoint = ChessPoint.Empty;
-        private ChessPoint _targetPoint = ChessPoint.Empty;
-        private ChessGrid _tmpGrid;
+        /// <summary>
+        /// 描述一个被鼠标点击过的有效矩形的坐标
+        /// </summary>
+        ///private Image _tmpMovingManImg;
+
+        private ChessGrid _tmpMouseDownGrid;
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
@@ -184,25 +293,30 @@ namespace Gean.UI.ChessControl
                         if (!this.OwnedRectangles[x-1, y-1].Contains(e.Location))
                             continue;
 
-                        this._tmpGrid = this.OwnedChessGame[x, y];
+                        this._tmpMouseDownGrid = this.OwnedChessGame[x, y];
                         
-                        if (Chessman.IsNullOrEmpty(_tmpGrid.OwnedChessman))
+                        if (Chessman.IsNullOrEmpty(_tmpMouseDownGrid.OwnedChessman))
                             return;//找到矩形，但矩形中无棋子，退出
-                        if (_tmpGrid.OwnedChessman.ChessmanSide != this.CurrChessSide)
+                        if (_tmpMouseDownGrid.OwnedChessman.ChessmanSide != this.CurrChessSide)
                             return;//棋子的战方与当前棋局要求的战方不符，退出
 
                         //鼠标到达的棋格符合所有规则，记录下棋格的坐标，等待移动
-                        _sourcePoint = new ChessPoint(x, y);
-                        Console.WriteLine(_sourcePoint);
+                        this.SelectedChessPoint = new ChessPoint(x, y);
+                        this.ViewKeyRectangle = false;
+                        this.Invalidate();
+                        //如可拖动棋子，设置可拖动的棋子图像
+                        //this._tmpMovingManImg = ChessBoardHelper.GetChessmanImage(_tmpMouseDownGrid.OwnedChessman.ChessmanSide, _tmpMouseDownGrid.OwnedChessman.ChessmanType);
                     }
                 }
             }//if
         }
+
+        private ChessGrid _tmpMouseUpGrid;
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
             if (this.OwnedChessGame == null) return;
-            if (this._sourcePoint.Equals(ChessPoint.Empty)) return;
+            if (this.SelectedChessPoint.Equals(ChessPoint.Empty)) return;
             if (e.Button == MouseButtons.Left)
             {
                 for (int x = 1; x <= 8; x++)
@@ -212,56 +326,89 @@ namespace Gean.UI.ChessControl
                         if (!this.OwnedRectangles[x-1, y-1].Contains(e.Location))
                             continue;
                         
-                        this._tmpGrid = this.OwnedChessGame[x, y];
+                        this._tmpMouseUpGrid = this.OwnedChessGame[x, y];
                         //目标棋格有棋子
-                        if (!Chessman.IsNullOrEmpty(_tmpGrid.OwnedChessman))
+                        if (!Chessman.IsNullOrEmpty(_tmpMouseUpGrid.OwnedChessman))
                         {
                             //目标棋格棋子的战方不符合规则
-                            if (_tmpGrid.OwnedChessman.ChessmanSide == this.CurrChessSide)
+                            if (_tmpMouseUpGrid.OwnedChessman.ChessmanSide == this.CurrChessSide)
+                            {
+                                //this.SelectedChessPoint = ChessPoint.Empty;//如不设置，将会变两个动作完成行棋
+                                //this._tmpMovingManImg = null;
                                 return;
+                            }
                         }
+                        ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPoint.X, this.SelectedChessPoint.Y];
+                        Chessman man = sourceGrid.OwnedChessman;
                         Enums.Action action = Enums.Action.General;
-                        Chessman man = this.OwnedChessGame[this._sourcePoint.X, this._sourcePoint.Y].OwnedChessman;
 
-                        if (ChessPath.TryMoveInGrid(man, null, null, out action))
+                        if (ChessPath.TryMoveIn(man, sourceGrid, _tmpMouseUpGrid, out action))
                         {
-                            //this._tmpGrid.MoveIn(this.OwnedChessGame, man, action);
+                            //核心行棋动作
+                            ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
+                            OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
+                            //转换战方
+                            this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
+                            //刷新
+                            this.Invalidate();
+                            this.SelectedChessPoint = ChessPoint.Empty;
+                            //this._tmpMovingManImg = null;
                         }
-
-                        if (!Chessman.IsNullOrEmpty(this._tmpGrid.OwnedChessman))
-                            action = Enums.Action.Kill;
-                        //核心，行棋动作
-                        ChessStep chessStep = this._tmpGrid.MoveIn(this.OwnedChessGame, man, action);
-                        OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
-                        this._sourcePoint = ChessPoint.Empty;
-                        //转换战方
-                        this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
-                        //刷新
-                        this.Invalidate();
                     }//for y
                 }//for x
             }//if
         }
 
+        private Rectangle _tmpEnterRect = Rectangle.Empty;
+        private Rectangle _tmpMovingRect = Rectangle.Empty;
+        private ChessGrid _tmpEnterGrid;
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             if (this.OwnedChessGame == null) return;
-            //if (_movedPoint != null)
-            //{
-            //    int offset = _chessGridWidth / 2;
-            //    Point newPoint = new Point(e.Location.X - offset, e.Location.Y - offset);
-            //    Image img = _movedPoint.Image;
-            //    _movedPoint = new MoveableRectangle(
-            //        new Rectangle(newPoint, new Size(_chessGridWidth, _chessGridHeight)), img);
-            //    this.InvalidateBoard(_movedPoint.Rectangle);
-            //}
-            ChessBoard.SetRectangleCursor(this.OwnedChessGame, this, e.Location);
+            for (int x = 1; x <= 8; x++)
+            {
+                for (int y = 1; y <= 8; y++)
+                {
+                    _tmpEnterRect = this.OwnedRectangles[x - 1, y - 1];
+
+                    #region 拖动棋子
+                    //if (!this.SelectedChessPoint.Equals(ChessPoint.Empty) && this._tmpMovingManImg != null)
+                    //{
+                    //    int offset = (int)((this._rectangleWidth * 0.8) / 2);
+                    //    this._tmpMovingRect = new Rectangle(
+                    //        e.Location.X - offset,
+                    //        e.Location.Y - offset,
+                    //        offset * 2,
+                    //        offset * 2);
+                    //    this.InvalidateBoard(this._tmpMovingManImg, this._tmpMovingRect);
+                    //}
+                    #endregion
+
+                    if (!_tmpEnterRect.Contains(e.Location))
+                    {
+                        this.Cursor = Cursors.Default;
+                        continue;
+                    }
+                    else//找到相应的矩形
+                    {
+                        _tmpEnterGrid = this.OwnedChessGame[x, y];
+                        if (Chessman.IsNullOrEmpty(_tmpEnterGrid.OwnedChessman))
+                            return;
+                        this.Cursor = Cursors.Hand;
+                        return;
+                    }
+                }
+            }
         }
 
         #endregion
 
-        #region private Method
+        #endregion
+
+        #region private
+
+        #region private Invalidate Method
 
         /// <summary>
         /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
@@ -279,31 +426,42 @@ namespace Gean.UI.ChessControl
         private void InvalidateBoard(Image image, Rectangle rectangle)
         {
             Graphics g = this.CreateGraphics();
-            if (image == null)
-            {
-                g.FillRectangle(Brushes.Tomato, rectangle);
-                g.DrawRectangle(Pens.Black, rectangle);
-            }
-            else
+            g.FillRectangle(Brushes.Transparent, rectangle);
+            if (image != null)
             {
                 g.DrawImage(image, rectangle);
             }
 
             // 使控件的 "rectangle" 以外的区域无效，重新绘制更新区域
-            //Point pt = rectangle.Location;
-            //Rectangle top = new Rectangle(0, 0, Width, pt.Y);
-            //Rectangle left = new Rectangle(0, pt.Y, pt.X, _chessGridHeight + 1);
-            //Rectangle right = new Rectangle(pt.X + _chessGridWidth + 1, pt.Y, Width - pt.Y - _chessGridWidth, _chessGridHeight + 1);
-            //Rectangle bottom = new Rectangle(0, pt.Y + _chessGridHeight + 1, Width, Height - pt.Y - _chessGridHeight);
-            //this.Invalidate(top, false);
-            //this.Invalidate(left, false);
-            //this.Invalidate(right, false);
-            //this.Invalidate(bottom, false);
+            Point pt = rectangle.Location;
+            Rectangle top = new Rectangle(0, 0, this.Width, pt.Y);
+            Rectangle left = new Rectangle(0, pt.Y, pt.X, rectangle.Height + 1);
+            Rectangle right = new Rectangle
+                (pt.X + rectangle.Width + 1, pt.Y, this.Width - pt.Y - rectangle.Width, rectangle.Height + 1);
+            Rectangle bottom = new Rectangle
+                (0, pt.Y + rectangle.Height + 1, this.Width, this.Height - pt.Y - rectangle.Height);
+            this.Invalidate(top, false);
+            this.Invalidate(left, false);
+            this.Invalidate(right, false);
+            this.Invalidate(bottom, false);
         }
 
         #endregion
 
+        private void SetSelectedPointByKey()
+        {
+            ChessGrid rid = this.OwnedChessGame[this.KeyChessPoint.X, this.KeyChessPoint.Y];
+            Chessman man = rid.OwnedChessman;
+            if (man == null)
+                return;
+            if (man.ChessmanSide != this.CurrChessSide)
+                return;
+            this.SelectedChessPoint = this.KeyChessPoint;
+        }
 
+        #endregion
+
+        #region Image Changed Event
 
         protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
         {
@@ -319,33 +477,9 @@ namespace Gean.UI.ChessControl
             this.Invalidate();
         }
 
-        #region static
+        #endregion
 
-        private static Rectangle _enterRect = Rectangle.Empty;
-        private static ChessGrid _enterGrid;
-        private static void SetRectangleCursor(ChessGame game, ChessBoard board, Point point)
-        {
-            for (int x = 1; x <= 8; x++)
-            {
-                for (int y = 1; y <= 8; y++)
-                {
-                    _enterRect = board.OwnedRectangles[x - 1, y - 1];//循环矩形集合
-                    if (!_enterRect.Contains(point))
-                    {
-                        board.Cursor = Cursors.Default;
-                        continue;
-                    }
-                    else//找到相应的矩形
-                    {
-                        _enterGrid = game[x, y];
-                        if (Chessman.IsNullOrEmpty(_enterGrid.OwnedChessman))
-                            return;
-                        board.Cursor = Cursors.Hand;
-                        return;
-                    }
-                }
-            }
-        }
+        #region static Method
 
         /// <summary>
         /// 仅供棋盘绘制时声明的矩形变量。防止反复在OnPaint事件中声明造成内存碎片。
@@ -423,6 +557,23 @@ namespace Gean.UI.ChessControl
             _currManImage = null;
         }
 
+        private static void PaintSelectedChessPoint(Graphics g, ChessBoard chessBoard)
+        {
+            if (chessBoard.SelectedChessPoint.Equals(ChessPoint.Empty))
+                return;
+            Rectangle rect = Rectangle.Empty;
+            if (chessBoard.ViewKeyRectangle)
+            {
+                rect = chessBoard.OwnedRectangles[chessBoard.KeyChessPoint.X - 1, chessBoard.KeyChessPoint.Y - 1];
+                g.DrawRectangle(Pens.White, rect);
+            }
+            rect = chessBoard.OwnedRectangles[chessBoard.SelectedChessPoint.X - 1, chessBoard.SelectedChessPoint.Y - 1];
+            for (int i = -1; i <= 1; i++)
+            {
+                g.DrawRectangle(Pens.Yellow, Rectangle.Inflate(rect, i, i));
+            }
+        }
+
         /// <summary>
         /// 获取棋子将绘制的矩形(棋子填充比棋格小15%，以保证美观)
         /// </summary>
@@ -483,6 +634,8 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
+        #region Custom EVENT
+
         /// <summary>
         /// 在行棋后发生
         /// </summary>
@@ -501,6 +654,9 @@ namespace Gean.UI.ChessControl
                 this.ChessStep = chessStep;
             }
         }
+
+        #endregion
+
     }
 
 }
