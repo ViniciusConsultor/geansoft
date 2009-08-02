@@ -338,22 +338,7 @@ namespace Gean.UI.ChessControl
                                 return;
                             }
                         }
-                        ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPoint.X, this.SelectedChessPoint.Y];
-                        Chessman man = sourceGrid.OwnedChessman;
-                        Enums.Action action = Enums.Action.General;
-
-                        if (ChessPath.TryMoveIn(man, sourceGrid, _tmpMouseUpGrid, out action))
-                        {
-                            //核心行棋动作
-                            ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
-                            OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
-                            //转换战方
-                            this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
-                            //刷新
-                            this.Invalidate();
-                            this.SelectedChessPoint = ChessPoint.Empty;
-                            //this._tmpMovingManImg = null;
-                        }
+                        this.MoveIn();
                     }//for y
                 }//for x
             }//if
@@ -448,7 +433,7 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-        private void SetSelectedPointByKey()
+        protected virtual void SetSelectedPointByKey()
         {
             ChessGrid rid = this.OwnedChessGame[this.KeyChessPoint.X, this.KeyChessPoint.Y];
             Chessman man = rid.OwnedChessman;
@@ -457,6 +442,31 @@ namespace Gean.UI.ChessControl
             if (man.ChessmanSide != this.CurrChessSide)
                 return;
             this.SelectedChessPoint = this.KeyChessPoint;
+        }
+
+        protected virtual void MoveIn()
+        {
+            ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPoint.X, this.SelectedChessPoint.Y];
+            Chessman man = sourceGrid.OwnedChessman;
+            Enums.Action action = Enums.Action.General;
+
+            if (ChessPath.TryMoveIn(man, sourceGrid, _tmpMouseUpGrid, out action))
+            {
+                //核心行棋动作
+                ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
+                OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
+                if (this.CurrChessSide == Enums.ChessmanSide.White &&
+                    this.OwnedChessGame.Record.Sequence.Count > 0)
+                {
+                    OnPlayPair(new PlayPairEventArgs(this.OwnedChessGame.Record.Sequence.Peek()));
+                }
+                //转换战方
+                this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
+                //刷新
+                this.Invalidate();
+                this.SelectedChessPoint = ChessPoint.Empty;
+                //this._tmpMovingManImg = null;
+            }
         }
 
         #endregion
@@ -652,6 +662,25 @@ namespace Gean.UI.ChessControl
             public PlayEventArgs(ChessStep chessStep)
             {
                 this.ChessStep = chessStep;
+            }
+        }
+
+        /// <summary>
+        /// 在白方与黑方都行棋后发生
+        /// </summary>
+        public event PlayPairEventHandler PlayPairEvent;
+        protected virtual void OnPlayPair(PlayPairEventArgs e)
+        {
+            if (PlayPairEvent != null)
+                PlayPairEvent(this, e);
+        }
+        public delegate void PlayPairEventHandler(object sender, PlayPairEventArgs e);
+        public class PlayPairEventArgs : EventArgs
+        {
+            public ChessStepPair ChessStepPair { get; private set; }
+            public PlayPairEventArgs(ChessStepPair chessStepPair)
+            {
+                this.ChessStepPair = chessStepPair;
             }
         }
 

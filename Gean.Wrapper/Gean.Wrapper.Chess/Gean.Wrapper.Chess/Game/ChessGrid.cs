@@ -100,7 +100,7 @@ namespace Gean.Wrapper.Chess
             }
             ChessStep chessStep = new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
             //注册行棋事件
-            OnMoveIn(new MoveInEventArgs(chessStep));
+            OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
             return chessStep;
         }
 
@@ -297,9 +297,13 @@ namespace Gean.Wrapper.Chess
         public delegate void MoveInEventHandler(object sender, MoveInEventArgs e);
         public class MoveInEventArgs : EventArgs
         {
+            public Enums.Action Action { get; private set; }
+            public Enums.ChessmanSide ChessmanSide { get; private set; }
             public ChessStep ChessStep { get; private set; }
-            public MoveInEventArgs(ChessStep chessStep)
+            public MoveInEventArgs(Enums.Action action, Enums.ChessmanSide chessmanSide, ChessStep chessStep)
             {
+                this.Action = action;
+                this.ChessmanSide = chessmanSide;
                 this.ChessStep = chessStep;
             }
         }

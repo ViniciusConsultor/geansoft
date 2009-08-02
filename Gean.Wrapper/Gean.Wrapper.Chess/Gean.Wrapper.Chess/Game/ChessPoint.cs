@@ -49,7 +49,7 @@ namespace Gean.Wrapper.Chess
         }
         public override string ToString()
         {
-            return string.Format("{0}({1}),{2}", this.CharX, this.X, this.Y);
+            return string.Format("{0}{1}", this.CharX, this.Y);
         }
     }
 }

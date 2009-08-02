@@ -99,6 +99,7 @@ namespace Gean.Wrapper.Chess
                     }
                 #endregion
             }
+            #region 注释
             if (this.CommentIndexs.Count > 0)//如果有注释，打印注释
             {
                 sb.Append('(');
@@ -108,6 +109,8 @@ namespace Gean.Wrapper.Chess
                 }
                 sb.Remove(sb.Length - 1, 1).Append(')');
             }
+            #endregion
+            #region 变招
             if (this.ChoiceStepsIndexs.Count > 0)//如果有变招，打印变招字符串
             {
                 sb.Append("[");
@@ -117,6 +120,7 @@ namespace Gean.Wrapper.Chess
                 }
                 sb.Remove(sb.Length - 1, 1).Append("]");
             }
+            #endregion
             return sb.ToString().Trim();
         }
         public override int GetHashCode()
