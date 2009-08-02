@@ -11,12 +11,12 @@ namespace Gean.Wrapper.Chess
     public class ChessStepPairSequence : BylawItem, IList<ChessStepPair>
     {
 
-        protected List<ChessStepPair> ChessSteps { get; private set; }
+        protected List<ChessStepPair> ChessStepPairs { get; private set; }
 
         public ChessStepPairSequence(string userId, string sequence, int number)
             : base(number, userId, sequence, '#')
         {
-            this.ChessSteps = new List<ChessStepPair>();
+            this.ChessStepPairs = new List<ChessStepPair>();
         }
 
         public override string ToString()
@@ -26,7 +26,7 @@ namespace Gean.Wrapper.Chess
         protected string SequenceToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (ChessStepPair pair in this.ChessSteps)
+            foreach (ChessStepPair pair in this.ChessStepPairs)
             {
                 sb.Append(pair.ToString()).Append(' ');
             }
@@ -37,29 +37,23 @@ namespace Gean.Wrapper.Chess
 
         public int IndexOf(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return this.ChessStepPairs.IndexOf(item);
         }
 
         public void Insert(int index, ChessStepPair item)
         {
-            throw new NotImplementedException();
+            this.ChessStepPairs.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            this.ChessStepPairs.RemoveAt(index);
         }
 
         public ChessStepPair this[int index]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return this.ChessStepPairs[index]; }
+            set { this.ChessStepPairs[index] = value; }
         }
 
         #endregion
@@ -68,37 +62,37 @@ namespace Gean.Wrapper.Chess
 
         public void Add(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            this.ChessStepPairs.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            this.ChessStepPairs.Clear();
         }
 
         public bool Contains(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return this.ChessStepPairs.Contains(item);
         }
 
         public void CopyTo(ChessStepPair[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            this.ChessStepPairs.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { throw new NotImplementedException(); }
+            get { return this.ChessStepPairs.Count; }
         }
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(ChessStepPair item)
         {
-            throw new NotImplementedException();
+            return this.ChessStepPairs.Remove(item);
         }
 
         #endregion
@@ -107,7 +101,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<ChessStepPair> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.ChessStepPairs.GetEnumerator();
         }
 
         #endregion
@@ -116,7 +110,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.ChessStepPairs.GetEnumerator();
         }
 
         #endregion

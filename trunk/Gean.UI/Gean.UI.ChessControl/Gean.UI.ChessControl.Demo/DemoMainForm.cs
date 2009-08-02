@@ -22,7 +22,13 @@ namespace Gean.UI.ChessControl.Demo
             this._board.BringToFront();
             this._splitContainer.Panel1.Controls.Add(_board);
 
-            this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
+            //this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
+            this._board.PlayPairEvent += new ChessBoard.PlayPairEventHandler(_board_PlayPairEvent);
+        }
+
+        void _board_PlayPairEvent(object sender, ChessBoard.PlayPairEventArgs e)
+        {
+            this._actionListBox.Items.Add(e.ChessStepPair);
         }
 
         void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)

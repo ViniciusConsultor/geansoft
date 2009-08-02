@@ -38,6 +38,9 @@ namespace Gean.Wrapper.Chess
         }
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+
             ChessStepPair csp = (ChessStepPair)obj;
             if (!this.Number.Equals(csp.Number)) return false;
             if (!UtilityEquals.Equals(this.White, csp.White)) return false;
