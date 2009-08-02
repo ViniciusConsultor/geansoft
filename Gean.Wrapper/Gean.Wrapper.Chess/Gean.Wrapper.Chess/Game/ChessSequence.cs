@@ -4,6 +4,10 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
+    
+    /// <summary>
+    /// 一个棋局记录中核心棋招序列
+    /// </summary>
     public sealed class ChessSequence : ChessStepPairSequence
     {
         public ChessSequence()

@@ -142,11 +142,17 @@
   <data name="black_rook" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ChessmanDefaultImage\black_rook.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="board_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>chessmandefaultimage\board_01.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="board_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>chessmandefaultimage\board_1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="board_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>chessmandefaultimage\board_02.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="board_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>chessmandefaultimage\board_2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="board_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>chessmandefaultimage\board_3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="board_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>chessmandefaultimage\board_4.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="white_bishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ChessmanDefaultImage\white_bishop.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -53,9 +53,6 @@
     <Compile Include="Chessman\ChessmanBishop.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Chessman\ChessmanEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Chessman\ChessmanKing.cs">
       <SubType>Code</SubType>
     </Compile>

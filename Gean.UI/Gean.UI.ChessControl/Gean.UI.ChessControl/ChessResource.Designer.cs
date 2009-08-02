@@ -116,16 +116,30 @@ namespace Gean.UI.ChessControl {
             }
         }
         
-        public static System.Drawing.Bitmap board_01 {
+        public static System.Drawing.Bitmap board_1 {
             get {
-                object obj = ResourceManager.GetObject("board_01", resourceCulture);
+                object obj = ResourceManager.GetObject("board_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        public static System.Drawing.Bitmap board_02 {
+        public static System.Drawing.Bitmap board_2 {
             get {
-                object obj = ResourceManager.GetObject("board_02", resourceCulture);
+                object obj = ResourceManager.GetObject("board_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap board_3 {
+            get {
+                object obj = ResourceManager.GetObject("board_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap board_4 {
+            get {
+                object obj = ResourceManager.GetObject("board_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -25,7 +25,7 @@ namespace Gean.UI.ChessControl
 
         private static void InitializeBoardImage()
         {
-            ChessBoardHelper.BoardImage = ChessResource.board_01;
+            ChessBoardHelper.BoardImage = ChessResource.board_4;
             OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardHelper.BoardImage));
         }
 

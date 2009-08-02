@@ -67,6 +67,7 @@ namespace Gean.Wrapper.Chess
 
             switch (action)
             {
+                #region case
                 case Enums.Action.General:
                 case Enums.Action.Check:
                     this.MoveInByGeneralAction(game, chessman);
@@ -88,6 +89,7 @@ namespace Gean.Wrapper.Chess
                 default:
                     Debug.Fail("\" " + action.ToString() + " \" isn't FAIL action.");
                     break;
+                #endregion
             }
 
             if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
@@ -96,7 +98,10 @@ namespace Gean.Wrapper.Chess
                 targetPoint = new ChessPoint(this.PointX, this.PointY);
                 chessman.ChessPoints.Push(new ChessPoint(this.PointX, this.PointY));
             }
-            return new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
+            ChessStep chessStep = new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
+            //注册行棋事件
+            OnMoveIn(new MoveInEventArgs(chessStep));
+            return chessStep;
         }
 
         /// <summary>
@@ -105,14 +110,9 @@ namespace Gean.Wrapper.Chess
         /// <param name="chessman">指定的棋子</param>
         private void MoveInByKillAction(ChessGame game, Chessman chessman)
         {
-            //1.注册棋子即将被杀死事件
-            OnKilling(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessPoints.Peek(), chessman));
-            //2.移除被杀死的棋子
+            //移除被杀死的棋子
             this.MoveOut(true);
-            //3.注册棋子被杀死后的事件
-            OnKilled(new ChessmanKillEventArgs(this, this.OwnedChessman, chessman.ChessPoints.Peek(), chessman));
-
-            //4.调用落子方法
+            //调用落子方法
             this.MoveInByGeneralAction(game, chessman);
         }
 
@@ -120,18 +120,14 @@ namespace Gean.Wrapper.Chess
         /// 对指定的棋子执行的动子并落子的一般性方法(含“将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByGeneralAction(ChessGame game, Chessman chessman)
+        private void MoveInByGeneralAction(ChessGame chessGame, Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
             ChessPoint point = chessman.ChessPoints.Peek();
-            game[point.X,point.Y].MoveOut(false);
+            chessGame[point.X,point.Y].MoveOut(false);
 
-            //2.注册落子前事件
-            OnMoveInBefore(new MoveEventArgs(chessman));
-            //3.落子
+            //2.落子
             this.OwnedChessman = chessman;
-            //4.注册落子后事件
-            OnMoveInAfter(new MoveEventArgs(chessman));
         }
 
         /// <summary>
@@ -163,16 +159,8 @@ namespace Gean.Wrapper.Chess
         {
             Chessman man = this.OwnedChessman;//棋格中的棋子
             man.IsKilled = isKill;//置该棋子的死活棋开关为“被杀死”状态
-            //注册动子前事件
-            if (!isKill)//如果移除的棋子是被杀死，将不再激活移除事件
-                OnMoveOutBefore(new MoveEventArgs(man));
-
             //移除棋子
             this.OwnedChessman = Chessman.NullOrEmpty;
-
-            //注册动子后事件
-            if (!isKill)//如果移除的棋子是被杀死，将不再激活移除事件
-                OnMoveOutAfter(new MoveEventArgs(man));
         }
 
         #endregion
@@ -295,126 +283,26 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region custom event
-
-        #region 动子事件，落子事件
-
-        /// <summary>
-        /// 在该棋格即将动子前发生
-        /// </summary>
-        public event MoveOutBeforeEventHandler MoveOutBeforeEvent;
-        private void OnMoveOutBefore(MoveEventArgs e)
-        {
-            if (MoveOutBeforeEvent != null)
-                MoveOutBeforeEvent(this, e);
-        }
-        public delegate void MoveOutBeforeEventHandler(object sender, MoveEventArgs e);
-
-        /// <summary>
-        /// 在该棋格动子后发生
-        /// </summary>
-        public event MoveOutAfterEventHandler MoveOutAfterEvent;
-        private void OnMoveOutAfter(MoveEventArgs e)
-        {
-            if (MoveOutAfterEvent != null)
-                MoveOutAfterEvent(this, e);
-        }
-        public delegate void MoveOutAfterEventHandler(object sender, MoveEventArgs e);
-
-        /// <summary>
-        /// 在该棋格中即将落子的时候发生。
-        /// </summary>
-        public event MoveInBeforeEventHandler MoveInBeforeEvent;
-        private void OnMoveInBefore(MoveEventArgs e)
-        {
-            if (MoveInBeforeEvent != null)
-                MoveInBeforeEvent(this, e);
-        }
-        public delegate void MoveInBeforeEventHandler(object sender, MoveEventArgs e);
+        #region custom MoveIn Event
 
         /// <summary>
         /// 在该棋格中落子后发生
         /// </summary>
-        public event MoveInAfterEventHandler MoveInAfterEvent;
-        private void OnMoveInAfter(MoveEventArgs e)
+        public event MoveInEventHandler MoveInEvent;
+        private void OnMoveIn(MoveInEventArgs e)
         {
-            if (MoveInAfterEvent != null)
-                MoveInAfterEvent(this, e);
+            if (MoveInEvent != null)
+                MoveInEvent(this, e);
         }
-        public delegate void MoveInAfterEventHandler(object sender, MoveEventArgs e);
-
-        public class MoveEventArgs : ChessmanEventArgs
+        public delegate void MoveInEventHandler(object sender, MoveInEventArgs e);
+        public class MoveInEventArgs : EventArgs
         {
-            public MoveEventArgs(Chessman man)
-                : base(man) { }
-        }
-
-        #endregion
-
-        #region 棋子被杀事件
-
-        /// <summary>
-        /// 在该棋子被杀死后发生
-        /// </summary>
-        public event KilledEventHandler KilledEvent;
-        private void OnKilled(ChessmanKillEventArgs e)
-        {
-            if (KilledEvent != null)
-                KilledEvent(this, e);
-        }
-        public delegate void KilledEventHandler(object sender, ChessmanKillEventArgs e);
-
-        /// <summary>
-        /// 在该棋子正在被杀死（也可理解为，即将被杀死时）发生
-        /// </summary>
-        public event KillingEventHandler KillingEvent;
-        private void OnKilling(ChessmanKillEventArgs e)
-        {
-            if (KillingEvent != null)
-                KillingEvent(this, e);
-        }
-        public delegate void KillingEventHandler(object sender, ChessmanKillEventArgs e);
-
-        /// <summary>
-        /// 包含棋子杀死事件的数据
-        /// </summary>
-        public class ChessmanKillEventArgs : EventArgs
-        {
-            /// <summary>
-            /// 被杀的棋所在的棋格
-            /// </summary>
-            public ChessGrid KilledGrid { get; private set; }
-            /// <summary>
-            /// 被杀的棋
-            /// </summary>
-            public Chessman KilledChessman { get; private set; }
-
-            /// <summary>
-            /// 杀棋的棋来路所在的棋格(杀招的执行者(棋)所在棋格)
-            /// </summary>
-            public ChessPoint ExecutePoint { get; private set; }
-            /// <summary>
-            /// 杀棋的棋(杀招的执行者)
-            /// </summary>
-            public Chessman ExecuteChessman { get; private set; }
-
-            /// <summary>
-            /// 包含棋子杀死事件的数据
-            /// </summary>
-            /// <param name="currGrid">被杀的棋所在的棋格</param>
-            /// <param name="currChessman">被杀的棋</param>
-            /// <param name="sourceGrid">杀棋的棋来路所在的棋格（杀棋的棋的源棋格）</param>
-            /// <param name="sourceChessman">杀棋的棋</param>
-            public ChessmanKillEventArgs(ChessGrid killedGrid, Chessman killedChessman, ChessPoint executePoint, Chessman executeChessman)
+            public ChessStep ChessStep { get; private set; }
+            public MoveInEventArgs(ChessStep chessStep)
             {
-                this.KilledGrid = killedGrid;
-                this.KilledChessman = killedChessman;
-                this.ExecutePoint = executePoint;
-                this.ExecuteChessman = executeChessman;
+                this.ChessStep = chessStep;
             }
         }
-
-        #endregion
 
         #endregion
 
