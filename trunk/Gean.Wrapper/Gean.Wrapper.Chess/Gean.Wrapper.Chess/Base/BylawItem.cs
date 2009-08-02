@@ -9,16 +9,16 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public abstract class BylawItem
     {
-        protected BylawItem(int number, string userId, string value, char flag)
+        protected char FlagChar { get; private set; }
+
+        protected BylawItem(int number, string userId, string value, char flagChar)
         {
-            this._flag = flag;
+            this.FlagChar = flagChar;
 
             this.UserID = userId;
             this.BylawValue = value;
             this.Number = number;
         }
-
-        protected char _flag { get; set; }
 
         /// <summary>
         /// 获取与设置编号
@@ -35,7 +35,7 @@ namespace Gean.Wrapper.Chess
 
         public override string ToString()
         {
-            return Utility.BylawItemToString(this._flag, this.Number, this.UserID, this.BylawValue);
+            return Utility.BylawItemToString(this.FlagChar, this.Number, this.UserID, this.BylawValue);
         }
         public override int GetHashCode()
         {

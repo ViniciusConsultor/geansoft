@@ -10,12 +10,14 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessStepPairSequence : BylawItem, IList<ChessStepPair>
     {
+
+        protected List<ChessStepPair> ChessSteps { get; private set; }
+
         public ChessStepPairSequence(string userId, string sequence, int number)
             : base(number, userId, sequence, '#')
         {
+            this.ChessSteps = new List<ChessStepPair>();
         }
-
-        protected List<ChessStepPair> _steps = new List<ChessStepPair>();
 
         public override string ToString()
         {
@@ -24,7 +26,7 @@ namespace Gean.Wrapper.Chess
         protected string SequenceToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (ChessStepPair pair in this._steps)
+            foreach (ChessStepPair pair in this.ChessSteps)
             {
                 sb.Append(pair.ToString()).Append(' ');
             }

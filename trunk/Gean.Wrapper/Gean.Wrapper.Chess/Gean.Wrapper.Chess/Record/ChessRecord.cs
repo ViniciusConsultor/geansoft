@@ -22,6 +22,8 @@ namespace Gean.Wrapper.Chess
             this.Choices = new ChessChoicesCollection();
         }
 
+        #region override
+
         public override bool Equals(object obj)
         {
             ChessRecord pr = obj as ChessRecord;
@@ -54,6 +56,8 @@ namespace Gean.Wrapper.Chess
             sb.AppendLine().AppendLine();
             return sb.ToString();
         }
+
+        #endregion
 
         /// <summary>
         /// 生成PGN棋谱记录
