@@ -433,6 +433,9 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
+        /// <summary>
+        /// 设置通过键盘选择的棋格
+        /// </summary>
         protected virtual void SetSelectedPointByKey()
         {
             ChessGrid rid = this.OwnedChessGame[this.KeyChessPoint.X, this.KeyChessPoint.Y];
@@ -444,6 +447,9 @@ namespace Gean.UI.ChessControl
             this.SelectedChessPoint = this.KeyChessPoint;
         }
 
+        /// <summary>
+        /// 棋子移动的方法
+        /// </summary>
         protected virtual void MoveIn()
         {
             ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPoint.X, this.SelectedChessPoint.Y];
@@ -455,7 +461,7 @@ namespace Gean.UI.ChessControl
                 //核心行棋动作
                 ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
                 OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
-                if (this.CurrChessSide == Enums.ChessmanSide.White &&
+                if (this.CurrChessSide == Enums.ChessmanSide.Black &&
                     this.OwnedChessGame.Record.Sequence.Count > 0)
                 {
                     OnPlayPair(new PlayPairEventArgs(this.OwnedChessGame.Record.Sequence.Peek()));
