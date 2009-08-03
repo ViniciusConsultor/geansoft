@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Gean.Wrapper.Chess
 {
@@ -51,6 +52,22 @@ namespace Gean.Wrapper.Chess
         public ChessStepPair Peek()
         {
             return this.ChessStepPairs[this.ChessStepPairs.Count - 1];
+        }
+
+        public static ChessSequence Parse(string stringvalue)
+        {
+            ChessSequence cs = new ChessSequence();
+            string regexstring = @"\b\d+.";
+            Regex regex = new Regex(regexstring);
+            string[] arr = regex.Split(stringvalue);
+            int j = 1;
+            foreach (var item in arr)
+            {
+                if (string.IsNullOrEmpty(item)) continue;
+                cs.Add(ChessStepPair.Parse(j, item));
+                j++;
+            }
+            return cs;
         }
     }
 }

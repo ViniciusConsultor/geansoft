@@ -10,7 +10,7 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessComment : BylawItem
     {
-        public ChessComment(string userId, string comment, int number)
+        public ChessComment(int number, string userId, string comment)
             : base(number, userId, comment, '#')
         {
         }
@@ -27,7 +27,7 @@ namespace Gean.Wrapper.Chess
             string comment;
             string userId;
             Utility.ParseAppendantString(value, flag, out number, out userId, out comment);
-            return new ChessComment(userId, comment, number);
+            return new ChessComment(number, userId, comment);
         }
     }
 }

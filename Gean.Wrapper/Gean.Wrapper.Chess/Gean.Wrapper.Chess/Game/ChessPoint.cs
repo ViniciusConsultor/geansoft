@@ -36,6 +36,15 @@ namespace Gean.Wrapper.Chess
             this._y = y;
             this._charX = Utility.IntToChar(x);
         }
+        public ChessPoint(char x, int y)
+        {
+            this._x = 0;
+            this._y = 0;
+            this._charX = '*';
+            this._x = Utility.CharToInt(x);
+            this._y = y;
+            this._charX = x;
+        }
 
         public override bool Equals(object obj)
         {

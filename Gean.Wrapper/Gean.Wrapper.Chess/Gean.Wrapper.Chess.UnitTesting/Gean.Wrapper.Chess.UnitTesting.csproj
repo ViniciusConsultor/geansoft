@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="ChessCommentTest.cs" />
     <Compile Include="ChessGameTest.cs" />
+    <Compile Include="ChessPGNReaderTest.cs" />
+    <Compile Include="ChessSequenceTest.cs" />
     <Compile Include="ChessStepPairTest.cs" />
     <Compile Include="ChessStepTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
