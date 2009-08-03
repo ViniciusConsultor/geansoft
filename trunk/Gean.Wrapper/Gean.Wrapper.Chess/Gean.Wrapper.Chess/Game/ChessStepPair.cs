@@ -49,18 +49,21 @@ namespace Gean.Wrapper.Chess
         }
 
         public static ChessStepPair Parse(string value)
-        {
+        { 
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentOutOfRangeException(value);
 
-            int n;
             int number = 0;
 
+            int n;
             value = value.Trim();
             n = value.IndexOf('.');
             number = int.Parse(value.Substring(0, n));
+            return ChessStepPair.Parse(number, value.Substring(n + 1));
+        }
 
-            value = value.Substring(n + 1);
+        public static ChessStepPair Parse(int number, string value)
+        {
             string[] steps = value.Split(' ');
 
             ChessStep white = null;
@@ -75,9 +78,9 @@ namespace Gean.Wrapper.Chess
 
                 }
                 if (white == null)
-                    white = ChessStep.Parse(steps[i]);
+                    white = ChessStep.Parse(steps[i], Enums.ChessmanSide.White);
                 else if (black == null)
-                    black = ChessStep.Parse(steps[i]);
+                    black = ChessStep.Parse(steps[i], Enums.ChessmanSide.Black);
             }
 
             return new ChessStepPair(number, white, black);

@@ -1,15 +1,17 @@
 ﻿using Gean.Wrapper.Chess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
     
     
     /// <summary>
-    ///这是 ChessGameTest 的测试类，旨在
-    ///包含所有 ChessGameTest 单元测试
+    ///这是 ChessPGNReaderTest 的测试类，旨在
+    ///包含所有 ChessPGNReaderTest 单元测试
     ///</summary>
     [TestClass()]
-    public class ChessGameTest
+    public class ChessPGNReaderTest
     {
         #region
 
@@ -63,37 +65,25 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
+        public ChessPGNReaderTest()
+        {
+            this.DemoFilePath = Path.GetFullPath(@"..\..\..\..\Gean.Wrapper.Chess\Gean.Wrapper.Chess.UnitTesting\CaseFiles\");
+            this.PGNFiles = Directory.GetFiles(this.DemoFilePath, "*.pgn");
+        }
+
+        private string DemoFilePath { get; set; }
+        private string[] PGNFiles { get; set; }
+
         /// <summary>
-        ///Item 的测试
+        ///Load 的测试
         ///</summary>
         [TestMethod()]
-        public void ItemTest()
+        public void LoadTest()
         {
-            ChessGame target = new ChessGame();
-
-            int x = 0;
-            int y = 0;
-
-            ChessGrid expected = null;
-            ChessGrid actual = null;
-
-            x = 1;
-            y = 1;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 8;
-            y = 8;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 3;
-            y = 6;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
+            ChessPGNReader target = new ChessPGNReader(); 
+            string fullpath = this.PGNFiles[0]; 
+            target.Load(fullpath);
+            Assert.IsNotNull(target);
         }
     }
 }

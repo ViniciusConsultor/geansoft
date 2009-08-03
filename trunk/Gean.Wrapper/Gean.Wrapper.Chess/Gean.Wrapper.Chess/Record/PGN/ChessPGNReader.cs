@@ -7,13 +7,13 @@ using System.Diagnostics;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessPGNReader : MarshalByRefObject, IDisposable
+    public class ChessPGNReader : MarshalByRefObject
     {
         protected TextReader TextReader { get; set; }
         /// <summary>
         /// 获取或设置一个PGN文件中所有的单局棋记录的集合
         /// </summary>
-        protected ChessRecord[] PGNRecordArray { get; set; }
+        protected ChessRecord[] ChessRecords { get; set; }
 
         public ChessPGNReader()
         { }
@@ -21,17 +21,8 @@ namespace Gean.Wrapper.Chess
         public void Load(string fullpath)
         {
             this.TextReader = new StreamReader(fullpath);
-            this.PGNRecordArray = Helper.GetPGNsByTextReader(this.TextReader);
+            this.ChessRecords = Helper.GetPGNsByTextReader(this.TextReader);
         }
-
-        #region IDisposable 成员
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
         static class Helper
         {
@@ -41,6 +32,7 @@ namespace Gean.Wrapper.Chess
                 List<StringBuilder> sbs = new List<StringBuilder>();
 
                 ChessRecord record = new ChessRecord();
+                StringBuilder sequenceBuilder = new StringBuilder();
 
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -48,12 +40,14 @@ namespace Gean.Wrapper.Chess
                     line = line.Trim();
                     if (line.Equals(string.Empty))
                     {
-                        if (record.Definer != null && !string.IsNullOrEmpty(record.Sequence.ToString()))
+                        if (record.Definer != null)
                         {
+                            record.Sequence = ChessSequence.Parse(sequenceBuilder.ToString());
                             records.Add(record);
                         }
                         if (records.Contains(record))
                         {
+                            sequenceBuilder = new StringBuilder();
                             record = new ChessRecord();
                         }
                     }
@@ -66,7 +60,7 @@ namespace Gean.Wrapper.Chess
                         }
                         else
                         {
-                            //record.Sequence.Append(line);
+                            sequenceBuilder.Append(line).Append(' ');
                         }
                     }
                 }
@@ -111,19 +105,13 @@ namespace Gean.Wrapper.Chess
             public override bool Equals(object obj)
             {
                 StringPair sp = (StringPair)obj;
-                if (!sp.Key.Equals(this._Key))
-                {
-                    return false;
-                }
-                if (!sp.Value.Equals(this._Value))
-                {
-                    return false;
-                }
+                if (!sp.Key.Equals(this._Key)) return false;
+                if (!sp.Value.Equals(this._Value)) return false;
                 return true;
             }
             public override int GetHashCode()
             {
-                return unchecked(27 * this._Key.GetHashCode() ^ this._Value.GetHashCode());
+                return unchecked(3 * (this._Key.GetHashCode() + this._Value.GetHashCode()));
             }
             public override string ToString()
             {

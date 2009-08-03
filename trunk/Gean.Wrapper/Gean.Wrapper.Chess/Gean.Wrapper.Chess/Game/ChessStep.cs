@@ -158,7 +158,7 @@ namespace Gean.Wrapper.Chess
 
         #region static Parse
 
-        public static ChessStep Parse(string value)
+        public static ChessStep Parse(string value, Enums.ChessmanSide manSide)
         {
             if (string.IsNullOrEmpty(value) || value.Length < 2)
                 throw new ArgumentOutOfRangeException(value);
@@ -206,6 +206,7 @@ namespace Gean.Wrapper.Chess
             }
 
             int n = 0;
+            ChessPoint sourcePoint = ChessPoint.Empty;
 
             if (char.IsUpper(value, 0))
             {//首字母是大写的
@@ -251,14 +252,25 @@ namespace Gean.Wrapper.Chess
                         rid = ChessGrid.Parse(value);
                         break;
                     case 4:
-                        rid = ChessGrid.Parse(value.Substring(value.IndexOf('x')));
+                        rid = ChessGrid.Parse(value.Substring(value.IndexOf('x') + 1));
+                        char cx = value.Substring(0, 1).ToCharArray()[0];
+                        int iy = int.Parse(value.Substring(3, 1));
+                        if (manSide == Enums.ChessmanSide.White)
+                            iy--;
+                        else
+                            iy++;
+                        sourcePoint = new ChessPoint(Utility.CharToInt(cx), iy);
+                        if (action == Enums.Action.Check)
+                            action = Enums.Action.KillAndCheck;
+                        else
+                            action = Enums.Action.Kill;
                         break;
                     default:
                         break;
                 }
                 #endregion
             }
-            ChessStep step = new ChessStep(action, manType, ChessPoint.Empty, ChessPoint.Empty);//ChessGrid.Empty, rid);
+            ChessStep step = new ChessStep(action, manType, sourcePoint, new ChessPoint(rid.PointX, rid.PointY));
             step.CommentIndexs = comments;
             step.ChoiceStepsIndexs = choices;
             return step;

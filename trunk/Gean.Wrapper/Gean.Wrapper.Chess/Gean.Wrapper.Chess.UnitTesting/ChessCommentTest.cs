@@ -93,17 +93,23 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Assert.AreEqual(324234, actual.Number);
 
             comment = "#232#myemail1234@usa.com.cn#///包含所有# ChessCommentTest 单元测试";
-            expected = new ChessComment("myemail1234@usa.com.cn", "///包含所有# ChessCommentTest 单元测试", 232);
+            expected = new ChessComment(232, "myemail1234@usa.com.cn", "///包含所有# ChessCommentTest 单元测试");
             actual = ChessComment.Parse(comment);
             Assert.AreEqual(expected, actual);
 
             comment = "#987654321#sim123sim456@51.public.net.cn#ABCD#EFGH#IJKLMNOPQRSTUVWXYZ";
-            expected = new ChessComment("sim123sim456@51.public.net.cn", "ABCD#EFGH#IJKLMNOPQRSTUVWXYZ", 987654321);
+            expected = new ChessComment(987654321, "sim123sim456@51.public.net.cn", "ABCD#EFGH#IJKLMNOPQRSTUVWXYZ");
             actual = ChessComment.Parse(comment);
             Assert.AreEqual(expected, actual);
 
             comment = "#88#a@a.b.c.d#————comment————";
-            expected = new ChessComment("a@a.b.c.d", "————comment————", 88);
+            expected = new ChessComment(88, "a@a.b.c.d", "————comment————");
+            actual = ChessComment.Parse(comment);
+            Assert.AreEqual(expected, actual);
+
+            //一般情况下的评论
+            comment = "#168#zhang_jianghua@gmail.com#此棋不好，易形成僵局。";
+            expected = new ChessComment(168, "zhang_jianghua@gmail.com", "此棋不好，易形成僵局。");
             actual = ChessComment.Parse(comment);
             Assert.AreEqual(expected, actual);
 

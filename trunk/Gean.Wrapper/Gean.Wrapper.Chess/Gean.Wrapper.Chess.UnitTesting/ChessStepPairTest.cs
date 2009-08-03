@@ -57,7 +57,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
-        /*
+        
         /// <summary>
         ///Parse 的测试
         ///</summary>
@@ -69,12 +69,12 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStepPair actual;
 
             value = "4.Qh5+ Ke7";
-            expected = new ChessStepPair(4,
-                new ChessStep(Enums.ChessmanType.Queen, Enums.Action.Check, ChessGrid.Empty, new ChessGrid('h', 5)),
-                new ChessStep(Enums.ChessmanType.King, Enums.Action.General, ChessGrid.Empty, new ChessGrid('e', 7)));
+            ChessStep white = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Queen, ChessPoint.Empty, new ChessPoint(8, 5));
+            ChessStep black = new ChessStep(Enums.Action.General, Enums.ChessmanType.King, ChessPoint.Empty, new ChessPoint(5, 7));
+            expected = new ChessStepPair(4, white, black);
             actual = ChessStepPair.Parse(value);
             Assert.AreEqual(expected, actual);
         }
-        */
+        
     }
 }
