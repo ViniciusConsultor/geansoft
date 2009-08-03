@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
+    [Serializable]
     public struct ChessPoint
     {
         public static readonly ChessPoint Empty = new ChessPoint(0, 0);

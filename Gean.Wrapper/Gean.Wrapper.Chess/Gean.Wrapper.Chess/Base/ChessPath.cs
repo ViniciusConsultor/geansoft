@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessPath
+    public static class ChessPath
     {
         /// <summary>
         /// 获取指定的棋子是否能够从指定的源棋格移动到指定的目标棋格，并返回该步棋的Enums.Action值
@@ -19,6 +19,10 @@ namespace Gean.Wrapper.Chess
             if (chessman == null) throw new ArgumentNullException("Chessman cannot NULL.");
             if (sourceGrid == null) throw new ArgumentNullException("Source ChessGrid cannot NULL.");
             if (targetGrid == null) throw new ArgumentNullException("Target ChessGrid cannot NULL.");
+            
+            action = Enums.Action.None;
+
+
 
             if (!Chessman.IsNullOrEmpty(targetGrid.OwnedChessman))
                 action = Enums.Action.Kill;

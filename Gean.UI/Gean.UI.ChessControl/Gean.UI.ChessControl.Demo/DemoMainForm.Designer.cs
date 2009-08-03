@@ -131,7 +131,6 @@
             this.Name = "DemoMainForm";
             this.ShowIcon = false;
             this.Text = "DemoMainForm";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this._splitContainer.Panel2.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
             this._rightSplitContainer.Panel1.ResumeLayout(false);
