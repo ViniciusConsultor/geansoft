@@ -9,21 +9,12 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public abstract class BylawItem
     {
-        protected char FlagChar { get; private set; }
-
-        protected BylawItem(int number, string userId, string value, char flagChar)
+        protected BylawItem(string userId, string value)
         {
-            this.FlagChar = flagChar;
-
             this.UserID = userId;
             this.BylawValue = value;
-            this.Number = number;
         }
 
-        /// <summary>
-        /// 获取与设置编号
-        /// </summary>
-        public int Number { get; set; }
         /// <summary>
         /// 获取与设置作者的ID
         /// </summary>
@@ -35,17 +26,15 @@ namespace Gean.Wrapper.Chess
 
         public override string ToString()
         {
-            return Utility.BylawItemToString(this.FlagChar, this.Number, this.UserID, this.BylawValue);
+            return Utility.BylawItemToString(this.UserID, this.BylawValue);
         }
         public override int GetHashCode()
         {
-            return unchecked(3 * (Number.GetHashCode() + UserID.GetHashCode() + BylawValue.GetHashCode()));
+            return unchecked(3 * (UserID.GetHashCode() + BylawValue.GetHashCode()));
         }
         public override bool Equals(object obj)
         {
             BylawItem bi = (BylawItem)obj;
-            if (!bi.Number.Equals(this.Number))
-                return false;
             if (!bi.UserID.Equals(this.UserID))
                 return false;
             if (!bi.BylawValue.Equals(this.BylawValue))

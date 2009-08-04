@@ -9,10 +9,10 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 一个棋局记录中核心棋招序列
     /// </summary>
-    public sealed class ChessMainSequence : ChessChoicesSequence
+    public sealed class ChessMainSequence : ChessSequence
     {
         public ChessMainSequence()
-            : base("", "", 0)
+            : base("", "")
         {
         }
 

@@ -187,16 +187,14 @@ namespace Gean.Wrapper.Chess
         /// <param name="userID"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        static public string BylawItemToString(char flag, int number, string userID, string value)
+        static public string BylawItemToString(string userID, string value)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(flag);
-            sb.Append(number.ToString());
-            sb.Append(flag);
             if (!string.IsNullOrEmpty(userID))
             {
+                sb.Append('<');
                 sb.Append(userID);
-                sb.Append(flag);
+                sb.Append('>');
             }
             sb.AppendLine(value);
             return sb.ToString();

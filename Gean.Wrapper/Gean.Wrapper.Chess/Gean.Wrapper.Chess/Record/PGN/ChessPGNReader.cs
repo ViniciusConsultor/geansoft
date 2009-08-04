@@ -233,6 +233,29 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
+        /// Parses out the PGN tag and value from the game header.
+        /// </summary>
+        /// <param name="line"></param>
+        public void ParseTag(string line)
+        {
+            int nleft = line.IndexOf('"');
+            int nright = line.LastIndexOf('"');
+
+            Match regMatch = _Regex.Match(line);
+            if (regMatch.Groups.Count == 3)
+            {
+                // Call the events with the tag and tag value.
+                if (EventTagParsed != null)
+                {
+                    _Tag = regMatch.Groups[1].Value;
+                    _Value.Length = 0;
+                    _Value.Append(regMatch.Groups[2].Value);
+                    EventTagParsed(this);
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the parsing of the actual game notation of the PGN file.
         /// </summary>
         /// <param name="line"></param>
@@ -346,8 +369,7 @@ namespace Gean.Wrapper.Chess
                     _Value.Append(aChar);
                     break;
                 case '-':
-                    if (_State != Enums.GameReaderState.ENDMARKER &&
-                       _Value.Length >= 1)
+                    if (_State != Enums.GameReaderState.ENDMARKER && _Value.Length >= 1)
                     {
                         if ("012".IndexOf(_Value[_Value.Length - 1]) >= 0)
                             _State = Enums.GameReaderState.ENDMARKER;
@@ -431,29 +453,6 @@ namespace Gean.Wrapper.Chess
             }
             // Always clear out our data as the handler should have used this value during the event.
             _Value.Length = 0;
-        }
-
-        /// <summary>
-        /// Parses out the PGN tag and value from the game header.
-        /// </summary>
-        /// <param name="line"></param>
-        public void ParseTag(string line)
-        {
-            int nleft = line.IndexOf('"');
-            int nright = line.LastIndexOf('"');
-
-            Match regMatch = _Regex.Match(line);
-            if (regMatch.Groups.Count == 3)
-            {
-                // Call the events with the tag and tag value.
-                if (EventTagParsed != null)
-                {
-                    _Tag = regMatch.Groups[1].Value;
-                    _Value.Length = 0;
-                    _Value.Append(regMatch.Groups[2].Value);
-                    EventTagParsed(this);
-                }
-            }
         }
 
     }

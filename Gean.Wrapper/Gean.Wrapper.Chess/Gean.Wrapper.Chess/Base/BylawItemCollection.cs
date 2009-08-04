@@ -10,20 +10,6 @@ namespace Gean.Wrapper.Chess
         List<BylawItem> _values = new List<BylawItem>();
 
         /// <summary>
-        /// 返回所有评论的编号
-        /// </summary>
-        public int[] Indexs
-        {
-            get
-            {
-                List<int> indexs = new List<int>();
-                foreach (var item in _values)
-                    indexs.Add(item.Number);
-                return indexs.ToArray();
-            }
-        }
-
-        /// <summary>
         /// 返回所有评论的用户名
         /// </summary>
         public string[] UserIds
