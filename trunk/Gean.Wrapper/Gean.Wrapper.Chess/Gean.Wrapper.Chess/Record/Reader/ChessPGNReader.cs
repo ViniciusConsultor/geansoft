@@ -99,7 +99,7 @@ namespace Gean.Wrapper.Chess
         {
             _Regex = new Regex("^\\[([A-Za-z]*) \"(.*)\"", RegexOptions.Compiled);
             _Value = new StringBuilder();
-            _State = Enums.GameReaderState.HEADER;
+            _State = Enums.GameReaderState.Header;
             _SaveState = new Stack();
             _PeriodCount = 0;
         }
@@ -177,7 +177,7 @@ namespace Gean.Wrapper.Chess
                             {
                                 // Check to make sure we're not inside a comment section then
                                 //  see if we are at a game tag.
-                                if (_State != Enums.GameReaderState.COMMENT && Regex.IsMatch(_Data, "^\\["))
+                                if (_State != Enums.GameReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
                                 {
                                     if (_NextGame == false)
                                     {
@@ -189,7 +189,7 @@ namespace Gean.Wrapper.Chess
                                             EventNewGame(this);
                                         }
                                     }
-                                    _State = Enums.GameReaderState.HEADER;
+                                    _State = Enums.GameReaderState.Header;
                                     ParseTag(_Data);
                                     _Value.Length = 0;
                                 }
@@ -266,7 +266,7 @@ namespace Gean.Wrapper.Chess
                 // Handle any special processing of our text.
                 switch (_State)
                 {
-                    case Enums.GameReaderState.COMMENT:
+                    case Enums.GameReaderState.Comment:
                         if (aChar == '}')
                         {
                             CallEvent(_State);
@@ -275,7 +275,7 @@ namespace Gean.Wrapper.Chess
                             _Value.Append(aChar);
                         break;
 
-                    case Enums.GameReaderState.NAGS:
+                    case Enums.GameReaderState.Nags:
                         if (aChar >= '0' && aChar <= '9')
                             _Value.Append(aChar);
                         else
@@ -284,7 +284,7 @@ namespace Gean.Wrapper.Chess
                             HandleChar(aChar);
                         }
                         break;
-                    case Enums.GameReaderState.COLOR:
+                    case Enums.GameReaderState.Color:
                         if (aChar == '.')
                         {
                             _PeriodCount++;
@@ -294,11 +294,11 @@ namespace Gean.Wrapper.Chess
                             _Value.Length = 0;
                             if (_PeriodCount == 1)
                             {
-                                _State = Enums.GameReaderState.WHITE;
+                                _State = Enums.GameReaderState.White;
                             }
                             else if (_PeriodCount > 1)
                             {
-                                _State = Enums.GameReaderState.BLACK;
+                                _State = Enums.GameReaderState.Black;
                             }
                             HandleChar(aChar);
                             _PeriodCount = 0;
@@ -311,7 +311,7 @@ namespace Gean.Wrapper.Chess
                 }
             }
             // Ensure we add a space between comment lines that are broken appart.
-            if (_State == Enums.GameReaderState.COMMENT)
+            if (_State == Enums.GameReaderState.Comment)
                 _Value.Append(' ');
             else
                 CallEvent(_State);
@@ -329,7 +329,7 @@ namespace Gean.Wrapper.Chess
                 case '{':
                     CallEvent(_State);
                     _PrevState = _State;
-                    _State = Enums.GameReaderState.COMMENT;
+                    _State = Enums.GameReaderState.Comment;
                     break;
                 case '(':
                     if (EventEnterVariation != null)
@@ -349,35 +349,35 @@ namespace Gean.Wrapper.Chess
                     break;
                 case '.':
                     // We may have come across 6. e4 6... d5 as in our example data.
-                    _State = Enums.GameReaderState.NUMBER;
+                    _State = Enums.GameReaderState.Number;
                     CallEvent(_State);
                     _PeriodCount = 1;
                     break;
                 case '$':
                     CallEvent(_State);
                     _PrevState = _State;
-                    _State = Enums.GameReaderState.NAGS;
+                    _State = Enums.GameReaderState.Nags;
                     break;
                 case '!':
                 case '?':
-                    if (_State != Enums.GameReaderState.CONVERT_NAG)
+                    if (_State != Enums.GameReaderState.ConvertNag)
                     {
                         CallEvent(_State);
                         _PrevState = _State;
-                        _State = Enums.GameReaderState.CONVERT_NAG;
+                        _State = Enums.GameReaderState.ConvertNag;
                     }
                     _Value.Append(aChar);
                     break;
                 case '-':
-                    if (_State != Enums.GameReaderState.ENDMARKER && _Value.Length >= 1)
+                    if (_State != Enums.GameReaderState.EndMarker && _Value.Length >= 1)
                     {
                         if ("012".IndexOf(_Value[_Value.Length - 1]) >= 0)
-                            _State = Enums.GameReaderState.ENDMARKER;
+                            _State = Enums.GameReaderState.EndMarker;
                     }
                     _Value.Append(aChar);
                     break;
                 case '*':
-                    _State = Enums.GameReaderState.ENDMARKER;
+                    _State = Enums.GameReaderState.EndMarker;
                     _Value.Append(aChar);
                     break;
                 case '\t':
@@ -398,17 +398,17 @@ namespace Gean.Wrapper.Chess
             {
                 switch (state)
                 {
-                    case Enums.GameReaderState.COMMENT:
+                    case Enums.GameReaderState.Comment:
                         if (EventCommentParsed != null)
                             EventCommentParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.NAGS:
+                    case Enums.GameReaderState.Nags:
                         if (EventNagParsed != null)
                             EventNagParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.CONVERT_NAG:
+                    case Enums.GameReaderState.ConvertNag:
                         string nag = _Value.ToString();
                         _Value.Length = 0;
                         if (nag.Equals("!"))
@@ -429,25 +429,25 @@ namespace Gean.Wrapper.Chess
                             EventNagParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.NUMBER:
+                    case Enums.GameReaderState.Number:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.COLOR;
+                        _State = Enums.GameReaderState.Color;
                         break;
-                    case Enums.GameReaderState.WHITE:
+                    case Enums.GameReaderState.White:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.BLACK;
+                        _State = Enums.GameReaderState.Black;
                         break;
-                    case Enums.GameReaderState.BLACK:
+                    case Enums.GameReaderState.Black:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.NUMBER;
+                        _State = Enums.GameReaderState.Number;
                         break;
-                    case Enums.GameReaderState.ENDMARKER:
+                    case Enums.GameReaderState.EndMarker:
                         if (EventendMarkerParsed != null)
                             EventendMarkerParsed(this);
-                        _State = Enums.GameReaderState.HEADER;
+                        _State = Enums.GameReaderState.Header;
                         break;
                 }
             }
