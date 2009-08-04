@@ -47,6 +47,15 @@ namespace Gean.UI.ChessControl.Demo
             this._board.LoadGame();
         }
 
+        private void chessRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChessPGNReader reader = new ChessPGNReader();
+            reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__agame.pgn"));
+            ChessRecordCollection records = new ChessRecordCollection();
+            reader.AddEvents(records);
+            reader.Parse();
+        }
+
     }
 
     static class First

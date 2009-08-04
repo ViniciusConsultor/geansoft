@@ -72,6 +72,10 @@
     <None Include="DemoFile\PGN\wblitz08.pgn" />
     <None Include="DemoFile\PGN\wch08.pgn" />
     <None Include="DemoFile\PGN\worldop09.pgn" />
+    <None Include="DemoFile\PGN\__TCh-CHN A.pgn" />
+    <None Include="DemoFile\PGN\__aGame.pgn" />
+    <None Include="DemoFile\PGN\__kaspjun03.pgn" />
+    <None Include="DemoFile\PGN\__Polgar-Anand.pgn" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

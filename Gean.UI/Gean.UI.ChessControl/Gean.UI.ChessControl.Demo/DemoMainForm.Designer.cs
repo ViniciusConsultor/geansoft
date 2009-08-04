@@ -35,6 +35,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开局ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.chessRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
             this._rightSplitContainer.Panel1.SuspendLayout();
@@ -95,7 +96,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.开局ToolStripMenuItem});
+            this.开局ToolStripMenuItem,
+            this.chessRecordToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(632, 24);
@@ -117,6 +119,14 @@
             this.statusStrip1.Size = new System.Drawing.Size(632, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // chessRecordToolStripMenuItem
+            // 
+            this.chessRecordToolStripMenuItem.Name = "chessRecordToolStripMenuItem";
+            this.chessRecordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.chessRecordToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.chessRecordToolStripMenuItem.Text = "ChessRecord";
+            this.chessRecordToolStripMenuItem.Click += new System.EventHandler(this.chessRecordToolStripMenuItem_Click);
             // 
             // DemoMainForm
             // 
@@ -152,6 +162,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem 开局ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chessRecordToolStripMenuItem;
     }
 }
 
