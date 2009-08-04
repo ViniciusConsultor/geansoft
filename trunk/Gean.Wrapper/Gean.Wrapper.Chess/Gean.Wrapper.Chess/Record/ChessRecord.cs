@@ -9,12 +9,12 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessRecord
     {
-        public Definer Definer { get; internal set; }
+        public ChessTag Tags { get; internal set; }
         public ChessSequence Sequence { get; internal set; }
 
         public ChessRecord()
         {
-            this.Definer = new Definer();
+            this.Tags = new ChessTag();
             this.Sequence = new ChessSequence();
         }
 
@@ -26,7 +26,7 @@ namespace Gean.Wrapper.Chess
             if (obj is System.DBNull) return false;
             
             ChessRecord pr = obj as ChessRecord;
-            if (!UtilityEquals.EnumerableEquals(this.Definer, pr.Definer))
+            if (!UtilityEquals.EnumerableEquals(this.Tags, pr.Tags))
                 return false;
             if (!UtilityEquals.CollectionsEquals<ChessStepPair>(this.Sequence, pr.Sequence))
                 return false;
@@ -36,13 +36,13 @@ namespace Gean.Wrapper.Chess
         {
             return unchecked
                 (
-                3 * (Definer.GetHashCode() + Sequence.GetHashCode())
+                3 * (Tags.GetHashCode() + Sequence.GetHashCode())
                 );
         }
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(this.Definer.ToString());
+            sb.AppendLine(this.Tags.ToString());
             sb.AppendLine();
             sb.AppendLine(this.Sequence.ToString());
             sb.AppendLine().AppendLine();
