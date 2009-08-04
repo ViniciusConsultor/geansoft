@@ -15,11 +15,11 @@ namespace Gean.Wrapper.Chess
         public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
-            ChessPoint point = Chessman.GetOpenningsPoint(side, gridSide, 1, 8);
+            ChessPosition point = Chessman.GetOpenningsPoint(side, gridSide, 1, 8);
             this.ChessPoints.Push(point);
         }
 
-        public ChessmanRook(Enums.ChessmanSide side, ChessPoint point)
+        public ChessmanRook(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Rook, side)
         {
             this.ChessPoints.Push(point);

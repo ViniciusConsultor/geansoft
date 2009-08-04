@@ -12,9 +12,9 @@ namespace Gean.Wrapper.Chess
         public enum Action
         {
             /// <summary>
-            /// 嘛也不是
+            /// 无效动作
             /// </summary>
-            None = 0,
+            Invalid = 0,
             /// <summary>
             /// 普通棋招
             /// </summary>
@@ -41,6 +41,14 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             Opennings = 32,
             /// <summary>
+            /// 升变
+            /// </summary>
+            Promotion = 64,
+            /// <summary>
+            /// 吃过路兵
+            /// </summary>
+            Enpassant = 128,
+            /// <summary>
             /// 杀棋并将军
             /// </summary>
             KillAndCheck = Kill | Check,
@@ -57,7 +65,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessmanSide : byte
         {
-            None = 0, White, Black,
+            None = 0, White = 1, Black = 2,
         }
 
         /// <summary>
@@ -75,7 +83,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessGridSide
         {
-            None = 0, Black, White,
+            None = 0, White = 1, Black = 2,
         }
 
         /// <summary>
@@ -102,27 +110,74 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 车
             /// </summary>
-            Rook,
+            Rook = 1,
             /// <summary>
             /// 马((中古时代的)武士, 骑士)
             /// </summary>
-            Knight,
+            Knight = 2,
             /// <summary>
             /// 象((基督教某些教派管辖大教区的)主教)
             /// </summary>
-            Bishop,
+            Bishop = 4,
             /// <summary>
             /// 皇后
             /// </summary>
-            Queen,
+            Queen = 8,
             /// <summary>
             /// 王
             /// </summary>
-            King,
+            King = 16,
             /// <summary>
             /// 兵
             /// </summary>
-            Pawn,
+            Pawn = 32,
+        }
+
+        /// <summary>
+        /// The different states our parse may be in when firing events.
+        /// </summary>
+        public enum GameReaderState
+        {
+            /// <summary>
+            /// Parsing the header information
+            /// </summary>
+            HEADER,
+            /// <summary>
+            /// Parsing the number of a move
+            /// </summary>
+            NUMBER,
+            /// <summary>
+            /// Parsing the color to move
+            /// </summary>
+            COLOR,
+            /// <summary>
+            /// Parsing white's move information
+            /// </summary>
+            WHITE,
+            /// <summary>
+            /// Parsing black's move information.
+            /// </summary>
+            BLACK,
+            /// <summary>
+            /// Parsing a comment.
+            /// </summary>
+            COMMENT,
+            /// <summary>
+            /// Finished parsing a comment.
+            /// </summary>
+            ENDCOMMENT,
+            /// <summary>
+            /// Parsing a NAG.
+            /// </summary>
+            NAGS,
+            /// <summary>
+            /// Convert a Nag to text.
+            /// </summary>
+            CONVERT_NAG,
+            /// <summary>
+            /// END.
+            /// </summary>
+            ENDMARKER
         }
 
         public static string ChessmanTypeToString(ChessmanType type)

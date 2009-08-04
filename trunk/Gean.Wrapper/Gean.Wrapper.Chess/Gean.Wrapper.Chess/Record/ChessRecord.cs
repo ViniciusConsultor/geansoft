@@ -10,14 +10,14 @@ namespace Gean.Wrapper.Chess
     public class ChessRecord
     {
         public Definer Definer { get; internal set; }
-        public ChessSequence Sequence { get; internal set; }
+        public ChessMainSequence Sequence { get; internal set; }
         public ChessCommentCollection Comments { get; internal set; }
         public ChessChoicesCollection Choices { get; internal set; }
 
         public ChessRecord()
         {
             this.Definer = new Definer();
-            this.Sequence = new ChessSequence();
+            this.Sequence = new ChessMainSequence();
             this.Comments = new ChessCommentCollection();
             this.Choices = new ChessChoicesCollection();
         }
@@ -26,6 +26,9 @@ namespace Gean.Wrapper.Chess
 
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+            
             ChessRecord pr = obj as ChessRecord;
             if (!UtilityEquals.EnumerableEquals(this.Definer, pr.Definer))
                 return false;
@@ -64,7 +67,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public string ToPGNString()
         {
-            throw new System.NotImplementedException();
+            return this.ToString();
         }
 
     }

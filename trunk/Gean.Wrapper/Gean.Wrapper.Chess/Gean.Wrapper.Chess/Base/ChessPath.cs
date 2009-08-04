@@ -20,11 +20,11 @@ namespace Gean.Wrapper.Chess
             if (sourceGrid == null) throw new ArgumentNullException("Source ChessGrid cannot NULL.");
             if (targetGrid == null) throw new ArgumentNullException("Target ChessGrid cannot NULL.");
             
-            action = Enums.Action.None;
+            action = Enums.Action.Invalid;
 
 
 
-            if (!Chessman.IsNullOrEmpty(targetGrid.OwnedChessman))
+            if (!Chessman.IsNullOrEmpty(targetGrid.Occupant))
                 action = Enums.Action.Kill;
             else
                 action = Enums.Action.General;

@@ -24,7 +24,7 @@ namespace Gean.UI.ChessControl
             this.BackColor = Color.Chocolate;
             this.BackgroundImage = ChessBoardHelper.BoardImage;
             this.OwnedRectangles = new Rectangle[8, 8];
-            this.KeyChessPoint = new ChessPoint(1, 1);
+            this.KeyChessPosition = new ChessPosition(1, 1);
             this.ViewKeyRectangle = false;
 
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
@@ -48,7 +48,7 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual List<Chessman> Chessmans { get; private set; }
 
-        protected virtual ChessPoint KeyChessPoint { get; private set; }
+        protected virtual ChessPosition KeyChessPosition { get; private set; }
 
         protected virtual bool ViewKeyRectangle { get; private set; }
 
@@ -84,7 +84,7 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 获取已选择的棋子所在的棋格坐标
         /// </summary>
-        public virtual ChessPoint SelectedChessPoint { get; private set; }
+        public virtual ChessPosition SelectedChessPosition { get; private set; }
         
         #endregion
 
@@ -174,7 +174,7 @@ namespace Gean.UI.ChessControl
         {
             foreach (Chessman man in chessmans)
             {
-                ChessPoint point = man.ChessPoints.Peek();
+                ChessPosition point = man.ChessPoints.Peek();
                 this.OwnedChessGame[point.X, point.Y].MoveIn(this.OwnedChessGame, man, Enums.Action.Opennings);
             }
         }
@@ -210,30 +210,30 @@ namespace Gean.UI.ChessControl
             {
                 #region 方向控制
                 case Keys.Down:
-                    if (this.KeyChessPoint.Y > 1)
+                    if (this.KeyChessPosition.Y > 1)
                     {
-                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X, this.KeyChessPoint.Y - 1);
+                        this.KeyChessPosition = new ChessPosition(this.KeyChessPosition.X, this.KeyChessPosition.Y - 1);
                         this.SetSelectedPointByKey();
                     }
                     break;
                 case Keys.Up:
-                    if (this.KeyChessPoint.Y < 8)
+                    if (this.KeyChessPosition.Y < 8)
                     {
-                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X, this.KeyChessPoint.Y + 1);
+                        this.KeyChessPosition = new ChessPosition(this.KeyChessPosition.X, this.KeyChessPosition.Y + 1);
                         this.SetSelectedPointByKey();
                     }
                     break;
                 case Keys.Left:
-                    if (this.KeyChessPoint.X > 1)
+                    if (this.KeyChessPosition.X > 1)
                     {
-                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X - 1, this.KeyChessPoint.Y);
+                        this.KeyChessPosition = new ChessPosition(this.KeyChessPosition.X - 1, this.KeyChessPosition.Y);
                         this.SetSelectedPointByKey();
                     }
                     break;
                 case Keys.Right:
-                    if (this.KeyChessPoint.Y < 8)
+                    if (this.KeyChessPosition.Y < 8)
                     {
-                        this.KeyChessPoint = new ChessPoint(this.KeyChessPoint.X + 1, this.KeyChessPoint.Y);
+                        this.KeyChessPosition = new ChessPosition(this.KeyChessPosition.X + 1, this.KeyChessPosition.Y);
                         this.SetSelectedPointByKey();
                     }
                     break;
@@ -295,13 +295,13 @@ namespace Gean.UI.ChessControl
 
                         this._tmpMouseDownGrid = this.OwnedChessGame[x, y];
                         
-                        if (Chessman.IsNullOrEmpty(_tmpMouseDownGrid.OwnedChessman))
+                        if (Chessman.IsNullOrEmpty(_tmpMouseDownGrid.Occupant))
                             return;//找到矩形，但矩形中无棋子，退出
-                        if (_tmpMouseDownGrid.OwnedChessman.ChessmanSide != this.CurrChessSide)
+                        if (_tmpMouseDownGrid.Occupant.ChessmanSide != this.CurrChessSide)
                             return;//棋子的战方与当前棋局要求的战方不符，退出
 
                         //鼠标到达的棋格符合所有规则，记录下棋格的坐标，等待移动
-                        this.SelectedChessPoint = new ChessPoint(x, y);
+                        this.SelectedChessPosition = new ChessPosition(x, y);
                         this.ViewKeyRectangle = false;
                         this.Invalidate();
                         //如可拖动棋子，设置可拖动的棋子图像
@@ -316,7 +316,7 @@ namespace Gean.UI.ChessControl
         {
             base.OnMouseUp(e);
             if (this.OwnedChessGame == null) return;
-            if (this.SelectedChessPoint.Equals(ChessPoint.Empty)) return;
+            if (this.SelectedChessPosition.Equals(ChessPosition.Empty)) return;
             if (e.Button == MouseButtons.Left)
             {
                 for (int x = 1; x <= 8; x++)
@@ -328,10 +328,10 @@ namespace Gean.UI.ChessControl
                         
                         this._tmpMouseUpGrid = this.OwnedChessGame[x, y];
                         //目标棋格有棋子
-                        if (!Chessman.IsNullOrEmpty(_tmpMouseUpGrid.OwnedChessman))
+                        if (!Chessman.IsNullOrEmpty(_tmpMouseUpGrid.Occupant))
                         {
                             //目标棋格棋子的战方不符合规则
-                            if (_tmpMouseUpGrid.OwnedChessman.ChessmanSide == this.CurrChessSide)
+                            if (_tmpMouseUpGrid.Occupant.ChessmanSide == this.CurrChessSide)
                             {
                                 //this.SelectedChessPoint = ChessPoint.Empty;//如不设置，将会变两个动作完成行棋
                                 //this._tmpMovingManImg = null;
@@ -378,7 +378,7 @@ namespace Gean.UI.ChessControl
                     else//找到相应的矩形
                     {
                         _tmpEnterGrid = this.OwnedChessGame[x, y];
-                        if (Chessman.IsNullOrEmpty(_tmpEnterGrid.OwnedChessman))
+                        if (Chessman.IsNullOrEmpty(_tmpEnterGrid.Occupant))
                             return;
                         this.Cursor = Cursors.Hand;
                         return;
@@ -438,13 +438,13 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual void SetSelectedPointByKey()
         {
-            ChessGrid rid = this.OwnedChessGame[this.KeyChessPoint.X, this.KeyChessPoint.Y];
-            Chessman man = rid.OwnedChessman;
+            ChessGrid rid = this.OwnedChessGame[this.KeyChessPosition.X, this.KeyChessPosition.Y];
+            Chessman man = rid.Occupant;
             if (man == null)
                 return;
             if (man.ChessmanSide != this.CurrChessSide)
                 return;
-            this.SelectedChessPoint = this.KeyChessPoint;
+            this.SelectedChessPosition = this.KeyChessPosition;
         }
 
         /// <summary>
@@ -452,8 +452,8 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual void MoveIn()
         {
-            ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPoint.X, this.SelectedChessPoint.Y];
-            Chessman man = sourceGrid.OwnedChessman;
+            ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPosition.X, this.SelectedChessPosition.Y];
+            Chessman man = sourceGrid.Occupant;
             Enums.Action action = Enums.Action.General;
 
             if (ChessPath.TryMoveIn(man, sourceGrid, _tmpMouseUpGrid, out action))
@@ -470,7 +470,7 @@ namespace Gean.UI.ChessControl
                 this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
                 //刷新
                 this.Invalidate();
-                this.SelectedChessPoint = ChessPoint.Empty;
+                this.SelectedChessPosition = ChessPosition.Empty;
                 //this._tmpMovingManImg = null;
             }
         }
@@ -562,7 +562,7 @@ namespace Gean.UI.ChessControl
             {
                 if (man.IsKilled)
                     continue;
-                ChessPoint point = man.ChessPoints.Peek();
+                ChessPosition point = man.ChessPoints.Peek();
                 ChessGrid chessGrid = board.OwnedChessGame[point.X, point.Y];
                 ChessBoard.GetChessmanRectangle(board, chessGrid);
                 _currManImage = ChessBoardHelper.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
@@ -575,15 +575,15 @@ namespace Gean.UI.ChessControl
 
         private static void PaintSelectedChessPoint(Graphics g, ChessBoard chessBoard)
         {
-            if (chessBoard.SelectedChessPoint.Equals(ChessPoint.Empty))
+            if (chessBoard.SelectedChessPosition.Equals(ChessPosition.Empty))
                 return;
             Rectangle rect = Rectangle.Empty;
             if (chessBoard.ViewKeyRectangle)
             {
-                rect = chessBoard.OwnedRectangles[chessBoard.KeyChessPoint.X - 1, chessBoard.KeyChessPoint.Y - 1];
+                rect = chessBoard.OwnedRectangles[chessBoard.KeyChessPosition.X - 1, chessBoard.KeyChessPosition.Y - 1];
                 g.DrawRectangle(Pens.White, rect);
             }
-            rect = chessBoard.OwnedRectangles[chessBoard.SelectedChessPoint.X - 1, chessBoard.SelectedChessPoint.Y - 1];
+            rect = chessBoard.OwnedRectangles[chessBoard.SelectedChessPosition.X - 1, chessBoard.SelectedChessPosition.Y - 1];
             for (int i = -1; i <= 1; i++)
             {
                 g.DrawRectangle(Pens.Yellow, Rectangle.Inflate(rect, i, i));
@@ -598,7 +598,7 @@ namespace Gean.UI.ChessControl
         private static void GetChessmanRectangle(ChessBoard board, ChessGrid chessGrid)
         {
             int offset = (int)(board._rectangleWidth * 0.15);//棋子填充比棋格小20%，以保证美观
-            Rectangle rectangle = board.OwnedRectangles[chessGrid.PointX - 1, chessGrid.PointY - 1];
+            Rectangle rectangle = board.OwnedRectangles[chessGrid.X - 1, chessGrid.Y - 1];
             _currManRect.Location = new Point(rectangle.X + offset, rectangle.Y + offset);
             _currManRect.Size = new Size(rectangle.Width - offset * 2, rectangle.Height - offset * 2);
         }

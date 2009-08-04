@@ -9,11 +9,11 @@ namespace Gean.Wrapper.Chess
         public ChessmanBishop(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            ChessPoint point = Chessman.GetOpenningsPoint(side, gridSide, 3, 6);
+            ChessPosition point = Chessman.GetOpenningsPoint(side, gridSide, 3, 6);
             this.ChessPoints.Push(point);
         }
 
-        public ChessmanBishop(Enums.ChessmanSide side, ChessPoint point)
+        public ChessmanBishop(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Bishop, side)
         {
             this.ChessPoints.Push(point);
