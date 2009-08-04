@@ -10,16 +10,12 @@ namespace Gean.Wrapper.Chess
     public class ChessRecord
     {
         public Definer Definer { get; internal set; }
-        public ChessMainSequence Sequence { get; internal set; }
-        public ChessCommentCollection Comments { get; internal set; }
-        public ChessChoicesCollection Choices { get; internal set; }
+        public ChessSequence Sequence { get; internal set; }
 
         public ChessRecord()
         {
             this.Definer = new Definer();
-            this.Sequence = new ChessMainSequence();
-            this.Comments = new ChessCommentCollection();
-            this.Choices = new ChessChoicesCollection();
+            this.Sequence = new ChessSequence();
         }
 
         #region override
@@ -34,17 +30,13 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (!UtilityEquals.CollectionsEquals<ChessStepPair>(this.Sequence, pr.Sequence))
                 return false;
-            if (!UtilityEquals.CollectionsEquals<BylawItem>(this.Comments, pr.Comments))
-                return false;
-            if (!UtilityEquals.CollectionsEquals<BylawItem>(this.Choices, pr.Choices))
-                return false;
             return true;
         }
         public override int GetHashCode()
         {
             return unchecked
                 (
-                3 * (Definer.GetHashCode() + Sequence.GetHashCode() + Comments.GetHashCode() + Choices.GetHashCode())
+                3 * (Definer.GetHashCode() + Sequence.GetHashCode())
                 );
         }
         public override string ToString()
@@ -53,9 +45,6 @@ namespace Gean.Wrapper.Chess
             sb.AppendLine(this.Definer.ToString());
             sb.AppendLine();
             sb.AppendLine(this.Sequence.ToString());
-            sb.AppendLine();
-            sb.AppendLine(this.Comments.ToString());
-            sb.AppendLine(this.Choices.ToString());
             sb.AppendLine().AppendLine();
             return sb.ToString();
         }

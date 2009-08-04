@@ -35,7 +35,7 @@ namespace Gean.Wrapper.Chess
             {
                 List<string> values = new List<string>();
                 foreach (var item in _values)
-                    values.Add(item.BylawValue);
+                    values.Add(item.Value);
                 return values.ToArray();
             }
         }

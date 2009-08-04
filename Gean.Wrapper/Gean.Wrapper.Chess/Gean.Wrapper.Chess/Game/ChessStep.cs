@@ -33,11 +33,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
         /// </summary>
-        public IndexList CommentIndexs { get; internal set; }
+        public ChessComment ChessComment { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的变招的索引集合
         /// </summary>
-        public IndexList ChoiceStepsIndexs { get; internal set; }
+        public ChessSequence VariationSteps { get; internal set; }
 
         #endregion
 
@@ -49,8 +49,6 @@ namespace Gean.Wrapper.Chess
             this.ChessmanType = chessmanType;
             this.TargetPoint = targetPoint;
             this.SourcePoint = sourcePoint;
-            this.CommentIndexs = new IndexList();
-            this.ChoiceStepsIndexs = new IndexList();
         }
 
         #endregion
@@ -99,28 +97,6 @@ namespace Gean.Wrapper.Chess
                     }
                 #endregion
             }
-            #region 注释
-            if (this.CommentIndexs.Count > 0)//如果有注释，打印注释
-            {
-                sb.Append('(');
-                foreach (int index in CommentIndexs)
-                {
-                    sb.Append(index.ToString()).Append(',');
-                }
-                sb.Remove(sb.Length - 1, 1).Append(')');
-            }
-            #endregion
-            #region 变招
-            if (this.ChoiceStepsIndexs.Count > 0)//如果有变招，打印变招字符串
-            {
-                sb.Append("[");
-                foreach (int index in this.ChoiceStepsIndexs)
-                {
-                    sb.Append(index.ToString()).Append(',');
-                }
-                sb.Remove(sb.Length - 1, 1).Append("]");
-            }
-            #endregion
             return sb.ToString().Trim();
         }
         public override int GetHashCode()
@@ -130,7 +106,7 @@ namespace Gean.Wrapper.Chess
                 this.Action.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
                 this.TargetPoint.GetHashCode() + this.SourcePoint.GetHashCode() +
-                this.CommentIndexs.GetHashCode() + this.ChoiceStepsIndexs.GetHashCode()
+                this.ChessComment.GetHashCode() + this.VariationSteps.GetHashCode()
                 ));
         }
         public override bool Equals(object obj)
@@ -147,9 +123,9 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (!UtilityEquals.PairEquals(this.SourcePoint, step.SourcePoint))
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.ChoiceStepsIndexs, step.ChoiceStepsIndexs))
+            if (!UtilityEquals.PairEquals(this.ChessComment, step.ChessComment))
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.CommentIndexs, step.CommentIndexs))
+            if (!UtilityEquals.EnumerableEquals(this.VariationSteps, step.VariationSteps))
                 return false;
             return true;
         }
@@ -165,23 +141,6 @@ namespace Gean.Wrapper.Chess
             value = value.Trim();
 
             string comments_choices = "";
-
-            #region 解析注释与变招的索引
-
-            IndexList comments = new IndexList();
-            IndexList choices = new IndexList();
-            if ((value.IndexOf('(') >= 0) || (value.IndexOf('[') >= 0))
-            {
-                int x = value.IndexOf('(');
-                int y = value.IndexOf('[');
-                int i = x > y ? y : x;
-                comments_choices = value.Substring(i);
-                value = value.Substring(0, i);
-                comments = Utility.IndexParse(comments_choices, '(', ')');
-                choices = Utility.IndexParse(comments_choices, '[', ']');
-            }
-
-            #endregion
 
             Enums.Action action = Enums.Action.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;
@@ -271,71 +230,7 @@ namespace Gean.Wrapper.Chess
                 #endregion
             }
             ChessStep step = new ChessStep(action, manType, sourcePoint, new ChessPosition(rid.X, rid.Y));
-            step.CommentIndexs = comments;
-            step.ChoiceStepsIndexs = choices;
             return step;
-        }
-
-        #endregion
-
-        #region class IndexList
-
-        public class IndexList : IEnumerable<int>
-        {
-            List<int> _indexs = new List<int>();
-
-            public int this[int index]
-            {
-                get { return _indexs[index]; }
-            }
-
-            public int IndexOf(int item)
-            {
-                return _indexs.IndexOf(item);
-            }
-
-            public void Add(int item)
-            {
-                _indexs.Add(item);
-            }
-
-            public void Clear()
-            {
-                _indexs.Clear();
-            }
-
-            public void RemoveAt(int index)
-            {
-                _indexs.RemoveAt(index);
-            }
-
-            public bool Remove(int item)
-            {
-                return _indexs.Remove(item);
-            }
-
-            public int Count
-            {
-                get { return _indexs.Count; }
-            }
-
-            #region IEnumerable<int> 成员
-
-            public IEnumerator<int> GetEnumerator()
-            {
-                return _indexs.GetEnumerator();
-            }
-
-            #endregion
-
-            #region IEnumerable 成员
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return _indexs.GetEnumerator();
-            }
-
-            #endregion
         }
 
         #endregion
