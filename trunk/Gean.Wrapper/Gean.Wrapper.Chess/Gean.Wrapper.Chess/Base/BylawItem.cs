@@ -12,32 +12,32 @@ namespace Gean.Wrapper.Chess
         protected BylawItem(string userId, string value)
         {
             this.UserID = userId;
-            this.BylawValue = value;
+            this.Value = value;
         }
 
         /// <summary>
         /// 获取与设置作者的ID
         /// </summary>
-        public string UserID { get; set; }
+        public virtual string UserID { get; private set; }
         /// <summary>
         /// 获取与设置条目的实际内容
         /// </summary>
-        public string BylawValue { get; set; }
+        public virtual string Value { get; private set; }
 
         public override string ToString()
         {
-            return Utility.BylawItemToString(this.UserID, this.BylawValue);
+            return Utility.BylawItemToString(this.UserID, this.Value);
         }
         public override int GetHashCode()
         {
-            return unchecked(3 * (UserID.GetHashCode() + BylawValue.GetHashCode()));
+            return unchecked(3 * (UserID.GetHashCode() + Value.GetHashCode()));
         }
         public override bool Equals(object obj)
         {
             BylawItem bi = (BylawItem)obj;
             if (!bi.UserID.Equals(this.UserID))
                 return false;
-            if (!bi.BylawValue.Equals(this.BylawValue))
+            if (!bi.Value.Equals(this.Value))
                 return false;
             return true;
         }

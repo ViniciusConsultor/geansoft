@@ -10,11 +10,13 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessComment : BylawItem
     {
+        public ChessComment(string comment)
+            : this("", comment)
+        { }
         public ChessComment(string userId, string comment)
             : base(userId, comment)
-        {
+        { }
 
-        }
         /// <summary>
         /// 对给定的定符串进行解析，返回一个棋局评论类型
         /// </summary>

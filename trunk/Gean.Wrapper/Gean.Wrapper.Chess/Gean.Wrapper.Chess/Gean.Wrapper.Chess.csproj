@@ -54,10 +54,8 @@
     <Compile Include="Record\Reader\ChessPGNReader.cs" />
     <Compile Include="Record\Reader\IPosition.cs" />
     <Compile Include="Record\Reader\IPositionEvents.cs" />
-    <Compile Include="Sequence\ChessMainSequence.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />
-    <Compile Include="Record\ChessCommentCollection.cs" />
     <Compile Include="Chessman\Chessman.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,10 +80,9 @@
     <Compile Include="Record\ChessRecord.cs" />
     <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="Sequence\ChessSequence.cs" />
+    <Compile Include="Record\ChessSequence.cs" />
     <Compile Include="Game\ChessStepPair.cs" />
     <Compile Include="Game\ChessException.cs" />
-    <Compile Include="Record\ChessChoicesCollection.cs" />
     <Compile Include="Base\Enums.cs" />
     <Compile Include="Game\ChessGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +104,9 @@
       <LastGenOutput>ChessStringResource.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Record\Sequence\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -199,20 +199,5 @@ namespace Gean.Wrapper.Chess
             sb.AppendLine(value);
             return sb.ToString();
         }
-
-        static public ChessStep.IndexList IndexParse(string value, char flagA, char flagB)
-        {
-            ChessStep.IndexList indexs = new ChessStep.IndexList();
-            int a = value.IndexOf(flagA);
-            int b = value.IndexOf(flagB);
-            value = value.Substring(a + 1, b - (a + 1)).Trim();
-            string[] arr = value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string str in arr)
-            {
-                indexs.Add(int.Parse(str.Trim()));
-            }
-            return indexs;
-        }
-
     }
 }
