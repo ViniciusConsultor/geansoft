@@ -9,20 +9,20 @@ namespace Gean.Wrapper.Chess
         public ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)
         {
-            ChessPoint point = ChessPoint.Empty;
+            ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    point = new ChessPoint(5, 1);
+                    point = new ChessPosition(5, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    point = new ChessPoint(5, 8);
+                    point = new ChessPosition(5, 8);
                     break;
             }
             this.ChessPoints.Push(point);
         }
 
-        public ChessmanKing(Enums.ChessmanSide side, ChessPoint point)
+        public ChessmanKing(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.King, side)
         {
             this.ChessPoints.Push(point);

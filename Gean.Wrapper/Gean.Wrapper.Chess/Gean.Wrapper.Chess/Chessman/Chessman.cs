@@ -24,7 +24,7 @@ namespace Gean.Wrapper.Chess
         {
             this.ChessmanType = type;
             this.ChessmanSide = side;
-            this.ChessPoints = new ChessPointCollection();
+            this.ChessPoints = new ChessPositionCollection();
             this.InitializeComponent();
         }
 
@@ -41,6 +41,8 @@ namespace Gean.Wrapper.Chess
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+
             Chessman man = obj as Chessman;
             if (man.ChessmanType != this.ChessmanType) 
                 return false;
@@ -67,7 +69,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 该棋子的棋步<see cref="ChessStep"/>的集合
         /// </summary>
-        public ChessPointCollection ChessPoints { get; set; }
+        public ChessPositionCollection ChessPoints { get; set; }
 
         public Image BackgroundImage { get; set; }
 
@@ -95,9 +97,9 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
         /// </summary>
-        internal static ChessPoint GetOpenningsPoint(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
+        internal static ChessPosition GetOpenningsPoint(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
         {
-            ChessPoint point = ChessPoint.Empty;
+            ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
@@ -105,10 +107,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessGridSide.Black:
-                                point = new ChessPoint(left, 1);
+                                point = new ChessPosition(left, 1);
                                 break;
                             case Enums.ChessGridSide.White:
-                                point = new ChessPoint(right, 1);
+                                point = new ChessPosition(right, 1);
                                 break;
                         }
                         break;
@@ -118,10 +120,10 @@ namespace Gean.Wrapper.Chess
                         switch (gridSide)
                         {
                             case Enums.ChessGridSide.Black:
-                                point = new ChessPoint(right, 8);
+                                point = new ChessPosition(right, 8);
                                 break;
                             case Enums.ChessGridSide.White:
-                                point = new ChessPoint(left, 8);
+                                point = new ChessPosition(left, 8);
                                 break;
                         }
                         break;

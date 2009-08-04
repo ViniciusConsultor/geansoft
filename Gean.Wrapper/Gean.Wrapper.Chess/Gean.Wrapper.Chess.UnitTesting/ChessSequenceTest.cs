@@ -70,44 +70,44 @@ namespace Gean.Wrapper.Chess.UnitTesting
         public void ParseTest()
         {
             string sequence = string.Empty;
-            ChessSequence expected = null;
-            ChessSequence actual = null;
+            ChessMainSequence expected = null;
+            ChessMainSequence actual = null;
 
 
             sequence = "1. c4 Nf6 2. d3 e5 3. cxd5 Nxd5 4. a3 Bg4 5. b4 a6";
-            expected = new ChessSequence();
-            ChessPoint e = ChessPoint.Empty;
+            expected = new ChessMainSequence();
+            ChessPosition e = ChessPosition.Empty;
             ChessStep w = null;
             ChessStep b = null;
             ChessStepPair pair = null;
             //1. c4 Nf6
-            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(3, 4));
-            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Knight, e, new ChessPoint(6, 6));
+            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(3, 4));
+            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Knight, e, new ChessPosition(6, 6));
             pair = new ChessStepPair(1, w, b);
             expected.Add(pair);
             //2. d3 e5
-            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(4, 3));
-            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(5, 5));
+            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(4, 3));
+            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(5, 5));
             pair = new ChessStepPair(2, w, b);
             expected.Add(pair);
             //3. cxd5 Nxd5
-            ChessPoint tmp = new ChessPoint('c', 4);
-            w = new ChessStep(Enums.Action.Kill, Enums.ChessmanType.Pawn, tmp, new ChessPoint(4, 5));
-            b = new ChessStep(Enums.Action.Kill, Enums.ChessmanType.Knight, e, new ChessPoint(4, 5));
+            ChessPosition tmp = new ChessPosition('c', 4);
+            w = new ChessStep(Enums.Action.Kill, Enums.ChessmanType.Pawn, tmp, new ChessPosition(4, 5));
+            b = new ChessStep(Enums.Action.Kill, Enums.ChessmanType.Knight, e, new ChessPosition(4, 5));
             pair = new ChessStepPair(3, w, b);
             expected.Add(pair);
             //4. a3 Bg4
-            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(1, 3));
-            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Bishop, e, new ChessPoint(7, 4));
+            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(1, 3));
+            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Bishop, e, new ChessPosition(7, 4));
             pair = new ChessStepPair(4, w, b);
             expected.Add(pair);
             //5. b4 a6
-            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(2, 4));
-            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPoint(1, 6));
+            w = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(2, 4));
+            b = new ChessStep(Enums.Action.General, Enums.ChessmanType.Pawn, e, new ChessPosition(1, 6));
             pair = new ChessStepPair(5, w, b);
             expected.Add(pair);
 
-            actual = ChessSequence.Parse(sequence);
+            actual = ChessMainSequence.Parse(sequence);
             Assert.AreEqual(expected, actual);
         }
     }

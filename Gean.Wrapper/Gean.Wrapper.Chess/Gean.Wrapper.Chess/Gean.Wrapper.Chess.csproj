@@ -41,9 +41,16 @@
     <Compile Include="Base\BylawItemCollection.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
-    <Compile Include="Game\ChessPoint.cs" />
-    <Compile Include="Game\ChessSequence.cs" />
-    <Compile Include="JavaGUIBoard.cs" />
+    <Compile Include="ChessStringResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChessStringResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Game\ChessPosition.cs" />
+    <Compile Include="Record\PGN\IGameReaderEvents.cs" />
+    <Compile Include="Record\PGN\IGameReader.cs" />
+    <Compile Include="Record\PGN\PGNReader.cs" />
+    <Compile Include="Sequence\ChessMainSequence.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />
     <Compile Include="Record\ChessCommentCollection.cs" />
@@ -69,22 +76,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Record\ChessRecord.cs" />
-    <Compile Include="Record\PGN\ChessPGNWriter.cs" />
     <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="Record\PGN\ChessPGNReader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Game\ChessStepPairSequence.cs" />
+    <Compile Include="Sequence\ChessChoicesSequence.cs" />
     <Compile Include="Game\ChessStepPair.cs" />
     <Compile Include="Game\ChessException.cs" />
     <Compile Include="Record\ChessChoicesCollection.cs" />
     <Compile Include="Base\Enums.cs" />
     <Compile Include="Game\ChessGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Game\ChessPointCollection.cs" />
+    <Compile Include="Game\ChessPositionCollection.cs" />
     <Compile Include="Base\Utility.cs" />
-    <Compile Include="Record\PGN\PGNLex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
@@ -94,6 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Gean.Wrapper.Chess.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ChessStringResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChessStringResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

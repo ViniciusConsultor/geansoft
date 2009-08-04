@@ -9,16 +9,11 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 一个棋局记录中核心棋招序列
     /// </summary>
-    public sealed class ChessSequence : ChessStepPairSequence
+    public sealed class ChessMainSequence : ChessChoicesSequence
     {
-        public ChessSequence()
+        public ChessMainSequence()
             : base("", "", 0)
         {
-        }
-
-        public override string ToString()
-        {
-            return this.SequenceToString();
         }
 
         private int _number = 1;
@@ -54,20 +49,26 @@ namespace Gean.Wrapper.Chess
             return this.ChessStepPairs[this.ChessStepPairs.Count - 1];
         }
 
-        public static ChessSequence Parse(string stringvalue)
+        public override string ToString()
         {
-            ChessSequence cs = new ChessSequence();
-            string regexstring = @"\b\d+.";
-            Regex regex = new Regex(regexstring);
-            string[] arr = regex.Split(stringvalue);
+            return this.SequenceToString();
+        }
+
+        public static ChessMainSequence Parse(string value)
+        {
+            ChessMainSequence mainSequence = new ChessMainSequence();
+            string regexstr = @"\b\d+.";
+            Regex regex = new Regex(regexstr);
+            string[] strArray = regex.Split(value);
             int j = 1;
-            foreach (var item in arr)
+            foreach (string item in strArray)
             {
-                if (string.IsNullOrEmpty(item)) continue;
-                cs.Add(ChessStepPair.Parse(j, item));
+                if (string.IsNullOrEmpty(item)) 
+                    continue;
+                mainSequence.Add(ChessStepPair.Parse(j, item));
                 j++;
             }
-            return cs;
+            return mainSequence;
         }
     }
 }

@@ -31,9 +31,9 @@ namespace Gean.Wrapper.Chess
             }
             #endregion
 
-            this.PointX = pointX;
-            this.PointY = pointY;
-            this.PointCharX = Utility.IntToChar(pointY);
+            this.X = pointX;
+            this.Y = pointY;
+            this.Horizontal = Utility.IntToChar(pointY);
             this.GridSide = ChessGrid.GetGridSide(pointY, pointY);
         }
 
@@ -60,10 +60,10 @@ namespace Gean.Wrapper.Chess
         public ChessStep MoveIn(ChessGame game, Chessman chessman, Enums.Action action)
         {
             //指定的棋子为空或动作为空
-            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.None)
+            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
                 throw new ArgumentNullException();
-            ChessPoint sourcePoint = chessman.ChessPoints.Peek();
-            ChessPoint targetPoint = ChessPoint.Empty;
+            ChessPosition sourcePoint = chessman.ChessPoints.Peek();
+            ChessPosition targetPoint = ChessPosition.Empty;
 
             switch (action)
             {
@@ -83,9 +83,9 @@ namespace Gean.Wrapper.Chess
                     this.MoveInByQueenSideCastlingAction();
                     break;
                 case Enums.Action.Opennings://仅开局摆棋，不激活任何相关事件
-                    this.OwnedChessman = chessman;
+                    this.Occupant = chessman;
                     break;
-                case Enums.Action.None:
+                case Enums.Action.Invalid:
                 default:
                     Debug.Fail("\" " + action.ToString() + " \" isn't FAIL action.");
                     break;
@@ -95,8 +95,8 @@ namespace Gean.Wrapper.Chess
             if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
             {
                 //将棋步注册到该棋子的棋步集合中
-                targetPoint = new ChessPoint(this.PointX, this.PointY);
-                chessman.ChessPoints.Push(new ChessPoint(this.PointX, this.PointY));
+                targetPoint = new ChessPosition(this.X, this.Y);
+                chessman.ChessPoints.Push(new ChessPosition(this.X, this.Y));
             }
             ChessStep chessStep = new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
             //注册行棋事件
@@ -123,11 +123,11 @@ namespace Gean.Wrapper.Chess
         private void MoveInByGeneralAction(ChessGame chessGame, Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
-            ChessPoint point = chessman.ChessPoints.Peek();
+            ChessPosition point = chessman.ChessPoints.Peek();
             chessGame[point.X,point.Y].MoveOut(false);
 
             //2.落子
-            this.OwnedChessman = chessman;
+            this.Occupant = chessman;
         }
 
         /// <summary>
@@ -157,10 +157,10 @@ namespace Gean.Wrapper.Chess
         /// </param>
         private void MoveOut(bool isKill)
         {
-            Chessman man = this.OwnedChessman;//棋格中的棋子
+            Chessman man = this.Occupant;//棋格中的棋子
             man.IsKilled = isKill;//置该棋子的死活棋开关为“被杀死”状态
             //移除棋子
-            this.OwnedChessman = Chessman.NullOrEmpty;
+            this.Occupied = false;
         }
 
         #endregion
@@ -170,7 +170,35 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
-        public Chessman OwnedChessman { get; private set; }
+        public Chessman Occupant
+        {
+            get { return _occupant; }
+            set
+            {
+                if (value != null)
+                    this._occupied = true;
+                else
+                    this._occupied = false;
+                this._occupant = value;
+            }
+        }
+        private Chessman _occupant;
+
+        /// <summary>
+        /// 获取或设置当前格子是否被棋子占住
+        /// </summary>
+        public bool Occupied
+        {
+            get { return _occupied; }
+            set
+            {
+                if (value == false)
+                    this._occupant = null;
+                _occupied = value;
+            }
+        }
+        private bool _occupied = false;
+
 
         #endregion
 
@@ -179,15 +207,19 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋格在棋盘上的横坐标
         /// </summary>
-        public int PointX { get; private set; }
+        public int X { get; private set; }
         /// <summary>
         /// 棋格在棋盘上的纵坐标
         /// </summary>
-        public int PointY { get; private set; }
+        public int Y { get; private set; }
         /// <summary>
         /// 棋格在棋盘上的横坐标的字母表示法。
         /// </summary>
-        public char PointCharX { get; private set; }
+        public char Horizontal { get; private set; }
+        /// <summary>
+        /// 棋格在棋盘上的纵坐标的表示法。
+        /// </summary>
+        public int Vertical { get; private set; }
 
         #endregion
 
@@ -225,28 +257,28 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(this.PointCharX).Append(this.PointY);
+            sb.Append(this.Horizontal).Append(this.Y);
             return sb.ToString();
         }
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
 
             ChessGrid rid = (ChessGrid)obj;
             if (!rid.GridSide.Equals(this.GridSide))
                 return false;
-            if (!rid.PointX.Equals(this.PointX))
+            if (!rid.X.Equals(this.X))
                 return false;
-            if (!rid.PointY.Equals(this.PointY))
+            if (!rid.Y.Equals(this.Y))
                 return false;
-            if (!UtilityEquals.PairEquals(this.OwnedChessman, rid.OwnedChessman))
+            if (!UtilityEquals.PairEquals(this.Occupant, rid.Occupant))
                 return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked((PointX.GetHashCode() + PointY.GetHashCode() + GridSide.GetHashCode()) * 3);
+            return unchecked((X.GetHashCode() + Y.GetHashCode() + GridSide.GetHashCode()) * 3);
         }
 
         #endregion

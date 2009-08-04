@@ -47,6 +47,7 @@
     <Compile Include="ChessSequenceTest.cs" />
     <Compile Include="ChessStepPairTest.cs" />
     <Compile Include="ChessStepTest.cs" />
+    <Compile Include="PGNReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

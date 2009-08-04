@@ -1,9 +1,16 @@
-﻿using Gean.Wrapper.Chess;
+﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace Gean.Wrapper.Chess.UnitTesting
 {
+    
+    
+    /// <summary>
+    ///这是 PGNReaderTest 的测试类，旨在
+    ///包含所有 PGNReaderTest 单元测试
+    ///</summary>
     [TestClass()]
-    public class ChessStepPairTest
+    public class PGNReaderTest
     {
         #region
 
@@ -57,24 +64,25 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
-        
+        public PGNReaderTest()
+        {
+            this.DemoFilePath = Path.GetFullPath(@"..\..\..\..\Gean.Wrapper.Chess\Gean.Wrapper.Chess.UnitTesting\CaseFiles\");
+            this.PGNFiles = Directory.GetFiles(this.DemoFilePath, "*.pgn");
+        }
+
+        private string DemoFilePath { get; set; }
+        private string[] PGNFiles { get; set; }
+
+
         /// <summary>
         ///Parse 的测试
         ///</summary>
         [TestMethod()]
         public void ParseTest()
         {
-            string value; 
-            ChessStepPair expected; 
-            ChessStepPair actual;
-
-            value = "4.Qh5+ Ke7";
-            ChessStep white = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 5));
-            ChessStep black = new ChessStep(Enums.Action.General, Enums.ChessmanType.King, ChessPosition.Empty, new ChessPosition(5, 7));
-            expected = new ChessStepPair(4, white, black);
-            actual = ChessStepPair.Parse(value);
-            Assert.AreEqual(expected, actual);
+            PGNReader target = new PGNReader();
+            target.Filename = this.PGNFiles[0];
+            target.Parse();
         }
-        
     }
 }

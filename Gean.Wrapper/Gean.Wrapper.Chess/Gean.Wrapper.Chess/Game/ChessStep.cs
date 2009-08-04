@@ -25,11 +25,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
-        public ChessPoint TargetPoint { get; internal set; }
+        public ChessPosition TargetPoint { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessPoint SourcePoint { get; internal set; }
+        public ChessPosition SourcePoint { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
         /// </summary>
@@ -43,7 +43,7 @@ namespace Gean.Wrapper.Chess
 
         #region ctor
 
-        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessPoint sourcePoint, ChessPoint targetPoint)
+        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessPosition sourcePoint, ChessPosition targetPoint)
         {
             this.Action = action;
             this.ChessmanType = chessmanType;
@@ -75,7 +75,7 @@ namespace Gean.Wrapper.Chess
                 case Enums.Action.Kill:
                 case Enums.Action.KillAndCheck:
                 case Enums.Action.Opennings:
-                case Enums.Action.None:
+                case Enums.Action.Invalid:
                     {
                         if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
                         {
@@ -85,7 +85,7 @@ namespace Gean.Wrapper.Chess
                         {
                             if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
-                                sb.Append(this.SourcePoint.CharX);
+                                sb.Append(this.SourcePoint.Horizontal);
                             }
                             sb.Append('x');
                         }
@@ -206,7 +206,7 @@ namespace Gean.Wrapper.Chess
             }
 
             int n = 0;
-            ChessPoint sourcePoint = ChessPoint.Empty;
+            ChessPosition sourcePoint = ChessPosition.Empty;
 
             if (char.IsUpper(value, 0))
             {//首字母是大写的
@@ -259,7 +259,7 @@ namespace Gean.Wrapper.Chess
                             iy--;
                         else
                             iy++;
-                        sourcePoint = new ChessPoint(Utility.CharToInt(cx), iy);
+                        sourcePoint = new ChessPosition(Utility.CharToInt(cx), iy);
                         if (action == Enums.Action.Check)
                             action = Enums.Action.KillAndCheck;
                         else
@@ -270,7 +270,7 @@ namespace Gean.Wrapper.Chess
                 }
                 #endregion
             }
-            ChessStep step = new ChessStep(action, manType, sourcePoint, new ChessPoint(rid.PointX, rid.PointY));
+            ChessStep step = new ChessStep(action, manType, sourcePoint, new ChessPosition(rid.X, rid.Y));
             step.CommentIndexs = comments;
             step.ChoiceStepsIndexs = choices;
             return step;
