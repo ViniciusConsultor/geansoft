@@ -12,15 +12,13 @@ namespace Gean.Wrapper.Chess
     {
         public static readonly ChessPosition Empty = null;
 
-        #region private
         private char _horizontal;
-        private int _vertical;
-        private int _x;
-        private int _y;
+        private int  _vertical;
+        private int  _x;
+        private int  _y;
 
-        private Regex _legalHorizontal = new Regex("[A-Ha-h]");
-        private Regex _legalVertical = new Regex("[1-8]");
-        #endregion
+        private Regex _hRegex = new Regex("[A-Ha-h]");
+        private Regex _vRegex = new Regex("[1-8]");
 
         /// <summary>
         /// 一个描述棋盘位置的类型
@@ -40,8 +38,8 @@ namespace Gean.Wrapper.Chess
         /// <param name="Y">纵坐标</param>
         public ChessPosition(int X, int Y)
         {
-            this.X = X;
-            this.Y = Y;
+            this.X = X - 1;
+            this.Y = Y - 1;
         }
         
         /// <summary>
@@ -52,10 +50,10 @@ namespace Gean.Wrapper.Chess
             get { return _horizontal; }
             set
             {
-                if (!_legalHorizontal.Match(value.ToString()).Success)
+                if (!_hRegex.Match(value.ToString()).Success)
                     throw new ArgumentException(ChessStringResource.ex_illegalHorizontalValue, "horizontal");
                 _horizontal = value;
-                _x = HorizontalToInt32(value);
+                _x = Utility.CharToInt(value) - 1;
 
             }
         }
@@ -68,7 +66,7 @@ namespace Gean.Wrapper.Chess
             get { return _vertical; }
             set
             {
-                if (!_legalVertical.Match(value.ToString()).Success)
+                if (!_vRegex.Match(value.ToString()).Success)
                     throw new ArgumentException(ChessStringResource.ex_illegalVerticalValue, "vertical");
                 _vertical = value;
                 _y = (value - 1);
@@ -83,12 +81,10 @@ namespace Gean.Wrapper.Chess
                 if (value >= 0 && value <= 7)
                 {
                     _x = value;
-                    _horizontal = Int32ToHorizontal(value);
+                    _horizontal = Utility.IntToChar(value + 1);
                 }
                 else
-                {
                     throw new ArgumentException(ChessStringResource.ex_illegalXCoordinateValue, "X");
-                }
             }
         }
 
@@ -103,13 +99,12 @@ namespace Gean.Wrapper.Chess
                     _vertical = (value + 1);
                 }
                 else
-                {
                     throw new ArgumentException(ChessStringResource.ex_illegalYCoordinateValue, "Y");
-                }
             }
         }
 
         #region override
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
@@ -118,6 +113,8 @@ namespace Gean.Wrapper.Chess
             ChessPosition point = (ChessPosition)obj;
             if (this.X != point.X) return false;
             if (this.Y != point.Y) return false;
+            if (this.Vertical != point.Vertical) return false;
+            if (this.Horizontal != point.Horizontal) return false;
             return true;
         }
         public override int GetHashCode()
@@ -126,8 +123,8 @@ namespace Gean.Wrapper.Chess
                 (3 * (
                 this._horizontal.GetHashCode() +
                 this._vertical.GetHashCode() +
-                this._legalHorizontal.GetHashCode() +
-                this._legalVertical.GetHashCode() +
+                this._hRegex.GetHashCode() +
+                this._vRegex.GetHashCode() +
                 this._x.GetHashCode() +
                 this._y.GetHashCode()
                 ));
@@ -136,20 +133,7 @@ namespace Gean.Wrapper.Chess
         {
             return string.Format("{0}{1}", this.Horizontal, this.Vertical);
         }
+
         #endregion
-
-        public static int HorizontalToInt32(char horizontal)
-        {
-            int horizontalIndex = Convert.ToInt32(horizontal);
-            horizontalIndex = horizontalIndex > 90 ? (horizontalIndex - 97) : (horizontalIndex - 65);
-
-            return horizontalIndex;
-        }
-
-        public static char Int32ToHorizontal(int x)
-        {
-            return Convert.ToChar(x + 65);
-        }
-
     }
 }

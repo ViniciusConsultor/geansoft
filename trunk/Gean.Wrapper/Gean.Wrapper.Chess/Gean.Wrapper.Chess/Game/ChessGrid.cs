@@ -124,7 +124,7 @@ namespace Gean.Wrapper.Chess
         {
             //1.动子（即从源棋格中移除该棋子）
             ChessPosition point = chessman.ChessPoints.Peek();
-            chessGame[point.X,point.Y].MoveOut(false);
+            chessGame[point.X + 1, point.Y + 1].MoveOut(false);
 
             //2.落子
             this.Occupant = chessman;
