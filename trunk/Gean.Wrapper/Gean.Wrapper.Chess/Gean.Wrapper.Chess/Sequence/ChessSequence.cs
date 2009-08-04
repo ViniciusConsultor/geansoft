@@ -8,19 +8,19 @@ namespace Gean.Wrapper.Chess
     /// 描述一个棋招序列（IList集合,集合的元素为<see>ChessStepPair</see>）。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
-    public class ChessChoicesSequence : BylawItem, IList<ChessStepPair>
+    public class ChessSequence : BylawItem, IList<ChessStepPair>
     {
         protected List<ChessStepPair> ChessStepPairs { get; private set; }
 
-        public ChessChoicesSequence(string userId, string sequence, int number)
-            : base(number, userId, sequence, '%')
+        public ChessSequence(string userId, string sequence)
+            : base(userId, sequence)
         {
             this.ChessStepPairs = new List<ChessStepPair>();
         }
 
         public override string ToString()
         {
-            return Utility.BylawItemToString('%', this.Number, this.UserID, this.SequenceToString());
+            return Utility.BylawItemToString(this.UserID, this.SequenceToString());
         }
         protected string SequenceToString()
         {

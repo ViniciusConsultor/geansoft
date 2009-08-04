@@ -47,6 +47,7 @@
       <DependentUpon>ChessStringResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Game\ChessPosition.cs" />
+    <Compile Include="Record\ChessRecordCollection.cs" />
     <Compile Include="Record\PGN\IGameReaderEvents.cs" />
     <Compile Include="Record\PGN\IGameReader.cs" />
     <Compile Include="Record\PGN\ChessPGNReader.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Record\ChessRecord.cs" />
     <Compile Include="Game\ChessStepFlag.cs" />
     <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="Sequence\ChessChoicesSequence.cs" />
+    <Compile Include="Sequence\ChessSequence.cs" />
     <Compile Include="Game\ChessStepPair.cs" />
     <Compile Include="Game\ChessException.cs" />
     <Compile Include="Record\ChessChoicesCollection.cs" />
