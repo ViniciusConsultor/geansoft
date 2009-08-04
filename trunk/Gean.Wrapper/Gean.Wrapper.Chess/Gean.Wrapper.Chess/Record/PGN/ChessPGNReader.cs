@@ -10,7 +10,7 @@ namespace Gean.Wrapper.Chess
     /// Provides the parsing of the PGN standard game notation files
     /// as defined by the standard.
     /// </summary>
-    public class PGNReader : IGameReader
+    public class ChessPGNReader : IGameReader
     {
 
         #region  ===== delegate -> event =====
@@ -95,7 +95,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// Constructor the initializes our parser.
         /// </summary>
-        public PGNReader()
+        public ChessPGNReader()
         {
             _Regex = new Regex("^\\[([A-Za-z]*) \"(.*)\"", RegexOptions.Compiled);
             _Value = new StringBuilder();
