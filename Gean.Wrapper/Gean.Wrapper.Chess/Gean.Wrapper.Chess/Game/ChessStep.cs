@@ -23,13 +23,13 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; internal set; }
         /// <summary>
-        /// 获取或设置该步棋的目标棋格
-        /// </summary>
-        public ChessPosition TargetPoint { get; internal set; }
-        /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessPosition SourcePoint { get; internal set; }
+        public ChessPosition SourcePosition { get; internal set; }
+        /// <summary>
+        /// 获取或设置该步棋的目标棋格
+        /// </summary>
+        public ChessPosition TargetPosition { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的注释的索引集合
         /// </summary>
@@ -43,12 +43,12 @@ namespace Gean.Wrapper.Chess
 
         #region ctor
 
-        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessPosition sourcePoint, ChessPosition targetPoint)
+        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos)
         {
             this.Action = action;
             this.ChessmanType = chessmanType;
-            this.TargetPoint = targetPoint;
-            this.SourcePoint = sourcePoint;
+            this.TargetPosition = tagPos;
+            this.SourcePosition = srcPos;
         }
 
         #endregion
@@ -83,11 +83,11 @@ namespace Gean.Wrapper.Chess
                         {
                             if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
                             {
-                                sb.Append(this.SourcePoint.Horizontal);
+                                sb.Append(this.SourcePosition.Horizontal);
                             }
                             sb.Append('x');
                         }
-                        sb.Append(this.TargetPoint.ToString());
+                        sb.Append(this.TargetPosition.ToString());
                         //有将军的动作，打印'+'
                         if (Enums.GetFlag(this.Action, Enums.Action.Kill) == Enums.Action.Check)
                         {
@@ -105,7 +105,7 @@ namespace Gean.Wrapper.Chess
                 (3 * (
                 this.Action.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
-                this.TargetPoint.GetHashCode() + this.SourcePoint.GetHashCode() +
+                this.TargetPosition.GetHashCode() + this.SourcePosition.GetHashCode() +
                 this.ChessComment.GetHashCode() + this.VariationSteps.GetHashCode()
                 ));
         }
@@ -119,9 +119,9 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (this.ChessmanType != step.ChessmanType)
                 return false;
-            if (!UtilityEquals.PairEquals(this.TargetPoint, step.TargetPoint))
+            if (!UtilityEquals.PairEquals(this.TargetPosition, step.TargetPosition))
                 return false;
-            if (!UtilityEquals.PairEquals(this.SourcePoint, step.SourcePoint))
+            if (!UtilityEquals.PairEquals(this.SourcePosition, step.SourcePosition))
                 return false;
             if (!UtilityEquals.PairEquals(this.ChessComment, step.ChessComment))
                 return false;
@@ -139,8 +139,6 @@ namespace Gean.Wrapper.Chess
             if (string.IsNullOrEmpty(value) || value.Length < 2)
                 throw new ArgumentOutOfRangeException(value);
             value = value.Trim();
-
-            string comments_choices = "";
 
             Enums.Action action = Enums.Action.General;
             Enums.ChessmanType manType = Enums.ChessmanType.None;

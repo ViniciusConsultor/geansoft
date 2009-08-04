@@ -47,7 +47,7 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 吃过路兵
             /// </summary>
-            Enpassant = 128,
+            EnPassant = 128,
             /// <summary>
             /// 杀棋并将军
             /// </summary>
@@ -63,7 +63,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子的战方：黑棋，白棋
         /// </summary>
-        public enum ChessmanSide : byte
+        public enum ChessmanSide
         {
             None = 0, White = 1, Black = 2,
         }
@@ -141,43 +141,43 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// Parsing the header information
             /// </summary>
-            HEADER,
+            Header,
             /// <summary>
             /// Parsing the number of a move
             /// </summary>
-            NUMBER,
+            Number,
             /// <summary>
             /// Parsing the color to move
             /// </summary>
-            COLOR,
+            Color,
             /// <summary>
             /// Parsing white's move information
             /// </summary>
-            WHITE,
+            White,
             /// <summary>
             /// Parsing black's move information.
             /// </summary>
-            BLACK,
+            Black,
             /// <summary>
             /// Parsing a comment.
             /// </summary>
-            COMMENT,
+            Comment,
             /// <summary>
             /// Finished parsing a comment.
             /// </summary>
-            ENDCOMMENT,
+            EndComment,
             /// <summary>
             /// Parsing a NAG.
             /// </summary>
-            NAGS,
+            Nags,
             /// <summary>
             /// Convert a Nag to text.
             /// </summary>
-            CONVERT_NAG,
+            ConvertNag,
             /// <summary>
             /// END.
             /// </summary>
-            ENDMARKER
+            EndMarker,
         }
 
         public static string ChessmanTypeToString(ChessmanType type)
