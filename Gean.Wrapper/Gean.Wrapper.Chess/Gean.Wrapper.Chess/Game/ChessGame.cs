@@ -13,7 +13,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取与设置一盘棋局的所有棋格类
         /// </summary>
-        protected ChessGrid[,] ChessGrids { get; private set; }
+        protected virtual ChessGrid[,] ChessGrids { get; private set; }
 
         /// <summary>
         /// 构造函数
@@ -46,23 +46,22 @@ namespace Gean.Wrapper.Chess
         /// <param name="y">棋格的y坐标(按象棋规则，不能为0)</param>
         public virtual ChessGrid this[char c, int y]
         {
-            get { return this.ChessGrids[Utility.CharToInt(c), y]; }
+            get { return this.ChessGrids[Utility.CharToInt(c) - 1, y - 1]; }
         }
 
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        public virtual ChessGrid[,] LoadGrids()
+        public virtual void LoadGrids()
         {
-            for (int x = 0; x < ChessGrids.GetLength(0); x++)
+            for (int x = 1; x <= 8; x++)
             {
-                for (int y = 0; y < ChessGrids.GetLength(1); y++)
+                for (int y = 1; y <= 8; y++)
                 {
-                    ChessGrids[x, y] = new ChessGrid(x + 1, y + 1);
-                    ChessGrids[x, y].MoveInEvent += new ChessGrid.MoveInEventHandler(ChessGame_MoveInAfterEvent);
+                    this.ChessGrids[x - 1, y - 1] = new ChessGrid(x, y);
+                    this.ChessGrids[x - 1, y - 1].MoveInEvent += new ChessGrid.MoveInEventHandler(ChessGame_MoveInAfterEvent);
                 }
             }
-            return this.ChessGrids;
         }
 
         protected virtual void ChessGame_MoveInAfterEvent(object sender, ChessGrid.MoveInEventArgs e)
