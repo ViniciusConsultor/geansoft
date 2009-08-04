@@ -49,7 +49,7 @@
     <Compile Include="Game\ChessPosition.cs" />
     <Compile Include="Record\PGN\IGameReaderEvents.cs" />
     <Compile Include="Record\PGN\IGameReader.cs" />
-    <Compile Include="Record\PGN\PGNReader.cs" />
+    <Compile Include="Record\PGN\ChessPGNReader.cs" />
     <Compile Include="Sequence\ChessMainSequence.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />

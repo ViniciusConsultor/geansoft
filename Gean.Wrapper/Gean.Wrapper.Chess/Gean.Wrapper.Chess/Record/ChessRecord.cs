@@ -7,7 +7,7 @@ namespace Gean.Wrapper.Chess
     /// <summary>
     /// 描述一局棋的记录，该记录可能与更多的棋局记录保存在一个PGN文件中
     /// </summary>
-    public class ChessRecord
+    public class ChessRecord : IGameReaderEvents
     {
         public Definer Definer { get; internal set; }
         public ChessMainSequence Sequence { get; internal set; }
@@ -62,13 +62,63 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        /// <summary>
-        /// 生成PGN棋谱记录
-        /// </summary>
-        public string ToPGNString()
+        #region IGameReaderEvents 成员
+
+        public void NewGame(IGameReader iParser)
         {
-            return this.ToString();
+            throw new NotImplementedException();
         }
 
+        public void ExitHeader(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnterVariation(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ExitVariation(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Starting(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Finished(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TagParsed(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NagParsed(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MoveParsed(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CommentParsed(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EndMarker(IGameReader iParser)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
