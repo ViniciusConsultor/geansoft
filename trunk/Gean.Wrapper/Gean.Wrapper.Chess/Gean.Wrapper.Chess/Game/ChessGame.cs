@@ -66,7 +66,7 @@ namespace Gean.Wrapper.Chess
 
         protected virtual void ChessGame_MoveInAfterEvent(object sender, ChessGrid.MoveInEventArgs e)
         {
-            this.Record.Sequence.Add(e.Action, e.ChessmanSide, e.ChessStep);
+            this.Record.Items.Add(e.Action, e.ChessmanSide, e.ChessStep);
         }
 
         #region IEnumerable<Chesspoint> 成员

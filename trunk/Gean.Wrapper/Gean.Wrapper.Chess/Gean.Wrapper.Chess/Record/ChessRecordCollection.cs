@@ -8,97 +8,8 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessRecordCollection : IList<ChessRecord>, IGameReaderEvents
     {
-        List<ChessRecord> _chessRecords = new List<ChessRecord>();
 
-        ChessRecord _tmpRecord = null;
-
-        #region IList<ChessRecord> 成员
-
-        public int IndexOf(ChessRecord item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(int index, ChessRecord item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ChessRecord this[int index]
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        #endregion
-
-        #region ICollection<ChessRecord> 成员
-
-        public void Add(ChessRecord item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(ChessRecord item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(ChessRecord[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Count
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool Remove(ChessRecord item)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IEnumerable<ChessRecord> 成员
-
-        public IEnumerator<ChessRecord> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region IEnumerable 成员
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        private List<ChessRecord> _chessRecords = new List<ChessRecord>();
 
         #region IGameReaderEvents 成员
 
@@ -106,62 +17,66 @@ namespace Gean.Wrapper.Chess
         private string _lastNumber;
         private ChessStepPair _tmpPair;
         private ChessComment _tmpComment;
+        private IStepTree _tmpTree = null;
 
-        int num = 1;
         public void NewGame(IGameReader iParser)
         {
-            _tmpRecord = new ChessRecord();
+            _states = new Stack();
+            _tmpTree = new ChessRecord();
+            _chessRecords.Add((ChessRecord)_tmpTree);
         }
 
         public void ExitHeader(IGameReader iParser)
         {
-            Console.WriteLine("{0}.ExitHeader", num++);
-            //throw new NotImplementedException();
         }
 
         public void EnterVariation(IGameReader iParser)
         {
-            Console.WriteLine("{0}.EnterVariation", num++);
-            //_states.Push(_lastNumber);
-            //if (_moveStepPair != null)
-            //{
-            //    _currentSequence.Add(_moveStepPair);
-            //    _moveStepPair = null;
-            //}
-            //_currentSequence = _currentSequence.AppendChild(newElement);
+            _states.Push(_lastNumber);
+            if (_tmpPair != null)
+            {
+                _tmpTree = _tmpPair;
+                _tmpTree.Items.Add(_tmpPair);
+                _tmpPair = null;
+            }
+            else
+            {
+                _tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - 1];
+            }
         }
 
         public void ExitVariation(IGameReader iParser)
         {
-            Console.WriteLine("{0}.ExitVariation", num++);
-            //if (iParser.State != Enums.GameReaderState.NUMBER)
-            //    MoveParsed(iParser);
-            //if (_moveStepPair != null)
-            //{
-            //    _currentSequence.AppendChild(_moveStepPair);
-            //    _moveStepPair = null;
-            //}
-            //_currentSequence = _currentSequence.ParentNode;
-            //_lastNumber = (string)_states.Pop();
+            if (iParser.State != Enums.GameReaderState.Number)
+                MoveParsed(iParser);
+            if (_tmpPair != null)
+            {
+                _tmpTree.Items.Add(_tmpPair);
+                _tmpPair = null;
+            }
+            _tmpTree = (IStepTree)_tmpTree.Parent;
+            _lastNumber = (string)_states.Pop();
         }
 
         public void Starting(IGameReader iParser)
         {
-            Console.WriteLine("{0}.Starting", num++);
-            //throw new NotImplementedException();
         }
 
         public void Finished(IGameReader iParser)
         {
-            Console.WriteLine("{0}.Finished", num++);
-            //throw new NotImplementedException();
+            if (_tmpPair != null)
+            {
+                _tmpTree.Items.Add(_tmpPair);
+                _tmpPair = null;
+            }
+            _states = new Stack();
         }
 
         public void TagParsed(IGameReader iParser)
         {
             try
             {
-                _tmpRecord.Tags.Set<string>(iParser.Tag, iParser.Value);
+                ((ChessRecord)_tmpTree).ChessTags.Set<string>(iParser.Tag, iParser.Value);
             }
             catch (ChessRecordException e)
             {
@@ -171,8 +86,13 @@ namespace Gean.Wrapper.Chess
 
         public void NagParsed(IGameReader iParser)
         {
-            Console.WriteLine("{0}.NagParsed", num++);
-            //throw new NotImplementedException();
+            if (_tmpPair != null)
+            {
+                _tmpTree.Items.Add(_tmpPair);
+                _tmpPair = null;
+            }
+            ChessNag nag = new ChessNag(iParser.Value);
+            _tmpTree.Items.Add(nag);
         }
 
         public void MoveParsed(IGameReader iParser)
@@ -199,7 +119,7 @@ namespace Gean.Wrapper.Chess
                     _tmpPair.Number = int.Parse(_lastNumber);
                 }
                 _tmpPair.Black = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.Black);
-                _tmpRecord.Sequence.Add(_tmpPair);
+                _tmpTree.Items.Add(_tmpPair);
                 _tmpPair = null;
             }
         }
@@ -208,17 +128,104 @@ namespace Gean.Wrapper.Chess
         {
             if (_tmpComment != null)
             {
-                _tmpRecord.Sequence.Add(_tmpComment);
+                _tmpTree.Items.Add(_tmpComment);
                 _tmpComment = null;
             }
             _tmpComment = new ChessComment(iParser.Value);
-            _tmpRecord.Sequence.Add(_tmpComment);
+            _tmpTree.Items.Add(_tmpComment);
         }
 
         public void EndMarker(IGameReader iParser)
         {
-            Console.WriteLine("{0}.EndMarker", num++);
-            //throw new NotImplementedException();
+            if (_tmpPair != null)
+            {
+                _tmpTree.Items.Add(_tmpPair);
+                _tmpPair = null;
+            }
+            ChessEnd end = new ChessEnd(iParser.Value);
+            _tmpTree.Items.Add(end);
+        }
+
+        #endregion
+
+        #region IList<ChessRecord> 成员
+
+        public int IndexOf(ChessRecord item)
+        {
+            return _chessRecords.IndexOf(item);
+        }
+
+        public void Insert(int index, ChessRecord item)
+        {
+            _chessRecords.Insert(index, item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            _chessRecords.RemoveAt(index);
+        }
+
+        public ChessRecord this[int index]
+        {
+            get { return _chessRecords[index]; }
+            set { _chessRecords[index] = value; }
+        }
+
+        #endregion
+
+        #region ICollection<ChessRecord> 成员
+
+        public void Add(ChessRecord item)
+        {
+            _chessRecords.Add(item);
+        }
+
+        public void Clear()
+        {
+            _chessRecords.Clear();
+        }
+
+        public bool Contains(ChessRecord item)
+        {
+            return _chessRecords.Contains(item);
+        }
+
+        public void CopyTo(ChessRecord[] array, int arrayIndex)
+        {
+            _chessRecords.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return _chessRecords.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public bool Remove(ChessRecord item)
+        {
+            return _chessRecords.Remove(item);
+        }
+
+        #endregion
+
+        #region IEnumerable<ChessRecord> 成员
+
+        public IEnumerator<ChessRecord> GetEnumerator()
+        {
+            return _chessRecords.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable 成员
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _chessRecords.GetEnumerator();
         }
 
         #endregion

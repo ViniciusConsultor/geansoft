@@ -462,9 +462,9 @@ namespace Gean.UI.ChessControl
                 ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
                 OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
                 if (this.CurrChessSide == Enums.ChessmanSide.Black &&
-                    this.OwnedChessGame.Record.Sequence.Count > 0)
+                    this.OwnedChessGame.Record.Items.Count > 0)
                 {
-                    OnPlayPair(new PlayPairEventArgs(this.OwnedChessGame.Record.Sequence.Peek()));
+                    OnPlayPair(new PlayPairEventArgs(this.OwnedChessGame.Record.Items.Peek()));
                 }
                 //转换战方
                 this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
