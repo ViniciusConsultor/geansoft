@@ -60,9 +60,8 @@ namespace Gean.Wrapper.Chess
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(this.ChessTags.ToString());
-            sb.AppendLine();
             sb.AppendLine(this.Items.ToString());
-            sb.AppendLine().AppendLine();
+            sb.AppendLine();
             return sb.ToString();
         }
 

@@ -14,6 +14,53 @@ namespace Gean
     public static class UtilityString
     {
         /// <summary>
+        /// 区位码及汉字之间的互换
+        /// </summary>
+        /// <param name="character">汉字</param>
+        /// <returns></returns>
+        public static string CharacterToCoding(string character)
+        {
+            string coding = "";
+            for (int i = 0; i < character.Length; i++)
+            {
+                byte[] bytes = System.Text.Encoding.Unicode.GetBytes(character.Substring(i, 1)); //取出二进制编码内容
+                string lowCode = System.Convert.ToString(bytes[0], 16); //取出低字节编码内容（两位16进制）
+                if (lowCode.Length == 1)
+                    lowCode = "0" + lowCode;
+                string hightCode = System.Convert.ToString(bytes[1], 16);//取出高字节编码内容（两位16进制）
+                if (hightCode.Length == 1)
+                    hightCode = "0" + hightCode;
+                coding += (lowCode + hightCode);//加入到字符串中,
+            }
+            return coding;
+        }
+
+        /// <summary>
+        /// 区位码及汉字之间的互换
+        /// </summary>
+        /// <param name="coding">区位码</param>
+        /// <returns></returns>
+        public static string CodingToCharacter(string coding)
+        {
+            string characters = "";
+            if (coding.Length % 4 != 0)//编码为16进制,必须为4的倍数。
+            {
+                throw new System.Exception("编码格式不正确");
+            }
+            for (int i = 0; i < coding.Length; i += 4) //每四位为一个汉字
+            {
+                byte[] bytes = new byte[2];
+                string lowCode = coding.Substring(i, 2); //取出低字节,并以16进制进制转换
+                bytes[0] = System.Convert.ToByte(lowCode, 16);
+                string highCode = coding.Substring(i + 2, 2); //取出高字节,并以16进制进行转换
+                bytes[1] = System.Convert.ToByte(highCode, 16);
+                string character = System.Text.Encoding.Unicode.GetString(bytes);
+                characters += character;
+            }
+            return characters;
+        }
+
+        /// <summary>
         /// 用一个字符串将一个原始字符串分割成字符串数组，而.net中只能使用char进行分割。
         /// </summary>
         /// <param name="sourceString">输入的字符串</param>

@@ -55,10 +55,31 @@ namespace Gean.Wrapper.Chess
             StringBuilder sb = new StringBuilder();
             foreach (ISequenceItem item in this.SequenceItemList)
             {
-                sb.Append(item.Value).Append(' ');
+                this.GetItemString(item, sb);
             }
-            return sb.ToString();
+            return sb.ToString().Replace("  ", " ");
         }
+        /// <summary>
+        /// 序列树生成字符串的递归子方法
+        /// </summary>
+        private void GetItemString(ISequenceItem item, StringBuilder sb)
+        {
+            sb.Append(item.Value).Append(' ');
+            if (item is IStepTree)
+            {
+                IStepTree tree = (IStepTree)item;
+                if (tree.HasChildren)
+                {
+                    sb.Append(' ').Append('(');
+                    foreach (var subItem in tree.Items)
+                    {
+                        this.GetItemString(subItem, sb);
+                    }
+                    sb.Append(')').Append(' ');
+                }
+            }
+        }
+        
 
         private string SequenceToString()
         {
