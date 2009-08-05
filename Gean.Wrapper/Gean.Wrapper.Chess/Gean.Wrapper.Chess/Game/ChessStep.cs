@@ -30,14 +30,6 @@ namespace Gean.Wrapper.Chess
         /// 获取或设置该步棋的目标棋格
         /// </summary>
         public ChessPosition TargetPosition { get; internal set; }
-        /// <summary>
-        /// 获取或设置该步棋的注释的索引集合
-        /// </summary>
-        public ChessComment ChessComment { get; internal set; }
-        /// <summary>
-        /// 获取或设置该步棋的变招的索引集合
-        /// </summary>
-        public ChessSequence VariationSteps { get; internal set; }
 
         #endregion
 
@@ -105,8 +97,7 @@ namespace Gean.Wrapper.Chess
                 (3 * (
                 this.Action.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
-                this.TargetPosition.GetHashCode() + this.SourcePosition.GetHashCode() +
-                this.ChessComment.GetHashCode() + this.VariationSteps.GetHashCode()
+                this.TargetPosition.GetHashCode() + this.SourcePosition.GetHashCode()
                 ));
         }
         public override bool Equals(object obj)
@@ -122,10 +113,6 @@ namespace Gean.Wrapper.Chess
             if (!UtilityEquals.PairEquals(this.TargetPosition, step.TargetPosition))
                 return false;
             if (!UtilityEquals.PairEquals(this.SourcePosition, step.SourcePosition))
-                return false;
-            if (!UtilityEquals.PairEquals(this.ChessComment, step.ChessComment))
-                return false;
-            if (!UtilityEquals.EnumerableEquals(this.VariationSteps, step.VariationSteps))
                 return false;
             return true;
         }

@@ -60,7 +60,7 @@ namespace Gean.Wrapper.Chess
             return sb.ToString();
         }
 
-        protected virtual string SequenceToString()
+        private string SequenceToString()
         {
             StringBuilder sb = new StringBuilder();
             foreach (ChessStepPair pair in this.SequenceItemList)
