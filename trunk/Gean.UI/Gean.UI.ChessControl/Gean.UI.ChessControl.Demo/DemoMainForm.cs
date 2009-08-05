@@ -54,7 +54,11 @@ namespace Gean.UI.ChessControl.Demo
             ChessRecordCollection records = new ChessRecordCollection();
             reader.AddEvents(records);
             reader.Parse();
+
+            MessageBox.Show(records[0].ToString());
         }
+
+
 
     }
 

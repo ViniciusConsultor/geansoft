@@ -21,7 +21,7 @@ namespace Gean
     /// </summary>
     public class Definer : IEnumerable
     {
-        private Dictionary<string, object> _definer = new Dictionary<string, object>();
+        protected Dictionary<string, object> _definer = new Dictionary<string, object>();
 
         public string this[string key]
         {

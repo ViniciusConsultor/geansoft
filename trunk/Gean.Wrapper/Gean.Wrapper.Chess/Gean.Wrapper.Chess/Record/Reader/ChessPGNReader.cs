@@ -70,7 +70,7 @@ namespace Gean.Wrapper.Chess
         {
             get { return _Tag; }
         }
-        string _Tag;
+        private string _Tag;
 
         /// <summary>
         /// Contains the values currently parsed, normally this
@@ -90,7 +90,7 @@ namespace Gean.Wrapper.Chess
             get { return _Filename; }
             set { _Filename = value; }
         }
-        string _Filename;
+        private string _Filename;
 
         /// <summary>
         /// Constructor the initializes our parser.
@@ -322,7 +322,7 @@ namespace Gean.Wrapper.Chess
         /// parser's state.
         /// </summary>
         /// <param name="aChar"></param>
-        void HandleChar(char aChar)
+        private void HandleChar(char aChar)
         {
             switch (aChar)
             {
@@ -392,7 +392,7 @@ namespace Gean.Wrapper.Chess
         /// Calls the correct event based on the parsers state.
         /// </summary>
         /// <param name="state"></param>
-        void CallEvent(Enums.GameReaderState state)
+        private void CallEvent(Enums.GameReaderState state)
         {
             if (_Value.Length > 0)
             {

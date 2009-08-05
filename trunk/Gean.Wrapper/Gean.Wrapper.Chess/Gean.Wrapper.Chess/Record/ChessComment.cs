@@ -43,12 +43,13 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append('{');
+            sb.Append(' ').Append('{').Append(' ');
             if (!string.IsNullOrEmpty(this.UserID))
             {
                 sb.Append('<').Append(this.UserID).Append('>');
             }
-            sb.Append('}');
+            sb.Append(this.Comment);
+            sb.Append(' ').Append('}').Append(' ');
             return sb.ToString();
         }
 

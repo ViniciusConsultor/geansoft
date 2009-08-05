@@ -35,13 +35,20 @@ namespace Gean.Wrapper.Chess
             _states.Push(_lastNumber);
             if (_tmpPair != null)
             {
+                _tmpPair.Parent = _tmpTree;
                 _tmpTree = _tmpPair;
                 _tmpTree.Items.Add(_tmpPair);
                 _tmpPair = null;
             }
             else
             {
-                _tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - 1];
+                IStepTree tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - 1];
+                tmpTree.Parent = _tmpTree;
+                _tmpTree = tmpTree;
+            }
+            if (_tmpTree.Items == null)
+            {
+                _tmpTree.Items = new ChessSequence();
             }
         }
 
@@ -126,11 +133,6 @@ namespace Gean.Wrapper.Chess
 
         public void CommentParsed(IGameReader iParser)
         {
-            if (_tmpComment != null)
-            {
-                _tmpTree.Items.Add(_tmpComment);
-                _tmpComment = null;
-            }
             _tmpComment = new ChessComment(iParser.Value);
             _tmpTree.Items.Add(_tmpComment);
         }
