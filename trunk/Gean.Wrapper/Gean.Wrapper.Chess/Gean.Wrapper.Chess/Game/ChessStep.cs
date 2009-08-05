@@ -163,7 +163,7 @@ namespace Gean.Wrapper.Chess
             }
 
             int n = 0;
-            ChessPosition sourcePoint = ChessPosition.Empty;
+            ChessPosition srcPos = ChessPosition.Empty;
 
             if (char.IsUpper(value, 0))
             {//首字母是大写的
@@ -187,15 +187,31 @@ namespace Gean.Wrapper.Chess
                 {
                     manType = Enums.StringToChessmanType(value[n]);
                     n++;
-                    if (value[n] == 'x')
+                    if (value.Length > 3 && value[n] == 'x')
                     {
                         n++;
                         if (action == Enums.Action.Check)
                             action = Enums.Action.KillAndCheck;
                         else
                             action = Enums.Action.Kill;
+                        rid = ChessGrid.Parse(value.Substring(n, 2));
+
                     }
-                    rid = ChessGrid.Parse(value.Substring(n, 2));
+                    else if (value.Length > 3 && value[n] != 'x')
+                    {
+                        char c = value[n];
+                        int i;
+                        if (c >= 'a' && c <= 'h')
+                            i = Utility.CharToInt(c);
+                        else
+                            i = int.Parse(c.ToString());
+                        srcPos = new ChessPosition(i, int.Parse(value[n + 2].ToString()));
+                        rid = ChessGrid.Parse(value.Substring(n + 1, 2));
+                    }
+                    else if (value.Length == 3)
+                    {
+                        rid = ChessGrid.Parse(value.Substring(n, 2));
+                    }
                 }
                 #endregion
             }
@@ -216,7 +232,7 @@ namespace Gean.Wrapper.Chess
                             iy--;
                         else
                             iy++;
-                        sourcePoint = new ChessPosition(Utility.CharToInt(cx), iy);
+                        srcPos = new ChessPosition(Utility.CharToInt(cx), iy);
                         if (action == Enums.Action.Check)
                             action = Enums.Action.KillAndCheck;
                         else
@@ -227,8 +243,12 @@ namespace Gean.Wrapper.Chess
                 }
                 #endregion
             }
-            ChessStep step = new ChessStep(action, manType, sourcePoint, new ChessPosition(rid.X, rid.Y));
-            return step;
+            ChessPosition newPos;
+            if (action == Enums.Action.KingSideCastling || action == Enums.Action.QueenSideCastling)
+                newPos = ChessPosition.Empty;
+            else
+                newPos = new ChessPosition(rid.X, rid.Y);
+            return new ChessStep(action, manType, srcPos, newPos);
         }
 
         #endregion

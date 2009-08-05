@@ -37,8 +37,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BylawItem.cs" />
-    <Compile Include="Base\BylawItemCollection.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
     <Compile Include="ChessStringResource.Designer.cs">
@@ -49,6 +47,7 @@
     <Compile Include="Game\ChessPosition.cs" />
     <Compile Include="Record\ChessRecordCollection.cs" />
     <Compile Include="Record\ChessTag.cs" />
+    <Compile Include="Record\ISequenceItem.cs" />
     <Compile Include="Record\Reader\FenNotation.cs" />
     <Compile Include="Record\Reader\IGameReaderEvents.cs" />
     <Compile Include="Record\Reader\IGameReader.cs" />

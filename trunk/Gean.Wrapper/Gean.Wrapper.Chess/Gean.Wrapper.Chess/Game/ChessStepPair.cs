@@ -9,11 +9,15 @@ namespace Gean.Wrapper.Chess
     /// 棋招的定义是成对的<see>ChessStep</see>,它代表着双方各走了一步棋，
     /// 同时它拥有棋局中的对“步数”的编号。
     /// </summary>
-    public class ChessStepPair
+    public class ChessStepPair : ISequenceItem
     {
         public ChessStep White { get; set; }
         public ChessStep Black { get; set; }
         public int Number { get; set; }
+
+        internal ChessStepPair()
+        { 
+        }
 
         public ChessStepPair(int number, ChessStep white, ChessStep black)
         {
@@ -24,6 +28,18 @@ namespace Gean.Wrapper.Chess
             this.Number = number;
             this.White = white;
             this.Black = black;
+        }
+
+        public string Value 
+        {
+            get { return this.ToString(); }
+            set
+            {
+                ChessStepPair pair = Parse(value);
+                this.Number = pair.Number;
+                this.White = pair.White;
+                this.Black = pair.Black;
+            }
         }
 
         public override string ToString()

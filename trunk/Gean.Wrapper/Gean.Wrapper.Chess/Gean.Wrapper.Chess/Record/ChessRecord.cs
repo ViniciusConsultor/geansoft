@@ -28,7 +28,7 @@ namespace Gean.Wrapper.Chess
             ChessRecord pr = obj as ChessRecord;
             if (!UtilityEquals.EnumerableEquals(this.Tags, pr.Tags))
                 return false;
-            if (!UtilityEquals.CollectionsEquals<ChessStepPair>(this.Sequence, pr.Sequence))
+            if (!UtilityEquals.CollectionsEquals<ISequenceItem>(this.Sequence, pr.Sequence))
                 return false;
             return true;
         }
