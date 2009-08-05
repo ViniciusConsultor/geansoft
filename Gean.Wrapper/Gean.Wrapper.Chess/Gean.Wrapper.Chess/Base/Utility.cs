@@ -178,26 +178,5 @@ namespace Gean.Wrapper.Chess
                     throw new FormatException(value);
             }
         }
-
-        /// <summary>
-        /// 棋局记录中的一些辅助项的生成
-        /// </summary>
-        /// <param name="flag"></param>
-        /// <param name="number"></param>
-        /// <param name="userID"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        static public string BylawItemToString(string userID, string value)
-        {
-            StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(userID))
-            {
-                sb.Append('<');
-                sb.Append(userID);
-                sb.Append('>');
-            }
-            sb.AppendLine(value);
-            return sb.ToString();
-        }
     }
 }

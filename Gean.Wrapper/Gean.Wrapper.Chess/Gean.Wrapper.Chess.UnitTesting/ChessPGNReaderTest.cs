@@ -75,14 +75,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
         private string[] PGNFiles { get; set; }
 
         /// <summary>
-        ///Load 的测试
+        ///Parse 的测试
         ///</summary>
         [TestMethod()]
-        public void LoadTest()
+        public void ParseTest()
         {
-            ChessPGNReader target = new ChessPGNReader(); 
-            string fullpath = this.PGNFiles[0]; 
-            target.Load(fullpath);
+            ChessPGNReader target = new ChessPGNReader(); // TODO: 初始化为适当的值
+            target.Parse();
             Assert.IsNotNull(target);
         }
     }

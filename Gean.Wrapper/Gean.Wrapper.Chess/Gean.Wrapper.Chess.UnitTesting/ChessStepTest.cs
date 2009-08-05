@@ -120,15 +120,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep expected;
             ChessStep actual;
 
-            value = "Rxb4+(33,35,36)[12,13,14,15]";
+            value = "Rxb4+";
             expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4));
-            expected.CommentIndexs.Add(33);
-            expected.CommentIndexs.Add(35);
-            expected.CommentIndexs.Add(36);
-            expected.ChoiceStepsIndexs.Add(12);
-            expected.ChoiceStepsIndexs.Add(13);
-            expected.ChoiceStepsIndexs.Add(14);
-            expected.ChoiceStepsIndexs.Add(15);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "Rfe1+";
+            expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Rook, new ChessPosition('f', 1), new ChessPosition('e', 1));
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 

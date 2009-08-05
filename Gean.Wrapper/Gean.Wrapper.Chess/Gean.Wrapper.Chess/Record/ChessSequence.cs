@@ -8,23 +8,13 @@ namespace Gean.Wrapper.Chess
     /// 描述一个棋招序列（IList集合,集合的元素为<see>ChessStepPair</see>）。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
-    public class ChessSequence : BylawItem, IList<ChessStepPair>
+    public class ChessSequence : IList<ISequenceItem>
     {
-        protected List<ChessStepPair> ChessStepPairs { get; private set; }
+        protected List<ISequenceItem> SequenceItemList { get; private set; }
 
         public ChessSequence()
-            : this("", "")
         {
-        }
-        public ChessSequence(string userId, string sequence)
-            : base(userId, sequence)
-        {
-            this.ChessStepPairs = new List<ChessStepPair>();
-        }
-
-        public override string Value
-        {
-            get { return this.ChessStepPairs.ToString(); }
+            this.SequenceItemList = new List<ISequenceItem>();
         }
 
         private int _number = 1;
@@ -57,73 +47,79 @@ namespace Gean.Wrapper.Chess
 
         public ChessStepPair Peek()
         {
-            return this.ChessStepPairs[this.ChessStepPairs.Count - 1];
+            return this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStepPair;
         }
 
         public override string ToString()
         {
-            return Utility.BylawItemToString(this.UserID, this.SequenceToString());
+            StringBuilder sb = new StringBuilder();
+            foreach (ISequenceItem item in this.SequenceItemList)
+            {
+                sb.Append(item.Value).Append(' ');
+            }
+            return sb.ToString();
         }
+
         protected virtual string SequenceToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (ChessStepPair pair in this.ChessStepPairs)
+            foreach (ChessStepPair pair in this.SequenceItemList)
             {
                 sb.Append(pair.ToString()).Append(' ');
             }
             return sb.ToString();
         }
 
-        #region IList<ChessStepPair> 成员
+        #region IList<ISequenceItem> 成员
 
-        public int IndexOf(ChessStepPair item)
+        public int IndexOf(ISequenceItem item)
         {
-            return this.ChessStepPairs.IndexOf(item);
+            return this.SequenceItemList.IndexOf(item);
         }
 
-        public void Insert(int index, ChessStepPair item)
+        public void Insert(int index, ISequenceItem item)
         {
-            this.ChessStepPairs.Insert(index, item);
+            this.SequenceItemList.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            this.ChessStepPairs.RemoveAt(index);
+            this.SequenceItemList.RemoveAt(index);
         }
 
-        public ChessStepPair this[int index]
+        public ISequenceItem this[int index]
         {
-            get { return this.ChessStepPairs[index]; }
-            set { this.ChessStepPairs[index] = value; }
+            get { return this.SequenceItemList[index]; }
+            set { this.SequenceItemList[index] = value; }
         }
 
         #endregion
 
-        #region ICollection<ChessStepPair> 成员
+        #region ICollection<ISequenceItem> 成员
 
-        public void Add(ChessStepPair item)
+        public void Add(ISequenceItem item)
         {
-            this.ChessStepPairs.Add(item);
+            this.SequenceItemList.Add(item);
         }
 
         public void Clear()
         {
-            this.ChessStepPairs.Clear();
+            this.SequenceItemList.Clear();
         }
 
-        public bool Contains(ChessStepPair item)
+        public bool Contains(ISequenceItem item)
         {
-            return this.ChessStepPairs.Contains(item);
+            return this.SequenceItemList.Contains(item);
         }
 
-        public void CopyTo(ChessStepPair[] array, int arrayIndex)
+        public void CopyTo(ISequenceItem[] array, int arrayIndex)
         {
-            this.ChessStepPairs.CopyTo(array, arrayIndex);
+            this.SequenceItemList.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return this.ChessStepPairs.Count; }
+            get { return this.SequenceItemList.Count; }
         }
 
         public bool IsReadOnly
@@ -131,18 +127,18 @@ namespace Gean.Wrapper.Chess
             get { return false; }
         }
 
-        public bool Remove(ChessStepPair item)
+        public bool Remove(ISequenceItem item)
         {
-            return this.ChessStepPairs.Remove(item);
+            return this.SequenceItemList.Remove(item);
         }
 
         #endregion
 
-        #region IEnumerable<ChessStepPair> 成员
+        #region IEnumerable<ISequenceItem> 成员
 
-        public IEnumerator<ChessStepPair> GetEnumerator()
+        public IEnumerator<ISequenceItem> GetEnumerator()
         {
-            return this.ChessStepPairs.GetEnumerator();
+            return this.SequenceItemList.GetEnumerator();
         }
 
         #endregion
@@ -151,7 +147,7 @@ namespace Gean.Wrapper.Chess
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return this.ChessStepPairs.GetEnumerator();
+            return this.SequenceItemList.GetEnumerator();
         }
 
         #endregion

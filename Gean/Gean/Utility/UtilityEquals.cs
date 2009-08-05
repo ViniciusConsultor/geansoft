@@ -23,9 +23,9 @@ namespace Gean
 
         static public bool EnumerableEquals(IEnumerable a, IEnumerable b)
         {
-            if (!Object.ReferenceEquals(a.GetType(), b.GetType())) return false;
             if ((a == null) && (b == null))
                 return true;
+            if (!Object.ReferenceEquals(a.GetType(), b.GetType())) return false;
             else
             {
                 if ((a != null) && (b == null)) return false;

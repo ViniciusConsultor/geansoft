@@ -104,14 +104,13 @@ namespace Gean.Wrapper.Chess
 
         private Stack _states;
         private string _lastNumber;
-        private ChessSequence _currentSequence;
-        private ChessStepPair _moveStepPair;
+        private ChessStepPair _tmpPair;
+        private ChessComment _tmpComment;
 
         int num = 1;
         public void NewGame(IGameReader iParser)
         {
-            Console.WriteLine("{0}.NewGame", num++);
-            //_tmpRecord = new ChessRecord();
+            _tmpRecord = new ChessRecord();
         }
 
         public void ExitHeader(IGameReader iParser)
@@ -160,8 +159,14 @@ namespace Gean.Wrapper.Chess
 
         public void TagParsed(IGameReader iParser)
         {
-            Console.WriteLine("{0}.TagParsed", num++);
-            //throw new NotImplementedException();
+            try
+            {
+                _tmpRecord.Tags.Set<string>(iParser.Tag, iParser.Value);
+            }
+            catch (ChessRecordException e)
+            {
+                throw e;
+            }
         }
 
         public void NagParsed(IGameReader iParser)
@@ -172,38 +177,42 @@ namespace Gean.Wrapper.Chess
 
         public void MoveParsed(IGameReader iParser)
         {
-            Console.WriteLine("{0}.MoveParsed", num++);
-            //if (iParser.State == Enums.GameReaderState.NUMBER)
-            //{
-            //    if (_moveStepPair == null)
-            //    {
-            //        _moveStepPair = GameDOM.CreateElement("MOVE");
-            //        coLastNumber = iParser.Value;
-            //        _moveStepPair.SetAttribute("number", coLastNumber);
-            //    }
-            //}
-            //else if (iParser.State == Enums.GameReaderState.WHITE)
-            //{
-            //    if (_moveStepPair != null)
-            //        _moveStepPair.SetAttribute("white", iParser.Value);
-            //}
-            //else if (iParser.State == Enums.GameReaderState.BLACK)
-            //{
-            //    if (_moveStepPair == null)
-            //    {
-            //        _moveStepPair = GameDOM.CreateElement("MOVE");
-            //        _moveStepPair.SetAttribute("number", coLastNumber);
-            //    }
-            //    _moveStepPair.SetAttribute("black", iParser.Value);
-            //    _currentSequence.AppendChild(_moveStepPair);
-            //    _moveStepPair = null;
-            //}
+            if (iParser.State == Enums.GameReaderState.Number)
+            {
+                if (_tmpPair == null)
+                {
+                    _lastNumber = iParser.Value;
+                    _tmpPair = new ChessStepPair();
+                    _tmpPair.Number = int.Parse(_lastNumber);
+                }
+            }
+            else if (iParser.State == Enums.GameReaderState.White)
+            {
+                if (_tmpPair != null)
+                    _tmpPair.White = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.White);
+            }
+            else if (iParser.State == Enums.GameReaderState.Black)
+            {
+                if (_tmpPair == null)
+                {
+                    _tmpPair = new ChessStepPair();
+                    _tmpPair.Number = int.Parse(_lastNumber);
+                }
+                _tmpPair.Black = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.Black);
+                _tmpRecord.Sequence.Add(_tmpPair);
+                _tmpPair = null;
+            }
         }
 
         public void CommentParsed(IGameReader iParser)
         {
-            Console.WriteLine("{0}.CommentParsed", num++);
-            //throw new NotImplementedException();
+            if (_tmpComment != null)
+            {
+                _tmpRecord.Sequence.Add(_tmpComment);
+                _tmpComment = null;
+            }
+            _tmpComment = new ChessComment(iParser.Value);
+            _tmpRecord.Sequence.Add(_tmpComment);
         }
 
         public void EndMarker(IGameReader iParser)
