@@ -29,19 +29,28 @@
         private void InitializeComponent()
         {
             this._splitContainer = new System.Windows.Forms.SplitContainer();
-            this._rightSplitContainer = new System.Windows.Forms.SplitContainer();
+            this._rightSplit = new System.Windows.Forms.SplitContainer();
+            this._recordTreeView = new System.Windows.Forms.TreeView();
+            this._rightButtonSplit = new System.Windows.Forms.SplitContainer();
             this._actionListBox = new System.Windows.Forms.ListBox();
             this._propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开局ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pgnConventToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.chessRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._label = new System.Windows.Forms.ToolStripStatusLabel();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
-            this._rightSplitContainer.Panel1.SuspendLayout();
-            this._rightSplitContainer.Panel2.SuspendLayout();
-            this._rightSplitContainer.SuspendLayout();
+            this._rightSplit.Panel1.SuspendLayout();
+            this._rightSplit.Panel2.SuspendLayout();
+            this._rightSplit.SuspendLayout();
+            this._rightButtonSplit.Panel1.SuspendLayout();
+            this._rightButtonSplit.Panel2.SuspendLayout();
+            this._rightButtonSplit.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _splitContainer
@@ -52,28 +61,54 @@
             // 
             // _splitContainer.Panel2
             // 
-            this._splitContainer.Panel2.Controls.Add(this._rightSplitContainer);
+            this._splitContainer.Panel2.Controls.Add(this._rightSplit);
             this._splitContainer.Size = new System.Drawing.Size(632, 399);
-            this._splitContainer.SplitterDistance = 382;
+            this._splitContainer.SplitterDistance = 204;
             this._splitContainer.SplitterWidth = 3;
             this._splitContainer.TabIndex = 0;
             // 
-            // _rightSplitContainer
+            // _rightSplit
             // 
-            this._rightSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._rightSplitContainer.Location = new System.Drawing.Point(0, 0);
-            this._rightSplitContainer.Name = "_rightSplitContainer";
+            this._rightSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._rightSplit.Location = new System.Drawing.Point(0, 0);
+            this._rightSplit.Name = "_rightSplit";
+            this._rightSplit.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // _rightSplitContainer.Panel1
+            // _rightSplit.Panel1
             // 
-            this._rightSplitContainer.Panel1.Controls.Add(this._actionListBox);
+            this._rightSplit.Panel1.Controls.Add(this._recordTreeView);
             // 
-            // _rightSplitContainer.Panel2
+            // _rightSplit.Panel2
             // 
-            this._rightSplitContainer.Panel2.Controls.Add(this._propertyGrid);
-            this._rightSplitContainer.Size = new System.Drawing.Size(247, 399);
-            this._rightSplitContainer.SplitterDistance = 124;
-            this._rightSplitContainer.TabIndex = 1;
+            this._rightSplit.Panel2.Controls.Add(this._rightButtonSplit);
+            this._rightSplit.Size = new System.Drawing.Size(425, 399);
+            this._rightSplit.SplitterDistance = 273;
+            this._rightSplit.TabIndex = 0;
+            // 
+            // _recordTreeView
+            // 
+            this._recordTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._recordTreeView.Location = new System.Drawing.Point(0, 0);
+            this._recordTreeView.Name = "_recordTreeView";
+            this._recordTreeView.Size = new System.Drawing.Size(425, 273);
+            this._recordTreeView.TabIndex = 0;
+            // 
+            // _rightButtonSplit
+            // 
+            this._rightButtonSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._rightButtonSplit.Location = new System.Drawing.Point(0, 0);
+            this._rightButtonSplit.Name = "_rightButtonSplit";
+            // 
+            // _rightButtonSplit.Panel1
+            // 
+            this._rightButtonSplit.Panel1.Controls.Add(this._actionListBox);
+            // 
+            // _rightButtonSplit.Panel2
+            // 
+            this._rightButtonSplit.Panel2.Controls.Add(this._propertyGrid);
+            this._rightButtonSplit.Size = new System.Drawing.Size(425, 122);
+            this._rightButtonSplit.SplitterDistance = 213;
+            this._rightButtonSplit.TabIndex = 1;
             // 
             // _actionListBox
             // 
@@ -81,7 +116,7 @@
             this._actionListBox.FormattingEnabled = true;
             this._actionListBox.Location = new System.Drawing.Point(0, 0);
             this._actionListBox.Name = "_actionListBox";
-            this._actionListBox.Size = new System.Drawing.Size(124, 394);
+            this._actionListBox.Size = new System.Drawing.Size(213, 121);
             this._actionListBox.TabIndex = 0;
             // 
             // _propertyGrid
@@ -90,14 +125,14 @@
             this._propertyGrid.Font = new System.Drawing.Font("Tahoma", 8F);
             this._propertyGrid.Location = new System.Drawing.Point(0, 0);
             this._propertyGrid.Name = "_propertyGrid";
-            this._propertyGrid.Size = new System.Drawing.Size(119, 399);
+            this._propertyGrid.Size = new System.Drawing.Size(208, 122);
             this._propertyGrid.TabIndex = 0;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.开局ToolStripMenuItem,
-            this.chessRecordToolStripMenuItem});
+            this._pgnToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(632, 24);
@@ -106,27 +141,50 @@
             // 
             // 开局ToolStripMenuItem
             // 
+            this.开局ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._newGameToolStripMenuItem});
             this.开局ToolStripMenuItem.Name = "开局ToolStripMenuItem";
-            this.开局ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.开局ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.开局ToolStripMenuItem.Text = "开局";
-            this.开局ToolStripMenuItem.Click += new System.EventHandler(this.开局ToolStripMenuItem_Click);
+            this.开局ToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.开局ToolStripMenuItem.Text = "新开局";
+            // 
+            // _newGameToolStripMenuItem
+            // 
+            this._newGameToolStripMenuItem.Name = "_newGameToolStripMenuItem";
+            this._newGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this._newGameToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this._newGameToolStripMenuItem.Text = "新开棋局";
+            this._newGameToolStripMenuItem.Click += new System.EventHandler(this.NewGame);
+            // 
+            // _pgnToolStripMenuItem
+            // 
+            this._pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._pgnConventToolStripMenuItem1});
+            this._pgnToolStripMenuItem.Name = "_pgnToolStripMenuItem";
+            this._pgnToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this._pgnToolStripMenuItem.Text = "已有棋谱";
+            // 
+            // _pgnConventToolStripMenuItem1
+            // 
+            this._pgnConventToolStripMenuItem1.Name = "_pgnConventToolStripMenuItem1";
+            this._pgnConventToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this._pgnConventToolStripMenuItem1.Size = new System.Drawing.Size(141, 22);
+            this._pgnConventToolStripMenuItem1.Text = "转换棋谱";
+            this._pgnConventToolStripMenuItem1.Click += new System.EventHandler(this.PGNConvent);
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._label});
             this.statusStrip1.Location = new System.Drawing.Point(0, 423);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(632, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // chessRecordToolStripMenuItem
+            // _label
             // 
-            this.chessRecordToolStripMenuItem.Name = "chessRecordToolStripMenuItem";
-            this.chessRecordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.chessRecordToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.chessRecordToolStripMenuItem.Text = "ChessRecord";
-            this.chessRecordToolStripMenuItem.Click += new System.EventHandler(this.chessRecordToolStripMenuItem_Click);
+            this._label.Name = "_label";
+            this._label.Size = new System.Drawing.Size(0, 17);
             // 
             // DemoMainForm
             // 
@@ -143,11 +201,16 @@
             this.Text = "DemoMainForm";
             this._splitContainer.Panel2.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
-            this._rightSplitContainer.Panel1.ResumeLayout(false);
-            this._rightSplitContainer.Panel2.ResumeLayout(false);
-            this._rightSplitContainer.ResumeLayout(false);
+            this._rightSplit.Panel1.ResumeLayout(false);
+            this._rightSplit.Panel2.ResumeLayout(false);
+            this._rightSplit.ResumeLayout(false);
+            this._rightButtonSplit.Panel1.ResumeLayout(false);
+            this._rightButtonSplit.Panel2.ResumeLayout(false);
+            this._rightButtonSplit.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,12 +220,17 @@
 
         private System.Windows.Forms.SplitContainer _splitContainer;
         private System.Windows.Forms.PropertyGrid _propertyGrid;
-        private System.Windows.Forms.SplitContainer _rightSplitContainer;
+        private System.Windows.Forms.SplitContainer _rightButtonSplit;
         private System.Windows.Forms.ListBox _actionListBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem 开局ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem chessRecordToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer _rightSplit;
+        private System.Windows.Forms.TreeView _recordTreeView;
+        private System.Windows.Forms.ToolStripMenuItem _pgnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem _pgnConventToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem _newGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel _label;
     }
 }
 

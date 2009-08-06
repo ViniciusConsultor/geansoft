@@ -10,9 +10,9 @@
 [PlyCount "105"]
 [EventDate "2008.03.26"]
 
-1. e4 c5 {This is a comment...} 
-2. Nf3 d6 (2. c4 c6 {This is 3 comment?} 3. Nc3 Nf6 (3. c4 b6 {This is 2 comment!} 4. g3 Bb7) 4. cxd5 cxd5 5. Bf4 Nc6) 
-3. Bb5+ Bd7 {THIS ( }36. Rxd7 Bxd7 {}59. Ke2 Ke6{} 37. Qxd7 Qxh4{ ) COMMENT} 
+1. e4 c5  {This (this,this) is "1" comment...} 
+2. Nf3 d6 (2. c4 c6 {This is "2-2" comment?} 3. Nc3 Nf6 (3. c4 b6 {This is "2-3-3" comment!} 4. g3 Bb7) 4. cxd5 cxd5 5. Bf4 Nc6) 
+3. Bb5+ Bd7 {THIS is "3" (36. Rxd7 Bxd7 59. Ke2 Ke6 37. Qxd7 Qxh4 ) COMMENT} 
 4. Bxd7+ Qxd7 1-0
 
 [Event "TCh-CHN A"]

@@ -149,86 +149,102 @@ namespace Gean.Wrapper.Chess
                 #endregion
             }
 
-            int n = 0;
             ChessPosition srcPos = ChessPosition.Empty;
-
-            if (char.IsUpper(value, 0))
-            {//首字母是大写的
-                #region Upper
-                if (value[0] == 'O')
+            if (value.Contains("="))//升变
+            {
+                return new ChessStep(action, Enums.ChessmanType.Pawn, srcPos, new ChessPosition(1, 1));
+            }
+            else
+            {
+                if (char.IsUpper(value, 0))//首字母是大写的
                 {
-                    value = value.Trim().Replace(" ", string.Empty);
+                    #region Upper
+                    if (value[0] == 'O')
+                    {
+                        value = value.Trim().Replace(" ", string.Empty);
+                        switch (value.Length)
+                        {
+                            case 3://O-O 短易位
+                                action = Enums.Action.KingSideCastling;
+                                break;
+                            case 5://O-O-O 长易位
+                                action = Enums.Action.QueenSideCastling;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        manType = Enums.StringToChessmanType(value[0]);
+                        if (value.Length > 3 && value.Contains("x")) //Rxe3,Rfxe3;
+                        {
+                            if (action == Enums.Action.Check)
+                                action = Enums.Action.KillAndCheck;
+                            else
+                                action = Enums.Action.Kill;
+                            if (value[1] == 'x')
+                            {
+                                rid = ChessGrid.Parse(value.Substring(2, 2));
+                            }
+                            else
+                            {
+                                char c = value[1];
+                                int i;
+                                if (c >= 'a' && c <= 'h')
+                                    i = Utility.CharToInt(c);
+                                else
+                                    i = int.Parse(c.ToString());
+                                srcPos = new ChessPosition(i, int.Parse(value[4].ToString()));
+                                rid = ChessGrid.Parse(value.Substring(3, 2));
+                            }
+                        }
+                        else if (value.Length > 3 && !value.Contains("x"))//Rfe3
+                        {
+                            char c = value[1];
+                            int i;
+                            if (c >= 'a' && c <= 'h')
+                                i = Utility.CharToInt(c);
+                            else
+                                i = int.Parse(c.ToString());
+                            srcPos = new ChessPosition(i, int.Parse(value[3].ToString()));
+                            rid = ChessGrid.Parse(value.Substring(2, 2));
+                        }
+                        else if (value.Length == 3)//Re3
+                        {
+                            rid = ChessGrid.Parse(value.Substring(1, 2));
+                        }
+                    }
+                    #endregion
+                }
+                else
+                {//c5 dxc5 dxc5+ 首字母是小写的，一般就是“兵”的动作
+                    #region Lower
+                    manType = Enums.ChessmanType.Pawn;
                     switch (value.Length)
                     {
-                        case 3://O-O 短易位
-                            action = Enums.Action.KingSideCastling;
+                        case 2:
+                            rid = ChessGrid.Parse(value);
                             break;
-                        case 5://O-O-O 长易位
-                            action = Enums.Action.QueenSideCastling;
+                        case 4:
+                            rid = ChessGrid.Parse(value.Substring(value.IndexOf('x') + 1));
+                            char cx = value.Substring(0, 1).ToCharArray()[0];
+                            int iy = int.Parse(value.Substring(3, 1));
+                            if (manSide == Enums.ChessmanSide.White)
+                                iy--;
+                            else
+                                iy++;
+                            srcPos = new ChessPosition(Utility.CharToInt(cx), iy);
+                            if (action == Enums.Action.Check)
+                                action = Enums.Action.KillAndCheck;
+                            else
+                                action = Enums.Action.Kill;
                             break;
                         default:
                             break;
                     }
+                    #endregion
                 }
-                else
-                {
-                    manType = Enums.StringToChessmanType(value[n]);
-                    n++;
-                    if (value.Length > 3 && value[n] == 'x')
-                    {
-                        n++;
-                        if (action == Enums.Action.Check)
-                            action = Enums.Action.KillAndCheck;
-                        else
-                            action = Enums.Action.Kill;
-                        rid = ChessGrid.Parse(value.Substring(n, 2));
-
-                    }
-                    else if (value.Length > 3 && value[n] != 'x')
-                    {
-                        char c = value[n];
-                        int i;
-                        if (c >= 'a' && c <= 'h')
-                            i = Utility.CharToInt(c);
-                        else
-                            i = int.Parse(c.ToString());
-                        srcPos = new ChessPosition(i, int.Parse(value[n + 2].ToString()));
-                        rid = ChessGrid.Parse(value.Substring(n + 1, 2));
-                    }
-                    else if (value.Length == 3)
-                    {
-                        rid = ChessGrid.Parse(value.Substring(n, 2));
-                    }
-                }
-                #endregion
-            }
-            else
-            {//c5 dxc5 dxc5+ 首字母是小写的，一般就是“兵”的动作
-                #region Lower
-                manType = Enums.ChessmanType.Pawn;
-                switch (value.Length)
-                {
-                    case 2:
-                        rid = ChessGrid.Parse(value);
-                        break;
-                    case 4:
-                        rid = ChessGrid.Parse(value.Substring(value.IndexOf('x') + 1));
-                        char cx = value.Substring(0, 1).ToCharArray()[0];
-                        int iy = int.Parse(value.Substring(3, 1));
-                        if (manSide == Enums.ChessmanSide.White)
-                            iy--;
-                        else
-                            iy++;
-                        srcPos = new ChessPosition(Utility.CharToInt(cx), iy);
-                        if (action == Enums.Action.Check)
-                            action = Enums.Action.KillAndCheck;
-                        else
-                            action = Enums.Action.Kill;
-                        break;
-                    default:
-                        break;
-                }
-                #endregion
             }
             ChessPosition newPos;
             if (action == Enums.Action.KingSideCastling || action == Enums.Action.QueenSideCastling)
