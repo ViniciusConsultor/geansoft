@@ -42,7 +42,13 @@ namespace Gean.Wrapper.Chess
             }
             else
             {
-                IStepTree tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - 1];
+                IStepTree tmpTree = null;
+                int i = 1;
+                while (!(_tmpTree.Items[_tmpTree.Items.Count - i] is IStepTree))
+                {
+                    i++;
+                }
+                tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - i];
                 tmpTree.Parent = _tmpTree;
                 _tmpTree = tmpTree;
             }
