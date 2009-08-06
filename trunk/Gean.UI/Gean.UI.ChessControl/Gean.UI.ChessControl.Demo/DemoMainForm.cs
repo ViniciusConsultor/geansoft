@@ -20,7 +20,7 @@ namespace Gean.UI.ChessControl.Demo
             Duration duration = new Duration();
             duration.Start();
             ChessPGNReader reader = new ChessPGNReader();
-            reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__aGame2.pgn")); //__agame.pgn"));
+            reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__aGame1.pgn")); //__agame.pgn"));
             reader.AddEvents(records);
             reader.Parse();
 

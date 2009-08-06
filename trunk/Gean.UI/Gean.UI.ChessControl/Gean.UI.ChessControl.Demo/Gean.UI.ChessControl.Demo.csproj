@@ -74,7 +74,7 @@
     <None Include="DemoFile\PGN\worldop09.pgn" />
     <None Include="DemoFile\PGN\__aGame2.pgn" />
     <None Include="DemoFile\PGN\__TCh-CHN A.pgn" />
-    <None Include="DemoFile\PGN\__aGame.pgn" />
+    <None Include="DemoFile\PGN\__aGame1.pgn" />
     <None Include="DemoFile\PGN\__kaspjun03.pgn" />
     <None Include="DemoFile\PGN\__Polgar-Anand.pgn" />
     <None Include="Properties\Settings.settings">
