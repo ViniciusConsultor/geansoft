@@ -125,6 +125,12 @@ namespace Gean.Wrapper.Chess
 
         #region static Parse
 
+        /// <summary>
+        /// 根据指定的字符串解析
+        /// </summary>
+        /// <param name="value">指定的字符串</param>
+        /// <param name="manSide">棋子的战方（主要是针对兵的源棋格使用）</param>
+        /// <returns></returns>
         public static ChessStep Parse(string value, Enums.ChessmanSide manSide)
         {
             if (string.IsNullOrEmpty(value) || value.Length < 2) throw new ArgumentOutOfRangeException(value);
@@ -165,13 +171,17 @@ namespace Gean.Wrapper.Chess
             if (value.Length == 2)//如仅是单坐标，仅为兵的动作：d4, f6, c4, g6, c3, d6
             {
                 #region
+
                 manType = Enums.ChessmanType.Pawn;
+
                 #endregion
+
                 goto END_PARSE;
             }
             else if (value[0] == 'O')//Castling, 王车易位
             {
-                #region Castling, 王车易位
+                #region
+
                 value = value.Trim().Replace(" ", string.Empty);
                 switch (value.Length)
                 {
@@ -184,7 +194,9 @@ namespace Gean.Wrapper.Chess
                     default:
                         break;
                 }
+
                 #endregion
+
                 goto END_PARSE_Castling;
             }
             else if ((i = value.IndexOf('=')) >= 2)//如果有等号，该步棋即为升变 Rfxe8=Q+, e8=Q, cxd8=Q+
@@ -195,19 +207,24 @@ namespace Gean.Wrapper.Chess
                 action = Enums.Action.Promotion;
 
                 value = value.Substring(0, i);
-                promotionString = value.Substring(i);
+                promotionString = value.Substring(i + 1);
 
                 #endregion
+
                 goto BEGIN_PARSE;
             }
             else if ((i = value.IndexOf('x')) >= 1)//Rfxe8+,Nxa3+;
             {
+                #region
+                
                 if (action == Enums.Action.Check)
                     action = Enums.Action.KillAndCheck;
                 else
                     action = Enums.Action.Kill;
-                ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i), out manType, out srcPos);
+                ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i + 1), manSide, out manType, out srcPos);
                 value = value.Substring(i + 1);
+
+                #endregion
             }
 
         END_PARSE:
@@ -222,7 +239,7 @@ namespace Gean.Wrapper.Chess
             return step;
         }
 
-        private static void ParseSrcPos(string mainValue, string tgtValue, out Enums.ChessmanType type, out ChessPosition pos)
+        private static void ParseSrcPos(string mainValue, string tgtValue, Enums.ChessmanSide manSide, out Enums.ChessmanType type, out ChessPosition pos)
         {
             pos = ChessPosition.Empty;
             type = Enums.ChessmanType.None;
@@ -235,7 +252,7 @@ namespace Gean.Wrapper.Chess
             {
                 type = Enums.ChessmanType.Pawn;
             }
-            //Parse value, 一般是指“Rfxe8”，“B3xd6”中的第2个字符的解析
+            //Parse value, 一般是指“axb5+”，“Rfxe8”，“B3xd6”中的第2个字符的解析
             if (!string.IsNullOrEmpty(mainValue))
             {
                 int x;
@@ -246,6 +263,17 @@ namespace Gean.Wrapper.Chess
                 {
                     x = Utility.CharToInt(c);
                     y = int.Parse(tgtValue[1].ToString());
+                    if (type == Enums.ChessmanType.Pawn)
+                    {
+                        if (manSide == Enums.ChessmanSide.Black)
+                            y++;
+                        else
+                            y--;
+                    }
+                    else
+                    { 
+                        //麻烦，麻烦，这块代码不好写呀
+                    }
                 }
                 else
                 {

@@ -7,6 +7,7 @@ namespace Gean
 {
     public static class UtilityEquals
     {
+
         static public bool PairEquals<T>(T a, T b)
         {
             if ((a == null) && (b == null))
