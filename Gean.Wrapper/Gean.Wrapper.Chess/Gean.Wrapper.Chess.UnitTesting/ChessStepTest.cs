@@ -1,5 +1,11 @@
 ﻿using Gean.Wrapper.Chess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Diagnostics;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
     
@@ -64,106 +70,201 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
-        /*
-        1. c4 Nf6       2. d3 e5        3. Nf3 Nc6      4. e3 d5         
-        5. cxd5 Nxd5    6. a3 Bg4       7. b4 a6        8. Be2 Bd6 
-        9. Bb2 0–0      10.Nbd2 Re8     11.Rc1 Qf6      12.0–0 Rad8     
-        13.Re1 Qh6      14.Ne4 Nf6      15.Nxd6 Rxd6    16.Qb3 Qg6 
-        17.Kh1 e4       18.dxe4 Nxe4    19.Kg1 Qh5      20.Red1 Rg6     
-        21.Kf1 Bh3      22.gxh3 Qxh3+   23.Ke1 Qg2      24.Rd7 Qh1+
-        25.Bf1 Qxf3     26.Rc2 Rg1      27.Qd5 Rf8      28.Qd3 Qg2      
-        29.Rxc7 Rd8     30.Bd4 Ne5      31.Bxe5 Rxf1+   32.Qxf1 Rd1+
-        33.Kxd1 Qxf1# 0–1 
-        */
-
-        /// <summary>
-        ///ToString 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ToStringTest()
+        public ChessStepTest()
         {
-            //ChessStep target = null;
-            //string expected = null;
-            //string actual = null;
-
-            //target = new ChessStep(Enums.ChessmanType.Rook, Enums.Action.KillAndCheck, new ChessGrid('e', 3), new ChessGrid('e', 5));
-            //target.CommentIndexs.Add(11);
-            //target.CommentIndexs.Add(12);
-            //target.CommentIndexs.Add(13);
-            //target.ChoiceStepsIndexs.Add(34);
-            //target.ChoiceStepsIndexs.Add(35);
-            //target.ChoiceStepsIndexs.Add(36);
-            //target.ChoiceStepsIndexs.Add(37);
-            
-            //expected = "Rxe5+(11,12,13)[34,35,36,37]";
-            //actual = target.ToString();
-            //Assert.AreEqual(expected, actual);
-
-            //target = new ChessStep(Enums.ChessmanType.Pawn, Enums.Action.KillAndCheck, new ChessGrid('f', 2), new ChessGrid('g', 3));
-            //target.CommentIndexs.Add(11);
-            //target.ChoiceStepsIndexs.Add(34);
-            //target.ChoiceStepsIndexs.Add(35);
-
-            //expected = "fxg3+(11)[34,35]";
-            //actual = target.ToString();
-            //Assert.AreEqual(expected, actual);
+            this.DemoFilePath = Path.GetFullPath(@"..\..\..\..\Gean.Wrapper.Chess\Gean.Wrapper.Chess.UnitTesting\CaseFiles\");
+            this.PGNFiles = Directory.GetFiles(this.DemoFilePath, "*.pgn");
         }
+
+        private string DemoFilePath { get; set; }
+        private string[] PGNFiles { get; set; }
 
         ///<summary>
         ///Parse 的测试
         ///</summary>
         [TestMethod()]
-        public void ParseTest()
+        public void ParseTest1()
         {
             string value = string.Empty;
             ChessStep expected;
             ChessStep actual;
 
             value = "O-O";
-            expected = new ChessStep(Enums.Action.KingSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.KingSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "O-O-O";
-            expected = new ChessStep(Enums.Action.QueenSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "O - O - O";
-            expected = new ChessStep(Enums.Action.QueenSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "b5+";
-            expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5));
+            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5), Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
-            value = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3));
+            value = "Qxh3+";
+            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.Kill,Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "Rxb4+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4));
+            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "axb5+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5));
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "axb5+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 6), new ChessPosition(2, 5));
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition(1, 6), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
             Assert.AreEqual(expected, actual);
 
+            value = "Qh3";
+            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.General);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "a3";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(1, 3), Enums.Action.General);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "e8=Q";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition('e', 8), Enums.Action.Promotion);
+            expected.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "fxe8=Q+";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 7), new ChessPosition('e', 8), Enums.Action.Promotion, Enums.Action.Check, Enums.Action.Kill);
+            expected.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            //cxd1=Q
+            //cxd1=Q+
+            //gxf1=Q+
+            //bxc1=Q
+            //exf1=Q+
+
+            value = "cxd8=N+";//bxc8=Q+
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('c', 7), new ChessPosition('d', 8), Enums.Action.Kill, Enums.Action.Check, Enums.Action.Promotion);
+            expected.PromotionChessmanType = Enums.ChessmanType.Knight;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "Rfb8";
+            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition('b', 8), Enums.Action.General);
+            expected.HasSame = true;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
             value = "Rfxe1+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, new ChessPosition('f', 1), new ChessPosition('e', 1));
+            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition('e', 1), Enums.Action.Kill, Enums.Action.Check);
+                //new ChessPosition('f', 1), new ChessPosition('e', 1));
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
         }
+
+        ///<summary>
+        ///Parse 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParseTest2()
+        {
+            Duration duration = new Duration();
+            duration.Start();
+            StringBuilder error = new StringBuilder();
+            string filename = Path.Combine(this.DemoFilePath, "ChessStep.txt");
+            string[] steps = File.ReadAllLines(filename);
+            ChessStep step = null;
+
+            foreach (string value in steps)
+            {
+                try
+                {
+                    step = ChessStep.Parse(value, Enums.ChessmanSide.White);
+                }
+                catch
+                {
+                    error.AppendLine(value);
+                }
+                Assert.IsNotNull(step);
+            }
+            duration.Stop();
+            error.AppendLine().Append("共 " + steps.Length.ToString() + " 个 ChessStep，")
+                .Append("总时间：").AppendLine(duration.DurationValue.ToString())
+                .AppendLine("每ChessStep的解析时间为：" + (duration.DurationValue / steps.Length).ToString());
+            string newFile = filename + ".error.txt";
+            File.Delete(newFile);
+            StreamWriter file = File.CreateText(newFile);
+            file.Write(error.ToString());
+            file.Flush();
+            file.Close();
+            using (Process notepad = new Process())
+            {
+                notepad.StartInfo.FileName = "notepad.exe";
+                notepad.StartInfo.Arguments = newFile;
+                notepad.Start();
+            }
+        }
+
+        /*
+        /// <summary>
+        ///ToString 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ToStringTest()
+        {
+            Regex regex = new Regex(@"\[.*\]");
+            string filename = Path.Combine(this.DemoFilePath, "ChessStepL.txt");
+            string[] strs = File.ReadAllLines(filename);
+            StringBuilder sb = new StringBuilder();
+            foreach (string item in strs)
+            {
+                if (string.IsNullOrEmpty(item))
+                    continue;
+                string newItem = item.Trim();
+                if (regex.IsMatch(newItem))
+                    continue;
+                if (newItem == "\r\n")
+                    continue;
+                sb.Append(newItem).Append(' ');
+            }
+            strs = null;
+            string[] pairs = (new Regex(@"\b\d+.")).Split(sb.ToString());
+            sb = new StringBuilder();
+            foreach (var item in pairs)
+            {
+                string[] ss = item.Split(' ');
+                foreach (var subitem in ss)
+                {
+                    if (string.IsNullOrEmpty(subitem))
+                        continue;
+                    string newItem = subitem.Trim();
+                    if (newItem == "\r\n")
+                        continue;
+                    sb.AppendLine(subitem);
+                }
+            }
+            string newFile = filename + ".new.txt";
+            File.Delete(newFile);
+            StreamWriter file = File.CreateText(newFile);
+            file.Write(sb.ToString());
+            file.Flush();
+            file.Close();
+        }
+        */
     }
 }

@@ -114,7 +114,7 @@ namespace Gean.Wrapper.Chess
                 if ((steps[i].StartsWith("(") && steps[i].EndsWith(")")) ||
                     (steps[i].StartsWith("[") && steps[i].EndsWith("]")))
                 {
-
+                    int m = 333;
                 }
                 if (white == null)
                     white = ChessStep.Parse(steps[i], Enums.ChessmanSide.White);

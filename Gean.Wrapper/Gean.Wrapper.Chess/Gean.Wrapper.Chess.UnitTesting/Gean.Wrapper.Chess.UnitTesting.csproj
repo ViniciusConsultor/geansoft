@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +62,8 @@
     <Shadow Include="测试引用\Gean.Wrapper.Chess.accessor" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CaseFiles\ChessStep.txt" />
+    <Content Include="CaseFiles\ChessStep.txt.error.txt" />
     <None Include="CaseFiles\_Test.pgn" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

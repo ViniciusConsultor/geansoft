@@ -69,8 +69,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStepPair actual;
 
             value = "4.Qh5+ Ke7";
-            ChessStep white = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 5));
-            ChessStep black = new ChessStep(Enums.Action.General, Enums.ChessmanType.King, ChessPosition.Empty, new ChessPosition(5, 7));
+            ChessStep white = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 5), Enums.Action.Check);
+            ChessStep black = new ChessStep(Enums.ChessmanType.King, ChessPosition.Empty, new ChessPosition(5, 7), Enums.Action.General);
             expected = new ChessStepPair(4, white, black);
             actual = ChessStepPair.Parse(value);
             Assert.AreEqual(expected, actual);

@@ -15,7 +15,8 @@ namespace Gean.Wrapper.Chess
         public static ChessPosition Parse(string value)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentNullException();
-            if (value.Length != 2) throw new ArgumentOutOfRangeException(value);
+            if (value.Length != 2) 
+                throw new ArgumentOutOfRangeException(value);
 
             char horizontal = value[0];
             int vertical = int.Parse(value[1].ToString());

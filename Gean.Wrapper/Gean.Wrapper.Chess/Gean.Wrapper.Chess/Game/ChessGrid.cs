@@ -73,7 +73,6 @@ namespace Gean.Wrapper.Chess
                     this.MoveInByGeneralAction(game, chessman);
                     break;
                 case Enums.Action.Kill:
-                case Enums.Action.KillAndCheck:
                     this.MoveInByKillAction(game, chessman);
                     break;
                 case Enums.Action.KingSideCastling:
@@ -98,7 +97,7 @@ namespace Gean.Wrapper.Chess
                 targetPoint = new ChessPosition(this.X, this.Y);
                 chessman.ChessPoints.Push(new ChessPosition(this.X, this.Y));
             }
-            ChessStep chessStep = new ChessStep(action, chessman.ChessmanType, sourcePoint, targetPoint);
+            ChessStep chessStep = new ChessStep(chessman.ChessmanType, sourcePoint, targetPoint, action);
             //注册行棋事件
             OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
             return chessStep;
