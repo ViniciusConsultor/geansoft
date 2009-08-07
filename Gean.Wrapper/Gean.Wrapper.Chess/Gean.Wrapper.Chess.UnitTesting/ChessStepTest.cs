@@ -119,20 +119,20 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep expected;
             ChessStep actual;
 
-            //value = "O-O";
-            //expected = new ChessStep(Enums.Action.KingSide);
-            //actual = ChessStep.Parse(value);
-            //Assert.AreEqual(expected, actual);
+            value = "O-O";
+            expected = new ChessStep(Enums.Action.KingSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
 
-            //value = "O-O-O";
-            //expected = new ChessStep(Enums.Castling.QueenSide);
-            //actual = ChessStep.Parse(value);
-            //Assert.AreEqual(expected, actual);
+            value = "O-O-O";
+            expected = new ChessStep(Enums.Action.QueenSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
 
-            //value = "O - O - O";
-            //expected = new ChessStep(Enums.Castling.QueenSide);
-            //actual = ChessStep.Parse(value);
-            //Assert.AreEqual(expected, actual);
+            value = "O - O - O";
+            expected = new ChessStep(Enums.Action.QueenSideCastling, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
 
             value = "b5+";
             expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5));
@@ -152,6 +152,11 @@ namespace Gean.Wrapper.Chess.UnitTesting
             value = "axb5+";
             expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5));
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "axb5+";
+            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 6), new ChessPosition(2, 5));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
             Assert.AreEqual(expected, actual);
 
             value = "Rfxe1+";
