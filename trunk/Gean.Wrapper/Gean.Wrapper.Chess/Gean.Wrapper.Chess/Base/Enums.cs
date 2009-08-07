@@ -48,16 +48,6 @@ namespace Gean.Wrapper.Chess
             /// 吃过路兵
             /// </summary>
             EnPassant = 128,
-            /// <summary>
-            /// 杀棋并将军
-            /// </summary>
-            KillAndCheck = Kill | Check,
-        }
-
-        public static Action GetFlag(Action value, Action flag)
-        {
-            value = value & (Action.KillAndCheck ^ flag);
-            return value;
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
-        public Enums.Action Action { get; internal set; }
+        public List<Enums.Action> Actions { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的棋子类型
         /// </summary>
@@ -34,14 +34,24 @@ namespace Gean.Wrapper.Chess
         /// 获取或设置该步棋的目标棋格
         /// </summary>
         public ChessPosition TargetPosition { get; internal set; }
+        /// <summary>
+        /// 有同行与同列的棋子可能产生同样的棋步
+        /// </summary>
+        public bool HasSame
+        {
+            get { return this._hasSame; }
+            set { this._hasSame = value; }
+        }
+        private bool _hasSame = false;
 
         #endregion
 
         #region ctor
 
-        public ChessStep(Enums.Action action, Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos)
+        public ChessStep(Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos, params Enums.Action[] action)
         {
-            this.Action = action;
+            this.Actions = new List<Enums.Action>();
+            this.Actions.AddRange(action);
             this.ChessmanType = chessmanType;
             this.TargetPosition = tagPos;
             this.SourcePosition = srcPos;
@@ -54,54 +64,72 @@ namespace Gean.Wrapper.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            switch (this.Action)
+            #region ToString()
+            if ((this.Actions[0] != Enums.Action.KingSideCastling) && (this.Actions[0] != Enums.Action.QueenSideCastling))
             {
-                #region case
-                case Enums.Action.KingSideCastling://短易位
-                    sb.Append("O-O");
-                    break;
-                case Enums.Action.QueenSideCastling://长易位
-                    sb.Append("O-O-O");
-                    break;
-                //不是易位
-                case Enums.Action.Check:
-                case Enums.Action.General:
-                case Enums.Action.Kill:
-                case Enums.Action.KillAndCheck:
-                case Enums.Action.Opennings:
-                case Enums.Action.Invalid:
-                    {
-                        if (this.ChessmanType != Enums.ChessmanType.Pawn)//如果是“兵”，不打印
+                sb.Append(this.TargetPosition.ToString());
+            }
+            foreach (Enums.Action action in this.Actions)
+            {
+                switch (action)
+                {
+                    #region case
+                    case Enums.Action.Kill:
+                        sb.Insert(0, 'x');
+                        break;
+                    case Enums.Action.Check:
+                        sb.Append('+');
+                        break;
+                    case Enums.Action.KingSideCastling:
+                        sb.Append("O-O");
+                        break;
+                    case Enums.Action.QueenSideCastling:
+                        sb.Append("O-O-O");
+                        break;
+                    case Enums.Action.General:
+                    case Enums.Action.Opennings:
+                    case Enums.Action.EnPassant:
+                        break;
+                    case Enums.Action.Promotion:
+                        if (sb.ToString().EndsWith("+"))//fxe8=Q+
                         {
-                            sb.Append(Enums.ChessmanTypeToString(this.ChessmanType));
+                            string str = "=" + Enums.ChessmanTypeToString(this.PromotionChessmanType);
+                            sb.Insert(sb.Length - 1, str);
                         }
-                        if (Enums.GetFlag(this.Action, Enums.Action.Check) == Enums.Action.Kill)
+                        else
                         {
-                            if (this.ChessmanType == Enums.ChessmanType.Pawn)//如果有子被杀死，列出兵的位置
-                            {
-                                sb.Append(this.SourcePosition.Horizontal);
-                            }
-                            sb.Append('x');
-                        }
-                        sb.Append(this.TargetPosition.ToString());
-                        //有将军的动作，打印'+'
-                        if (Enums.GetFlag(this.Action, Enums.Action.Kill) == Enums.Action.Check)
-                        {
-                            sb.Append('+');
+                            sb.Append('=').Append(Enums.ChessmanTypeToString(this.PromotionChessmanType));
                         }
                         break;
-                    }
-                #endregion
+                    case Enums.Action.Invalid:
+                    default:
+                        break;
+                    #endregion
+                }
             }
-            return sb.ToString().Trim();
+            if ((this.Actions[0] != Enums.Action.KingSideCastling) &&
+                (this.Actions[0] != Enums.Action.QueenSideCastling) &&
+                (this.ChessmanType != Enums.ChessmanType.Pawn))
+            {
+                sb.Insert(0, Enums.ChessmanTypeToString(this.ChessmanType));
+            }
+            else if (this.ChessmanType == Enums.ChessmanType.Pawn)
+            {
+                if (SourcePosition != ChessPosition.Empty)
+                    sb.Insert(0, SourcePosition.Horizontal);
+            }
+            #endregion
+            return sb.ToString();
         }
         public override int GetHashCode()
         {
             return unchecked
                 (3 * (
-                this.Action.GetHashCode() +
+                this.Actions.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
-                this.TargetPosition.GetHashCode() + this.SourcePosition.GetHashCode()
+                this.PromotionChessmanType.GetHashCode() +
+                this.TargetPosition.GetHashCode() + 
+                this.SourcePosition.GetHashCode()
                 ));
         }
         public override bool Equals(object obj)
@@ -110,13 +138,15 @@ namespace Gean.Wrapper.Chess
             if (obj is System.DBNull) return false;
 
             ChessStep step = (ChessStep)obj;
-            if (this.Action != step.Action)
-                return false;
             if (this.ChessmanType != step.ChessmanType)
+                return false;
+            if (!UtilityEquals.CollectionsNoSortedEquals<Enums.Action>(this.Actions, step.Actions))
                 return false;
             if (!UtilityEquals.PairEquals(this.TargetPosition, step.TargetPosition))
                 return false;
             if (!UtilityEquals.PairEquals(this.SourcePosition, step.SourcePosition))
+                return false;
+            if (this.PromotionChessmanType != step.PromotionChessmanType)
                 return false;
             return true;
         }
@@ -133,10 +163,11 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         public static ChessStep Parse(string value, Enums.ChessmanSide manSide)
         {
-            if (string.IsNullOrEmpty(value) || value.Length < 2) throw new ArgumentOutOfRangeException(value);
+            if (string.IsNullOrEmpty(value) || value.Length < 2 || value == "\r\n") 
+                throw new ArgumentOutOfRangeException(value);
             value = value.Trim();//移除所有前导空白字符和尾部空白字符
 
-            Enums.Action action = Enums.Action.General;
+            List<Enums.Action> actionList = new List<Enums.Action>();
             Enums.ChessmanType manType = Enums.ChessmanType.None;
 
             string srcChar = string.Empty;
@@ -157,7 +188,7 @@ namespace Gean.Wrapper.Chess
                 if (value.EndsWith(flagword))
                 {
                     if (flagword.Equals("+"))//Qh5+
-                        action = Enums.Action.Check;
+                        actionList.Add(Enums.Action.Check);
                     endString = flagword;
                     value = value.Substring(0, value.LastIndexOf(flagword));//裁剪掉尾部标记符
                     break;
@@ -175,7 +206,6 @@ namespace Gean.Wrapper.Chess
                 manType = Enums.ChessmanType.Pawn;
 
                 #endregion
-
                 goto END_PARSE;
             }
             else if (value[0] == 'O')//Castling, 王车易位
@@ -186,83 +216,90 @@ namespace Gean.Wrapper.Chess
                 switch (value.Length)
                 {
                     case 3://O-O 短易位
-                        action = Enums.Action.KingSideCastling;
+                        actionList.Add(Enums.Action.KingSideCastling);
                         break;
                     case 5://O-O-O 长易位
-                        action = Enums.Action.QueenSideCastling;
+                        actionList.Add(Enums.Action.QueenSideCastling);
                         break;
                     default:
                         break;
                 }
 
                 #endregion
-
                 goto END_PARSE_Castling;
             }
-            else if ((i = value.IndexOf('=')) >= 2)//如果有等号，该步棋即为升变 Rfxe8=Q+, e8=Q, cxd8=Q+
+            else if ((i = value.IndexOf('=')) >= 2)//如果有等号，该步棋即为升变 fxe8=Q+, e8=Q, cxd8=Q+
             {
                 #region
 
                 isPromotion = true;
-                action = Enums.Action.Promotion;
+                actionList.Add(Enums.Action.Promotion);
 
-                value = value.Substring(0, i);
                 promotionString = value.Substring(i + 1);
+                value = value.Substring(0, i);
 
                 #endregion
-
                 goto BEGIN_PARSE;
             }
             else if ((i = value.IndexOf('x')) >= 1)//Rfxe8+,Nxa3+;
             {
                 #region
-                
-                if (action == Enums.Action.Check)
-                    action = Enums.Action.KillAndCheck;
-                else
-                    action = Enums.Action.Kill;
+
+                actionList.Add(Enums.Action.Kill);
                 ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i + 1), manSide, out manType, out srcPos);
                 value = value.Substring(i + 1);
 
                 #endregion
             }
-
+            else if (value.Length == 3)
+            {
+                manType = Enums.StringToChessmanType(value[0]);
+                value = value.Remove(0, 1);
+            }
+            else if (value.Length == 4)//Rhb1,R1b7+,Rac2,a8=Q,Rae8+,Ngf3,Nbd7
+            {
+                ChessStep.ParseSrcPos(value.Substring(0, 2), value.Substring(2), manSide, out manType, out srcPos);
+                value = value.Substring(2);
+            }
+            
         END_PARSE:
 
             tgtPos = ChessPosition.Parse(value);
 
         END_PARSE_Castling:
+            if (actionList.Count == 0)
+                actionList.Add(Enums.Action.General);
 
-            ChessStep step = new ChessStep(action, manType, srcPos, tgtPos);
+            ChessStep step = new ChessStep(manType, srcPos, tgtPos, actionList.ToArray());
             if (isPromotion)//如果是升变
                 step.PromotionChessmanType = Enums.StringToChessmanType(promotionString);
             return step;
         }
 
-        private static void ParseSrcPos(string mainValue, string tgtValue, Enums.ChessmanSide manSide, out Enums.ChessmanType type, out ChessPosition pos)
+        private static void ParseSrcPos(string before, string after, Enums.ChessmanSide manSide, out Enums.ChessmanType type, out ChessPosition pos)
         {
             pos = ChessPosition.Empty;
             type = Enums.ChessmanType.None;
-            if (char.IsUpper(mainValue, 0))//首字母是大写的
+            if (char.IsUpper(before, 0))//首字母是大写的
             {
-                type = Enums.StringToChessmanType(mainValue[0]);
-                mainValue = mainValue.Remove(0, 1);
+                type = Enums.StringToChessmanType(before[0]);
+                before = before.Remove(0, 1);
             }
-            else if (!char.IsUpper(mainValue, 0))//首字母是小写的
+            else if (char.IsLower(before, 0))//首字母是小写的
             {
                 type = Enums.ChessmanType.Pawn;
             }
             //Parse value, 一般是指“axb5+”，“Rfxe8”，“B3xd6”中的第2个字符的解析
-            if (!string.IsNullOrEmpty(mainValue))
+            if (!string.IsNullOrEmpty(before))
             {
                 int x;
                 int y;
-                char c = mainValue[0];
+                char c = before[0];
 
                 if (c >= 'a' && c <= 'h')
                 {
                     x = Utility.CharToInt(c);
-                    y = int.Parse(tgtValue[1].ToString());
+                    y = int.Parse(after[1].ToString());
                     if (type == Enums.ChessmanType.Pawn)
                     {
                         if (manSide == Enums.ChessmanSide.Black)
@@ -271,14 +308,14 @@ namespace Gean.Wrapper.Chess
                             y--;
                     }
                     else
-                    { 
-                        //麻烦，麻烦，这块代码不好写呀
+                    {
+                        return;
                     }
                 }
                 else
                 {
                     x = int.Parse(c.ToString());
-                    y = Utility.CharToInt(tgtValue[0]);
+                    y = Utility.CharToInt(after[0]);
                 }
                 pos = new ChessPosition(x, y);
             }
