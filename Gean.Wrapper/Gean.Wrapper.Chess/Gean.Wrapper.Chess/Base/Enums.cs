@@ -131,6 +131,10 @@ namespace Gean.Wrapper.Chess
             /// 兵
             /// </summary>
             Pawn = 32,
+            /// <summary>
+            /// 升变
+            /// </summary>
+            Promotion=64,
         }
 
         /// <summary>

@@ -14,11 +14,6 @@ namespace Gean
     [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase")]
     public class Duration
     {
-        public static Duration Parse(string str)
-        {
-            return null;
-        }
-
         public static Duration GetDuration(DateTime beginTime, DateTime endTime)
         {
             Duration dura = new Duration();
