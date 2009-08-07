@@ -107,7 +107,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
             //expected = "fxg3+(11)[34,35]";
             //actual = target.ToString();
             //Assert.AreEqual(expected, actual);
-
         }
 
         ///<summary>
@@ -119,31 +118,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
             string value = string.Empty;
             ChessStep expected;
             ChessStep actual;
-
-            value = "Rxb4+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4));
-            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
-            Assert.AreEqual(expected, actual);
-
-            value = "Rfe1+";
-            expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Rook, new ChessPosition('f', 1), new ChessPosition('e', 1));
-            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
-            Assert.AreEqual(expected, actual);
-
-            value = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3));
-            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
-            Assert.AreEqual(expected, actual);
-
-            value = "b5+";
-            expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5));
-            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
-            Assert.AreEqual(expected, actual);
-
-            value = "axb5+";
-            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5));
-            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
-            Assert.AreEqual(expected, actual);
 
             //value = "O-O";
             //expected = new ChessStep(Enums.Action.KingSide);
@@ -160,6 +134,30 @@ namespace Gean.Wrapper.Chess.UnitTesting
             //actual = ChessStep.Parse(value);
             //Assert.AreEqual(expected, actual);
 
+            value = "b5+";
+            expected = new ChessStep(Enums.Action.Check, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "Qxh3+";//后杀死h3的棋子，走到h3棋格，并将军
+            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "Rxb4+";
+            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "axb5+";
+            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "Rfxe1+";
+            expected = new ChessStep(Enums.Action.KillAndCheck, Enums.ChessmanType.Rook, new ChessPosition('f', 1), new ChessPosition('e', 1));
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
 
         }
     }
