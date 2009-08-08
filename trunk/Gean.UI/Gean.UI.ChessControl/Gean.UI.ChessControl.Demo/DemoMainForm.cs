@@ -89,6 +89,8 @@ namespace Gean.UI.ChessControl.Demo
 
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
             this._board.PlayPairEvent += new ChessBoard.PlayPairEventHandler(_board_PlayPairEvent);
+
+            this.WindowState = FormWindowState.Maximized;
         }
 
 

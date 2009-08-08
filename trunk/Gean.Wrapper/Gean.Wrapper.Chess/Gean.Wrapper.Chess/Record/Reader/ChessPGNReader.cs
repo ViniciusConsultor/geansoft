@@ -87,10 +87,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public string Filename
         {
-            get { return _Filename; }
-            set { _Filename = value; }
+            get { return _filename; }
+            set { _filename = value; }
         }
-        private string _Filename;
+        private string _filename;
 
         /// <summary>
         /// Constructor the initializes our parser.
@@ -152,31 +152,28 @@ namespace Gean.Wrapper.Chess
         public void Parse()
         {
             StringBuilder builder = new StringBuilder(1024);
-            FileStream fs = null;
-            BinaryReader reader = null;
+            StreamReader reader = null;
 
             if (EventStarting != null)
                 EventStarting(this);
             try
             {
-                fs = new FileStream(_Filename, FileMode.Open, FileAccess.Read);
-                reader = new BinaryReader(fs);
+                Encoding fileEncoding = FileEncoding.GetEncoding(_filename);
+                reader = new StreamReader(_filename, fileEncoding);
 
-                long bytesread = 0;
-                while (bytesread != fs.Length)
+                while (!reader.EndOfStream)
                 {
-                    byte aByte = reader.ReadByte();
-                    switch (aByte)
+                    char aChar = (char)reader.Read();
+                    switch (aChar)
                     {
-                        case 0x0D:
+                        #region case
+                        case '\r':
                             break;
-                        case 0x0A:
+                        case '\n':
                             _Data = builder.ToString();
                             builder.Length = 0;
                             if (_Data.Length > 0)
                             {
-                                // Check to make sure we're not inside a comment section then
-                                //  see if we are at a game tag.
                                 if (_State != Enums.GameReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
                                 {
                                     if (_NextGame == false)
@@ -208,10 +205,10 @@ namespace Gean.Wrapper.Chess
                             }
                             break;
                         default:
-                            builder.Append((char)aByte);
+                            builder.Append(aChar);
                             break;
+                        #endregion
                     }
-                    bytesread++;
                 }
 
                 CallEvent(_State);
