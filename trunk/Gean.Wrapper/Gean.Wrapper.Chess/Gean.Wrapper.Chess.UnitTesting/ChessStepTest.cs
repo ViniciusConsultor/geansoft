@@ -8,8 +8,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
-    
-    
+
+
     /// <summary>
     ///这是 ChessStepTest 的测试类，旨在
     ///包含所有 ChessStepTest 单元测试
@@ -110,7 +110,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Assert.AreEqual(expected, actual);
 
             value = "Qxh3+";
-            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.Kill,Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
@@ -151,30 +151,57 @@ namespace Gean.Wrapper.Chess.UnitTesting
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
-            //cxd1=Q
-            //cxd1=Q+
-            //gxf1=Q+
-            //bxc1=Q
-            //exf1=Q+
-
-            value = "cxd8=N+";//bxc8=Q+
+            value = "cxd8=N+";
             expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('c', 7), new ChessPosition('d', 8), Enums.Action.Kill, Enums.Action.Check, Enums.Action.Promotion);
             expected.PromotionChessmanType = Enums.ChessmanType.Knight;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
-            value = "Rfb8";
-            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition('b', 8), Enums.Action.General);
-            expected.HasSame = true;
+            value = "cxd1=Q+";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('c', 2), new ChessPosition('d', 1), Enums.Action.Promotion, Enums.Action.Kill, Enums.Action.Check);
+            expected.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
+            Assert.AreEqual(expected, actual);
+
+            value = "gxf1=Q+";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('g', 2), new ChessPosition('f', 1), Enums.Action.Check, Enums.Action.Kill, Enums.Action.Promotion);
+            expected.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
+            Assert.AreEqual(expected, actual);
+
+            value = "fxe5+";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 4), new ChessPosition('e', 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
-            value = "Rfxe1+";
-            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition('e', 1), Enums.Action.Kill, Enums.Action.Check);
-                //new ChessPosition('f', 1), new ChessPosition('e', 1));
+            value = "Bfe5";
+            expected = new ChessStep(Enums.ChessmanType.Bishop, new ChessPosition('f', 5), new ChessPosition('e', 5), Enums.Action.General);
+            expected.HasSame = Enums.SameOrientation.Horizontal;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
+            value = "Nac7";
+            expected = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
+            expected.HasSame = Enums.SameOrientation.Horizontal;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "N5c7";
+            expected = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('c', 5), new ChessPosition('c', 7), Enums.Action.General);
+            expected.HasSame = Enums.SameOrientation.Vertical;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "ac7";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
+            expected.HasSame = Enums.SameOrientation.Horizontal;
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
+
+            value = "axb7+";
+            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('a', 6), new ChessPosition('b', 7), Enums.Action.Check, Enums.Action.Kill);
+            actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
+            Assert.AreEqual(expected, actual);
         }
 
         ///<summary>
@@ -186,7 +213,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Duration duration = new Duration();
             duration.Start();
             StringBuilder error = new StringBuilder();
-            string filename = Path.Combine(this.DemoFilePath, "ChessStep.txt");
+            string filename = Path.Combine(this.DemoFilePath, "__ChessStep.txt");
+
+            if (!File.Exists(filename))//因测试太耗时，需测试时将上行代码中的文件名中的“_”删除。
+            {
+                return;
+            }
+
             string[] steps = File.ReadAllLines(filename);
             ChessStep step = null;
 
@@ -202,10 +235,12 @@ namespace Gean.Wrapper.Chess.UnitTesting
                 }
                 Assert.IsNotNull(step);
             }
+
             duration.Stop();
             error.AppendLine().Append("共 " + steps.Length.ToString() + " 个 ChessStep，")
                 .Append("总时间：").AppendLine(duration.DurationValue.ToString())
                 .AppendLine("每ChessStep的解析时间为：" + (duration.DurationValue / steps.Length).ToString());
+
             string newFile = filename + ".error.txt";
             File.Delete(newFile);
             StreamWriter file = File.CreateText(newFile);
@@ -220,51 +255,93 @@ namespace Gean.Wrapper.Chess.UnitTesting
             }
         }
 
-        /*
         /// <summary>
         ///ToString 的测试
         ///</summary>
         [TestMethod()]
         public void ToStringTest()
         {
-            Regex regex = new Regex(@"\[.*\]");
-            string filename = Path.Combine(this.DemoFilePath, "ChessStepL.txt");
-            string[] strs = File.ReadAllLines(filename);
-            StringBuilder sb = new StringBuilder();
-            foreach (string item in strs)
-            {
-                if (string.IsNullOrEmpty(item))
-                    continue;
-                string newItem = item.Trim();
-                if (regex.IsMatch(newItem))
-                    continue;
-                if (newItem == "\r\n")
-                    continue;
-                sb.Append(newItem).Append(' ');
-            }
-            strs = null;
-            string[] pairs = (new Regex(@"\b\d+.")).Split(sb.ToString());
-            sb = new StringBuilder();
-            foreach (var item in pairs)
-            {
-                string[] ss = item.Split(' ');
-                foreach (var subitem in ss)
-                {
-                    if (string.IsNullOrEmpty(subitem))
-                        continue;
-                    string newItem = subitem.Trim();
-                    if (newItem == "\r\n")
-                        continue;
-                    sb.AppendLine(subitem);
-                }
-            }
-            string newFile = filename + ".new.txt";
-            File.Delete(newFile);
-            StreamWriter file = File.CreateText(newFile);
-            file.Write(sb.ToString());
-            file.Flush();
-            file.Close();
+            string expected;
+            string actual;
+            ChessStep step;
+
+            expected = "fe8";
+            step = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "Rfe8";
+            step = new ChessStep(Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "Nfe8";
+            step = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "Qfe8";
+            step = new ChessStep(Enums.ChessmanType.Queen, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "Nfxe8+";
+            step = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "Rfxe8+";
+            step = new ChessStep(Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
+            step.HasSame = Enums.SameOrientation.Horizontal;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
         }
-        */
+
     }
 }
+
+/* 生成ChessStep步数的测试文件
+
+Regex regex = new Regex(@"\[.*\]");
+string filename = Path.Combine(this.DemoFilePath, "ChessStepL.txt");
+string[] strs = File.ReadAllLines(filename);
+StringBuilder sb = new StringBuilder();
+foreach (string item in strs)
+{
+    if (string.IsNullOrEmpty(item))
+        continue;
+    string newItem = item.Trim();
+    if (regex.IsMatch(newItem))
+        continue;
+    if (newItem == "\r\n")
+        continue;
+    sb.Append(newItem).Append(' ');
+}
+strs = null;
+string[] pairs = (new Regex(@"\b\d+.")).Split(sb.ToString());
+sb = new StringBuilder();
+foreach (var item in pairs)
+{
+    string[] ss = item.Split(' ');
+    foreach (var subitem in ss)
+    {
+        if (string.IsNullOrEmpty(subitem))
+            continue;
+        string newItem = subitem.Trim();
+        if (newItem == "\r\n")
+            continue;
+        sb.AppendLine(subitem);
+    }
+}
+string newFile = filename + ".new.txt";
+File.Delete(newFile);
+StreamWriter file = File.CreateText(newFile);
+file.Write(sb.ToString());
+file.Flush();
+file.Close();
+*/
