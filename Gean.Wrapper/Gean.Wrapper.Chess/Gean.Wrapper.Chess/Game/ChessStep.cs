@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Gean.Wrapper.Chess
 {
@@ -29,7 +30,20 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的源棋格
         /// </summary>
-        public ChessPosition SourcePosition { get; internal set; }
+        public ChessPosition SourcePosition
+        {
+            get { return this._srcPosition; }
+            internal set
+            {
+                this._srcPosition = value;
+                if (value != ChessPosition.Empty)
+                {
+                    this._sameHorizontal = Utility.CharToInt(value.Horizontal);
+                    this._sameVertical = value.Vertical;
+                }
+            }
+        }
+        private ChessPosition _srcPosition; 
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -37,12 +51,27 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 有同行与同列的棋子可能产生同样的棋步
         /// </summary>
-        public bool HasSame
+        public Enums.SameOrientation HasSame
         {
             get { return this._hasSame; }
-            set { this._hasSame = value; }
+            internal set { this._hasSame = value; }
         }
-        private bool _hasSame = false;
+        /// <summary>
+        /// 有同行与同列的棋子可能产生同样的棋步
+        /// </summary>
+        private Enums.SameOrientation _hasSame = Enums.SameOrientation.None;
+
+        public int SameHorizontal
+        {
+            get { return this._sameHorizontal; }
+        }
+        private int _sameHorizontal;
+
+        public int SameVertical
+        {
+            get { return this._sameVertical; }
+        }
+        private int _sameVertical;
 
         #endregion
 
@@ -118,6 +147,24 @@ namespace Gean.Wrapper.Chess
                 if (SourcePosition != ChessPosition.Empty)
                     sb.Insert(0, SourcePosition.Horizontal);
             }
+            if (_hasSame != Enums.SameOrientation.None)//是否能使用该棋步的棋子
+            {
+                if (this.ChessmanType != Enums.ChessmanType.Pawn)
+                {
+                    switch (_hasSame)
+                    {
+                        case Enums.SameOrientation.Horizontal:
+                            sb.Insert(1, Utility.IntToChar(this.SameHorizontal));
+                            break;
+                        case Enums.SameOrientation.Vertical:
+                            sb.Insert(1, this.SameVertical.ToString());
+                            break;
+                        case Enums.SameOrientation.None:
+                        default:
+                            break;
+                    }
+                }
+            }
             #endregion
             return sb.ToString();
         }
@@ -156,7 +203,8 @@ namespace Gean.Wrapper.Chess
         #region static Parse
 
         /// <summary>
-        /// 根据指定的字符串解析
+        /// 根据指定的字符串解析.
+        /// (该方法逻辑较复杂，日后可优化)Gean: 2009-08-08 23:25:06
         /// </summary>
         /// <param name="value">指定的字符串</param>
         /// <param name="manSide">棋子的战方（主要是针对兵的源棋格使用）</param>
@@ -178,6 +226,10 @@ namespace Gean.Wrapper.Chess
 
             ChessPosition srcPos = ChessPosition.Empty;
             ChessPosition tgtPos = ChessPosition.Empty;
+
+            Enums.SameOrientation hasSame = Enums.SameOrientation.None;
+            int sameHorizontal = 0;
+            int sameVertical = 0;
 
             #region 针对尾部标记符进行一些操作,并返回裁剪掉尾部标记符的Value值
             ChessStepFlag flags = new ChessStepFlag();
@@ -246,19 +298,34 @@ namespace Gean.Wrapper.Chess
                 #region
 
                 actionList.Add(Enums.Action.Kill);
-                ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i + 1), manSide, out manType, out srcPos);
+                ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i + 1), manSide,
+                                        out manType, out srcPos, out hasSame, out sameHorizontal, out sameVertical);
                 value = value.Substring(i + 1);
 
                 #endregion
             }
             else if (value.Length == 3)
             {
-                manType = Enums.StringToChessmanType(value[0]);
-                value = value.Remove(0, 1);
+                if (char.IsUpper(value[0]))
+                {
+                    manType = Enums.StringToChessmanType(value[0]);
+                    value = value.Remove(0, 1);
+                }
+                else
+                {
+                    manType = Enums.ChessmanType.Pawn;
+                    hasSame = Enums.SameOrientation.Horizontal;
+                    sameHorizontal = Utility.CharToInt(value[0]);
+                    sameVertical = int.Parse(value[2].ToString());
+                    srcPos = new ChessPosition(sameHorizontal, sameVertical);
+                    value = value.Remove(0, 1);
+                    goto BEGIN_PARSE;
+                }
             }
             else if (value.Length == 4)//Rhb1,R1b7+,Rac2,a8=Q,Rae8+,Ngf3,Nbd7
             {
-                ChessStep.ParseSrcPos(value.Substring(0, 2), value.Substring(2), manSide, out manType, out srcPos);
+                ChessStep.ParseSrcPos(value.Substring(0, 2), value.Substring(2), manSide,
+                                        out manType, out srcPos, out hasSame, out sameHorizontal, out sameVertical);
                 value = value.Substring(2);
             }
             
@@ -271,15 +338,28 @@ namespace Gean.Wrapper.Chess
                 actionList.Add(Enums.Action.General);
 
             ChessStep step = new ChessStep(manType, srcPos, tgtPos, actionList.ToArray());
+            step._hasSame = hasSame;
+            step._sameHorizontal = sameHorizontal;
+            step._sameVertical = sameVertical;
             if (isPromotion)//如果是升变
                 step.PromotionChessmanType = Enums.StringToChessmanType(promotionString);
             return step;
         }
 
-        private static void ParseSrcPos(string before, string after, Enums.ChessmanSide manSide, out Enums.ChessmanType type, out ChessPosition pos)
+        private static void ParseSrcPos(string before, 
+                                        string after, 
+                                        Enums.ChessmanSide manSide, 
+                                        out Enums.ChessmanType type, 
+                                        out ChessPosition pos,
+                                        out Enums.SameOrientation hasSame,
+                                        out int sameHorizontal,
+                                        out int sameVertical)
         {
             pos = ChessPosition.Empty;
             type = Enums.ChessmanType.None;
+            hasSame = Enums.SameOrientation.None;
+            sameHorizontal = 0;
+            sameVertical = 0;
             if (char.IsUpper(before, 0))//首字母是大写的
             {
                 type = Enums.StringToChessmanType(before[0]);
@@ -292,32 +372,28 @@ namespace Gean.Wrapper.Chess
             //Parse value, 一般是指“axb5+”，“Rfxe8”，“B3xd6”中的第2个字符的解析
             if (!string.IsNullOrEmpty(before))
             {
-                int x;
-                int y;
                 char c = before[0];
 
                 if (c >= 'a' && c <= 'h')
                 {
-                    x = Utility.CharToInt(c);
-                    y = int.Parse(after[1].ToString());
+                    hasSame = Enums.SameOrientation.Horizontal;
+                    sameHorizontal = Utility.CharToInt(c);
+                    sameVertical = int.Parse(after[1].ToString());
                     if (type == Enums.ChessmanType.Pawn)
                     {
                         if (manSide == Enums.ChessmanSide.Black)
-                            y++;
+                            sameVertical++;
                         else
-                            y--;
-                    }
-                    else
-                    {
-                        return;
+                            sameVertical--;
                     }
                 }
                 else
                 {
-                    x = int.Parse(c.ToString());
-                    y = Utility.CharToInt(after[0]);
+                    hasSame = Enums.SameOrientation.Vertical;
+                    sameHorizontal = Utility.CharToInt(after[0]);
+                    sameVertical = int.Parse(c.ToString());
                 }
-                pos = new ChessPosition(x, y);
+                pos = new ChessPosition(sameHorizontal, sameVertical);
             }
         }
 

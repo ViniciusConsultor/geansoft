@@ -39,7 +39,6 @@ namespace Gean.UI.ChessControl.Demo
             this._recordTreeView.Nodes.Clear();
             int k = this._actionListBox.SelectedIndex;
             ChessRecord record = records[k];
-            this._propertyGrid.SelectedObject = record;
             TreeNode node = new TreeNode("Game");
             foreach (var item in record.Items)
             {
@@ -101,12 +100,6 @@ namespace Gean.UI.ChessControl.Demo
         void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)
         {
             this._actionListBox.Items.Add(e.ChessStep);
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            this._propertyGrid.SelectedObject = this._board;
         }
 
         #endregion

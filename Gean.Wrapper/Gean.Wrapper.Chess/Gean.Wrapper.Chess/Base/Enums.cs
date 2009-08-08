@@ -51,6 +51,22 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
+        /// 当有同行与同列的棋子可能产生同样的棋步，描述取坐标的哪个值来表示。
+        /// </summary>
+        public enum SameOrientation
+        {
+            None = 0, 
+            /// <summary>
+            /// 横方向
+            /// </summary>
+            Horizontal,
+            /// <summary>
+            /// 纵方向
+            /// </summary>
+            Vertical,
+        }
+
+        /// <summary>
         /// 棋子的战方：黑棋，白棋
         /// </summary>
         public enum ChessmanSide
@@ -121,10 +137,10 @@ namespace Gean.Wrapper.Chess
             /// 兵
             /// </summary>
             Pawn = 32,
-            /// <summary>
-            /// 升变
-            /// </summary>
-            Promotion=64,
+            ///// <summary>
+            ///// 升变
+            ///// </summary>
+            //Promotion=64,
         }
 
         /// <summary>
