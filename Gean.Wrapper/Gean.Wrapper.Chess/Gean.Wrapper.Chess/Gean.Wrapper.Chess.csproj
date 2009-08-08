@@ -94,9 +94,6 @@
     <Compile Include="Base\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gean.Wrapper.Chess.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="ChessStringResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ChessStringResource.Designer.cs</LastGenOutput>
