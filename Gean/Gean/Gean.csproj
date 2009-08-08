@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Base\CloneableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\File\FileEncoding.cs" />
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />
