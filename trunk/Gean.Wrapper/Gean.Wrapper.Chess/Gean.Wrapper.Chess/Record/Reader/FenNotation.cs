@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System;
 using System.IO;
+using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
@@ -14,11 +13,10 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// Holds our board position based on squares 0 thru 63.
         /// </summary>
-        private StringBuilder _board;
+        private StringBuilder coBoard;
 
         #region Events
-
-        public delegate void EventPlacePiece(Chessman piece, int square);
+        public delegate void EventPlacePiece(FenChessmans piece, int square);
         public event EventPlacePiece EventPlacePieceHandler;
 
         /// Defines the color hooks that allow call back to set who's move it is.
@@ -48,93 +46,93 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public char Color
         {
-            get { return _color; }
+            get { return coActiveColor; }
             set
             {
                 if (value == 'w' || value == 'b')
-                    _color = value;
+                    coActiveColor = value;
                 else
                     throw new Exception("Specify: 'w' or 'b'");
             }
         }
-        private char _color;
+        private char coActiveColor;
 
         /// <summary>
         /// If true then white can still castle king side.
         /// </summary>
         public bool WhiteCastleKing
         {
-            get { return _WKCastle; }
-            set { _WKCastle = value; }
+            get { return coWKCastle; }
+            set { coWKCastle = value; }
         }
-        private bool _WKCastle;
+        private bool coWKCastle;
 
         /// <summary>
         /// If true then white can still castle queen side.
         /// </summary>    
         public bool WhiteCastleQueen
         {
-            get { return _WQCastle; }
-            set { _WQCastle = value; }
+            get { return coWQCastle; }
+            set { coWQCastle = value; }
         }
-        private bool _WQCastle;
+        private bool coWQCastle;
 
         /// <summary>
         /// If true then black can still castle king side.
         /// </summary>
         public bool BlackCastleKing
         {
-            get { return _BKCastle; }
-            set { _BKCastle = value; }
+            get { return coBKCastle; }
+            set { coBKCastle = value; }
         }
-        private bool _BKCastle;
+        private bool coBKCastle;
 
         /// <summary>
         /// If true then black can still castle queen side.
         /// </summary>
         public bool BlackCastleQueen
         {
-            get { return _BQCastle; }
-            set { _BQCastle = value; }
+            get { return coBQCastle; }
+            set { coBQCastle = value; }
         }
-        private bool _BQCastle;
+        private bool coBQCastle;
 
         /// <summary>
         /// Algebraic square for enpassant captures or '-'.
         /// </summary>
-        public string EnPassant
+        public string Enpassant
         {
-            get { return _EnPassant; }
-            set { _EnPassant = value; }
+            get { return coEnPassant; }
+            set { coEnPassant = value; }
         }
-        private string _EnPassant;
+        private string coEnPassant;
 
         /// <summary>
         /// Number of half moves to determine the 50 move rule.
         /// </summary>
         public int HalfMove
         {
-            get { return _HalfMove; }
-            set { _HalfMove = value; }
+            get { return coHalfMove; }
+            set { coHalfMove = value; }
         }
-        private int _HalfMove;
+        private int coHalfMove;
 
         /// <summary>
         /// Number of completed move cycles, i.e. after black moves.
         /// </summary>
         public int FullMove
         {
-            get { return _FullMove; }
-            set { _FullMove = value; }
+            get { return coFullMove; }
+            set { coFullMove = value; }
         }
-        private int _FullMove;
+        private int coFullMove;
 
         public string Format
         {
-            get { return _Format; }
-            set { _Format = value; }
+            get { return coFormat; }
+            set { coFormat = value; }
         }
-        private string _Format = "{0} {1} {2} {3} {4} {5}";
+        private string coFormat = "{0} {1} {2} {3} {4} {5}";
 
         /// <summary>
         /// Indexer into the board.  Returns an upper case character for white and
@@ -143,12 +141,12 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public char this[int ndx]
         {
-            get { return _board[ndx]; }
+            get { return coBoard[ndx]; }
             set
             {
                 string str = "KQRBNPkqrbnp";
                 if (str.IndexOf(value) >= 0)
-                    _board[ndx] = value;
+                    coBoard[ndx] = value;
                 else
                     throw new Exception("Invalid piece value (" + value + ") use one of: " + str);
             }
@@ -160,7 +158,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="str">A valid FEN notation data string</param>
         public FenNotation(string str)
         {
-            _board = new StringBuilder(64, 64);
+            coBoard = new StringBuilder(64, 64);
             Parse(str);
         }
 
@@ -170,7 +168,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public FenNotation()
         {
-            _board = new StringBuilder(64, 64);
+            coBoard = new StringBuilder(64, 64);
             Clear();
         }
 
@@ -179,16 +177,16 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public void Clear()
         {
-            _board.Length = 0;
-            _board.Append(' ', 64);
-            _EnPassant = "-";
-            _color = 'w';
-            _WKCastle = true;
-            _WQCastle = true;
-            _BKCastle = true;
-            _BQCastle = true;
-            _HalfMove = 0;
-            _FullMove = 0;
+            coBoard.Length = 0;
+            coBoard.Append(' ', 64);
+            coEnPassant = "-";
+            coActiveColor = 'w';
+            coWKCastle = true;
+            coWQCastle = true;
+            coBKCastle = true;
+            coBQCastle = true;
+            coHalfMove = 0;
+            coFullMove = 0;
         }
 
         /// <summary>
@@ -206,7 +204,7 @@ namespace Gean.Wrapper.Chess
                 count = 0;
                 for (int cnt = 0; cnt < 8; cnt++)
                 {
-                    char achar = _board[ndx + cnt];
+                    char achar = coBoard[ndx + cnt];
                     if (achar == ' ')
                         count++;
                     else
@@ -226,17 +224,21 @@ namespace Gean.Wrapper.Chess
 
             parms[0] = note.ToString();
             note.Length = 0;
-            parms[1] = _color.ToString();
+            //note.Append(' ');
+            parms[1] = coActiveColor.ToString();
+            //note.Append(coActiveColor);
+            //note.Append(' ');
 
-            if (_WKCastle | _WQCastle | _BKCastle | _BQCastle)
+
+            if (coWKCastle | coWQCastle | coBKCastle | coBQCastle)
             {
-                if (_WKCastle)
+                if (coWKCastle)
                     note.Append('K');
-                if (_WQCastle)
+                if (coWQCastle)
                     note.Append('Q');
-                if (_BKCastle)
+                if (coBKCastle)
                     note.Append('k');
-                if (_BQCastle)
+                if (coBQCastle)
                     note.Append('q');
             }
             else
@@ -245,10 +247,18 @@ namespace Gean.Wrapper.Chess
             parms[2] = note.ToString();
             note.Length = 0;
 
-            parms[3] = _EnPassant;
-            parms[4] = _HalfMove.ToString();
-            parms[5] = _FullMove.ToString();
+            //      note.Append(' ');
+            //      note.Append(coEnPassant);
+            parms[3] = coEnPassant;
+            //      note.Append(' ');
+            parms[4] = coHalfMove.ToString();
+            //      note.Append(coHalfMove.ToString());
+            //      note.Append(' ');
+            parms[5] = coFullMove.ToString();
+            //      note.Append(coFullMove.ToString());
             return string.Format(Format, parms);
+
+            //return note.ToString();
         }
 
         #region IPosition Members
@@ -283,17 +293,14 @@ namespace Gean.Wrapper.Chess
                         cnt += (int)(achar - '0');
                     else
                     {
-                        #region 此处使用开源的代码但未编译通过
-                        // TODO: ConvertPiece
-                        //if (ConvertPiece.FromFEN(achar) != Pieces.None)
-                        //{
-                        //    if (cnt > 7)  // This check needed here to avoid overrunning index below under some error conditions.
-                        //        throw new ArgumentException("Invalid board specification, rank " + (ndx / 8 + 1) + " has more then 8 items specified.");
-                        //    if (EventPlacePieceHandler != null)
-                        //        EventPlacePieceHandler(ConvertPiece.FromFEN(achar), ndx + cnt);
-                        //    this[ndx + cnt] = achar;
-                        //}
-                        #endregion
+                        if (FenConvertChessman.FromFEN(achar) != FenChessmans.None)
+                        {
+                            if (cnt > 7)  // This check needed here to avoid overrunning index below under some error conditions.
+                                throw new ArgumentException("Invalid board specification, rank " + (ndx / 8 + 1) + " has more then 8 items specified.");
+                            if (EventPlacePieceHandler != null)
+                                EventPlacePieceHandler(FenConvertChessman.FromFEN(achar), ndx + cnt);
+                            this[ndx + cnt] = achar;
+                        }
                         cnt++;
                     }
                 }
@@ -366,39 +373,39 @@ namespace Gean.Wrapper.Chess
                 if (note.Length >= 4)
                 {
                     // 16.1.3.4: Parse en passant target square such as "e3"
-                    _EnPassant = note[3];
-                    if (_EnPassant.Length == 2)
+                    coEnPassant = note[3];
+                    if (coEnPassant.Length == 2)
                     {
                         if (Color.Equals('w'))
                         {
-                            if (_EnPassant[1] != '6')
-                                throw new Exception("Invalid target square for white En passant captures: " + _EnPassant.ToString());
+                            if (coEnPassant[1] != '6')
+                                throw new Exception("Invalid target square for white En passant captures: " + coEnPassant.ToString());
                         }
                         else
                         {
-                            if (_EnPassant[1] != '3')
-                                throw new Exception("Invalid target square for black En passant captures: " + _EnPassant.ToString());
+                            if (coEnPassant[1] != '3')
+                                throw new Exception("Invalid target square for black En passant captures: " + coEnPassant.ToString());
                         }
 
                         if (EventEnpassantHandler != null)
-                            EventEnpassantHandler(_EnPassant);
+                            EventEnpassantHandler(coEnPassant);
                     }
                 }
 
                 if (note.Length >= 5)
                 {
                     // 16.1.3.5: Parse halfmove clock, count of half-move since last pawn advance or unit capture
-                    _HalfMove = Int16.Parse(note[4]);
+                    coHalfMove = Int16.Parse(note[4]);
                     if (EventHalfMovesHandler != null)
-                        EventHalfMovesHandler(_HalfMove);
+                        EventHalfMovesHandler(coHalfMove);
                 }
 
                 if (note.Length >= 6)
                 {
                     // 16.1.3.6: Parse fullmove number, increment after each black move
-                    _FullMove = Int16.Parse(note[5]);
+                    coFullMove = Int16.Parse(note[5]);
                     if (EventFullMovesHandler != null)
-                        EventFullMovesHandler(_FullMove);
+                        EventFullMovesHandler(coFullMove);
                 }
             }
             catch
@@ -440,16 +447,14 @@ namespace Gean.Wrapper.Chess
         #endregion
 
         #region IPositionEvents Members
-
         /// <summary>
         /// Implementation of IPositionEvents 
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="square"></param>
-        public void PlacePiece(Chessman chessman, int square)
+        public void PlacePiece(FenChessmans piece, int square)
         {
-            // TODO: ConvertPiece
-            //this[square] = ConvertPiece.ToFEN(chessman);
+            this[square] = FenConvertChessman.ToFEN(piece);
         }
         /// <summary>
         /// Implementation of IPositionEvents
@@ -479,7 +484,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="enpassant"></param>
         public void SetEnpassant(string enpassant)
         {
-            this.EnPassant = enpassant;
+            this.Enpassant = enpassant;
         }
         /// <summary>
         /// Implementation of IPositionEvents

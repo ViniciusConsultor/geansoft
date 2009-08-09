@@ -52,6 +52,7 @@
     <Compile Include="Record\ChessRecordCollection.cs" />
     <Compile Include="Record\ChessTag.cs" />
     <Compile Include="Record\ISequenceItem.cs" />
+    <Compile Include="Record\Reader\FenConvertPiece.cs" />
     <Compile Include="Record\Reader\FenNotation.cs" />
     <Compile Include="Record\Reader\IGameReaderEvents.cs" />
     <Compile Include="Record\Reader\IGameReader.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\ChessPositionCollection.cs" />
     <Compile Include="Base\Utility.cs" />
+    <Compile Include="Record\Reader\FenChessmans.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ChessStringResource.resx">
