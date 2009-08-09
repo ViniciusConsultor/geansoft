@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
     /// 描述一局棋的记录，该记录可能与更多的棋局记录保存在一个PGN文件中
     /// </summary>
-    public class ChessRecord : IStepTree
+    public class ChessRecord : IStepTree, IEnumerable<ChessStep>
     {
         #region IStepTree 成员
 
@@ -67,6 +68,90 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region IEnumerable<ChessStep> 成员
+
+        public IEnumerator<ChessStep> GetEnumerator()
+        {
+            return new ChessStepEnumerator(this.Items);
+        }
+
+        #endregion
+
+        #region IEnumerable 成员
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new ChessStepEnumerator(this.Items);
+        }
+
+        #endregion
+
+        public class ChessStepEnumerator : IEnumerator<ChessStep>
+        {
+            private List<ChessStep> _chessSteps;
+            private int position = -1;
+
+            public ChessStepEnumerator(IList<ISequenceItem> list)
+            {
+                _chessSteps = new List<ChessStep>();
+                foreach (ISequenceItem item in list)
+                {
+                    if (!(item is ChessStepPair))
+                    {
+                        continue;
+                    }
+                    ChessStepPair pair = item as ChessStepPair;
+                    if (pair.White != null)
+                        _chessSteps.Add(pair.White);
+                    if (pair.Black != null)
+                        _chessSteps.Add(pair.Black);
+                }
+            }
+
+            public bool MoveNext()
+            {
+                position++;
+                return (position < _chessSteps.Count);
+            }
+
+            public void Reset()
+            {
+                position = -1;
+            }
+
+            public object Current
+            {
+                get
+                {
+                    try
+                    {
+                        return _chessSteps[position];
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+            }
+
+            #region IEnumerator<ChessStep> 成员
+
+            ChessStep IEnumerator<ChessStep>.Current
+            {
+                get { return (ChessStep)this.Current; }
+            }
+
+            #endregion
+
+            #region IDisposable 成员
+
+            public void Dispose()
+            {
+                _chessSteps = null;
+            }
+
+            #endregion
+        }
 
     }
 }
