@@ -34,8 +34,8 @@ namespace Gean.UI.ChessControl.Demo
 
         void _board_PlayPairEvent(object sender, ChessBoard.PlayPairEventArgs e)
         {
-            TreeNode node = new TreeNode(e.ChessStepPair.ToString());
-            this._currTree.Nodes.Add(node);
+            //TreeNode node = new TreeNode(e.ChessStepPair.ToString());
+            //this._currTree.Nodes.Add(node);
         }
 
         void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)

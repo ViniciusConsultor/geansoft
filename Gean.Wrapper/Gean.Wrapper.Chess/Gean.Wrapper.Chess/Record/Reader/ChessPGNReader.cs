@@ -167,8 +167,6 @@ namespace Gean.Wrapper.Chess
                     switch (aChar)
                     {
                         #region case
-                        case '\r':
-                            break;
                         case '\n':
                             _Data = builder.ToString();
                             builder.Length = 0;
@@ -203,6 +201,8 @@ namespace Gean.Wrapper.Chess
                                     ParseDetail(_Data);
                                 }
                             }
+                            break;
+                        case '\r':
                             break;
                         default:
                             builder.Append(aChar);
