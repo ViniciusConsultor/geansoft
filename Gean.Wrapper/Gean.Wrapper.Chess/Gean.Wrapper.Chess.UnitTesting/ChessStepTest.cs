@@ -90,116 +90,116 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep actual;
 
             value = "O-O";
-            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.KingSideCastling);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.KingSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "O-O-O";
-            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "O - O - O";
-            expected = new ChessStep(Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.None, ChessPosition.Empty, ChessPosition.Empty, Enums.Action.QueenSideCastling);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "b5+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5), Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(2, 5), Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "Qxh3+";
-            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "Rxb4+";
-            expected = new ChessStep(Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4), Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Rook, ChessPosition.Empty, new ChessPosition(2, 4), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "axb5+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition(1, 4), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "axb5+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition(1, 6), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.Pawn, new ChessPosition(1, 6), new ChessPosition(2, 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
             Assert.AreEqual(expected, actual);
 
             value = "Qh3";
-            expected = new ChessStep(Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 3), Enums.Action.General);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "a3";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(1, 3), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition(1, 3), Enums.Action.General);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "e8=Q";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition('e', 8), Enums.Action.Promotion);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, ChessPosition.Empty, new ChessPosition('e', 8), Enums.Action.Promotion);
             expected.PromotionChessmanType = Enums.ChessmanType.Queen;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "fxe8=Q+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 7), new ChessPosition('e', 8), Enums.Action.Promotion, Enums.Action.Check, Enums.Action.Kill);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('f', 7), new ChessPosition('e', 8), Enums.Action.Promotion, Enums.Action.Check, Enums.Action.Kill);
             expected.PromotionChessmanType = Enums.ChessmanType.Queen;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "cxd8=N+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('c', 7), new ChessPosition('d', 8), Enums.Action.Kill, Enums.Action.Check, Enums.Action.Promotion);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('c', 7), new ChessPosition('d', 8), Enums.Action.Kill, Enums.Action.Check, Enums.Action.Promotion);
             expected.PromotionChessmanType = Enums.ChessmanType.Knight;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "cxd1=Q+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('c', 2), new ChessPosition('d', 1), Enums.Action.Promotion, Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.Pawn, new ChessPosition('c', 2), new ChessPosition('d', 1), Enums.Action.Promotion, Enums.Action.Kill, Enums.Action.Check);
             expected.PromotionChessmanType = Enums.ChessmanType.Queen;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
             Assert.AreEqual(expected, actual);
 
             value = "gxf1=Q+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('g', 2), new ChessPosition('f', 1), Enums.Action.Check, Enums.Action.Kill, Enums.Action.Promotion);
+            expected = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.Pawn, new ChessPosition('g', 2), new ChessPosition('f', 1), Enums.Action.Check, Enums.Action.Kill, Enums.Action.Promotion);
             expected.PromotionChessmanType = Enums.ChessmanType.Queen;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.Black);
             Assert.AreEqual(expected, actual);
 
             value = "fxe5+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 4), new ChessPosition('e', 5), Enums.Action.Kill, Enums.Action.Check);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('f', 4), new ChessPosition('e', 5), Enums.Action.Kill, Enums.Action.Check);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "Bfe5";
-            expected = new ChessStep(Enums.ChessmanType.Bishop, new ChessPosition('f', 5), new ChessPosition('e', 5), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Bishop, new ChessPosition('f', 5), new ChessPosition('e', 5), Enums.Action.General);
             expected.HasSame = Enums.SameOrientation.Horizontal;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "Nac7";
-            expected = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Knight, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
             expected.HasSame = Enums.SameOrientation.Horizontal;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "N5c7";
-            expected = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('c', 5), new ChessPosition('c', 7), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Knight, new ChessPosition('c', 5), new ChessPosition('c', 7), Enums.Action.General);
             expected.HasSame = Enums.SameOrientation.Vertical;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "ac7";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('a', 7), new ChessPosition('c', 7), Enums.Action.General);
             expected.HasSame = Enums.SameOrientation.Horizontal;
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
 
             value = "axb7+";
-            expected = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('a', 6), new ChessPosition('b', 7), Enums.Action.Check, Enums.Action.Kill);
+            expected = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('a', 6), new ChessPosition('b', 7), Enums.Action.Check, Enums.Action.Kill);
             actual = ChessStep.Parse(value, Enums.ChessmanSide.White);
             Assert.AreEqual(expected, actual);
         }
@@ -266,40 +266,53 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep step;
 
             expected = "fe8";
-            step = new ChessStep(Enums.ChessmanType.Pawn, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
 
             expected = "Rfe8";
-            step = new ChessStep(Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
 
             expected = "Nfe8";
-            step = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
 
             expected = "Qfe8";
-            step = new ChessStep(Enums.ChessmanType.Queen, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Queen, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.General);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
 
             expected = "Nfxe8+";
-            step = new ChessStep(Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Knight, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
 
             expected = "Rfxe8+";
-            step = new ChessStep(Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Rook, new ChessPosition('f', 8), new ChessPosition('e', 8), Enums.Action.Check, Enums.Action.Kill);
             step.HasSame = Enums.SameOrientation.Horizontal;
             actual = step.ToString();
             Assert.AreEqual(expected, actual);
+
+            expected = "cxd1=Q+";
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('c', 2), new ChessPosition('d', 1), Enums.Action.Promotion, Enums.Action.Kill, Enums.Action.Check);
+            step.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
+            expected = "axb8=Q+";
+            step = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn, new ChessPosition('a', 7), new ChessPosition('b', 8), Enums.Action.Promotion, Enums.Action.Kill, Enums.Action.Check);
+            step.PromotionChessmanType = Enums.ChessmanType.Queen;
+            actual = step.ToString();
+            Assert.AreEqual(expected, actual);
+
         }
 
     }

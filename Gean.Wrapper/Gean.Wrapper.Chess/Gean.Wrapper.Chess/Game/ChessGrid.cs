@@ -97,7 +97,7 @@ namespace Gean.Wrapper.Chess
                 targetPoint = new ChessPosition(this.X, this.Y);
                 chessman.ChessPoints.Push(new ChessPosition(this.X, this.Y));
             }
-            ChessStep chessStep = new ChessStep(chessman.ChessmanType, sourcePoint, targetPoint, action);
+            ChessStep chessStep = new ChessStep(chessman.ChessmanSide, chessman.ChessmanType, sourcePoint, targetPoint, action);
             //注册行棋事件
             OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
             return chessStep;

@@ -30,12 +30,12 @@
         {
             this._splitContainer = new System.Windows.Forms.SplitContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this._recordTreeView = new System.Windows.Forms.TreeView();
+            this._recordTree = new System.Windows.Forms.TreeView();
             this._rightSplit = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this._actionListBox = new System.Windows.Forms.ListBox();
+            this._recordList = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.开局ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +43,8 @@
             this._pgnConventToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._label = new System.Windows.Forms.ToolStripStatusLabel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this._currTree = new System.Windows.Forms.TreeView();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -52,8 +54,11 @@
             this._rightSplit.Panel2.SuspendLayout();
             this._rightSplit.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _splitContainer
@@ -78,7 +83,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._recordTreeView);
+            this.splitContainer1.Panel1.Controls.Add(this._recordTree);
             // 
             // splitContainer1.Panel2
             // 
@@ -87,13 +92,13 @@
             this.splitContainer1.SplitterDistance = 108;
             this.splitContainer1.TabIndex = 1;
             // 
-            // _recordTreeView
+            // _recordTree
             // 
-            this._recordTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._recordTreeView.Location = new System.Drawing.Point(0, 0);
-            this._recordTreeView.Name = "_recordTreeView";
-            this._recordTreeView.Size = new System.Drawing.Size(108, 399);
-            this._recordTreeView.TabIndex = 0;
+            this._recordTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._recordTree.Location = new System.Drawing.Point(0, 0);
+            this._recordTree.Name = "_recordTree";
+            this._recordTree.Size = new System.Drawing.Size(108, 399);
+            this._recordTree.TabIndex = 0;
             // 
             // _rightSplit
             // 
@@ -108,7 +113,7 @@
             // 
             // _rightSplit.Panel2
             // 
-            this._rightSplit.Panel2.Controls.Add(this._actionListBox);
+            this._rightSplit.Panel2.Controls.Add(this._recordList);
             this._rightSplit.Size = new System.Drawing.Size(313, 399);
             this._rightSplit.SplitterDistance = 273;
             this._rightSplit.TabIndex = 0;
@@ -126,32 +131,33 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.splitContainer2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(305, 247);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "棋盘选项";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(305, 248);
+            this.tabPage2.Size = new System.Drawing.Size(305, 247);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "棋谱选项";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // _actionListBox
+            // _recordList
             // 
-            this._actionListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._actionListBox.FormattingEnabled = true;
-            this._actionListBox.Location = new System.Drawing.Point(0, 0);
-            this._actionListBox.Name = "_actionListBox";
-            this._actionListBox.Size = new System.Drawing.Size(313, 121);
-            this._actionListBox.TabIndex = 0;
+            this._recordList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._recordList.FormattingEnabled = true;
+            this._recordList.Location = new System.Drawing.Point(0, 0);
+            this._recordList.Name = "_recordList";
+            this._recordList.Size = new System.Drawing.Size(313, 121);
+            this._recordList.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -211,6 +217,27 @@
             this._label.Name = "_label";
             this._label.Size = new System.Drawing.Size(0, 17);
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this._currTree);
+            this.splitContainer2.Size = new System.Drawing.Size(299, 241);
+            this.splitContainer2.SplitterDistance = 99;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // _currTree
+            // 
+            this._currTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._currTree.Location = new System.Drawing.Point(0, 0);
+            this._currTree.Name = "_currTree";
+            this._currTree.Size = new System.Drawing.Size(99, 241);
+            this._currTree.TabIndex = 0;
+            // 
             // DemoMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -233,10 +260,13 @@
             this._rightSplit.Panel2.ResumeLayout(false);
             this._rightSplit.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,12 +275,12 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer _splitContainer;
-        private System.Windows.Forms.ListBox _actionListBox;
+        private System.Windows.Forms.ListBox _recordList;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripMenuItem 开局ToolStripMenuItem;
         private System.Windows.Forms.SplitContainer _rightSplit;
-        private System.Windows.Forms.TreeView _recordTreeView;
+        private System.Windows.Forms.TreeView _recordTree;
         private System.Windows.Forms.ToolStripMenuItem _pgnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _pgnConventToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem _newGameToolStripMenuItem;
@@ -259,6 +289,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TreeView _currTree;
     }
 }
 

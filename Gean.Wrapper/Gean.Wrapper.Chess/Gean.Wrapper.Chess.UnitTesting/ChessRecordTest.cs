@@ -1,9 +1,18 @@
 ﻿using Gean.Wrapper.Chess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
+    
+    
+    /// <summary>
+    ///这是 ChessRecordTest 的测试类，旨在
+    ///包含所有 ChessRecordTest 单元测试
+    ///</summary>
     [TestClass()]
-    public class ChessStepPairTest
+    public class ChessRecordTest
     {
         #region
 
@@ -57,24 +66,36 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         #endregion
 
-        
+        public ChessRecordTest()
+        {
+            this.DemoFilePath = Path.GetFullPath(@"..\..\..\..\Gean.Wrapper.Chess\Gean.Wrapper.Chess.UnitTesting\CaseFiles\");
+            this.PGNFiles = Directory.GetFiles(this.DemoFilePath, "*.pgn");
+        }
+
+        private string DemoFilePath { get; set; }
+        private string[] PGNFiles { get; set; }
+
         /// <summary>
-        ///Parse 的测试
+        ///ToString 的测试
         ///</summary>
         [TestMethod()]
-        public void ParseTest()
+        public void ChessRecordForeachTest()
         {
-            string value; 
-            ChessStepPair expected; 
-            ChessStepPair actual;
+            ChessRecordCollection records = new ChessRecordCollection();
+            ChessPGNReader target = new ChessPGNReader();
+            target.Filename = this.PGNFiles[0];
+            target.AddEvents(records);
+            target.Parse();
 
-            value = "4.Qh5+ Ke7";
-            ChessStep white = new ChessStep(Enums.ChessmanSide.White, Enums.ChessmanType.Queen, ChessPosition.Empty, new ChessPosition(8, 5), Enums.Action.Check);
-            ChessStep black = new ChessStep(Enums.ChessmanSide.Black, Enums.ChessmanType.King, ChessPosition.Empty, new ChessPosition(5, 7), Enums.Action.General);
-            expected = new ChessStepPair(4, white, black);
-            actual = ChessStepPair.Parse(value);
-            Assert.AreEqual(expected, actual);
+            ChessRecord record = records[0];
+
+            List<ChessStep> steps = new List<ChessStep>();
+            foreach (ChessStep step in record)
+            {
+                steps.Add(step);
+                Assert.IsNotNull(step);
+            }
+            Assert.AreEqual(89, steps.Count);
         }
-        
     }
 }

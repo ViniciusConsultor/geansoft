@@ -24,6 +24,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; internal set; }
         /// <summary>
+        /// 获取或设置该步棋的棋子战方
+        /// </summary>
+        public Enums.ChessmanSide ChessmanSide { get; internal set; }
+        /// <summary>
         /// 获取或设置该步棋的升变后棋子类型
         /// </summary>
         public Enums.ChessmanType PromotionChessmanType { get; internal set; }
@@ -60,13 +64,17 @@ namespace Gean.Wrapper.Chess
         /// 有同行与同列的棋子可能产生同样的棋步
         /// </summary>
         private Enums.SameOrientation _hasSame = Enums.SameOrientation.None;
-
+        /// <summary>
+        /// 当同 “行” 有棋子可能产生同样的棋步时的值
+        /// </summary>
         public int SameHorizontal
         {
             get { return this._sameHorizontal; }
         }
         private int _sameHorizontal;
-
+        /// <summary>
+        /// 当同 “列” 有棋子可能产生同样的棋步时的值
+        /// </summary>
         public int SameVertical
         {
             get { return this._sameVertical; }
@@ -77,11 +85,12 @@ namespace Gean.Wrapper.Chess
 
         #region ctor
 
-        public ChessStep(Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos, params Enums.Action[] action)
+        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos, params Enums.Action[] action)
         {
             this.Actions = new List<Enums.Action>();
             this.Actions.AddRange(action);
             this.ChessmanType = chessmanType;
+            this.ChessmanSide = manSide;
             this.TargetPosition = tagPos;
             this.SourcePosition = srcPos;
         }
@@ -142,7 +151,7 @@ namespace Gean.Wrapper.Chess
             {
                 sb.Insert(0, Enums.ChessmanTypeToString(this.ChessmanType));
             }
-            else if (this.ChessmanType == Enums.ChessmanType.Pawn)
+            else if (this.ChessmanType == Enums.ChessmanType.Pawn && this.Actions.Contains(Enums.Action.Kill))
             {
                 if (SourcePosition != ChessPosition.Empty)
                     sb.Insert(0, SourcePosition.Horizontal);
@@ -151,17 +160,35 @@ namespace Gean.Wrapper.Chess
             {
                 if (this.ChessmanType != Enums.ChessmanType.Pawn)
                 {
-                    switch (_hasSame)
+                        switch (_hasSame)
+                        {
+                            case Enums.SameOrientation.Horizontal:
+                                sb.Insert(1, Utility.IntToChar(this.SameHorizontal));
+                                break;
+                            case Enums.SameOrientation.Vertical:
+                                sb.Insert(1, this.SameVertical.ToString());
+                                break;
+                            case Enums.SameOrientation.None:
+                            default:
+                                break;
+                        }
+                }
+                else
+                {
+                    if (!this.Actions.Contains(Enums.Action.Kill))
                     {
-                        case Enums.SameOrientation.Horizontal:
-                            sb.Insert(1, Utility.IntToChar(this.SameHorizontal));
-                            break;
-                        case Enums.SameOrientation.Vertical:
-                            sb.Insert(1, this.SameVertical.ToString());
-                            break;
-                        case Enums.SameOrientation.None:
-                        default:
-                            break;
+                        switch (_hasSame)
+                        {
+                            case Enums.SameOrientation.Horizontal:
+                                sb.Insert(0, Utility.IntToChar(this.SameHorizontal));
+                                break;
+                            case Enums.SameOrientation.Vertical:
+                                sb.Insert(0, this.SameVertical.ToString());
+                                break;
+                            case Enums.SameOrientation.None:
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -186,6 +213,8 @@ namespace Gean.Wrapper.Chess
 
             ChessStep step = (ChessStep)obj;
             if (this.ChessmanType != step.ChessmanType)
+                return false;
+            if (this.ChessmanSide != step.ChessmanSide)
                 return false;
             if (!UtilityEquals.CollectionsNoSortedEquals<Enums.Action>(this.Actions, step.Actions))
                 return false;
@@ -337,7 +366,7 @@ namespace Gean.Wrapper.Chess
             if (actionList.Count == 0)
                 actionList.Add(Enums.Action.General);
 
-            ChessStep step = new ChessStep(manType, srcPos, tgtPos, actionList.ToArray());
+            ChessStep step = new ChessStep(manSide, manType, srcPos, tgtPos, actionList.ToArray());
             step._hasSame = hasSame;
             step._sameHorizontal = sameHorizontal;
             step._sameVertical = sameVertical;
