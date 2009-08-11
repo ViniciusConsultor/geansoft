@@ -24,7 +24,7 @@ namespace Gean
 
             foreach (string file in logfiles)
             {
-                this._ObjectNameList.Add(file);
+                this._objectNameList.Add(file);
                 StreamWriter sw;
                 string ufile = file;
                 if (!File.Exists(ufile))//如果Log文件存在，将不在保留
@@ -71,7 +71,7 @@ namespace Gean
         /// <param name="message">信息主体，可是多个对象(当未是String时，将会调用object的Tostring()获取字符串)</param>
         public override void Write(LogLevel logLevel, string file, params object[] message)
         {
-            Debug.Assert(this._ObjectNameList.Contains(file), file + " isn't Exist!");
+            Debug.Assert(this._objectNameList.Contains(file), file + " isn't Exist!");
             lock (this.TargetObjectDictionary)
             {
                 StreamWriter sw = this.TargetObjectDictionary[file] as StreamWriter;

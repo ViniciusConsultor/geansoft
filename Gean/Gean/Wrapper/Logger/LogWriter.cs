@@ -10,17 +10,17 @@ namespace Gean
     public abstract class LogWriter : ILogWriter
     {
 
-        protected List<string> _ObjectNameList = new List<string>();
-        public EventIndexedDictionary<string, object> TargetObjectDictionary { get; set; }
+        protected List<string> _objectNameList = new List<string>();
+        public Dictionary<string, object> TargetObjectDictionary { get; set; }
 
         public void Write(params object[] messages)
         {
-            this.Write(LogLevel.Info, _ObjectNameList[0], messages);
+            this.Write(LogLevel.Info, _objectNameList[0], messages);
         }
 
         public void Write(LogLevel logLevel, params object[] messages)
         {
-            this.Write(logLevel, _ObjectNameList[0], messages);
+            this.Write(logLevel, _objectNameList[0], messages);
         }
 
         public void Write(string objName, params object[] messages)
