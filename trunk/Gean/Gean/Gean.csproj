@@ -96,7 +96,6 @@
     <Compile Include="Widgets\Duration.cs" />
     <Compile Include="Wrapper\Logger\LogLevel.cs" />
     <Compile Include="Wrapper\Logger\LogWriter.cs" />
-    <Compile Include="Wrapper\Logger\TextLog.cs" />
     <Compile Include="Wrapper\User32.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
