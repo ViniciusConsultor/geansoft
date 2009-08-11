@@ -61,12 +61,12 @@
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
-    <Compile Include="_Resources\FilterString.Designer.cs">
+    <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FilterString.resx</DependentUpon>
     </Compile>
-    <Compile Include="_Resources\RegexString.Designer.cs">
+    <Compile Include="Resources\RegexString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RegexString.resx</DependentUpon>
@@ -105,12 +105,12 @@
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="_Resources\FilterString.resx">
+    <EmbeddedResource Include="Resources\FilterString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="_Resources\RegexString.resx">
+    <EmbeddedResource Include="Resources\RegexString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
