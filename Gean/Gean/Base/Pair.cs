@@ -46,7 +46,7 @@ namespace Gean
         public override int GetHashCode()
         {
             // combine the hash codes of all members here (e.g. with XOR operator ^)
-            return unchecked(27 * First.GetHashCode() + Second.GetHashCode());
+            return unchecked(3 * (First.GetHashCode() + Second.GetHashCode()));
         }
 
         public override string ToString()
