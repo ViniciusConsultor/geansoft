@@ -54,11 +54,9 @@ namespace Gean
                 sb.Append(DateTime.Now.ToString("MM-dd HH:mm:ss"))
                   .Append(" ")
                   .Append(DateTime.Now.Millisecond.ToString())
-                  .Append("\t")
-                  .Append("< ")
+                  .Append(",\t")
                   .Append(logLevel.ToString())
-                  .Append(" >")
-                  .Append("\t");
+                  .Append(",\t");
                 //使用者附加的Log信息
                 foreach (object item in message)
                 {
@@ -75,7 +73,7 @@ namespace Gean
                     }
                 }
                 //写入文件
-                Stream.WriteLine(sb.ToString(0, sb.ToString().Length - 2));
+                Stream.WriteLine(sb.ToString(0, sb.Length - 2));
                 Stream.Flush();
             }//lock (_StreamWriterDic)
         }
@@ -102,7 +100,8 @@ namespace Gean
         private static StreamWriter FileCreator(string file)
         {
             StreamWriter sw;
-            File.AppendAllText(file, "### " + DateTime.Now.ToString() + " " + DateTime.Now.Millisecond.ToString() + " ###\r\n", Encoding.UTF8);
+            string begin = string.Format("### {0} {1} ###\r\n=====\t=====\t=====\r\n", DateTime.Now, DateTime.Now.Millisecond);
+            File.AppendAllText(file, begin, Encoding.UTF8);
             sw = File.AppendText(file);
             return sw;
         }
