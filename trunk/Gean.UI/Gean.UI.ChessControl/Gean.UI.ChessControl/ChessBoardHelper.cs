@@ -209,5 +209,13 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
+        /// <summary>
+        /// 自动演示(摆棋)的间隔时间(毫秒)
+        /// </summary>
+        public static int AutoForwardTime
+        {
+            get { return _autoForwardTime; }
+        }
+        private static int _autoForwardTime = 2000;
     }
 }

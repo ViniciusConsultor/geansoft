@@ -414,7 +414,6 @@ namespace Gean.Wrapper.Chess
             throw new Exception("Not implemented for FenPosition");
         }
 
-
         public void AddEvents(IPositionEvents ievents)
         {
             EventPlacePieceHandler += new EventPlacePiece(ievents.PlacePiece);

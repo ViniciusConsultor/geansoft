@@ -122,7 +122,6 @@ namespace Gean.Wrapper.Chess
             EventMoveParsed += new moveParsed(ievents.MoveParsed);
             EventCommentParsed += new commentParsed(ievents.CommentParsed);
             EventendMarkerParsed += new endMarkerParsed(ievents.EndMarker);
-
         }
 
         /// <summary>

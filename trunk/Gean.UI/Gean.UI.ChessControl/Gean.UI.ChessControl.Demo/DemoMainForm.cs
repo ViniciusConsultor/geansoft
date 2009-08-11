@@ -22,13 +22,19 @@ namespace Gean.UI.ChessControl.Demo
             InitializeComponent();
             this._board.Dock = DockStyle.Fill;
             this._board.BringToFront();
-            this._splitContainer.Panel1.Controls.Add(_board);
+            this._mainSpliter.Panel1.Controls.Add(_board);
+            this._statusLabel.Text = "";
             this._recordList.SelectedValueChanged += new EventHandler(SelectedRecord);
 
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
             this._board.PlayPairEvent += new ChessBoard.PlayPairEventHandler(_board_PlayPairEvent);
 
             this.WindowState = FormWindowState.Maximized;
+
+            ChessRecordPlayToolStrip strip = new ChessRecordPlayToolStrip();
+
+            this._stripContainer.TopToolStripPanel.Controls.Add(strip);
+            this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
         }
 
 
@@ -64,7 +70,7 @@ namespace Gean.UI.ChessControl.Demo
                 this._recordList.Items.Add(item.ChessTags);
             }
             duration.Stop();
-            this._label.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
+            this._statusLabel.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
                 records.Count, duration.DurationValue, duration.DurationValue / records.Count);
             this.Cursor = Cursors.Default;
         }
