@@ -11,7 +11,7 @@ namespace Gean
         /// Key是目标的键值（如文件名），Value是目标
         /// </summary>
         /// <value>Log置入的目标.</value>
-        EventIndexedDictionary<string, object> TargetObjectDictionary { get; set; }
+        Dictionary<string, object> TargetObjectDictionary { get; set; }
 
         /// <summary>
         /// 写入Log信息
