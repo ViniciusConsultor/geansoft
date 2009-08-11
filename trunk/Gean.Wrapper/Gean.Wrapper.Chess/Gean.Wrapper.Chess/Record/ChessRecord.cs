@@ -10,6 +10,15 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessRecord : IStepTree, IEnumerable<ChessStep>
     {
+
+        public ChessRecord()
+        {
+            this.ChessTags = new ChessTag();
+            this.Items = new ChessSequence();
+        }
+
+        public ChessTag ChessTags { get; set; }
+
         #region IStepTree 成员
 
         public object Parent { get; set; }
@@ -27,14 +36,6 @@ namespace Gean.Wrapper.Chess
         public ChessSequence Items { get; set; }
 
         #endregion
-
-        public ChessRecord()
-        {
-            this.ChessTags = new ChessTag();
-            this.Items = new ChessSequence();
-        }
-
-        public ChessTag ChessTags { get; set; }
 
         #region override
 
@@ -68,6 +69,8 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region IEnumerable
+
         #region IEnumerable<ChessStep> 成员
 
         public IEnumerator<ChessStep> GetEnumerator()
@@ -89,7 +92,7 @@ namespace Gean.Wrapper.Chess
         public class ChessStepEnumerator : IEnumerator<ChessStep>
         {
             private List<ChessStep> _chessSteps;
-            private int position = -1;
+            private int _position = -1;
 
             public ChessStepEnumerator(IList<ISequenceItem> list)
             {
@@ -110,13 +113,13 @@ namespace Gean.Wrapper.Chess
 
             public bool MoveNext()
             {
-                position++;
-                return (position < _chessSteps.Count);
+                _position++;
+                return (_position < _chessSteps.Count);
             }
 
             public void Reset()
             {
-                position = -1;
+                _position = -1;
             }
 
             public object Current
@@ -125,7 +128,7 @@ namespace Gean.Wrapper.Chess
                 {
                     try
                     {
-                        return _chessSteps[position];
+                        return _chessSteps[_position];
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -153,5 +156,6 @@ namespace Gean.Wrapper.Chess
             #endregion
         }
 
+        #endregion
     }
 }
