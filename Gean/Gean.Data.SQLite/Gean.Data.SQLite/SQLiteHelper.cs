@@ -1,5 +1,7 @@
 ﻿using System.Data;
 using System.Data.SQLite;
+using System.IO;
+using System;
 
 namespace Gean.Data.SQLite
 {
@@ -9,10 +11,17 @@ namespace Gean.Data.SQLite
         /// 获得连接对象
         ///</summary>
         ///<returns></returns>
-        public static SQLiteConnection GetSQLiteConnection()
+        public static SQLiteConnection GetSQLiteConnection(string filename)
         {
-            return new SQLiteConnection("Data Source=" + "");
+            if (!File.Exists(filename))
+            {
+                throw new Exception();
+            }
+            SQLiteFile = filename;
+            return new SQLiteConnection("Data Source=\"" + filename + "\"");
         }
+
+        public static string SQLiteFile { get; set; }
 
         private static void PrepareCommand(SQLiteCommand cmd, SQLiteConnection conn, string cmdText, params object[] p)
         {
@@ -34,7 +43,7 @@ namespace Gean.Data.SQLite
         {
             DataSet ds = new DataSet();
             SQLiteCommand command = new SQLiteCommand();
-            using (SQLiteConnection connection = GetSQLiteConnection())
+            using (SQLiteConnection connection = GetSQLiteConnection(SQLiteFile))
             {
                 PrepareCommand(command, connection, cmdText, p);
                 SQLiteDataAdapter da = new SQLiteDataAdapter(command);
@@ -60,7 +69,7 @@ namespace Gean.Data.SQLite
         public static int ExecuteNonQuery(string cmdText, params object[] p)
         {
             SQLiteCommand command = new SQLiteCommand();
-            using (SQLiteConnection connection = GetSQLiteConnection())
+            using (SQLiteConnection connection = GetSQLiteConnection(SQLiteFile))
             {
                 PrepareCommand(command, connection, cmdText, p);
                 return command.ExecuteNonQuery();
@@ -76,7 +85,7 @@ namespace Gean.Data.SQLite
         public static SQLiteDataReader ExecuteReader(string cmdText, params object[] p)
         {
             SQLiteCommand command = new SQLiteCommand();
-            SQLiteConnection connection = GetSQLiteConnection();
+            SQLiteConnection connection = GetSQLiteConnection(SQLiteFile);
             try
             {
                 PrepareCommand(command, connection, cmdText, p);
@@ -100,7 +109,7 @@ namespace Gean.Data.SQLite
         {
             SQLiteCommand cmd = new SQLiteCommand();
 
-            using (SQLiteConnection connection = GetSQLiteConnection())
+            using (SQLiteConnection connection = GetSQLiteConnection(SQLiteFile))
             {
                 PrepareCommand(cmd, connection, cmdText, p);
                 return cmd.ExecuteScalar();
@@ -125,7 +134,7 @@ namespace Gean.Data.SQLite
             DataSet ds = new DataSet();
 
             SQLiteCommand command = new SQLiteCommand();
-            using (SQLiteConnection connection = GetSQLiteConnection())
+            using (SQLiteConnection connection = GetSQLiteConnection(SQLiteFile))
             {
                 PrepareCommand(command, connection, cmdText, p);
                 SQLiteDataAdapter da = new SQLiteDataAdapter(command);
