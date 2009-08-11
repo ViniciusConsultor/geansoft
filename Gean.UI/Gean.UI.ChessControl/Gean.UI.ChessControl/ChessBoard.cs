@@ -85,6 +85,11 @@ namespace Gean.UI.ChessControl
         /// 获取已选择的棋子所在的棋格坐标
         /// </summary>
         public virtual ChessPosition SelectedChessPosition { get; private set; }
+        /// <summary>
+        /// 获取与设置棋子将要被移到的棋格坐标
+        /// </summary>
+        public virtual ChessPosition TargetChessPosition { get; set; }
+
 
         #endregion
 
@@ -188,6 +193,7 @@ namespace Gean.UI.ChessControl
             base.OnResize(e);
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
         }
+        
         protected override void OnPaintBackground(PaintEventArgs pe)
         {
             base.OnPaintBackground(pe);
@@ -272,122 +278,60 @@ namespace Gean.UI.ChessControl
             this.Invalidate();
         }
 
-        #region OnMouse
-
-        /// <summary>
-        /// 描述一个被鼠标点击过的有效矩形的坐标
-        /// </summary>
-        ///private Image _tmpMovingManImg;
-
-        private ChessGrid _tmpMouseDownGrid;
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
             if (this.OwnedChessGame == null) return;
-            if (e.Button == MouseButtons.Left)
+            switch (e.Button)
             {
-                for (int x = 1; x <= 8; x++)
-                {
-                    for (int y = 1; y <= 8; y++)
+                case MouseButtons.Left:
+                    #region 选择ChessPosition,并MoveIn
+                    for (int x = 1; x <= 8; x++)
                     {
-                        if (!this.OwnedRectangles[x - 1, y - 1].Contains(e.Location))
-                            continue;
-
-                        this._tmpMouseDownGrid = this.OwnedChessGame[x, y];
-
-                        if (Chessman.IsNullOrEmpty(_tmpMouseDownGrid.Occupant))
-                            return;//找到矩形，但矩形中无棋子，退出
-                        if (_tmpMouseDownGrid.Occupant.ChessmanSide != this.CurrChessSide)
-                            return;//棋子的战方与当前棋局要求的战方不符，退出
-
-                        //鼠标到达的棋格符合所有规则，记录下棋格的坐标，等待移动
-                        this.SelectedChessPosition = new ChessPosition(x, y);
-                        this.ViewKeyRectangle = false;
-                        this.Invalidate();
-                        //如可拖动棋子，设置可拖动的棋子图像
-                        //this._tmpMovingManImg = ChessBoardHelper.GetChessmanImage(_tmpMouseDownGrid.OwnedChessman.ChessmanSide, _tmpMouseDownGrid.OwnedChessman.ChessmanType);
-                    }
-                }
-            }//if
-        }
-
-        private ChessGrid _tmpMouseUpGrid;
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-            if (this.OwnedChessGame == null) return;
-            if (this.SelectedChessPosition == null) return;
-            if (e.Button == MouseButtons.Left)
-            {
-                for (int x = 1; x <= 8; x++)
-                {
-                    for (int y = 1; y <= 8; y++)
-                    {
-                        if (!this.OwnedRectangles[x - 1, y - 1].Contains(e.Location))
-                            continue;
-
-                        this._tmpMouseUpGrid = this.OwnedChessGame[x, y];
-                        //目标棋格有棋子
-                        if (!Chessman.IsNullOrEmpty(_tmpMouseUpGrid.Occupant))
+                        for (int y = 1; y <= 8; y++)
                         {
-                            //目标棋格棋子的战方不符合规则
-                            if (_tmpMouseUpGrid.Occupant.ChessmanSide == this.CurrChessSide)
+                            if (!this.OwnedRectangles[x - 1, y - 1].Contains(e.Location))
+                                continue;
+
+                            ChessGrid tmpGrid = this.OwnedChessGame[x, y];
+                            if (this.SelectedChessPosition == ChessPosition.Empty)//选择棋子
                             {
-                                //this.SelectedChessPoint = ChessPoint.Empty;//如不设置，将会变两个动作完成行棋
-                                //this._tmpMovingManImg = null;
-                                return;
+                                if (Chessman.IsNullOrEmpty(tmpGrid.Occupant))
+                                    return;//找到矩形，但矩形中无棋子，退出
+                                if (tmpGrid.Occupant.ChessmanSide != this.CurrChessSide)
+                                    return;//棋子的战方与当前棋局要求的战方不符，退出
+
+                                //鼠标到达的棋格符合所有规则，记录下棋格的坐标，等待移动
+                                this.SelectedChessPosition = new ChessPosition(x, y);
+                                this.Invalidate();
                             }
+                            else//移动棋子
+                            {
+                                //目标棋格有棋子
+                                if (!Chessman.IsNullOrEmpty(tmpGrid.Occupant))
+                                {
+                                    //目标棋格棋子的战方不符合规则
+                                    if (tmpGrid.Occupant.ChessmanSide == this.CurrChessSide)
+                                    {
+                                        return;
+                                    }
+                                }
+                                this.TargetChessPosition = new ChessPosition(x, y);
+                                this.MoveIn(this.SelectedChessPosition, this.TargetChessPosition);
+                            }//this.SelectedChessPosition == ?
                         }
-                        this.MoveIn();
-                    }//for y
-                }//for x
-            }//if
-        }
-
-        private Rectangle _tmpEnterRect = Rectangle.Empty;
-        private Rectangle _tmpMovingRect = Rectangle.Empty;
-        private ChessGrid _tmpEnterGrid;
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            if (this.OwnedChessGame == null) return;
-            for (int x = 1; x <= 8; x++)
-            {
-                for (int y = 1; y <= 8; y++)
-                {
-                    _tmpEnterRect = this.OwnedRectangles[x - 1, y - 1];
-
-                    #region 拖动棋子
-                    //if (!this.SelectedChessPoint.Equals(ChessPoint.Empty) && this._tmpMovingManImg != null)
-                    //{
-                    //    int offset = (int)((this._rectangleWidth * 0.8) / 2);
-                    //    this._tmpMovingRect = new Rectangle(
-                    //        e.Location.X - offset,
-                    //        e.Location.Y - offset,
-                    //        offset * 2,
-                    //        offset * 2);
-                    //    this.InvalidateBoard(this._tmpMovingManImg, this._tmpMovingRect);
-                    //}
+                    }
                     #endregion
-
-                    if (!_tmpEnterRect.Contains(e.Location))
-                    {
-                        this.Cursor = Cursors.Default;
-                        continue;
-                    }
-                    else//找到相应的矩形
-                    {
-                        _tmpEnterGrid = this.OwnedChessGame[x, y];
-                        if (Chessman.IsNullOrEmpty(_tmpEnterGrid.Occupant))
-                            return;
-                        this.Cursor = Cursors.Hand;
-                        return;
-                    }
-                }
+                    break;
+                case MouseButtons.Middle:
+                case MouseButtons.Right:
+                case MouseButtons.None:
+                case MouseButtons.XButton1:
+                case MouseButtons.XButton2:
+                default:
+                    break;
             }
         }
-
-        #endregion
 
         #endregion
 
@@ -450,16 +394,17 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 棋子移动的方法
         /// </summary>
-        protected virtual void MoveIn()
+        public virtual void MoveIn(ChessPosition srcPos, ChessPosition tgtPos)
         {
-            ChessGrid sourceGrid = this.OwnedChessGame[this.SelectedChessPosition.X + 1, this.SelectedChessPosition.Y + 1];
-            Chessman man = sourceGrid.Occupant;
+            ChessGrid srcGrid = this.OwnedChessGame[srcPos.X + 1, srcPos.Y + 1];
+            ChessGrid tgtGrid = this.OwnedChessGame[tgtPos.X + 1, tgtPos.Y + 1];
+            Chessman man = srcGrid.Occupant;
             Enums.Action action = Enums.Action.General;
 
-            if (ChessPath.TryMoveIn(man, sourceGrid, _tmpMouseUpGrid, out action))
+            if (ChessPath.TryMoveIn(man, srcGrid, tgtGrid, out action))
             {
                 //核心行棋动作
-                ChessStep chessStep = this._tmpMouseUpGrid.MoveIn(this.OwnedChessGame, man, action);
+                ChessStep chessStep = tgtGrid.MoveIn(this.OwnedChessGame, man, action);
                 OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
                 if (this.CurrChessSide == Enums.ChessmanSide.Black &&
                     this.OwnedChessGame.Record.Items.Count > 0)
@@ -471,7 +416,6 @@ namespace Gean.UI.ChessControl
                 //刷新
                 this.Invalidate();
                 this.SelectedChessPosition = ChessPosition.Empty;
-                //this._tmpMovingManImg = null;
             }
         }
 
