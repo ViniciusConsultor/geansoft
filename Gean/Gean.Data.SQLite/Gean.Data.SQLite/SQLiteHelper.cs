@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
-using System.Configuration;
-using System.Data;
+﻿using System.Data;
 using System.Data.SQLite;
 
 namespace Gean.Data.SQLite
