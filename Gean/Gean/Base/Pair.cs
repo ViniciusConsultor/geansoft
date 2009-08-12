@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
+/*
 namespace Gean
 {
     /// <summary>
@@ -78,3 +78,4 @@ namespace Gean
     }
 
 }
+*/
