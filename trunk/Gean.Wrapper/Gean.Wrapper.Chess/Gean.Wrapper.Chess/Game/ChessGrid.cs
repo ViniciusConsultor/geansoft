@@ -164,7 +164,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region Owned Chessman
+        #region Occupant Chessman
 
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子

@@ -46,21 +46,20 @@ namespace Gean.UI.ChessControl
 
         #region IRecordPlay 成员
 
-        public IActiveGame ActiveGame
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IActiveRecord ActiveRecord { get; private set; }
+
+        public IChessBoard ChessBoard { get; private set; }
 
         public void Forward()
         {
-            throw new NotImplementedException();
+            ChessStep step = this.ActiveRecord.GetStep();
+            ChessPosition srcPos = step.SourcePosition;
+            ChessPosition tgtPos = step.TargetPosition;
+            if (srcPos == ChessPosition.Empty)
+            {
+                srcPos = ChessPath.GetSourcePosition(step, this.ChessBoard.CurrChessSide, this.ChessBoard.OwnedChessGame);
+            }
+            this.ChessBoard.MoveIn(srcPos, tgtPos);
         }
 
         public void Back()
@@ -100,30 +99,5 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-    }
-
-    public interface IRecordPlay
-    {
-        IActiveGame ActiveGame { get; set; }
-        void Forward();
-        void Back();
-        void FastForward();
-        void FastBack();
-        void ForwardEnd();
-        void BackStart();
-        void Skip(int number);
-        void AutoForward();
-    }
-
-    public interface ISelectedRecord
-    {
-        ChessRecord SelectedRecord { get; }
-    }
-
-    public interface IActiveGame
-    {
-        ChessGame ActiveGame { get; }
-        int CurrChessStepPair { get; }
-        Enums.ChessmanSide CurrChessmanSide { get; }
     }
 }
