@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.UI.ChessControl", "Gean.UI.ChessControl\Gean.UI.ChessControl.csproj", "{7929E6E5-574E-4E12-84C7-8B6DA8C28530}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.UI.ChessControl.Demo", "Gean.UI.ChessControl.Demo\Gean.UI.ChessControl.Demo.csproj", "{72DAEDEA-629B-404F-BFC4-1D8D934D8903}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.Chess", "..\..\Gean.Wrapper\Gean.Wrapper.Chess\Gean.Wrapper.Chess\Gean.Wrapper.Chess.csproj", "{29FCFFF2-14E3-4741-99A9-3FCC041F6207}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7929E6E5-574E-4E12-84C7-8B6DA8C28530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7929E6E5-574E-4E12-84C7-8B6DA8C28530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7929E6E5-574E-4E12-84C7-8B6DA8C28530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7929E6E5-574E-4E12-84C7-8B6DA8C28530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72DAEDEA-629B-404F-BFC4-1D8D934D8903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72DAEDEA-629B-404F-BFC4-1D8D934D8903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72DAEDEA-629B-404F-BFC4-1D8D934D8903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72DAEDEA-629B-404F-BFC4-1D8D934D8903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29FCFFF2-14E3-4741-99A9-3FCC041F6207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29FCFFF2-14E3-4741-99A9-3FCC041F6207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29FCFFF2-14E3-4741-99A9-3FCC041F6207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29FCFFF2-14E3-4741-99A9-3FCC041F6207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
