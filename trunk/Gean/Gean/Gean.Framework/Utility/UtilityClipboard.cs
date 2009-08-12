@@ -1,10 +1,3 @@
-// <file>
-//     <copyright see="prj:///doc/copyright.txt"/>
-//     <license see="prj:///doc/license.txt"/>
-//     <owner name="Daniel Grunwald" email="daniel@danielgrunwald.de"/>
-//     <version>$Revision: 2432 $</version>
-// </file>
-
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;

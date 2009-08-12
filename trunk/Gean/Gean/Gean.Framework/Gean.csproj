@@ -43,12 +43,33 @@
   <ItemGroup>
     <Compile Include="Base\CloneableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\SmartDateString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmartDateString.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\File\FileEncoding.cs" />
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />
     <Compile Include="Utility\UtilityRAR.cs" />
     <Compile Include="Utility\UtilityType.cs" />
+    <Compile Include="Widgets\Checking.cs" />
+    <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
+    <Compile Include="Widgets\SmartDate.cs" />
+    <Compile Include="Wrapper\Database\DbEnums.cs" />
+    <Compile Include="Wrapper\Database\DbParam.cs" />
+    <Compile Include="Wrapper\Database\DbParamCollection.cs" />
+    <Compile Include="Wrapper\Database\IBaseQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\IDataBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\IQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\SafeDataReader.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
@@ -63,7 +84,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegexString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Base\Collections\EventIndexedDictionary.cs" />
     <Compile Include="Base\Collections\EventList.cs" />
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\EventArgs\ChangedEventArgs.cs" />
@@ -107,9 +127,11 @@
       <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wrapper\Database\" />
+    <EmbeddedResource Include="Resources\SmartDateString.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

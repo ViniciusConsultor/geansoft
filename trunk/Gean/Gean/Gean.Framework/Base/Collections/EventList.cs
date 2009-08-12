@@ -24,7 +24,7 @@ namespace Gean
         /// </summary>
         /// <param name="collection">一个集合，其元素应被添加到 <see cref="T:System.Collections.Generic.List`1"/> 的末尾。集合自身不能为 null，但它可以包含为 null 的元素（如果类型 <paramref name="T"/> 为引用类型）。</param>
         /// <exception cref="T:System.ArgumentNullException">
-        /// 	<paramref name="collection"/> 为 null。</exception>
+        /// <paramref name="collection"/> 为 null。</exception>
         public new void AddRange(IEnumerable<T> collection)
         {
             foreach (var item in collection)

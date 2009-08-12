@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean
+namespace Gean.Chinese
 {
 
     /// <summary>

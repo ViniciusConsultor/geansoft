@@ -3,7 +3,6 @@ using System.Xml;
 using System.Xml.Schema;
 using System.IO;
 
-
 namespace Gean.Xml
 {
     /// <summary>
@@ -17,8 +16,8 @@ namespace Gean.Xml
         /// <summary>
         /// 根据已有的Schema对XmlDocument进行检测
         /// </summary>
-        /// <param name="schemaFile">公文XML文档路径</param>
-        /// <param name="xmlFile"></param>
+        /// <param name="schemaFile">Schema文件路径</param>
+        /// <param name="xmlFile">需校验的XmlDocument的路径</param>
         /// <returns></returns>
         public static bool CheckArchXMLContent(string schemaFile, string xmlFile, out string strErrorMsg)
         {
@@ -38,10 +37,8 @@ namespace Gean.Xml
                 xrsArchContent.ValidationEventHandler += new ValidationEventHandler(DealError);
 
                 XmlReader reader = XmlReader.Create(xmlFile, xrsArchContent);
-                while (reader.Read())
-                {
 
-                }
+                while (reader.Read()) { }
 
                 if (_strErrorMsg != "")
                 {

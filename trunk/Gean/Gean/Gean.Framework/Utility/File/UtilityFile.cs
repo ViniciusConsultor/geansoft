@@ -9,9 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
-//using Gean.Resources;
-using Microsoft.Win32;
 using Gean.Resources;
+using Microsoft.Win32;
 
 namespace Gean
 {

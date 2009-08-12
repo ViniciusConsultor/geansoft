@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Threading;
 
-namespace Gean
+namespace Gean.Chinese
 {
     /// <summary>
     /// 汉字转拼音

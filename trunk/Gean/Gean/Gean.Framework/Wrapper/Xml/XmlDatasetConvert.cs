@@ -9,7 +9,11 @@ namespace Gean.Xml
 {
     public class XmlDatasetConvert
     {
-        //将xml对象内容字符串转换为DataSet
+        /// <summary>
+        /// 将xml对象内容字符串转换为DataSet
+        /// </summary>
+        /// <param name="xmlData"></param>
+        /// <returns></returns>
         public static DataSet ConvertXMLToDataSet(string xmlData)
         {
             StringReader stream = null;
@@ -34,7 +38,11 @@ namespace Gean.Xml
             }
         }
 
-        //将xml文件转换为DataSet
+        /// <summary>
+        /// 将xml文件转换为DataSet
+        /// </summary>
+        /// <param name="xmlFile"></param>
+        /// <returns></returns>
         public static DataSet ConvertXMLFileToDataSet(string xmlFile)
         {
             StringReader stream = null;
@@ -63,7 +71,11 @@ namespace Gean.Xml
             }
         }
 
-        //将DataSet转换为xml对象字符串
+        /// <summary>
+        /// 将DataSet转换为xml对象字符串
+        /// </summary>
+        /// <param name="xmlDS"></param>
+        /// <returns></returns>
         public static string ConvertDataSetToXML(DataSet xmlDS)
         {
             MemoryStream stream = null;
@@ -96,7 +108,11 @@ namespace Gean.Xml
             }
         }
 
-        //将DataSet转换为xml文件
+        /// <summary>
+        /// 将DataSet转换为xml文件
+        /// </summary>
+        /// <param name="xmlDS"></param>
+        /// <param name="xmlFile"></param>
         public static void ConvertDataSetToXMLFile(DataSet xmlDS, string xmlFile)
         {
             MemoryStream stream = null;
