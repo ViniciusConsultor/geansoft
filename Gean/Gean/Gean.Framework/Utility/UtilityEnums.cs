@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
-namespace Gean.Utility
+namespace Gean
 {
-    /*
-    /// <summary>
-    /// 枚举操作公共类
-    /// </summary>
-    public class EnumHelper
+    public static class UtilityEnums
     {
         #region 通过字符串获取枚举成员实例
         /// <summary>
@@ -19,7 +16,18 @@ namespace Gean.Utility
         /// 范例:Enum1枚举有两个成员A=0,B=1,则传入"A"或"0"获取 Enum1.A 枚举类型</param>
         public static T GetInstance<T>(string member)
         {
-            return ConvertHelper.ConvertTo<T>(Enum.Parse(typeof(T), member, true));
+            return (T)Enum.Parse(typeof(T), member, true);
+        }
+
+        /// <summary>
+        /// 通过字符串获取枚举成员实例
+        /// </summary>
+        /// <typeparam name="T">枚举名,比如Enum1</typeparam>
+        /// <param name="member">枚举成员的常量名或常量值,
+        /// 范例:Enum1枚举有两个成员A=0,B=1,则传入"A"或"0"获取 Enum1.A 枚举类型</param>
+        public static T GetInstance<T>(object member)
+        {
+            return GetInstance<T>(member.ToString());
         }
         #endregion
 
@@ -28,10 +36,10 @@ namespace Gean.Utility
         /// 获取枚举成员名称和成员值的键值对集合
         /// </summary>
         /// <typeparam name="T">枚举名,比如Enum1</typeparam>
-        public static Dictionary<string, object> GetMemberKeyValue<T>()
+        public static Hashtable GetMemberKeyValue<T>()
         {
             //创建哈希表
-            Dictionary<string, object> dic = new Dictionary<string, object>();
+            Hashtable ht = new Hashtable();
 
             //获取枚举所有成员名称
             string[] memberNames = GetMemberNames<T>();
@@ -39,11 +47,11 @@ namespace Gean.Utility
             //遍历枚举成员
             foreach (string memberName in memberNames)
             {
-                dic.Add(memberName, GetMemberValue<T>(memberName));
+                ht.Add(memberName, GetMemberValue<T>(memberName));
             }
 
             //返回哈希表
-            return dic;
+            return ht;
         }
         #endregion
 
@@ -63,13 +71,13 @@ namespace Gean.Utility
         /// 获取枚举成员的名称
         /// </summary>
         /// <typeparam name="T">枚举名,比如Enum1</typeparam>
-        /// <param name="member">枚举成员实例或成员值, 
+        /// <param name="member">枚举成员实例或成员值,
         /// 范例:Enum1枚举有两个成员A=0,B=1,则传入Enum1.A或0,获取成员名称"A"</param>
         public static string GetMemberName<T>(object member)
         {
             //转成基础类型的成员值
             Type underlyingType = GetUnderlyingType(typeof(T));
-            object memberValue = ConvertHelper.ConvertTo(member, underlyingType);
+            object memberValue = UtilityConvert.ConvertTo(member, underlyingType);
 
             //获取枚举成员的名称
             return Enum.GetName(typeof(T), memberValue);
@@ -103,7 +111,7 @@ namespace Gean.Utility
             T instance = GetInstance<T>(memberName);
 
             //获取枚举成员的值
-            return ConvertHelper.ConvertTo(instance, underlyingType);
+            return UtilityConvert.ConvertTo(instance, underlyingType);
         }
         #endregion
 
@@ -130,6 +138,6 @@ namespace Gean.Utility
             return Enum.IsDefined(typeof(T), member);
         }
         #endregion
+
     }
-    */
 }

@@ -20,20 +20,20 @@ namespace Gean
         /// <returns>引用新的克隆对象</returns>       
         public object Clone()
         {
-            //首先我们建立指定类型的一个实例           
+            //首先建立指定类型的一个实例           
             object newObject = Activator.CreateInstance(this.GetType());
-            //我们取得新的类型实例的字段数组。           
+            //取得新的类型实例的字段数组。           
             FieldInfo[] fields = newObject.GetType().GetFields();
             int i = 0;
             foreach (FieldInfo fi in this.GetType().GetFields())
             {
-                //我们判断字段是否支持ICloneable接口。               
+                //判断字段是否支持ICloneable接口。               
                 Type ICloneType = fi.FieldType.GetInterface("ICloneable", true);
                 if (ICloneType != null)
                 {
                     //取得对象的Icloneable接口。                   
                     ICloneable IClone = (ICloneable)fi.GetValue(this);
-                    //我们使用克隆方法给字段设定新值。                  
+                    //使用克隆方法给字段设定新值。                  
                     fields[i].SetValue(newObject, IClone.Clone());
                 }
                 else
@@ -41,8 +41,8 @@ namespace Gean
                     // 如果该字段部支持Icloneable接口，直接设置即可。                   
                     fields[i].SetValue(newObject, fi.GetValue(this));
                 }
-                //现在我们检查该对象是否支持IEnumerable接口，如果支持，               
-                //我们还需要枚举其所有项并检查他们是否支持IList 或 IDictionary 接口。              
+                //现在检查该对象是否支持IEnumerable接口，如果支持，               
+                //还需要枚举其所有项并检查他们是否支持IList 或 IDictionary 接口。              
                 Type IEnumerableType = fi.FieldType.GetInterface("IEnumerable", true);
                 if (IEnumerableType != null)
                 {
@@ -62,7 +62,7 @@ namespace Gean
                             if (ICloneType != null)
                             {
                                 //如果支持ICloneable 接口，               
-                                //我们用它李设置列表中的对象的克隆             
+                                //用它李设置列表中的对象的克隆             
                                 ICloneable clone = (ICloneable)obj;
                                 list[j] = clone.Clone();
                             }

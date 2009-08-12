@@ -76,6 +76,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Gean\Gean.Framework\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gean.Data.SQLite\Gean.Data.SQLite.csproj">
       <Project>{081E4DB7-421A-46B3-8D95-138A9422381D}</Project>
       <Name>Gean.Data.SQLite</Name>

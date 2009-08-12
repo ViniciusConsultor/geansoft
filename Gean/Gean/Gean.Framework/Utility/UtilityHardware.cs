@@ -48,23 +48,24 @@ namespace Gean
         public static string GetHardDiskID()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia");
-            string strHardDiskID = null;
-            foreach (ManagementObject mo in searcher.Get())
+            ManagementObjectCollection moc = searcher.Get();
+            foreach (ManagementObject mo in moc)
             {
                 return mo["SerialNumber"].ToString().Trim();
             }
             return null;
         }//end
 
+        /*
         public enum NCBCONST
         {
-            NCBNAMSZ = 16, /* absolute length of a net name */
-            MAX_LANA = 254, /* lana's in range 0 to MAX_LANA inclusive */
-            NCBENUM = 0x37, /* NCB ENUMERATE LANA NUMBERS */
-            NRC_GOODRET = 0x00, /* good return */
-            NCBRESET = 0x32, /* NCB RESET */
-            NCBASTAT = 0x33, /* NCB ADAPTER STATUS */
-            NUM_NAMEBUF = 30, /* Number of NAME's BUFFER */
+            NCBNAMSZ = 16, // absolute length of a net name
+            MAX_LANA = 254, // lana's in range 0 to MAX_LANA inclusive
+            NCBENUM = 0x37, // NCB ENUMERATE LANA NUMBERS
+            NRC_GOODRET = 0x00, // good return
+            NCBRESET = 0x32, // NCB RESET
+            NCBASTAT = 0x33, // NCB ADAPTER STATUS
+            NUM_NAMEBUF = 30, // Number of NAME's BUFFER
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -131,5 +132,6 @@ namespace Gean
             public byte[] ncb_reserve;
             public IntPtr ncb_event;
         }
+        */
     }
 }

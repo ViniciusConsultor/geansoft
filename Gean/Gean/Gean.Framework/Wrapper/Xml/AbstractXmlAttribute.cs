@@ -28,7 +28,7 @@ namespace Gean.Xml
         public string Value { get; set; }
 
         /// <summary>
-        /// Aarhus重写。
+        /// Gean重写。
         /// </summary>
         public override bool Equals(object obj)
         {
@@ -44,14 +44,14 @@ namespace Gean.Xml
             return true;
         }
         /// <summary>
-        /// Aarhus重写。
+        /// Gean重写。
         /// </summary>
         public override int GetHashCode()
         {
-            return this.Key.GetHashCode() ^ this.Value.GetHashCode();
+            return unchecked(3 * (this.Key.GetHashCode() + this.Value.GetHashCode()));
         }
         /// <summary>
-        /// Aarhus重写。生成真实的做为Xhtml中的属性的字符串格式。
+        /// Gean重写。生成真实的做为Xhtml中的属性的字符串格式。
         /// 属性名与大小写无关，全部转换成小写字母
         /// </summary>
         public override string ToString()

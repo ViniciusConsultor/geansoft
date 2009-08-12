@@ -18,7 +18,7 @@ namespace Gean.Utility
         /// <summary>
         /// 用RAR命令行执行程序解压指定的压缩文件
         /// </summary>
-        /// <param name="compressionFile">指定的压缩文件</param>
+        /// <param name="compressionFile">指定的待解压缩文件</param>
         /// <returns>返回解压后的目录及文件数等相关信息</returns>
         public static string UnRar(string compressionFile)
         {
