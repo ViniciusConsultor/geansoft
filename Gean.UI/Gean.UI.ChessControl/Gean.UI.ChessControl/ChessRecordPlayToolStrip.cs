@@ -46,6 +46,18 @@ namespace Gean.UI.ChessControl
 
         #region IRecordPlay 成员
 
+        public IActiveGame ActiveGame
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public void Forward()
         {
             throw new NotImplementedException();
@@ -87,10 +99,12 @@ namespace Gean.UI.ChessControl
         }
 
         #endregion
+
     }
 
     public interface IRecordPlay
     {
+        IActiveGame ActiveGame { get; set; }
         void Forward();
         void Back();
         void FastForward();
@@ -109,5 +123,7 @@ namespace Gean.UI.ChessControl
     public interface IActiveGame
     {
         ChessGame ActiveGame { get; }
+        int CurrChessStepPair { get; }
+        Enums.ChessmanSide CurrChessmanSide { get; }
     }
 }

@@ -29,12 +29,12 @@ namespace Gean.UI.ChessControl.Demo
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
             this._board.PlayPairEvent += new ChessBoard.PlayPairEventHandler(_board_PlayPairEvent);
 
-            this.WindowState = FormWindowState.Maximized;
-
             ChessRecordPlayToolStrip strip = new ChessRecordPlayToolStrip();
 
             this._stripContainer.TopToolStripPanel.Controls.Add(strip);
             this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
+
+            this.WindowState = FormWindowState.Normal;
         }
 
 
