@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.PlugTree.PlugFileCreator", "Gean.Wrapper.PlugTree.PlugFileCreator\Gean.Wrapper.PlugTree.PlugFileCreator.csproj", "{C6CA9778-47F8-49FB-BB1E-41CB6A6BBA91}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.PlugTree", "Gean.Wrapper.PlugTree\Gean.Wrapper.PlugTree.csproj", "{02FCE16E-7F04-465B-BB02-57FE59257660}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6CA9778-47F8-49FB-BB1E-41CB6A6BBA91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6CA9778-47F8-49FB-BB1E-41CB6A6BBA91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6CA9778-47F8-49FB-BB1E-41CB6A6BBA91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6CA9778-47F8-49FB-BB1E-41CB6A6BBA91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02FCE16E-7F04-465B-BB02-57FE59257660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02FCE16E-7F04-465B-BB02-57FE59257660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02FCE16E-7F04-465B-BB02-57FE59257660}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -22,9 +28,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
