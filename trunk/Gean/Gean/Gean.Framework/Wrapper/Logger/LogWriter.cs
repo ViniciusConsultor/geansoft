@@ -18,11 +18,10 @@ namespace Gean
         /// <param name="logfiles">日志记录的文件</param>
         private LogWriter(string logfile)
         {
-            StreamWriter sw;
             if (!File.Exists(logfile))//如果Log文件存在，将不在保留
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(logfile)));
-                sw = FileCreator(logfile);
+                Stream = FileCreator(logfile);
             }
             else
             {
@@ -35,7 +34,7 @@ namespace Gean
                 {
                     logfile += ".log";
                 }
-                sw = LogWriter.FileCreator(logfile);
+                Stream = LogWriter.FileCreator(logfile);
             }
             this.LogFile = new FileInfo(logfile);
         }
@@ -51,12 +50,12 @@ namespace Gean
             {
                 StringBuilder sb = new StringBuilder();
                 //加入时间信息
-                sb.Append(DateTime.Now.ToString("MM-dd HH:mm:ss"))
+                sb.Append(DateTime.Now.ToString("yyMMdd HH:mm:ss"))
                   .Append(" ")
                   .Append(DateTime.Now.Millisecond.ToString())
                   .Append(",\t")
                   .Append(logLevel.ToString())
-                  .Append(",\t");
+                  .Append(",   \t");
                 //使用者附加的Log信息
                 foreach (object item in message)
                 {
@@ -100,7 +99,7 @@ namespace Gean
         private static StreamWriter FileCreator(string file)
         {
             StreamWriter sw;
-            string begin = string.Format("### {0} {1} ###\r\n=====\t=====\t=====\r\n", DateTime.Now, DateTime.Now.Millisecond);
+            string begin = string.Format("### {0} {1} ###\r\n==========\t\t=====\t\t==========\r\n", DateTime.Now, DateTime.Now.Millisecond);
             File.AppendAllText(file, begin, Encoding.UTF8);
             sw = File.AppendText(file);
             return sw;
