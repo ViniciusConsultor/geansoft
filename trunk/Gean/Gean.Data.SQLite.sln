@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.SQLite", "Gean.Data.SQLite\Gean.Data.SQLite\Gean.Data.SQLite.csproj", "{081E4DB7-421A-46B3-8D95-138A9422381D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.SQLite.Demo", "Gean.Data.SQLite\Gean.Data.SQLite.Demo\Gean.Data.SQLite.Demo.csproj", "{F1D439FF-A4E5-41DA-8556-6154825AC9E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{081E4DB7-421A-46B3-8D95-138A9422381D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081E4DB7-421A-46B3-8D95-138A9422381D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081E4DB7-421A-46B3-8D95-138A9422381D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081E4DB7-421A-46B3-8D95-138A9422381D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D439FF-A4E5-41DA-8556-6154825AC9E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D439FF-A4E5-41DA-8556-6154825AC9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D439FF-A4E5-41DA-8556-6154825AC9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D439FF-A4E5-41DA-8556-6154825AC9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
