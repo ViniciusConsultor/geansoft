@@ -134,7 +134,7 @@
     <comment>Argument Exception message thrown by Board Class.</comment>
   </data>
   <data name="ex_pieceNotInGame" xml:space="preserve">
-    <value>This piece is no longer in the game.</value>
-    <comment>Application Exception message thrown by BasePieceClass</comment>
+    <value>This chessman is no longer in the game.</value>
+    <comment>Application Exception message thrown by ChessmanClass</comment>
   </data>
 </root>

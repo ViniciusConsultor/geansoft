@@ -22,14 +22,14 @@ namespace Gean.Wrapper.Chess {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ChessStringResource {
+    internal class ExceptionString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ChessStringResource() {
+        internal ExceptionString() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Gean.Wrapper.Chess {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Wrapper.Chess.ChessStringResource", typeof(ChessStringResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Wrapper.Chess.ExceptionString", typeof(ExceptionString).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -97,7 +97,7 @@ namespace Gean.Wrapper.Chess {
         }
         
         /// <summary>
-        ///   查找类似 This piece is no longer in the game. 的本地化字符串。
+        ///   查找类似 This chessman is no longer in the game. 的本地化字符串。
         /// </summary>
         internal static string ex_pieceNotInGame {
             get {

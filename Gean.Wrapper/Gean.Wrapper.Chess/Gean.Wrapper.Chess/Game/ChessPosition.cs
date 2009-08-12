@@ -63,7 +63,7 @@ namespace Gean.Wrapper.Chess
             set
             {
                 if (!_hRegex.Match(value.ToString()).Success)
-                    throw new ArgumentException(ChessStringResource.ex_illegalHorizontalValue, "horizontal");
+                    throw new ArgumentException(ExceptionString.ex_illegalHorizontalValue, "horizontal");
                 _horizontal = value;
                 _x = Utility.CharToInt(value) - 1;
 
@@ -79,7 +79,7 @@ namespace Gean.Wrapper.Chess
             set
             {
                 if (!_vRegex.Match(value.ToString()).Success)
-                    throw new ArgumentException(ChessStringResource.ex_illegalVerticalValue, "vertical");
+                    throw new ArgumentException(ExceptionString.ex_illegalVerticalValue, "vertical");
                 _vertical = value;
                 _y = (value - 1);
             }
@@ -96,7 +96,7 @@ namespace Gean.Wrapper.Chess
                     _horizontal = Utility.IntToChar(value + 1);
                 }
                 else
-                    throw new ArgumentException(ChessStringResource.ex_illegalXCoordinateValue, "X");
+                    throw new ArgumentException(ExceptionString.ex_illegalXCoordinateValue, "X");
             }
         }
 
@@ -111,7 +111,7 @@ namespace Gean.Wrapper.Chess
                     _vertical = (value + 1);
                 }
                 else
-                    throw new ArgumentException(ChessStringResource.ex_illegalYCoordinateValue, "Y");
+                    throw new ArgumentException(ExceptionString.ex_illegalYCoordinateValue, "Y");
             }
         }
 

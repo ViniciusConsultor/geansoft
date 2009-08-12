@@ -40,10 +40,10 @@
     <Compile Include="Base\BitBoard.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
-    <Compile Include="ChessStringResource.Designer.cs">
+    <Compile Include="ExceptionString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ChessStringResource.resx</DependentUpon>
+      <DependentUpon>ExceptionString.resx</DependentUpon>
     </Compile>
     <Compile Include="Game\ChessPosition.cs" />
     <Compile Include="Game\IStepTree.cs" />
@@ -97,9 +97,9 @@
     <Compile Include="Reader\FenChessmans.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ChessStringResource.resx">
+    <EmbeddedResource Include="ExceptionString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ChessStringResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>ExceptionString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
