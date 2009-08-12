@@ -30,5 +30,10 @@ namespace Gean.Wrapper.Chess
                 action = Enums.Action.General;
             return true;
         }
+
+        public static ChessPosition GetSourcePosition(ChessStep step, Enums.ChessmanSide chessmanSide, ChessGame chessGame)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

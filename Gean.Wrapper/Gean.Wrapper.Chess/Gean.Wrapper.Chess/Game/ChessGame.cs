@@ -24,6 +24,12 @@ namespace Gean.Wrapper.Chess
             this.LoadGrids();
             this.Record = new ChessRecord();
         }
+        public ChessGame(ChessRecord record)
+        {
+            this.ChessGrids = new ChessGrid[8, 8];
+            this.LoadGrids();
+            this.Record = record;
+        }
 
         /// <summary>
         /// 获取本局棋的记录

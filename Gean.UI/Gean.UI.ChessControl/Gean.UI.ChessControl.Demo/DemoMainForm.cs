@@ -34,7 +34,7 @@ namespace Gean.UI.ChessControl.Demo
             this._stripContainer.TopToolStripPanel.Controls.Add(strip);
             this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
 
-            this.WindowState = FormWindowState.Normal;
+            this.WindowState = FormWindowState.Maximized;
         }
 
 
