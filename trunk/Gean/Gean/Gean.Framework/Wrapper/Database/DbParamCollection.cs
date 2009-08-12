@@ -52,6 +52,11 @@ namespace Gean.Data
            return _params.Contains(item);
         }
 
+        public bool RemoveAt(int index)
+        {
+            return _params.RemoveAt(index);
+        }
+
         public bool Remove(DbParam item)
         {
             return _params.Remove(item);
