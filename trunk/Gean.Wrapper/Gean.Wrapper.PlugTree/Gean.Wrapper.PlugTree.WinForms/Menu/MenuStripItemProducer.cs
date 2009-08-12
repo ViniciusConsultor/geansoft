@@ -30,8 +30,8 @@ namespace Gean.Wrapper.PlugTree.WinForms
 
         void _MenuItem_Click(object sender, EventArgs e)
         {
-            IRun run = PlugTree.Runners[this.Name];
-            run.Run();
+            //IRun run = PlugTree.Runners[this.Name];
+            //run.Run();
         }
     }
 }

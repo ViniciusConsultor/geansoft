@@ -35,38 +35,38 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
         {
             XmlDocument doc = new XmlDocument();
             doc.Load("Definers.xml");
-            Definers definers;
+            //Definer definers;
 
-            definers = Definers.Parse(doc.DocumentElement.SelectSingleNode("element").ChildNodes);
-            this._Listbox.Items.Add("XmlNodeList");
-            foreach (KeyValuePair<string,object> item in definers)
-            {
-                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
-            }
+            //definers = Definer.Parse(doc.DocumentElement.SelectSingleNode("element").ChildNodes);
+            //this._Listbox.Items.Add("XmlNodeList");
+            //foreach (KeyValuePair<string,object> item in definers)
+            //{
+            //    this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            //}
 
-            definers = Definers.Parse(doc.DocumentElement.SelectSingleNode("attributes").Attributes);
-            this._Listbox.Items.Add("XmlAttributeCollection");
-            foreach (KeyValuePair<string, object> item in definers)
-            {
-                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
-            }
+            //definers = Definers.Parse(doc.DocumentElement.SelectSingleNode("attributes").Attributes);
+            //this._Listbox.Items.Add("XmlAttributeCollection");
+            //foreach (KeyValuePair<string, object> item in definers)
+            //{
+            //    this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            //}
 
-            definers = Definers.Parse((XmlElement)doc.DocumentElement.SelectSingleNode("ele_att"));
-            this._Listbox.Items.Add("XmlElement");
-            foreach (KeyValuePair<string, object> item in definers)
-            {
-                this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
-            }
+            //definers = Definers.Parse((XmlElement)doc.DocumentElement.SelectSingleNode("ele_att"));
+            //this._Listbox.Items.Add("XmlElement");
+            //foreach (KeyValuePair<string, object> item in definers)
+            //{
+            //    this._Listbox.Items.Add(string.Format("{0} | {1}", item.Key, item.Value as string));
+            //}
 
-            string filename = "Definers.Save.Test.xml";
-            definers.Save(filename);
+            //string filename = "Definers.Save.Test.xml";
+            //definers.Save(filename);
 
-            doc.Load(filename);
-            this._Listbox.Items.Add("XML Save:");
-            this._Listbox.Items.Add(doc.DocumentElement.InnerXml);
-            FileInfo fi = new FileInfo(filename);
-            string fileinfo = fi.FullName + "\r\n" + fi.Length + "\r\n" + fi.LastWriteTime.ToLongTimeString() + "\r\n";
-            MessageBox.Show(fileinfo + doc.DocumentElement.InnerXml);
+            //doc.Load(filename);
+            //this._Listbox.Items.Add("XML Save:");
+            //this._Listbox.Items.Add(doc.DocumentElement.InnerXml);
+            //FileInfo fi = new FileInfo(filename);
+            //string fileinfo = fi.FullName + "\r\n" + fi.Length + "\r\n" + fi.LastWriteTime.ToLongTimeString() + "\r\n";
+            //MessageBox.Show(fileinfo + doc.DocumentElement.InnerXml);
         }
         /// <summary>
         /// PlugPath类型的Demo方法
@@ -76,7 +76,7 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
             XmlDocument doc = new XmlDocument();
             doc.Load("PlugPaths.xml");
 
-            PlugPath paths = DemoService.ScanPlugPath(doc);
+            PlugPath paths = null;// = DemoService.ScanPlugPath(doc);
 
             TreeNode treenode = new TreeNode();
             this.BuildTreeNode(paths, treenode);
@@ -90,10 +90,10 @@ namespace Gean.Wrapper.PlugTree.DemoApplicationForm
             node.Text = paths.Name;
             if (paths.HasChildPathItems)
             {
-                foreach (PlugPath item in paths.PlugPaths)
+                foreach (PlugPath item in paths.PlugPathItems)
                 {
                     TreeNode subnode = new TreeNode();
-                    if (item.Plugs != null)
+                    if (item.PlugItems != null)
                     {
                         subnode.BackColor = Color.Goldenrod;
                     }

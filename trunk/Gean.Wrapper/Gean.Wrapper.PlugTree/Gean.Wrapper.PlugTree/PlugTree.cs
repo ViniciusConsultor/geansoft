@@ -138,7 +138,7 @@ namespace Gean.Wrapper.PlugTree
             }
 
             //程序集所在路径
-            string filepath = Path.Combine(UtilityFile.GetDirectoryByFilepath(docPath), assName);
+            string filepath = Path.Combine(Path.GetDirectoryName(docPath), assName);
             Debug.Assert(File.Exists(filepath), "Gean: File not found.");
             Assembly assembly = Assembly.LoadFile(filepath);
 

@@ -23,13 +23,13 @@
     </Import>
 	</Runtime>
 	
-	<Path name = "/Gean/Ambiences">
+	<Path name = "/SharpDevelop/Workbench/Ambiences">
 		<Class id    = ".NET"
 		       class = "ICSharpCode.SharpDevelop.NetAmbience"/>
 	</Path>
 	
 	<!-- Main Menu -->
-	<Path name = "/Gean/MainMenu">
+	<Path name = "/SharpDevelop/Workbench/MainMenu">
 		<MenuItem id = "File" label    = "${res:XML.MainMenu.FileMenu}" type="Menu">
 			<MenuItem id = "New" label = "${res:XML.MainMenu.FileMenu.New}" type="Menu">
 				<MenuItem id           = "File"

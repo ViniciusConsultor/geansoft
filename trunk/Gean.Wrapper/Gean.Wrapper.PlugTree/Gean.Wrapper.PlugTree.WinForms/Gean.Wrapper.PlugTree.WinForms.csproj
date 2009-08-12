@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C90B2B81-5DA9-4AB8-A78E-B10AEBEB0DE7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -46,7 +46,7 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Gean\Gean\Gean.csproj">
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
