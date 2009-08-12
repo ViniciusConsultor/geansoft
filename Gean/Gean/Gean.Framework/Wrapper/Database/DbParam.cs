@@ -15,80 +15,21 @@ namespace Gean.Data
     [Serializable]
     public class DbParam
     {
-        #region 字段定义
         /// <summary>
         /// 参数名
         /// </summary>
-        private string _paramName;
+        public string ParamName { get; set; }
 
         /// <summary>
         /// 参数的类型
         /// </summary>
-        private DbType _type;
+        public DbType Type { get; set; }
 
         /// <summary>
         /// 参数的值
         /// </summary>
-        private object _value;
+        public object Value { get; set; }
 
-        #endregion
-
-        #region 属性
-
-        #region 参数名
-        /// <summary>
-        /// 参数名
-        /// </summary>
-        public string ParamName
-        {
-            get
-            {
-                return _paramName;
-            }
-            set
-            {
-                _paramName = value;
-            }
-        }
-        #endregion
-
-        #region 参数的类型
-        /// <summary>
-        /// 参数的类型
-        /// </summary>
-        public DbType Type
-        {
-            get
-            {
-                return _type;
-            }
-            set
-            {
-                _type = value;
-            }
-        }
-        #endregion
-
-        #region 参数的值
-        /// <summary>
-        /// 参数的值
-        /// </summary>
-        public object Value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                _value = value;
-            }
-        }
-        #endregion
-
-        #endregion
-
-        #region 构造函数
         /// <summary>
         /// 初始化对象
         /// </summary>
@@ -102,12 +43,11 @@ namespace Gean.Data
         /// <param name="paramName">参数名</param>
         /// <param name="type">参数的类型</param>
         /// <param name="value">参数的值</param>
-        public DbParam( string paramName, DbType type, object value )
+        public DbParam(string paramName, DbType type, object value)
         {
-            _paramName = paramName;
-            _type = type;
-            _value = value;
+            this.ParamName = paramName;
+            this.Type = type;
+            this.Value = value;
         }
-        #endregion
     }
 }
