@@ -11,43 +11,85 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum Action
         {
+            General = 0,
+            ///// <summary>
+            ///// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
+            ///// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
+            ///// </summary>
+            Check = 1,
             /// <summary>
-            /// 无效动作
+            /// 伙伴
             /// </summary>
-            Invalid = 0,
-            /// <summary>
-            /// 普通棋招
-            /// </summary>
-            General = 1,
-            /// <summary>
-            /// 有棋被杀死
-            /// </summary>
-            Kill = 2,
-            /// <summary>
-            /// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
-            /// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
-            /// </summary>
-            Check = 4,
-            /// <summary>
-            /// 王车短易位
-            /// </summary>
-            KingSideCastling = 8,
-            /// <summary>
-            /// 王车长易位
-            /// </summary>
-            QueenSideCastling = 16,
-            /// <summary>
-            /// 开局摆棋
-            /// </summary>
-            Opennings = 32,
-            /// <summary>
-            /// 升变
-            /// </summary>
-            Promotion = 64,
-            /// <summary>
-            /// 吃过路兵
-            /// </summary>
+            Mate = 2,
+            ///// <summary>
+            ///// 有棋被杀死(捕获, 夺得, 俘获) 
+            ///// </summary>
+            Capture = 4,
+            PromoteToQueen = 8,
+            PromoteToRook = 16,
+            PromoteToKnight = 32,
+            PromoteToBishop = 64,
             EnPassant = 128,
+            ///// <summary>
+            ///// 王车长易位
+            ///// </summary>
+            QueenSideCastling = 256,
+            ///// <summary>
+            ///// 王车短易位
+            ///// </summary>
+            KingSideCastling = 512,
+            PawnCapture = 1024,
+            KnightCapture = 2048,
+            BishopCapture = 4096,
+            RookCapture = 8192,
+            QueenCapture = 16384,
+            BreakShortCastle = 32768,
+            BreakLongCastle = 65536,
+            NoPromotion = ~(PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
+            ///// <summary>
+            ///// 升变
+            ///// </summary>
+            Promotion = (PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
+            Castling = (QueenSideCastling | KingSideCastling),
+            Opennings = 131072,
+            Invalid = 262144,
+            ///// <summary>
+            ///// 无效动作
+            ///// </summary>
+            //Invalid = 0,
+            ///// <summary>
+            ///// 普通棋招
+            ///// </summary>
+            //General = 1,
+            ///// <summary>
+            ///// 有棋被杀死(捕获, 夺得, 俘获) 
+            ///// </summary>
+            //Capture = 2,
+            ///// <summary>
+            ///// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
+            ///// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
+            ///// </summary>
+            //Check = 4,
+            ///// <summary>
+            ///// 王车短易位
+            ///// </summary>
+            //KingSideCastling = 8,
+            ///// <summary>
+            ///// 王车长易位
+            ///// </summary>
+            //QueenSideCastling = 16,
+            ///// <summary>
+            ///// 开局摆棋
+            ///// </summary>
+            //Opennings = 32,
+            ///// <summary>
+            ///// 升变
+            ///// </summary>
+            //Promotion = 64,
+            ///// <summary>
+            ///// 吃过路兵
+            ///// </summary>
+            //EnPassant = 128,
         }
 
         /// <summary>
@@ -506,5 +548,124 @@ namespace Gean.Wrapper.Chess
             return aPiece;
         }
 
+        /// <summary>
+        /// The piece containined in a square
+        /// To describe the part only 4 bit is necessary ( this is significant only for move packing )
+        /// The part color is maskable with the part.
+        /// </summary>
+        public enum BitChessman
+        {
+            PieceMask = 0xF,
+            None = 0,
+            Pawn = 1,
+            Knight = 2,
+            King = 3,
+            Rook = 4,
+            Bishop = 8,
+            Queen = 12,
+            /// <summary>
+            /// 所有方向 = Queen
+            /// </summary>
+            IsSliding = 12,
+            /// <summary>
+            /// 斜向 = Bishop
+            /// </summary>
+            DiagonalSliding = 8,
+            /// <summary>
+            /// 直向 = Rook
+            /// </summary>
+            StraightSliding = 4,
+            White = 16,
+            Black = 32
+        }
+
+        public enum Promotion
+        {
+            None = 0,
+            Knight = 1,
+            Bishop = 2,
+            Rook = 3,
+            Queen = 4
+        }
+
+        /// <summary>
+        /// Enumerate the cells... the enum value is an index in the 0x88 board
+        /// </summary>
+        public enum Cell
+        {
+            a1 = 0,
+            b1 = 1,
+            c1 = 2,
+            d1 = 3,
+            e1 = 4,
+            f1 = 5,
+            g1 = 6,
+            h1 = 7,
+
+            a2 = 16,
+            b2 = 17,
+            c2 = 18,
+            d2 = 19,
+            e2 = 20,
+            f2 = 21,
+            g2 = 22,
+            h2 = 23,
+
+            a3 = 32,
+            b3 = 33,
+            c3 = 34,
+            d3 = 35,
+            e3 = 36,
+            f3 = 37,
+            g3 = 38,
+            h3 = 39,
+
+            a4 = 48,
+            b4 = 49,
+            c4 = 50,
+            d4 = 51,
+            e4 = 52,
+            f4 = 53,
+            g4 = 54,
+            h4 = 55,
+
+            a5 = 64,
+            b5 = 65,
+            c5 = 66,
+            d5 = 67,
+            e5 = 68,
+            f5 = 69,
+            g5 = 70,
+            h5 = 71,
+
+            a6 = 80,
+            b6 = 81,
+            c6 = 82,
+            d6 = 83,
+            e6 = 84,
+            f6 = 85,
+            g6 = 86,
+            h6 = 87,
+
+            a7 = 96,
+            b7 = 97,
+            c7 = 98,
+            d7 = 99,
+            e7 = 100,
+            f7 = 101,
+            g7 = 102,
+            h7 = 103,
+
+            a8 = 112,
+            b8 = 113,
+            c8 = 114,
+            d8 = 115,
+            e8 = 116,
+            f8 = 117,
+            g8 = 118,
+            h8 = 119,
+
+            Invalid = 0x88
+        }
     }
 }

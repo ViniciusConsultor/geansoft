@@ -29,8 +29,21 @@ namespace Gean.Wrapper.Chess
         }
         public override string ToString()
         {
-            return string.Format("Side: {0} , Type: {1}", this.ChessmanSide.ToString(), this.ChessmanType.ToString());
+            string side = string.Empty;
+            switch (this.ChessmanSide)
+            {
+                case Enums.ChessmanSide.White:
+                    side = "W";
+                    break;
+                case Enums.ChessmanSide.Black:
+                    side = "B";
+                    break;
+                case Enums.ChessmanSide.None:
+                default:
+                    break;
+            }
+            string type = Enums.ChessmanTypeToString(this.ChessmanType);
+            return string.Format("{0}{1}", side, type);
         }
-
     }
 }

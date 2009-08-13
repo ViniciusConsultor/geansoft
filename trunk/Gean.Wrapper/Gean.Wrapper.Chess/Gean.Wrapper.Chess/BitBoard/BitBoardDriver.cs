@@ -4,27 +4,8 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Gean.Wrapper.Chess.Engine
+namespace Gean.Wrapper.Chess
 {
-
-    public interface IBitBoard
-    {
-        unsafe ulong* RawData { get; }
-        int Flags { get; }
-        void DoMove(int move);
-        void UndoMove(int move);
-       Enums.ChessmanSide ToMove { get; }
-        ulong GetPawns(Enums.ChessmanSide s);
-        ulong GetKnights(Enums.ChessmanSide s);
-        ulong GetBishops(Enums.ChessmanSide s);
-        ulong GetRooks(Enums.ChessmanSide s);
-        ulong GetQueens(Enums.ChessmanSide s);
-        ulong GetKing(Enums.ChessmanSide s);
-        void SetBoard(string fen);
-        string SavePos();
-        void Dump(TextWriter tw);
-    }
-
     public class BitBoardDriver
     {
         public BitBoardDriver(IBitBoard IBitBoard, IMoveGenerator IMoveGenerator)
@@ -777,9 +758,9 @@ namespace Gean.Wrapper.Chess.Engine
                 return move;
             }
         }*/
-        //private static MoveFlag ToFlag(string p)
+        //private static Enums.Action ToFlag(string p)
         /*{
-            MoveFlag f = MoveFlag.Nothing;
+            Enums.Action f = Enums.Action.Nothing;
             if (!string.IsNullOrEmpty(p))
             {
                 foreach (char c in p.ToLower())
@@ -787,32 +768,32 @@ namespace Gean.Wrapper.Chess.Engine
                     switch (c)
                     {
                         case '+':
-                            f |= MoveFlag.Check;
+                            f |= Enums.Action.Check;
                             break;
                         case '#':
-                            f |= MoveFlag.Mate;
+                            f |= Enums.Action.Mate;
                             break;
                         case 'x':
                         case ':':
-                            f |= MoveFlag.Capture;
+                            f |= Enums.Action.Capture;
                             break;
                         case 'q':
-                            f |= MoveFlag.PromoteToQueen;
+                            f |= Enums.Action.PromoteToQueen;
                             break;
                         case 'r':
-                            f |= MoveFlag.PromoteToRook;
+                            f |= Enums.Action.PromoteToRook;
                             break;
                         case 'n':
-                            f |= MoveFlag.PromoteToKnight;
+                            f |= Enums.Action.PromoteToKnight;
                             break;
                         case 'b':
-                            f |= MoveFlag.PromoteToBishop;
+                            f |= Enums.Action.PromoteToBishop;
                             break;
                     }
                 }
             }
             else
-                return MoveFlag.Nothing;
+                return Enums.Action.Nothing;
             return f;
         }*/
 

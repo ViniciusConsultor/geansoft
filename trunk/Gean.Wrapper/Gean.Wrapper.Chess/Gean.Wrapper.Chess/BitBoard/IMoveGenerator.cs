@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Wrapper.Chess.Engine
+namespace Gean.Wrapper.Chess
 {
-    
+
     public enum MoveGenerationMode
     {
         All,
@@ -19,14 +19,13 @@ namespace Gean.Wrapper.Chess.Engine
         List<BitMove> GetMoves(Enums.ChessmanSide c, BitBoardDriver board, MoveGenerationMode mode);
         ulong GetPawnCaptures(int square, Enums.ChessmanSide color, BitBoardDriver board);
         ulong GetPawnMoves(Enums.ChessmanSide color, ulong mask, BitBoardDriver board);
-        ulong GetKnightAttacks(int square,  BitBoardDriver board);
-        ulong GetBishopAttacks(int square,  BitBoardDriver board);
-        ulong GetRookAttacks(int square,  BitBoardDriver board);
-        ulong GetQueenAttacks(int square,  BitBoardDriver board);
-        ulong GetKingAttacks(int square,  BitBoardDriver board);
-        
+        ulong GetKnightAttacks(int square, BitBoardDriver board);
+        ulong GetBishopAttacks(int square, BitBoardDriver board);
+        ulong GetRookAttacks(int square, BitBoardDriver board);
+        ulong GetQueenAttacks(int square, BitBoardDriver board);
+        ulong GetKingAttacks(int square, BitBoardDriver board);
     }
-    
+
     public interface IMoveGenerator
     {
         /// <summary>
