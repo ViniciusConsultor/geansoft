@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Wrapper.Chess
+namespace Gean.Wrapper.Chess.Engine
 {
-    /*
+    
     public enum MoveGenerationMode
     {
         All,
         OnlyCaptures,
         OnlyQuiescent
-    }*/
+    }
+
     public interface IMoveGeneratorOld
     {
         void Init();
-        List<BitMove> GetMoves(Enums.ChessmanSide c, BitBoardDriver board);
-        List<BitMove> GetMoves(Enums.ChessmanSide c, BitBoardDriver board, MoveGenerationMode mode);
-        ulong GetPawnCaptures(int square, Enums.ChessmanSide color, BitBoardDriver board);
-        ulong GetPawnMoves(Enums.ChessmanSide color, ulong mask, BitBoardDriver board);
+        List<BitMove> GetMoves(Side c, BitBoardDriver board);
+        List<BitMove> GetMoves(Side c, BitBoardDriver board, MoveGenerationMode mode);
+        ulong GetPawnCaptures(int square, Side color, BitBoardDriver board);
+        ulong GetPawnMoves(Side color, ulong mask, BitBoardDriver board);
         ulong GetKnightAttacks(int square,  BitBoardDriver board);
         ulong GetBishopAttacks(int square,  BitBoardDriver board);
         ulong GetRookAttacks(int square,  BitBoardDriver board);
         ulong GetQueenAttacks(int square,  BitBoardDriver board);
         ulong GetKingAttacks(int square,  BitBoardDriver board);
+        
     }
     
     public interface IMoveGenerator
@@ -42,7 +44,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="board">the position</param>
         /// <param name="side">the side to check</param>
         /// <returns>returns true if the side is in check</returns>
-        bool InCheck(IBitBoard board, Enums.ChessmanSide side);
+        bool InCheck(IBitBoard board, Side side);
         /// <summary>
         /// Check if a set of squares is in check from the point of view of Side
         /// </summary>
@@ -50,7 +52,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="cells">the cells to check</param>
         /// <param name="side">the side</param>
         /// <returns>return true if at least one of the cell is in check by the point of view of side</returns>
-        bool InCheck(IBitBoard board, int[] cells, Enums.ChessmanSide side);
+        bool InCheck(IBitBoard board, int[] cells, Side side);
         /// <summary>
         /// Check move legality *WITHOUT CHECK CONTROL*
         /// Probe for castling validity and the move does not capture the king...
