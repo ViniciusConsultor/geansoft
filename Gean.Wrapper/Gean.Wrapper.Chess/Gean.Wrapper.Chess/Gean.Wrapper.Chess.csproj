@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,6 +41,10 @@
     <Compile Include="Base\BitBoard.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
+    <Compile Include="BitBoard\BitBoardDriver.cs" />
+    <Compile Include="BitBoard\BitMove.cs" />
+    <Compile Include="BitBoard\IBitBoard.cs" />
+    <Compile Include="BitBoard\IMoveGenerator.cs" />
     <Compile Include="ExceptionString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,6 +113,9 @@
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BitBoard\BitBoardDriver.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

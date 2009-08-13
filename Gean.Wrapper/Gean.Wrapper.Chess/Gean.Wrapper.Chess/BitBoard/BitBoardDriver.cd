@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Wrapper.Chess.BitBoardDriver">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <Members>
+      <Method Name="Bindex" Hidden="true" />
+      <Method Name="BitBoardDriver" Hidden="true" />
+      <Method Name="BuildZobristKeyGen" Hidden="true" />
+      <Method Name="ToFlag" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Gean.Wrapper.Chess.BitBoardDriver.GamePhase" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>BitBoard\Bitboard.PieceSquare.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>iBBBgACAARAIHgACoAUIigEUyUByFCQQIAMRECBAKCI=</HashCode>
+      <FileName>BitBoard\Bitboard.PieceSquare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
