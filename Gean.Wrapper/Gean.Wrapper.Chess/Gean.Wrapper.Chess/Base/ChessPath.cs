@@ -25,7 +25,7 @@ namespace Gean.Wrapper.Chess
 
 
             if (!Chessman.IsNullOrEmpty(targetGrid.Occupant))
-                action = Enums.Action.Kill;
+                action = Enums.Action.Capture;
             else
                 action = Enums.Action.General;
             return true;

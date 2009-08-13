@@ -72,7 +72,7 @@ namespace Gean.Wrapper.Chess
                 case Enums.Action.Check:
                     this.MoveInByGeneralAction(game, chessman);
                     break;
-                case Enums.Action.Kill:
+                case Enums.Action.Capture:
                     this.MoveInByKillAction(game, chessman);
                     break;
                 case Enums.Action.KingSideCastling:

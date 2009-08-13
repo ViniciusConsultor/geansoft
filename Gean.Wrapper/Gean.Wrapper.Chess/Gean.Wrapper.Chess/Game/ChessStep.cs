@@ -116,7 +116,7 @@ namespace Gean.Wrapper.Chess
                 switch (action)
                 {
                     #region case
-                    case Enums.Action.Kill:
+                    case Enums.Action.Capture:
                         sb.Insert(0, 'x');
                         break;
                     case Enums.Action.Check:
@@ -155,7 +155,7 @@ namespace Gean.Wrapper.Chess
             {
                 sb.Insert(0, Enums.ChessmanTypeToString(this.ChessmanType));
             }
-            else if (this.ChessmanType == Enums.ChessmanType.Pawn && this.Actions.Contains(Enums.Action.Kill))
+            else if (this.ChessmanType == Enums.ChessmanType.Pawn && this.Actions.Contains(Enums.Action.Capture))
             {
                 if (SourcePosition != ChessPosition.Empty)
                     sb.Insert(0, SourcePosition.Horizontal);
@@ -179,7 +179,7 @@ namespace Gean.Wrapper.Chess
                 }
                 else
                 {
-                    if (!this.Actions.Contains(Enums.Action.Kill))
+                    if (!this.Actions.Contains(Enums.Action.Capture))
                     {
                         switch (_hasSame)
                         {
@@ -330,7 +330,7 @@ namespace Gean.Wrapper.Chess
             {
                 #region
 
-                actionList.Add(Enums.Action.Kill);
+                actionList.Add(Enums.Action.Capture);
                 ChessStep.ParseSrcPos(value.Substring(0, i), value.Substring(i + 1), manSide,
                                         out manType, out srcPos, out hasSame, out sameHorizontal, out sameVertical);
                 value = value.Substring(i + 1);
