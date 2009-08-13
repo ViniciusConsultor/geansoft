@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessRecordCollection : IList<ChessRecord>, IGameReaderEvents
+    public class ChessRecordCollection : IList<ChessRecord>, IPGNReaderEvents
     {
 
         private List<ChessRecord> _chessRecords = new List<ChessRecord>();
@@ -19,18 +19,18 @@ namespace Gean.Wrapper.Chess
         private ChessComment _tmpComment;
         private IStepTree _tmpTree = null;
 
-        public void NewGame(IGameReader iParser)
+        public void NewGame(IPGNReader iParser)
         {
             _states = new Stack();
             _tmpTree = new ChessRecord();
             _chessRecords.Add((ChessRecord)_tmpTree);
         }
 
-        public void ExitHeader(IGameReader iParser)
+        public void ExitHeader(IPGNReader iParser)
         {
         }
 
-        public void EnterVariation(IGameReader iParser)
+        public void EnterVariation(IPGNReader iParser)
         {
             _states.Push(_lastNumber);
             if (_tmpPair != null)
@@ -58,9 +58,9 @@ namespace Gean.Wrapper.Chess
             }
         }
 
-        public void ExitVariation(IGameReader iParser)
+        public void ExitVariation(IPGNReader iParser)
         {
-            if (iParser.State != Enums.GameReaderState.Number)
+            if (iParser.State != Enums.PGNReaderState.Number)
                 MoveParsed(iParser);
             if (_tmpPair != null)
             {
@@ -71,11 +71,11 @@ namespace Gean.Wrapper.Chess
             _lastNumber = (string)_states.Pop();
         }
 
-        public void Starting(IGameReader iParser)
+        public void Starting(IPGNReader iParser)
         {
         }
 
-        public void Finished(IGameReader iParser)
+        public void Finished(IPGNReader iParser)
         {
             if (_tmpPair != null)
             {
@@ -85,7 +85,7 @@ namespace Gean.Wrapper.Chess
             _states = new Stack();
         }
 
-        public void TagParsed(IGameReader iParser)
+        public void TagParsed(IPGNReader iParser)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Gean.Wrapper.Chess
             }
         }
 
-        public void NagParsed(IGameReader iParser)
+        public void NagParsed(IPGNReader iParser)
         {
             if (_tmpPair != null)
             {
@@ -108,9 +108,9 @@ namespace Gean.Wrapper.Chess
             _tmpTree.Items.Add(nag);
         }
 
-        public void MoveParsed(IGameReader iParser)
+        public void MoveParsed(IPGNReader iParser)
         {
-            if (iParser.State == Enums.GameReaderState.Number)
+            if (iParser.State == Enums.PGNReaderState.Number)
             {
                 if (_tmpPair == null)
                 {
@@ -119,12 +119,12 @@ namespace Gean.Wrapper.Chess
                     _tmpPair.Number = int.Parse(_lastNumber);
                 }
             }
-            else if (iParser.State == Enums.GameReaderState.White)
+            else if (iParser.State == Enums.PGNReaderState.White)
             {
                 if (_tmpPair != null)
                     _tmpPair.White = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.White);
             }
-            else if (iParser.State == Enums.GameReaderState.Black)
+            else if (iParser.State == Enums.PGNReaderState.Black)
             {
                 if (_tmpPair == null)
                 {
@@ -137,13 +137,13 @@ namespace Gean.Wrapper.Chess
             }
         }
 
-        public void CommentParsed(IGameReader iParser)
+        public void CommentParsed(IPGNReader iParser)
         {
             _tmpComment = new ChessComment(iParser.Value);
             _tmpTree.Items.Add(_tmpComment);
         }
 
-        public void EndMarker(IGameReader iParser)
+        public void EndMarker(IPGNReader iParser)
         {
             if (_tmpPair != null)
             {

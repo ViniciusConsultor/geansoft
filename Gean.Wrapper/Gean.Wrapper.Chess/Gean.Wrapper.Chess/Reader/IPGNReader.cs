@@ -8,7 +8,7 @@ namespace Gean.Wrapper.Chess
     /// present, but the interface must be delcared.
     /// <seealso cref="IGameParserEvents"/>
     /// </summary>
-    public interface IGameReader
+    public interface IPGNReader
     {
         /// <summary>
         /// Name of the fileto parse.
@@ -18,7 +18,7 @@ namespace Gean.Wrapper.Chess
         /// Show what STATE with in the parser 
         /// that is currently active.
         /// </summary>
-        Enums.GameReaderState State { get; set; }
+        Enums.PGNReaderState State { get; set; }
         /// <summary>
         /// Holds any header/game information that describes attributes
         /// of the game such as: Date, Players, ELO, ECO, Ratings, and others.
@@ -42,11 +42,11 @@ namespace Gean.Wrapper.Chess
         /// Used to register event handlers.
         /// </summary>
         /// <param name="ievents"></param>
-        void AddEvents(IGameReaderEvents ievents);
+        void AddEvents(IPGNReaderEvents ievents);
         /// <summary>
         /// Used to remove event handlers.
         /// </summary>
         /// <param name="ievents"></param>
-        void RemoveEvents(IGameReaderEvents ievents);
+        void RemoveEvents(IPGNReaderEvents ievents);
     }
 }

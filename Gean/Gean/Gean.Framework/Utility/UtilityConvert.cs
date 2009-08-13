@@ -9,6 +9,10 @@ using System.Windows.Forms;
 
 namespace Gean
 {
+    /// <summary>
+    /// 定义一些基础的转换方法(对系统方法的一些扩展)
+    /// Defines some basic conversion routines.
+    /// </summary>
     public static class UtilityConvert
     {
         /// <summary>

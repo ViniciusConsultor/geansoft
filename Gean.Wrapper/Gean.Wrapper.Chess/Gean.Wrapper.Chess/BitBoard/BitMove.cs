@@ -134,23 +134,23 @@ namespace Gean.Wrapper.Chess.Engine
 
             if ((pCell == (int)Cell.e1
                 && cCell == (int)Cell.g1
-                && 0 != (board.GetKing(Side.White) & bm.Previous)
+                && 0 != (board.GetKing(Enums.ChessmanSide.White) & bm.Previous)
                 )
                 ||
                 (pCell == (int)Cell.e8
                 && cCell == (int)Cell.g8
-                && 0 != (board.GetKing(Side.Black) & bm.Previous)
+                && 0 != (board.GetKing(Enums.ChessmanSide.Black) & bm.Previous)
                 )
                 )
                 bm.Flag |= MoveFlag.KingSideCastle;
             if ((pCell == (int)Cell.e1
                 && cCell == (int)Cell.c1
-                && 0 != (board.GetKing(Side.White) & bm.Previous)
+                && 0 != (board.GetKing(Enums.ChessmanSide.White) & bm.Previous)
                 )
                 ||
                 (pCell == (int)Cell.e8
                 && cCell == (int)Cell.c8
-                && 0 != (board.GetKing(Side.Black) & bm.Previous)
+                && 0 != (board.GetKing(Enums.ChessmanSide.Black) & bm.Previous)
                 )
                 )
                 bm.Flag |= MoveFlag.QueenSideCastle;
@@ -202,7 +202,19 @@ namespace Gean.Wrapper.Chess.Engine
     /// </summary>
     public enum PieceEnum
     {
-        PieceMask = 0xF, None = 0, Pawn = 1, Knight = 2, King = 3, Rook = 4, Bishop = 8, Queen = 12, IsSliding = 12, DiagSliding = 8, StraightSliding = 4, White = 16, Black = 32
+        PieceMask = 0xF, 
+        None = 0, 
+        Pawn = 1, 
+        Knight = 2,
+        King = 3, 
+        Rook = 4, 
+        Bishop = 8, 
+        Queen = 12, 
+        IsSliding = 12, 
+        DiagSliding = 8, 
+        StraightSliding = 4, 
+        White = 16, 
+        Black = 32
     }
 
     public enum PromotionEnum

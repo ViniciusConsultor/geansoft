@@ -8,7 +8,7 @@ namespace Gean.Wrapper.Chess
     /// For reference see: "Portable Game Notation Specification 
     /// and Implementation Guide"  section 16.1: FEN.  
     /// </summary>
-    public class FenNotation : IPosition, IPositionEvents
+    public class ChessFENReader : IFENReader, IFENReaderEvents
     {
         /// <summary>
         /// Holds our board position based on squares 0 thru 63.
@@ -17,7 +17,7 @@ namespace Gean.Wrapper.Chess
 
         #region Events
 
-        public delegate void EventPlacePiece(FenChessmans piece, int square);
+        public delegate void EventPlacePiece(Enums.FenChessmans piece, int square);
         public event EventPlacePiece EventPlacePieceHandler;
 
         /// Defines the color hooks that allow call back to set who's move it is.
@@ -161,7 +161,7 @@ namespace Gean.Wrapper.Chess
         /// Constructs a class by parsing a FEN notation string.
         /// </summary>
         /// <param name="str">A valid FEN notation data string</param>
-        public FenNotation(string str)
+        public ChessFENReader(string str)
         {
             _boardStringBuilder = new StringBuilder(64, 64);
             Parse(str);
@@ -171,7 +171,7 @@ namespace Gean.Wrapper.Chess
         /// Constructs a default FEN notation object with the board cleared,
         /// all castling available, white to move.
         /// </summary>
-        public FenNotation()
+        public ChessFENReader()
         {
             _boardStringBuilder = new StringBuilder(64, 64);
             Clear();
@@ -287,12 +287,12 @@ namespace Gean.Wrapper.Chess
                         cnt += (int)(achar - '0');
                     else
                     {
-                        if (FenConvertChessman.FromFEN(achar) != FenChessmans.None)
+                        if (Enums.FromFEN(achar) != Enums.FenChessmans.None)
                         {
                             if (cnt > 7)  // This check needed here to avoid overrunning index below under some error conditions.
                                 throw new ArgumentException("Invalid board specification, rank " + (ndx / 8 + 1) + " has more then 8 items specified.");
                             if (EventPlacePieceHandler != null)
-                                EventPlacePieceHandler(FenConvertChessman.FromFEN(achar), ndx + cnt);
+                                EventPlacePieceHandler(Enums.FromFEN(achar), ndx + cnt);
                             this[ndx + cnt] = achar;
                         }
                         cnt++;
@@ -414,7 +414,7 @@ namespace Gean.Wrapper.Chess
             throw new Exception("Not implemented for FenPosition");
         }
 
-        public void AddEvents(IPositionEvents ievents)
+        public void AddEvents(IFENReaderEvents ievents)
         {
             EventPlacePieceHandler += new EventPlacePiece(ievents.PlacePiece);
             EventSideToMoveHandler += new EventSideToMove(ievents.SetSideToMove);
@@ -425,7 +425,7 @@ namespace Gean.Wrapper.Chess
             EventFinishedHandler += new EventFinished(ievents.Finished);
             EventStartingHandler += new EventStarting(ievents.Starting);
         }
-        public void RemoveEvents(IPositionEvents ievents)
+        public void RemoveEvents(IFENReaderEvents ievents)
         {
             EventPlacePieceHandler -= new EventPlacePiece(ievents.PlacePiece);
             EventSideToMoveHandler -= new EventSideToMove(ievents.SetSideToMove);
@@ -446,9 +446,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="square"></param>
-        public void PlacePiece(FenChessmans piece, int square)
+        public void PlacePiece(Enums.FenChessmans piece, int square)
         {
-            this[square] = FenConvertChessman.ToFEN(piece);
+            this[square] = Enums.ToFEN(piece);
         }
         /// <summary>
         /// Implementation of IPositionEvents

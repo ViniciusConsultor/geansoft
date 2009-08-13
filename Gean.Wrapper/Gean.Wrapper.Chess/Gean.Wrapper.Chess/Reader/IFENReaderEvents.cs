@@ -8,7 +8,7 @@ namespace Gean.Wrapper.Chess
     /// Defines the events that the IPosition class will need to fire to allow
     ///   the proper setup of a chess position.
     /// </summary>
-    public interface IPositionEvents
+    public interface IFENReaderEvents
     {
         /// <summary>
         /// Used to inform a subscriber that a new piece needs to be
@@ -16,7 +16,7 @@ namespace Gean.Wrapper.Chess
         ///  </summary>
         /// <param name="piece"></param>
         /// <param name="square"></param>
-        void PlacePiece(FenChessmans piece, int square);
+        void PlacePiece(Enums.FenChessmans piece, int square);
         /// <summary>
         /// Used to inform a subscriber who's move it is.    
         /// </summary>

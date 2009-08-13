@@ -55,7 +55,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取当前棋步后的Fen记录
         /// </summary>
-        public FenNotation Fen { get; internal set; }
+        public ChessFENReader Fen { get; internal set; }
         /// <summary>
         /// 有同行与同列的棋子可能产生同样的棋步
         /// </summary>
