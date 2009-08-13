@@ -6,6 +6,7 @@ namespace Gean
 {
     public class Checking
     {
+
         #region IsNullOrEmpty
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Gean
         {
             return IsNullOrEmpty<object>(data);
         }
+
         #endregion
 
     }
