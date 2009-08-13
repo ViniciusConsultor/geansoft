@@ -38,11 +38,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BitBoard.cs" />
     <Compile Include="Base\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
-    <Compile Include="BitBoardDriver.cs" />
-    <Compile Include="BitMove.cs" />
+    <Compile Include="BitBoard\BitBoardDriver.cs" />
+    <Compile Include="BitBoard\BitMove.cs" />
     <Compile Include="ExceptionString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -50,21 +49,20 @@
     </Compile>
     <Compile Include="Game\ChessPosition.cs" />
     <Compile Include="Game\IStepTree.cs" />
-    <Compile Include="IBitBoard.cs" />
-    <Compile Include="IMoveGenerator.cs" />
+    <Compile Include="BitBoard\IBitBoard.cs" />
+    <Compile Include="BitBoard\IMoveGenerator.cs" />
     <Compile Include="Record\ChessChoices.cs" />
     <Compile Include="Record\ChessEnd.cs" />
     <Compile Include="Record\ChessNag.cs" />
     <Compile Include="Record\ChessRecordCollection.cs" />
     <Compile Include="Record\ChessTag.cs" />
     <Compile Include="Record\ISequenceItem.cs" />
-    <Compile Include="Reader\FenConvertPiece.cs" />
-    <Compile Include="Reader\FenNotation.cs" />
-    <Compile Include="Reader\IGameReaderEvents.cs" />
-    <Compile Include="Reader\IGameReader.cs" />
+    <Compile Include="Reader\ChessFENReader.cs" />
+    <Compile Include="Reader\IPGNReaderEvents.cs" />
+    <Compile Include="Reader\IPGNReader.cs" />
     <Compile Include="Reader\ChessPGNReader.cs" />
-    <Compile Include="Reader\IPosition.cs" />
-    <Compile Include="Reader\IPositionEvents.cs" />
+    <Compile Include="Reader\IFENReader.cs" />
+    <Compile Include="Reader\IFENReaderEvents.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />
     <Compile Include="Chessman\Chessman.cs">
@@ -99,8 +97,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Game\ChessPositionCollection.cs" />
     <Compile Include="Base\Utility.cs" />
-    <Compile Include="Reader\FenChessmans.cs" />
-    <Compile Include="SideEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExceptionString.resx">

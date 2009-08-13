@@ -10,32 +10,32 @@ namespace Gean.Wrapper.Chess
     /// Provides the parsing of the PGN standard game notation files
     /// as defined by the standard.
     /// </summary>
-    public class ChessPGNReader : IGameReader
+    public class ChessPGNReader : IPGNReader
     {
 
         #region  ===== delegate -> event =====
 
-        public delegate void newGame(IGameReader iParser);
+        public delegate void newGame(IPGNReader iParser);
         public event newGame EventNewGame;
-        public delegate void exitHeader(IGameReader iParser);
+        public delegate void exitHeader(IPGNReader iParser);
         public event exitHeader EventExitHeader;
-        public delegate void enterVariation(IGameReader iParser);
+        public delegate void enterVariation(IPGNReader iParser);
         public event enterVariation EventEnterVariation;
-        public delegate void exitVariation(IGameReader iParser);
+        public delegate void exitVariation(IPGNReader iParser);
         public event exitVariation EventExitVariation;
-        public delegate void starting(IGameReader iParser);
+        public delegate void starting(IPGNReader iParser);
         public event starting EventStarting;
-        public delegate void finished(IGameReader iParser);
+        public delegate void finished(IPGNReader iParser);
         public event finished EventFinished;
-        public delegate void tagParsed(IGameReader iParser);
+        public delegate void tagParsed(IPGNReader iParser);
         public event tagParsed EventTagParsed;
-        public delegate void nagParsed(IGameReader iParser);
+        public delegate void nagParsed(IPGNReader iParser);
         public event nagParsed EventNagParsed;
-        public delegate void moveParsed(IGameReader iParser);
+        public delegate void moveParsed(IPGNReader iParser);
         public event moveParsed EventMoveParsed;
-        public delegate void commentParsed(IGameReader iParser);
+        public delegate void commentParsed(IPGNReader iParser);
         public event commentParsed EventCommentParsed;
-        public delegate void endMarkerParsed(IGameReader iParser);
+        public delegate void endMarkerParsed(IPGNReader iParser);
         public event endMarkerParsed EventendMarkerParsed;
 
         #endregion
@@ -55,13 +55,13 @@ namespace Gean.Wrapper.Chess
         /// Allows access to the current state of the parser
         /// when an event has been fired.
         /// </summary>
-        public Enums.GameReaderState State
+        public Enums.PGNReaderState State
         {
             get { return this._State; }
             set { this._State = value; }
         }
-        private Enums.GameReaderState _State;
-        private Enums.GameReaderState _PrevState;
+        private Enums.PGNReaderState _State;
+        private Enums.PGNReaderState _PrevState;
 
         /// <summary>
         /// Contains the PGN tag information.
@@ -99,7 +99,7 @@ namespace Gean.Wrapper.Chess
         {
             _Regex = new Regex("^\\[([A-Za-z]*) \"(.*)\"", RegexOptions.Compiled);
             _Value = new StringBuilder();
-            _State = Enums.GameReaderState.Header;
+            _State = Enums.PGNReaderState.Header;
             _SaveState = new Stack();
             _PeriodCount = 0;
         }
@@ -109,7 +109,7 @@ namespace Gean.Wrapper.Chess
         /// of the PGN data.
         /// </summary>
         /// <param name="ievents"></param>
-        public void AddEvents(IGameReaderEvents ievents)
+        public void AddEvents(IPGNReaderEvents ievents)
         {
             EventNewGame += new newGame(ievents.NewGame);
             EventExitHeader += new exitHeader(ievents.ExitHeader);
@@ -129,7 +129,7 @@ namespace Gean.Wrapper.Chess
         /// of the PGN data.
         /// </summary>
         /// <param name="ievents"></param>
-        public void RemoveEvents(IGameReaderEvents ievents)
+        public void RemoveEvents(IPGNReaderEvents ievents)
         {
             EventNewGame -= new newGame(ievents.NewGame);
             EventExitHeader += new exitHeader(ievents.ExitHeader);
@@ -171,7 +171,7 @@ namespace Gean.Wrapper.Chess
                             builder.Length = 0;
                             if (_Data.Length > 0)
                             {
-                                if (_State != Enums.GameReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
+                                if (_State != Enums.PGNReaderState.Comment && Regex.IsMatch(_Data, "^\\["))
                                 {
                                     if (_NextGame == false)
                                     {
@@ -183,7 +183,7 @@ namespace Gean.Wrapper.Chess
                                             EventNewGame(this);
                                         }
                                     }
-                                    _State = Enums.GameReaderState.Header;
+                                    _State = Enums.PGNReaderState.Header;
                                     ParseTag(_Data);
                                     _Value.Length = 0;
                                 }
@@ -262,7 +262,7 @@ namespace Gean.Wrapper.Chess
                 // Handle any special processing of our text.
                 switch (_State)
                 {
-                    case Enums.GameReaderState.Comment:
+                    case Enums.PGNReaderState.Comment:
                         if (aChar == '}')
                         {
                             CallEvent(_State);
@@ -271,7 +271,7 @@ namespace Gean.Wrapper.Chess
                             _Value.Append(aChar);
                         break;
 
-                    case Enums.GameReaderState.Nags:
+                    case Enums.PGNReaderState.Nags:
                         if (aChar >= '0' && aChar <= '9')
                             _Value.Append(aChar);
                         else
@@ -280,7 +280,7 @@ namespace Gean.Wrapper.Chess
                             HandleChar(aChar);
                         }
                         break;
-                    case Enums.GameReaderState.Color:
+                    case Enums.PGNReaderState.Color:
                         if (aChar == '.')
                         {
                             _PeriodCount++;
@@ -290,11 +290,11 @@ namespace Gean.Wrapper.Chess
                             _Value.Length = 0;
                             if (_PeriodCount == 1)
                             {
-                                _State = Enums.GameReaderState.White;
+                                _State = Enums.PGNReaderState.White;
                             }
                             else if (_PeriodCount > 1)
                             {
-                                _State = Enums.GameReaderState.Black;
+                                _State = Enums.PGNReaderState.Black;
                             }
                             HandleChar(aChar);
                             _PeriodCount = 0;
@@ -307,7 +307,7 @@ namespace Gean.Wrapper.Chess
                 }
             }
             // Ensure we add a space between comment lines that are broken appart.
-            if (_State == Enums.GameReaderState.Comment)
+            if (_State == Enums.PGNReaderState.Comment)
                 _Value.Append(' ');
             else
                 CallEvent(_State);
@@ -325,7 +325,7 @@ namespace Gean.Wrapper.Chess
                 case '{':
                     CallEvent(_State);
                     _PrevState = _State;
-                    _State = Enums.GameReaderState.Comment;
+                    _State = Enums.PGNReaderState.Comment;
                     break;
                 case '(':
                     if (EventEnterVariation != null)
@@ -337,7 +337,7 @@ namespace Gean.Wrapper.Chess
                     if (EventExitVariation != null)
                         EventExitVariation(this);
                     _Value.Length = 0;
-                    _State = (Enums.GameReaderState)_SaveState.Pop();
+                    _State = (Enums.PGNReaderState)_SaveState.Pop();
                     break;
                 case ' ':
                     // Only if we have some data do we want to fire an event.
@@ -345,35 +345,35 @@ namespace Gean.Wrapper.Chess
                     break;
                 case '.':
                     // We may have come across 6. e4 6... d5 as in our example data.
-                    _State = Enums.GameReaderState.Number;
+                    _State = Enums.PGNReaderState.Number;
                     CallEvent(_State);
                     _PeriodCount = 1;
                     break;
                 case '$':
                     CallEvent(_State);
                     _PrevState = _State;
-                    _State = Enums.GameReaderState.Nags;
+                    _State = Enums.PGNReaderState.Nags;
                     break;
                 case '!':
                 case '?':
-                    if (_State != Enums.GameReaderState.ConvertNag)
+                    if (_State != Enums.PGNReaderState.ConvertNag)
                     {
                         CallEvent(_State);
                         _PrevState = _State;
-                        _State = Enums.GameReaderState.ConvertNag;
+                        _State = Enums.PGNReaderState.ConvertNag;
                     }
                     _Value.Append(aChar);
                     break;
                 case '-':
-                    if (_State != Enums.GameReaderState.EndMarker && _Value.Length >= 1)
+                    if (_State != Enums.PGNReaderState.EndMarker && _Value.Length >= 1)
                     {
                         if ("012".IndexOf(_Value[_Value.Length - 1]) >= 0)
-                            _State = Enums.GameReaderState.EndMarker;
+                            _State = Enums.PGNReaderState.EndMarker;
                     }
                     _Value.Append(aChar);
                     break;
                 case '*':
-                    _State = Enums.GameReaderState.EndMarker;
+                    _State = Enums.PGNReaderState.EndMarker;
                     _Value.Append(aChar);
                     break;
                 case '\t':
@@ -388,23 +388,23 @@ namespace Gean.Wrapper.Chess
         /// Calls the correct event based on the parsers state.
         /// </summary>
         /// <param name="state"></param>
-        private void CallEvent(Enums.GameReaderState state)
+        private void CallEvent(Enums.PGNReaderState state)
         {
             if (_Value.Length > 0)
             {
                 switch (state)
                 {
-                    case Enums.GameReaderState.Comment:
+                    case Enums.PGNReaderState.Comment:
                         if (EventCommentParsed != null)
                             EventCommentParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.Nags:
+                    case Enums.PGNReaderState.Nags:
                         if (EventNagParsed != null)
                             EventNagParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.ConvertNag:
+                    case Enums.PGNReaderState.ConvertNag:
                         string nag = _Value.ToString();
                         _Value.Length = 0;
                         if (nag.Equals("!"))
@@ -425,25 +425,25 @@ namespace Gean.Wrapper.Chess
                             EventNagParsed(this);
                         _State = _PrevState;
                         break;
-                    case Enums.GameReaderState.Number:
+                    case Enums.PGNReaderState.Number:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.Color;
+                        _State = Enums.PGNReaderState.Color;
                         break;
-                    case Enums.GameReaderState.White:
+                    case Enums.PGNReaderState.White:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.Black;
+                        _State = Enums.PGNReaderState.Black;
                         break;
-                    case Enums.GameReaderState.Black:
+                    case Enums.PGNReaderState.Black:
                         if (EventMoveParsed != null)
                             EventMoveParsed(this);
-                        _State = Enums.GameReaderState.Number;
+                        _State = Enums.PGNReaderState.Number;
                         break;
-                    case Enums.GameReaderState.EndMarker:
+                    case Enums.PGNReaderState.EndMarker:
                         if (EventendMarkerParsed != null)
                             EventendMarkerParsed(this);
-                        _State = Enums.GameReaderState.Header;
+                        _State = Enums.PGNReaderState.Header;
                         break;
                 }
             }

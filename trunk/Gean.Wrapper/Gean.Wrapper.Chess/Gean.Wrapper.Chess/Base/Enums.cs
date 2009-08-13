@@ -143,53 +143,6 @@ namespace Gean.Wrapper.Chess
             //Promotion=64,
         }
 
-        /// <summary>
-        /// The different states our parse may be in when firing events.
-        /// </summary>
-        public enum GameReaderState
-        {
-            /// <summary>
-            /// Parsing the header information
-            /// </summary>
-            Header,
-            /// <summary>
-            /// Parsing the number of a move
-            /// </summary>
-            Number,
-            /// <summary>
-            /// Parsing the color to move
-            /// </summary>
-            Color,
-            /// <summary>
-            /// Parsing white's move information
-            /// </summary>
-            White,
-            /// <summary>
-            /// Parsing black's move information.
-            /// </summary>
-            Black,
-            /// <summary>
-            /// Parsing a comment.
-            /// </summary>
-            Comment,
-            /// <summary>
-            /// Finished parsing a comment.
-            /// </summary>
-            EndComment,
-            /// <summary>
-            /// Parsing a NAG.
-            /// </summary>
-            Nags,
-            /// <summary>
-            /// Convert a Nag to text.
-            /// </summary>
-            ConvertNag,
-            /// <summary>
-            /// END.
-            /// </summary>
-            EndMarker,
-        }
-
         public static string ChessmanTypeToString(ChessmanType type)
         {
             switch (type)
@@ -253,6 +206,304 @@ namespace Gean.Wrapper.Chess
                     throw new ChessRecordException(c.ToString());
             }
             return manType;
+        }
+
+        /// <summary>
+        /// The different states our parse may be in when firing events.
+        /// </summary>
+        public enum PGNReaderState
+        {
+            /// <summary>
+            /// Parsing the header information
+            /// </summary>
+            Header,
+            /// <summary>
+            /// Parsing the number of a move
+            /// </summary>
+            Number,
+            /// <summary>
+            /// Parsing the color to move
+            /// </summary>
+            Color,
+            /// <summary>
+            /// Parsing white's move information
+            /// </summary>
+            White,
+            /// <summary>
+            /// Parsing black's move information.
+            /// </summary>
+            Black,
+            /// <summary>
+            /// Parsing a comment.
+            /// </summary>
+            Comment,
+            /// <summary>
+            /// Finished parsing a comment.
+            /// </summary>
+            EndComment,
+            /// <summary>
+            /// Parsing a NAG.
+            /// </summary>
+            Nags,
+            /// <summary>
+            /// Convert a Nag to text.
+            /// </summary>
+            ConvertNag,
+            /// <summary>
+            /// END.
+            /// </summary>
+            EndMarker,
+        }
+
+        /// <summary>
+        /// Internal naming for Pieces, also used for indexing into an array of cursors.
+        /// </summary>
+        public enum FenChessmans
+        {
+            /// <summary>
+            /// No piece or empty square.
+            /// </summary>
+            None,
+            /// <summary>
+            /// White's king
+            /// </summary>
+            WhiteKing,
+            /// <summary>
+            /// White's queen
+            /// </summary>
+            WhiteQueen,
+            /// <summary>
+            /// White's rook
+            /// </summary>
+            WhiteRook,
+            /// <summary>
+            /// White's bishop
+            /// </summary>
+            WhiteBishop,
+            /// <summary>
+            /// White's knight 
+            /// </summary>
+            WhiteKnight,
+            /// <summary>
+            /// White's pawn
+            /// </summary>
+            WhitePawn,
+            /// <summary>
+            /// Black's king
+            /// </summary>
+            BlackKing,
+            /// <summary>
+            /// Black's queen
+            /// </summary>
+            BlackQueen,
+            /// <summary>
+            /// Black's rook
+            /// </summary>
+            BlackRook,
+            /// <summary>
+            /// Black's bishop
+            /// </summary>
+            BlackBishop,
+            /// <summary>
+            /// Black's knight
+            /// </summary>
+            BlackKnight,
+            /// <summary>
+            /// Black's pawn
+            /// </summary>
+            BlackPawn,
+            /// <summary>
+            /// Open hand cursor.
+            /// </summary>
+            OpenHand,
+            /// <summary>
+            /// Closed hand cursor.
+            /// </summary>
+            ClosedHand,
+            /// <summary>
+            /// Remove of the piece.
+            /// </summary>
+            Delete,
+            /// <summary>
+            /// Used to hide all kings from displaying on the board.
+            /// </summary>
+            AllKings,
+            /// <summary>
+            /// Used to hide all kings from displaying on the board.
+            /// </summary>
+            AllQueens,
+            /// <summary>
+            /// Used to hide all queens from displaying on the board.
+            /// </summary>
+            AllRooks,
+            /// <summary>
+            /// Used to hide all rooks from displaying on the board.
+            /// </summary>
+            AllBishops,
+            /// <summary>
+            /// Used to hide all bishops from displaying on the board.
+            /// </summary>
+            AllKnights,
+            /// <summary>
+            /// Used to hide all knights from displaying on the board.
+            /// </summary>
+            AllPawns,
+            /// <summary>
+            /// Used to hide all pawns from displaying on the board.
+            /// </summary>
+            AllNonPawns,
+            /// <summary>
+            /// Used to hide all the non-pawns from displaying on the board.
+            /// </summary>
+            AllMinors,
+            /// <summary>
+            /// Used to hide all the pieces.
+            /// </summary>
+            All
+        };
+
+        /// <summary>
+        /// Returns a FEN piece representation base on our 
+        /// internal piece enumeration.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns></returns>
+        public static FenChessmans FromFEN(char piece)
+        {
+            FenChessmans aPiece = FenChessmans.None;
+            switch (piece)
+            {
+                #region case
+                case 'K':
+                    aPiece = FenChessmans.WhiteKing;
+                    break;
+                case 'Q':
+                    aPiece = FenChessmans.WhiteQueen;
+                    break;
+                case 'R':
+                    aPiece = FenChessmans.WhiteRook;
+                    break;
+                case 'B':
+                    aPiece = FenChessmans.WhiteBishop;
+                    break;
+                case 'N':
+                    aPiece = FenChessmans.WhiteKnight;
+                    break;
+                case 'P':
+                    aPiece = FenChessmans.WhitePawn;
+                    break;
+                case 'k':
+                    aPiece = FenChessmans.BlackKing;
+                    break;
+                case 'q':
+                    aPiece = FenChessmans.BlackQueen;
+                    break;
+                case 'r':
+                    aPiece = FenChessmans.BlackRook;
+                    break;
+                case 'b':
+                    aPiece = FenChessmans.BlackBishop;
+                    break;
+                case 'n':
+                    aPiece = FenChessmans.BlackKnight;
+                    break;
+                case 'p':
+                    aPiece = FenChessmans.BlackPawn;
+                    break;
+                #endregion
+            }
+            return aPiece;
+        }
+        /// <summary>
+        /// Returns a FEN piece representation base on our 
+        /// internal piece enumeration.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns></returns>
+        public static char ToFEN(FenChessmans piece)
+        {
+            char aPiece = ' ';
+            switch (piece)
+            {
+                #region case
+                case FenChessmans.WhiteKing:
+                    aPiece = 'K';
+                    break;
+                case FenChessmans.WhiteQueen:
+                    aPiece = 'Q';
+                    break;
+                case FenChessmans.WhiteRook:
+                    aPiece = 'R';
+                    break;
+                case FenChessmans.WhiteBishop:
+                    aPiece = 'B';
+                    break;
+                case FenChessmans.WhiteKnight:
+                    aPiece = 'N';
+                    break;
+                case FenChessmans.WhitePawn:
+                    aPiece = 'P';
+                    break;
+                case FenChessmans.BlackKing:
+                    aPiece = 'k';
+                    break;
+                case FenChessmans.BlackQueen:
+                    aPiece = 'q';
+                    break;
+                case FenChessmans.BlackRook:
+                    aPiece = 'r';
+                    break;
+                case FenChessmans.BlackBishop:
+                    aPiece = 'b';
+                    break;
+                case FenChessmans.BlackKnight:
+                    aPiece = 'n';
+                    break;
+                case FenChessmans.BlackPawn:
+                    aPiece = 'p';
+                    break;
+                #endregion
+            }
+            return aPiece;
+        }
+        /// <summary>
+        /// Translates an internal piece enumeration into an algebraic piece character.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns>Character representing our piece.</returns>
+        public static char ToNotation(FenChessmans piece)
+        {
+            char aPiece = ' ';
+            switch (piece)
+            {
+                #region case
+                case FenChessmans.WhiteKing:
+                case FenChessmans.BlackKing:
+                    aPiece = 'K';
+                    break;
+                case FenChessmans.WhiteQueen:
+                case FenChessmans.BlackQueen:
+                    aPiece = 'Q';
+                    break;
+                case FenChessmans.WhiteRook:
+                case FenChessmans.BlackRook:
+                    aPiece = 'R';
+                    break;
+                case FenChessmans.WhiteBishop:
+                case FenChessmans.BlackBishop:
+                    aPiece = 'B';
+                    break;
+                case FenChessmans.WhiteKnight:
+                case FenChessmans.BlackKnight:
+                    aPiece = 'N';
+                    break;
+                case FenChessmans.WhitePawn:
+                case FenChessmans.BlackPawn:
+                    aPiece = 'P';
+                    break;
+                #endregion
+            }
+            return aPiece;
         }
 
     }
