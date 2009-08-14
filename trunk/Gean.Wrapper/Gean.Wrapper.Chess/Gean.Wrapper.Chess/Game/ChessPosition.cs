@@ -24,19 +24,28 @@ namespace Gean.Wrapper.Chess
             return new ChessPosition(horizontal, vertical);
         }
 
+        /// <summary>
+        /// 当前位置的棋盘横坐标(a-h)
+        /// </summary>
         private char _horizontal;
-        private int  _vertical;
-        private int  _x;
-        private int  _y;
-
-        private Regex _hRegex = new Regex("[A-Ha-h]");
-        private Regex _vRegex = new Regex("[1-8]");
+        /// <summary>
+        /// 当前位置的棋盘纵坐标(1-8)
+        /// </summary>
+        private int _vertical;
+        /// <summary>
+        /// 当前位置的计算机X坐标(0-7)
+        /// </summary>
+        private int _x;
+        /// <summary>
+        /// 当前位置的计算机Y坐标(0-7)
+        /// </summary>
+        private int _y;
 
         /// <summary>
         /// 一个描述棋盘位置的类型
         /// </summary>
-        /// <param name="horizontal">横坐标</param>
-        /// <param name="vertical">纵坐标</param>
+        /// <param name="horizontal">横坐标(a-h)</param>
+        /// <param name="vertical">纵坐标(1-8)</param>
         public ChessPosition(char horizontal, int vertical)
         {
             this.Horizontal = horizontal;
@@ -46,8 +55,8 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 一个描述棋盘位置的类型
         /// </summary>
-        /// <param name="X">横坐标</param>
-        /// <param name="Y">纵坐标</param>
+        /// <param name="X">横坐标(1-8)</param>
+        /// <param name="Y">纵坐标(1-8)</param>
         public ChessPosition(int X, int Y)
         {
             this.X = X - 1;
@@ -55,36 +64,39 @@ namespace Gean.Wrapper.Chess
         }
         
         /// <summary>
-        /// 横坐标
+        /// 获取或设置当前位置的棋盘横坐标(a-h)
         /// </summary>
         public char Horizontal
         {
             get { return _horizontal; }
             set
             {
-                if (!_hRegex.Match(value.ToString()).Success)
+                string str = "abcdefgh";
+                if (!str.Contains(value.ToString()))
                     throw new ArgumentException(ExceptionString.ex_illegalHorizontalValue, "horizontal");
                 _horizontal = value;
                 _x = Utility.CharToInt(value) - 1;
-
             }
         }
         
         /// <summary>
-        /// 纵坐标
+        /// 获取或设置当前位置的棋盘纵坐标(1-8)
         /// </summary>
         public int Vertical
         {
             get { return _vertical; }
             set
             {
-                if (!_vRegex.Match(value.ToString()).Success)
+                if (!(value >= 1 && value <= 8))
                     throw new ArgumentException(ExceptionString.ex_illegalVerticalValue, "vertical");
                 _vertical = value;
                 _y = (value - 1);
             }
         }
 
+        /// <summary>
+        /// 获取或设置当前位置的计算机X坐标(0-7)
+        /// </summary>
         public int X
         {
             get { return _x; }
@@ -100,6 +112,9 @@ namespace Gean.Wrapper.Chess
             }
         }
 
+        /// <summary>
+        /// 获取或设置当前位置的计算机Y坐标(0-7)
+        /// </summary>
         public int Y
         {
             get { return _y; }
@@ -113,6 +128,79 @@ namespace Gean.Wrapper.Chess
                 else
                     throw new ArgumentException(ExceptionString.ex_illegalYCoordinateValue, "Y");
             }
+        }
+
+        /// <summary>
+        /// 向北移一格
+        /// </summary>
+        public ChessPosition ShiftNorth()
+        {
+            if (_y == 7)
+                return ChessPosition.Empty;
+            return new ChessPosition(_horizontal, _y + 1);
+        }
+        /// <summary>
+        /// 向南移一格
+        /// </summary>
+        public ChessPosition ShiftSouth()
+        {
+            if (_y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_horizontal, _y - 1);
+        }
+        /// <summary>
+        /// 向西移一格
+        /// </summary>
+        public ChessPosition ShiftWest()
+        {
+            if (_x == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _vertical);
+        }
+        /// <summary>
+        /// 向东移一格
+        /// </summary>
+        public ChessPosition ShiftEast()
+        {
+            if (_x == 7)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _vertical);
+        }
+        /// <summary>
+        /// 向西北移一格
+        /// </summary>
+        public ChessPosition ShiftWestNorth()
+        {
+            if (_x == 1 || _y == 8)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _y + 1);
+        }
+        /// <summary>
+        /// 向东北移一格
+        /// </summary>
+        public ChessPosition ShiftEastNorth()
+        {
+            if (_x == 8 || _y == 8)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _y + 1);
+        }
+        /// <summary>
+        /// 向西南移一格
+        /// </summary>
+        public ChessPosition ShiftWestSouth()
+        {
+            if (_x == 1 || _y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _y - 1);
+        }
+        /// <summary>
+        /// 向东南移一格
+        /// </summary>
+        public ChessPosition ShiftEastSouth()
+        {
+            if (_x == 8 || _y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _y - 1);
         }
 
         #region override
@@ -135,8 +223,6 @@ namespace Gean.Wrapper.Chess
                 (3 * (
                 this._horizontal.GetHashCode() +
                 this._vertical.GetHashCode() +
-                this._hRegex.GetHashCode() +
-                this._vRegex.GetHashCode() +
                 this._x.GetHashCode() +
                 this._y.GetHashCode()
                 ));

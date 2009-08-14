@@ -189,7 +189,7 @@ namespace Gean.UI.ChessControl
         {
             foreach (Chessman man in chessmans)
             {
-                ChessPosition point = man.ChessPoints.Peek();
+                ChessPosition point = man.ChessPositions.Peek();
                 this._ownedChessGame[point.X + 1, point.Y + 1].MoveIn(this._ownedChessGame, man, Enums.Action.Opennings);
             }
         }
@@ -514,9 +514,9 @@ namespace Gean.UI.ChessControl
         {
             foreach (Chessman man in chessmans)
             {
-                if (man.IsKilled)
+                if (man.IsCaptured)
                     continue;
-                ChessPosition point = man.ChessPoints.Peek();
+                ChessPosition point = man.ChessPositions.Peek();
                 ChessGrid chessGrid = board._ownedChessGame[point.X + 1, point.Y + 1];
                 ChessBoard.GetChessmanRectangle(board, chessGrid);
                 _currManImage = ChessBoardHelper.GetChessmanImage(man.ChessmanSide, man.ChessmanType);

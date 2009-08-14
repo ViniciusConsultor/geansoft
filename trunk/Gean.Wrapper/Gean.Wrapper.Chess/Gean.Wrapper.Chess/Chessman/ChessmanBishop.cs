@@ -10,22 +10,18 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Bishop, side)
         {
             ChessPosition point = Chessman.GetOpenningsPoint(side, gridSide, 3, 6);
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
         public ChessmanBishop(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
-        public override void InitializeComponent()
+        public override ChessPosition[] GetEnablePositions()
         {
-        }
-
-        public override string ToSimpleString()
-        {
-            return "B";
+            throw new NotImplementedException();
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Gean.Wrapper.Chess
             //指定的棋子为空或动作为空
             if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
                 throw new ArgumentNullException();
-            ChessPosition sourcePoint = chessman.ChessPoints.Peek();
+            ChessPosition sourcePoint = chessman.ChessPositions.Peek();
             ChessPosition targetPoint = ChessPosition.Empty;
 
             switch (action)
@@ -95,7 +95,7 @@ namespace Gean.Wrapper.Chess
             {
                 //将棋步注册到该棋子的棋步集合中
                 targetPoint = new ChessPosition(this.X, this.Y);
-                chessman.ChessPoints.Push(new ChessPosition(this.X, this.Y));
+                chessman.ChessPositions.Push(new ChessPosition(this.X, this.Y));
             }
             ChessStep chessStep = new ChessStep(chessman.ChessmanSide, chessman.ChessmanType, sourcePoint, targetPoint, action);
             //注册行棋事件
@@ -122,7 +122,7 @@ namespace Gean.Wrapper.Chess
         private void MoveInByGeneralAction(ChessGame chessGame, Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
-            ChessPosition point = chessman.ChessPoints.Peek();
+            ChessPosition point = chessman.ChessPositions.Peek();
             chessGame[point.X + 1, point.Y + 1].MoveOut(false);
 
             //2.落子
@@ -157,7 +157,7 @@ namespace Gean.Wrapper.Chess
         private void MoveOut(bool isKill)
         {
             Chessman man = this.Occupant;//棋格中的棋子
-            man.IsKilled = isKill;//置该棋子的死活棋开关为“被杀死”状态
+            man.IsCaptured = isKill;//置该棋子的死活棋开关为“被杀死”状态
             //移除棋子
             this.Occupied = false;
         }
