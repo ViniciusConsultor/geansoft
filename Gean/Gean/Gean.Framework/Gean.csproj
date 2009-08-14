@@ -73,6 +73,10 @@
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\SevenZip\Common\CommandLineParser.cs" />
+    <Compile Include="Wrapper\SevenZip\Common\CRC.cs" />
+    <Compile Include="Wrapper\SevenZip\Common\InBuffer.cs" />
+    <Compile Include="Wrapper\SevenZip\Common\OutBuffer.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -132,6 +136,15 @@
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Wrapper\SevenZip\7zFormat.txt" />
+    <Content Include="Wrapper\SevenZip\history.txt" />
+    <Content Include="Wrapper\SevenZip\lzma.txt" />
+    <Content Include="Wrapper\SevenZip\Methods.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Wrapper\SevenZip\Compress\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

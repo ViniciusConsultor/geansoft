@@ -53,43 +53,54 @@ namespace Gean.Wrapper.Chess
             Castling = (QueenSideCastling | KingSideCastling),
             Opennings = 131072,
             Invalid = 262144,
-            ///// <summary>
-            ///// 无效动作
-            ///// </summary>
-            //Invalid = 0,
-            ///// <summary>
-            ///// 普通棋招
-            ///// </summary>
-            //General = 1,
-            ///// <summary>
-            ///// 有棋被杀死(捕获, 夺得, 俘获) 
-            ///// </summary>
-            //Capture = 2,
-            ///// <summary>
-            ///// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
-            ///// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
-            ///// </summary>
-            //Check = 4,
-            ///// <summary>
-            ///// 王车短易位
-            ///// </summary>
-            //KingSideCastling = 8,
-            ///// <summary>
-            ///// 王车长易位
-            ///// </summary>
-            //QueenSideCastling = 16,
-            ///// <summary>
-            ///// 开局摆棋
-            ///// </summary>
-            //Opennings = 32,
-            ///// <summary>
-            ///// 升变
-            ///// </summary>
-            //Promotion = 64,
-            ///// <summary>
-            ///// 吃过路兵
-            ///// </summary>
-            //EnPassant = 128,
+        }
+
+        public static Action ToAction(string value)
+        {
+            Action action = Action.General;
+            if (!string.IsNullOrEmpty(value))
+            {
+                foreach (char c in value.ToLower())
+                {
+                    switch (c)
+                    {
+                        #region case
+                        case '+':
+                            action |= Action.Check;
+                            break;
+                        case '#':
+                            action |= Action.Mate;
+                            break;
+                        case 'x':
+                        case ':':
+                            action |= Action.Capture;
+                            break;
+                        case 'q':
+                            action |= Action.PromoteToQueen;
+                            break;
+                        case 'r':
+                            action |= Action.PromoteToRook;
+                            break;
+                        case 'n':
+                            action |= Action.PromoteToKnight;
+                            break;
+                        case 'b':
+                            action |= Action.PromoteToBishop;
+                            break;
+                        #endregion
+                    }
+                }
+            }
+            else
+            {
+                return Action.General;
+            }
+            return action;
+        }
+
+        public enum GamePhase
+        {
+            Opening, Middle, End
         }
 
         /// <summary>
