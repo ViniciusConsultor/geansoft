@@ -16,22 +16,18 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Rook, side)
         {
             ChessPosition point = Chessman.GetOpenningsPoint(side, gridSide, 1, 8);
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
         public ChessmanRook(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
-        public override void InitializeComponent()
+        public override ChessPosition[] GetEnablePositions()
         {
-        }
-
-        public override string ToSimpleString()
-        {
-            return "R";
+            throw new NotImplementedException();
         }
     }
 }

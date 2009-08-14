@@ -19,22 +19,18 @@ namespace Gean.Wrapper.Chess
                     point = new ChessPosition(5, 8);
                     break;
             }
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
         public ChessmanKing(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.King, side)
         {
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
-        public override void InitializeComponent()
+        public override ChessPosition[] GetEnablePositions()
         {
-        }
-
-        public override string ToSimpleString()
-        {
-            return "K";
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,22 +10,18 @@ namespace Gean.Wrapper.Chess
             : base(Enums.ChessmanType.Knight, side)
         {
             ChessPosition point = Chessman.GetOpenningsPoint(side, gridSide, 2, 7);
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
         public ChessmanKnight(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Knight, side)
         {
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
-        public override void InitializeComponent()
+        public override ChessPosition[] GetEnablePositions()
         {
-        }
-
-        public override string ToSimpleString()
-        {
-            return "N";
+            throw new NotImplementedException();
         }
     }
 }

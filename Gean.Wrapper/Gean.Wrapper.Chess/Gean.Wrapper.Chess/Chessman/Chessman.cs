@@ -24,8 +24,7 @@ namespace Gean.Wrapper.Chess
         {
             this.ChessmanType = type;
             this.ChessmanSide = side;
-            this.ChessPoints = new ChessPositionCollection();
-            this.InitializeComponent();
+            this.ChessPositions = new ChessPositionStack();
         }
 
         #region override
@@ -48,7 +47,7 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (man.ChessmanSide != this.ChessmanSide) 
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.ChessPoints, man.ChessPoints)) 
+            if (!UtilityEquals.EnumerableEquals(this.ChessPositions, man.ChessPositions)) 
                 return false;
             return true;
         }
@@ -69,17 +68,16 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 该棋子的棋步<see cref="ChessStep"/>的集合
         /// </summary>
-        public ChessPositionCollection ChessPoints { get; set; }
+        public ChessPositionStack ChessPositions { get; set; }
 
-        public Image BackgroundImage { get; set; }
+        public Image Image { get; set; }
 
         /// <summary>
         /// 获取或设置该棋子是否已被杀死
         /// </summary>
-        public virtual bool IsKilled { get; internal set; }
+        public virtual bool IsCaptured { get; internal set; }
 
-        public abstract void InitializeComponent();
-        public abstract string ToSimpleString();
+        public abstract ChessPosition[] GetEnablePositions();
 
         /// <summary>
         /// 指示指定的 Chessman 对象是 null 还是 Chessman.Empty。

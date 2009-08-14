@@ -23,22 +23,31 @@ namespace Gean.Wrapper.Chess
                         break;
                     }
             }
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
         public ChessmanPawn(Enums.ChessmanSide side, ChessPosition point)
             : base(Enums.ChessmanType.Pawn, side)
         {
-            this.ChessPoints.Push(point);
+            this.ChessPositions.Push(point);
         }
 
-        public override void InitializeComponent()
+        public override ChessPosition[] GetEnablePositions()
         {
-        }
+            List<ChessPosition> positions = new List<ChessPosition>();
+            ChessPosition peekPos = this.ChessPositions.Peek();
+            if (this.ChessmanSide == Enums.ChessmanSide.White)
+            {
+                if (this.ChessPositions.Count == 1)//起步阶段
+                {
+                    positions.Add(new ChessPosition(peekPos.X - 1, peekPos.Y));
+                    positions.Add(new ChessPosition(peekPos.X - 1, peekPos.Y + 1));
+                }
+            }
+            if (this.ChessmanSide == Enums.ChessmanSide.Black)
+                ;
 
-        public override string ToSimpleString()
-        {
-            return "P";
+            return positions.ToArray();
         }
     }
 }
