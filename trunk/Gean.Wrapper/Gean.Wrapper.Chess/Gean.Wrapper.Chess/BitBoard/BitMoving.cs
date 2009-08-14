@@ -5,52 +5,34 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
 
-    public class BitMove : ICloneable
+    public class BitMoving : ICloneable
     {
-        private static BitMove nullMove = new BitMove();
-        public static BitMove NullMove
+        private static BitMoving nullMove = new BitMoving();
+        public static BitMoving NullMove
         {
-            get
-            {
-                return nullMove;
-            }
+            get { return nullMove; }
         }
         public override bool Equals(object obj)
         {
-            BitMove other = obj as BitMove;
-            return other.prev == prev && current == other.current;
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+            
+            BitMoving other = obj as BitMoving;
+            return other.Previous == Previous && other.Current == Current;
         }
         public override int GetHashCode()
         {
-            return current.GetHashCode() + prev.GetHashCode();
+            return unchecked(3 * (Current.GetHashCode() + Previous.GetHashCode()));
         }
 
-        public Enums.Action Action
-        {
-            get { return action; }
-            set { action = value; }
-        }
-        private Enums.Action action;
+        public Enums.Action Action { get; set; }
+        public ulong Previous { get; set; }
+        public ulong Current { get; set; }
 
-        private ulong prev;
-
-        public ulong Previous
-        {
-            get { return prev; }
-            set { prev = value; }
-        }
-
-        private ulong current;
-
-        public ulong Current
-        {
-            get { return current; }
-            set { current = value; }
-        }
         public override string ToString()
         {
-            int cell1 = BitBoardDriver.BitToCell(Previous);
-            int cell2 = BitBoardDriver.BitToCell(Current);
+            int cell1 = BitBoardEngine.BitToCell(Previous);
+            int cell2 = BitBoardEngine.BitToCell(Current);
             string s = string.Format("{0}{1}", ToLiteral(cell1), ToLiteral(cell2));
             if (Action == Enums.Action.PromoteToQueen)
             {
@@ -71,10 +53,10 @@ namespace Gean.Wrapper.Chess
             return s;
         }
 
-        private string ToLiteral(int cell1)
+        private string ToLiteral(int pos)
         {
-            string z = "abcdefgh";
-            return string.Format("{0}{1}", z[cell1 % 8], 8 - (int)cell1 / 8);
+            string str = "abcdefgh";
+            return string.Format("{0}{1}", str[pos % 8], 8 - (int)pos / 8);
         }
 
         /// <summary>
@@ -90,13 +72,13 @@ namespace Gean.Wrapper.Chess
         /// <param name="p"></param>
         /// <param name="board"></param>
         /// <returns></returns>
-        public static BitMove FromRaw(int p, IBitBoard board)
+        public static BitMoving FromRaw(int p, IBitBoard board)
         {
-            BitMove bm = new BitMove();
+            BitMoving bm = new BitMoving();
             int pCell = p & 0x3F;
             int cCell = (p >> 6) & 0x3f;
-            bm.Previous = BitBoardDriver.CellToBit(pCell);
-            bm.Current = BitBoardDriver.CellToBit(cCell);
+            bm.Previous = BitBoardEngine.CellToBit(pCell);
+            bm.Current = BitBoardEngine.CellToBit(cCell);
 
             if ((pCell == (int)Enums.Cell.e1
                 && cCell == (int)Enums.Cell.g1

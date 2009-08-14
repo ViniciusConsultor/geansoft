@@ -5,15 +5,20 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// For reference see: "Portable Game Notation Specification 
-    /// and Implementation Guide"  section 16.1: FEN.  
+    /// 国际象棋的FEN格式串是由6段ASCII字符串组成的代码(彼此5个空格隔开)，这6段代码的意义依次是：
+　　/// (1) 棋盘上的棋子，这是FEN格式串的主要部分；
+　　/// (2) 轮到哪一方走子；
+　　/// (3) 每方及该方的王翼和后翼是否还存在“王车易位”的可能；
+　　/// (4) 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
+　　/// (5) 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
+    /// (6) 棋局的回合数。
     /// </summary>
     public class ChessFENReader : IFENReader, IFENReaderEvents
     {
         /// <summary>
         /// Holds our board position based on squares 0 thru 63.
         /// </summary>
-        private StringBuilder _boardStringBuilder;
+        private StringBuilder _FENstring;
 
         #region Events
 
@@ -144,12 +149,12 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public char this[int ndx]
         {
-            get { return _boardStringBuilder[ndx]; }
+            get { return _FENstring[ndx]; }
             set
             {
                 string str = "KQRBNPkqrbnp";
                 if (str.IndexOf(value) >= 0)
-                    _boardStringBuilder[ndx] = value;
+                    _FENstring[ndx] = value;
                 else
                     throw new Exception("Invalid piece value (" + value + ") use one of: " + str);
             }
@@ -163,8 +168,8 @@ namespace Gean.Wrapper.Chess
         /// <param name="str">A valid FEN notation data string</param>
         public ChessFENReader(string str)
         {
-            _boardStringBuilder = new StringBuilder(64, 64);
-            Parse(str);
+            _FENstring = new StringBuilder(64, 64);
+            this.Parse(str);
         }
 
         /// <summary>
@@ -173,7 +178,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessFENReader()
         {
-            _boardStringBuilder = new StringBuilder(64, 64);
+            _FENstring = new StringBuilder(64, 64);
             Clear();
         }
 
@@ -182,8 +187,8 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public void Clear()
         {
-            _boardStringBuilder.Length = 0;
-            _boardStringBuilder.Append(' ', 64);
+            _FENstring.Length = 0;
+            _FENstring.Append(' ', 64);
             _EnPassant = "-";
             _activeColor = 'w';
             _WKCastle = true;
@@ -209,7 +214,7 @@ namespace Gean.Wrapper.Chess
                 count = 0;
                 for (int cnt = 0; cnt < 8; cnt++)
                 {
-                    char achar = _boardStringBuilder[ndx + cnt];
+                    char achar = _FENstring[ndx + cnt];
                     if (achar == ' ')
                         count++;
                     else
@@ -264,7 +269,7 @@ namespace Gean.Wrapper.Chess
         public void Parse(string str)
         {
             // Clear all current settings.
-            Clear();
+            this.Clear();
             int ndx = 56;
             int cnt = 0;
             string[] note = str.Split(' ');
@@ -425,6 +430,7 @@ namespace Gean.Wrapper.Chess
             EventFinishedHandler += new EventFinished(ievents.Finished);
             EventStartingHandler += new EventStarting(ievents.Starting);
         }
+
         public void RemoveEvents(IFENReaderEvents ievents)
         {
             EventPlacePieceHandler -= new EventPlacePiece(ievents.PlacePiece);
@@ -497,7 +503,7 @@ namespace Gean.Wrapper.Chess
             FullMove = number;
         }
         /// <summary>
-        /// Implementation of IPositionEvents
+        /// (Null Method)
         /// </summary>
         public void Finished()
         {

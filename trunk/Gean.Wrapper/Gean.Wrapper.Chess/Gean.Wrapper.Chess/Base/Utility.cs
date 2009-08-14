@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
+using Gean.Resources;
 
 namespace Gean.Wrapper.Chess
 {
     static class Utility
     {
+        //Regex moveSplit = new Regex(@"[1-9]+[0-9]?\.(?'move'\s*?(O-O|O-O-O|\w+)(=[QNRB])?[+#]?(\s+(O-O|O-O-O|\w+)(=[QNRB])?[+#]?\s+)?)", RegexOptions.Singleline | RegexOptions.Compiled);
+        //Regex singleMoveSplit = new Regex("(?'piece'[NBRKQ])?((?'drank'[12345678])|(?'dfile'[abcdefgh]))?x?(?'dest'[abcdefgh][12345678])(=(?'promote'[QNRB]))?");
+
         public const int TOP = 8;
         public const int FOOTER = 1;
         public const int LEFT = 1;
@@ -117,6 +121,16 @@ namespace Gean.Wrapper.Chess
             return Utility.IntToChar(i).ToString();
         }
 
+        static Random _rand;
+        static public Int64 Rand64()
+        {
+            if (_rand == null)
+            {
+                _rand = new Random(unchecked((int)DateTime.Now.Ticks));
+            }
+            return _rand.Next() ^ ((Int64)_rand.Next() << 15) ^ ((Int64)_rand.Next() << 30) ^ ((Int64)_rand.Next() << 45) ^ ((Int64)_rand.Next() << 60);
+        }
+
         /// <summary>
         /// 解析棋局记录中的附属字符串：评论，变招等
         /// </summary>
@@ -164,8 +178,7 @@ namespace Gean.Wrapper.Chess
                     }
                 case 3:
                     {
-                        string strExp = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";//一般规则，非严谨的邮址验证规则
-                        Regex r = new Regex(strExp);
+                        Regex r = new Regex(RegexString.RegexStr_EmailAddress);
                         Match m = r.Match(commentArray[1]);
                         if (m.Success)
                         {
