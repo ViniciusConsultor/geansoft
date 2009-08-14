@@ -73,10 +73,31 @@
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
-    <Compile Include="Wrapper\SevenZip\Common\CommandLineParser.cs" />
-    <Compile Include="Wrapper\SevenZip\Common\CRC.cs" />
-    <Compile Include="Wrapper\SevenZip\Common\InBuffer.cs" />
-    <Compile Include="Wrapper\SevenZip\Common\OutBuffer.cs" />
+    <Compile Include="Wrapper\SevenZip\Common\CommandLineParser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\SevenZip\Common\CRC.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\SevenZip\Common\InBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\SevenZip\Common\OutBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\SevenZip\Compress\ICoder.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LzmaAlone\LzmaAlone.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LzmaAlone\LzmaBench.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZMA\LzmaBase.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZMA\LzmaDecoder.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZMA\LzmaEncoder.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZ\IMatchFinder.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZ\LzBinTree.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZ\LzInWindow.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\LZ\LzOutWindow.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\RangeCoder\RangeCoder.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\RangeCoder\RangeCoderBit.cs" />
+    <Compile Include="Wrapper\SevenZip\Compress\RangeCoder\RangeCoderBitTree.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -138,13 +159,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Wrapper\SevenZip\7zFormat.txt" />
-    <Content Include="Wrapper\SevenZip\history.txt" />
-    <Content Include="Wrapper\SevenZip\lzma.txt" />
-    <Content Include="Wrapper\SevenZip\Methods.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wrapper\SevenZip\Compress\" />
+    <Content Include="Wrapper\SevenZip\Readme\7zFormat.txt" />
+    <Content Include="Wrapper\SevenZip\Readme\history.txt" />
+    <Content Include="Wrapper\SevenZip\Readme\lzma.txt" />
+    <Content Include="Wrapper\SevenZip\Readme\Methods.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
