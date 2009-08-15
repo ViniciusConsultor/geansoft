@@ -15,6 +15,11 @@ namespace Gean.Wrapper.Chess
 　　/// (4) 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
 　　/// (5) 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
     /// (6) 棋局的回合数。
+    /// |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+    /// |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
+    /// |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
+    /// |example: 8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48
+    /// |example: rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3
     /// </summary>
     public class ChessFENReader : IFENReader, IFENReaderEvents
     {
@@ -25,10 +30,9 @@ namespace Gean.Wrapper.Chess
 
         #region Events
 
-        public delegate void EventPlacePiece(Enums.FenChessmans piece, int square);
-        public event EventPlacePiece EventPlacePieceHandler;
+        public delegate void EventChessmanPosition(Enums.FenChessmans piece, int square);
+        public event EventChessmanPosition EventChessmanPositionHandler;
 
-        /// Defines the color hooks that allow call back to set who's move it is.
         public delegate void EventSideToMove(bool bColor);
         public event EventSideToMove EventSideToMoveHandler;
 
@@ -76,7 +80,7 @@ namespace Gean.Wrapper.Chess
             get { return _WKCastle; }
             set { _WKCastle = value; }
         }
-        private bool _WKCastle;
+        private bool _WKCastle = false;
 
         /// <summary>
         /// If true then white can still castle queen side.
@@ -86,7 +90,7 @@ namespace Gean.Wrapper.Chess
             get { return _WQCastle; }
             set { _WQCastle = value; }
         }
-        private bool _WQCastle;
+        private bool _WQCastle = false;
 
         /// <summary>
         /// If true then black can still castle king side.
@@ -96,7 +100,7 @@ namespace Gean.Wrapper.Chess
             get { return _BKCastle; }
             set { _BKCastle = value; }
         }
-        private bool _BKCastle;
+        private bool _BKCastle = false;
 
         /// <summary>
         /// If true then black can still castle queen side.
@@ -106,7 +110,7 @@ namespace Gean.Wrapper.Chess
             get { return _BQCastle; }
             set { _BQCastle = value; }
         }
-        private bool _BQCastle;
+        private bool _BQCastle = false;
 
         /// <summary>
         /// Algebraic square for enpassant captures or '-'.
@@ -194,10 +198,10 @@ namespace Gean.Wrapper.Chess
             _FENstring.Append(' ', 64);
             _EnPassant = "-";
             _activeColor = 'w';
-            _WKCastle = true;
-            _WQCastle = true;
-            _BKCastle = true;
-            _BQCastle = true;
+            _WKCastle = false;
+            _WQCastle = false;
+            _BKCastle = false;
+            _BQCastle = false;
             _halfMove = 0;
             _fullMove = 0;
         }
@@ -299,8 +303,8 @@ namespace Gean.Wrapper.Chess
                         {
                             if (cnt > 7)  // This check needed here to avoid overrunning index below under some error conditions.
                                 throw new ArgumentException("Invalid board specification, rank " + (ndx / 8 + 1) + " has more then 8 items specified.");
-                            if (EventPlacePieceHandler != null)
-                                EventPlacePieceHandler(Enums.FromFEN(achar), ndx + cnt);
+                            if (EventChessmanPositionHandler != null)
+                                EventChessmanPositionHandler(Enums.FromFEN(achar), ndx + cnt);
                             this[ndx + cnt] = achar;
                         }
                         cnt++;
@@ -349,15 +353,19 @@ namespace Gean.Wrapper.Chess
                     switch (achar)
                     {
                         case 'K':
+                            this._WKCastle = true;
                             WK = true;
                             break;
                         case 'Q':
+                            this._WQCastle = true;
                             WQ = true;
                             break;
                         case 'k':
+                            this._BKCastle = true;
                             BK = true;
                             break;
                         case 'q':
+                            this._BQCastle = true;
                             BQ = true;
                             break;
                         case '-':
@@ -417,14 +425,9 @@ namespace Gean.Wrapper.Chess
                 EventFinishedHandler();
         }
 
-        public void Parse(Stream stream)
-        {
-            throw new Exception("Not implemented for FenPosition");
-        }
-
         public void AddEvents(IFENReaderEvents ievents)
         {
-            EventPlacePieceHandler += new EventPlacePiece(ievents.PlacePiece);
+            EventChessmanPositionHandler += new EventChessmanPosition(ievents.ChessmanPosition);
             EventSideToMoveHandler += new EventSideToMove(ievents.SetSideToMove);
             EventCastlingHandler += new EventCastling(ievents.SetCastling);
             EventEnpassantHandler += new EventEnpassant(ievents.SetEnpassant);
@@ -436,7 +439,7 @@ namespace Gean.Wrapper.Chess
 
         public void RemoveEvents(IFENReaderEvents ievents)
         {
-            EventPlacePieceHandler -= new EventPlacePiece(ievents.PlacePiece);
+            EventChessmanPositionHandler -= new EventChessmanPosition(ievents.ChessmanPosition);
             EventSideToMoveHandler -= new EventSideToMove(ievents.SetSideToMove);
             EventCastlingHandler -= new EventCastling(ievents.SetCastling);
             EventEnpassantHandler -= new EventEnpassant(ievents.SetEnpassant);
@@ -455,9 +458,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="square"></param>
-        public void PlacePiece(Enums.FenChessmans piece, int square)
+        public void ChessmanPosition(Enums.FenChessmans man, int square)
         {
-            this[square] = Enums.ToFEN(piece);
+            this[square] = Enums.ToFEN(man);
         }
         /// <summary>
         /// Implementation of IPositionEvents
