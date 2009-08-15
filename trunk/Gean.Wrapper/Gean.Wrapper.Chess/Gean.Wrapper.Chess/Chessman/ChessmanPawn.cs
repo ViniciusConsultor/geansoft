@@ -34,20 +34,7 @@ namespace Gean.Wrapper.Chess
 
         public override ChessPosition[] GetEnablePositions()
         {
-            List<ChessPosition> positions = new List<ChessPosition>();
-            ChessPosition peekPos = this.ChessPositions.Peek();
-            if (this.ChessmanSide == Enums.ChessmanSide.White)
-            {
-                if (this.ChessPositions.Count == 1)//起步阶段
-                {
-                    positions.Add(new ChessPosition(peekPos.X - 1, peekPos.Y));
-                    positions.Add(new ChessPosition(peekPos.X - 1, peekPos.Y + 1));
-                }
-            }
-            if (this.ChessmanSide == Enums.ChessmanSide.Black)
-                ;
-
-            return positions.ToArray();
+            return this.ChessPositions.Peek().GetPawnPositions(this.ChessmanSide);
         }
     }
 }
