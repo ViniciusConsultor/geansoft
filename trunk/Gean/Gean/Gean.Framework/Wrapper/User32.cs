@@ -10,6 +10,11 @@ namespace Gean
         #region LoadCursor
         [DllImport("user32.dll")]
         private static extern IntPtr LoadCursorFromFile(string fileName);
+        /// <summary>
+        /// 从一个文件中获取一个鼠标指针
+        /// </summary>
+        /// <param name="fileName">含有鼠标指针的一个文件</param>
+        /// <returns></returns>
         public static Cursor LoadCursor(string fileName)
         {
             return new Cursor(LoadCursorFromFile(fileName));
@@ -39,11 +44,11 @@ namespace Gean
         const int SWP_NOCOPYBITS = 0x0100;
         const int SWP_NOOWNERZORDER = 0x0200;  /* Don't do owner Z ordering */
         const int SWP_NOSENDCHANGING = 0x0400;  /* Don't send WM_WINDOWPOSCHANGING */
-        public static void SetWindowHide(System.Windows.Forms.Form form)
+        public static void SetWindowHide(Form form)
         {
             SetWindowPos(form.Handle, (IntPtr)0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_HIDEWINDOW | SWP_NOSENDCHANGING);
         }
-        public static void SetWindowShow(System.Windows.Forms.Form form, System.Windows.Forms.Form formAfter, int x, int y, int width, int height)
+        public static void SetWindowShow(Form form, Form formAfter, int x, int y, int width, int height)
         {
             SetWindowPos(form.Handle, (formAfter == null ? (IntPtr)0 : formAfter.Handle), x, y, width, height, SWP_SHOWWINDOW | SWP_NOACTIVATE);
         }
