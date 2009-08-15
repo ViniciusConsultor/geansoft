@@ -5,6 +5,19 @@ using System.Text.RegularExpressions;
 
 namespace Gean.Wrapper.Chess
 {
+    /*
+     *   8 |     1   2   3   4   5   6   7   8 = (9-8)*8
+     *   7 |     9  10  11  12  13  14  15  16 = (9-7)*8
+     *   6 |    17  18  19  20  21  22  23  24 = (9-6)*8
+     *   5 |    25  26  27  28  29  30  31  32 = (9-5)*8
+     *   4 |    33  34  35  36  37  38  39  40 = (9-4)*8
+     *   3 |    41  42  43  44  45  46  47  48 = (9-3)*8
+     *   2 |    49  50  51  52  53  54  55  56 = (9-2)*8
+     *   1 |    57  58  59  60  61  62  63  64 = (9-1)*8
+     *          ------------------------------
+     *           1   2   3   4   5   6   7   8
+     *           a   b   c   d   e   f   g   h
+     */
     /// <summary>
     /// 一个描述棋盘位置的类型
     /// </summary>
@@ -50,6 +63,7 @@ namespace Gean.Wrapper.Chess
         {
             this.Horizontal = horizontal;
             this.Vertical = vertical;
+            this.Dot = (9 - (_y + 1)) * (_x + 1);
         }
 
         /// <summary>
@@ -61,6 +75,7 @@ namespace Gean.Wrapper.Chess
         {
             this.X = X - 1;
             this.Y = Y - 1;
+            this.Dot = (9 - (_y + 1)) * (_x + 1);
         }
         
         /// <summary>
@@ -131,77 +146,9 @@ namespace Gean.Wrapper.Chess
         }
 
         /// <summary>
-        /// 向北移一格
+        /// 获取该位置对应FEN的点(1-64)
         /// </summary>
-        public ChessPosition ShiftNorth()
-        {
-            if (_y == 7)
-                return ChessPosition.Empty;
-            return new ChessPosition(_horizontal, _y + 1);
-        }
-        /// <summary>
-        /// 向南移一格
-        /// </summary>
-        public ChessPosition ShiftSouth()
-        {
-            if (_y == 1)
-                return ChessPosition.Empty;
-            return new ChessPosition(_horizontal, _y - 1);
-        }
-        /// <summary>
-        /// 向西移一格
-        /// </summary>
-        public ChessPosition ShiftWest()
-        {
-            if (_x == 1)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _vertical);
-        }
-        /// <summary>
-        /// 向东移一格
-        /// </summary>
-        public ChessPosition ShiftEast()
-        {
-            if (_x == 7)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _vertical);
-        }
-        /// <summary>
-        /// 向西北移一格
-        /// </summary>
-        public ChessPosition ShiftWestNorth()
-        {
-            if (_x == 1 || _y == 8)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _y + 1);
-        }
-        /// <summary>
-        /// 向东北移一格
-        /// </summary>
-        public ChessPosition ShiftEastNorth()
-        {
-            if (_x == 8 || _y == 8)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _y + 1);
-        }
-        /// <summary>
-        /// 向西南移一格
-        /// </summary>
-        public ChessPosition ShiftWestSouth()
-        {
-            if (_x == 1 || _y == 1)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _y - 1);
-        }
-        /// <summary>
-        /// 向东南移一格
-        /// </summary>
-        public ChessPosition ShiftEastSouth()
-        {
-            if (_x == 8 || _y == 1)
-                return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _y - 1);
-        }
+        public int Dot { get; private set; }
 
         #region override
 
@@ -233,5 +180,99 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        /// <summary>
+        /// 向北移一格
+        /// </summary>
+        private ChessPosition ShiftNorth()
+        {
+            if (_y == 7)
+                return ChessPosition.Empty;
+            return new ChessPosition(_horizontal, _y + 1);
+        }
+        /// <summary>
+        /// 向南移一格
+        /// </summary>
+        private ChessPosition ShiftSouth()
+        {
+            if (_y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_horizontal, _y - 1);
+        }
+        /// <summary>
+        /// 向西移一格
+        /// </summary>
+        private ChessPosition ShiftWest()
+        {
+            if (_x == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _vertical);
+        }
+        /// <summary>
+        /// 向东移一格
+        /// </summary>
+        private ChessPosition ShiftEast()
+        {
+            if (_x == 7)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _vertical);
+        }
+        /// <summary>
+        /// 向西北移一格
+        /// </summary>
+        private ChessPosition ShiftWestNorth()
+        {
+            if (_x == 1 || _y == 8)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _y + 1);
+        }
+        /// <summary>
+        /// 向东北移一格
+        /// </summary>
+        private ChessPosition ShiftEastNorth()
+        {
+            if (_x == 8 || _y == 8)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _y + 1);
+        }
+        /// <summary>
+        /// 向西南移一格
+        /// </summary>
+        private ChessPosition ShiftWestSouth()
+        {
+            if (_x == 1 || _y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x - 1, _y - 1);
+        }
+        /// <summary>
+        /// 向东南移一格
+        /// </summary>
+        private ChessPosition ShiftEastSouth()
+        {
+            if (_x == 8 || _y == 1)
+                return ChessPosition.Empty;
+            return new ChessPosition(_x + 1, _y - 1);
+        }
+
+        /// <summary>
+        /// 获取兵的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetPawnPositions(Enums.ChessmanSide side)
+        {
+            ChessPosition[] poss = new ChessPosition[3];
+            if (side == Enums.ChessmanSide.Black)
+            {
+                poss[0] = this.ShiftWestNorth();
+                poss[1] = this.ShiftNorth();
+                poss[2] = this.ShiftEastNorth();
+            }
+            if (side == Enums.ChessmanSide.White)
+            {
+                poss[0] = this.ShiftWestSouth();
+                poss[1] = this.ShiftSouth();
+                poss[2] = this.ShiftEastSouth();
+            }
+            return poss;
+        }
     }
 }
