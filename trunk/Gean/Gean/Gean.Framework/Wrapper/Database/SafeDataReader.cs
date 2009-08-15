@@ -40,7 +40,7 @@ namespace Gean.Data
         public string GetString(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return string.Empty;
             }
@@ -51,7 +51,6 @@ namespace Gean.Data
             }
             catch (Exception ex)
             {
-
                 return string.Empty;
             }
         }
@@ -65,7 +64,7 @@ namespace Gean.Data
         public bool GetBoolean(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return false;
             }
@@ -82,7 +81,7 @@ namespace Gean.Data
         public int GetInt32(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return 0;
             }
@@ -99,7 +98,7 @@ namespace Gean.Data
         public double GetDouble(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return 0;
             }
@@ -116,7 +115,7 @@ namespace Gean.Data
         public decimal GetDecimal(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return 0;
             }
@@ -133,7 +132,7 @@ namespace Gean.Data
         public DateTime GetDateTime(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return Convert.ToDateTime("1900-1-1");
             }
@@ -150,7 +149,7 @@ namespace Gean.Data
         public SmartDate GetSmartDate(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return new SmartDate(true);
             }
@@ -167,7 +166,7 @@ namespace Gean.Data
         public Guid GetGUID(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return Guid.Empty;
             }
@@ -192,7 +191,7 @@ namespace Gean.Data
         public T GetEnum<T>(string fieldName)
         {
             //有效性检测
-            if (Checking.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
+            if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
             {
                 return default(T);
             }

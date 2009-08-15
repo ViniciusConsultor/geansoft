@@ -16,7 +16,9 @@ namespace Gean
     public static class UtilityConvert
     {
         /// <summary>
-        /// Converts the value from string.
+        /// 转换指定的字符串为指定的类型，如转换不成功，将返回指定的类型的默认值
+        /// <param name="v">指定的字符串</param>
+        /// <param name="defaultValue">指定的类型的默认值</param>
         /// </summary>
         public static T FromString<T>(string v, T defaultValue)
         {
@@ -36,10 +38,11 @@ namespace Gean
         }
 
         /// <summary>
-        /// Converts the value to string.
+        /// 转换指定的类型为字符串，如转换不成功，将返回Null
         /// </summary>
         public static string ToString<T>(T val)
         {
+            List<int> i;
             if (typeof(T) == typeof(string))
             {
                 string s = (string)(object)val;
@@ -323,7 +326,7 @@ namespace Gean
         {
             try
             {
-                if (Checking.IsNullOrEmpty(date))
+                if (Checker.IsNullOrEmpty(date))
                 {
                     return Convert.ToDateTime("1900-1-1");
                 }
@@ -347,7 +350,7 @@ namespace Gean
         public static SmartDate ToSmartDate(object data)
         {
             //有效性验证
-            if (Checking.IsNullOrEmpty(data))
+            if (Checker.IsNullOrEmpty(data))
             {
                 return new SmartDate(true);
             }
@@ -372,7 +375,7 @@ namespace Gean
         public static Guid ToGuid(object data)
         {
             //有效性验证
-            if (Checking.IsNullOrEmpty(data))
+            if (Checker.IsNullOrEmpty(data))
             {
                 return Guid.Empty;
             }
@@ -401,7 +404,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -427,7 +430,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty(data))
+                if (Checker.IsNullOrEmpty(data))
                 {
                     return 0;
                 }
@@ -475,7 +478,7 @@ namespace Gean
             try
             {
                 //如果为空则返回false
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return false;
                 }
@@ -501,7 +504,7 @@ namespace Gean
             try
             {
                 //如果为空则返回false
-                if (Checking.IsNullOrEmpty(data))
+                if (Checker.IsNullOrEmpty(data))
                 {
                     return false;
                 }
@@ -532,7 +535,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -558,7 +561,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<object>(data))
+                if (Checker.IsNullOrEmpty<object>(data))
                 {
                     return 0;
                 }
@@ -589,7 +592,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -617,7 +620,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -644,7 +647,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty(data))
+                if (Checker.IsNullOrEmpty(data))
                 {
                     return 0;
                 }
@@ -671,7 +674,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<object>(data))
+                if (Checker.IsNullOrEmpty<object>(data))
                 {
                     return 0;
                 }
@@ -703,7 +706,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -731,7 +734,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<T>(data))
+                if (Checker.IsNullOrEmpty<T>(data))
                 {
                     return 0;
                 }
@@ -758,7 +761,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty(data))
+                if (Checker.IsNullOrEmpty(data))
                 {
                     return 0;
                 }
@@ -785,7 +788,7 @@ namespace Gean
             try
             {
                 //如果为空则返回0
-                if (Checking.IsNullOrEmpty<object>(data))
+                if (Checker.IsNullOrEmpty<object>(data))
                 {
                     return 0;
                 }
@@ -815,7 +818,7 @@ namespace Gean
         public static object ConvertTo(object data, Type targetType)
         {
             //如果数据为空，则返回
-            if (Checking.IsNullOrEmpty(data))
+            if (Checker.IsNullOrEmpty(data))
             {
                 return null;
             }
@@ -848,7 +851,7 @@ namespace Gean
         public static T ConvertTo<T>(object data)
         {
             //如果数据为空，则返回
-            if (Checking.IsNullOrEmpty(data))
+            if (Checker.IsNullOrEmpty(data))
             {
                 return default(T);
             }

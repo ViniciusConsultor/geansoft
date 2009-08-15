@@ -4,10 +4,8 @@ using System.Text;
 
 namespace Gean
 {
-    public class Checking
+    public class Checker
     {
-
-        #region IsNullOrEmpty
 
         /// <summary>
         /// 检测对象是否为空，为空返回true
@@ -17,33 +15,25 @@ namespace Gean
         public static bool IsNullOrEmpty<T>(T data)
         {
             //如果为null
-            if (data == null)
-            {
-                return true;
-            }
-
+            if (data == null) return true;
+                
             //如果为""
             if (data.GetType() == typeof(String))
             {
                 if (string.IsNullOrEmpty(data.ToString().Trim()))
-                {
                     return true;
-                }
                 else
-                {
                     return false;
-                }
             }
 
             //如果为DBNull
             if (data.GetType() == typeof(DBNull))
-            {
                 return true;
-            }
 
             //不为空
             return false;
         }
+
         /// <summary>
         /// 检测对象是否为空，为空返回true
         /// </summary>
@@ -52,8 +42,6 @@ namespace Gean
         {
             return IsNullOrEmpty<object>(data);
         }
-
-        #endregion
 
     }
 }
