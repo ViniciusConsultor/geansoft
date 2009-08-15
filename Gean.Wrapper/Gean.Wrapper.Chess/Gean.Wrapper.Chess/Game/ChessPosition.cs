@@ -5,7 +5,8 @@ using System.Text.RegularExpressions;
 
 namespace Gean.Wrapper.Chess
 {
-    /*
+    /*   FEN Dot
+     * 
      *   8 |     1   2   3   4   5   6   7   8 = (9-8)*8
      *   7 |     9  10  11  12  13  14  15  16 = (9-7)*8
      *   6 |    17  18  19  20  21  22  23  24 = (9-6)*8
@@ -17,19 +18,23 @@ namespace Gean.Wrapper.Chess
      *          ------------------------------
      *           1   2   3   4   5   6   7   8
      *           a   b   c   d   e   f   g   h
+     *   
+     *   this.Dot = (9 - y) * x;
+     *   
      */
+
     /// <summary>
     /// 一个描述棋盘位置的类型
     /// </summary>
     public class ChessPosition
     {
+        #region static
         public static readonly ChessPosition Empty = null;
 
         public static ChessPosition Parse(string value)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentNullException();
-            if (value.Length != 2) 
-                throw new ArgumentOutOfRangeException(value);
+            if (value.Length != 2) throw new ArgumentOutOfRangeException(value);
 
             char horizontal = value[0];
             int vertical = int.Parse(value[1].ToString());
@@ -37,6 +42,20 @@ namespace Gean.Wrapper.Chess
             return new ChessPosition(horizontal, vertical);
         }
 
+        public static ChessPosition GetPositionByDot(int dot)
+        {
+            if (dot < 1 || dot > 64)
+            {
+                return Empty;
+            }
+            int x = dot % 8;
+            int y = 8 - ((dot - 1) / 8);
+            if (x == 0) x = 8;
+            return new ChessPosition(x, y);
+        }
+        #endregion
+
+        #region private
         /// <summary>
         /// 当前位置的棋盘横坐标(a-h)
         /// </summary>
@@ -53,6 +72,7 @@ namespace Gean.Wrapper.Chess
         /// 当前位置的计算机Y坐标(0-7)
         /// </summary>
         private int _y;
+        #endregion
 
         /// <summary>
         /// 一个描述棋盘位置的类型
@@ -61,9 +81,11 @@ namespace Gean.Wrapper.Chess
         /// <param name="vertical">纵坐标(1-8)</param>
         public ChessPosition(char horizontal, int vertical)
         {
-            this.Horizontal = horizontal;
-            this.Vertical = vertical;
-            this.Dot = (9 - (_y + 1)) * (_x + 1);
+            _horizontal = horizontal;
+            _vertical = vertical;
+            _x = Utility.CharToInt(horizontal) - 1;
+            _y = vertical - 1;
+            this.Dot = this.CalculateDot();
         }
 
         /// <summary>
@@ -71,79 +93,38 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="X">横坐标(1-8)</param>
         /// <param name="Y">纵坐标(1-8)</param>
-        public ChessPosition(int X, int Y)
+        public ChessPosition(int x, int y)
         {
-            this.X = X - 1;
-            this.Y = Y - 1;
-            this.Dot = (9 - (_y + 1)) * (_x + 1);
+            _x = x - 1;
+            _y = y - 1;
+            _horizontal = Utility.IntToChar(x);
+            _vertical = y;
+            this.Dot = this.CalculateDot();
         }
-        
+        private int CalculateDot()
+        {
+            return (8 * (7 - _y)) + (_x + 1);
+        }
+
         /// <summary>
         /// 获取或设置当前位置的棋盘横坐标(a-h)
         /// </summary>
-        public char Horizontal
-        {
-            get { return _horizontal; }
-            set
-            {
-                string str = "abcdefgh";
-                if (!str.Contains(value.ToString()))
-                    throw new ArgumentException(ExceptionString.ex_illegalHorizontalValue, "horizontal");
-                _horizontal = value;
-                _x = Utility.CharToInt(value) - 1;
-            }
-        }
-        
+        public char Horizontal { get { return _horizontal; } }
+
         /// <summary>
         /// 获取或设置当前位置的棋盘纵坐标(1-8)
         /// </summary>
-        public int Vertical
-        {
-            get { return _vertical; }
-            set
-            {
-                if (!(value >= 1 && value <= 8))
-                    throw new ArgumentException(ExceptionString.ex_illegalVerticalValue, "vertical");
-                _vertical = value;
-                _y = (value - 1);
-            }
-        }
+        public int Vertical { get { return _vertical; } }
 
         /// <summary>
         /// 获取或设置当前位置的计算机X坐标(0-7)
         /// </summary>
-        public int X
-        {
-            get { return _x; }
-            set
-            {
-                if (value >= 0 && value <= 7)
-                {
-                    _x = value;
-                    _horizontal = Utility.IntToChar(value + 1);
-                }
-                else
-                    throw new ArgumentException(ExceptionString.ex_illegalXCoordinateValue, "X");
-            }
-        }
+        public int X { get { return _x; } }
 
         /// <summary>
         /// 获取或设置当前位置的计算机Y坐标(0-7)
         /// </summary>
-        public int Y
-        {
-            get { return _y; }
-            set
-            {
-                if (value >= 0 && value <= 7)
-                {
-                    _y = value;
-                    _vertical = (value + 1);
-                }
-                else
-                    throw new ArgumentException(ExceptionString.ex_illegalYCoordinateValue, "Y");
-            }
-        }
+        public int Y { get { return _y; } }
 
         /// <summary>
         /// 获取该位置对应FEN的点(1-64)
@@ -160,16 +141,12 @@ namespace Gean.Wrapper.Chess
             ChessPosition point = (ChessPosition)obj;
             if (this.X != point.X) return false;
             if (this.Y != point.Y) return false;
-            if (this.Vertical != point.Vertical) return false;
-            if (this.Horizontal != point.Horizontal) return false;
             return true;
         }
         public override int GetHashCode()
         {
             return unchecked
                 (3 * (
-                this._horizontal.GetHashCode() +
-                this._vertical.GetHashCode() +
                 this._x.GetHashCode() +
                 this._y.GetHashCode()
                 ));
@@ -188,25 +165,25 @@ namespace Gean.Wrapper.Chess
         {
             if (_y == 7)
                 return ChessPosition.Empty;
-            return new ChessPosition(_horizontal, _y + 1);
+            return new ChessPosition(_horizontal, _y + 2);
         }
         /// <summary>
         /// 向南移一格
         /// </summary>
         private ChessPosition ShiftSouth()
         {
-            if (_y == 1)
+            if (_y == 0)
                 return ChessPosition.Empty;
-            return new ChessPosition(_horizontal, _y - 1);
+            return new ChessPosition(_horizontal, _y);
         }
         /// <summary>
         /// 向西移一格
         /// </summary>
         private ChessPosition ShiftWest()
         {
-            if (_x == 1)
+            if (_x == 0)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _vertical);
+            return new ChessPosition(_x, _vertical);
         }
         /// <summary>
         /// 向东移一格
@@ -215,64 +192,275 @@ namespace Gean.Wrapper.Chess
         {
             if (_x == 7)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _vertical);
+            return new ChessPosition(_x + 2, _vertical);
         }
         /// <summary>
         /// 向西北移一格
         /// </summary>
         private ChessPosition ShiftWestNorth()
         {
-            if (_x == 1 || _y == 8)
+            if (_x == 0 || _y == 7)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _y + 1);
+            return new ChessPosition(_x, _y + 2);
         }
         /// <summary>
         /// 向东北移一格
         /// </summary>
         private ChessPosition ShiftEastNorth()
         {
-            if (_x == 8 || _y == 8)
+            if (_x == 7 || _y == 7)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _y + 1);
+            return new ChessPosition(_x + 2, _y + 2);
         }
         /// <summary>
         /// 向西南移一格
         /// </summary>
         private ChessPosition ShiftWestSouth()
         {
-            if (_x == 1 || _y == 1)
+            if (_x == 0 || _y == 0)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x - 1, _y - 1);
+            return new ChessPosition(_x, _y);
         }
         /// <summary>
         /// 向东南移一格
         /// </summary>
         private ChessPosition ShiftEastSouth()
         {
-            if (_x == 8 || _y == 1)
+            if (_x == 7 || _y == 0)
                 return ChessPosition.Empty;
-            return new ChessPosition(_x + 1, _y - 1);
+            return new ChessPosition(_x + 2, _y);
         }
 
         /// <summary>
-        /// 获取兵的可能移动到的位置
+        /// 获取“兵”的可能移动到的位置
         /// </summary>
         public ChessPosition[] GetPawnPositions(Enums.ChessmanSide side)
         {
-            ChessPosition[] poss = new ChessPosition[3];
-            if (side == Enums.ChessmanSide.Black)
-            {
-                poss[0] = this.ShiftWestNorth();
-                poss[1] = this.ShiftNorth();
-                poss[2] = this.ShiftEastNorth();
-            }
+            List<ChessPosition> positions = new List<ChessPosition>();
+            ChessPosition pos;
             if (side == Enums.ChessmanSide.White)
             {
-                poss[0] = this.ShiftWestSouth();
-                poss[1] = this.ShiftSouth();
-                poss[2] = this.ShiftEastSouth();
+                if (this._y < 1) return null;
+
+                pos = this.ShiftNorth();
+                positions.Add(pos);
+
+                if (_y == 1)
+                {
+                    pos = pos.ShiftNorth();
+                    positions.Add(pos);
+                }
+
+                pos = this.ShiftWestNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+
+                pos = this.ShiftEastNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
             }
-            return poss;
+            if (side == Enums.ChessmanSide.Black)
+            {
+                if (this._y > 6) return null;
+
+                pos = this.ShiftSouth();
+                positions.Add(pos);
+
+                if (_y == 6)
+                {
+                    pos = pos.ShiftSouth();
+                    positions.Add(pos);
+                }
+
+                pos = this.ShiftWestSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+
+                pos = this.ShiftEastSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            return positions.ToArray();
         }
+
+        /// <summary>
+        /// 获取“车”的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetRookPositions()
+        {
+            List<ChessPosition> positions = new List<ChessPosition>();
+
+            ChessPosition pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftEast();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftWest();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+
+            return positions.ToArray();
+        }
+
+        /// <summary>
+        /// 获取“马”的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetKnightPositions()
+        {
+            List<ChessPosition> positions = new List<ChessPosition>();
+            ChessPosition aPos = this.ShiftWestNorth();
+            ChessPosition bPos = this.ShiftEastNorth();
+            ChessPosition cPos = this.ShiftWestSouth();
+            ChessPosition dPos = this.ShiftEastSouth();
+            ChessPosition pos;
+            if (aPos != ChessPosition.Empty)
+            {
+                pos = aPos.ShiftNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+                pos = aPos.ShiftWest();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            if (bPos != ChessPosition.Empty)
+            {
+                pos = bPos.ShiftNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+                pos = bPos.ShiftEast();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            if (cPos != ChessPosition.Empty)
+            {
+                pos = cPos.ShiftWest();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+                pos = cPos.ShiftSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            if (dPos != ChessPosition.Empty)
+            {
+                pos = dPos.ShiftEast();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+                pos = dPos.ShiftSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+
+            return positions.ToArray();
+        }
+
+        /// <summary>
+        /// 获取“象”的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetBishopPositions()
+        {
+            List<ChessPosition> positions = new List<ChessPosition>();
+            ChessPosition pos = this;
+
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftEastNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftEastSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftWestNorth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+            while (pos != ChessPosition.Empty)
+            {
+                pos = pos.ShiftWestSouth();
+                if (pos != ChessPosition.Empty)
+                    positions.Add(pos);
+            }
+            pos = this;
+
+
+            return positions.ToArray();
+        }
+
+        /// <summary>
+        /// 获取“后”的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetQueenPositions()
+        {
+            List<ChessPosition> positions = new List<ChessPosition>();
+            positions.AddRange(this.GetRookPositions());
+            positions.AddRange(this.GetBishopPositions());
+            return positions.ToArray();
+        }
+
+        /// <summary>
+        /// 获取“王”的可能移动到的位置
+        /// </summary>
+        public ChessPosition[] GetKingPositions()
+        {
+            List<ChessPosition> positions = new List<ChessPosition>();
+            ChessPosition pos = this;
+
+            pos = this.ShiftEast();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftWest();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftSouth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftNorth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftEastNorth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftEastSouth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftWestNorth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+            pos = this.ShiftWestSouth();
+            if (pos != ChessPosition.Empty)
+                positions.Add(pos);
+
+
+            return positions.ToArray();
+        }
+
     }
 }

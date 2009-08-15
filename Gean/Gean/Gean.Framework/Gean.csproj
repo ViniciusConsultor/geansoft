@@ -54,7 +54,7 @@
     <Compile Include="Utility\UtilityEquals.cs" />
     <Compile Include="Utility\UtilityRAR.cs" />
     <Compile Include="Utility\UtilityType.cs" />
-    <Compile Include="Widgets\Checking.cs" />
+    <Compile Include="Widgets\Checker.cs" />
     <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
     <Compile Include="Wrapper\Database\DbEnums.cs" />

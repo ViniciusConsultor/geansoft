@@ -23,7 +23,8 @@ namespace Gean
         }
 
         /// <summary>
-        /// Adds all <paramref name="elements"/> to <paramref name="list"/>.
+        /// Adds all 
+        /// <paramref name="elements"/> to <paramref name="list"/>.
         /// </summary>
         public static void AddRange<T>(ICollection<T> list, IEnumerable<T> elements)
         {

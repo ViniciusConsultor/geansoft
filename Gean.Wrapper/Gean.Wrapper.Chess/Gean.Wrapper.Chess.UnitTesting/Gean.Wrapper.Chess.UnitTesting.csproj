@@ -44,6 +44,7 @@
     <Compile Include="ChessFENReaderTest.cs" />
     <Compile Include="ChessGameTest.cs" />
     <Compile Include="ChessPGNReaderTest.cs" />
+    <Compile Include="ChessPositionTest.cs" />
     <Compile Include="ChessRecordTest.cs" />
     <Compile Include="ChessStepPairTest.cs" />
     <Compile Include="ChessStepTest.cs" />
