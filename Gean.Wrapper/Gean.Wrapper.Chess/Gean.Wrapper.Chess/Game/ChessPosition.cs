@@ -161,7 +161,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向北移一格
         /// </summary>
-        private ChessPosition ShiftNorth()
+        internal ChessPosition ShiftNorth()
         {
             if (_y == 7)
                 return ChessPosition.Empty;
@@ -170,7 +170,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向南移一格
         /// </summary>
-        private ChessPosition ShiftSouth()
+        internal ChessPosition ShiftSouth()
         {
             if (_y == 0)
                 return ChessPosition.Empty;
@@ -179,7 +179,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向西移一格
         /// </summary>
-        private ChessPosition ShiftWest()
+        internal ChessPosition ShiftWest()
         {
             if (_x == 0)
                 return ChessPosition.Empty;
@@ -188,7 +188,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向东移一格
         /// </summary>
-        private ChessPosition ShiftEast()
+        internal ChessPosition ShiftEast()
         {
             if (_x == 7)
                 return ChessPosition.Empty;
@@ -197,7 +197,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向西北移一格
         /// </summary>
-        private ChessPosition ShiftWestNorth()
+        internal ChessPosition ShiftWestNorth()
         {
             if (_x == 0 || _y == 7)
                 return ChessPosition.Empty;
@@ -206,7 +206,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向东北移一格
         /// </summary>
-        private ChessPosition ShiftEastNorth()
+        internal ChessPosition ShiftEastNorth()
         {
             if (_x == 7 || _y == 7)
                 return ChessPosition.Empty;
@@ -215,7 +215,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向西南移一格
         /// </summary>
-        private ChessPosition ShiftWestSouth()
+        internal ChessPosition ShiftWestSouth()
         {
             if (_x == 0 || _y == 0)
                 return ChessPosition.Empty;
@@ -224,7 +224,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 向东南移一格
         /// </summary>
-        private ChessPosition ShiftEastSouth()
+        internal ChessPosition ShiftEastSouth()
         {
             if (_x == 7 || _y == 0)
                 return ChessPosition.Empty;
