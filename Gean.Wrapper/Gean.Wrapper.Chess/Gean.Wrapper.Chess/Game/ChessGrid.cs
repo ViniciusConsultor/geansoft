@@ -73,7 +73,7 @@ namespace Gean.Wrapper.Chess
                     this.MoveInByGeneralAction(game, chessman);
                     break;
                 case Enums.Action.Capture:
-                    this.MoveInByKillAction(game, chessman);
+                    this.MoveInByCapture(game, chessman);
                     break;
                 case Enums.Action.KingSideCastling:
                     this.MoveInByKingSideCastlingAction();
@@ -107,7 +107,7 @@ namespace Gean.Wrapper.Chess
         /// 对指定的棋子执行的动子并落子的方法(含“杀棋”动作和“杀棋并将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByKillAction(ChessGame game, Chessman chessman)
+        private void MoveInByCapture(ChessGame game, Chessman chessman)
         {
             //移除被杀死的棋子
             this.MoveOut(true);
@@ -154,10 +154,10 @@ namespace Gean.Wrapper.Chess
         /// 是否是杀招，true 时指被移除的棋是被杀死，false 时指被移除
         /// 的棋仅为“动子”，该棋子还将被移到其他的棋格。
         /// </param>
-        private void MoveOut(bool isKill)
+        private void MoveOut(bool isCapture)
         {
             Chessman man = this.Occupant;//棋格中的棋子
-            man.IsCaptured = isKill;//置该棋子的死活棋开关为“被杀死”状态
+            man.IsCaptured = isCapture;//置该棋子的死活棋开关为“被杀死”状态
             //移除棋子
             this.Occupied = false;
         }
