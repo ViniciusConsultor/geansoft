@@ -21,11 +21,6 @@ namespace Gean.Wrapper.Chess
         /// <param name="str"></param>
         void Parse(string str);
         /// <summary>
-        /// Used to parse out a position calling the events as needed
-        ///   to inform the using class of what's happening.
-        /// </summary>
-        void Parse(Stream ioStream);
-        /// <summary>
         /// Used to register event handlers.
         /// </summary>
         /// <param name="ievents"></param>

@@ -115,6 +115,17 @@ namespace Gean.Wrapper.Chess.UnitTesting
             reader.Parse(fen09);
             string actual09 = reader.ToString();
 
+            string fen10 = "8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48";
+            reader = new ChessFENReader();
+            reader.Parse(fen10);
+            string actual10 = reader.ToString();
+
+            string fen11 = "rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6c4 0 3";
+            reader = new ChessFENReader();
+            reader.Parse(fen11);
+            string actual11 = reader.ToString();
+
+
             Assert.AreEqual(fen01, actual01);
             Assert.AreEqual(fen02, actual02);
             Assert.AreEqual(fen03, actual03);

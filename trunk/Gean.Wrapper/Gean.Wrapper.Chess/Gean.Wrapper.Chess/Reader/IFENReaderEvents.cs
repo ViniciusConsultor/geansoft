@@ -16,7 +16,7 @@ namespace Gean.Wrapper.Chess
         ///  </summary>
         /// <param name="piece"></param>
         /// <param name="square"></param>
-        void PlacePiece(Enums.FenChessmans piece, int square);
+        void ChessmanPosition(Enums.FenChessmans piece, int square);
         /// <summary>
         /// Used to inform a subscriber who's move it is.    
         /// </summary>
