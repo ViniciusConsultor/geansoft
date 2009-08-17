@@ -12,23 +12,12 @@ namespace Gean.Wrapper.Chess
     ///   a position in multiple places such as a validation engine
     ///   and the bitmap dislay of the pieces.
     /// </summary>
-    public interface IFENReader
+    public interface IFENBuilder
     {
         /// <summary>
-        /// Used to parse out a position calling the events as needed
-        ///   to inform the using class of what's happening.
+        /// Used to parse out a position calling the events as needed to inform the using class of what's happening.
         /// </summary>
         /// <param name="str"></param>
         void Parse(string str);
-        /// <summary>
-        /// Used to register event handlers.
-        /// </summary>
-        /// <param name="ievents"></param>
-        void AddEvents(IFENReaderEvents ievents);
-        /// <summary>
-        /// Used to remove event handlers.
-        /// </summary>
-        /// <param name="ievents"></param>
-        void RemoveEvents(IFENReaderEvents ievents);
     }
 }

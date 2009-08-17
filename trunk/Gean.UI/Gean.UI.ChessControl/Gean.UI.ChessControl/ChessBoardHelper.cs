@@ -81,8 +81,10 @@ namespace Gean.UI.ChessControl
         public static void ChangeGridImages(Image white, Image black)
         {
             if (white == null || black == null)
+            {
                 Debug.Fail("Image cannot NULL.");
                 return;
+            }
             ChessBoardHelper.WhiteGridImage = white;
             ChessBoardHelper.BlackGridImage = black;
 

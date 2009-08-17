@@ -6,7 +6,7 @@ using System.Collections;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 这是描述一盘棋局的类
+    /// 这是描述一盘棋局的类。实现了IEnumerable&lt;ChessGrid&gt;。
     /// </summary>
     public class ChessGame : IEnumerable<ChessGrid>
     {
@@ -75,11 +75,13 @@ namespace Gean.Wrapper.Chess
             this.Record.Items.Add(e.Action, e.ChessmanSide, e.ChessStep);
         }
 
-        #region IEnumerable<Chesspoint> 成员
+        #region IEnumerable
+
+        #region IEnumerable<ChessGrid> 成员
 
         public IEnumerator<ChessGrid> GetEnumerator()
         {
-            return (IEnumerator<ChessGrid>)this.ChessGrids.GetEnumerator();
+            return new ChessGridEnumerator(this.ChessGrids);
         }
 
         #endregion
@@ -88,7 +90,67 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.ChessGrids.GetEnumerator();
+            return new ChessGridEnumerator(this.ChessGrids);
+        }
+
+        #endregion
+
+        public class ChessGridEnumerator : IEnumerator<ChessGrid>
+        {
+            private List<ChessGrid> _chessGrids;
+            private int _position = -1;
+
+            public ChessGridEnumerator(ChessGrid[,] rids)
+            {
+                _chessGrids = new List<ChessGrid>(64);
+                for (int y = 0; y <= 7; y++)
+                {
+                    for (int x = 0; x <= 7; x++)
+                    {
+                        _chessGrids.Add(rids[x, y]);
+                    }
+                }
+            }
+
+            public bool MoveNext()
+            {
+                _position++;
+                return (_position < _chessGrids.Count);
+            }
+
+            public void Reset()
+            {
+                _position = -1;
+            }
+
+            public object Current
+            {
+                get
+                {
+                    try 
+                    { return _chessGrids[_position]; }
+                    catch
+                    { throw new InvalidOperationException(); }
+                }
+            }
+
+            #region IEnumerator<ChessGrid> 成员
+
+            ChessGrid IEnumerator<ChessGrid>.Current
+            {
+                get { return (ChessGrid)this.Current; }
+            }
+
+            #endregion
+
+            #region IDisposable 成员
+
+            public void Dispose()
+            {
+                _chessGrids = null;
+            }
+
+            #endregion
         }
 
         #endregion

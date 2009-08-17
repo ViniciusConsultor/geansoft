@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChessFENReaderTest.cs" />
     <Compile Include="ChessGameTest.cs" />
     <Compile Include="ChessPGNReaderTest.cs" />
     <Compile Include="ChessPositionTest.cs" />
     <Compile Include="ChessRecordTest.cs" />
     <Compile Include="ChessStepPairTest.cs" />
     <Compile Include="ChessStepTest.cs" />
+    <Compile Include="FENBuilderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

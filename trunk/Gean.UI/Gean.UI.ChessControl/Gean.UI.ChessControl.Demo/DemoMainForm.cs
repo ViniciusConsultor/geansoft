@@ -23,7 +23,7 @@ namespace Gean.UI.ChessControl.Demo
             this._board.Dock = DockStyle.Fill;
             this._board.BringToFront();
             this._mainSpliter.Panel1.Controls.Add(_board);
-            this._statusLabel.Text = "";
+            this._statusLabel.Text = "OK";
             this._recordList.SelectedValueChanged += new EventHandler(SelectedRecord);
 
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
@@ -48,6 +48,9 @@ namespace Gean.UI.ChessControl.Demo
         {
             TreeNode node = new TreeNode(e.ChessStep.ToString());
             this._currTree.Nodes.Add(node);
+            this._statusLabel.Text = e.ChessStep.ToString();
+            FENBuilder fen = FENBuilder.CreateFENBuilder(_board.OwnedChessGame);
+            _FENStringLabel.Text = fen.ToFENString();
         }
 
         #endregion

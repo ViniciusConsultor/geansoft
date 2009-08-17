@@ -30,12 +30,13 @@ namespace Gean.Wrapper.Chess
         #region override
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Chessman: ");
-            sb.Append(this.ChessmanSide.ToString());
-            sb.Append(',');
-            sb.Append(this.ChessmanType.ToString());
-            return sb.ToString();
+            return Enums.ChessmanTypeToString(this.ChessmanType);
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append("Chessman: ");
+            //sb.Append(this.ChessmanSide.ToString());
+            //sb.Append(',');
+            //sb.Append(this.ChessmanType.ToString());
+            //return sb.ToString();
         }
         public override bool Equals(object obj)
         {
