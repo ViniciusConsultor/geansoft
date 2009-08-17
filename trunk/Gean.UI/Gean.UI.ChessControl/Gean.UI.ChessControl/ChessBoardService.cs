@@ -6,17 +6,17 @@ using Gean.Wrapper.Chess;
 
 namespace Gean.UI.ChessControl
 {
-    public static class ChessBoardHelper
+    public static class ChessBoardService
     {
         /// <summary>
         /// 静态类型:ChessBoardHelper的初始化
         /// </summary>
         public static void Initialize()
         {
-            ChessBoardHelper.ChessmanImages = new Dictionary<ChessmanState, Image>(12);
-            ChessBoardHelper.InitializeBoardImage();
-            ChessBoardHelper.InitializeGridImages();
-            ChessBoardHelper.InitializeChessmanImages();
+            ChessBoardService.ChessmanImages = new Dictionary<ChessmanState, Image>(12);
+            ChessBoardService.InitializeBoardImage();
+            ChessBoardService.InitializeGridImages();
+            ChessBoardService.InitializeChessmanImages();
         }
 
         #region Board Image
@@ -25,8 +25,8 @@ namespace Gean.UI.ChessControl
 
         private static void InitializeBoardImage()
         {
-            ChessBoardHelper.BoardImage = ChessResource.board_4;
-            OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardHelper.BoardImage));
+            ChessBoardService.BoardImage = ChessResource.board_4;
+            OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardService.BoardImage));
         }
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace Gean.UI.ChessControl
         /// <param name="boardImage">棋盘所在桌面的背景图片</param>
         public static void ChangeBoardImage(Image boardImage)
         {
-            ChessBoardHelper.BoardImage = boardImage;
-            OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardHelper.BoardImage));
+            ChessBoardService.BoardImage = boardImage;
+            OnBoardImageChanged(new BoardImageChangedEventArgs(ChessBoardService.BoardImage));
         }
 
         /// <summary>
@@ -67,10 +67,10 @@ namespace Gean.UI.ChessControl
 
         private static void InitializeGridImages()
         {
-            ChessBoardHelper.WhiteGridImage = ChessResource.white_grid_01;
-            ChessBoardHelper.BlackGridImage = ChessResource.black_grid_01;
+            ChessBoardService.WhiteGridImage = ChessResource.white_grid_01;
+            ChessBoardService.BlackGridImage = ChessResource.black_grid_01;
 
-            OnGridImagesChanged(new GridImagesChangedEventArgs(ChessBoardHelper.WhiteGridImage, ChessBoardHelper.BlackGridImage));
+            OnGridImagesChanged(new GridImagesChangedEventArgs(ChessBoardService.WhiteGridImage, ChessBoardService.BlackGridImage));
         }
 
         /// <summary>
@@ -85,10 +85,10 @@ namespace Gean.UI.ChessControl
                 Debug.Fail("Image cannot NULL.");
                 return;
             }
-            ChessBoardHelper.WhiteGridImage = white;
-            ChessBoardHelper.BlackGridImage = black;
+            ChessBoardService.WhiteGridImage = white;
+            ChessBoardService.BlackGridImage = black;
 
-            OnGridImagesChanged(new GridImagesChangedEventArgs(ChessBoardHelper.WhiteGridImage, ChessBoardHelper.BlackGridImage));
+            OnGridImagesChanged(new GridImagesChangedEventArgs(ChessBoardService.WhiteGridImage, ChessBoardService.BlackGridImage));
         }
 
         /// <summary>
@@ -130,45 +130,45 @@ namespace Gean.UI.ChessControl
             ChessmanState state;
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Bishop);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_bishop);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_bishop);
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.King);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_king);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_king);
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Knight);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_knight);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_knight);
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Pawn);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_pawn);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_pawn);
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Queen);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_queen);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_queen);
 
             state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Rook);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.black_rook);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_rook);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Bishop);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_bishop);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_bishop);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.King);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_king);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_king);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Knight);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_knight);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_knight);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_pawn);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_pawn);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Queen);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_queen);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_queen);
 
             state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Rook);
-            ChessBoardHelper.ChessmanImages.Add(state, ChessResource.white_rook);
+            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_rook);
 
             #endregion
 
             //注册棋子背景图片更换事件
-            OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardHelper.ChessmanImages));
+            OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardService.ChessmanImages));
         }
 
         internal static Image GetChessmanImage(Enums.ChessmanSide chessmanSide, Enums.ChessmanType chessmanType)
@@ -183,11 +183,11 @@ namespace Gean.UI.ChessControl
         /// <param name="images">棋子的背景图片集合</param>
         public static void ChangeChessmanImages(Dictionary<string, Image> images)
         {
-            ChessBoardHelper.ChessmanImages = null;
+            ChessBoardService.ChessmanImages = null;
             //ChessBoardHelper.ChessmanImages = images;
 
             //注册棋子背景图片更换事件
-            OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardHelper.ChessmanImages));
+            OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardService.ChessmanImages));
         }
 
         /// <summary>
@@ -211,6 +211,8 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
+        #region Option
+
         /// <summary>
         /// 自动演示(摆棋)的间隔时间(毫秒)
         /// </summary>
@@ -219,5 +221,8 @@ namespace Gean.UI.ChessControl
             get { return _autoForwardTime; }
         }
         private static int _autoForwardTime = 2000;
+
+        #endregion
+
     }
 }

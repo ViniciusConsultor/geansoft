@@ -81,8 +81,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ChessRecordForeachTest()
         {
-            ChessRecordCollection records = new ChessRecordCollection();
-            ChessPGNReader target = new ChessPGNReader();
+            ChessRecordFile records = new ChessRecordFile();
+            PGNReader target = new PGNReader();
             target.Filename = this.PGNFiles[0];
             target.AddEvents(records);
             target.Parse();

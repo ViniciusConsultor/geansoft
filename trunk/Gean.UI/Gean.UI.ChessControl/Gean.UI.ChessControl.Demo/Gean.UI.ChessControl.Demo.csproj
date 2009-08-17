@@ -45,6 +45,7 @@
     <Compile Include="DemoMainForm.Designer.cs">
       <DependentUpon>DemoMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DemoMainForm.resx">
       <DependentUpon>DemoMainForm.cs</DependentUpon>
