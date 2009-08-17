@@ -41,12 +41,12 @@ namespace Gean.Wrapper.Chess
     }
 
     [global::System.Serializable]
-    public class ChessGridException : ChessException
+    public class ChessGameException : ChessException
     {
-        public ChessGridException() { }
-        public ChessGridException(string message) : base(message) { }
-        public ChessGridException(string message, Exception inner) : base(message, inner) { }
-        protected ChessGridException(
+        public ChessGameException() { }
+        public ChessGameException(string message) : base(message) { }
+        public ChessGameException(string message, Exception inner) : base(message, inner) { }
+        protected ChessGameException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
