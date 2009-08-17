@@ -24,7 +24,7 @@ namespace Gean.Wrapper.Chess
         {
             this.ChessmanType = type;
             this.ChessmanSide = side;
-            this.ChessPositions = new ChessPositionStack();
+            this.ChessPositions = new Stack<ChessPosition>();
         }
 
         #region override
@@ -69,7 +69,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 该棋子的棋步<see cref="ChessStep"/>的集合
         /// </summary>
-        public ChessPositionStack ChessPositions { get; set; }
+        public Stack<ChessPosition> ChessPositions { get; set; }
 
         public Image Image { get; set; }
 

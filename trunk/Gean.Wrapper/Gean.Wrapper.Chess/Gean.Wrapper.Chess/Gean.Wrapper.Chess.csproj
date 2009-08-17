@@ -38,7 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Reader\FENBuilder.cs" />
+    <Compile Include="ChessRecord\Parse\FENBuilder.cs" />
     <Compile Include="Chessman\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
     <Compile Include="BitBoard\BitBoardEngine.cs" />
@@ -48,22 +48,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Game\ChessPosition.cs" />
-    <Compile Include="Game\IStepTree.cs" />
+    <Compile Include="ChessRecord\ChessPosition.cs" />
+    <Compile Include="ChessRecord\IStepTree.cs" />
     <Compile Include="BitBoard\IBitBoard.cs" />
     <Compile Include="BitBoard\IMoveGenerator.cs" />
-    <Compile Include="Record\ChessChoices.cs" />
-    <Compile Include="Record\ChessEnd.cs" />
-    <Compile Include="Record\ChessNag.cs" />
-    <Compile Include="Record\ChessRecordCollection.cs" />
-    <Compile Include="Record\ChessTag.cs" />
-    <Compile Include="Record\ISequenceItem.cs" />
-    <Compile Include="Reader\IPGNReaderEvents.cs" />
-    <Compile Include="Reader\IPGNReader.cs" />
-    <Compile Include="Reader\ChessPGNReader.cs" />
-    <Compile Include="Reader\IFENBuilder.cs" />
-    <Compile Include="Game\ChessGame.cs" />
-    <Compile Include="Record\ChessComment.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessChoices.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessEnd.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessNag.cs" />
+    <Compile Include="ChessRecord\ChessRecordFile.cs" />
+    <Compile Include="ChessRecord\ChessTag.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ISequenceItem.cs" />
+    <Compile Include="ChessRecord\Parse\IPGNReaderEvents.cs" />
+    <Compile Include="ChessRecord\Parse\IPGNReader.cs" />
+    <Compile Include="ChessRecord\Parse\PGNReader.cs" />
+    <Compile Include="ChessRecord\Parse\IFENBuilder.cs" />
+    <Compile Include="ChessGame\ChessGame.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessComment.cs" />
     <Compile Include="Chessman\Chessman.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -85,16 +85,14 @@
     <Compile Include="Chessman\ChessmanRook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Record\ChessRecord.cs" />
-    <Compile Include="Game\ChessStepFlag.cs" />
-    <Compile Include="Game\ChessStep.cs" />
-    <Compile Include="Game\ChessSequence.cs" />
-    <Compile Include="Game\ChessStepPair.cs" />
-    <Compile Include="Game\ChessException.cs" />
+    <Compile Include="ChessRecord\ChessRecord.cs" />
+    <Compile Include="ChessRecord\ChessStep.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessSequence.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessStepPair.cs" />
+    <Compile Include="Base\ChessException.cs" />
     <Compile Include="Base\Enums.cs" />
-    <Compile Include="Game\ChessGrid.cs" />
+    <Compile Include="ChessGame\ChessGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Game\ChessPositionStack.cs" />
     <Compile Include="Base\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +107,9 @@
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChessRecord\ChessRecord.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
