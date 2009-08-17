@@ -80,7 +80,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ParseTest()
         {
-            ChessPGNReader target = new ChessPGNReader();
+            PGNReader target = new PGNReader();
             target.Filename = this.PGNFiles[0];
             target.Parse();
             Assert.IsNotNull(target);

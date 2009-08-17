@@ -22,16 +22,16 @@ namespace Gean.UI.ChessControl
         {
             this.DoubleBuffered = true;
             this.BackColor = Color.Chocolate;
-            this.BackgroundImage = ChessBoardHelper.BoardImage;
+            this.BackgroundImage = ChessBoardService.BoardImage;
             this.OwnedRectangles = new Rectangle[8, 8];
             this.KeyChessPosition = new ChessPosition(1, 1);
             this.ViewKeyRectangle = false;
 
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
-            ChessBoardHelper.BoardImageChangedEvent += new ChessBoardHelper.BoardImageChangedEventHandler(ChessBoardHelper_BoardImageChangedEvent);
-            ChessBoardHelper.GridImagesChangedEvent += new ChessBoardHelper.GridImagesChangedEventHandler(ChessBoardHelper_GridImagesChangedEvent);
-            ChessBoardHelper.ChessmanImagesChangedEvent += new ChessBoardHelper.ChessmanImagesChangedEventHandler(ChessBoardHelper_ChessmanImagesChangedEvent);
+            ChessBoardService.BoardImageChangedEvent += new ChessBoardService.BoardImageChangedEventHandler(ChessBoardHelper_BoardImageChangedEvent);
+            ChessBoardService.GridImagesChangedEvent += new ChessBoardService.GridImagesChangedEventHandler(ChessBoardHelper_GridImagesChangedEvent);
+            ChessBoardService.ChessmanImagesChangedEvent += new ChessBoardService.ChessmanImagesChangedEventHandler(ChessBoardHelper_ChessmanImagesChangedEvent);
         }
 
         #endregion
@@ -433,16 +433,16 @@ namespace Gean.UI.ChessControl
 
         #region Image Changed Event
 
-        protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardHelper.BoardImageChangedEventArgs e)
+        protected virtual void ChessBoardHelper_BoardImageChangedEvent(ChessBoardService.BoardImageChangedEventArgs e)
         {
             this.BackgroundImage = e.BoardImage;
             this.Invalidate();
         }
-        protected virtual void ChessBoardHelper_GridImagesChangedEvent(ChessBoardHelper.GridImagesChangedEventArgs e)
+        protected virtual void ChessBoardHelper_GridImagesChangedEvent(ChessBoardService.GridImagesChangedEventArgs e)
         {
             this.Invalidate();
         }
-        protected virtual void ChessBoardHelper_ChessmanImagesChangedEvent(ChessBoardHelper.ChessmanImagesChangedEventArgs e)
+        protected virtual void ChessBoardHelper_ChessmanImagesChangedEvent(ChessBoardService.ChessmanImagesChangedEventArgs e)
         {
             this.Invalidate();
         }
@@ -485,7 +485,7 @@ namespace Gean.UI.ChessControl
                     rectangles[x - 1, y - 1] = _currRect;
                     if ((x + y) % 2 != 0)
                     {
-                        g.DrawImage(ChessBoardHelper.WhiteGridImage, _currRect);
+                        g.DrawImage(ChessBoardService.WhiteGridImage, _currRect);
                         g.DrawRectangle(Pens.Black, _currRect);
 #if DEBUG
                         g.DrawString(string.Format("{0},{1}", x, y), new Font("Arial", 6.5F), Brushes.Black, _currRect.Location);
@@ -493,7 +493,7 @@ namespace Gean.UI.ChessControl
                     }
                     else
                     {
-                        g.DrawImage(ChessBoardHelper.BlackGridImage, _currRect);
+                        g.DrawImage(ChessBoardService.BlackGridImage, _currRect);
                         g.DrawRectangle(Pens.Black, _currRect);
 #if DEBUG
                         g.DrawString(string.Format("{0},{1}", x, y), new Font("Arial", 6.5F), Brushes.White, _currRect.Location);
@@ -519,7 +519,7 @@ namespace Gean.UI.ChessControl
                 ChessPosition point = man.ChessPositions.Peek();
                 ChessGrid chessGrid = board._ownedChessGame[point.X + 1, point.Y + 1];
                 ChessBoard.GetChessmanRectangle(board, chessGrid);
-                _currManImage = ChessBoardHelper.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
+                _currManImage = ChessBoardService.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
                 g.DrawImage(_currManImage, _currManRect);
 
             }

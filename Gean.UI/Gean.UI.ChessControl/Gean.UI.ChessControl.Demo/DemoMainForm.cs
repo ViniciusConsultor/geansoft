@@ -12,6 +12,8 @@ namespace Gean.UI.ChessControl.Demo
 {
     public partial class DemoMainForm : Form
     {
+        public FormWindowState IsShangBan { get { return FormWindowState.Normal; } }
+
         #region MyRegion
 
         private string _demoFile = Path.GetDirectoryName(@"..\..\DemoFile\");
@@ -34,7 +36,7 @@ namespace Gean.UI.ChessControl.Demo
             this._stripContainer.TopToolStripPanel.Controls.Add(strip);
             this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
 
-            this.WindowState = FormWindowState.Maximized;
+            this.WindowState = this.IsShangBan;
         }
 
 
@@ -55,14 +57,14 @@ namespace Gean.UI.ChessControl.Demo
 
         #endregion
 
-        ChessRecordCollection records = new ChessRecordCollection();
+        ChessRecordFile records = new ChessRecordFile();
 
         private void PGNConvent(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
             Duration duration = new Duration();
             duration.Start();
-            ChessPGNReader reader = new ChessPGNReader();
+            PGNReader reader = new PGNReader();
             reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__aGame1.pgn")); //__agame.pgn"));
             reader.AddEvents(records);
             reader.Parse();
@@ -70,7 +72,7 @@ namespace Gean.UI.ChessControl.Demo
             this._recordList.Items.Clear();
             foreach (var item in records)
             {
-                this._recordList.Items.Add(item.ChessTags);
+                this._recordList.Items.Add(item.Definer);
             }
             duration.Stop();
             this._statusLabel.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
@@ -116,30 +118,5 @@ namespace Gean.UI.ChessControl.Demo
         {
             this._board.LoadGame();
         }
-
-
     }
-
-    static class First
-    {
-        /// <summary>
-        /// 应用程序的主入口点。
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            Initialize();
-
-            Application.Run(new DemoMainForm());
-        }
-
-        private static void Initialize()
-        {
-            ChessBoardHelper.Initialize();
-        }
-    }
-
 }
