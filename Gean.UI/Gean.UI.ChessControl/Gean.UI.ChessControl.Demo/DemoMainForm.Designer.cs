@@ -45,8 +45,9 @@
             this._pgnConventToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this._stripContainer = new System.Windows.Forms.ToolStripContainer();
             this._mainStatus = new System.Windows.Forms.StatusStrip();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this._FENStringLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this._mainSpliter.Panel2.SuspendLayout();
             this._mainSpliter.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -173,7 +174,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(305, 262);
+            this.tabPage2.Size = new System.Drawing.Size(305, 229);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "棋谱选项";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -253,12 +254,25 @@
             // 
             this._mainStatus.Dock = System.Windows.Forms.DockStyle.None;
             this._mainStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._statusLabel});
+            this._statusLabel,
+            this._FENStringLabel});
             this._mainStatus.Location = new System.Drawing.Point(0, 0);
             this._mainStatus.Name = "_mainStatus";
             this._mainStatus.Size = new System.Drawing.Size(632, 22);
             this._mainStatus.TabIndex = 4;
             this._mainStatus.Text = "statusStrip2";
+            // 
+            // _statusLabel
+            // 
+            this._statusLabel.Name = "_statusLabel";
+            this._statusLabel.Size = new System.Drawing.Size(68, 17);
+            this._statusLabel.Text = "_statusLabel";
+            // 
+            // _FENStringLabel
+            // 
+            this._FENStringLabel.Name = "_FENStringLabel";
+            this._FENStringLabel.Size = new System.Drawing.Size(54, 17);
+            this._FENStringLabel.Text = "FENString";
             // 
             // toolStripContainer1
             // 
@@ -280,12 +294,6 @@
             this.toolStripContainer1.Size = new System.Drawing.Size(632, 445);
             this.toolStripContainer1.TabIndex = 5;
             this.toolStripContainer1.Text = "toolStripContainer1";
-            // 
-            // _statusLabel
-            // 
-            this._statusLabel.Name = "_statusLabel";
-            this._statusLabel.Size = new System.Drawing.Size(109, 17);
-            this._statusLabel.Text = "toolStripStatusLabel1";
             // 
             // DemoMainForm
             // 
@@ -347,6 +355,7 @@
         private System.Windows.Forms.StatusStrip _mainStatus;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripStatusLabel _statusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel _FENStringLabel;
     }
 }
 

@@ -55,7 +55,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取当前棋步后的Fen记录
         /// </summary>
-        public string Fen { get; private set; }
+        public FENBuilder Fen { get; private set; }
         /// <summary>
         /// 有同行与同列的棋子可能产生同样的棋步
         /// </summary>
@@ -89,7 +89,8 @@ namespace Gean.Wrapper.Chess
 
         #region ctor
 
-        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType chessmanType, ChessPosition srcPos, ChessPosition tagPos, params Enums.Action[] action)
+        public ChessStep(Enums.ChessmanSide manSide, Enums.ChessmanType chessmanType, 
+                            ChessPosition srcPos, ChessPosition tagPos, params Enums.Action[] action)
         {
             this.Actions = new List<Enums.Action>();
             this.Actions.AddRange(action);
@@ -97,10 +98,7 @@ namespace Gean.Wrapper.Chess
             this.ChessmanSide = manSide;
             this.TargetPosition = tagPos;
             this.SourcePosition = srcPos;
-
-            ChessFENReader fen = new ChessFENReader();
-
-            this.Fen = fen.ToString();
+            this.Fen = new FENBuilder();
         }
 
         #endregion

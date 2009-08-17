@@ -1,3 +1,409 @@
+ï»¿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Gean.Wrapper.Chess
+{
+    /// <summary>
+    /// å›½é™…è±¡æ£‹çš„FENæ ¼å¼ä¸²æ˜¯ç”±6æ®µASCIIå­—ç¬¦ä¸²ç»„æˆçš„ä»£ç (å½¼æ­¤5ä¸ªç©ºæ ¼éš”å¼€)ï¼Œè¿™6æ®µä»£ç çš„æ„ä¹‰ä¾æ¬¡æ˜¯ï¼š
+    /// (1) è¡¨ç¤ºæ£‹ç›˜ä¸Šæ¯è¡Œçš„æ£‹å­ï¼Œè¿™æ˜¯FENæ ¼å¼ä¸²çš„ä¸»è¦éƒ¨åˆ†ï¼›è§„åˆ™æ˜¯ä»ç¬¬ 8æ¨ªçº¿å¼€å§‹é¡ºæ¬¡æ•°åˆ°ç¬¬ 1æ¨ªçº¿
+    /// (ç™½æ–¹åœ¨ä¸‹ï¼Œä»ä¸Šæ•°åˆ°ä¸‹)ï¼Œä» açº¿å¼€å§‹é¡ºæ¬¡æ•°åˆ°hçº¿ï¼›ç™½æ–¹æ£‹å­ä»¥å¤§å†™å­—æ¯â€œPNBRQKâ€è¡¨ç¤ºï¼Œé»‘æ–¹æ£‹å­
+    /// ä»¥å°å†™ â€œpnbrqkâ€è¡¨ç¤ºï¼Œè¿™æ˜¯è‹±æ–‡è¡¨ç¤ºæ³•ï¼Œæ¯ä¸ªå­—æ¯ä»£è¡¨çš„æ„ä¹‰ä¸å¸¸è§„è§„å®šç›¸åŒã€‚æ•°å­—ä»£è¡¨ä¸€ä¸ªæ¨ªçº¿
+    /// ä¸Šçš„è¿ç»­ç©ºæ ¼ï¼Œåæ–œæ â€œ/â€ è¡¨ç¤ºç»“æŸä¸€ä¸ªæ¨ªçº¿çš„æè¿°ã€‚
+    /// (2) è½®åˆ°å“ªä¸€æ–¹èµ°å­ï¼›
+    /// (3) æ¯æ–¹åŠè¯¥æ–¹çš„ç‹ç¿¼å’Œåç¿¼æ˜¯å¦è¿˜å­˜åœ¨â€œç‹è½¦æ˜“ä½â€çš„å¯èƒ½ï¼›
+    /// (4) æ˜¯å¦å­˜åœ¨åƒè¿‡è·¯å…µçš„å¯èƒ½ï¼Œè¿‡è·¯å…µæ˜¯ç»è¿‡å“ªä¸ªæ ¼å­çš„ï¼›
+    /// (5) æœ€è¿‘ä¸€æ¬¡åƒå­æˆ–è€…è¿›å…µåæ£‹å±€è¿›è¡Œçš„æ­¥æ•°(åŠå›åˆæ•°)ï¼Œç”¨æ¥åˆ¤æ–­â€œ50å›åˆè‡ªç„¶é™ç€â€ï¼›
+    /// (6) æ£‹å±€çš„å›åˆæ•°ã€‚
+    /// |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+    /// |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
+    /// |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
+    /// |example: 8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48
+    /// |example: rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3
+    /// </summary>
+    public class FENBuilder : IFENBuilder
+    {
+        private StringBuilder[] Rows = new StringBuilder[8];
+        private int _index = 0;
+
+        public FENBuilder()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Rows[i] = new StringBuilder("11111111");
+            }
+        }
+        public FENBuilder(string fenstring)
+        {
+            this.Parse(fenstring);
+        }
+
+        #region Properties
+
+        /// <summary>
+        /// The color to move given the current position.
+        /// Must be 'w' or 'b'.
+        /// </summary>
+        public char Color
+        {
+            get { return _activeColor; }
+            set
+            {
+                if (value == 'w' || value == 'b')
+                    _activeColor = value;
+                else
+                    throw new Exception("Specify: 'w' or 'b'");
+            }
+        }
+        private char _activeColor;
+
+        /// <summary>
+        /// If true then white can still castle king side.
+        /// </summary>
+        public bool WhiteCastleKing { get; set; }
+
+        /// <summary>
+        /// If true then white can still castle queen side.
+        /// </summary>    
+        public bool WhiteCastleQueen { get; set; }
+
+        /// <summary>
+        /// If true then black can still castle king side.
+        /// </summary>
+        public bool BlackCastleKing { get; set; }
+
+        /// <summary>
+        /// If true then black can still castle queen side.
+        /// </summary>
+        public bool BlackCastleQueen { get; set; }
+
+        /// <summary>
+        /// Algebraic square for enpassant captures or '-'.
+        /// </summary>
+        public string Enpassant { get; set; }
+
+        /// <summary>
+        /// Number of half moves to determine the 50 move rule.
+        /// </summary>
+        public int HalfMove { get; set; }
+
+        /// <summary>
+        /// Number of completed move cycles, i.e. after black moves.
+        /// </summary>
+        public int FullMove { get; set; }
+
+        public string Format
+        {
+            get { return _format; }
+            set { _format = value; }
+        }
+        private string _format = "{0} {1} {2} {3} {4} {5}";
+
+        #endregion
+
+        #region IFENBuilder æˆå‘˜
+
+        public void Parse(string str)
+        {
+            this.Clear();
+            int dot = 56;
+            int index = 0;
+            string[] note = str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            #region 16.1.3.1: Parse piece placement data
+
+            string[] row = note[0].Split('/');
+            if (row.Length != 8)
+                throw new ArgumentException("Invalid board specification, " + row.Length + " ranks are defined, there should be 8.");
+
+            foreach (string line in row)
+            {
+                index = 0;
+                foreach (char achar in line)
+                {
+                    if (achar >= '0' && achar <= '9')
+                        index += (int)(achar - '0');
+                    else
+                    {
+                        if (Enums.FromFEN(achar) != Enums.FenChessmans.None)
+                        {
+                            if (index > 7)  // This check needed here to avoid overrunning index below under some error conditions.
+                                throw new ArgumentException("Invalid board specification, rank " + (dot / 8 + 1) + " has more then 8 items specified.");
+                            this[dot + index] = achar;
+                        }
+                        index++;
+                    }
+                }
+
+                if (index == 0) // Allow null lines = /8/
+                    index += 8;
+
+                if (index != 8)
+                    throw new ArgumentException("Invalid board specification, rank " + (dot / 8 + 1) + " has " + index + " items specified, there should be 8.");
+
+                dot -= 8;
+            }
+
+            if (note.Length >= 2)
+            {
+                // 16.1.3.2: Parse active color
+                if (note[1].Length > 0)
+                {
+                    char colorchar = Char.ToLower(note[1][0]);
+                    if (colorchar.Equals('w') || colorchar.Equals('b'))
+                    {
+                        Color = colorchar;
+                    }
+                    else
+                        throw new ArgumentException("Invalid color designation, use w or b as 2nd field separated by spaces.");
+
+                    if (note[1].Length != 1)
+                        throw new ArgumentException("Invalid color designation, 2nd field is " + note[1].Length + " chars long, only 1 allowed.");
+                }
+            }
+
+            #endregion
+
+            #region 16.1.3.3: Parse castling availability
+
+            if (note.Length >= 3)
+            {
+                foreach (char achar in note[2])
+                {
+                    switch (achar)
+                    {
+                        case 'K':
+                            this.WhiteCastleKing = true;
+                            break;
+                        case 'Q':
+                            this.WhiteCastleQueen = true;
+                            break;
+                        case 'k':
+                            this.BlackCastleKing = true;
+                            break;
+                        case 'q':
+                            this.BlackCastleQueen = true;
+                            break;
+                        case '-':
+                            break;
+                        default:
+                            throw new Exception("Invalid castle privileges designation, use: KQkq or -");
+                    }
+                }
+            }
+
+            #endregion
+
+            #region
+            try
+            {
+                if (note.Length >= 4)
+                {
+                    // 16.1.3.4: Parse en passant target square such as "e3"
+                    this.Enpassant = note[3];
+                    if (this.Enpassant.Length == 2)
+                    {
+                        if (Color.Equals('w'))
+                        {
+                            if (this.Enpassant[1] != '6')
+                                throw new Exception("Invalid target square for white En passant captures: " + this.Enpassant.ToString());
+                        }
+                        else
+                        {
+                            if (this.Enpassant[1] != '3')
+                                throw new Exception("Invalid target square for black En passant captures: " + this.Enpassant.ToString());
+                        }
+                    }
+                }
+
+                if (note.Length >= 5)
+                {
+                    // 16.1.3.5: Parse halfmove clock, count of half-move since last pawn advance or unit capture
+                    this.HalfMove = Int16.Parse(note[4]);
+                }
+
+                if (note.Length >= 6)
+                {
+                    // 16.1.3.6: Parse fullmove number, increment after each black move
+                    this.FullMove = Int16.Parse(note[5]);
+                }
+            }
+            catch
+            {
+            }
+            #endregion
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Clear all current settings.
+        /// </summary>
+        public void Clear()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Rows[i] = new StringBuilder("11111111");
+            }
+            this._activeColor = 'w';
+            this.Enpassant = "-";
+            this.WhiteCastleKing = false;
+            this.WhiteCastleQueen = false;
+            this.BlackCastleKing = false;
+            this.BlackCastleQueen = false;
+            this.HalfMove = 0;
+            this.FullMove = 0;
+        }
+
+        /// <summary>
+        /// åœ¨æ­¤å®ä¾‹çš„ç»“å°¾è¿½åŠ æŒ‡å®šå¯¹è±¡çš„å­—ç¬¦ä¸²è¡¨ç¤ºå½¢å¼ã€‚
+        /// æŒ‡å®šå¯¹è±¡åº”ä¸ºstring,int,charï¼Œå…¶ä»–ç±»å‹å°†æŠ›å‡ºArgumentOutOfRangeExceptionå¼‚å¸¸ã€‚
+        /// æŒ‡å®šå¯¹è±¡åº”ä¸º12345678,abcdefgh,ACDEFGH,/,ä¸­éƒ¨ä»½ã€‚
+        /// </summary>
+        /// <param name="value">æŒ‡å®šå¯¹è±¡</param>
+        /// <returns></returns>
+        public FENBuilder AppendFENChar(object value)
+        {
+            if (value == null) throw new ArgumentNullException();
+            if (value is System.DBNull) throw new ArgumentNullException();
+
+            string str = "12345678prnbqkPRNBQK/";
+            string v = value.ToString();
+            int m = _index / 8;
+            int n = _index % 8;
+            if (value is string || value is int || value is char)
+            {
+                if (str.IndexOf(v) >= 0 && v.Length == 1)
+                {
+                    this.Rows[m][n] = v[0];
+                    _index++;
+                    return this;
+                }
+                else
+                    throw new ArgumentOutOfRangeException();
+            }
+            else
+                throw new ArgumentOutOfRangeException();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (StringBuilder row in Rows)
+            {
+                sb.Append(row).Append('/');
+            }
+            return sb.ToString().TrimEnd('/');
+        }
+
+        public string ToFENString()
+        {
+            string[] parms = new string[6];
+            StringBuilder note = new StringBuilder();
+
+            for (int j = 7; j >= 0; j--)
+            {
+                int i = 0;
+                StringBuilder rowNote = new StringBuilder();
+
+
+                string str = Rows[j].ToString();
+                foreach (char achar in str)// 11b11k1B = 2b2k1b
+                {
+                    int tmp = 0;
+                    if (!int.TryParse(achar.ToString(), out tmp))
+                    {
+                        if (i != 0)
+                        {
+                            rowNote.Append(i).Append(achar);
+                            i = 0;
+                        }
+                        else
+                        {
+                            rowNote.Append(achar);
+                        }
+                    }
+                    else
+                        i++;
+                }
+                if (i != 0) 
+                    rowNote.Append(i);
+                note.Append(rowNote).Append('/');
+            }
+            parms[0] = note.ToString().TrimEnd('/');
+            note.Length = 0;
+
+            parms[1] = _activeColor.ToString();
+
+            if (WhiteCastleKing | WhiteCastleQueen | BlackCastleKing | BlackCastleQueen)
+            {
+                if (WhiteCastleKing)
+                    note.Append('K');
+                if (WhiteCastleQueen)
+                    note.Append('Q');
+                if (BlackCastleKing)
+                    note.Append('k');
+                if (BlackCastleQueen)
+                    note.Append('q');
+            }
+            else
+                note.Append('-');
+
+            parms[2] = note.ToString();
+            note.Length = 0;
+            parms[3] = Enpassant;
+            parms[4] = HalfMove.ToString();
+            parms[5] = FullMove.ToString();
+            return string.Format(Format, parms);
+        }
+
+        public char this[int dot]
+        {
+            get { return this.GetChar(dot); }
+            set { this.SetChar(dot, value); }
+        }
+
+        private void SetChar(int dot, char value)
+        {
+            int m = dot / 8;
+            int n = dot % 8;
+            this.Rows[m][n] = value;
+        }
+
+        private char GetChar(int dot)
+        {
+            int m = dot / 8;
+            int n = dot % 8;
+            return this.Rows[m][n];
+        }
+
+        public static FENBuilder CreateFENBuilder(ChessGame game)
+        {
+            FENBuilder builder = new FENBuilder();
+            int dot = 0;
+            foreach (ChessGrid grid in game)
+            {
+                if (grid.Occupant != null)
+                {
+                    string str = string.Empty;
+                    if (grid.Occupant.IsCaptured == false)
+                    {
+                        str = grid.Occupant.ToString();
+                        if (grid.Occupant.ChessmanSide == Enums.ChessmanSide.Black)
+                            str = str.ToLowerInvariant();
+                    }
+                    builder[dot] = str[0];
+                }
+                dot++;
+            }
+            return builder;
+        }
+
+    }
+}
+
+
+/* ChessFENReader.cs
 using System;
 using System.IO;
 using System.Text;
@@ -5,23 +411,23 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// ¹ú¼ÊÏóÆåµÄFEN¸ñÊ½´®ÊÇÓÉ6¶ÎASCII×Ö·û´®×é³ÉµÄ´úÂë(±Ë´Ë5¸ö¿Õ¸ñ¸ô¿ª)£¬Õâ6¶Î´úÂëµÄÒâÒåÒÀ´ÎÊÇ£º
-    /// (1) ±íÊ¾ÆåÅÌÉÏÃ¿ĞĞµÄÆå×Ó£¬ÕâÊÇFEN¸ñÊ½´®µÄÖ÷Òª²¿·Ö£»¹æÔòÊÇ´ÓµÚ 8ºáÏß¿ªÊ¼Ë³´ÎÊıµ½µÚ 1ºáÏß
-    /// (°×·½ÔÚÏÂ£¬´ÓÉÏÊıµ½ÏÂ)£¬´Ó aÏß¿ªÊ¼Ë³´ÎÊıµ½hÏß£»°×·½Æå×ÓÒÔ´óĞ´×ÖÄ¸¡°PNBRQK¡±±íÊ¾£¬ºÚ·½Æå×Ó
-    /// ÒÔĞ¡Ğ´ ¡°pnbrqk¡±±íÊ¾£¬ÕâÊÇÓ¢ÎÄ±íÊ¾·¨£¬Ã¿¸ö×ÖÄ¸´ú±íµÄÒâÒåÓë³£¹æ¹æ¶¨ÏàÍ¬¡£Êı×Ö´ú±íÒ»¸öºáÏß
-    /// ÉÏµÄÁ¬Ğø¿Õ¸ñ£¬·´Ğ±¸Ü¡°/¡± ±íÊ¾½áÊøÒ»¸öºáÏßµÄÃèÊö¡£
-¡¡¡¡/// (2) ÂÖµ½ÄÄÒ»·½×ß×Ó£»
-¡¡¡¡/// (3) Ã¿·½¼°¸Ã·½µÄÍõÒíºÍºóÒíÊÇ·ñ»¹´æÔÚ¡°Íõ³µÒ×Î»¡±µÄ¿ÉÄÜ£»
-¡¡¡¡/// (4) ÊÇ·ñ´æÔÚ³Ô¹ıÂ·±øµÄ¿ÉÄÜ£¬¹ıÂ·±øÊÇ¾­¹ıÄÄ¸ö¸ñ×ÓµÄ£»
-¡¡¡¡/// (5) ×î½üÒ»´Î³Ô×Ó»òÕß½ø±øºóÆå¾Ö½øĞĞµÄ²½Êı(°ë»ØºÏÊı)£¬ÓÃÀ´ÅĞ¶Ï¡°50»ØºÏ×ÔÈ»ÏŞ×Å¡±£»
-    /// (6) Æå¾ÖµÄ»ØºÏÊı¡£
+    /// å›½é™…è±¡æ£‹çš„FENæ ¼å¼ä¸²æ˜¯ç”±6æ®µASCIIå­—ç¬¦ä¸²ç»„æˆçš„ä»£ç (å½¼æ­¤5ä¸ªç©ºæ ¼éš”å¼€)ï¼Œè¿™6æ®µä»£ç çš„æ„ä¹‰ä¾æ¬¡æ˜¯ï¼š
+    /// (1) è¡¨ç¤ºæ£‹ç›˜ä¸Šæ¯è¡Œçš„æ£‹å­ï¼Œè¿™æ˜¯FENæ ¼å¼ä¸²çš„ä¸»è¦éƒ¨åˆ†ï¼›è§„åˆ™æ˜¯ä»ç¬¬ 8æ¨ªçº¿å¼€å§‹é¡ºæ¬¡æ•°åˆ°ç¬¬ 1æ¨ªçº¿
+    /// (ç™½æ–¹åœ¨ä¸‹ï¼Œä»ä¸Šæ•°åˆ°ä¸‹)ï¼Œä» açº¿å¼€å§‹é¡ºæ¬¡æ•°åˆ°hçº¿ï¼›ç™½æ–¹æ£‹å­ä»¥å¤§å†™å­—æ¯â€œPNBRQKâ€è¡¨ç¤ºï¼Œé»‘æ–¹æ£‹å­
+    /// ä»¥å°å†™ â€œpnbrqkâ€è¡¨ç¤ºï¼Œè¿™æ˜¯è‹±æ–‡è¡¨ç¤ºæ³•ï¼Œæ¯ä¸ªå­—æ¯ä»£è¡¨çš„æ„ä¹‰ä¸å¸¸è§„è§„å®šç›¸åŒã€‚æ•°å­—ä»£è¡¨ä¸€ä¸ªæ¨ªçº¿
+    /// ä¸Šçš„è¿ç»­ç©ºæ ¼ï¼Œåæ–œæ â€œ/â€ è¡¨ç¤ºç»“æŸä¸€ä¸ªæ¨ªçº¿çš„æè¿°ã€‚
+ã€€ã€€/// (2) è½®åˆ°å“ªä¸€æ–¹èµ°å­ï¼›
+ã€€ã€€/// (3) æ¯æ–¹åŠè¯¥æ–¹çš„ç‹ç¿¼å’Œåç¿¼æ˜¯å¦è¿˜å­˜åœ¨â€œç‹è½¦æ˜“ä½â€çš„å¯èƒ½ï¼›
+ã€€ã€€/// (4) æ˜¯å¦å­˜åœ¨åƒè¿‡è·¯å…µçš„å¯èƒ½ï¼Œè¿‡è·¯å…µæ˜¯ç»è¿‡å“ªä¸ªæ ¼å­çš„ï¼›
+ã€€ã€€/// (5) æœ€è¿‘ä¸€æ¬¡åƒå­æˆ–è€…è¿›å…µåæ£‹å±€è¿›è¡Œçš„æ­¥æ•°(åŠå›åˆæ•°)ï¼Œç”¨æ¥åˆ¤æ–­â€œ50å›åˆè‡ªç„¶é™ç€â€ï¼›
+    /// (6) æ£‹å±€çš„å›åˆæ•°ã€‚
     /// |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
     /// |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
     /// |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
     /// |example: 8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48
     /// |example: rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3
     /// </summary>
-    public class ChessFENReader : IFENReader, IFENReaderEvents
+    public class ChessFENReader : IFENBuilder, IFENReaderEvents
     {
         /// <summary>
         /// Holds our board position based on squares 0 thru 63.
@@ -185,7 +591,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessFENReader()
         {
-            _FENstring = new StringBuilder(64, 64);
+            _FENstring = new StringBuilder(64 + 7);
             Clear();
         }
 
@@ -195,7 +601,7 @@ namespace Gean.Wrapper.Chess
         public void Clear()
         {
             _FENstring.Length = 0;
-            _FENstring.Append(' ', 64);
+            _FENstring.Append(' ', 64 + 7);
             _EnPassant = "-";
             _activeColor = 'w';
             _WKCastle = false;
@@ -525,3 +931,4 @@ namespace Gean.Wrapper.Chess
         #endregion
     }
 }
+*/

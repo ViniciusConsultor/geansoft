@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reader\FENBuilder.cs" />
     <Compile Include="Chessman\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
     <Compile Include="BitBoard\BitBoardEngine.cs" />
@@ -57,12 +58,10 @@
     <Compile Include="Record\ChessRecordCollection.cs" />
     <Compile Include="Record\ChessTag.cs" />
     <Compile Include="Record\ISequenceItem.cs" />
-    <Compile Include="Reader\ChessFENReader.cs" />
     <Compile Include="Reader\IPGNReaderEvents.cs" />
     <Compile Include="Reader\IPGNReader.cs" />
     <Compile Include="Reader\ChessPGNReader.cs" />
-    <Compile Include="Reader\IFENReader.cs" />
-    <Compile Include="Reader\IFENReaderEvents.cs" />
+    <Compile Include="Reader\IFENBuilder.cs" />
     <Compile Include="Game\ChessGame.cs" />
     <Compile Include="Record\ChessComment.cs" />
     <Compile Include="Chessman\Chessman.cs">
