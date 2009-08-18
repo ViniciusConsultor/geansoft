@@ -95,7 +95,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
                 steps.Add(step);
                 Assert.IsNotNull(step);
             }
-            Assert.AreEqual(89, steps.Count);
+            Assert.AreEqual(90, steps.Count);
         }
     }
 }

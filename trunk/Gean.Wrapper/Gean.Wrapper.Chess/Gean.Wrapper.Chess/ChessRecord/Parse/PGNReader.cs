@@ -119,7 +119,7 @@ namespace Gean.Wrapper.Chess
             EventFinished += new finished(ievents.Finished);
             EventTagParsed += new tagParsed(ievents.TagParsed);
             EventNagParsed += new nagParsed(ievents.NagParsed);
-            EventMoveParsed += new moveParsed(ievents.MoveParsed);
+            EventMoveParsed += new moveParsed(ievents.StepParsed);
             EventCommentParsed += new commentParsed(ievents.CommentParsed);
             EventendMarkerParsed += new endMarkerParsed(ievents.EndMarker);
         }
@@ -139,7 +139,7 @@ namespace Gean.Wrapper.Chess
             EventFinished -= new finished(ievents.Finished);
             EventTagParsed -= new tagParsed(ievents.TagParsed);
             EventNagParsed -= new nagParsed(ievents.NagParsed);
-            EventMoveParsed -= new moveParsed(ievents.MoveParsed);
+            EventMoveParsed -= new moveParsed(ievents.StepParsed);
             EventCommentParsed -= new commentParsed(ievents.CommentParsed);
             EventendMarkerParsed -= new endMarkerParsed(ievents.EndMarker);
         }

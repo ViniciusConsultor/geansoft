@@ -7,7 +7,9 @@ using System.Collections;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 一个记载有多个棋局记录的文件，被解析成一个ChessRecord的IList集合。即本类型。
+    /// 描述一个记载有多个棋局记录文件中的数据封装类型。
+    /// 该文件将被解析成一个IList&lt;ChessRecord&gt;集合,即本类型。
+    /// 该类型实现了PGN解析接口。
     /// </summary>
     public class ChessRecordFile : IList<ChessRecord>, IPGNReaderEvents
     {
@@ -18,15 +20,15 @@ namespace Gean.Wrapper.Chess
 
         private Stack _states;
         private string _lastNumber;
-        private ChessStepPair _tmpPair;
+        private ChessStep _tmpStep;
         private ChessComment _tmpComment;
-        private IStepTree _tmpTree = null;
+        private IStepTree _tmpStepTree = null;
 
         public void NewGame(IPGNReader iParser)
         {
             _states = new Stack();
-            _tmpTree = new ChessRecord();
-            _chessRecords.Add((ChessRecord)_tmpTree);
+            _tmpStepTree = new ChessRecord();
+            _chessRecords.Add((ChessRecord)_tmpStepTree);
         }
 
         public void ExitHeader(IPGNReader iParser)
@@ -36,41 +38,41 @@ namespace Gean.Wrapper.Chess
         public void EnterVariation(IPGNReader iParser)
         {
             _states.Push(_lastNumber);
-            if (_tmpPair != null)
+            if (_tmpStep != null)
             {
-                _tmpPair.Parent = _tmpTree;
-                _tmpTree = _tmpPair;
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStep.Parent = _tmpStepTree;
+                _tmpStepTree = _tmpStep;
+                _tmpStepTree.Items.Add(_tmpStep);
+                _tmpStep = null;
             }
             else
             {
                 IStepTree tmpTree = null;
                 int i = 1;
-                while (!(_tmpTree.Items[_tmpTree.Items.Count - i] is IStepTree))
+                while (!(_tmpStepTree.Items[_tmpStepTree.Items.Count - i] is IStepTree))
                 {
                     i++;
                 }
-                tmpTree = (IStepTree)_tmpTree.Items[_tmpTree.Items.Count - i];
-                tmpTree.Parent = _tmpTree;
-                _tmpTree = tmpTree;
+                tmpTree = (IStepTree)_tmpStepTree.Items[_tmpStepTree.Items.Count - i];
+                tmpTree.Parent = _tmpStepTree;
+                _tmpStepTree = tmpTree;
             }
-            if (_tmpTree.Items == null)
+            if (_tmpStepTree.Items == null)
             {
-                _tmpTree.Items = new ChessSequence();
+                _tmpStepTree.Items = new ChessSequence();
             }
         }
 
         public void ExitVariation(IPGNReader iParser)
         {
             if (iParser.State != Enums.PGNReaderState.Number)
-                MoveParsed(iParser);
-            if (_tmpPair != null)
+                StepParsed(iParser);
+            if (_tmpStep != null)
             {
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStepTree.Items.Add(_tmpStep);
+                _tmpStep = null;
             }
-            _tmpTree = (IStepTree)_tmpTree.Parent;
+            _tmpStepTree = (IStepTree)_tmpStepTree.Parent;
             _lastNumber = (string)_states.Pop();
         }
 
@@ -80,10 +82,10 @@ namespace Gean.Wrapper.Chess
 
         public void Finished(IPGNReader iParser)
         {
-            if (_tmpPair != null)
+            if (_tmpStep != null)
             {
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStepTree.Items.Add(_tmpStep);
+                _tmpStep = null;
             }
             _states = new Stack();
         }
@@ -92,7 +94,7 @@ namespace Gean.Wrapper.Chess
         {
             try
             {
-                ((ChessRecord)_tmpTree).Definer.Set<string>(iParser.Tag, iParser.Value);
+                ((ChessRecord)_tmpStepTree).Definer.Set<string>(iParser.Tag, iParser.Value);
             }
             catch (ChessRecordException e)
             {
@@ -102,59 +104,50 @@ namespace Gean.Wrapper.Chess
 
         public void NagParsed(IPGNReader iParser)
         {
-            if (_tmpPair != null)
+            if (_tmpStep != null)
             {
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStepTree.Items.Add(_tmpStep);
+                _tmpStep = null;
             }
             ChessNag nag = new ChessNag(iParser.Value);
-            _tmpTree.Items.Add(nag);
+            _tmpStepTree.Items.Add(nag);
         }
 
-        public void MoveParsed(IPGNReader iParser)
+        public void StepParsed(IPGNReader iParser)
         {
             if (iParser.State == Enums.PGNReaderState.Number)
             {
-                if (_tmpPair == null)
-                {
-                    _lastNumber = iParser.Value;
-                    _tmpPair = new ChessStepPair();
-                    _tmpPair.Number = int.Parse(_lastNumber);
-                }
+                _lastNumber = iParser.Value;
             }
             else if (iParser.State == Enums.PGNReaderState.White)
             {
-                if (_tmpPair != null)
-                    _tmpPair.White = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.White);
+                _tmpStep = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.White);
+                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStepTree.Items.Add(_tmpStep);
             }
             else if (iParser.State == Enums.PGNReaderState.Black)
             {
-                if (_tmpPair == null)
-                {
-                    _tmpPair = new ChessStepPair();
-                    _tmpPair.Number = int.Parse(_lastNumber);
-                }
-                _tmpPair.Black = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.Black);
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStep = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.Black);
+                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStepTree.Items.Add(_tmpStep);
             }
         }
 
         public void CommentParsed(IPGNReader iParser)
         {
             _tmpComment = new ChessComment(iParser.Value);
-            _tmpTree.Items.Add(_tmpComment);
+            _tmpStepTree.Items.Add(_tmpComment);
         }
 
         public void EndMarker(IPGNReader iParser)
         {
-            if (_tmpPair != null)
+            if (_tmpStep != null)
             {
-                _tmpTree.Items.Add(_tmpPair);
-                _tmpPair = null;
+                _tmpStepTree.Items.Add(_tmpStep);
+                _tmpStep = null;
             }
             ChessEnd end = new ChessEnd(iParser.Value);
-            _tmpTree.Items.Add(end);
+            _tmpStepTree.Items.Add(end);
         }
 
         #endregion

@@ -54,7 +54,7 @@ namespace Gean.Wrapper.Chess
         /// 当解析到行棋时
         /// </summary>
         /// <param name="iParser"></param>
-        void MoveParsed(IPGNReader iParser);
+        void StepParsed(IPGNReader iParser);
         /// <summary>
         /// 当解析到一条评论时
         /// </summary>

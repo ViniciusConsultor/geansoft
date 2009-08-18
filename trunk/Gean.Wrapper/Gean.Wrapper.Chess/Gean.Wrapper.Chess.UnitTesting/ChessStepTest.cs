@@ -1,18 +1,14 @@
-﻿using Gean.Wrapper.Chess;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Diagnostics;
 using System.IO;
-using System;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Gean.Utility;
+
 namespace Gean.Wrapper.Chess.UnitTesting
 {
 
-
     /// <summary>
-    ///这是 ChessStepTest 的测试类，旨在
-    ///包含所有 ChessStepTest 单元测试
+    ///这是 ChessStepTest 的测试类，旨在包含所有 ChessStepTest 单元测试
     ///</summary>
     [TestClass()]
     public class ChessStepTest
@@ -85,6 +81,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         [TestMethod()]
         public void ParseTest1()
         {
+
             string value = string.Empty;
             ChessStep expected;
             ChessStep actual;
