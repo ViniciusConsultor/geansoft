@@ -55,21 +55,13 @@
   <Class Name="Gean.Wrapper.Chess.ChessComment" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="6.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAEAAAAAAAEAAAAAAgAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAEAAAAAAAEgAAAAAgAAAAAAIAKAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessComment.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Gean.Wrapper.Chess.ChessEnd" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>ChessRecord\ISequenceItem\ChessEnd.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Gean.Wrapper.Chess.ChessNag" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="4.25" Width="1.5" />
+    <Position X="6.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessNag.cs</FileName>
@@ -79,7 +71,7 @@
   <Class Name="Gean.Wrapper.Chess.ChessSequence" Collapsed="true">
     <Position X="4.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AkIgAkAAAAEEABAUCAAABAQAAAAICAAECAAAAABQIAA=</HashCode>
+      <HashCode>AkIgAkAAAAEEABAUCAAABAQAAAAAAAAECAAAAABQIAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessSequence.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -97,6 +89,14 @@
     <TypeIdentifier>
       <HashCode>gAggAAAAAAEgQhRAYAAIAABQpAAAAAACoQIkJCACAAg=</HashCode>
       <FileName>ChessRecord\Parse\PGNReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessResult" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAABACAAAAAAmgCAAAAQAABAAAIAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessResult.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
