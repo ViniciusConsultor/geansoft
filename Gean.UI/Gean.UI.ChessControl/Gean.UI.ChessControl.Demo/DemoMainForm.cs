@@ -29,7 +29,6 @@ namespace Gean.UI.ChessControl.Demo
             this._recordList.SelectedValueChanged += new EventHandler(SelectedRecord);
 
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
-            this._board.PlayPairEvent += new ChessBoard.PlayPairEventHandler(_board_PlayPairEvent);
 
             ChessRecordPlayToolStrip strip = new ChessRecordPlayToolStrip();
 
@@ -37,13 +36,6 @@ namespace Gean.UI.ChessControl.Demo
             this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
 
             this.WindowState = this.IsShangBan;
-        }
-
-
-        void _board_PlayPairEvent(object sender, ChessBoard.PlayPairEventArgs e)
-        {
-            //TreeNode node = new TreeNode(e.ChessStepPair.ToString());
-            //this._currTree.Nodes.Add(node);
         }
 
         void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)
@@ -68,6 +60,7 @@ namespace Gean.UI.ChessControl.Demo
             reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__aGame1.pgn")); //__agame.pgn"));
             reader.AddEvents(records);
             reader.Parse();
+            string s = records[0].ToString();
 
             this._recordList.Items.Clear();
             foreach (var item in records)

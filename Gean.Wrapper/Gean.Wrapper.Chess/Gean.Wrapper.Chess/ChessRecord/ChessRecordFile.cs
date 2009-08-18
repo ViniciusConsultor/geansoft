@@ -42,6 +42,10 @@ namespace Gean.Wrapper.Chess
             {
                 _tmpStep.Parent = _tmpStepTree;
                 _tmpStepTree = _tmpStep;
+                if (_tmpStepTree.Items == null)
+                {
+                    _tmpStepTree.Items = new ChessSequence();
+                }
                 _tmpStepTree.Items.Add(_tmpStep);
                 _tmpStep = null;
             }

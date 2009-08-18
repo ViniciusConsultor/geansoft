@@ -38,11 +38,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChessRecord\Parse\FENBuilder.cs" />
     <Compile Include="Chessman\ChessmanState.cs" />
     <Compile Include="Base\ChessPath.cs" />
     <Compile Include="BitBoard\BitBoardEngine.cs" />
     <Compile Include="BitBoard\BitMoving.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\Parse\FENBuilder.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\Parse\IFENBuilder.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\Parse\IPGNReader.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\Parse\IPGNReaderEvents.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\Parse\PGNReader.cs" />
     <Compile Include="ExceptionString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -58,10 +62,6 @@
     <Compile Include="ChessRecord\ChessRecordFile.cs" />
     <Compile Include="ChessRecord\ChessTag.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ISequenceItem.cs" />
-    <Compile Include="ChessRecord\Parse\IPGNReaderEvents.cs" />
-    <Compile Include="ChessRecord\Parse\IPGNReader.cs" />
-    <Compile Include="ChessRecord\Parse\PGNReader.cs" />
-    <Compile Include="ChessRecord\Parse\IFENBuilder.cs" />
     <Compile Include="ChessGame\ChessGame.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessComment.cs" />
     <Compile Include="Chessman\Chessman.cs">
@@ -109,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ChessRecord\ChessRecord.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BitBoard\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

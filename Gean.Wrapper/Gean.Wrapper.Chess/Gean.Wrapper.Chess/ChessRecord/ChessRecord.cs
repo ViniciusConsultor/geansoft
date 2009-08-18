@@ -43,10 +43,10 @@ namespace Gean.Wrapper.Chess
             if (obj == null) return false;
             if (obj is System.DBNull) return false;
             
-            ChessRecord pr = obj as ChessRecord;
-            if (!UtilityEquals.EnumerableEquals(this.Definer, pr.Definer))
+            ChessRecord record = obj as ChessRecord;
+            if (!UtilityEquals.EnumerableEquals(this.Definer, record.Definer))
                 return false;
-            if (!UtilityEquals.CollectionsEquals<ISequenceItem>(this.Items, pr.Items))
+            if (!UtilityEquals.CollectionsEquals<ISequenceItem>(this.Items, record.Items))
                 return false;
             return true;
         }

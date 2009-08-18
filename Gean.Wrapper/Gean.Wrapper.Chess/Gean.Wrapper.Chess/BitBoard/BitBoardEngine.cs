@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Gean.Wrapper.Chess
 {
+    /*  class BitBoardEngine
     public class BitBoardEngine
     {
         #region private
@@ -126,13 +127,13 @@ namespace Gean.Wrapper.Chess
         }
 
         #region Zobrist
-        /* Zobrist Key
-        Zobrist就是把一个棋盘编码成HashKey的一种映射关系表，表里面全是随机数，用于棋类比赛人工智能
-        神经网络中的模拟退火技术，BP网初始权值随机设定神经网络里的初始权值通常就是随机数。此外为防
-        止出现局部极小训练不收敛，使用随机技术是常有的事。
-        为什么要编码呢，其实就是为了把棋盘压缩成 1个64位长整型，这样的话，比较两个局面等价于比较两
-        个整数，是不是超级简单而且快速了呢?
-        */
+        // Zobrist Key
+        //Zobrist就是把一个棋盘编码成HashKey的一种映射关系表，表里面全是随机数，用于棋类比赛人工智能
+        //神经网络中的模拟退火技术，BP网初始权值随机设定神经网络里的初始权值通常就是随机数。此外为防
+        //止出现局部极小训练不收敛，使用随机技术是常有的事。
+        //为什么要编码呢，其实就是为了把棋盘压缩成 1个64位长整型，这样的话，比较两个局面等价于比较两
+        //个整数，是不是超级简单而且快速了呢?
+        
 
         static ulong[, ,] ZobristKeyGen = new ulong[6, 2, 64];
         const ulong CastleBlackRandom = 0x86726af5ec1ea6fdUL;
@@ -257,174 +258,174 @@ namespace Gean.Wrapper.Chess
         {
             return 0;
         }
-        /*
-        public int GetExtimatedBoardPositionalValue(Enums.ChessmanSide s, Enums.GamePhase phase)
-        {
-            int valueWhite = 0, valueBlack = 0;
-            foreach (int cell in Unpack(WhitePawns))
-            {
-                if (phase == Enums.GamePhase.End)
-                    valueWhite += endgamePawnSquareBonuses[63 - cell];
-                else
-                    if (phase == Enums.GamePhase.Opening)
-                        valueWhite += openingPawnSquareBonuses[63 - cell];
-                    else
-                        valueWhite += pawnSquareBonuses[63 - cell];
-            }
-            foreach (int cell in Unpack(WhiteKing))
-            {
-                if (phase == Enums.GamePhase.End)
-                    valueWhite += endgameKingSquareBonuses[63 - cell];
-                else
-                    valueWhite += kingSquareBonuses[63 - cell];
-            }
-            foreach (int cell in Unpack(WhiteQueen))
-            {
-                valueWhite += queenSquareBonuses[63 - cell];
-            }
-            foreach (int cell in Unpack(WhiteRooks))
-            {
-                valueWhite += rookSquareBonuses[63 - cell];
-            }
-            foreach (int cell in Unpack(WhiteKnights))
-            {
-                valueWhite += knightSquareBonuses[63 - cell];
-            }
-            foreach (int cell in Unpack(WhiteBishops))
-            {
-                valueWhite += bishopSquareBonuses[63 - cell];
-            }
-            //black
-            foreach (int cell in Unpack(BlackPawns))
-            {
-                if (phase == Enums.GamePhase.End)
-                    valueBlack += endgamePawnSquareBonuses[cell];
-                else
-                    if (phase == Enums.GamePhase.Opening)
-                        valueBlack += openingPawnSquareBonuses[cell];
-                    else
-                        valueBlack += pawnSquareBonuses[cell];
-            }
-            foreach (int cell in Unpack(BlackKing))
-            {
-                if (phase == Enums.GamePhase.End)
-                    valueBlack += endgameKingSquareBonuses[cell];
-                else
-                    valueBlack += kingSquareBonuses[cell];
-            }
-            foreach (int cell in Unpack(BlackQueen))
-            {
-                valueBlack += queenSquareBonuses[cell];
-            }
-            foreach (int cell in Unpack(BlackRooks))
-            {
-                valueBlack += rookSquareBonuses[cell];
-            }
-            foreach (int cell in Unpack(BlackKnights))
-            {
-                valueBlack += knightSquareBonuses[cell];
-            }
-            foreach (int cell in Unpack(BlackBishops))
-            {
-                valueBlack += bishopSquareBonuses[cell];
-            }
-            return s == Enums.ChessmanSide.White ? valueWhite - valueBlack : valueBlack - valueWhite;
-        }
+        
+        //public int GetExtimatedBoardPositionalValue(Enums.ChessmanSide s, Enums.GamePhase phase)
+        //{
+        //    int valueWhite = 0, valueBlack = 0;
+        //    foreach (int cell in Unpack(WhitePawns))
+        //    {
+        //        if (phase == Enums.GamePhase.End)
+        //            valueWhite += endgamePawnSquareBonuses[63 - cell];
+        //        else
+        //            if (phase == Enums.GamePhase.Opening)
+        //                valueWhite += openingPawnSquareBonuses[63 - cell];
+        //            else
+        //                valueWhite += pawnSquareBonuses[63 - cell];
+        //    }
+        //    foreach (int cell in Unpack(WhiteKing))
+        //    {
+        //        if (phase == Enums.GamePhase.End)
+        //            valueWhite += endgameKingSquareBonuses[63 - cell];
+        //        else
+        //            valueWhite += kingSquareBonuses[63 - cell];
+        //    }
+        //    foreach (int cell in Unpack(WhiteQueen))
+        //    {
+        //        valueWhite += queenSquareBonuses[63 - cell];
+        //    }
+        //    foreach (int cell in Unpack(WhiteRooks))
+        //    {
+        //        valueWhite += rookSquareBonuses[63 - cell];
+        //    }
+        //    foreach (int cell in Unpack(WhiteKnights))
+        //    {
+        //        valueWhite += knightSquareBonuses[63 - cell];
+        //    }
+        //    foreach (int cell in Unpack(WhiteBishops))
+        //    {
+        //        valueWhite += bishopSquareBonuses[63 - cell];
+        //    }
+        //    //black
+        //    foreach (int cell in Unpack(BlackPawns))
+        //    {
+        //        if (phase == Enums.GamePhase.End)
+        //            valueBlack += endgamePawnSquareBonuses[cell];
+        //        else
+        //            if (phase == Enums.GamePhase.Opening)
+        //                valueBlack += openingPawnSquareBonuses[cell];
+        //            else
+        //                valueBlack += pawnSquareBonuses[cell];
+        //    }
+        //    foreach (int cell in Unpack(BlackKing))
+        //    {
+        //        if (phase == Enums.GamePhase.End)
+        //            valueBlack += endgameKingSquareBonuses[cell];
+        //        else
+        //            valueBlack += kingSquareBonuses[cell];
+        //    }
+        //    foreach (int cell in Unpack(BlackQueen))
+        //    {
+        //        valueBlack += queenSquareBonuses[cell];
+        //    }
+        //    foreach (int cell in Unpack(BlackRooks))
+        //    {
+        //        valueBlack += rookSquareBonuses[cell];
+        //    }
+        //    foreach (int cell in Unpack(BlackKnights))
+        //    {
+        //        valueBlack += knightSquareBonuses[cell];
+        //    }
+        //    foreach (int cell in Unpack(BlackBishops))
+        //    {
+        //        valueBlack += bishopSquareBonuses[cell];
+        //    }
+        //    return s == Enums.ChessmanSide.White ? valueWhite - valueBlack : valueBlack - valueWhite;
+        //}
 
-        public int GetMoveBonus(BitMoving bm, Enums.GamePhase phase)
-        {
-            if ((bm.Previous & WhitePieces) != 0)
-            {
-                int cellFrom = 63 - BitToCell(bm.Previous);
-                int cellTo = 63 - BitToCell(bm.Current);
-                if ((bm.Previous & WhitePawns) != 0)
-                {
-                    if (phase == Enums.GamePhase.End)
-                        return endgamePawnSquareBonuses[cellTo] - endgamePawnSquareBonuses[cellFrom];
-                    else
-                        if (phase == Enums.GamePhase.Opening)
-                            return openingPawnSquareBonuses[cellTo] - openingPawnSquareBonuses[cellFrom];
-                        else
-                            if (phase == Enums.GamePhase.Middle)
-                                return pawnSquareBonuses[cellTo] - pawnSquareBonuses[cellFrom];
-                }
-                else
-                    if ((bm.Previous & WhiteKing) != 0)
-                    {
-                        if (phase == Enums.GamePhase.End)
-                            return endgameKingSquareBonuses[cellTo] - endgameKingSquareBonuses[cellFrom];
-                        else
-                            return kingSquareBonuses[cellTo] - kingSquareBonuses[cellFrom];
-                    }
-                    else
-                        if ((bm.Previous & WhiteQueen) != 0)
-                        {
-                            return queenSquareBonuses[cellTo] - queenSquareBonuses[cellFrom];
-                        }
-                        else
-                            if ((bm.Previous & WhiteRooks) != 0)
-                            {
-                                return rookSquareBonuses[cellTo] - rookSquareBonuses[cellFrom];
-                            }
-                            else
-                                if ((bm.Previous & WhiteBishops) != 0)
-                                {
-                                    return bishopSquareBonuses[cellTo] - bishopSquareBonuses[cellFrom];
-                                }
-                                else
-                                    if ((bm.Previous & WhiteKnights) != 0)
-                                    {
-                                        return knightSquareBonuses[cellTo] - knightSquareBonuses[cellFrom];
-                                    }
-            }
-            else
-                if ((bm.Previous & BlackPieces) != 0)
-                {
-                    int cellFrom = BitToCell(bm.Previous);
-                    int cellTo = BitToCell(bm.Current);
-                    if ((bm.Previous & BlackPawns) != 0)
-                    {
-                        if (phase == Enums.GamePhase.End)
-                            return endgamePawnSquareBonuses[cellTo] - endgamePawnSquareBonuses[cellFrom];
-                        else
-                            if (phase == Enums.GamePhase.Opening)
-                                return openingPawnSquareBonuses[cellTo] - openingPawnSquareBonuses[cellFrom];
-                            else
-                                if (phase == Enums.GamePhase.Middle)
-                                    return pawnSquareBonuses[cellTo] - pawnSquareBonuses[cellFrom];
-                    }
-                    else
-                        if ((bm.Previous & BlackKing) != 0)
-                        {
-                            if (phase == Enums.GamePhase.End)
-                                return endgameKingSquareBonuses[cellTo] - endgameKingSquareBonuses[cellFrom];
-                            else
-                                return kingSquareBonuses[cellTo] - kingSquareBonuses[cellFrom];
-                        }
-                        else
-                            if ((bm.Previous & BlackQueen) != 0)
-                            {
-                                return queenSquareBonuses[cellTo] - queenSquareBonuses[cellFrom];
-                            }
-                            else
-                                if ((bm.Previous & BlackRooks) != 0)
-                                {
-                                    return rookSquareBonuses[cellTo] - rookSquareBonuses[cellFrom];
-                                }
-                                else
-                                    if ((bm.Previous & BlackBishops) != 0)
-                                    {
-                                        return bishopSquareBonuses[cellTo] - bishopSquareBonuses[cellFrom];
-                                    }
-                                    else
-                                        if ((bm.Previous & BlackKnights) != 0)
-                                        {
-                                            return knightSquareBonuses[cellTo] - knightSquareBonuses[cellFrom];
-                                        }
-                }
-            return 0;
-        }
-        */
+        //public int GetMoveBonus(BitMoving bm, Enums.GamePhase phase)
+        //{
+        //    if ((bm.Previous & WhitePieces) != 0)
+        //    {
+        //        int cellFrom = 63 - BitToCell(bm.Previous);
+        //        int cellTo = 63 - BitToCell(bm.Current);
+        //        if ((bm.Previous & WhitePawns) != 0)
+        //        {
+        //            if (phase == Enums.GamePhase.End)
+        //                return endgamePawnSquareBonuses[cellTo] - endgamePawnSquareBonuses[cellFrom];
+        //            else
+        //                if (phase == Enums.GamePhase.Opening)
+        //                    return openingPawnSquareBonuses[cellTo] - openingPawnSquareBonuses[cellFrom];
+        //                else
+        //                    if (phase == Enums.GamePhase.Middle)
+        //                        return pawnSquareBonuses[cellTo] - pawnSquareBonuses[cellFrom];
+        //        }
+        //        else
+        //            if ((bm.Previous & WhiteKing) != 0)
+        //            {
+        //                if (phase == Enums.GamePhase.End)
+        //                    return endgameKingSquareBonuses[cellTo] - endgameKingSquareBonuses[cellFrom];
+        //                else
+        //                    return kingSquareBonuses[cellTo] - kingSquareBonuses[cellFrom];
+        //            }
+        //            else
+        //                if ((bm.Previous & WhiteQueen) != 0)
+        //                {
+        //                    return queenSquareBonuses[cellTo] - queenSquareBonuses[cellFrom];
+        //                }
+        //                else
+        //                    if ((bm.Previous & WhiteRooks) != 0)
+        //                    {
+        //                        return rookSquareBonuses[cellTo] - rookSquareBonuses[cellFrom];
+        //                    }
+        //                    else
+        //                        if ((bm.Previous & WhiteBishops) != 0)
+        //                        {
+        //                            return bishopSquareBonuses[cellTo] - bishopSquareBonuses[cellFrom];
+        //                        }
+        //                        else
+        //                            if ((bm.Previous & WhiteKnights) != 0)
+        //                            {
+        //                                return knightSquareBonuses[cellTo] - knightSquareBonuses[cellFrom];
+        //                            }
+        //    }
+        //    else
+        //        if ((bm.Previous & BlackPieces) != 0)
+        //        {
+        //            int cellFrom = BitToCell(bm.Previous);
+        //            int cellTo = BitToCell(bm.Current);
+        //            if ((bm.Previous & BlackPawns) != 0)
+        //            {
+        //                if (phase == Enums.GamePhase.End)
+        //                    return endgamePawnSquareBonuses[cellTo] - endgamePawnSquareBonuses[cellFrom];
+        //                else
+        //                    if (phase == Enums.GamePhase.Opening)
+        //                        return openingPawnSquareBonuses[cellTo] - openingPawnSquareBonuses[cellFrom];
+        //                    else
+        //                        if (phase == Enums.GamePhase.Middle)
+        //                            return pawnSquareBonuses[cellTo] - pawnSquareBonuses[cellFrom];
+        //            }
+        //            else
+        //                if ((bm.Previous & BlackKing) != 0)
+        //                {
+        //                    if (phase == Enums.GamePhase.End)
+        //                        return endgameKingSquareBonuses[cellTo] - endgameKingSquareBonuses[cellFrom];
+        //                    else
+        //                        return kingSquareBonuses[cellTo] - kingSquareBonuses[cellFrom];
+        //                }
+        //                else
+        //                    if ((bm.Previous & BlackQueen) != 0)
+        //                    {
+        //                        return queenSquareBonuses[cellTo] - queenSquareBonuses[cellFrom];
+        //                    }
+        //                    else
+        //                        if ((bm.Previous & BlackRooks) != 0)
+        //                        {
+        //                            return rookSquareBonuses[cellTo] - rookSquareBonuses[cellFrom];
+        //                        }
+        //                        else
+        //                            if ((bm.Previous & BlackBishops) != 0)
+        //                            {
+        //                                return bishopSquareBonuses[cellTo] - bishopSquareBonuses[cellFrom];
+        //                            }
+        //                            else
+        //                                if ((bm.Previous & BlackKnights) != 0)
+        //                                {
+        //                                    return knightSquareBonuses[cellTo] - knightSquareBonuses[cellFrom];
+        //                                }
+        //        }
+        //    return 0;
+        //}
+        
         
         static int[] openingPawnSquareBonuses = new int[]
         #region
@@ -741,4 +742,5 @@ namespace Gean.Wrapper.Chess
         #endregion
 
     }
+    */
 }

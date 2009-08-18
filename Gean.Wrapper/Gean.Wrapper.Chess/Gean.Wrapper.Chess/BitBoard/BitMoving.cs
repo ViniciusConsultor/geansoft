@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-
+    /* class BitMoving : ICloneable
     public class BitMoving : ICloneable
     {
         private static BitMoving nullMove = new BitMoving();
@@ -151,5 +151,5 @@ namespace Gean.Wrapper.Chess
 
         #endregion
     }
-
+    */
 }
