@@ -2,8 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
-    
-    
     /// <summary>
     ///这是 ChessCommentTest 的测试类，旨在
     ///包含所有 ChessCommentTest 单元测试
@@ -11,7 +9,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
     [TestClass()]
     public class ChessCommentTest
     {
-
+        #region MyRegion
+        
 
         private TestContext testContextInstance;
 
@@ -60,6 +59,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //}
         //
         #endregion
+        #endregion
 
         /// <summary>
         ///Parse 的测试
@@ -71,16 +71,57 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessComment expected = new ChessComment();
 
             value = "{ <ab1234cd@ggmail.com.cn> 这是一个测试的注释，This is a Comment! }";
+            expected = new ChessComment(); 
             expected.UserID = "ab1234cd@ggmail.com.cn";
             expected.Comment = "这是一个测试的注释，This is a Comment!";
             ChessComment actual = ChessComment.Parse(value);
             Assert.AreEqual(expected, actual);
 
             value = "{ <ab1234cd@ggmail> 这是一个测试的注释，This is a Comment! }";
+            expected = new ChessComment();
             expected.UserID = "";
             expected.Comment = "<ab1234cd@ggmail> 这是一个测试的注释，This is a Comment!";
             actual = ChessComment.Parse(value);
             Assert.AreEqual(expected, actual);
+
+            value = "{ <zhong.guo-email@google.email.com.cn> 这是一个测试的注释，This is a Comment! }";
+            expected = new ChessComment();
+            expected.UserID = "zhong.guo-email@google.email.com.cn";
+            expected.Comment = "这是一个测试的注释，This is a Comment!";
+            actual = ChessComment.Parse(value);
+            Assert.AreEqual(expected, actual);
+
+            value = "{ <zhong.guo-email@google.email.com.cn 这是一个测试的注释，This is a Comment! }";
+            expected = new ChessComment();
+            expected.Comment = "<zhong.guo-email@google.email.com.cn 这是一个测试的注释，This is a Comment!";
+            actual = ChessComment.Parse(value);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///ToString 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ToStringTest()
+        {
+            ChessComment target;
+            string expected;
+            string actual;
+
+            target = new ChessComment();
+            target.UserID = "1234567890";
+            target.Comment = "~!@#$%^&*()"; 
+            expected = " { ~!@#$%^&*() } "; 
+            actual = target.ToString();
+            Assert.AreEqual(expected, actual);
+
+            target = new ChessComment();
+            target.UserID = "zeng-shu-shu_lu.xue.qi@qingyungu.com.org.com.cn";
+            target.Comment = "zengshushu 2. ... Nf6 3. Nc3 e6 4. g3 b6 5. Bg2 Bb7 6. O-O ... luxueqi";
+            expected = " { <zeng-shu-shu_lu.xue.qi@qingyungu.com.org.com.cn> zengshushu 2. ... Nf6 3. Nc3 e6 4. g3 b6 5. Bg2 Bb7 6. O-O ... luxueqi } ";
+            actual = target.ToString();
+            Assert.AreEqual(expected, actual);
+
         }
     }
 }

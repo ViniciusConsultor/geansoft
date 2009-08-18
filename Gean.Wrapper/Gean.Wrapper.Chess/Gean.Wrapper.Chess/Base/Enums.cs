@@ -98,6 +98,77 @@ namespace Gean.Wrapper.Chess
             return action;
         }
 
+        /// <summary>
+        /// 棋局结果
+        /// </summary>
+        public enum Result
+        { 
+            /// <summary>
+            /// 白胜
+            /// </summary>
+            WhiteWin,
+            /// <summary>
+            /// 黑胜
+            /// </summary>
+            BlackWin,
+            /// <summary>
+            /// 和棋
+            /// </summary>
+            Draw,
+            /// <summary>
+            /// 未知
+            /// </summary>
+            UnKnown,
+        }
+
+        public static Result ToResult(string value)
+        {
+            value = value.Replace(" ", "");
+            if (value.Equals(ChessResult.ResultWhiteWin))
+            {
+                return Result.WhiteWin;
+            }
+            else if (value.Equals(ChessResult.ResultBlackWin))
+            {
+                return Result.BlackWin;
+            }
+            else if (value.Equals(ChessResult.ResultDraw1))
+            {
+                return Result.Draw;
+            }
+            else if (value.Equals(ChessResult.ResultDraw2))
+            {
+                return Result.Draw;
+            }
+            else if (value.Equals(ChessResult.ResultDraw3))
+            {
+                return Result.Draw;
+            }
+            else if (value.Equals(ChessResult.ResultUnKnown))
+            {
+                return Result.UnKnown;
+            }
+            else
+            {
+                return Result.UnKnown;
+            }
+        }
+        public static string ResultToString(Enums.Result result)
+        {
+            switch (result)
+            {
+                case Result.WhiteWin:
+                    return ChessResult.ResultWhiteWin;
+                case Result.BlackWin:
+                    return ChessResult.ResultBlackWin;
+                case Result.Draw:
+                    return ChessResult.ResultDraw1;
+                case Result.UnKnown:
+                default:
+                    return ChessResult.ResultUnKnown;
+            }
+        }
+
         public enum GamePhase
         {
             Opening, Middle, End

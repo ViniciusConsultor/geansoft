@@ -7,18 +7,28 @@ using Gean.Resources;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 描述棋评的类
+    /// 描述棋评的类。他被包括在一对大括号中。一般都将跟随在一个ChessStep的后面。
     /// </summary>
     public class ChessComment : ISequenceItem
     {
-        public string UserID { get; set; }
+        /// <summary>
+        /// 棋评
+        /// </summary>
         public string Comment { get; set; }
 
-        public ChessComment()
+        /// <summary>
+        /// 棋评的作者，一般都将是一个Email地址。
+        /// </summary>
+        public string UserID
         {
-            this.UserID = "";
-            this.Comment = "";
+            get { return this._userId; }
+            set
+            {
+                if (CheckEmail(value))
+                    _userId = value;
+            }
         }
+        private string _userId;
 
         #region ISequenceItem 成员
 
@@ -29,13 +39,17 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        /// <summary>
+        /// 已重写。按照规定的格式输出到一对大括号中。
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(" { ");
-            if (!string.IsNullOrEmpty(this.UserID))
+            if (!string.IsNullOrEmpty(_userId))
             {
-                sb.AppendFormat("<{0}> ", this.UserID);
+                sb.AppendFormat("<{0}> ", _userId);
             }
             sb.Append(this.Comment).Append(" } ");
             return sb.ToString();
@@ -46,13 +60,13 @@ namespace Gean.Wrapper.Chess
             if (obj is System.DBNull) return false;
 
             ChessComment comment = (ChessComment)obj;
-            if (!(this.UserID.Equals(comment.UserID))) return false;
-            if (!(this.Comment.Equals(comment.Comment))) return false;
+            if (!(UtilityEquals.StringEquals(this.Comment, comment.Comment))) return false;
+            if (!(UtilityEquals.StringEquals(this._userId, comment._userId))) return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked(3 * (this.Comment.GetHashCode() + this.UserID.GetHashCode()));
+            return unchecked(3 * (Comment.GetHashCode() + _userId.GetHashCode()));
         }
 
         /// <summary>
@@ -70,17 +84,25 @@ namespace Gean.Wrapper.Chess
                 {
                     int index = value.IndexOf('>') - 1;
                     string user = value.Substring(1, index).Trim();
-                    Regex r = new Regex(RegexString.RegexStr_SimpleEmail);
-                    Match m = r.Match(user);
-                    if (m.Success)
+                    if (CheckEmail(user))
                     {
-                        comment.UserID = user;
+                        comment._userId = user;
                         value = value.Substring(index+2).Trim();
                     }
                 }
             }
             comment.Comment = value;
             return comment;
+        }
+        /// <summary>
+        /// 用一个不太复杂的正则校验一个指定的字符串是否是邮件地址
+        /// </summary>
+        /// <param name="var">指定的字符串</param>
+        /// <returns></returns>
+        private static bool CheckEmail(string var)
+        {
+            Regex r = new Regex(RegexString.RegexStr_SimpleEmail);
+            return r.Match(var).Success;
         }
 
     }

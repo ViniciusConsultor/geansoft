@@ -150,7 +150,7 @@ namespace Gean.Wrapper.Chess
                 _tmpStepTree.Items.Add(_tmpStep);
                 _tmpStep = null;
             }
-            ChessEnd end = new ChessEnd(iParser.Value);
+            ChessResult end = ChessResult.Parse(iParser.Value);
             _tmpStepTree.Items.Add(end);
         }
 
