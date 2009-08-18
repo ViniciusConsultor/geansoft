@@ -90,27 +90,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
         }
 
         /// <summary>
-        ///ParseAppendantString 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ParseAppendantStringTest()
-        {
-            string value = string.Empty; // TODO: 初始化为适当的值
-            char flag = '\0'; // TODO: 初始化为适当的值
-            int number = 0; // TODO: 初始化为适当的值
-            int numberExpected = 0; // TODO: 初始化为适当的值
-            string username = string.Empty; // TODO: 初始化为适当的值
-            string usernameExpected = string.Empty; // TODO: 初始化为适当的值
-            string record = string.Empty; // TODO: 初始化为适当的值
-            string recordExpected = string.Empty; // TODO: 初始化为适当的值
-            Utility.ParseAppendantString(value, flag, out number, out username, out record);
-            Assert.AreEqual(numberExpected, number);
-            Assert.AreEqual(usernameExpected, username);
-            Assert.AreEqual(recordExpected, record);
-            Assert.Inconclusive("无法验证不返回值的方法。");
-        }
-
-        /// <summary>
         ///IntToString 的测试
         ///</summary>
         [TestMethod()]

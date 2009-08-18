@@ -389,7 +389,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
             ChessStep target = new ChessStep(manSide, chessmanType, srcPos, tagPos, action); // TODO: 初始化为适当的值
             string expected = string.Empty; // TODO: 初始化为适当的值
             string actual;
-            target.Value = expected;
             actual = target.Value;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");

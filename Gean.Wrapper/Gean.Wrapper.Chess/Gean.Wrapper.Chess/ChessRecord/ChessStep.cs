@@ -117,7 +117,6 @@ namespace Gean.Wrapper.Chess
         public string Value
         {
             get { return this.ToString(); }
-            set {  }
         }
 
         #endregion

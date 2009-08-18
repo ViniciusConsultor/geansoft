@@ -139,7 +139,7 @@ namespace Gean.Wrapper.Chess
 
         public void CommentParsed(IPGNReader iParser)
         {
-            _tmpComment = new ChessComment(iParser.Value);
+            _tmpComment = ChessComment.Parse(iParser.Value);
             _tmpStepTree.Items.Add(_tmpComment);
         }
 

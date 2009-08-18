@@ -18,10 +18,6 @@ namespace Gean.Wrapper.Chess
             this.SequenceItemList = new List<ISequenceItem>();
         }
 
-        private int _number = 1;
-        private ChessStep _tmpWhiteChessStep = null;
-        private ChessStep _tmpBlackChessStep = null;
-
         public ChessStep Peek()
         {
             return this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStep;

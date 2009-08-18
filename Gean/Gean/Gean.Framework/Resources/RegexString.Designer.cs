@@ -79,15 +79,6 @@ namespace Gean.Resources {
         }
         
         /// <summary>
-        ///   查找类似 ^((?&amp;gt;[a-zA-Z\d!#$%&amp;amp;&apos;*+\-/=?^_`{|}~]+\x20*|&quot;&quot;((?=[\x01-\x7f])[^&quot;&quot;\\]|\\[\x01-\x7f])*&quot;&quot;\x20*)*(?&amp;lt;angle&amp;gt;&amp;lt;))?((?!\.)(?&amp;gt;\.?[a-zA-Z\d!#$%&amp;amp;&apos;*+\-/=?^_`{|}~]+)+|&quot;&quot;((?=[\x01-\x7f])[^&quot;&quot;\\]|\\[\x01-\x7f])*&quot;&quot;)@(((?!-)[a-zA-Z\d\-]+(?&amp;lt;!-)\.)+[a-zA-Z]{2,}|\[(((?(?&amp;lt;!\[)\.)(25[0-5]|2[0-4]\d|[01]?\d?\d)){4}|[a-zA-Z\d\-]*[a-zA-Z\d]:((?=[\x01-\x7f])[^\\\[\]]|\\[\x01-\x7f])+)\])(?(angle)&amp;gt;)$ 的本地化字符串。
-        /// </summary>
-        public static string RegexStr_EmailAddress {
-            get {
-                return ResourceManager.GetString("RegexStr_EmailAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 ^([a-zA-Z]:)?[^:]+$ 的本地化字符串。
         /// </summary>
         public static string RegexStr_FileName {
@@ -97,11 +88,29 @@ namespace Gean.Resources {
         }
         
         /// <summary>
+        ///   查找类似 (?&lt;email&gt;[a-zA-Z][a-zA-Z0-9-_.]+\@[a-zA-Z][a-zA-Z0-9-_]+\.(?(?=[a-zA-Z]{2}\.)([a-zA-Z0-9-_]{2}\.[a-zA-Z0-9-_]{2})|([a-zA-Z0-9-_]{2,3}))) 的本地化字符串。
+        /// </summary>
+        public static string RegexStr_FindEmail {
+            get {
+                return ResourceManager.GetString("RegexStr_FindEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ^(http|https)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{1,10}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\&apos;\\\+&amp;amp;%\$#\=~_\-]+))*$ 的本地化字符串。
         /// </summary>
         public static string RegexStr_HttpUrl {
             get {
                 return ResourceManager.GetString("RegexStr_HttpUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ^([0-9a-zA-Z]+[-._+&amp;amp;])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,4}$ 的本地化字符串。
+        /// </summary>
+        public static string RegexStr_SimpleEmail {
+            get {
+                return ResourceManager.GetString("RegexStr_SimpleEmail", resourceCulture);
             }
         }
         

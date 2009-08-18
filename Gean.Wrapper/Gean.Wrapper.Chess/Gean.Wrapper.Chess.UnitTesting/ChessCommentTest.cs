@@ -61,78 +61,26 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //
         #endregion
 
-
-        /// <summary>
-        ///UserID 的测试
-        ///</summary>
-        [TestMethod()]
-        public void UserIDTest()
-        {
-            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            target.UserID = expected;
-            actual = target.UserID;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///Comment 的测试
-        ///</summary>
-        [TestMethod()]
-        public void CommentTest()
-        {
-            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            target.Comment = expected;
-            actual = target.Comment;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
         /// <summary>
         ///Parse 的测试
         ///</summary>
         [TestMethod()]
         public void ParseTest()
         {
-            string value = string.Empty; // TODO: 初始化为适当的值
-            ChessComment expected = null; // TODO: 初始化为适当的值
-            ChessComment actual;
+            string value;
+            ChessComment expected = new ChessComment();
+
+            value = "{ <ab1234cd@ggmail.com.cn> 这是一个测试的注释，This is a Comment! }";
+            expected.UserID = "ab1234cd@ggmail.com.cn";
+            expected.Comment = "这是一个测试的注释，This is a Comment!";
+            ChessComment actual = ChessComment.Parse(value);
+            Assert.AreEqual(expected, actual);
+
+            value = "{ <ab1234cd@ggmail> 这是一个测试的注释，This is a Comment! }";
+            expected.UserID = "";
+            expected.Comment = "<ab1234cd@ggmail> 这是一个测试的注释，This is a Comment!";
             actual = ChessComment.Parse(value);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///ToString 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ToStringTest()
-        {
-            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            actual = target.ToString();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///Value 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ValueTest()
-        {
-            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            target.Value = expected;
-            actual = target.Value;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
         }
     }
 }
