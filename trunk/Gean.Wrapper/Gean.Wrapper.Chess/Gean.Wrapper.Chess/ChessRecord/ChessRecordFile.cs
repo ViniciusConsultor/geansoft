@@ -125,14 +125,12 @@ namespace Gean.Wrapper.Chess
             }
             else if (iParser.State == Enums.PGNReaderState.White)
             {
-                _tmpStep = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.White);
-                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStep = ChessStep.Parse(iParser.Value, int.Parse(_lastNumber), Enums.ChessmanSide.White);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
             else if (iParser.State == Enums.PGNReaderState.Black)
             {
-                _tmpStep = ChessStep.Parse(iParser.Value, Enums.ChessmanSide.Black);
-                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStep = ChessStep.Parse(iParser.Value, int.Parse(_lastNumber), Enums.ChessmanSide.Black);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
         }
