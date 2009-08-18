@@ -52,6 +52,7 @@
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />
+    <Compile Include="Utility\UtilityNet.cs" />
     <Compile Include="Utility\UtilityRAR.cs" />
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Widgets\Checker.cs" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessDefiner : Definer, ISequenceItem
+    public class ChessDefiner : Definer
     {
         public override string ToString()
         {

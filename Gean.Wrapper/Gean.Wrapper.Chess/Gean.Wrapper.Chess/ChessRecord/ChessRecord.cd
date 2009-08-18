@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Gean.Wrapper.Chess.ChessPosition" Collapsed="true">
-    <Position X="8.25" Y="0.5" Width="1.5" />
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>EAIgAAAIAARAAAAkgEIRAAJBCAAAAIBACCIGAIgAaAA=</HashCode>
       <FileName>ChessRecord\ChessPosition.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessRecord" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="1.5" Width="1.5" />
+    <Position X="2.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgBCBAEgAAAQAAAAAAAAIAEAAAAAAAAAAA=</HashCode>
       <FileName>ChessRecord\ChessRecord.cs</FileName>
@@ -21,23 +24,15 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AWIAAEAAEBgAARAQCCQCBASABCACAAAACEAAASBQIAA=</HashCode>
+      <HashCode>AWIAAEAAEBgABBAQCCQCBAQCBCACAAAACEAAASBQIQA=</HashCode>
       <FileName>ChessRecord\ChessRecordFile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Gean.Wrapper.Chess.ChessStep">
-    <Position X="6.5" Y="3.5" Width="1.5" />
-    <NestedTypes>
-      <Class Name="Gean.Wrapper.Chess.ChessStep.Flag" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>ChessRecord\ChessStep.cs</NewMemberFileName>
-        </TypeIdentifier>
-        <Lollipop Position="0.2" />
-      </Class>
-    </NestedTypes>
+  <Class Name="Gean.Wrapper.Chess.ChessStep" Collapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAhAAQIIAgACAAkgAAAQAIAEAACIIA4AAAgAABACAA=</HashCode>
+      <HashCode>ABIhAAQIIAgACAAEgEAAQAIAEAACIIA4AAAgAABACAA=</HashCode>
       <FileName>ChessRecord\ChessStep.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -48,10 +43,9 @@
       <HashCode>AAAgAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ChessTag.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessChoices" Collapsed="true">
-    <Position X="6.5" Y="1.5" Width="1.5" />
+    <Position X="6.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessChoices.cs</FileName>
@@ -59,7 +53,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessComment" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="2.75" Width="1.5" />
+    <Position X="6.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAAEAAAAAAAEAAAAAAgAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessComment.cs</FileName>
@@ -67,7 +61,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessEnd" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="3.5" Width="1.5" />
+    <Position X="6.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessEnd.cs</FileName>
@@ -75,7 +69,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessNag" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="4.25" Width="1.5" />
+    <Position X="6.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessNag.cs</FileName>
@@ -83,18 +77,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessSequence" Collapsed="true">
-    <Position X="4.5" Y="1.5" Width="1.5" />
+    <Position X="4.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AGIAAkAAAAEEABAUCAAABAQAAAAICAAACAAAAABQIAA=</HashCode>
+      <HashCode>AkIgAkAAAAEEABAUCAAABAQAAAAICAAECAAAAABQIAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessSequence.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Gean.Wrapper.Chess.ChessStepPair" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIkAAAAAAgACAAEgEAAQAAABAAAAIAAAAAgAAAAAAA=</HashCode>
-      <FileName>ChessRecord\ISequenceItem\ChessStepPair.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -145,7 +131,7 @@
   <Interface Name="Gean.Wrapper.Chess.IPGNReaderEvents" Collapsed="true">
     <Position X="0.5" Y="1.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEBgAAQAAACQCAAAABAACAAAAAEAAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEBgABAAAACQCAAAABAACAAAAAEAAAQAAAAA=</HashCode>
       <FileName>ChessRecord\Parse\IPGNReaderEvents.cs</FileName>
     </TypeIdentifier>
   </Interface>

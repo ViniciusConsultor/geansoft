@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 描述棋局中的回合序列（实现IList接口, 集合的元素为<see>ChessStepPair</see>）。
+    /// 描述棋局中的回合序列(实现IList接口, 集合的元素为<see>ChessStepPair</see>)。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
     public class ChessSequence : IList<ISequenceItem>
@@ -21,33 +22,21 @@ namespace Gean.Wrapper.Chess
         private ChessStep _tmpWhiteChessStep = null;
         private ChessStep _tmpBlackChessStep = null;
 
-        public void Add(Enums.Action action, Enums.ChessmanSide chessmanSide, ChessStep chessStep)
+        public ChessStep Peek()
         {
-            if (action == Enums.Action.Opennings)
-            {
-                return;
-            }
-            if (chessmanSide == Enums.ChessmanSide.White)
-            {
-                this._tmpWhiteChessStep = chessStep;
-            }
-            else
-            {
-                this._tmpBlackChessStep = chessStep;
-            }
-            if ((_tmpBlackChessStep != null) && (_tmpWhiteChessStep != null))
-            {
-                this.Add(new ChessStepPair(_number, _tmpWhiteChessStep, _tmpBlackChessStep));
-                _number++;
-                _tmpBlackChessStep = null;
-                _tmpWhiteChessStep = null;
-            }
-
+            return this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStep;
         }
 
-        public ChessStepPair Peek()
+        public ChessStep[] PeekPair()
         {
-            return this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStepPair;
+            if (this.SequenceItemList.Count < 2)
+            {
+                return null;
+            }
+            ChessStep[] steps = new ChessStep[2];
+            steps[0] = this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStep;
+            steps[1] = this.SequenceItemList[this.SequenceItemList.Count - 2] as ChessStep;
+            return steps;
         }
 
         public override string ToString()
@@ -155,12 +144,17 @@ namespace Gean.Wrapper.Chess
 
         #region IEnumerable 成员
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return this.SequenceItemList.GetEnumerator();
         }
 
         #endregion
 
+
+        protected static void Parse(string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

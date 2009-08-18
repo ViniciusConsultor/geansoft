@@ -10,7 +10,6 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessRecord : IStepTree, IEnumerable<ChessStep>
     {
-
         public ChessRecord()
         {
             this.Definer = new ChessDefiner();
@@ -36,7 +35,6 @@ namespace Gean.Wrapper.Chess
         public ChessSequence Items { get; set; }
 
         #endregion
-
 
         #region override
 
@@ -100,15 +98,9 @@ namespace Gean.Wrapper.Chess
                 _chessSteps = new List<ChessStep>();
                 foreach (ISequenceItem item in list)
                 {
-                    if (!(item is ChessStepPair))
-                    {
+                    if (!(item is ChessStep))
                         continue;
-                    }
-                    ChessStepPair pair = item as ChessStepPair;
-                    if (pair.White != null)
-                        _chessSteps.Add(pair.White);
-                    if (pair.Black != null)
-                        _chessSteps.Add(pair.Black);
+                    _chessSteps.Add(item as ChessStep);
                 }
             }
 

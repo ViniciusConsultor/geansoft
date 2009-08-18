@@ -10,8 +10,8 @@ namespace Gean.Wrapper.Chess
 
         public string Value
         {
-            get { return this.Value; }
-            set { this.Value = value; }
+            get { return this.ToString(); }
+            set { ChessSequence.Parse(value); }
         }
 
         #endregion

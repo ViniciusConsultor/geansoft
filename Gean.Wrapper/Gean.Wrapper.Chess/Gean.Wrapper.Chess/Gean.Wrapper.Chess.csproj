@@ -88,7 +88,6 @@
     <Compile Include="ChessRecord\ChessRecord.cs" />
     <Compile Include="ChessRecord\ChessStep.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessSequence.cs" />
-    <Compile Include="ChessRecord\ISequenceItem\ChessStepPair.cs" />
     <Compile Include="Base\ChessException.cs" />
     <Compile Include="Base\Enums.cs" />
     <Compile Include="ChessGame\ChessGrid.cs" />

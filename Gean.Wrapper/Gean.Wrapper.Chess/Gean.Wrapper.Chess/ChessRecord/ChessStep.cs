@@ -12,8 +12,13 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessStep : IStepTree, ISequenceItem
     {
+
         #region Property
 
+        /// <summary>
+        /// 回合编号
+        /// </summary>
+        public int Number { get; set; }
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
@@ -54,7 +59,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取当前棋步后的Fen记录
         /// </summary>
-        public FENBuilder Fen { get; private set; }
+        public FENBuilder FenNotation { get; private set; }
         /// <summary>
         /// 有同行与同列的棋子可能产生同样的棋步
         /// </summary>
@@ -97,7 +102,40 @@ namespace Gean.Wrapper.Chess
             this.ChessmanSide = manSide;
             this.TargetPosition = tagPos;
             this.SourcePosition = srcPos;
-            this.Fen = new FENBuilder();
+            this.FenNotation = new FENBuilder();
+        }
+
+        #endregion
+
+        public void Add(ChessChoices choices)
+        {
+            this.Items = choices;
+        }
+
+        #region ISequenceItem 成员
+
+        public string Value
+        {
+            get { return this.ToString(); }
+            set {  }
+        }
+
+        #endregion
+
+        #region IStepTree
+
+        public object Parent { get; set; }
+
+        public ChessSequence Items { get; set; }
+
+        public bool HasChildren
+        {
+            get
+            {
+                if (this.Items == null) return false;
+                if (this.Items.Count <= 0) return false;
+                return true;
+            }
         }
 
         #endregion
@@ -236,6 +274,44 @@ namespace Gean.Wrapper.Chess
 
         #region static Parse
 
+        public static ChessStep Parse(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentOutOfRangeException(value);
+
+            int number = 0;
+
+            int n;
+            value = value.Trim();
+            n = value.IndexOf('.');
+            number = int.Parse(value.Substring(0, n));
+            return Parse(value.Substring(n + 1), number);
+        }
+
+        public static ChessStep Parse(string value, int number)
+        {
+            string[] steps = value.Split(' ');
+
+            ChessStep white = null;
+            ChessStep black = null;
+            for (int i = 0; i < steps.Length; i++)
+            {
+                if (string.IsNullOrEmpty(steps[i]))
+                    continue;
+                if ((steps[i].StartsWith("(") && steps[i].EndsWith(")")) ||
+                    (steps[i].StartsWith("[") && steps[i].EndsWith("]")))
+                {
+                    //TODO!!!!!!
+                }
+                if (white == null)
+                    white = ChessStep.Parse(steps[i], Enums.ChessmanSide.White);
+                else if (black == null)
+                    black = ChessStep.Parse(steps[i], Enums.ChessmanSide.Black);
+            }
+
+            return null;//new ChessStep(number, white, black);
+        }
+
         /// <summary>
         /// 根据指定的字符串解析.
         /// (该方法逻辑较复杂，日后可优化)Gean: 2009-08-08 23:25:06
@@ -245,9 +321,11 @@ namespace Gean.Wrapper.Chess
         /// <returns></returns>
         public static ChessStep Parse(string value, Enums.ChessmanSide manSide)
         {
-            if (string.IsNullOrEmpty(value) || value.Length < 2 || value == "\r\n") 
-                throw new ArgumentOutOfRangeException(value);
+            if (string.IsNullOrEmpty(value)) 
+                throw new ArgumentNullException();
             value = value.Trim();//移除所有前导空白字符和尾部空白字符
+            if (value.Length < 2 || value == "\r\n")
+                throw new ArgumentOutOfRangeException(value);
 
             List<Enums.Action> actionList = new List<Enums.Action>();
             Enums.ChessmanType manType = Enums.ChessmanType.None;
@@ -433,6 +511,8 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region step flag
+
         class Flag : IEnumerable<string>
         {
             private static Dictionary<string, string> _flags = new Dictionary<string, string>();
@@ -525,53 +605,8 @@ namespace Gean.Wrapper.Chess
             #endregion
         }
 
-        #region IStepTree 成员
-
-        public object Parent
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public ChessSequence Items
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool HasChildren
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         #endregion
 
-        #region ISequenceItem 成员
 
-        public string Value
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        #endregion
     }
 }
