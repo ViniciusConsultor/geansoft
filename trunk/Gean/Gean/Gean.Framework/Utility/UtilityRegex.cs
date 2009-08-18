@@ -11,7 +11,7 @@ namespace Gean
         /// </summary>
         static public Regex EmailAddress
         {
-            get { return new Regex(RegexString.RegexStr_EmailAddress, RegexOptions.Multiline | RegexOptions.ExplicitCapture); }
+            get { return new Regex(RegexString.RegexStr_SimpleEmail, RegexOptions.Multiline | RegexOptions.ExplicitCapture); }
         }
         /// <summary>
         /// 正则：验证Url地址。
