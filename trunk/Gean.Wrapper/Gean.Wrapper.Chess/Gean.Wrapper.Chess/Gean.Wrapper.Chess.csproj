@@ -57,7 +57,7 @@
     <Compile Include="BitBoard\IBitBoard.cs" />
     <Compile Include="BitBoard\IMoveGenerator.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessChoices.cs" />
-    <Compile Include="ChessRecord\ISequenceItem\ChessEnd.cs" />
+    <Compile Include="ChessRecord\ISequenceItem\ChessResult.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessNag.cs" />
     <Compile Include="ChessRecord\ChessRecordFile.cs" />
     <Compile Include="ChessRecord\ChessTag.cs" />

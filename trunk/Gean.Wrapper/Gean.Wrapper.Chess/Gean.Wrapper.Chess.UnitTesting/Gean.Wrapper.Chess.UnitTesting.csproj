@@ -44,12 +44,12 @@
     <Compile Include="ChessChoicesTest.cs" />
     <Compile Include="ChessCommentTest.cs" />
     <Compile Include="ChessDefinerTest.cs" />
-    <Compile Include="ChessEndTest.cs" />
     <Compile Include="ChessGameTest.cs" />
     <Compile Include="ChessNagTest.cs" />
     <Compile Include="ChessPGNReaderTest.cs" />
     <Compile Include="ChessPositionTest.cs" />
     <Compile Include="ChessRecordTest.cs" />
+    <Compile Include="ChessResultTest.cs" />
     <Compile Include="ChessSequenceTest.cs" />
     <Compile Include="ChessStepTest.cs" />
     <Compile Include="FENBuilderTest.cs" />

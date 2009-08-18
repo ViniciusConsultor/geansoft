@@ -22,6 +22,31 @@ namespace Gean
             return true;
         }
 
+        /// <summary>
+        /// 比较两个字符串的值是否相等，在本方法中当字符串为null时或者为“”时等同对待。
+        /// </summary>
+        static public bool StringEquals(String a, String b)
+        {
+            if (a == null && b == null) return true;
+            bool aBool = string.IsNullOrEmpty(a);
+            bool bBool = string.IsNullOrEmpty(b);
+            if ((aBool == true) && (bBool == true))
+            {
+                return true;
+            }
+            else
+            {
+                if (a == null)
+                {
+                    return b.Equals(a);
+                }
+                else
+                {
+                    return a.Equals(b);
+                }
+            }
+        }
+
         static public bool EnumerableEquals(IEnumerable a, IEnumerable b)
         {
             if ((a == null) && (b == null))
