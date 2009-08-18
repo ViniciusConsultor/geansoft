@@ -5,13 +5,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
     
     
     /// <summary>
-    ///这是 ChessGameTest 的测试类，旨在
-    ///包含所有 ChessGameTest 单元测试
+    ///这是 ChessCommentTest 的测试类，旨在
+    ///包含所有 ChessCommentTest 单元测试
     ///</summary>
     [TestClass()]
-    public class ChessGameTest
+    public class ChessCommentTest
     {
-        #region
+
 
         private TestContext testContextInstance;
 
@@ -61,93 +61,77 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //
         #endregion
 
-        #endregion
 
         /// <summary>
-        ///Item 的测试
+        ///UserID 的测试
         ///</summary>
         [TestMethod()]
-        public void ItemTest()
+        public void UserIDTest()
         {
-            ChessGame target = new ChessGame();
-
-            int x = 0;
-            int y = 0;
-
-            ChessGrid expected = null;
-            ChessGrid actual = null;
-
-            x = 1;
-            y = 1;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 8;
-            y = 8;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 3;
-            y = 6;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        ///Record 的测试
-        ///</summary>
-        [TestMethod()]
-        [DeploymentItem("Gean.Wrapper.Chess.dll")]
-        public void RecordTest()
-        {
-            ChessGame_Accessor target = new ChessGame_Accessor(); // TODO: 初始化为适当的值
-            ChessRecord expected = null; // TODO: 初始化为适当的值
-            ChessRecord actual;
-            target.Record = expected;
-            actual = target.Record;
+            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
+            string expected = string.Empty; // TODO: 初始化为适当的值
+            string actual;
+            target.UserID = expected;
+            actual = target.UserID;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
 
         /// <summary>
-        ///LoadGrids 的测试
+        ///Comment 的测试
         ///</summary>
         [TestMethod()]
-        public void LoadGridsTest()
+        public void CommentTest()
         {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            target.LoadGrids();
-            Assert.Inconclusive("无法验证不返回值的方法。");
-        }
-
-        /// <summary>
-        ///Item 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ItemTest2()
-        {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            int x = 0; // TODO: 初始化为适当的值
-            int y = 0; // TODO: 初始化为适当的值
-            ChessGrid actual;
-            actual = target[x, y];
+            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
+            string expected = string.Empty; // TODO: 初始化为适当的值
+            string actual;
+            target.Comment = expected;
+            actual = target.Comment;
+            Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
 
         /// <summary>
-        ///Item 的测试
+        ///Parse 的测试
         ///</summary>
         [TestMethod()]
-        public void ItemTest1()
+        public void ParseTest()
         {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            char c = '\0'; // TODO: 初始化为适当的值
-            int y = 0; // TODO: 初始化为适当的值
-            ChessGrid actual;
-            actual = target[c, y];
+            string value = string.Empty; // TODO: 初始化为适当的值
+            ChessComment expected = null; // TODO: 初始化为适当的值
+            ChessComment actual;
+            actual = ChessComment.Parse(value);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///ToString 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ToStringTest()
+        {
+            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
+            string expected = string.Empty; // TODO: 初始化为适当的值
+            string actual;
+            actual = target.ToString();
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Value 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ValueTest()
+        {
+            ChessComment target = new ChessComment(); // TODO: 初始化为适当的值
+            string expected = string.Empty; // TODO: 初始化为适当的值
+            string actual;
+            target.Value = expected;
+            actual = target.Value;
+            Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
     }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Gean.Utility;
+using Gean.Wrapper.Chess;
 
 namespace Gean.Wrapper.Chess.UnitTesting
 {
@@ -312,6 +313,124 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
         }
 
+
+        /// <summary>
+        ///Add 的测试
+        ///</summary>
+        [TestMethod()]
+        public void AddTest()
+        {
+            Enums.ChessmanSide manSide = new Enums.ChessmanSide(); // TODO: 初始化为适当的值
+            Enums.ChessmanType chessmanType = new Enums.ChessmanType(); // TODO: 初始化为适当的值
+            ChessPosition srcPos = null; // TODO: 初始化为适当的值
+            ChessPosition tagPos = null; // TODO: 初始化为适当的值
+            Enums.Action[] action = null; // TODO: 初始化为适当的值
+            ChessStep target = new ChessStep(manSide, chessmanType, srcPos, tagPos, action); // TODO: 初始化为适当的值
+            ChessChoices choices = null; // TODO: 初始化为适当的值
+            target.Add(choices);
+            Assert.Inconclusive("无法验证不返回值的方法。");
+        }
+
+        /// <summary>
+        ///Parse 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParseTest4()
+        {
+            string value = string.Empty; // TODO: 初始化为适当的值
+            int number = 0; // TODO: 初始化为适当的值
+            ChessStep expected = null; // TODO: 初始化为适当的值
+            ChessStep actual;
+            actual = ChessStep.Parse(value, number);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Parse 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParseTest3()
+        {
+            string value = string.Empty; // TODO: 初始化为适当的值
+            Enums.ChessmanSide manSide = new Enums.ChessmanSide(); // TODO: 初始化为适当的值
+            ChessStep expected = null; // TODO: 初始化为适当的值
+            ChessStep actual;
+            actual = ChessStep.Parse(value, manSide);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Parse 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParseTest()
+        {
+            string value = string.Empty; // TODO: 初始化为适当的值
+            ChessStep expected = null; // TODO: 初始化为适当的值
+            ChessStep actual;
+            actual = ChessStep.Parse(value);
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Value 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ValueTest()
+        {
+            Enums.ChessmanSide manSide = new Enums.ChessmanSide(); // TODO: 初始化为适当的值
+            Enums.ChessmanType chessmanType = new Enums.ChessmanType(); // TODO: 初始化为适当的值
+            ChessPosition srcPos = null; // TODO: 初始化为适当的值
+            ChessPosition tagPos = null; // TODO: 初始化为适当的值
+            Enums.Action[] action = null; // TODO: 初始化为适当的值
+            ChessStep target = new ChessStep(manSide, chessmanType, srcPos, tagPos, action); // TODO: 初始化为适当的值
+            string expected = string.Empty; // TODO: 初始化为适当的值
+            string actual;
+            target.Value = expected;
+            actual = target.Value;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///PromotionChessmanType 的测试
+        ///</summary>
+        [TestMethod()]
+        public void PromotionChessmanTypeTest()
+        {
+            Enums.ChessmanSide manSide = new Enums.ChessmanSide(); // TODO: 初始化为适当的值
+            Enums.ChessmanType chessmanType = new Enums.ChessmanType(); // TODO: 初始化为适当的值
+            ChessPosition srcPos = null; // TODO: 初始化为适当的值
+            ChessPosition tagPos = null; // TODO: 初始化为适当的值
+            Enums.Action[] action = null; // TODO: 初始化为适当的值
+            ChessStep target = new ChessStep(manSide, chessmanType, srcPos, tagPos, action); // TODO: 初始化为适当的值
+            Enums.ChessmanType expected = new Enums.ChessmanType(); // TODO: 初始化为适当的值
+            Enums.ChessmanType actual;
+            target.PromotionChessmanType = expected;
+            actual = target.PromotionChessmanType;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///FenNotation 的测试
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("Gean.Wrapper.Chess.dll")]
+        public void FenNotationTest()
+        {
+            PrivateObject param0 = null; // TODO: 初始化为适当的值
+            ChessStep_Accessor target = new ChessStep_Accessor(param0); // TODO: 初始化为适当的值
+            FENBuilder expected = null; // TODO: 初始化为适当的值
+            FENBuilder actual;
+            target.FenNotation = expected;
+            actual = target.FenNotation;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
     }
 }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-
+    /* interface IMoveGenerator
     public interface IMoveGenerator
     {
         /// <summary>
@@ -50,19 +50,5 @@ namespace Gean.Wrapper.Chess
         OnlyCaptures,
         OnlyQuiescent
     }
-
-    //public interface IMoveGeneratorOld
-    /*{
-        void Init();
-        List<BitMoving> GetMoves(Enums.ChessmanSide c, BitBoardEngine board);
-        List<BitMoving> GetMoves(Enums.ChessmanSide c, BitBoardEngine board, MoveGenerationMode mode);
-        ulong GetPawnCaptures(int square, Enums.ChessmanSide color, BitBoardEngine board);
-        ulong GetPawnMoves(Enums.ChessmanSide color, ulong mask, BitBoardEngine board);
-        ulong GetKnightAttacks(int square, BitBoardEngine board);
-        ulong GetBishopAttacks(int square, BitBoardEngine board);
-        ulong GetRookAttacks(int square, BitBoardEngine board);
-        ulong GetQueenAttacks(int square, BitBoardEngine board);
-        ulong GetKingAttacks(int square, BitBoardEngine board);
-    }*/
-
+    */
 }

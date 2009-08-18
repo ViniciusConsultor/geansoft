@@ -97,5 +97,62 @@ namespace Gean.Wrapper.Chess.UnitTesting
             }
             Assert.AreEqual(90, steps.Count);
         }
+
+        /// <summary>
+        ///Definer 的测试
+        ///</summary>
+        [TestMethod()]
+        public void DefinerTest()
+        {
+            ChessRecord target = new ChessRecord(); // TODO: 初始化为适当的值
+            ChessDefiner expected = null; // TODO: 初始化为适当的值
+            ChessDefiner actual;
+            target.Definer = expected;
+            actual = target.Definer;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///HasChildren 的测试
+        ///</summary>
+        [TestMethod()]
+        public void HasChildrenTest()
+        {
+            ChessRecord target = new ChessRecord(); // TODO: 初始化为适当的值
+            bool actual;
+            actual = target.HasChildren;
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Items 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ItemsTest()
+        {
+            ChessRecord target = new ChessRecord(); // TODO: 初始化为适当的值
+            ChessSequence expected = null; // TODO: 初始化为适当的值
+            ChessSequence actual;
+            target.Items = expected;
+            actual = target.Items;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
+
+        /// <summary>
+        ///Parent 的测试
+        ///</summary>
+        [TestMethod()]
+        public void ParentTest()
+        {
+            ChessRecord target = new ChessRecord(); // TODO: 初始化为适当的值
+            object expected = null; // TODO: 初始化为适当的值
+            object actual;
+            target.Parent = expected;
+            actual = target.Parent;
+            Assert.AreEqual(expected, actual);
+            Assert.Inconclusive("验证此测试方法的正确性。");
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace Gean.Wrapper.Chess
 {
     public interface ISequenceItem
     {
-        string Value { get; set; }
+        string Value { get; }
     }
 }

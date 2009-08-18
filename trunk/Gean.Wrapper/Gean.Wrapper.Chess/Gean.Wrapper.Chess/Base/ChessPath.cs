@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
+     
     public static class ChessPath
     {
         /// <summary>

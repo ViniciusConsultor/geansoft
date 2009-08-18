@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Gean.Wrapper.Chess
 {
-
+    /* interface IBitBoard
     public interface IBitBoard
     {
         unsafe ulong* RawData { get; }
@@ -23,5 +23,5 @@ namespace Gean.Wrapper.Chess
         string SavePos();
         void Dump(TextWriter tw);
     }
-
+    */
 }

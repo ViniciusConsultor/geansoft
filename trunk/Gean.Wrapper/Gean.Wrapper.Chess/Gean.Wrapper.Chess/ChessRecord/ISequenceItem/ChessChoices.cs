@@ -11,7 +11,6 @@ namespace Gean.Wrapper.Chess
         public string Value
         {
             get { return this.ToString(); }
-            set { ChessSequence.Parse(value); }
         }
 
         #endregion

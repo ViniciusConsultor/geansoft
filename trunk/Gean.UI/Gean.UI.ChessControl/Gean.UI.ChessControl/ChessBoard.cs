@@ -416,11 +416,6 @@ namespace Gean.UI.ChessControl
                 //核心行棋动作
                 ChessStep chessStep = tgtGrid.MoveIn(this._ownedChessGame, man, action);
                 OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
-                if (this.CurrChessSide == Enums.ChessmanSide.Black &&
-                    this._ownedChessGame.Record.Items.Count > 0)
-                {
-                    OnPlayPair(new PlayPairEventArgs(this._ownedChessGame.Record.Items.Peek()));
-                }
                 //转换战方
                 this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
                 //刷新
@@ -640,25 +635,6 @@ namespace Gean.UI.ChessControl
             public PlayEventArgs(ChessStep chessStep)
             {
                 this.ChessStep = chessStep;
-            }
-        }
-
-        /// <summary>
-        /// 在白方与黑方都行棋后发生
-        /// </summary>
-        public event PlayPairEventHandler PlayPairEvent;
-        protected virtual void OnPlayPair(PlayPairEventArgs e)
-        {
-            if (PlayPairEvent != null)
-                PlayPairEvent(this, e);
-        }
-        public delegate void PlayPairEventHandler(object sender, PlayPairEventArgs e);
-        public class PlayPairEventArgs : EventArgs
-        {
-            public ChessStepPair ChessStepPair { get; private set; }
-            public PlayPairEventArgs(ChessStepPair chessStepPair)
-            {
-                this.ChessStepPair = chessStepPair;
             }
         }
 
