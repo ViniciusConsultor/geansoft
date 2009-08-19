@@ -12,7 +12,7 @@ namespace Gean.UI.ChessControl.Demo
 {
     public partial class DemoMainForm : Form
     {
-        public FormWindowState IsShangBan { get { return FormWindowState.Normal; } }
+        public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
 
         #region MyRegion
 
@@ -57,7 +57,7 @@ namespace Gean.UI.ChessControl.Demo
             Duration duration = new Duration();
             duration.Start();
             PGNReader reader = new PGNReader();
-            reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__aGame1.pgn")); //__agame.pgn"));
+            reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, @"pgn\__TCh-CHN A.pgn")); //__agame.pgn"));
             reader.AddEvents(records);
             reader.Parse();
             string s = records[0].ToString();

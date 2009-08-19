@@ -231,6 +231,29 @@ namespace Gean.Wrapper.Chess
             return new ChessPosition(_x + 2, _y);
         }
 
+        public ChessPosition[] GetPositions(Chessman man, Enums.ChessmanSide side)
+        {
+            switch (man.ChessmanType)
+            {
+                case Enums.ChessmanType.Rook:
+                    return this.GetRookPositions();
+                case Enums.ChessmanType.Knight:
+                    return this.GetKnightPositions();
+                case Enums.ChessmanType.Bishop:
+                    return this.GetBishopPositions();
+                case Enums.ChessmanType.Queen:
+                    return this.GetQueenPositions();
+                case Enums.ChessmanType.King:
+                    return this.GetKingPositions();
+                case Enums.ChessmanType.Pawn:
+                    return this.GetPawnPositions(side);
+                case Enums.ChessmanType.None:
+                default:
+                    return null;
+            }
+        }
+
+
         /// <summary>
         /// 获取“兵”的可能移动到的位置
         /// </summary>

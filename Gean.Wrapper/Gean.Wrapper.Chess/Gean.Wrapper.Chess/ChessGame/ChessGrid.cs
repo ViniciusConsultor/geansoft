@@ -57,7 +57,7 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="action">该棋步的动作</param>
-        public ChessStep MoveIn(ChessGame game, Chessman chessman, Enums.Action action)
+        public ChessStep MoveIn(int number, ChessGame game, Chessman chessman, Enums.Action action)
         {
             //指定的棋子为空或动作为空
             if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
@@ -97,7 +97,7 @@ namespace Gean.Wrapper.Chess
                 targetPoint = new ChessPosition(this.X, this.Y);
                 chessman.ChessPositions.Push(new ChessPosition(this.X, this.Y));
             }
-            ChessStep chessStep = null;//new ChessStep(chessman.ChessmanSide, chessman.ChessmanType, sourcePoint, targetPoint, action);
+            ChessStep chessStep = new ChessStep(number, chessman.ChessmanSide, chessman.ChessmanType, sourcePoint, targetPoint, action);
             //注册行棋事件
             OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
             return chessStep;

@@ -543,7 +543,8 @@ namespace Gean.Wrapper.Chess
                     _flags.Add("Capture", this.Capture);
                     _flags.Add("Check", this.Check);
                     _flags.Add("DoubleCheck", this.DoubleCheck);
-                    _flags.Add("Checkmate", this.Checkmate);
+                    _flags.Add("Checkmate1", this.Checkmate1);
+                    _flags.Add("Checkmate2", this.Checkmate2);
                     _flags.Add("EnPassant", this.EnPassant);
                     _flags.Add("Favorable", this.Favorable);
                     _flags.Add("FavorablePro", this.FavorablePro);
@@ -577,7 +578,11 @@ namespace Gean.Wrapper.Chess
             /// <summary>
             /// 目标格坐标后：将死
             /// </summary>
-            public string Checkmate { get { return "x"; } }
+            public string Checkmate1 { get { return "x"; } }
+            /// <summary>
+            /// 目标格坐标后：将死
+            /// </summary>
+            public string Checkmate2 { get { return "#"; } }
             /// <summary>
             /// 目标格坐标后：吃过路兵
             /// </summary>

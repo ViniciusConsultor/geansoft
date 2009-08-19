@@ -26,6 +26,7 @@ namespace Gean.UI.ChessControl
             this.OwnedRectangles = new Rectangle[8, 8];
             this.KeyChessPosition = new ChessPosition(1, 1);
             this.ViewKeyRectangle = false;
+            this.Number = 1;
 
             ChessBoard.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
@@ -50,6 +51,8 @@ namespace Gean.UI.ChessControl
 
         protected virtual ChessPosition KeyChessPosition { get; private set; }
 
+        protected virtual ChessPosition[] EnableMoveinPosition { get; private set; }
+
         protected virtual bool ViewKeyRectangle { get; private set; }
 
         /// <summary>
@@ -73,6 +76,10 @@ namespace Gean.UI.ChessControl
 
         #region Pivotal Properties
 
+        /// <summary>
+        /// 回合编号
+        /// </summary>
+        public int Number { get; private set; }
         /// <summary>
         /// 获取此棋盘所拥有(包含)的ChessGame
         /// </summary>
@@ -99,7 +106,6 @@ namespace Gean.UI.ChessControl
         /// 获取与设置棋子将要被移到的棋格坐标
         /// </summary>
         public virtual ChessPosition TargetChessPosition { get; set; }
-
 
         #endregion
 
@@ -190,7 +196,7 @@ namespace Gean.UI.ChessControl
             foreach (Chessman man in chessmans)
             {
                 ChessPosition point = man.ChessPositions.Peek();
-                this._ownedChessGame[point.X + 1, point.Y + 1].MoveIn(this._ownedChessGame, man, Enums.Action.Opennings);
+                this._ownedChessGame[point.X + 1, point.Y + 1].MoveIn(0, this._ownedChessGame, man, Enums.Action.Opennings);
             }
         }
 
@@ -212,6 +218,7 @@ namespace Gean.UI.ChessControl
             if (this._ownedChessGame != null && this.Chessmans != null)
             {
                 ChessBoard.PaintChessmanImage(g, this.Chessmans, this);
+                ChessBoard.PaintEnableMoveInChessPoint(g, this);
                 ChessBoard.PaintSelectedChessPoint(g, this);
             }
             g.Flush();
@@ -313,6 +320,8 @@ namespace Gean.UI.ChessControl
 
                                 //鼠标到达的棋格符合所有规则，记录下棋格的坐标，等待移动
                                 this.SelectedChessPosition = new ChessPosition(x, y);
+
+                                this.EnableMoveinPosition = this.SelectedChessPosition.GetPositions(tmpGrid.Occupant, this.CurrChessSide);
                                 this.Invalidate();
                             }
                             else//移动棋子
@@ -411,19 +420,45 @@ namespace Gean.UI.ChessControl
             Chessman man = srcGrid.Occupant;
             Enums.Action action = Enums.Action.General;
 
-            if (ChessPath.TryMoveIn(man, srcGrid, tgtGrid, out action))
+            if (TryMoveIn(man, srcGrid, tgtGrid, out action))
             {
                 //核心行棋动作
-                ChessStep chessStep = tgtGrid.MoveIn(this._ownedChessGame, man, action);
+                ChessStep chessStep = tgtGrid.MoveIn(this.Number, this._ownedChessGame, man, action);
                 OnPlay(new PlayEventArgs(chessStep));//注册行棋事件
                 //转换战方
                 this.CurrChessSide = Enums.GetOtherSide(this.CurrChessSide);
                 //刷新
                 this.Invalidate();
                 this.SelectedChessPosition = ChessPosition.Empty;
+                if (this.CurrChessSide == Enums.ChessmanSide.Black)
+                    this.Number++;
             }
         }
 
+        /// <summary>
+        /// 获取指定的棋子是否能够从指定的源棋格移动到指定的目标棋格，并返回该步棋的Enums.Action值
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        /// <param name="sourceGrid">指定的棋子所在的源棋格</param>
+        /// <param name="targetGrid">指定的目标棋格</param>
+        /// <param name="action">该步棋的Enums.Action值</param>
+        /// <returns></returns>
+        public static bool TryMoveIn(Chessman chessman, ChessGrid sourceGrid, ChessGrid targetGrid, out Enums.Action action)
+        {
+            if (chessman == null) throw new ArgumentNullException("Chessman cannot NULL.");
+            if (sourceGrid == null) throw new ArgumentNullException("Source ChessGrid cannot NULL.");
+            if (targetGrid == null) throw new ArgumentNullException("Target ChessGrid cannot NULL.");
+
+            action = Enums.Action.Invalid;
+
+
+
+            if (!Chessman.IsNullOrEmpty(targetGrid.Occupant))
+                action = Enums.Action.Capture;
+            else
+                action = Enums.Action.General;
+            return true;
+        }
         #endregion
 
         #region Image Changed Event
@@ -536,6 +571,23 @@ namespace Gean.UI.ChessControl
             for (int i = -1; i <= 1; i++)
             {
                 g.DrawRectangle(Pens.Yellow, Rectangle.Inflate(rect, i, i));
+            }
+        }
+
+        private static void PaintEnableMoveInChessPoint(Graphics g, ChessBoard chessBoard)
+        {
+            if (chessBoard.SelectedChessPosition == null)
+                return;
+            if (chessBoard.EnableMoveinPosition == null)
+                return;
+            Rectangle rect = Rectangle.Empty;
+            foreach (ChessPosition position in chessBoard.EnableMoveinPosition)
+            {
+                rect = chessBoard.OwnedRectangles[position.X, position.Y];
+                for (int i = 0; i <= 1; i++)
+                {
+                    g.DrawRectangle(Pens.Green, Rectangle.Inflate(rect, i, i));
+                }
             }
         }
 
