@@ -195,7 +195,7 @@ namespace Gean.Wrapper.Chess
             {
                 sb.Insert(0, Enums.ChessmanTypeToString(this.ChessmanType));
             }
-            else if (this.ChessmanType == Enums.ChessmanType.Pawn && this.Actions.Contains(Enums.Action.Capture))
+            else if ((this.ChessmanType == Enums.ChessmanType.Pawn) && this.Actions.Contains(Enums.Action.Capture))
             {
                 if (SourcePosition != ChessPosition.Empty)
                     sb.Insert(0, SourcePosition.Horizontal);
@@ -261,11 +261,11 @@ namespace Gean.Wrapper.Chess
             if (obj is System.DBNull) return false;
 
             ChessStep step = (ChessStep)obj;
+            if (this.Number != step.Number)
+                return false;
             if (this.ChessmanType != step.ChessmanType)
                 return false;
             if (this.ChessmanSide != step.ChessmanSide)
-                return false;
-            if (this.Number != step.Number)
                 return false;
             if (!UtilityEquals.CollectionsNoSortedEquals<Enums.Action>(this.Actions, step.Actions))
                 return false;
@@ -282,21 +282,31 @@ namespace Gean.Wrapper.Chess
 
         #region static Parse
 
-        public static ChessStep Parse(string value)
+        /// <summary>
+        /// 该方法暂不可用。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ChessStep[] Parse(string value)
         {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentOutOfRangeException(value);
 
             int number = 0;
 
-            int n;
+            int index;
             value = value.Trim();
-            n = value.IndexOf('.');
-            number = int.Parse(value.Substring(0, n));
-            return Parse(value.Substring(n + 1), number);
+            index = value.IndexOf('.');
+            number = int.Parse(value.Substring(0, index));
+            return ChessStep.Parse(number, value.Substring(index + 1));
         }
 
-        public static ChessStep Parse(string value, int number)
+        /// <summary>
+        /// 该方法暂不可用。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ChessStep[] Parse(int number, string value)
         {
             string[] steps = value.Split(' ');
 
@@ -312,12 +322,12 @@ namespace Gean.Wrapper.Chess
                     //TODO!!!!!!
                 }
                 if (white == null)
-                    white = ChessStep.Parse(steps[i], number, Enums.ChessmanSide.White);
+                    white = ChessStep.Parse(number, steps[i], Enums.ChessmanSide.White);
                 else if (black == null)
-                    black = ChessStep.Parse(steps[i], number, Enums.ChessmanSide.Black);
+                    black = ChessStep.Parse(number, steps[i], Enums.ChessmanSide.Black);
             }
 
-            return null;//new ChessStep(number, white, black);
+            return new ChessStep[] { white, black };
         }
 
         /// <summary>
@@ -327,7 +337,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="value">指定的字符串</param>
         /// <param name="manSide">棋子的战方（主要是针对兵的源棋格使用）</param>
         /// <returns></returns>
-        public static ChessStep Parse(string value, int number, Enums.ChessmanSide manSide)
+        public static ChessStep Parse(int number, string value, Enums.ChessmanSide manSide)
         {
             if (string.IsNullOrEmpty(value)) 
                 throw new ArgumentNullException();

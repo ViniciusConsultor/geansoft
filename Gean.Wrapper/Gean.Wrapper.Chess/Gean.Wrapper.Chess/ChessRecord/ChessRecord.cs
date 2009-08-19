@@ -117,17 +117,7 @@ namespace Gean.Wrapper.Chess
 
             public object Current
             {
-                get
-                {
-                    try
-                    {
-                        return _chessSteps[_position];
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        throw new InvalidOperationException();
-                    }
-                }
+                get { return _chessSteps[_position]; }
             }
 
             #region IEnumerator<ChessStep> 成员

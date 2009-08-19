@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace Gean.Utility
+namespace Gean
 {
     /// <summary>
     /// 一些简单的基于网络的小型扩展方法

@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing.Drawing2D;
 
-namespace Gean.Utility
+namespace Gean
 {
     public static class UtilityDrawing
     {

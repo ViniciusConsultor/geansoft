@@ -46,7 +46,7 @@ namespace Gean.Wrapper.Chess
                 {
                     _tmpStepTree.Items = new ChessSequence();
                 }
-                _tmpStepTree.Items.Add(_tmpStep);
+                //_tmpStepTree.Items.Add(_tmpStep);
                 _tmpStep = null;
             }
             else
@@ -125,12 +125,12 @@ namespace Gean.Wrapper.Chess
             }
             else if (iParser.State == Enums.PGNReaderState.White)
             {
-                _tmpStep = ChessStep.Parse(iParser.Value, int.Parse(_lastNumber), Enums.ChessmanSide.White);
+                _tmpStep = ChessStep.Parse(int.Parse(_lastNumber), iParser.Value, Enums.ChessmanSide.White);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
             else if (iParser.State == Enums.PGNReaderState.Black)
             {
-                _tmpStep = ChessStep.Parse(iParser.Value, int.Parse(_lastNumber), Enums.ChessmanSide.Black);
+                _tmpStep = ChessStep.Parse(int.Parse(_lastNumber), iParser.Value, Enums.ChessmanSide.Black);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
         }
