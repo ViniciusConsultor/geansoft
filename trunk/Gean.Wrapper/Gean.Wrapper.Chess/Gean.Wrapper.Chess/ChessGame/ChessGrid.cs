@@ -57,10 +57,10 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="action">该棋步的动作</param>
-        public ChessStep MoveIn(int number, ChessGame game, ChessPiece chessman, Enums.Action action)
+        public ChessStep MoveIn(int number, ChessGame game, Chessman chessman, Enums.Action action)
         {
             //指定的棋子为空或动作为空
-            if (ChessPiece.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
+            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
                 throw new ArgumentNullException();
             ChessPosition sourcePoint = chessman.ChessPositions.Peek();
             ChessPosition targetPoint = ChessPosition.Empty;
@@ -107,7 +107,7 @@ namespace Gean.Wrapper.Chess
         /// 对指定的棋子执行的动子并落子的方法(含“杀棋”动作和“杀棋并将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByCapture(ChessGame game, ChessPiece chessman)
+        private void MoveInByCapture(ChessGame game, Chessman chessman)
         {
             //移除被杀死的棋子
             this.MoveOut(true);
@@ -119,7 +119,7 @@ namespace Gean.Wrapper.Chess
         /// 对指定的棋子执行的动子并落子的一般性方法(含“将军”)
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        private void MoveInByGeneralAction(ChessGame chessGame, ChessPiece chessman)
+        private void MoveInByGeneralAction(ChessGame chessGame, Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
             ChessPosition point = chessman.ChessPositions.Peek();
@@ -156,7 +156,7 @@ namespace Gean.Wrapper.Chess
         /// </param>
         private void MoveOut(bool isCapture)
         {
-            ChessPiece man = this.Occupant;//棋格中的棋子
+            Chessman man = this.Occupant;//棋格中的棋子
             man.IsCaptured = isCapture;//置该棋子的死活棋开关为“被杀死”状态
             //移除棋子
             this.Occupied = false;
@@ -169,7 +169,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置当前格子中拥有的棋子
         /// </summary>
-        public ChessPiece Occupant
+        public Chessman Occupant
         {
             get { return _occupant; }
             set
@@ -181,7 +181,7 @@ namespace Gean.Wrapper.Chess
                 this._occupant = value;
             }
         }
-        private ChessPiece _occupant;
+        private Chessman _occupant;
 
         /// <summary>
         /// 获取或设置当前格子是否被棋子占住

@@ -57,7 +57,7 @@ namespace Gean.UI.ChessControl
             ChessPosition tgtPos = step.TargetPosition;
             if (srcPos == ChessPosition.Empty)
             {
-                srcPos = ChessPath.GetSourcePosition(step, this.ChessBoard.CurrChessSide, this.ChessBoard.OwnedChessGame);
+                //srcPos = ChessPath.GetSourcePosition(step, this.ChessBoard.CurrChessSide, this.ChessBoard.OwnedChessGame);
             }
             this.ChessBoard.MoveIn(srcPos, tgtPos);
         }

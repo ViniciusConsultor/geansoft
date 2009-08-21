@@ -10,12 +10,12 @@ namespace Gean.Wrapper.Chess
     /// of the board at the beginning of a game. 
     /// Rooks can move forwards, backwards, or sideways, but not diagonally. 
     /// </summary>
-    public class ChessmanRook : ChessPiece
+    public class ChessmanRook : Chessman
     {
         public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
-            ChessPosition point = ChessPiece.GetOpenningsPoint(side, gridSide, 1, 8);
+            ChessPosition point = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
             this.ChessPositions.Push(point);
         }
 
