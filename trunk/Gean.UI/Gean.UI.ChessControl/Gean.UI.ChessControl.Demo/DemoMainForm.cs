@@ -12,7 +12,7 @@ namespace Gean.UI.ChessControl.Demo
 {
     public partial class DemoMainForm : Form
     {
-        public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
+        public FormWindowState IsShangBan { get { return FormWindowState.Normal; } }
 
         #region MyRegion
 
