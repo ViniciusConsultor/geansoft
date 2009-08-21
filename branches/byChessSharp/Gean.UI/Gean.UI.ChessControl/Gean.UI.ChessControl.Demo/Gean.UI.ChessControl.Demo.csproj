@@ -97,10 +97,6 @@
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gean.UI.ChessControl\Gean.UI.ChessControl.csproj">
-      <Project>{7929E6E5-574E-4E12-84C7-8B6DA8C28530}</Project>
-      <Name>Gean.UI.ChessControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DemoFile\chessboard.gif" />
