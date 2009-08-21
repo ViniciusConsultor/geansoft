@@ -106,7 +106,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Gean\Gean\Gean.csproj">
+    <ProjectReference Include="..\..\Gean\Gean\Gean.Framework\Gean.csproj">
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>

@@ -231,7 +231,7 @@ namespace Gean.Wrapper.Chess
             return new ChessPosition(_x + 2, _y);
         }
 
-        public ChessPosition[] GetPositions(Chessman man, Enums.ChessmanSide side)
+        public ChessPosition[] GetPositions(ChessPiece man, Enums.ChessmanSide side)
         {
             switch (man.ChessmanType)
             {

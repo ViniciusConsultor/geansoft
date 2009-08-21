@@ -47,7 +47,7 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 获取此棋盘上所拥有的棋子集合，默认初始化为通常的32枚棋子
         /// </summary>
-        protected virtual List<Chessman> Chessmans { get; private set; }
+        protected virtual List<ChessPiece> Chessmans { get; private set; }
 
         protected virtual ChessPosition KeyChessPosition { get; private set; }
 
@@ -125,7 +125,7 @@ namespace Gean.UI.ChessControl
         /// 载入新棋局
         /// </summary>
         /// <param name="chessmans">指定的棋子集合，一般是指残局或中盘棋局</param>
-        public virtual void LoadGame(IEnumerable<Chessman> chessmans)
+        public virtual void LoadGame(IEnumerable<ChessPiece> chessmans)
         {
             this._ownedChessGame = new ChessGame();
             this.CurrChessSide = Enums.ChessmanSide.White;
@@ -142,7 +142,7 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual void InitializeChessmans()
         {
-            this.Chessmans = new List<Chessman>(32);
+            this.Chessmans = new List<ChessPiece>(32);
             #region
             //兵
             for (int i = 1; i <= 8; i++)
@@ -179,9 +179,9 @@ namespace Gean.UI.ChessControl
         /// 初始化棋子集合
         /// </summary>
         /// <param name="images">一个指定棋子集合</param>
-        protected virtual void InitializeChessmans(IEnumerable<Chessman> chessmans)
+        protected virtual void InitializeChessmans(IEnumerable<ChessPiece> chessmans)
         {
-            this.Chessmans = new List<Chessman>(32);
+            this.Chessmans = new List<ChessPiece>(32);
             this.Chessmans.AddRange(chessmans);
             this.Chessmans.TrimExcess();
             this.Invalidate();
@@ -191,9 +191,9 @@ namespace Gean.UI.ChessControl
         /// 注册所有棋子当相应的棋格
         /// </summary>
         /// <param name="chessmans"></param>
-        protected virtual void RegisterChessmans(IEnumerable<Chessman> chessmans)
+        protected virtual void RegisterChessmans(IEnumerable<ChessPiece> chessmans)
         {
-            foreach (Chessman man in chessmans)
+            foreach (ChessPiece man in chessmans)
             {
                 ChessPosition point = man.ChessPositions.Peek();
                 this._ownedChessGame[point.X + 1, point.Y + 1].MoveIn(0, this._ownedChessGame, man, Enums.Action.Opennings);
@@ -313,7 +313,7 @@ namespace Gean.UI.ChessControl
                             ChessGrid tmpGrid = this._ownedChessGame[x, y];
                             if (this.SelectedChessPosition == ChessPosition.Empty)//选择棋子
                             {
-                                if (Chessman.IsNullOrEmpty(tmpGrid.Occupant))
+                                if (ChessPiece.IsNullOrEmpty(tmpGrid.Occupant))
                                     return;//找到矩形，但矩形中无棋子，退出
                                 if (tmpGrid.Occupant.ChessmanSide != this.CurrChessSide)
                                     return;//棋子的战方与当前棋局要求的战方不符，退出
@@ -327,7 +327,7 @@ namespace Gean.UI.ChessControl
                             else//移动棋子
                             {
                                 //目标棋格有棋子
-                                if (!Chessman.IsNullOrEmpty(tmpGrid.Occupant))
+                                if (!ChessPiece.IsNullOrEmpty(tmpGrid.Occupant))
                                 {
                                     //目标棋格棋子的战方不符合规则
                                     if (tmpGrid.Occupant.ChessmanSide == this.CurrChessSide)
@@ -402,7 +402,7 @@ namespace Gean.UI.ChessControl
         protected virtual void SetSelectedPointByKey()
         {
             ChessGrid rid = this._ownedChessGame[this.KeyChessPosition.X, this.KeyChessPosition.Y];
-            Chessman man = rid.Occupant;
+            ChessPiece man = rid.Occupant;
             if (man == null)
                 return;
             if (man.ChessmanSide != this.CurrChessSide)
@@ -417,7 +417,7 @@ namespace Gean.UI.ChessControl
         {
             ChessGrid srcGrid = this._ownedChessGame[srcPos.X + 1, srcPos.Y + 1];
             ChessGrid tgtGrid = this._ownedChessGame[tgtPos.X + 1, tgtPos.Y + 1];
-            Chessman man = srcGrid.Occupant;
+            ChessPiece man = srcGrid.Occupant;
             Enums.Action action = Enums.Action.General;
 
             if (TryMoveIn(man, srcGrid, tgtGrid, out action))
@@ -443,7 +443,7 @@ namespace Gean.UI.ChessControl
         /// <param name="targetGrid">指定的目标棋格</param>
         /// <param name="action">该步棋的Enums.Action值</param>
         /// <returns></returns>
-        public static bool TryMoveIn(Chessman chessman, ChessGrid sourceGrid, ChessGrid targetGrid, out Enums.Action action)
+        public static bool TryMoveIn(ChessPiece chessman, ChessGrid sourceGrid, ChessGrid targetGrid, out Enums.Action action)
         {
             if (chessman == null) throw new ArgumentNullException("Chessman cannot NULL.");
             if (sourceGrid == null) throw new ArgumentNullException("Source ChessGrid cannot NULL.");
@@ -453,7 +453,7 @@ namespace Gean.UI.ChessControl
 
 
 
-            if (!Chessman.IsNullOrEmpty(targetGrid.Occupant))
+            if (!ChessPiece.IsNullOrEmpty(targetGrid.Occupant))
                 action = Enums.Action.Capture;
             else
                 action = Enums.Action.General;
@@ -540,9 +540,9 @@ namespace Gean.UI.ChessControl
         /// <param name="g">Graphics</param>
         /// <param name="chessmans">指定的棋子图片集合</param>
         /// <param name="board">传递引用的ChessBoard类型</param>
-        private static void PaintChessmanImage(Graphics g, List<Chessman> chessmans, ChessBoard board)
+        private static void PaintChessmanImage(Graphics g, List<ChessPiece> chessmans, ChessBoard board)
         {
-            foreach (Chessman man in chessmans)
+            foreach (ChessPiece man in chessmans)
             {
                 if (man.IsCaptured)
                     continue;
