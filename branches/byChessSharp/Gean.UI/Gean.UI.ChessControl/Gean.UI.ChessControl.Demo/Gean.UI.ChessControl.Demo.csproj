@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72DAEDEA-629B-404F-BFC4-1D8D934D8903}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gean.UI.ChessControl.Demo</RootNamespace>
+    <AssemblyName>Gean.UI.ChessControl.Demo</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DemoMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoMainForm.Designer.cs">
+      <DependentUpon>DemoMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DemoMainForm.resx">
+      <DependentUpon>DemoMainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="DemoFile\PGN\aero09.pgn" />
+    <None Include="DemoFile\PGN\aker09.pgn" />
+    <None Include="DemoFile\PGN\best04.pgn" />
+    <None Include="DemoFile\PGN\bunrat09.pgn" />
+    <None Include="DemoFile\PGN\capdag08.pgn" />
+    <None Include="DemoFile\PGN\corusc09.pgn" />
+    <None Include="DemoFile\PGN\dono09.pgn" />
+    <None Include="DemoFile\PGN\slick09.pgn" />
+    <None Include="DemoFile\PGN\torreko08.pgn" />
+    <None Include="DemoFile\PGN\vars09.pgn" />
+    <None Include="DemoFile\PGN\wblitz08.pgn" />
+    <None Include="DemoFile\PGN\wch08.pgn" />
+    <None Include="DemoFile\PGN\worldop09.pgn" />
+    <None Include="DemoFile\PGN\__aGame2.pgn" />
+    <None Include="DemoFile\PGN\__TCh-CHN A.pgn" />
+    <None Include="DemoFile\PGN\__aGame1.pgn" />
+    <None Include="DemoFile\PGN\__kaspjun03.pgn" />
+    <None Include="DemoFile\PGN\__Polgar-Anand.pgn" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean.Wrapper\Gean.Wrapper.Chess\Gean.Wrapper.Chess\Gean.Wrapper.Chess.csproj">
+      <Project>{29FCFFF2-14E3-4741-99A9-3FCC041F6207}</Project>
+      <Name>Gean.Wrapper.Chess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gean.UI.ChessControl\Gean.UI.ChessControl.csproj">
+      <Project>{7929E6E5-574E-4E12-84C7-8B6DA8C28530}</Project>
+      <Name>Gean.UI.ChessControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DemoFile\chessboard.gif" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 001.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 002.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 003.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 004.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\Black\BoardGrid - Black - 005.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 001.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 002.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 003.jpg" />
+    <Content Include="DemoFile\ChessBoardGrid\White\BoardGrid - White - 004.jpg" />
+    <Content Include="DemoFile\Chessman\black_bishop.png" />
+    <Content Include="DemoFile\Chessman\black_king.png" />
+    <Content Include="DemoFile\Chessman\black_knight.png" />
+    <Content Include="DemoFile\Chessman\black_pawn.png" />
+    <Content Include="DemoFile\Chessman\black_queen.png" />
+    <Content Include="DemoFile\Chessman\black_rook.png" />
+    <Content Include="DemoFile\Chessman\white_bishop.png" />
+    <Content Include="DemoFile\Chessman\white_king.png" />
+    <Content Include="DemoFile\Chessman\white_knight.png" />
+    <Content Include="DemoFile\Chessman\white_pawn.png" />
+    <Content Include="DemoFile\Chessman\white_queen.png" />
+    <Content Include="DemoFile\Chessman\white_rook.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

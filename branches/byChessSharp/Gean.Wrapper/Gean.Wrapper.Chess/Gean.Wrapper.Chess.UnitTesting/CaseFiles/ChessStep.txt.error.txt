@@ -1,0 +1,24 @@
+cxb1=Q
+axb1=Q+
+cxb1=Q
+exf1=Q+
+cxd1=Q+
+fxg1=Q
+cxd1=Q
+cxd1=Q+
+gxf1=Q+
+bxc1=Q
+exf1=Q+
+exf1=Q+
+bxa1=R
+cxd1=R+
+fxe1=Q+
+dxe1=N+
+dxe1=Q+
+cxd1=Q
+cxb1=Q
+dxc1=Q
+exd1=Q
+
+共 622573 个 ChessStep，总时间：39531.25
+每ChessStep的解析时间为：0.0634965698801586

@@ -1,0 +1,141 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</ProjectGuid>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>Gean.Framework</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Gean</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\CloneableObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\SmartDateString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmartDateString.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\File\FileEncoding.cs" />
+    <Compile Include="Utility\UtilityDrawing.cs" />
+    <Compile Include="Utility\UtilityEnums.cs" />
+    <Compile Include="Utility\UtilityEquals.cs" />
+    <Compile Include="Utility\UtilityNet.cs" />
+    <Compile Include="Utility\UtilityRAR.cs" />
+    <Compile Include="Utility\UtilityType.cs" />
+    <Compile Include="Widgets\Checker.cs" />
+    <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
+    <Compile Include="Widgets\SmartDate.cs" />
+    <Compile Include="Wrapper\Database\DbEnums.cs" />
+    <Compile Include="Wrapper\Database\DbParam.cs" />
+    <Compile Include="Wrapper\Database\DbParamCollection.cs" />
+    <Compile Include="Wrapper\Database\IBaseQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\IDataBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\IQuery.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Wrapper\Database\SafeDataReader.cs" />
+    <Compile Include="Wrapper\Definer\Definer.cs" />
+    <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
+    <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
+    <Compile Include="Resources\FilterString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FilterString.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RegexString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RegexString.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Collections\EventList.cs" />
+    <Compile Include="Base\Pair.cs" />
+    <Compile Include="Base\EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Base\EventArgs\EventArgs.cs" />
+    <Compile Include="Wrapper\Logger\ILogWriter.cs" />
+    <Compile Include="Utility\File\FileEnums.cs" />
+    <Compile Include="Utility\File\FileSearching.cs" />
+    <Compile Include="Utility\File\UtilityFile.cs" />
+    <Compile Include="Utility\UtilityClipboard.cs" />
+    <Compile Include="Utility\UtilityCollection.cs" />
+    <Compile Include="Utility\UtilityConvert.cs" />
+    <Compile Include="Utility\UtilityDateTime.cs" />
+    <Compile Include="Utility\UtilityEncrypt.cs" />
+    <Compile Include="Utility\UtilityGuid.cs" />
+    <Compile Include="Utility\UtilityHardware.cs" />
+    <Compile Include="Utility\UtilityKeys.cs" />
+    <Compile Include="Utility\UtilityRandom.cs" />
+    <Compile Include="Utility\UtilityRegex.cs" />
+    <Compile Include="Utility\UtilityString.cs" />
+    <Compile Include="Widgets\Chinese\ChineseIDCardValid.cs" />
+    <Compile Include="Widgets\Chinese\ChineseSpell.cs" />
+    <Compile Include="Widgets\Duration.cs" />
+    <Compile Include="Wrapper\Logger\LogLevel.cs" />
+    <Compile Include="Wrapper\Logger\LogWriter.cs" />
+    <Compile Include="Wrapper\User32.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlElement.cs" />
+    <Compile Include="Wrapper\Xml\AbstractXmlNode.cs" />
+    <Compile Include="Wrapper\Xml\XmlHelper.cs" />
+    <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\FilterString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilterString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RegexString.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RegexString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SmartDateString.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
