@@ -39,7 +39,19 @@ namespace Gean.Wrapper.Chess
             [Result "1/2-1/2"] 　               //和棋
             [Result "*"]　 　　　               //可能还在进行，可能该局作废，可能其它原因
     */
-
+    /*
+    [Event "WCh"]
+    [Site "Bonn GER"]
+    [Date "2008.10.15"]
+    [Round "2"]
+    [White "Anand,V"]
+    [Black "Kramnik,V"]
+    [Result "1/2-1/2"]
+    [WhiteElo "2783"]
+    [BlackElo "2772"]
+    [EventDate "2008.10.14"]
+    [ECO "E25"]
+     */
 
     /// <summary>
     /// 棋局记录的标签对部分
