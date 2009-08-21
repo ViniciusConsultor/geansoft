@@ -59,7 +59,7 @@
     <Compile Include="ChessRecord\ISequenceItem\ChessResult.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessNag.cs" />
     <Compile Include="ChessRecord\ChessRecordFile.cs" />
-    <Compile Include="ChessRecord\ChessTag.cs" />
+    <Compile Include="ChessRecord\ChessDefiner.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ISequenceItem.cs" />
     <Compile Include="ChessGame\ChessGame.cs" />
     <Compile Include="ChessRecord\ISequenceItem\ChessComment.cs" />

@@ -26,7 +26,7 @@ namespace Gean.UI.ChessControl.Demo
             this._board.BringToFront();
             this._mainSpliter.Panel1.Controls.Add(_board);
             this._statusLabel.Text = "OK";
-            this._recordList.SelectedValueChanged += new EventHandler(SelectedRecord);
+            this._recordListView.SelectedIndexChanged += new EventHandler(SelectedRecord);
 
             this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
 
@@ -62,10 +62,10 @@ namespace Gean.UI.ChessControl.Demo
             reader.Parse();
             string s = records[0].ToString();
 
-            this._recordList.Items.Clear();
+            this._recordListView.Items.Clear();
             foreach (var item in records)
             {
-                this._recordList.Items.Add(item.Definer);
+                this._recordListView.Add(item);
             }
             duration.Stop();
             this._statusLabel.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
@@ -75,9 +75,12 @@ namespace Gean.UI.ChessControl.Demo
 
         private void SelectedRecord(object sender, EventArgs e)
         {
+            if (this._recordListView.SelectedRecord == null || this._recordListView.SelectedRecord.Length == 0)
+            {
+                return;
+            }
             this._recordTree.Nodes.Clear();
-            int k = this._recordList.SelectedIndex;
-            ChessRecord record = records[k];
+            ChessRecord record = this._recordListView.SelectedRecord[0];
             TreeNode node = new TreeNode("Game");
             foreach (var item in record.Items)
             {
