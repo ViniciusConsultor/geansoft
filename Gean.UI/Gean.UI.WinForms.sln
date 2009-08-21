@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.UI.WinForms", "Gean.UI.WinForms\Gean.UI.WinForms.csproj", "{BC9321B1-A644-45DB-838A-D65AF74AFAA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\Gean\Gean\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\Gean\Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -26,5 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

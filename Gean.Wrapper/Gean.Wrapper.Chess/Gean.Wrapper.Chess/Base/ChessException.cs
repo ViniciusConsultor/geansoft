@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    [global::System.Serializable]
+    [Serializable]
     public class ChessException : ApplicationException
     {
         public ChessException() { }
@@ -16,7 +16,23 @@ namespace Gean.Wrapper.Chess
             : base(info, context) { }
     }
 
-    [global::System.Serializable]
+    [Serializable]
+    public class FENValidationException : ChessRecordException
+    {
+        public string FENMessage { get; private set; }
+        public FENValidationException() { }
+        public FENValidationException(string message) : base(message)
+        {
+            this.FENMessage = message;
+        }
+        public FENValidationException(string message, Exception inner) : base(message, inner) { }
+        protected FENValidationException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
+
+    [Serializable]
     public class ChessRecordException : ChessException
     {
         public ChessRecordException() { }
@@ -28,7 +44,7 @@ namespace Gean.Wrapper.Chess
             : base(info, context) { }
     }
 
-    [global::System.Serializable]
+    [Serializable]
     public class ChessmanException : ChessException
     {
         public ChessmanException() { }
@@ -40,7 +56,7 @@ namespace Gean.Wrapper.Chess
             : base(info, context) { }
     }
 
-    [global::System.Serializable]
+    [Serializable]
     public class ChessGameException : ChessException
     {
         public ChessGameException() { }

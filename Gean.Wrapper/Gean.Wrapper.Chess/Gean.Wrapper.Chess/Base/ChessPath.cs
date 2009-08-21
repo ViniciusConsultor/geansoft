@@ -15,7 +15,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="targetGrid">指定的目标棋格</param>
         /// <param name="action">该步棋的Enums.Action值</param>
         /// <returns></returns>
-        public static bool TryMoveIn(Chessman chessman, ChessGrid sourceGrid, ChessGrid targetGrid, out Enums.Action action)
+        public static bool TryMoveIn(ChessPiece chessman, ChessGrid sourceGrid, ChessGrid targetGrid, out Enums.Action action)
         {
             if (chessman == null) throw new ArgumentNullException("Chessman cannot NULL.");
             if (sourceGrid == null) throw new ArgumentNullException("Source ChessGrid cannot NULL.");
@@ -25,7 +25,7 @@ namespace Gean.Wrapper.Chess
 
 
 
-            if (!Chessman.IsNullOrEmpty(targetGrid.Occupant))
+            if (!ChessPiece.IsNullOrEmpty(targetGrid.Occupant))
                 action = Enums.Action.Capture;
             else
                 action = Enums.Action.General;
