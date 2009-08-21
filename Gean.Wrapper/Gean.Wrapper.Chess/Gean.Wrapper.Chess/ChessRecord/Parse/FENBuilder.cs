@@ -381,20 +381,20 @@ namespace Gean.Wrapper.Chess
         {
             FENBuilder builder = new FENBuilder();
             int dot = 0;
-            foreach (ChessGrid grid in game)
+            foreach (ChessPosition pos in game)
             {
-                if (grid.Occupant != null)
-                {
-                    string str = string.Empty;
-                    if (grid.Occupant.IsCaptured == false)
-                    {
-                        str = grid.Occupant.ToString();
-                        if (grid.Occupant.ChessmanSide == Enums.ChessmanSide.Black)
-                            str = str.ToLowerInvariant();
-                    }
-                    builder[dot] = str[0];
-                }
-                dot++;
+                //if (pos.Occupant != null)
+                //{
+                //    string str = string.Empty;
+                //    if (pos.Occupant.IsCaptured == false)
+                //    {
+                //        str = pos.Occupant.ToString();
+                //        if (pos.Occupant.ChessmanSide == Enums.ChessmanSide.Black)
+                //            str = str.ToLowerInvariant();
+                //    }
+                //    builder[dot] = str[0];
+                //}
+                //dot++;
             }
             return builder;
         }

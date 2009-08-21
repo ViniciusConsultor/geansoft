@@ -7,20 +7,19 @@ namespace Gean.Wrapper.Chess
 {
     /*   FEN Dot
      * 
-     *   8 |     1   2   3   4   5   6   7   8 = (9-8)*8
-     *   7 |     9  10  11  12  13  14  15  16 = (9-7)*8
-     *   6 |    17  18  19  20  21  22  23  24 = (9-6)*8
-     *   5 |    25  26  27  28  29  30  31  32 = (9-5)*8
-     *   4 |    33  34  35  36  37  38  39  40 = (9-4)*8
-     *   3 |    41  42  43  44  45  46  47  48 = (9-3)*8
-     *   2 |    49  50  51  52  53  54  55  56 = (9-2)*8
-     *   1 |    57  58  59  60  61  62  63  64 = (9-1)*8
+     *   8 |     1   2   3   4   5   6   7   8
+     *   7 |     9  10  11  12  13  14  15  16
+     *   6 |    17  18  19  20  21  22  23  24
+     *   5 |    25  26  27  28  29  30  31  32
+     *   4 |    33  34  35  36  37  38  39  40
+     *   3 |    41  42  43  44  45  46  47  48
+     *   2 |    49  50  51  52  53  54  55  56
+     *   1 |    57  58  59  60  61  62  63  64
      *          ------------------------------
      *           1   2   3   4   5   6   7   8
      *           a   b   c   d   e   f   g   h
      *   
-     *   this.Dot = (9 - y) * x;
-     *   
+     *   this.Dot = (8 * (7 - _y)) + (_x + 1);
      */
 
     /// <summary>
@@ -48,10 +47,21 @@ namespace Gean.Wrapper.Chess
             {
                 return Empty;
             }
-            int x = dot % 8;
-            int y = 8 - ((dot - 1) / 8);
-            if (x == 0) x = 8;
+            int x;
+            int y;
+            ChessPosition.CalculateXY(dot, out x, out y);
             return new ChessPosition(x, y);
+        }
+
+        public static void CalculateXY(int dot, out int x, out int y)
+        {
+            x = dot % 8;
+            y = 8 - ((dot - 1) / 8);
+            if (x == 0) x = 8;
+        }
+        public static int CalculateDot(int x, int y)
+        {
+            return (8 * (7 - y)) + (x + 1);
         }
         #endregion
 
@@ -85,7 +95,7 @@ namespace Gean.Wrapper.Chess
             _vertical = vertical;
             _x = Utility.CharToInt(horizontal) - 1;
             _y = vertical - 1;
-            this.Dot = this.CalculateDot();
+            this.Dot = ChessPosition.CalculateDot(_x, _y);
         }
 
         /// <summary>
@@ -99,11 +109,7 @@ namespace Gean.Wrapper.Chess
             _y = y - 1;
             _horizontal = Utility.IntToChar(x);
             _vertical = y;
-            this.Dot = this.CalculateDot();
-        }
-        private int CalculateDot()
-        {
-            return (8 * (7 - _y)) + (_x + 1);
+            this.Dot = ChessPosition.CalculateDot(_x, _y);
         }
 
         /// <summary>
@@ -231,7 +237,7 @@ namespace Gean.Wrapper.Chess
             return new ChessPosition(_x + 2, _y);
         }
 
-        public ChessPosition[] GetPositions(ChessPiece man, Enums.ChessmanSide side)
+        public ChessPosition[] GetPositions(Chessman man, Enums.ChessmanSide side)
         {
             switch (man.ChessmanType)
             {
@@ -252,7 +258,6 @@ namespace Gean.Wrapper.Chess
                     return null;
             }
         }
-
 
         /// <summary>
         /// 获取“兵”的可能移动到的位置

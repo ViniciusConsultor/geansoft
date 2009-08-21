@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessmanBishop : ChessPiece
+    public class ChessmanBishop : Chessman
     {
         public ChessmanBishop(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            ChessPosition point = ChessPiece.GetOpenningsPoint(side, gridSide, 3, 6);
+            ChessPosition point = Chessman.GetOpenningsPosition(side, gridSide, 3, 6);
             this.ChessPositions.Push(point);
         }
 

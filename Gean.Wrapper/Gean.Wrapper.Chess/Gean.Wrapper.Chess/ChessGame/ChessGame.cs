@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
-    /// 这是描述一盘棋局的类。实现了IEnumerable&lt;ChessGrid&gt;。
+    /// 这是描述一盘棋局的类。
+    /// 它与ChessRecord的主要区别在于：
+    /// 1.Game主要实现一系列棋子，棋子移动相关的方法，事件；
+    /// 2.Record主要实现棋局记录相关的方法，事件；
+    /// 已实现IEnumerable&lt;ChessPosition&gt;。
     /// </summary>
-    public class ChessGame : IEnumerable<ChessGrid>
+    public class ChessGame : IEnumerable<ChessPosition>
     {
         /// <summary>
         /// 获取与设置一盘棋局的所有棋格类
         /// </summary>
-        protected virtual ChessGrid[,] ChessGrids { get; private set; }
+        protected virtual ChessPosition[] ChessPositions { get; private set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        public ChessGame()
-        {
-            this.ChessGrids = new ChessGrid[8, 8];
-            this.LoadGrids();
-            this.Record = new ChessRecord();
-        }
+        public ChessGame() : this(new ChessRecord()) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public ChessGame(ChessRecord record)
         {
-            this.ChessGrids = new ChessGrid[8, 8];
-            this.LoadGrids();
             this.Record = record;
+            this.LoadPositions();
         }
 
         /// <summary>
@@ -36,52 +38,200 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public virtual ChessRecord Record { get; private set; }
 
+        public virtual ChessPosition this[int dot]
+        {
+            get { return ChessPosition.Empty; }
+        }
         /// <summary>
         /// 获取指定坐标值的棋格(坐标是象棋规则的1-8)
         /// </summary>
         /// <param name="x">棋格的x坐标(按象棋规则，不能为0)</param>
         /// <param name="y">棋格的y坐标(按象棋规则，不能为0)</param>
-        public virtual ChessGrid this[int x, int y]
+        public virtual ChessPosition this[int x, int y]
         {
-            get { return this.ChessGrids[x - 1, y - 1]; }
+            get { return this.ChessPositions[ChessPosition.CalculateDot(x - 1, y - 1)]; }
         }
         /// <summary>
         /// 获取指定坐标值的棋格(坐标是象棋规则的1-8)
         /// </summary>
         /// <param name="c">棋格的x坐标(按象棋规则，a-h)</param>
         /// <param name="y">棋格的y坐标(按象棋规则，不能为0)</param>
-        public virtual ChessGrid this[char c, int y]
+        public virtual ChessPosition this[char c, int y]
         {
-            get { return this.ChessGrids[Utility.CharToInt(c) - 1, y - 1]; }
+            get { return this[Utility.CharToInt(c) - 1, y - 1]; }
         }
 
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
-        public virtual void LoadGrids()
+        protected virtual void LoadPositions()
         {
-            for (int x = 1; x <= 8; x++)
+            this.ChessPositions = new ChessPosition[64];
+            for (int x = 1; x <= 64; x++)
             {
-                for (int y = 1; y <= 8; y++)
-                {
-                    this.ChessGrids[x - 1, y - 1] = new ChessGrid(x, y);
-                    this.ChessGrids[x - 1, y - 1].MoveInEvent += new ChessGrid.MoveInEventHandler(ChessGame_MoveInAfterEvent);
-                }
+                this.ChessPositions[x] = ChessPosition.GetPositionByDot(x);
             }
         }
 
-        protected virtual void ChessGame_MoveInAfterEvent(object sender, ChessGrid.MoveInEventArgs e)
+        #region === Move ===
+
+        /// <summary>
+        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
+        /// 1.棋子的战方应在调用该方法之前进行判断;
+        /// 2.该棋子是否能够落入指定的棋格应在调用该方法之前进行判断;
+        /// 重点方法。
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        /// <param name="action">该棋步的动作</param>
+        public ChessStep MoveIn(int number, Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos)
         {
-            //this.Record.Items.Add(e.Action, e.ChessmanSide, e.ChessStep);
+            //指定的棋子为空或动作为空
+            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
+                throw new ArgumentNullException();
+
+            switch (action)
+            {
+                #region case
+                case Enums.Action.General:
+                case Enums.Action.Check:
+                    this.MoveInByGeneralAction(chessman);
+                    break;
+                case Enums.Action.Capture:
+                    this.MoveInByCapture(chessman);
+                    break;
+                case Enums.Action.KingSideCastling:
+                    this.MoveInByKingSideCastlingAction();
+                    break;
+                case Enums.Action.QueenSideCastling:
+                    this.MoveInByQueenSideCastlingAction();
+                    break;
+                case Enums.Action.Opennings://仅开局摆棋，不激活任何相关事件
+                    this.Occupant = chessman;
+                    break;
+                case Enums.Action.Invalid:
+                default:
+                    Debug.Fail("\" " + action.ToString() + " \" isn't FAIL action.");
+                    break;
+                #endregion
+            }
+
+            if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
+            {
+                //将棋步插入到该棋子的棋步集合中
+                chessman.ChessPositions.Push(tgtPos);
+            }
+            ChessStep chessStep = new ChessStep(number, chessman.ChessmanSide, chessman.ChessmanType, srcPos, tgtPos, action);
+            //注册行棋事件
+            OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
+            return chessStep;
         }
+
+        /// <summary>
+        /// 对指定的棋子执行的动子并落子的方法(含“杀棋”动作和“杀棋并将军”)
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        private void MoveInByCapture(Chessman chessman)
+        {
+            //移除被杀死的棋子
+            this.MoveOut(true);
+            //调用落子方法
+            this.MoveInByGeneralAction(game, chessman);
+        }
+
+        /// <summary>
+        /// 对指定的棋子执行的动子并落子的一般性方法(含“将军”)
+        /// </summary>
+        /// <param name="chessman">指定的棋子</param>
+        private void MoveInByGeneralAction(Chessman chessman)
+        {
+            //1.动子（即从源棋格中移除该棋子）
+            ChessPosition point = chessman.ChessPositions.Peek();
+            chessGame[point.X + 1, point.Y + 1].MoveOut(false);
+
+            //2.落子
+            this.Occupant = chessman;
+        }
+
+        /// <summary>
+        /// 长易位(后侧)
+        /// </summary>
+        /// <param name="chessman"></param>
+        private void MoveInByQueenSideCastlingAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 短易位(王侧)
+        /// </summary>
+        /// <param name="chessman"></param>
+        private void MoveInByKingSideCastlingAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 将本棋格的棋子移除(已注册移除事件)。
+        /// </summary>
+        /// <param name="isKill">
+        /// 是否是杀招，true 时指被移除的棋是被杀死，false 时指被移除
+        /// 的棋仅为“动子”，该棋子还将被移到其他的棋格。
+        /// </param>
+        private void MoveOut(bool isCapture)
+        {
+            Chessman man = this.Occupant;//棋格中的棋子
+            man.IsCaptured = isCapture;//置该棋子的死活棋开关为“被杀死”状态
+            //移除棋子
+            this.Occupied = false;
+        }
+
+        #endregion
+
+        #region Occupant Chessman
+
+        /// <summary>
+        /// 获取或设置当前格子中拥有的棋子
+        /// </summary>
+        public Chessman Occupant
+        {
+            get { return _occupant; }
+            set
+            {
+                if (value != null)
+                    this._occupied = true;
+                else
+                    this._occupied = false;
+                this._occupant = value;
+            }
+        }
+        private Chessman _occupant;
+
+        ///// <summary>
+        ///// 获取或设置当前格子是否被棋子占住
+        ///// </summary>
+        //public bool Occupied
+        //{
+        //    get { return _occupied; }
+        //    set
+        //    {
+        //        if (value == false)
+        //            this._occupant = null;
+        //        _occupied = value;
+        //    }
+        //}
+        //private bool _occupied = false;
+
+
+        #endregion
+
 
         #region IEnumerable
 
-        #region IEnumerable<ChessGrid> 成员
+        #region IEnumerable<ChessPosition> 成员
 
-        public IEnumerator<ChessGrid> GetEnumerator()
+        public IEnumerator<ChessPosition> GetEnumerator()
         {
-            return new ChessGridEnumerator(this.ChessGrids);
+            return new ChessGridEnumerator(this.ChessPositions);
         }
 
         #endregion
@@ -90,55 +240,35 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new ChessGridEnumerator(this.ChessGrids);
+            return new ChessGridEnumerator(this.ChessPositions);
         }
 
         #endregion
 
-        public class ChessGridEnumerator : IEnumerator<ChessGrid>
+        public class ChessGridEnumerator : IEnumerator<ChessPosition>
         {
-            private List<ChessGrid> _chessGrids;
-            private int _position = -1;
+            private List<ChessPosition> _chessPositions;
+            private int _index = -1;
 
-            public ChessGridEnumerator(ChessGrid[,] rids)
+            public ChessGridEnumerator(ChessPosition[] positions)
             {
-                _chessGrids = new List<ChessGrid>(64);
-                for (int y = 0; y <= 7; y++)
+                _chessPositions = new List<ChessPosition>(64);
+                for (int x = 1; x <= 64; x++)
                 {
-                    for (int x = 0; x <= 7; x++)
-                    {
-                        _chessGrids.Add(rids[x, y]);
-                    }
+                    _chessPositions.Add(positions[x - 1]);
                 }
             }
 
-            public bool MoveNext()
-            {
-                _position++;
-                return (_position < _chessGrids.Count);
-            }
+            #region IEnumerator<ChessPosition> 成员
 
-            public void Reset()
-            {
-                _position = -1;
-            }
-
-            public object Current
+            public ChessPosition Current
             {
                 get
                 {
-                    try 
-                    { return _chessGrids[_position]; }
+                    try { return _chessPositions[_index]; }
                     catch
                     { throw new InvalidOperationException(); }
                 }
-            }
-
-            #region IEnumerator<ChessGrid> 成员
-
-            ChessGrid IEnumerator<ChessGrid>.Current
-            {
-                get { return (ChessGrid)this.Current; }
             }
 
             #endregion
@@ -147,12 +277,60 @@ namespace Gean.Wrapper.Chess
 
             public void Dispose()
             {
-                _chessGrids = null;
+                _chessPositions = null;
+            }
+
+            #endregion
+
+            #region IEnumerator 成员
+
+            object IEnumerator.Current
+            {
+                get { return this.Current; }
+            }
+
+            public bool MoveNext()
+            {
+                _index++;
+                return (_index < _chessPositions.Count);
+            }
+
+            public void Reset()
+            {
+                _index = -1;
             }
 
             #endregion
         }
 
         #endregion
+
+        #region custom MoveIn Event
+
+        /// <summary>
+        /// 在该棋格中落子后发生
+        /// </summary>
+        public event MoveInEventHandler MoveInEvent;
+        private void OnMoveIn(MoveInEventArgs e)
+        {
+            if (MoveInEvent != null)
+                MoveInEvent(this, e);
+        }
+        public delegate void MoveInEventHandler(object sender, MoveInEventArgs e);
+        public class MoveInEventArgs : EventArgs
+        {
+            public Enums.Action Action { get; private set; }
+            public Enums.ChessmanSide ChessmanSide { get; private set; }
+            public ChessStep ChessStep { get; private set; }
+            public MoveInEventArgs(Enums.Action action, Enums.ChessmanSide chessmanSide, ChessStep chessStep)
+            {
+                this.Action = action;
+                this.ChessmanSide = chessmanSide;
+                this.ChessStep = chessStep;
+            }
+        }
+
+        #endregion
+
     }
 }

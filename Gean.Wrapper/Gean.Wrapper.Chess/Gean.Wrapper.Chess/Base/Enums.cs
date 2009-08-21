@@ -52,6 +52,9 @@ namespace Gean.Wrapper.Chess
             Promotion = (PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
             Castling = (QueenSideCastling | KingSideCastling),
             Opennings = 131072,
+            /// <summary>
+            /// 无效
+            /// </summary>
             Invalid = 262144,
         }
 
