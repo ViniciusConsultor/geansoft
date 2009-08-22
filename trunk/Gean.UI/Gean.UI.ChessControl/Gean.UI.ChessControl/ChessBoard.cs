@@ -51,8 +51,6 @@ namespace Gean.UI.ChessControl
         }
         private List<Chessman> _chessmans = new List<Chessman>();
 
-        protected virtual List<int> ChessmanDot { get; private set; } 
-
         protected virtual ChessPosition KeyChessPosition { get; private set; }
 
         protected virtual ChessPosition[] EnableMoveinPosition { get; private set; }
@@ -87,17 +85,18 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 获取此棋盘所拥有(包含)的ChessGame
         /// </summary>
-        public virtual ChessGame OwnedChessGame
+        public virtual ChessGame ChessGame
         {
-            get { return this._ownedChessGame; }
+            get { return this._ChessGame; }
             set
             {
-                ChessGame oldGame = this._ownedChessGame;
-                this._ownedChessGame = value;
+                ChessGame oldGame = this._ChessGame;
+                this._ChessGame = value;
                 OnChessGameChanged(new ChessGameChangedEventArgs(oldGame, value));
             }
         }
-        private ChessGame _ownedChessGame;
+        private ChessGame _ChessGame;
+
         /// <summary>
         /// 获取此棋盘当前的战方
         /// </summary>
@@ -113,33 +112,31 @@ namespace Gean.UI.ChessControl
 
         #endregion
 
-        #region Method
+        #region LoadGame Method
 
         /// <summary>
         /// 载入新棋局
         /// </summary>
         public virtual void LoadGame()
         {
-            this._ownedChessGame = new ChessGame();
+            this._ChessGame = new ChessGame();
             this.CurrChessSide = Enums.ChessmanSide.White;
             this.InitializeChessmans();
-            this.RegisterChessmans(this.Chessmans);
         }
         /// <summary>
         /// 载入新棋局
         /// </summary>
         /// <param name="chessmans">指定的棋子集合，一般是指残局或中盘棋局</param>
-        public virtual void LoadGame(IEnumerable<Chessman> chessmans)
+        public virtual void LoadGame(FENBuilder fenBuilder)
         {
-            this._ownedChessGame = new ChessGame();
+            this._ChessGame = new ChessGame();
             this.CurrChessSide = Enums.ChessmanSide.White;
-            this.InitializeChessmans(chessmans);
-            this.RegisterChessmans(this.Chessmans);
+            this.InitializeChessmans(fenBuilder.ToChessmans());
         }
 
         #endregion
 
-        #region Chessman List Protected Method
+        #region Initialize Chessmans
 
         /// <summary>
         /// 初始化默认棋子集合（32个棋子）
@@ -191,22 +188,9 @@ namespace Gean.UI.ChessControl
             this.Invalidate();
         }
 
-        /// <summary>
-        /// 注册所有棋子当相应的棋格
-        /// </summary>
-        /// <param name="chessmans"></param>
-        protected virtual void RegisterChessmans(IEnumerable<Chessman> chessmans)
-        {
-            foreach (Chessman man in chessmans)
-            {
-                //ChessPosition point = man.ChessPositions.Peek();
-                //this._ownedChessGame.MoveIn(0, this._ownedChessGame, man, Enums.Action.Opennings);
-            }
-        }
-
         #endregion
 
-        #region override
+        #region Override: OnResize, OnPaintBackground, OnKeyUp, OnMouseDown
 
         protected override void OnResize(EventArgs e)
         {
@@ -219,7 +203,7 @@ namespace Gean.UI.ChessControl
             base.OnPaintBackground(pe);
             Graphics g = pe.Graphics;
             ChessBoard.PaintChessBoardGrid(g, this.Rectangles, _XofPanel, _YofPanel, _rectangleWidth, _rectangleHeight);
-            if (this._ownedChessGame != null && this.Chessmans != null)
+            if (this._ChessGame != null && this.Chessmans != null)
             {
                 ChessBoard.PaintChessmanImage(g, this.Chessmans, this);
                 ChessBoard.PaintEnableMoveInChessPoint(g, this);
@@ -231,7 +215,7 @@ namespace Gean.UI.ChessControl
         protected override void OnKeyUp(KeyEventArgs e)
         {
             base.OnKeyUp(e);
-            if (this._ownedChessGame == null) return;
+            if (this._ChessGame == null) return;
 
             switch (e.KeyCode)
             {
@@ -302,7 +286,7 @@ namespace Gean.UI.ChessControl
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            if (this._ownedChessGame == null) return;
+            if (this._ChessGame == null) return;
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -314,7 +298,7 @@ namespace Gean.UI.ChessControl
                             if (!this.Rectangles[x - 1, y - 1].Contains(e.Location))
                                 continue;
 
-                            ChessPosition position = this._ownedChessGame[x, y];
+                            ChessPosition position = this._ChessGame[x, y];
                             if (this.SelectedChessPosition == ChessPosition.Empty)//选择棋子
                             {
                                 //if (Chessman.IsNullOrEmpty(position.Occupant))
@@ -405,7 +389,7 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual void SetSelectedPointByKey()
         {
-            ChessPosition rid = this._ownedChessGame[this.KeyChessPosition.X, this.KeyChessPosition.Y];
+            ChessPosition rid = this._ChessGame[this.KeyChessPosition.X, this.KeyChessPosition.Y];
             Chessman man = null;// rid.Occupant;
             if (man == null)
                 return;

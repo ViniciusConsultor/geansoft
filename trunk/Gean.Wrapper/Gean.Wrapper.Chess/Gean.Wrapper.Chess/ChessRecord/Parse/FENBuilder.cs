@@ -357,10 +357,36 @@ namespace Gean.Wrapper.Chess
             return string.Format(Format, parms);
         }
 
+        public Chessman[] ToChessmans()
+        {
+            List<Chessman> mans = new List<Chessman>();
+            for (int x = 0; x < Rows.Length; x++)
+            {
+                for (int y = 0; y < Rows[x].Length; y++)
+                {
+                    char c = Rows[x][y];
+                    if (y == '1') continue;
+                    Enums.ChessmanType manType;
+                    Enums.ChessmanSide manSide;
+                    Enums.FenChessmansToType(Enums.FromFEN(c), out manSide, out manType);
+                    Chessman man = Chessman.CreatMan(manType, manSide, new ChessPosition(x, y));
+                    mans.Add(man);
+                }
+            }
+            return mans.ToArray();
+        }
+
         public char this[int dot]
         {
             get { return this.GetChar(dot); }
             set { this.SetChar(dot, value); }
+        }
+
+        public FENBuilder Move(Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos)
+        {
+            this[tgtPos.Dot] = chessman.ToString()[0];
+            this[srcPos.Dot] = '1';
+            return this;
         }
 
         private void SetChar(int dot, char value)
@@ -377,28 +403,14 @@ namespace Gean.Wrapper.Chess
             return this.Rows[m][n];
         }
 
-        public static FENBuilder CreateFENBuilder(ChessGame game)
+        public static FENBuilder NewGame
         {
-            FENBuilder builder = new FENBuilder();
-            int dot = 0;
-            foreach (ChessPosition pos in game)
+            get
             {
-                //if (pos.Occupant != null)
-                //{
-                //    string str = string.Empty;
-                //    if (pos.Occupant.IsCaptured == false)
-                //    {
-                //        str = pos.Occupant.ToString();
-                //        if (pos.Occupant.ChessmanSide == Enums.ChessmanSide.Black)
-                //            str = str.ToLowerInvariant();
-                //    }
-                //    builder[dot] = str[0];
-                //}
-                //dot++;
+                string fenstring = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+                return new FENBuilder(fenstring);
             }
-            return builder;
         }
-
     }
 }
 

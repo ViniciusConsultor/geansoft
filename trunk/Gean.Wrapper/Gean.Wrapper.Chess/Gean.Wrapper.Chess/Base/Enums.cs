@@ -214,7 +214,18 @@ namespace Gean.Wrapper.Chess
 
         public enum GamePhase
         {
-            Opening, Middle, End
+            /// <summary>
+            /// 开局
+            /// </summary>
+            Opening,
+            /// <summary>
+            ///  中局
+            /// </summary>
+            Middlegame,
+            /// <summary>
+            /// 残局
+            /// </summary>
+            Ending,        
         }
 
         /// <summary>
@@ -238,7 +249,19 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum ChessmanSide
         {
-            None = 0, White = 1, Black = 2,
+            White = 0, Black = 1
+        }
+        public static ChessmanSide FormSide(char c)
+        {
+            if (c == 'w') return ChessmanSide.White;
+            if (c == 'b') return ChessmanSide.Black;
+            throw new ChessException();
+        }
+        public static char ToSide(ChessmanSide side)
+        {
+            if (side == ChessmanSide.White) return 'w';
+            if (side == ChessmanSide.Black) return 'b';
+            throw new ChessException();
         }
 
         /// <summary>
@@ -528,6 +551,78 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             All
         };
+
+        public static void FenChessmansToType(FenChessmans fenChessmans, out Enums.ChessmanSide manSide, out Enums.ChessmanType manType)
+        {
+            manSide = ChessmanSide.White;
+            manType = ChessmanType.None;
+            switch (fenChessmans)
+            {
+                case FenChessmans.WhiteKing:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.King;
+                    break;
+                case FenChessmans.WhiteQueen:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.Queen;
+                    break;
+                case FenChessmans.WhiteRook:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.Rook;
+                    break;
+                case FenChessmans.WhiteBishop:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.Bishop;
+                    break;
+                case FenChessmans.WhiteKnight:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.Knight;
+                    break;
+                case FenChessmans.WhitePawn:
+                    manSide = ChessmanSide.White;
+                    manType = ChessmanType.Pawn;
+                    break;
+                case FenChessmans.BlackKing:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.King;
+                    break;
+                case FenChessmans.BlackQueen:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.Queen;
+                    break;
+                case FenChessmans.BlackRook:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.Rook;
+                    break;
+                case FenChessmans.BlackBishop:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.Bishop;
+                    break;
+                case FenChessmans.BlackKnight:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.Knight;
+                    break;
+                case FenChessmans.BlackPawn:
+                    manSide = ChessmanSide.Black;
+                    manType = ChessmanType.Pawn;
+                    break;
+                case FenChessmans.None:
+                case FenChessmans.OpenHand:
+                case FenChessmans.ClosedHand:
+                case FenChessmans.Delete:
+                case FenChessmans.AllKings:
+                case FenChessmans.AllQueens:
+                case FenChessmans.AllRooks:
+                case FenChessmans.AllBishops:
+                case FenChessmans.AllKnights:
+                case FenChessmans.AllPawns:
+                case FenChessmans.AllNonPawns:
+                case FenChessmans.AllMinors:
+                case FenChessmans.All:
+                default:
+                    break;
+            }
+        }
 
         /// <summary>
         /// Returns a FEN piece representation base on our 
