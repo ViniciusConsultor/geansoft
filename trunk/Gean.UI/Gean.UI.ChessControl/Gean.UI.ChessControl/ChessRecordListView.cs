@@ -51,7 +51,7 @@ namespace Gean.UI.ChessControl
             ColumnHeader columnHeader10 = new ColumnHeader();
             columnHeader10.Text = "Date";
             ColumnHeader columnHeader11 = new ColumnHeader();
-            columnHeader11.Text = "Step";
+            columnHeader11.Text = "PlyCount";
             ColumnHeader columnHeader12 = new ColumnHeader();
             columnHeader12.Text = "";
             ColumnHeader columnHeader13 = new ColumnHeader();
@@ -99,7 +99,7 @@ namespace Gean.UI.ChessControl
                     recode.Definer.Get("Result","").ToString(),
                     recode.Definer.Get("ECO","").ToString(),
                     recode.Definer.Get("Date","").ToString(),
-                    recode.Items.Count.ToString()
+                    recode.Definer.Get("PlyCount", recode.Items.Count.ToString()),
                 });
             item.Tag = recode;
             this.Items.Add(item);
@@ -107,8 +107,8 @@ namespace Gean.UI.ChessControl
         }
 
         public ChessRecord[] SelectedRecord
-        { 
-            get 
+        {
+            get
             {
                 List<ChessRecord> records = new List<ChessRecord>();
                 foreach (ListViewItem item in this.SelectedItems)
@@ -116,7 +116,7 @@ namespace Gean.UI.ChessControl
                     records.Add(item.Tag as ChessRecord);
                 }
                 return records.ToArray();
-            } 
+            }
         }
     }
 }

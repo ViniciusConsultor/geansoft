@@ -601,7 +601,7 @@ namespace Gean.UI.ChessControl
         private static Rectangle GetChessmanRectangle(ChessBoard board, ChessPosition pos)
         {
             int offset = (int)(board._rectangleWidth * 0.15);//棋子填充比棋格小20%，以保证美观
-            Rectangle boardRect = board.Rectangles[pos.X - 1, pos.Y - 1];
+            Rectangle boardRect = board.Rectangles[pos.X, pos.Y];
             Rectangle rtnRect = new Rectangle();
             rtnRect.Location = new Point(boardRect.X + offset, boardRect.Y + offset);
             rtnRect.Size = new Size(boardRect.Width - offset * 2, boardRect.Height - offset * 2);
