@@ -15,14 +15,13 @@ namespace Gean.Wrapper.Chess
         public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Rook, side)
         {
-            ChessPosition point = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
-            this.ChessPositions.Push(point);
+            this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
         }
 
-        public ChessmanRook(Enums.ChessmanSide side, ChessPosition point)
+        public ChessmanRook(Enums.ChessmanSide side, ChessPosition pos)
             : base(Enums.ChessmanType.Rook, side)
         {
-            this.ChessPositions.Push(point);
+            this.CurrPosition = pos;
         }
 
         public override ChessPosition[] GetEnablePositions()

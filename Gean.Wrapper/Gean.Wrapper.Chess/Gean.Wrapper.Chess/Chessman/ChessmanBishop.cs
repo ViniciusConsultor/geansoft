@@ -9,14 +9,13 @@ namespace Gean.Wrapper.Chess
         public ChessmanBishop(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            ChessPosition point = Chessman.GetOpenningsPosition(side, gridSide, 3, 6);
-            this.ChessPositions.Push(point);
+            this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 3, 6);
         }
 
-        public ChessmanBishop(Enums.ChessmanSide side, ChessPosition point)
+        public ChessmanBishop(Enums.ChessmanSide side, ChessPosition pos)
             : base(Enums.ChessmanType.Bishop, side)
         {
-            this.ChessPositions.Push(point);
+            this.CurrPosition = pos;
         }
 
         public override ChessPosition[] GetEnablePositions()

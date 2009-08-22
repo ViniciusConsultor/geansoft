@@ -9,23 +9,22 @@ namespace Gean.Wrapper.Chess
         public ChessmanKing(Enums.ChessmanSide side)
             : base(Enums.ChessmanType.King, side)
         {
-            ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    point = new ChessPosition(5, 1);
+                    this.CurrPosition = new ChessPosition(5, 1);
                     break;
                 case Enums.ChessmanSide.Black:
-                    point = new ChessPosition(5, 8);
+                    this.CurrPosition = new ChessPosition(5, 8);
                     break;
             }
-            this.ChessPositions.Push(point);
+            //this.ChessPositions.Push(point);
         }
 
-        public ChessmanKing(Enums.ChessmanSide side, ChessPosition point)
+        public ChessmanKing(Enums.ChessmanSide side, ChessPosition pos)
             : base(Enums.ChessmanType.King, side)
         {
-            this.ChessPositions.Push(point);
+            this.CurrPosition = pos;
         }
 
         public override ChessPosition[] GetEnablePositions()
