@@ -38,7 +38,6 @@ namespace Gean.Wrapper.Chess
                 case Enums.ChessmanSide.Black:
                     side = "B";
                     break;
-                case Enums.ChessmanSide.None:
                 default:
                     break;
             }

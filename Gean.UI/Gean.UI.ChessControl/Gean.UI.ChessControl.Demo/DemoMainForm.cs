@@ -51,8 +51,6 @@ namespace Gean.UI.ChessControl.Demo
             TreeNode node = new TreeNode(e.ChessStep.ToString());
             this._currTree.Nodes.Add(node);
             this._statusLabel.Text = e.ChessStep.ToString();
-            FENBuilder fen = FENBuilder.CreateFENBuilder(_board.OwnedChessGame);
-            _FENStringLabel.Text = fen.ToFENString();
         }
 
         private void PGNConvent(object sender, EventArgs e)

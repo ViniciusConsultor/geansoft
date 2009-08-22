@@ -133,5 +133,10 @@ namespace Gean.Wrapper.Chess
             }
             return point;
         }
+
+        internal static Chessman CreatMan(Enums.ChessmanType manType, Enums.ChessmanSide manSide, ChessPosition chessPosition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

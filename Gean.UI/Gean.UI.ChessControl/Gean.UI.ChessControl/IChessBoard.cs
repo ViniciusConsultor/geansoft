@@ -7,6 +7,6 @@ namespace Gean.UI.ChessControl
     {
         Enums.ChessmanSide CurrChessSide { get; }
         void MoveIn(ChessPosition srcPos, ChessPosition tgtPos);
-        ChessGame OwnedChessGame { get; }
+        ChessGame ChessGame { get; }
     }
 }
