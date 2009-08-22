@@ -11,6 +11,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public enum Action
         {
+            /// <summary>
+            /// 一般棋招动作
+            /// </summary>
             General = 0,
             ///// <summary>
             ///// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
@@ -18,44 +21,81 @@ namespace Gean.Wrapper.Chess
             ///// </summary>
             Check = 1,
             /// <summary>
-            /// 伙伴
+            /// 开局摆棋
             /// </summary>
-            Mate = 2,
+            Opennings = 2,
             ///// <summary>
             ///// 有棋被杀死(捕获, 夺得, 俘获) 
             ///// </summary>
             Capture = 4,
-            PromoteToQueen = 8,
-            PromoteToRook = 16,
-            PromoteToKnight = 32,
-            PromoteToBishop = 64,
-            EnPassant = 128,
+            /// <summary>
+            /// 用兵吃棋的动作
+            /// </summary>
+            PawnCapture = 8,
+            /// <summary>
+            /// 用马吃棋的动作
+            /// </summary>
+            KnightCapture = 16,
+            /// <summary>
+            /// 用象吃棋的动作
+            /// </summary>
+            BishopCapture = 32,
+            /// <summary>
+            /// 用车吃棋的动作
+            /// </summary>
+            RookCapture = 64,
+            /// <summary>
+            /// 用后吃棋的动作
+            /// </summary>
+            QueenCapture = 128,
+            /// <summary>
+            /// 吃过路兵
+            /// </summary>
+            EnPassant = 256,
+            /// <summary>
+            /// 升变为后
+            /// </summary>
+            PromoteToQueen = 512,
+            /// <summary>
+            /// 升变为车
+            /// </summary>
+            PromoteToRook = 1024,
+            /// <summary>
+            /// 升变为马
+            /// </summary>
+            PromoteToKnight = 2048,
+            /// <summary>
+            /// 升变为象
+            /// </summary>
+            PromoteToBishop = 4096,
             ///// <summary>
             ///// 王车长易位
             ///// </summary>
-            QueenSideCastling = 256,
+            QueenSideCastling = 8192,
             ///// <summary>
             ///// 王车短易位
             ///// </summary>
-            KingSideCastling = 512,
-            PawnCapture = 1024,
-            KnightCapture = 2048,
-            BishopCapture = 4096,
-            RookCapture = 8192,
-            QueenCapture = 16384,
-            BreakShortCastle = 32768,
-            BreakLongCastle = 65536,
-            NoPromotion = ~(PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
+            KingSideCastling = 16384,
+            /// <summary>
+            /// 将死，记号为“#”
+            /// </summary>
+            CheckMate,
+            /// <summary>
+            /// 王车易位
+            /// </summary>
+            Castling = (QueenSideCastling | KingSideCastling),
             ///// <summary>
             ///// 升变
             ///// </summary>
             Promotion = (PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
-            Castling = (QueenSideCastling | KingSideCastling),
-            Opennings = 131072,
+            /// <summary>
+            /// 不升变
+            /// </summary>
+            NoPromotion = ~(PromoteToBishop | PromoteToKnight | PromoteToQueen | PromoteToRook),
             /// <summary>
             /// 无效
             /// </summary>
-            Invalid = 262144,
+            Invalid = 32768,
         }
 
         public static Action ToAction(string value)
@@ -72,7 +112,7 @@ namespace Gean.Wrapper.Chess
                             action |= Action.Check;
                             break;
                         case '#':
-                            action |= Action.Mate;
+                            action |= Action.CheckMate;
                             break;
                         case 'x':
                         case ':':

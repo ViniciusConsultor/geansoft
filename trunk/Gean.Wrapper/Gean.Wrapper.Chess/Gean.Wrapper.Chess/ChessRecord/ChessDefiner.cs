@@ -40,17 +40,20 @@ namespace Gean.Wrapper.Chess
             [Result "*"]　 　　　               //可能还在进行，可能该局作废，可能其它原因
     */
     /*
-    [Event "WCh"]
-    [Site "Bonn GER"]
-    [Date "2008.10.15"]
-    [Round "2"]
-    [White "Anand,V"]
-    [Black "Kramnik,V"]
-    [Result "1/2-1/2"]
-    [WhiteElo "2783"]
-    [BlackElo "2772"]
-    [EventDate "2008.10.14"]
-    [ECO "E25"]
+        [Event "CHN-RUS Summit Men"]//赛事名，中国-俄罗斯最高对抗赛男子组
+        [EventDate "2001.09.07"] 　 //赛事开始日期
+        [Site "Shanghai"]　         //地点，上海
+        [Date "2001.09.10"] 　      //该局日期
+        [Round "4"] 　              //第4轮
+        [White "Ye Jiangchuan"] 　  //白方 叶江川
+        [Black "Dreev, Alexey"] 　  //黑方 A·德里耶夫
+        [Result "1-0"] 　           //对局结果白胜
+        [Opening "Caro-Kann: classical, 6.h4"]　//开局名，卡罗-卡恩防御：经典变例，6.h4
+        [ECO "B19"] 　      //ECO开局编号为B19
+        [NIC "CK.11"] 　    //"New In Chess"编号
+        [WhiteElo "2677"] 　//白方国际ELO等级分
+        [BlackElo "2690"] 　//黑方国际ELO等级分
+        [PlyCount "75"] 　  //双方共走了75步(不是回合)
      */
 
     /// <summary>

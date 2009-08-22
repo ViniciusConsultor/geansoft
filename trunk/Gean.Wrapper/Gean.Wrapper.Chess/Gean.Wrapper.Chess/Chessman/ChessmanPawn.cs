@@ -9,32 +9,30 @@ namespace Gean.Wrapper.Chess
         public ChessmanPawn(Enums.ChessmanSide side, int column)
             : base(Enums.ChessmanType.Pawn, side)
         {
-            ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
                     {
-                        point = new ChessPosition(column, 2);
+                        this.CurrPosition = new ChessPosition(column, 2);
                         break;
                     }
                 case Enums.ChessmanSide.Black:
                     {
-                        point = new ChessPosition(column, 7);
+                        this.CurrPosition = new ChessPosition(column, 7);
                         break;
                     }
             }
-            this.ChessPositions.Push(point);
         }
 
-        public ChessmanPawn(Enums.ChessmanSide side, ChessPosition point)
+        public ChessmanPawn(Enums.ChessmanSide side, ChessPosition pos)
             : base(Enums.ChessmanType.Pawn, side)
         {
-            this.ChessPositions.Push(point);
+            this.CurrPosition = pos;
         }
 
         public override ChessPosition[] GetEnablePositions()
         {
-            return this.ChessPositions.Peek().GetPawnPositions(this.ChessmanSide);
+            return this.CurrPosition.GetPawnPositions(this.ChessmanSide);
         }
     }
 }

@@ -23,21 +23,33 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 构造函数
         /// </summary>
-        public ChessGame() : this(new ChessRecord()) { }
+        public ChessGame() : this(new ChessRecord(), Enums.ChessmanSide.White, 1) { }
         /// <summary>
         /// 构造函数
         /// </summary>
-        public ChessGame(ChessRecord record)
+        public ChessGame(ChessRecord record) : this(record, Enums.ChessmanSide.White, 1) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ChessGame(ChessRecord record, Enums.ChessmanSide side) : this(record, side, 1) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ChessGame(ChessRecord record, int number) : this(record, Enums.ChessmanSide.White, number) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public ChessGame(ChessRecord record, Enums.ChessmanSide side, int number)
         {
+            _chessmanSide = side;
+            this.Number = number;
             this.Record = record;
             this.LoadPositions();
         }
 
         /// <summary>
-        /// 获取本局棋的记录
+        /// 根据FEN的点(1-64)来获取位置
         /// </summary>
-        public virtual ChessRecord Record { get; private set; }
-
         public virtual ChessPosition this[int dot]
         {
             get { return ChessPosition.Empty; }
@@ -61,6 +73,23 @@ namespace Gean.Wrapper.Chess
             get { return this[Utility.CharToInt(c) - 1, y - 1]; }
         }
 
+        public virtual Enums.ChessmanSide ChessmanSide 
+        {
+            get { return this._chessmanSide; }
+            private set
+            {
+                if (value == Enums.ChessmanSide.White) Number++;
+                _chessmanSide = value;
+            }
+        }
+        private Enums.ChessmanSide _chessmanSide;
+        public virtual int Number { get; set; }
+
+        /// <summary>
+        /// 获取本局棋的记录
+        /// </summary>
+        public virtual ChessRecord Record { get; private set; }
+
         /// <summary>
         /// 初始化棋格（一个棋盘由64个棋格组成，该方法将初始化整个棋盘的每个棋格）
         /// </summary>
@@ -83,44 +112,16 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="action">该棋步的动作</param>
-        public ChessStep MoveIn(int number, Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos)
+        public ChessStep MoveIn(FENBuilder fen, Chessman chessman, ChessPosition srcPos, ChessPosition tgtPos)
         {
             //指定的棋子为空或动作为空
-            if (Chessman.IsNullOrEmpty(chessman) || action == Enums.Action.Invalid)
+            if (Chessman.IsNullOrEmpty(chessman) || tgtPos == ChessPosition.Empty)
                 throw new ArgumentNullException();
 
-            switch (action)
-            {
-                #region case
-                case Enums.Action.General:
-                case Enums.Action.Check:
-                    this.MoveInByGeneralAction(chessman);
-                    break;
-                case Enums.Action.Capture:
-                    this.MoveInByCapture(chessman);
-                    break;
-                case Enums.Action.KingSideCastling:
-                    this.MoveInByKingSideCastlingAction();
-                    break;
-                case Enums.Action.QueenSideCastling:
-                    this.MoveInByQueenSideCastlingAction();
-                    break;
-                case Enums.Action.Opennings://仅开局摆棋，不激活任何相关事件
-                    this.Occupant = chessman;
-                    break;
-                case Enums.Action.Invalid:
-                default:
-                    Debug.Fail("\" " + action.ToString() + " \" isn't FAIL action.");
-                    break;
-                #endregion
-            }
+            Enums.Action action = Enums.Action.General;
 
-            if (action != Enums.Action.Opennings)//在开局摆棋时，不需重复绑定Step(在棋子初始化时已绑定)
-            {
-                //将棋步插入到该棋子的棋步集合中
-                chessman.ChessPositions.Push(tgtPos);
-            }
-            ChessStep chessStep = new ChessStep(number, chessman.ChessmanSide, chessman.ChessmanType, srcPos, tgtPos, action);
+
+            ChessStep chessStep = new ChessStep(Number, chessman.ChessmanSide, chessman.ChessmanType, srcPos, tgtPos, action);
             //注册行棋事件
             OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
             return chessStep;
@@ -135,7 +136,7 @@ namespace Gean.Wrapper.Chess
             //移除被杀死的棋子
             this.MoveOut(true);
             //调用落子方法
-            this.MoveInByGeneralAction(game, chessman);
+            this.MoveInByGeneralAction(chessman);
         }
 
         /// <summary>
@@ -145,11 +146,11 @@ namespace Gean.Wrapper.Chess
         private void MoveInByGeneralAction(Chessman chessman)
         {
             //1.动子（即从源棋格中移除该棋子）
-            ChessPosition point = chessman.ChessPositions.Peek();
-            chessGame[point.X + 1, point.Y + 1].MoveOut(false);
+            ChessPosition position = chessman.CurrPosition;
+            this.MoveOut(false);
 
             //2.落子
-            this.Occupant = chessman;
+            //this.Occupant = chessman;
         }
 
         /// <summary>
@@ -179,51 +180,13 @@ namespace Gean.Wrapper.Chess
         /// </param>
         private void MoveOut(bool isCapture)
         {
-            Chessman man = this.Occupant;//棋格中的棋子
-            man.IsCaptured = isCapture;//置该棋子的死活棋开关为“被杀死”状态
-            //移除棋子
-            this.Occupied = false;
+            //Chessman man = this.Occupant;//棋格中的棋子
+            //man.IsCaptured = isCapture;//置该棋子的死活棋开关为“被杀死”状态
+            ////移除棋子
+            //this.Occupied = false;
         }
 
         #endregion
-
-        #region Occupant Chessman
-
-        /// <summary>
-        /// 获取或设置当前格子中拥有的棋子
-        /// </summary>
-        public Chessman Occupant
-        {
-            get { return _occupant; }
-            set
-            {
-                if (value != null)
-                    this._occupied = true;
-                else
-                    this._occupied = false;
-                this._occupant = value;
-            }
-        }
-        private Chessman _occupant;
-
-        ///// <summary>
-        ///// 获取或设置当前格子是否被棋子占住
-        ///// </summary>
-        //public bool Occupied
-        //{
-        //    get { return _occupied; }
-        //    set
-        //    {
-        //        if (value == false)
-        //            this._occupant = null;
-        //        _occupied = value;
-        //    }
-        //}
-        //private bool _occupied = false;
-
-
-        #endregion
-
 
         #region IEnumerable
 
@@ -231,7 +194,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<ChessPosition> GetEnumerator()
         {
-            return new ChessGridEnumerator(this.ChessPositions);
+            return (IEnumerator<ChessPosition>)this.ChessPositions.GetEnumerator();
         }
 
         #endregion
@@ -240,11 +203,12 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new ChessGridEnumerator(this.ChessPositions);
+            return this.ChessPositions.GetEnumerator();
         }
 
         #endregion
 
+        /*
         public class ChessGridEnumerator : IEnumerator<ChessPosition>
         {
             private List<ChessPosition> _chessPositions;
@@ -302,6 +266,7 @@ namespace Gean.Wrapper.Chess
 
             #endregion
         }
+        */
 
         #endregion
 

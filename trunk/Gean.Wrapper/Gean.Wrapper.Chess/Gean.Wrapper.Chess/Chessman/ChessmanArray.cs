@@ -13,7 +13,7 @@ namespace Gean.Wrapper.Chess
         {
             if (Chessmans.Contains(item))
             {
-                dot = item.ChessPositions.Peek().Dot;
+                dot = item.CurrPosition.Dot;
                 return true;
             }
             else

@@ -14,7 +14,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 表示棋子为空(null)时。此变量为只读。
         /// </summary>
-        public static readonly Chessman NullOrEmpty = null;
+        public static readonly Chessman Empty = null;
 
         /// <summary>
         /// 构造函数
@@ -25,7 +25,7 @@ namespace Gean.Wrapper.Chess
             this.ChessmanType = type;
             this.ChessmanSide = side;
             this.IsCaptured = false;
-            this.ChessPositions = new Stack<ChessPosition>();
+            //this.ChessPositions = new Stack<ChessPosition>();
         }
 
         #region override
@@ -49,8 +49,8 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (man.ChessmanSide != this.ChessmanSide) 
                 return false;
-            if (!UtilityEquals.EnumerableEquals(this.ChessPositions, man.ChessPositions)) 
-                return false;
+            //if (!UtilityEquals.EnumerableEquals(this.ChessPositions, man.ChessPositions)) 
+            //    return false;
             return true;
         }
         public override int GetHashCode()
@@ -66,11 +66,15 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子的类型
         /// </summary>
-        public Enums.ChessmanType ChessmanType { get; private set; }
+        public Enums.ChessmanType ChessmanType { get; protected set; }
+        /// <summary>
+        /// 棋子所在位置
+        /// </summary>
+        public ChessPosition CurrPosition { get; protected set; }
         /// <summary>
         /// 该棋子的棋步<see cref="ChessStep"/>的集合
         /// </summary>
-        public Stack<ChessPosition> ChessPositions { get; set; }
+        //public Stack<ChessPosition> ChessPositions { get; set; }
 
         /// <summary>
         /// 获取或设置该棋子是否已被杀死
@@ -87,7 +91,7 @@ namespace Gean.Wrapper.Chess
         {
             if (chessman == null)
                 return true;
-            if (chessman == Chessman.NullOrEmpty)
+            if (chessman == Chessman.Empty)
                 return true;
             return false;
         }

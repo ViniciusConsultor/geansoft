@@ -9,14 +9,13 @@ namespace Gean.Wrapper.Chess
         public ChessmanKnight(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
             : base(Enums.ChessmanType.Knight, side)
         {
-            ChessPosition point = Chessman.GetOpenningsPosition(side, gridSide, 2, 7);
-            this.ChessPositions.Push(point);
+            this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 2, 7);
         }
 
-        public ChessmanKnight(Enums.ChessmanSide side, ChessPosition point)
+        public ChessmanKnight(Enums.ChessmanSide side, ChessPosition pos)
             : base(Enums.ChessmanType.Knight, side)
         {
-            this.ChessPositions.Push(point);
+            this.CurrPosition = pos;
         }
 
         public override ChessPosition[] GetEnablePositions()
