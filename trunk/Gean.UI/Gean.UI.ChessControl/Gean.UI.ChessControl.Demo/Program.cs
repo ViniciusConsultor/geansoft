@@ -26,6 +26,14 @@ namespace Gean.UI.ChessControl.Demo
         {
             ChessBoardService.Initialize();
         }
+
+        public static string PGNFile_340_Game { get { return @"pgn\340,game.pgn"; } }
+        public static string PGNFile_8_Game { get { return @"pgn\8,game.pgn"; } }
+        public static string PGNFile_CHS_Game { get { return @"pgn\chs,game.pgn"; } }
+        public static string PGNFile_Largeness_Game { get { return @"pgn\largeness,game.pgn"; } }
+        public static string PGNFile_Test_1_Game { get { return @"pgn\test,1,game.pgn"; } }
+        public static string PGNFile_Test_2_Game { get { return @"pgn\test,1,game.pgn"; } }
+        public static string PGNFile_WorldOpen_Game { get { return @"pgn\worldopen,game.pgn"; } }
     }
 
 }

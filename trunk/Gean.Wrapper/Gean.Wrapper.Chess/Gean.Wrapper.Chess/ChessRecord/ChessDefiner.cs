@@ -39,7 +39,8 @@ namespace Gean.Wrapper.Chess
             [Result "1/2-1/2"] 　               //和棋
             [Result "*"]　 　　　               //可能还在进行，可能该局作废，可能其它原因
     */
-    /*
+
+    /* 常见标签对
         [Event "CHN-RUS Summit Men"]//赛事名，中国-俄罗斯最高对抗赛男子组
         [EventDate "2001.09.07"] 　 //赛事开始日期
         [Site "Shanghai"]　         //地点，上海

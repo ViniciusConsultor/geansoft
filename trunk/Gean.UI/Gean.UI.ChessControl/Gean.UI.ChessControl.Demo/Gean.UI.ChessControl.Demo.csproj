@@ -60,24 +60,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DemoFile\PGN\aero09.pgn" />
-    <None Include="DemoFile\PGN\aker09.pgn" />
-    <None Include="DemoFile\PGN\best04.pgn" />
-    <None Include="DemoFile\PGN\bunrat09.pgn" />
-    <None Include="DemoFile\PGN\capdag08.pgn" />
-    <None Include="DemoFile\PGN\corusc09.pgn" />
-    <None Include="DemoFile\PGN\dono09.pgn" />
-    <None Include="DemoFile\PGN\slick09.pgn" />
-    <None Include="DemoFile\PGN\torreko08.pgn" />
-    <None Include="DemoFile\PGN\vars09.pgn" />
-    <None Include="DemoFile\PGN\wblitz08.pgn" />
-    <None Include="DemoFile\PGN\wch08.pgn" />
-    <None Include="DemoFile\PGN\worldop09.pgn" />
-    <None Include="DemoFile\PGN\__aGame2.pgn" />
-    <None Include="DemoFile\PGN\__TCh-CHN A.pgn" />
-    <None Include="DemoFile\PGN\__aGame1.pgn" />
-    <None Include="DemoFile\PGN\__kaspjun03.pgn" />
-    <None Include="DemoFile\PGN\__Polgar-Anand.pgn" />
+    <None Include="DemoFile\PGN\340,game.pgn" />
+    <None Include="DemoFile\PGN\8,game.pgn" />
+    <None Include="DemoFile\PGN\test,2,game.pgn" />
+    <None Include="DemoFile\PGN\worldopen,game.pgn" />
+    <None Include="DemoFile\PGN\largeness,game.pgn" />
+    <None Include="DemoFile\PGN\chs,game.pgn" />
+    <None Include="DemoFile\PGN\test,1,game.pgn" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
