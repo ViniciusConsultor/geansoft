@@ -98,7 +98,7 @@ namespace Gean.Wrapper.Chess
             this.ChessPositions = new ChessPosition[64];
             for (int x = 1; x <= 64; x++)
             {
-                this.ChessPositions[x] = ChessPosition.GetPositionByDot(x);
+                this.ChessPositions[x - 1] = ChessPosition.GetPositionByDot(x);
             }
         }
 
