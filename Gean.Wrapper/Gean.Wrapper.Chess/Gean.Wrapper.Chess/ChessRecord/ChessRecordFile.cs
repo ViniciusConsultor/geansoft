@@ -86,11 +86,6 @@ namespace Gean.Wrapper.Chess
 
         public void Finished(IPGNReader iParser)
         {
-            if (_tmpStep != null)
-            {
-                _tmpStepTree.Items.Add(_tmpStep);
-                _tmpStep = null;
-            }
             _states = new Stack();
         }
 
@@ -143,11 +138,6 @@ namespace Gean.Wrapper.Chess
 
         public void EndMarker(IPGNReader iParser)
         {
-            if (_tmpStep != null)
-            {
-                _tmpStepTree.Items.Add(_tmpStep);
-                _tmpStep = null;
-            }
             ChessResult end = ChessResult.Parse(iParser.Value);
             _tmpStepTree.Items.Add(end);
         }

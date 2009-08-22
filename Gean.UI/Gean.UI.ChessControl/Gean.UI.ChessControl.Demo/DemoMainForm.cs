@@ -12,14 +12,18 @@ namespace Gean.UI.ChessControl.Demo
 {
     public partial class DemoMainForm : Form
     {
-        public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
-        public string PGNFile { get { return @"pgn\aero09.pgn"; } }
 
-        #region MyRegion
+
+        public string PGNFile { get { return Program.PGNFile_Test_1_Game; } } 
+        public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
+
+
 
         private string _demoFile = Path.GetDirectoryName(@"..\..\DemoFile\");
         private ChessBoard _board = new ChessBoard();
+        private ChessRecordFile records = new ChessRecordFile();
 
+        /// <summary>构造函数</summary>
         public DemoMainForm()
         {
             InitializeComponent();
@@ -29,7 +33,7 @@ namespace Gean.UI.ChessControl.Demo
             this._statusLabel.Text = "OK";
             this._recordListView.SelectedIndexChanged += new EventHandler(SelectedRecord);
 
-            this._board.PlayEvent += new ChessBoard.PlayEventHandler(_board_PlayEvent);
+            this._board.PlayEvent += new ChessBoard.PlayEventHandler(WhilePlayed);
 
             ChessRecordPlayToolStrip strip = new ChessRecordPlayToolStrip();
 
@@ -39,7 +43,10 @@ namespace Gean.UI.ChessControl.Demo
             this.WindowState = this.IsShangBan;
         }
 
-        void _board_PlayEvent(object sender, ChessBoard.PlayEventArgs e)
+        /// <summary>当下棋后发生</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WhilePlayed(object sender, ChessBoard.PlayEventArgs e)
         {
             TreeNode node = new TreeNode(e.ChessStep.ToString());
             this._currTree.Nodes.Add(node);
@@ -47,10 +54,6 @@ namespace Gean.UI.ChessControl.Demo
             FENBuilder fen = FENBuilder.CreateFENBuilder(_board.OwnedChessGame);
             _FENStringLabel.Text = fen.ToFENString();
         }
-
-        #endregion
-
-        ChessRecordFile records = new ChessRecordFile();
 
         private void PGNConvent(object sender, EventArgs e)
         {
@@ -94,6 +97,9 @@ namespace Gean.UI.ChessControl.Demo
             this._recordTree.EndUpdate();
         }
 
+        /// <summary>生成ChessStep树递归子方法</summary>
+        /// <param name="item"></param>
+        /// <param name="parNode"></param>
         private static void GetSubTreenode(ISequenceItem item, TreeNode parNode)
         {
             TreeNode squNode = new TreeNode(item.Value);
