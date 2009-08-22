@@ -14,7 +14,7 @@ namespace Gean.UI.ChessControl.Demo
     {
 
 
-        public string PGNFile { get { return Program.PGNFile_Test_1_Game; } } 
+        public string PGNFile { get { return Program.PGNFile_Test_2_Game; } } 
         public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
 
 

@@ -71,11 +71,6 @@ namespace Gean.Wrapper.Chess
         {
             if (iParser.State != Enums.PGNReaderState.Number)
                 StepParsed(iParser);
-            if (_tmpStep != null)
-            {
-                _tmpStepTree.Items.Add(_tmpStep);
-                _tmpStep = null;
-            }
             _tmpStepTree = (IStepTree)_tmpStepTree.Parent;
             _lastNumber = (string)_states.Pop();
         }

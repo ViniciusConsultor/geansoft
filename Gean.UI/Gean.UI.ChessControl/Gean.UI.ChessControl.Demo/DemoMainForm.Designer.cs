@@ -79,7 +79,7 @@
             // 
             this._mainSpliter.Panel2.Controls.Add(this.splitContainer1);
             this._mainSpliter.Size = new System.Drawing.Size(632, 373);
-            this._mainSpliter.SplitterDistance = 159;
+            this._mainSpliter.SplitterDistance = 348;
             this._mainSpliter.SplitterWidth = 3;
             this._mainSpliter.TabIndex = 0;
             // 
@@ -96,8 +96,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._rightSplit);
-            this.splitContainer1.Size = new System.Drawing.Size(470, 373);
-            this.splitContainer1.SplitterDistance = 68;
+            this.splitContainer1.Size = new System.Drawing.Size(281, 373);
+            this.splitContainer1.SplitterDistance = 122;
             this.splitContainer1.TabIndex = 1;
             // 
             // _recordTree
@@ -105,7 +105,7 @@
             this._recordTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._recordTree.Location = new System.Drawing.Point(0, 0);
             this._recordTree.Name = "_recordTree";
-            this._recordTree.Size = new System.Drawing.Size(68, 373);
+            this._recordTree.Size = new System.Drawing.Size(122, 373);
             this._recordTree.TabIndex = 0;
             // 
             // _rightSplit
@@ -122,8 +122,8 @@
             // _rightSplit.Panel2
             // 
             this._rightSplit.Panel2.Controls.Add(this._recordListView);
-            this._rightSplit.Size = new System.Drawing.Size(398, 373);
-            this._rightSplit.SplitterDistance = 126;
+            this._rightSplit.Size = new System.Drawing.Size(155, 373);
+            this._rightSplit.SplitterDistance = 200;
             this._rightSplit.TabIndex = 0;
             // 
             // tabControl1
@@ -134,7 +134,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(398, 126);
+            this.tabControl1.Size = new System.Drawing.Size(155, 200);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -143,7 +143,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(390, 100);
+            this.tabPage1.Size = new System.Drawing.Size(147, 174);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "棋盘选项";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -157,8 +157,8 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this._currTree);
-            this.splitContainer2.Size = new System.Drawing.Size(384, 94);
-            this.splitContainer2.SplitterDistance = 190;
+            this.splitContainer2.Size = new System.Drawing.Size(141, 168);
+            this.splitContainer2.SplitterDistance = 101;
             this.splitContainer2.TabIndex = 0;
             // 
             // _currTree
@@ -166,7 +166,7 @@
             this._currTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._currTree.Location = new System.Drawing.Point(0, 0);
             this._currTree.Name = "_currTree";
-            this._currTree.Size = new System.Drawing.Size(190, 94);
+            this._currTree.Size = new System.Drawing.Size(101, 168);
             this._currTree.TabIndex = 0;
             // 
             // tabPage2
@@ -174,7 +174,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(214, 229);
+            this.tabPage2.Size = new System.Drawing.Size(390, 101);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "棋谱选项";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -187,7 +187,7 @@
             this._recordListView.Location = new System.Drawing.Point(0, 0);
             this._recordListView.Name = "_recordListView";
             this._recordListView.Number = 1;
-            this._recordListView.Size = new System.Drawing.Size(398, 243);
+            this._recordListView.Size = new System.Drawing.Size(155, 169);
             this._recordListView.TabIndex = 0;
             this._recordListView.UseCompatibleStateImageBehavior = false;
             this._recordListView.View = System.Windows.Forms.View.Details;
