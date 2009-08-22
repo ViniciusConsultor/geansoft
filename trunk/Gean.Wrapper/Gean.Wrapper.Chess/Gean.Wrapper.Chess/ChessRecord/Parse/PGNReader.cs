@@ -162,6 +162,7 @@ namespace Gean.Wrapper.Chess
 
                 while (!reader.EndOfStream)
                 {
+                    #region while
                     char aChar = (char)reader.Read();
                     switch (aChar)
                     {
@@ -205,10 +206,16 @@ namespace Gean.Wrapper.Chess
                             break;
                         default:
                             builder.Append(aChar);
+                            if (reader.EndOfStream)
+                            {
+                                goto case '\n';
+                            }
                             break;
                         #endregion
                     }
-                }
+                    #endregion
+
+                }//while
 
                 CallEvent(_State);
             }
