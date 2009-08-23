@@ -95,8 +95,8 @@ namespace Gean.Wrapper.Chess
         }
         public virtual Enums.ChessmanSide ChessmanSide
         {
-            get { return Enums.FormSide(CurrFENBuilder.Color); }
-            set { CurrFENBuilder.Color = Enums.ToSide(value); }
+            get { return Enums.ToChessmanSide(CurrFENBuilder.Color); }
+            set { CurrFENBuilder.Color = Enums.FormChessmanSide(value); }
         }
         public virtual bool BlackCastleKing
         {
@@ -135,6 +135,18 @@ namespace Gean.Wrapper.Chess
         /// 获取本局棋的记录
         /// </summary>
         public virtual ChessRecord Record { get; private set; }
+
+        public bool HasChessman(ChessPosition position, out Enums.ChessmanSide side, out Enums.ChessmanType type)
+        {
+            side = Enums.ChessmanSide.White;
+            type = Enums.ChessmanType.None;
+            char c = this.CurrFENBuilder[position.Dot];
+            if (c == '1')
+                return false;
+            else
+                Enums.FenChessmansToType(Enums.FromFEN(this.CurrFENBuilder[position.Dot]), out side, out type);
+            return true;
+        }
 
         #region === Move ===
 
@@ -271,6 +283,7 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
 
     }
 }

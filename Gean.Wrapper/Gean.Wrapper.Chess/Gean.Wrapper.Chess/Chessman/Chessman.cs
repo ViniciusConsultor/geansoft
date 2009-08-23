@@ -11,33 +11,52 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public abstract class Chessman
     {
-        /// <summary>
-        /// 表示棋子为空(null)时。此变量为只读。
-        /// </summary>
-        public static readonly Chessman Empty = null;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="type">棋子类型</param>
-        internal Chessman(Enums.ChessmanType type, Enums.ChessmanSide side)
+        internal Chessman(Enums.ChessmanType type)
         {
             this.ChessmanType = type;
-            this.ChessmanSide = side;
+            switch (type)
+            {
+                #region case
+                case Enums.ChessmanType.WhiteKing:
+                case Enums.ChessmanType.WhiteQueen:
+                case Enums.ChessmanType.WhiteRook:
+                case Enums.ChessmanType.WhiteBishop:
+                case Enums.ChessmanType.WhiteKnight:
+                case Enums.ChessmanType.WhitePawn:
+                    this.ChessmanSide = Enums.ChessmanSide.White;
+                    break;
+                case Enums.ChessmanType.BlackKing:
+                case Enums.ChessmanType.BlackQueen:
+                case Enums.ChessmanType.BlackRook:
+                case Enums.ChessmanType.BlackBishop:
+                case Enums.ChessmanType.BlackKnight:
+                case Enums.ChessmanType.BlackPawn:
+                    this.ChessmanSide = Enums.ChessmanSide.Black;
+                    break;
+                case Enums.ChessmanType.None:
+                case Enums.ChessmanType.AllKings:
+                case Enums.ChessmanType.AllQueens:
+                case Enums.ChessmanType.AllRooks:
+                case Enums.ChessmanType.AllBishops:
+                case Enums.ChessmanType.AllKnights:
+                case Enums.ChessmanType.AllPawns:
+                case Enums.ChessmanType.All:
+                default:
+                    break;
+                #endregion
+            }
             this.IsCaptured = false;
-            //this.ChessPositions = new Stack<ChessPosition>();
         }
 
         #region override
         public override string ToString()
         {
-            return Enums.ChessmanTypeToString(this.ChessmanType);
-            //StringBuilder sb = new StringBuilder();
-            //sb.Append("Chessman: ");
-            //sb.Append(this.ChessmanSide.ToString());
-            //sb.Append(',');
-            //sb.Append(this.ChessmanType.ToString());
-            //return sb.ToString();
+            return Enums.FromChessmanType(this.ChessmanType);
         }
         public override bool Equals(object obj)
         {
@@ -45,44 +64,50 @@ namespace Gean.Wrapper.Chess
             if (obj is System.DBNull) return false;
 
             Chessman man = obj as Chessman;
-            if (man.ChessmanType != this.ChessmanType) 
+            if (this.ChessmanType.Equals(man.ChessmanType))
                 return false;
-            if (man.ChessmanSide != this.ChessmanSide) 
+            if (this.ChessmanSide.Equals(man.ChessmanSide))
                 return false;
-            //if (!UtilityEquals.EnumerableEquals(this.ChessPositions, man.ChessPositions)) 
-            //    return false;
+            if (this.IsCaptured.Equals(man.IsCaptured))
+                return false;
+            if (this.CurrPosition.Equals(man.CurrPosition))
+                return false;
             return true;
         }
         public override int GetHashCode()
         {
-            return unchecked(7 * (this.ChessmanSide.GetHashCode() + this.ChessmanType.GetHashCode()));
+            return unchecked(3 * (
+                this.ChessmanSide.GetHashCode() +
+                this.ChessmanType.GetHashCode() +
+                this.IsCaptured.GetHashCode() +
+                this.CurrPosition.GetHashCode()
+                ));
         }
         #endregion
 
-        /// <summary>
-        /// 棋子的战方
-        /// </summary>
-        public Enums.ChessmanSide ChessmanSide { get; protected set; }
         /// <summary>
         /// 棋子的类型
         /// </summary>
         public Enums.ChessmanType ChessmanType { get; protected set; }
         /// <summary>
-        /// 棋子所在位置
+        /// 棋子的战方
         /// </summary>
-        public ChessPosition CurrPosition { get; protected set; }
-        /// <summary>
-        /// 该棋子的棋步<see cref="ChessStep"/>的集合
-        /// </summary>
-        //public Stack<ChessPosition> ChessPositions { get; set; }
-
+        public Enums.ChessmanSide ChessmanSide { get; private set; }
         /// <summary>
         /// 获取或设置该棋子是否已被杀死
         /// </summary>
         public virtual bool IsCaptured { get; internal set; }
+        /// <summary>
+        /// 棋子所在位置
+        /// </summary>
+        public ChessPosition CurrPosition { get; protected set; }
 
         public abstract ChessPosition[] GetEnablePositions();
 
+        /// <summary>
+        /// 表示棋子为空(null)时。此变量为只读。
+        /// </summary>
+        public static readonly Chessman Empty = null;
         /// <summary>
         /// 指示指定的 Chessman 对象是 null 还是 Chessman.Empty。
         /// </summary>
