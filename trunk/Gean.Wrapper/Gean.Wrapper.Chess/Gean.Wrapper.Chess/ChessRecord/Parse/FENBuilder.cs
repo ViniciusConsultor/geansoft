@@ -5,16 +5,18 @@ using System.Text;
 namespace Gean.Wrapper.Chess
 {
     /// <summary>
+    /// 一个棋局局面描述类。
     /// 国际象棋的FEN格式串是由6段ASCII字符串组成的代码(彼此5个空格隔开)，这6段代码的意义依次是：
-    /// (1) 表示棋盘上每行的棋子，这是FEN格式串的主要部分；规则是从第 8横线开始顺次数到第 1横线
+    /// (1) 棋子位置数值区域(Piece placement data)
+    /// 表示棋盘上每行的棋子，这是FEN格式串的主要部分；规则是从第 8横线开始顺次数到第 1横线
     /// (白方在下，从上数到下)，从 a线开始顺次数到h线；白方棋子以大写字母“PNBRQK”表示，黑方棋子
     /// 以小写 “pnbrqk”表示，这是英文表示法，每个字母代表的意义与常规规定相同。数字代表一个横线
     /// 上的连续空格，反斜杠“/” 表示结束一个横线的描述。
-    /// (2) 轮到哪一方走子；
-    /// (3) 每方及该方的王翼和后翼是否还存在“王车易位”的可能；
-    /// (4) 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
-    /// (5) 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
-    /// (6) 棋局的回合数。
+    /// (2) 轮走棋方(Active color): 轮到哪一方走子；
+    /// (3) 易位可行性(Castling availability): 每方及该方的王翼和后翼是否还存在“王车易位”的可能；
+    /// (4) 吃过路兵目标格(En passant target square): 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
+    /// (5) 半回合计数(Halfmove clock): 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
+    /// (6) 回合数(Fullmove number): 棋局的回合数。
     /// |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
     /// |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
     /// |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
@@ -106,8 +108,10 @@ namespace Gean.Wrapper.Chess
         public void Parse(string str)
         {
             this.Clear();
+
             int dot = 56;
             int index = 0;
+
             string[] note = str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             #region 16.1.3.1: Parse piece placement data
@@ -194,7 +198,7 @@ namespace Gean.Wrapper.Chess
 
             #endregion
 
-            #region
+            #region 16.1.3.4: Parse en passant target square such as "e3"
             try
             {
                 if (note.Length >= 4)
@@ -215,22 +219,33 @@ namespace Gean.Wrapper.Chess
                         }
                     }
                 }
+            }
+            catch { }
+            #endregion
+
+            #region 16.1.3.5: Parse halfmove clock, count of half-move since last pawn advance or unit capture
+            try
+            {
 
                 if (note.Length >= 5)
                 {
                     // 16.1.3.5: Parse halfmove clock, count of half-move since last pawn advance or unit capture
                     this.HalfMove = Int16.Parse(note[4]);
                 }
+            }
+            catch { }
+            #endregion
 
+            #region 16.1.3.6: Parse fullmove number, increment after each black move
+            try
+            {
                 if (note.Length >= 6)
                 {
                     // 16.1.3.6: Parse fullmove number, increment after each black move
                     this.FullMove = Int16.Parse(note[5]);
                 }
             }
-            catch
-            {
-            }
+            catch { }
             #endregion
         }
 
@@ -405,15 +420,15 @@ namespace Gean.Wrapper.Chess
 
         public static FENBuilder NewGame
         {
-            get
-            {
-                string fenstring = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-                return new FENBuilder(fenstring);
-            }
+            get { return new FENBuilder(NewGameFENString); }
         }
+
+        /// <summary>
+        /// 新棋局局面，白棋大写，黑棋小写
+        /// </summary>
+        public static readonly string NewGameFENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     }
 }
-
 
 /* ChessFENReader.cs
 using System;

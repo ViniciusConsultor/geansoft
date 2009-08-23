@@ -28,6 +28,7 @@ namespace Gean.Wrapper.Chess
     public class ChessPosition
     {
         #region static
+
         public static readonly ChessPosition Empty = null;
 
         public static ChessPosition Parse(string value)
@@ -59,30 +60,15 @@ namespace Gean.Wrapper.Chess
             y = 8 - ((dot - 1) / 8);
             if (x == 0) x = 8;
         }
+
         public static int CalculateDot(int x, int y)
         {
             return (8 * (7 - y)) + (x + 1);
         }
+
         #endregion
 
-        #region private
-        /// <summary>
-        /// 当前位置的棋盘横坐标(a-h)
-        /// </summary>
-        private char _horizontal;
-        /// <summary>
-        /// 当前位置的棋盘纵坐标(1-8)
-        /// </summary>
-        private int _vertical;
-        /// <summary>
-        /// 当前位置的计算机X坐标(0-7)
-        /// </summary>
-        private int _x;
-        /// <summary>
-        /// 当前位置的计算机Y坐标(0-7)
-        /// </summary>
-        private int _y;
-        #endregion
+        #region ctor
 
         /// <summary>
         /// 一个描述棋盘位置的类型
@@ -112,32 +98,54 @@ namespace Gean.Wrapper.Chess
             this.Dot = ChessPosition.CalculateDot(_x, _y);
         }
 
+        #endregion
+
+        #region Property
+
         /// <summary>
         /// 获取或设置当前位置的棋盘横坐标(a-h)
         /// </summary>
         public char Horizontal { get { return _horizontal; } }
+        /// <summary>
+        /// 当前位置的棋盘横坐标(a-h)
+        /// </summary>
+        private char _horizontal;
 
         /// <summary>
         /// 获取或设置当前位置的棋盘纵坐标(1-8)
         /// </summary>
         public int Vertical { get { return _vertical; } }
+        /// <summary>
+        /// 当前位置的棋盘纵坐标(1-8)
+        /// </summary>
+        private int _vertical;
 
         /// <summary>
         /// 获取或设置当前位置的计算机X坐标(0-7)
         /// </summary>
         public int X { get { return _x; } }
+        /// <summary>
+        /// 当前位置的计算机X坐标(0-7)
+        /// </summary>
+        private int _x;
 
         /// <summary>
         /// 获取或设置当前位置的计算机Y坐标(0-7)
         /// </summary>
         public int Y { get { return _y; } }
+        /// <summary>
+        /// 当前位置的计算机Y坐标(0-7)
+        /// </summary>
+        private int _y;
 
         /// <summary>
         /// 获取该位置对应FEN的点(1-64)
         /// </summary>
         public int Dot { get; private set; }
 
-        #region override
+        #endregion
+
+        #region Override
 
         public override bool Equals(object obj)
         {
@@ -163,6 +171,8 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        #region Shift
 
         /// <summary>
         /// 向北移一格
@@ -236,6 +246,10 @@ namespace Gean.Wrapper.Chess
                 return ChessPosition.Empty;
             return new ChessPosition(_x + 2, _y);
         }
+
+        #endregion
+
+        #region Get enable position array
 
         public ChessPosition[] GetPositions(Chessman man, Enums.ChessmanSide side)
         {
@@ -490,5 +504,6 @@ namespace Gean.Wrapper.Chess
             return positions.ToArray();
         }
 
+        #endregion
     }
 }

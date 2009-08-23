@@ -6,7 +6,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>EAIgAAAIAARAAAAkgEIRAAJBCAAAAIBACCIGAIgAaAA=</HashCode>
+      <HashCode>EAIgAAAIACRAAAAkgEMRAAJBCAAAAIBACCIGAIgAaAA=</HashCode>
       <FileName>ChessRecord\ChessPosition.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -40,8 +40,8 @@
   <Class Name="Gean.Wrapper.Chess.ChessDefiner" Collapsed="true">
     <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>ChessRecord\ChessTag.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ChessDefiner.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessChoices" Collapsed="true">
@@ -79,7 +79,7 @@
   <Class Name="Gean.Wrapper.Chess.FENBuilder" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAICABggEAFEECACgIAAAAAgAAAAAgAAAkABABEA=</HashCode>
+      <HashCode>gAAgAICABogEAFAECACgIAAABAgAAAAAgAAAkABABEA=</HashCode>
       <FileName>ChessRecord\Parse\FENBuilder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -97,6 +97,26 @@
     <TypeIdentifier>
       <HashCode>AAEgAABACAAAAAAmgCAAAAQAABAAAIAAAAAgAAAAAAA=</HashCode>
       <FileName>ChessRecord\ISequenceItem\ChessResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessGame">
+    <Position X="8.5" Y="0.5" Width="1.75" />
+    <NestedTypes>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.MoveInEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame\ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGame.MoveInEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame\ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAABAIAABAAEADgACEiCAAAAAAECAAAEgAAAAAAABBA=</HashCode>
+      <FileName>ChessGame\ChessGame.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

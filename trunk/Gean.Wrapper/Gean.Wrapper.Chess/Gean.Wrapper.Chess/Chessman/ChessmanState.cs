@@ -41,7 +41,7 @@ namespace Gean.Wrapper.Chess
                 default:
                     break;
             }
-            string type = Enums.ChessmanTypeToString(this.ChessmanType);
+            string type = Enums.FromChessmanType(this.ChessmanType);
             return string.Format("{0}{1}", side, type);
         }
     }

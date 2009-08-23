@@ -15,7 +15,7 @@ namespace Gean.Wrapper.Chess
             internal set
             {
                 _result = value;
-                this.Value = Enums.ResultToString(value);
+                this.Value = Enums.FromResult(value);
             }
         }
         private Enums.Result _result;
