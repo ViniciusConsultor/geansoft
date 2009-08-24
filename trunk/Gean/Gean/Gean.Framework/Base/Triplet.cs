@@ -7,64 +7,67 @@ using System.Security.Permissions;
 namespace Gean
 {
     /// <summary>
-    /// 一个存储了一对值（非键值对类型）的类型。
+    /// 一个存储了三个值（非键值对类型）的类型。
     /// 该结构重写了==和!=操作符。
     /// Gean: 2009-08-24 22:30:51
     /// </summary>
     [Serializable]
-    public class Pair<A, B> : IEquatable<Pair<A, B>>, ISerializable
+    public class Triplet<A, B, C> : IEquatable<Triplet<A, B, C>>, ISerializable
         where A : IEquatable<A>
         where B : IEquatable<B>
+        where C : IEquatable<C>
     {
         public readonly A First;
         public readonly B Second;
+        public readonly C Third;
 
-        public Pair(A first, B second)
+        public Triplet(A first, B second, C third)
         {
             if (first == null)
                 throw new ArgumentNullException("first");
             if (second == null)
                 throw new ArgumentNullException("second");
+            if (third == null)
+                throw new ArgumentNullException("third");
             this.First = first;
             this.Second = second;
+            this.Third = third;
         }
 
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
             if (obj is System.DBNull) return false;
-            if (obj is Pair<A, B>)
-                return Equals((Pair<A, B>)obj); // use Equals method below
+            if (obj is Triplet<A, B, C>)
+                return this.Equals((Triplet<A, B, C>)obj);
             else
                 return false;
         }
 
-        public bool Equals(Pair<A, B> other)
+        public bool Equals(Triplet<A, B, C> other)
         {
-            // add comparisions for all members here
-            return First.Equals(other.First) && Second.Equals(other.Second);
+            return First.Equals(other.First) && Second.Equals(other.Second) && Third.Equals(other.Third);
         }
 
         public override int GetHashCode()
         {
-            // combine the hash codes of all members here (e.g. with XOR operator ^)
-            return unchecked(3 * (First.GetHashCode() ^ Second.GetHashCode()));
+            return unchecked(3 * (First.GetHashCode() ^ Second.GetHashCode() ^ Third.GetHashCode()));
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            return sb.Append(First.ToString()).Append(" | ").Append(Second.ToString()).ToString();
+            string str = string.Format("[First: {0}][Second: {1}][Third: {2}]", First, Second, Third);
+            return str;
         }
 
-        public static bool operator ==(Pair<A, B> lhs, Pair<A, B> rhs)
+        public static bool operator ==(Triplet<A, B, C> lhs, Triplet<A, B, C> rhs)
         {
             return lhs.Equals(rhs);
         }
 
-        public static bool operator !=(Pair<A, B> lhs, Pair<A, B> rhs)
+        public static bool operator !=(Triplet<A, B, C> lhs, Triplet<A, B, C> rhs)
         {
-            return !(lhs.Equals(rhs)); // use operator == and negate result
+            return !(lhs.Equals(rhs));
         }
 
         [SecurityPermissionAttribute(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
@@ -76,7 +79,7 @@ namespace Gean
             }
             info.AddValue("FirstValue", this.First);
             info.AddValue("SecondValue", this.Second);
+            info.AddValue("ThirdValue", this.Third);
         }
     }
-
 }

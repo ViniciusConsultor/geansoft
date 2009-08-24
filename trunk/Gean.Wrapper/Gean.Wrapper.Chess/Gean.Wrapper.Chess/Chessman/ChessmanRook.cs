@@ -6,37 +6,38 @@ namespace Gean.Wrapper.Chess
 {
     /// <summary>
     /// 棋子：车。
-    /// In chess, a rook is one of the chess pieces which stand in the corners
-    /// of the board at the beginning of a game. 
-    /// Rooks can move forwards, backwards, or sideways, but not diagonally. 
     /// </summary>
     public class ChessmanRook : Chessman
     {
-        
-        //public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
-        //    : base(Enums.ChessmanType.Rook, side)
-        //{
-        //    this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
-        //}
+        public static ChessmanRook Rook01 = new ChessmanRook(Enums.ChessmanSide.Black, new ChessPosition(1, 8));
+        public static ChessmanRook Rook08 = new ChessmanRook(Enums.ChessmanSide.Black, new ChessPosition(8, 8));
+        public static ChessmanRook Rook57 = new ChessmanRook(Enums.ChessmanSide.White, new ChessPosition(1, 1));
+        public static ChessmanRook Rook64 = new ChessmanRook(Enums.ChessmanSide.White, new ChessPosition(8, 1));
 
-        //public ChessmanRook(Enums.ChessmanSide side, ChessPosition pos)
-        //    : base(Enums.ChessmanType.Rook, side)
-        //{
-        //    this.CurrPosition = pos;
-        //}
+        public ChessmanRook(Enums.ChessmanSide manSide, ChessPosition position)
+        {
+            this.ChessmanSide = manSide;
+            switch (manSide)
+            {
+                case Enums.ChessmanSide.White:
+                    this.ChessmanType = Enums.ChessmanType.WhiteRook;
+                    break;
+                case Enums.ChessmanSide.Black:
+                    this.ChessmanType = Enums.ChessmanType.BlackRook;
+                    break;
+            }
+            this.IsCaptured = false;
+            this.CurrPosition = this.SetCurrPosition(position);
+        }
 
-        //public override ChessPosition[] GetEnablePositions()
-        //{
-        //    throw new NotImplementedException();
-        //}
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            throw new NotImplementedException();
+            return position;
         }
 
         public override ChessPosition[] GetEnablePositions()
         {
-            throw new NotImplementedException();
+            return this.CurrPosition.GetRookPositions();
         }
     }
 }

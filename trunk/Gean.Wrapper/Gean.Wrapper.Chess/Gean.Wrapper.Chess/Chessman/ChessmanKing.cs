@@ -6,16 +6,19 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanKing : Chessman
     {
+        public static ChessmanKing BlackKing = new ChessmanKing(Enums.ChessmanSide.Black);
+        public static ChessmanKing WhiteKing = new ChessmanKing(Enums.ChessmanSide.White);
         public ChessmanKing(Enums.ChessmanSide side) : this(side, ChessPosition.Empty) { }
         public ChessmanKing(Enums.ChessmanSide side, ChessPosition position)
         {
+            this.ChessmanSide = side;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    this.ChessmanType = Enums.ChessmanType.WhiteKing;
+                    this.ChessmanType = Enums.ChessmanType.WhiteQueen;
                     break;
                 case Enums.ChessmanSide.Black:
-                    this.ChessmanType = Enums.ChessmanType.BlackKing;
+                    this.ChessmanType = Enums.ChessmanType.BlackQueen;
                     break;
             }
             this.IsCaptured = false;

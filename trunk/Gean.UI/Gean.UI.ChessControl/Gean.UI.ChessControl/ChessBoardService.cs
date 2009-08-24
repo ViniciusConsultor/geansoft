@@ -127,8 +127,6 @@ namespace Gean.UI.ChessControl
         {
             #region Initialize Dictionary<Enums.ChessmanType, Image>
 
-            ChessmanState state;
-
             ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackBishop, ChessResource.black_bishop);
             ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackKing, ChessResource.black_king);
             ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackKnight, ChessResource.black_knight);
