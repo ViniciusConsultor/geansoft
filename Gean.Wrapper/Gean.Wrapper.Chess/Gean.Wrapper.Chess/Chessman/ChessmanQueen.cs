@@ -6,38 +6,43 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanQueen : Chessman
     {
-        //public ChessmanQueen(Enums.ChessmanSide side)
-        //    : base(Enums.ChessmanType.Queen, side)
-        //{
-        //    switch (side)
-        //    {
-        //        case Enums.ChessmanSide.White:
-        //            this.CurrPosition = new ChessPosition(4, 1);
-        //            break;
-        //        case Enums.ChessmanSide.Black:
-        //            this.CurrPosition = new ChessPosition(4, 8);
-        //            break;
-        //    }
-        //}
+        public ChessmanQueen(Enums.ChessmanSide side) : this(side, ChessPosition.Empty) { }
+        public ChessmanQueen(Enums.ChessmanSide side, ChessPosition position)
+        {
+            switch (side)
+            {
+                case Enums.ChessmanSide.White:
+                    this.ChessmanType = Enums.ChessmanType.WhiteQueen;
+                    break;
+                case Enums.ChessmanSide.Black:
+                    this.ChessmanType = Enums.ChessmanType.BlackQueen;
+                    break;
+            }
+            this.IsCaptured = false;
+            this.CurrPosition = this.SetCurrPosition(position);
+        }
 
-        //public ChessmanQueen(Enums.ChessmanSide side, ChessPosition pos)
-        //    : base(Enums.ChessmanType.Queen, side)
-        //{
-        //    this.CurrPosition = pos;
-        //}
-
-        //public override ChessPosition[] GetEnablePositions()
-        //{
-        //    throw new NotImplementedException();
-        //}
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            throw new NotImplementedException();
+            if (position.Equals(ChessPosition.Empty))
+            {
+                switch (this.ChessmanSide)
+                {
+                    case Enums.ChessmanSide.White:
+                        return new ChessPosition(4, 1);
+                    case Enums.ChessmanSide.Black:
+                        return new ChessPosition(4, 8);
+                    default:
+                        throw new ChessmanException(ExString.ChessPositionIsEmpty);
+                }
+            }
+            else
+                return position;
         }
 
         public override ChessPosition[] GetEnablePositions()
         {
-            throw new NotImplementedException();
+            return this.CurrPosition.GetQueenPositions();
         }
     }
 }

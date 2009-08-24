@@ -61,20 +61,29 @@ namespace Gean.Wrapper.Chess {
         }
         
         /// <summary>
-        ///   查找类似 &quot;Enums.ChessmanType.{0}&quot; 类型棋子无法被创建。 的本地化字符串。
-        /// </summary>
-        internal static string ChessmanTypeCannotCreated {
-            get {
-                return ResourceManager.GetString("ChessmanTypeCannotCreated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 &quot;Enums.ChessmanType.{0}&quot; 类型无法进行相应的运算。 的本地化字符串。
         /// </summary>
         internal static string ChessmanTypeError {
             get {
                 return ResourceManager.GetString("ChessmanTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 棋盘位置是空值，无法运算。 的本地化字符串。
+        /// </summary>
+        internal static string ChessPositionIsEmpty {
+            get {
+                return ResourceManager.GetString("ChessPositionIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 棋盘位置(“ ChessPosition: {0} ”)是错误的值，导致运算出错。 的本地化字符串。
+        /// </summary>
+        internal static string ChessPositionIsError {
+            get {
+                return ResourceManager.GetString("ChessPositionIsError", resourceCulture);
             }
         }
         
