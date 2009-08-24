@@ -129,7 +129,7 @@ namespace Gean.Wrapper.Chess
                         index += (int)(achar - '0');
                     else
                     {
-                        if (Enums.FromFEN(achar) != Enums.FenChessmans.None)
+                        if (Enums.ToChessmanType(achar) != Enums.ChessmanType.None)
                         {
                             if (index > 7)  // This check needed here to avoid overrunning index below under some error conditions.
                                 throw new ArgumentException("Invalid board specification, rank " + (dot / 8 + 1) + " has more then 8 items specified.");
@@ -383,9 +383,7 @@ namespace Gean.Wrapper.Chess
                     if (y == '1') continue;
                     Enums.ChessmanType manType;
                     Enums.ChessmanSide manSide;
-                    Enums.FenChessmansToType(Enums.FromFEN(c), out manSide, out manType);
-                    Chessman man = Chessman.CreatMan(manType, manSide, new ChessPosition(x, y));
-                    mans.Add(man);
+                    throw new NotImplementedException();
                 }
             }
             return mans.ToArray();

@@ -11,49 +11,21 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public abstract class Chessman
     {
+        #region ctor
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="type">棋子类型</param>
-        internal Chessman(Enums.ChessmanType type)
-        {
-            this.ChessmanType = type;
-            switch (type)
-            {
-                #region case
-                case Enums.ChessmanType.WhiteKing:
-                case Enums.ChessmanType.WhiteQueen:
-                case Enums.ChessmanType.WhiteRook:
-                case Enums.ChessmanType.WhiteBishop:
-                case Enums.ChessmanType.WhiteKnight:
-                case Enums.ChessmanType.WhitePawn:
-                    this.ChessmanSide = Enums.ChessmanSide.White;
-                    break;
-                case Enums.ChessmanType.BlackKing:
-                case Enums.ChessmanType.BlackQueen:
-                case Enums.ChessmanType.BlackRook:
-                case Enums.ChessmanType.BlackBishop:
-                case Enums.ChessmanType.BlackKnight:
-                case Enums.ChessmanType.BlackPawn:
-                    this.ChessmanSide = Enums.ChessmanSide.Black;
-                    break;
-                case Enums.ChessmanType.None:
-                case Enums.ChessmanType.AllKings:
-                case Enums.ChessmanType.AllQueens:
-                case Enums.ChessmanType.AllRooks:
-                case Enums.ChessmanType.AllBishops:
-                case Enums.ChessmanType.AllKnights:
-                case Enums.ChessmanType.AllPawns:
-                case Enums.ChessmanType.All:
-                default:
-                    break;
-                #endregion
-            }
-            this.IsCaptured = false;
-        }
+        protected Chessman() { }
 
-        #region override
+        #endregion
+
+        #region Override
+
+        /// <summary>
+        /// 重写。生成该棋子的字符表示。
+        /// </summary>
+        /// <returns>大写表示为白棋，小写表示黑棋</returns>
         public override string ToString()
         {
             return Enums.FromChessmanType(this.ChessmanType);
@@ -83,16 +55,19 @@ namespace Gean.Wrapper.Chess
                 this.CurrPosition.GetHashCode()
                 ));
         }
+
         #endregion
+
+        #region Property
 
         /// <summary>
         /// 棋子的类型
         /// </summary>
-        public Enums.ChessmanType ChessmanType { get; protected set; }
+        public virtual Enums.ChessmanType ChessmanType { get; protected set; }
         /// <summary>
         /// 棋子的战方
         /// </summary>
-        public Enums.ChessmanSide ChessmanSide { get; private set; }
+        public virtual Enums.ChessmanSide ChessmanSide { get; private set; }
         /// <summary>
         /// 获取或设置该棋子是否已被杀死
         /// </summary>
@@ -100,9 +75,18 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子所在位置
         /// </summary>
-        public ChessPosition CurrPosition { get; protected set; }
+        public virtual ChessPosition CurrPosition { get; protected set; }
 
+        #endregion
+
+        #region abstract
+
+        protected abstract ChessPosition SetCurrPosition(ChessPosition position);
         public abstract ChessPosition[] GetEnablePositions();
+
+        #endregion
+
+        #region static
 
         /// <summary>
         /// 表示棋子为空(null)时。此变量为只读。
@@ -121,47 +105,24 @@ namespace Gean.Wrapper.Chess
             return false;
         }
 
-        /// <summary>
-        /// 根据指定的棋字战方、棋格方获取开局的棋子坐标
-        /// </summary>
-        protected static ChessPosition GetOpenningsPosition(Enums.ChessmanSide side, Enums.ChessGridSide gridSide, int left, int right)
+        /// <summary>根据指定的棋子战方与指定的棋子X坐标获取开局的棋子坐标</summary>
+        /// <param name="side">指定的棋子战方</param>
+        /// <param name="x">指定的棋子X坐标</param>
+        protected static ChessPosition GetOpenningsPosition(Enums.ChessmanSide side, int x)
         {
             ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    {
-                        switch (gridSide)
-                        {
-                            case Enums.ChessGridSide.Black:
-                                point = new ChessPosition(left, 1);
-                                break;
-                            case Enums.ChessGridSide.White:
-                                point = new ChessPosition(right, 1);
-                                break;
-                        }
-                        break;
-                    }
+                    point = new ChessPosition(x, 1);
+                    break;
                 case Enums.ChessmanSide.Black:
-                    {
-                        switch (gridSide)
-                        {
-                            case Enums.ChessGridSide.Black:
-                                point = new ChessPosition(right, 8);
-                                break;
-                            case Enums.ChessGridSide.White:
-                                point = new ChessPosition(left, 8);
-                                break;
-                        }
-                        break;
-                    }
+                    point = new ChessPosition(x, 8);
+                    break;
             }
             return point;
         }
 
-        internal static Chessman CreatMan(Enums.ChessmanType manType, Enums.ChessmanSide manSide, ChessPosition chessPosition)
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
     }
 }

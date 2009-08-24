@@ -255,17 +255,17 @@ namespace Gean.Wrapper.Chess
         {
             switch (man.ChessmanType)
             {
-                case Enums.ChessmanType.Rook:
+                case Enums.ChessmanType.AllRooks:
                     return this.GetRookPositions();
-                case Enums.ChessmanType.Knight:
+                case Enums.ChessmanType.AllKnights:
                     return this.GetKnightPositions();
-                case Enums.ChessmanType.Bishop:
+                case Enums.ChessmanType.AllBishops:
                     return this.GetBishopPositions();
-                case Enums.ChessmanType.Queen:
+                case Enums.ChessmanType.AllQueens:
                     return this.GetQueenPositions();
-                case Enums.ChessmanType.King:
+                case Enums.ChessmanType.AllKings:
                     return this.GetKingPositions();
-                case Enums.ChessmanType.Pawn:
+                case Enums.ChessmanType.AllPawns:
                     return this.GetPawnPositions(side);
                 case Enums.ChessmanType.None:
                 default:

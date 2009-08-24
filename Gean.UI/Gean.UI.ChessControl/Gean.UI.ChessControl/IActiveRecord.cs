@@ -10,7 +10,6 @@ namespace Gean.UI.ChessControl
         ChessRecord ActiveRecord { get; }
         int CurrChessStepPair { get; }
         Enums.ChessmanSide CurrChessmanSide { get; }
-        void SetStep(int number, Enums.ChessGridSide side);
         ChessStep GetStep();
     }
 }

@@ -191,18 +191,18 @@ namespace Gean.Wrapper.Chess
             }
             if ((this.Actions[0] != Enums.Action.KingSideCastling) &&
                 (this.Actions[0] != Enums.Action.QueenSideCastling) &&
-                (this.ChessmanType != Enums.ChessmanType.Pawn))
+                (this.ChessmanType != Enums.ChessmanType.AllPawns))
             {
                 sb.Insert(0, Enums.FromChessmanType(this.ChessmanType));
             }
-            else if ((this.ChessmanType == Enums.ChessmanType.Pawn) && this.Actions.Contains(Enums.Action.Capture))
+            else if ((this.ChessmanType == Enums.ChessmanType.AllPawns) && this.Actions.Contains(Enums.Action.Capture))
             {
                 if (SourcePosition != ChessPosition.Empty)
                     sb.Insert(0, SourcePosition.Horizontal);
             }
             if (_hasSame != Enums.Orientation.None)//是否能使用该棋步的棋子
             {
-                if (this.ChessmanType != Enums.ChessmanType.Pawn)
+                if (this.ChessmanType != Enums.ChessmanType.AllPawns)
                 {
                         switch (_hasSame)
                         {
@@ -385,7 +385,7 @@ namespace Gean.Wrapper.Chess
             {
                 #region
 
-                manType = Enums.ChessmanType.Pawn;
+                manType = Enums.ChessmanType.AllPawns;
 
                 #endregion
                 goto END_PARSE;
@@ -443,7 +443,7 @@ namespace Gean.Wrapper.Chess
                 }
                 else
                 {
-                    manType = Enums.ChessmanType.Pawn;
+                    manType = Enums.ChessmanType.AllPawns;
                     hasSame = Enums.Orientation.Rank;
                     sameHorizontal = Utility.CharToInt(value[0]);
                     sameVertical = int.Parse(value[2].ToString());
@@ -497,7 +497,7 @@ namespace Gean.Wrapper.Chess
             }
             else if (char.IsLower(before, 0))//首字母是小写的
             {
-                type = Enums.ChessmanType.Pawn;
+                type = Enums.ChessmanType.AllPawns;
             }
             //Parse value, 一般是指“axb5+”，“Rfxe8”，“B3xd6”中的第2个字符的解析
             if (!string.IsNullOrEmpty(before))
@@ -509,7 +509,7 @@ namespace Gean.Wrapper.Chess
                     hasSame = Enums.Orientation.Rank;
                     sameHorizontal = Utility.CharToInt(c);
                     sameVertical = int.Parse(after[1].ToString());
-                    if (type == Enums.ChessmanType.Pawn)
+                    if (type == Enums.ChessmanType.AllPawns)
                     {
                         if (manSide == Enums.ChessmanSide.Black)
                             sameVertical++;

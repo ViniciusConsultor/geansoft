@@ -13,7 +13,7 @@ namespace Gean.UI.ChessControl
         /// </summary>
         public static void Initialize()
         {
-            ChessBoardService.ChessmanImages = new Dictionary<ChessmanState, Image>(12);
+            ChessBoardService.ChessmanImages = new Dictionary<Enums.ChessmanType, Image>(12);
             ChessBoardService.InitializeBoardImage();
             ChessBoardService.InitializeGridImages();
             ChessBoardService.InitializeChessmanImages();
@@ -119,51 +119,28 @@ namespace Gean.UI.ChessControl
         /// <summary>
         /// 棋子背景图片集合
         /// </summary>
-        private static Dictionary<ChessmanState, Image> ChessmanImages { get; set; }
+        private static Dictionary<Enums.ChessmanType, Image> ChessmanImages { get; set; }
         /// <summary>
         /// 初始化默认棋子背景图片集合
         /// </summary>
         private static void InitializeChessmanImages()
         {
-            #region Initialize Dictionary<ChessmanState, Image>
+            #region Initialize Dictionary<Enums.ChessmanType, Image>
 
             ChessmanState state;
 
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Bishop);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_bishop);
-
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.King);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_king);
-
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Knight);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_knight);
-
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Pawn);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_pawn);
-
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Queen);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_queen);
-
-            state = new ChessmanState(Enums.ChessmanSide.Black, Enums.ChessmanType.Rook);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.black_rook);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Bishop);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_bishop);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.King);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_king);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Knight);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_knight);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Pawn);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_pawn);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Queen);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_queen);
-
-            state = new ChessmanState(Enums.ChessmanSide.White, Enums.ChessmanType.Rook);
-            ChessBoardService.ChessmanImages.Add(state, ChessResource.white_rook);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackBishop, ChessResource.black_bishop);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackKing, ChessResource.black_king);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackKnight, ChessResource.black_knight);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackPawn, ChessResource.black_pawn);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackQueen, ChessResource.black_queen);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.BlackRook, ChessResource.black_rook);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhiteBishop, ChessResource.white_bishop);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhiteKing, ChessResource.white_king);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhiteKnight, ChessResource.white_knight);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhitePawn, ChessResource.white_pawn);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhiteQueen, ChessResource.white_queen);
+            ChessBoardService.ChessmanImages.Add(Enums.ChessmanType.WhiteRook, ChessResource.white_rook);
 
             #endregion
 
@@ -171,20 +148,18 @@ namespace Gean.UI.ChessControl
             OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardService.ChessmanImages));
         }
 
-        internal static Image GetChessmanImage(Enums.ChessmanSide chessmanSide, Enums.ChessmanType chessmanType)
+        internal static Image GetChessmanImage(Enums.ChessmanType chessmanType)
         {
-            ChessmanState state = new ChessmanState(chessmanSide, chessmanType);
-            return ChessmanImages[state];
+            return ChessmanImages[chessmanType];
         }
 
         /// <summary>
         /// 更换棋子的背景图片集合
         /// </summary>
         /// <param name="images">棋子的背景图片集合</param>
-        public static void ChangeChessmanImages(Dictionary<string, Image> images)
+        public static void ChangeChessmanImages(Dictionary<Enums.ChessmanType, Image> images)
         {
-            ChessBoardService.ChessmanImages = null;
-            //ChessBoardHelper.ChessmanImages = images;
+            ChessBoardService.ChessmanImages = images;
 
             //注册棋子背景图片更换事件
             OnChessmanImagesChanged(new ChessmanImagesChangedEventArgs(ChessBoardService.ChessmanImages));
@@ -202,8 +177,8 @@ namespace Gean.UI.ChessControl
         public delegate void ChessmanImagesChangedEventHandler(ChessmanImagesChangedEventArgs e);
         public class ChessmanImagesChangedEventArgs : EventArgs
         {
-            public Dictionary<ChessmanState, Image> Images { get; private set; }
-            public ChessmanImagesChangedEventArgs(Dictionary<ChessmanState, Image> images)
+            public Dictionary<Enums.ChessmanType, Image> Images { get; private set; }
+            public ChessmanImagesChangedEventArgs(Dictionary<Enums.ChessmanType, Image> images)
             {
                 this.Images = images;
             }

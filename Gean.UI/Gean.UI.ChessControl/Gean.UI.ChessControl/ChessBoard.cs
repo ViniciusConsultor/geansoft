@@ -134,33 +134,34 @@ namespace Gean.UI.ChessControl
         {
             this.Chessmans = new List<Chessman>(32);
             #region
+            throw new NotImplementedException();
             //兵
-            for (int i = 1; i <= 8; i++)
-            {
-                this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
-                this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
-            }
-            //王
-            this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
-            this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
-            //后
-            this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
-            this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
-            //车
-            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //马
-            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            //象
-            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            //for (int i = 1; i <= 8; i++)
+            //{
+            //    this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
+            //    this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
+            //}
+            ////王
+            //this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
+            //this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
+            ////后
+            //this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
+            //this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
+            ////车
+            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            ////马
+            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
+            ////象
+            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
+            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
+            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
             #endregion
             this.Invalidate();
         }
@@ -522,7 +523,7 @@ namespace Gean.UI.ChessControl
                 if (man.IsCaptured)
                     continue;
                 _currManRect = ChessBoard.GetChessmanRectangle(board, man.CurrPosition);
-                _currManImage = ChessBoardService.GetChessmanImage(man.ChessmanSide, man.ChessmanType);
+                _currManImage = ChessBoardService.GetChessmanImage(man.ChessmanType);
                 g.DrawImage(_currManImage, _currManRect);
 
             }
