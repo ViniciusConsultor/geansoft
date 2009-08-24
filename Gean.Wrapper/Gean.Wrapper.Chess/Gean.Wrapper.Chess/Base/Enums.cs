@@ -293,6 +293,27 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region ChessGridSide
+
+        /// <summary>
+        /// 黑格，白格
+        /// </summary>
+        public enum ChessGridSide
+        {
+            White = 0, Black = 1,
+        }
+        /// <summary>
+        /// 获取棋格的另一方
+        /// </summary>
+        public static ChessGridSide GetOtherGridSide(ChessGridSide side)
+        {
+            if (side == ChessGridSide.Black)
+                return ChessGridSide.White;
+            return ChessGridSide.Black;
+        }
+
+        #endregion
+
         #region ChessmanSide
 
         /// <summary>
@@ -632,26 +653,6 @@ namespace Gean.Wrapper.Chess
 }
 
 /*
-#region ChessGridSide
-
-/// <summary>
-/// 黑格，白格
-/// </summary>
-public enum ChessGridSide
-{
-    None = 0, White = 1, Black = 2,
-}
-/// <summary>
-/// 获取棋格的另一方
-/// </summary>
-public static ChessGridSide GetOtherGridSide(ChessGridSide side)
-{
-    if (side == ChessGridSide.Black)
-        return ChessGridSide.White;
-    return ChessGridSide.Black;
-}
-
-#endregion
 
 /// <summary>
 /// Internal naming for Pieces, also used for indexing into an array of cursors.

@@ -20,6 +20,34 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region Property
+
+        /// <summary>
+        /// 棋子的类型
+        /// </summary>
+        public virtual Enums.ChessmanType ChessmanType { get; protected set; }
+        /// <summary>
+        /// 棋子的战方
+        /// </summary>
+        public virtual Enums.ChessmanSide ChessmanSide { get; protected set; }
+        /// <summary>
+        /// 获取或设置该棋子是否已被杀死
+        /// </summary>
+        public virtual bool IsCaptured { get; internal set; }
+        /// <summary>
+        /// 棋子所在位置
+        /// </summary>
+        public virtual ChessPosition CurrPosition { get; protected set; }
+
+        #endregion
+
+        #region abstract
+
+        protected abstract ChessPosition SetCurrPosition(ChessPosition position);
+        public abstract ChessPosition[] GetEnablePositions();
+
+        #endregion
+
         #region Override
 
         /// <summary>
@@ -55,34 +83,6 @@ namespace Gean.Wrapper.Chess
                 this.CurrPosition.GetHashCode()
                 ));
         }
-
-        #endregion
-
-        #region Property
-
-        /// <summary>
-        /// 棋子的类型
-        /// </summary>
-        public virtual Enums.ChessmanType ChessmanType { get; protected set; }
-        /// <summary>
-        /// 棋子的战方
-        /// </summary>
-        public virtual Enums.ChessmanSide ChessmanSide { get; private set; }
-        /// <summary>
-        /// 获取或设置该棋子是否已被杀死
-        /// </summary>
-        public virtual bool IsCaptured { get; internal set; }
-        /// <summary>
-        /// 棋子所在位置
-        /// </summary>
-        public virtual ChessPosition CurrPosition { get; protected set; }
-
-        #endregion
-
-        #region abstract
-
-        protected abstract ChessPosition SetCurrPosition(ChessPosition position);
-        public abstract ChessPosition[] GetEnablePositions();
 
         #endregion
 

@@ -23,6 +23,11 @@ namespace Gean.Wrapper.Chess
             }
         }
 
+        public void AddRange(IEnumerable<Chessman> items)
+        {
+            this.Chessmans.AddRange(items);
+        }
+
         public void Clear()
         {
             Chessmans.Clear();
@@ -100,5 +105,41 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        public static ChessmanCollection OpeningChessmans
+        {
+            get 
+            {
+                if (_openingChessmans == null)
+                {
+                    _openingChessmans = ChessmanCollection.ChessmansCreator(_openingChessmans);
+                }
+                return _openingChessmans;
+            }
+        }
+        private static ChessmanCollection _openingChessmans = new ChessmanCollection();
+        public static ChessmanCollection ChessmansCreator(ChessmanCollection chessmans)
+        {
+            chessmans.AddRange(ChessmanPawn.WhitePawns);
+            chessmans.AddRange(ChessmanPawn.BlackPawns);
+            chessmans.Add(ChessmanRook.Rook01);
+            chessmans.Add(ChessmanRook.Rook08);
+            chessmans.Add(ChessmanRook.Rook57);
+            chessmans.Add(ChessmanRook.Rook64);
+            chessmans.Add(ChessmanKnight.Knight02);
+            chessmans.Add(ChessmanKnight.Knight07);
+            chessmans.Add(ChessmanKnight.Knight58);
+            chessmans.Add(ChessmanKnight.Knight63);
+            chessmans.Add(ChessmanBishop.Bishop03);
+            chessmans.Add(ChessmanBishop.Bishop06);
+            chessmans.Add(ChessmanBishop.Bishop59);
+            chessmans.Add(ChessmanBishop.Bishop62);
+            chessmans.Add(ChessmanQueen.WhiteQueen);
+            chessmans.Add(ChessmanQueen.BlackQueen);
+            chessmans.Add(ChessmanKing.WhiteKing);
+            chessmans.Add(ChessmanKing.BlackKing);
+
+            return chessmans;
+        }
     }
 }

@@ -13,7 +13,9 @@ namespace Gean.UI.ChessControl
     /// </summary>
     public class ChessBoard : Control, IChessBoard
     {
-        /// <summary>获取此棋盘上所拥有的所有的棋格矩形(8*8)</summary>
+        /// <summary>
+        /// 获取此棋盘上所拥有的所有的棋格矩形(8*8)
+        /// </summary>
         protected virtual Rectangle[,] Rectangles { get; private set; }
 
         protected virtual ChessPosition KeySelectPosition { get; private set; }
@@ -42,7 +44,7 @@ namespace Gean.UI.ChessControl
         }
         private ChessGame _ChessGame;
 
-        public List<Chessman> Chessmans { get; set; }
+        public ChessmanCollection Chessmans { get; set; }
 
         /// <summary>
         /// 获取此棋盘当前的战方
@@ -132,37 +134,7 @@ namespace Gean.UI.ChessControl
         /// </summary>
         protected virtual void InitializeChessmans()
         {
-            this.Chessmans = new List<Chessman>(32);
-            #region
-            throw new NotImplementedException();
-            //兵
-            //for (int i = 1; i <= 8; i++)
-            //{
-            //    this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.White, i));//白兵
-            //    this.Chessmans.Add(new ChessmanPawn(Enums.ChessmanSide.Black, i));//黑兵
-            //}
-            ////王
-            //this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.White));
-            //this.Chessmans.Add(new ChessmanKing(Enums.ChessmanSide.Black));
-            ////后
-            //this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.White));
-            //this.Chessmans.Add(new ChessmanQueen(Enums.ChessmanSide.Black));
-            ////车
-            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanRook(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            ////马
-            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanKnight(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            ////象
-            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.White, Enums.ChessGridSide.Black));
-            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.White));
-            //this.Chessmans.Add(new ChessmanBishop(Enums.ChessmanSide.Black, Enums.ChessGridSide.Black));
-            #endregion
+            this.Chessmans = ChessmanCollection.OpeningChessmans;
             this.Invalidate();
         }
 
@@ -172,9 +144,8 @@ namespace Gean.UI.ChessControl
         /// <param name="images">一个指定棋子集合</param>
         protected virtual void InitializeChessmans(IEnumerable<Chessman> chessmans)
         {
-            this.Chessmans = new List<Chessman>(32);
+            this.Chessmans = new ChessmanCollection();
             this.Chessmans.AddRange(chessmans);
-            this.Chessmans.TrimExcess();
             this.Invalidate();
         }
 
@@ -516,7 +487,7 @@ namespace Gean.UI.ChessControl
         /// <param name="g">Graphics</param>
         /// <param name="chessmans">指定的棋子图片集合</param>
         /// <param name="board">传递引用的ChessBoard类型</param>
-        private static void PaintChessmanImage(Graphics g, List<Chessman> chessmans, ChessBoard board)
+        private static void PaintChessmanImage(Graphics g, ChessmanCollection chessmans, ChessBoard board)
         {
             foreach (Chessman man in chessmans)
             {
