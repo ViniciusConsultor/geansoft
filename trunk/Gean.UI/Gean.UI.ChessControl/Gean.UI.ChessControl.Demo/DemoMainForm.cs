@@ -14,11 +14,11 @@ namespace Gean.UI.ChessControl.Demo
     {
 
 
+        public FormWindowState IsShangBan { get { return Program.IsShangBan; } }
+
+
+
         public string PGNFile { get { return Program.PGNFile_Test_2_Game; } } 
-        public FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
-
-
-
         private string _demoFile = Path.GetDirectoryName(@"..\..\DemoFile\");
         private ChessBoard _board = new ChessBoard();
         private ChessRecordFile records = new ChessRecordFile();

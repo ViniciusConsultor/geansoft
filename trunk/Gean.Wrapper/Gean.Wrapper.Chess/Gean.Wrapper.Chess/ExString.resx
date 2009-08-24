@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChessmanTypeCannotCreated" xml:space="preserve">
-    <value>"Enums.ChessmanType.{0}" 类型棋子无法被创建。</value>
-  </data>
   <data name="ChessmanTypeError" xml:space="preserve">
     <value>"Enums.ChessmanType.{0}" 类型无法进行相应的运算。</value>
+  </data>
+  <data name="ChessPositionIsEmpty" xml:space="preserve">
+    <value>棋盘位置是空值，无法运算。</value>
+  </data>
+  <data name="ChessPositionIsError" xml:space="preserve">
+    <value>棋盘位置(“ ChessPosition: {0} ”)是错误的值，导致运算出错。</value>
   </data>
   <data name="ex_illegalHorizontalValue" xml:space="preserve">
     <value>Illegal horizontal value. Use [A-Z] instead.</value>

@@ -21,39 +21,28 @@ namespace Gean.Wrapper.Chess
             this.IsCaptured = false;
             this.CurrPosition = this.SetCurrPosition(position);
         }
-        //public ChessmanKing(Enums.ChessmanSide side)
-        //    : base(Enums.ChessmanType.King, side)
-        //{
-        //    switch (side)
-        //    {
-        //        case Enums.ChessmanSide.White:
-        //            this.CurrPosition = new ChessPosition(5, 1);
-        //            break;
-        //        case Enums.ChessmanSide.Black:
-        //            this.CurrPosition = new ChessPosition(5, 8);
-        //            break;
-        //    }
-        //    //this.ChessPositions.Push(point);
-        //}
 
-        //public ChessmanKing(Enums.ChessmanSide side, ChessPosition pos)
-        //    : base(Enums.ChessmanType.King, side)
-        //{
-        //    this.CurrPosition = pos;
-        //}
-
-        //public override ChessPosition[] GetEnablePositions()
-        //{
-        //    throw new NotImplementedException();
-        //}
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            throw new NotImplementedException();
+            if (position.Equals(ChessPosition.Empty))
+            {
+                switch (this.ChessmanSide)
+                {
+                    case Enums.ChessmanSide.White:
+                        return new ChessPosition(5, 1);
+                    case Enums.ChessmanSide.Black:
+                        return new ChessPosition(5, 8);
+                    default:
+                        throw new ChessmanException(ExString.ChessPositionIsEmpty);
+                }
+            }
+            else
+                return position;
         }
 
         public override ChessPosition[] GetEnablePositions()
         {
-            throw new NotImplementedException();
+            return this.CurrPosition.GetKingPositions();
         }
     }
 }

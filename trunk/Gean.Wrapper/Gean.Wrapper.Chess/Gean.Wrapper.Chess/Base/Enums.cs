@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gean.Wrapper.Chess
 {
@@ -629,6 +627,7 @@ namespace Gean.Wrapper.Chess
             Diagonal = 4,
         }
         #endregion
+
     }
 }
 
