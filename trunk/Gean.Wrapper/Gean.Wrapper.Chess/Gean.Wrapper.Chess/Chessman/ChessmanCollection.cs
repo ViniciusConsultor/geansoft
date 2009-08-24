@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace Gean.Wrapper.Chess
 {
-    public class ChessmanArray : ICollection<Chessman>
+    public class ChessmanCollection : ICollection<Chessman>
     {
         List<Chessman> Chessmans = new List<Chessman>(32);
 

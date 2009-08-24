@@ -22,14 +22,14 @@ namespace Gean.Wrapper.Chess {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExceptionString {
+    internal class ExString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ExceptionString() {
+        internal ExString() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Gean.Wrapper.Chess {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Wrapper.Chess.ExceptionString", typeof(ExceptionString).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Wrapper.Chess.ExString", typeof(ExString).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,24 @@ namespace Gean.Wrapper.Chess {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &quot;Enums.ChessmanType.{0}&quot; 类型棋子无法被创建。 的本地化字符串。
+        /// </summary>
+        internal static string ChessmanTypeCannotCreated {
+            get {
+                return ResourceManager.GetString("ChessmanTypeCannotCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &quot;Enums.ChessmanType.{0}&quot; 类型无法进行相应的运算。 的本地化字符串。
+        /// </summary>
+        internal static string ChessmanTypeError {
+            get {
+                return ResourceManager.GetString("ChessmanTypeError", resourceCulture);
             }
         }
         

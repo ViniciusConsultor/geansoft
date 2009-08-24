@@ -12,16 +12,26 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessmanRook : Chessman
     {
-        public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
-            : base(Enums.ChessmanType.Rook, side)
-        {
-            this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
-        }
+        
+        //public ChessmanRook(Enums.ChessmanSide side, Enums.ChessGridSide gridSide)
+        //    : base(Enums.ChessmanType.Rook, side)
+        //{
+        //    this.CurrPosition = Chessman.GetOpenningsPosition(side, gridSide, 1, 8);
+        //}
 
-        public ChessmanRook(Enums.ChessmanSide side, ChessPosition pos)
-            : base(Enums.ChessmanType.Rook, side)
+        //public ChessmanRook(Enums.ChessmanSide side, ChessPosition pos)
+        //    : base(Enums.ChessmanType.Rook, side)
+        //{
+        //    this.CurrPosition = pos;
+        //}
+
+        //public override ChessPosition[] GetEnablePositions()
+        //{
+        //    throw new NotImplementedException();
+        //}
+        protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            this.CurrPosition = pos;
+            throw new NotImplementedException();
         }
 
         public override ChessPosition[] GetEnablePositions()
