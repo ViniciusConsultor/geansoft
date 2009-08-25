@@ -27,7 +27,7 @@ namespace Gean.Wrapper.Chess
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            if (position.Equals(ChessPosition.Empty))
+            if (position == ChessPosition.Empty)
             {
                 switch (this.ChessmanSide)
                 {

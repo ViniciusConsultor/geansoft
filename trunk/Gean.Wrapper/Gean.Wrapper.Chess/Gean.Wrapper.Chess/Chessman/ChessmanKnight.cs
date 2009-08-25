@@ -34,6 +34,6 @@ namespace Gean.Wrapper.Chess
 
         public override ChessPosition[] GetEnablePositions()
         {
-            return this.CurrPosition.GetRookPositions();
+            return this.CurrPosition.GetKnightPositions();
         }    }
 }

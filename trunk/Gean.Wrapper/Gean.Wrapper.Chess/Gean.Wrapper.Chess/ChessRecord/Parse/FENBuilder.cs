@@ -411,6 +411,7 @@ namespace Gean.Wrapper.Chess
 
         private char GetChar(int dot)
         {
+            dot = dot - 1;
             int m = dot / 8;
             int n = dot % 8;
             return this.Rows[m][n];

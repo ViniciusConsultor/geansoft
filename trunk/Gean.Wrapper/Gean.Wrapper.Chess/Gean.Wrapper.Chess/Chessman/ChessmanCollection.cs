@@ -9,6 +9,20 @@ namespace Gean.Wrapper.Chess
     {
         List<Chessman> Chessmans = new List<Chessman>(32);
 
+        public bool TryGetChessman(int dot, out Chessman chessman)
+        {
+            chessman = Chessman.Empty;
+            foreach (Chessman man in Chessmans)
+            {
+                if (man.CurrPosition.Dot == dot)
+                {
+                    chessman = man;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool TryContains(Chessman item, out int dot)
         {
             if (Chessmans.Contains(item))
@@ -106,20 +120,9 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        public static ChessmanCollection OpeningChessmans
+        public static ChessmanCollection OpeningChessmansCreator()
         {
-            get 
-            {
-                if (_openingChessmans == null)
-                {
-                    _openingChessmans = ChessmanCollection.ChessmansCreator(_openingChessmans);
-                }
-                return _openingChessmans;
-            }
-        }
-        private static ChessmanCollection _openingChessmans = new ChessmanCollection();
-        public static ChessmanCollection ChessmansCreator(ChessmanCollection chessmans)
-        {
+            ChessmanCollection chessmans = new ChessmanCollection();
             chessmans.AddRange(ChessmanPawn.WhitePawns);
             chessmans.AddRange(ChessmanPawn.BlackPawns);
             chessmans.Add(ChessmanRook.Rook01);
@@ -138,7 +141,7 @@ namespace Gean.Wrapper.Chess
             chessmans.Add(ChessmanQueen.BlackQueen);
             chessmans.Add(ChessmanKing.WhiteKing);
             chessmans.Add(ChessmanKing.BlackKing);
-
+            chessmans.Chessmans.TrimExcess();
             return chessmans;
         }
     }
