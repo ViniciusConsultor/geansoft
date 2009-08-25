@@ -48,6 +48,7 @@
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._FENStringLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._mainSpliter.Panel2.SuspendLayout();
             this._mainSpliter.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -60,6 +61,7 @@
             this.tabPage1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this._mainMenuStrip.SuspendLayout();
             this._stripContainer.ContentPanel.SuspendLayout();
             this._stripContainer.SuspendLayout();
@@ -67,6 +69,7 @@
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // _mainSpliter
@@ -171,10 +174,11 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Controls.Add(this.pictureBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(390, 101);
+            this.tabPage2.Size = new System.Drawing.Size(147, 174);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "棋谱选项";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -299,6 +303,14 @@
             this.toolStripContainer1.TabIndex = 5;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(127, 90);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // DemoMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,6 +334,7 @@
             this.tabPage1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this._mainMenuStrip.ResumeLayout(false);
             this._mainMenuStrip.PerformLayout();
             this._stripContainer.ContentPanel.ResumeLayout(false);
@@ -334,6 +347,7 @@
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -360,6 +374,7 @@
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripStatusLabel _statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel _FENStringLabel;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

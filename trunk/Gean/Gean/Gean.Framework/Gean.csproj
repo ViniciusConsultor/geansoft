@@ -58,7 +58,9 @@
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Widgets\Checker.cs" />
     <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
+    <Compile Include="Widgets\GlobaShortcut.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
+    <Compile Include="Widgets\SnipScreen.cs" />
     <Compile Include="Wrapper\Database\DbEnums.cs" />
     <Compile Include="Wrapper\Database\DbParam.cs" />
     <Compile Include="Wrapper\Database\DbParamCollection.cs" />
