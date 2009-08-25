@@ -9,6 +9,12 @@ namespace Gean.Wrapper.Chess
     {
         List<Chessman> Chessmans = new List<Chessman>(32);
 
+        /// <summary>
+        /// 尝试从棋子集合中根据指定的棋盘位置获取棋子
+        /// </summary>
+        /// <param name="dot">指定的棋盘位置</param>
+        /// <param name="chessman">棋子</param>
+        /// <returns></returns>
         public bool TryGetChessman(int dot, out Chessman chessman)
         {
             chessman = Chessman.Empty;
