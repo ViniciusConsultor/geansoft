@@ -15,10 +15,10 @@ namespace Gean.Wrapper.Chess
             switch (side)
             {
                 case Enums.ChessmanSide.White:
-                    this.ChessmanType = Enums.ChessmanType.WhiteQueen;
+                    this.ChessmanType = Enums.ChessmanType.WhiteKing;
                     break;
                 case Enums.ChessmanSide.Black:
-                    this.ChessmanType = Enums.ChessmanType.BlackQueen;
+                    this.ChessmanType = Enums.ChessmanType.BlackKing;
                     break;
             }
             this.IsCaptured = false;
@@ -27,7 +27,7 @@ namespace Gean.Wrapper.Chess
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
-            if (position.Equals(ChessPosition.Empty))
+            if (position == ChessPosition.Empty)
             {
                 switch (this.ChessmanSide)
                 {

@@ -9,27 +9,27 @@ namespace Gean.Wrapper.Chess
         public static ChessmanPawn[] BlackPawns = new ChessmanPawn[]
             #region
             {
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(1,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(2,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(3,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(4,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(5,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(6,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(7,7)),
-                new ChessmanPawn(Enums.ChessmanSide.Black,new ChessPosition(8,7))
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(1,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(2,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(3,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(4,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(5,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(6,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(7,7)),
+                new ChessmanPawn(Enums.ChessmanSide.Black, new ChessPosition(8,7))
             };
             #endregion
         public static ChessmanPawn[] WhitePawns = new ChessmanPawn[]
             #region
             {
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(1,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(2,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(3,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(4,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(5,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(6,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(7,8)),
-                new ChessmanPawn(Enums.ChessmanSide.White,new ChessPosition(8,8))
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(1,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(2,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(3,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(4,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(5,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(6,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(7,2)),
+                new ChessmanPawn(Enums.ChessmanSide.White, new ChessPosition(8,2))
             };
             #endregion
 
@@ -69,7 +69,8 @@ namespace Gean.Wrapper.Chess
 
         public override ChessPosition[] GetEnablePositions()
         {
-            return this.CurrPosition.GetKingPositions();
+            return this.CurrPosition.GetPawnPositions(this.ChessmanSide);
         }
+
     }
 }

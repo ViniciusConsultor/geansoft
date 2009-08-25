@@ -136,15 +136,13 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public virtual ChessRecord Record { get; private set; }
 
-        public bool HasChessman(ChessPosition position, out Enums.ChessmanType type)
+        public bool HasChessman(ChessPosition position)
         {
-            type = Enums.ChessmanType.None;
             char c = this.CurrFENBuilder[position.Dot];
             if (c == '1')
                 return false;
             else
-                type = Enums.ToChessmanType(c);
-            return true;
+                return true;
         }
 
         #region === Move ===

@@ -35,7 +35,7 @@ namespace Gean.Wrapper.Chess
 
         public override ChessPosition[] GetEnablePositions()
         {
-            return this.CurrPosition.GetQueenPositions();
+            return this.CurrPosition.GetBishopPositions();
         }
 
     }
