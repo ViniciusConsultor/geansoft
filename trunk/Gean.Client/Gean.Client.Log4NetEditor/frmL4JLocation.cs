@@ -159,7 +159,7 @@ namespace Gean.Client.Log4NetEditor
             // 
             this.btnAddAppender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddAppender.Enabled = false;
-            this.btnAddAppender.Location = new System.Drawing.Point(411, 262);
+            this.btnAddAppender.Location = new System.Drawing.Point(409, 259);
             this.btnAddAppender.Name = "btnAddAppender";
             this.btnAddAppender.Size = new System.Drawing.Size(75, 23);
             this.btnAddAppender.TabIndex = 2;
@@ -170,7 +170,7 @@ namespace Gean.Client.Log4NetEditor
             // 
             this.btnRemoveAppender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveAppender.Enabled = false;
-            this.btnRemoveAppender.Location = new System.Drawing.Point(491, 262);
+            this.btnRemoveAppender.Location = new System.Drawing.Point(488, 258);
             this.btnRemoveAppender.Name = "btnRemoveAppender";
             this.btnRemoveAppender.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveAppender.TabIndex = 1;
@@ -187,7 +187,7 @@ namespace Gean.Client.Log4NetEditor
             this.dgAppenders.Location = new System.Drawing.Point(8, 8);
             this.dgAppenders.Name = "dgAppenders";
             this.dgAppenders.ReadOnly = true;
-            this.dgAppenders.Size = new System.Drawing.Size(555, 246);
+            this.dgAppenders.Size = new System.Drawing.Size(555, 245);
             this.dgAppenders.TabIndex = 0;
             this.dgAppenders.CurrentCellChanged += new System.EventHandler(this.dgAppenders_CurrentCellChanged);
             // 
@@ -196,9 +196,9 @@ namespace Gean.Client.Log4NetEditor
             this.tabLoggers.Controls.Add(this.btnAddLogger);
             this.tabLoggers.Controls.Add(this.btnRemoveLogger);
             this.tabLoggers.Controls.Add(this.dgLoggers);
-            this.tabLoggers.Location = new System.Drawing.Point(4, 21);
+            this.tabLoggers.Location = new System.Drawing.Point(4, 22);
             this.tabLoggers.Name = "tabLoggers";
-            this.tabLoggers.Size = new System.Drawing.Size(571, 293);
+            this.tabLoggers.Size = new System.Drawing.Size(571, 294);
             this.tabLoggers.TabIndex = 1;
             this.tabLoggers.Text = "Loggers";
             // 
@@ -206,7 +206,7 @@ namespace Gean.Client.Log4NetEditor
             // 
             this.btnAddLogger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddLogger.Enabled = false;
-            this.btnAddLogger.Location = new System.Drawing.Point(510, 250);
+            this.btnAddLogger.Location = new System.Drawing.Point(408, 256);
             this.btnAddLogger.Name = "btnAddLogger";
             this.btnAddLogger.Size = new System.Drawing.Size(75, 23);
             this.btnAddLogger.TabIndex = 2;
@@ -217,7 +217,7 @@ namespace Gean.Client.Log4NetEditor
             // 
             this.btnRemoveLogger.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveLogger.Enabled = false;
-            this.btnRemoveLogger.Location = new System.Drawing.Point(590, 250);
+            this.btnRemoveLogger.Location = new System.Drawing.Point(489, 256);
             this.btnRemoveLogger.Name = "btnRemoveLogger";
             this.btnRemoveLogger.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveLogger.TabIndex = 1;
@@ -234,7 +234,7 @@ namespace Gean.Client.Log4NetEditor
             this.dgLoggers.Location = new System.Drawing.Point(8, 8);
             this.dgLoggers.Name = "dgLoggers";
             this.dgLoggers.ReadOnly = true;
-            this.dgLoggers.Size = new System.Drawing.Size(654, 234);
+            this.dgLoggers.Size = new System.Drawing.Size(556, 242);
             this.dgLoggers.TabIndex = 0;
             this.dgLoggers.CurrentCellChanged += new System.EventHandler(this.dgLoggers_CurrentCellChanged);
             // 
