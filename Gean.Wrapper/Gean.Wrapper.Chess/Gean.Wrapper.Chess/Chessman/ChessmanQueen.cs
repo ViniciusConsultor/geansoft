@@ -6,34 +6,34 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanQueen : Chessman
     {
-        public static ChessmanQueen BlackQueen = new ChessmanQueen(Enums.ChessmanSide.Black);
-        public static ChessmanQueen WhiteQueen = new ChessmanQueen(Enums.ChessmanSide.White);
-        public ChessmanQueen(Enums.ChessmanSide side) : this(side, ChessPosition.Empty) { }
-        public ChessmanQueen(Enums.ChessmanSide side, ChessPosition position)
+        public static ChessmanQueen BlackQueen = new ChessmanQueen(Enums.GameSide.Black);
+        public static ChessmanQueen WhiteQueen = new ChessmanQueen(Enums.GameSide.White);
+        public ChessmanQueen(Enums.GameSide side) : this(side, ChessPosition.Empty) { }
+        public ChessmanQueen(Enums.GameSide side, ChessPosition position)
         {
-            this.ChessmanSide = side;
+            this.GameSide = side;
             switch (side)
             {
-                case Enums.ChessmanSide.White:
+                case Enums.GameSide.White:
                     this.ChessmanType = Enums.ChessmanType.WhiteQueen;
                     break;
-                case Enums.ChessmanSide.Black:
+                case Enums.GameSide.Black:
                     this.ChessmanType = Enums.ChessmanType.BlackQueen;
                     break;
             }
             this.IsCaptured = false;
-            this.CurrPosition = this.SetCurrPosition(position);
+            this._currPosition = this.SetCurrPosition(position);
         }
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)
         {
             if (position == ChessPosition.Empty)
             {
-                switch (this.ChessmanSide)
+                switch (this.GameSide)
                 {
-                    case Enums.ChessmanSide.White:
+                    case Enums.GameSide.White:
                         return new ChessPosition(4, 1);
-                    case Enums.ChessmanSide.Black:
+                    case Enums.GameSide.Black:
                         return new ChessPosition(4, 8);
                     default:
                         throw new ChessmanException(ExString.ChessPositionIsEmpty);

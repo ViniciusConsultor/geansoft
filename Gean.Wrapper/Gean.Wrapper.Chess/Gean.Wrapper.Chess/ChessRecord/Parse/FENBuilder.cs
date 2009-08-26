@@ -382,7 +382,7 @@ namespace Gean.Wrapper.Chess
                     char c = Rows[x][y];
                     if (y == '1') continue;
                     Enums.ChessmanType manType;
-                    Enums.ChessmanSide manSide;
+                    Enums.GameSide manSide;
                     throw new NotImplementedException();
                 }
             }
@@ -399,6 +399,7 @@ namespace Gean.Wrapper.Chess
         {
             this[tgtPos.Dot] = chessman.ToString()[0];
             this[srcPos.Dot] = '1';
+            //throw new NotImplementedException();
             return this;
         }
 

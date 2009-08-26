@@ -5,8 +5,7 @@ namespace Gean.UI.ChessControl
 {
     public interface IChessBoard
     {
-        Enums.ChessmanSide CurrChessSide { get; }
-        void MoveIn(ChessPosition srcPos, ChessPosition tgtPos);
+        Enums.GameSide CurrChessSide { get; }
         ChessGame ChessGame { get; }
     }
 }

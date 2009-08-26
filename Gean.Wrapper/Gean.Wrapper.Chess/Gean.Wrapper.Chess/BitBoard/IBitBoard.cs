@@ -12,13 +12,13 @@ namespace Gean.Wrapper.Chess
         int Flags { get; }
         void DoMove(int move);
         void UndoMove(int move);
-        Enums.ChessmanSide ToMove { get; }
-        ulong GetPawns(Enums.ChessmanSide s);
-        ulong GetKnights(Enums.ChessmanSide s);
-        ulong GetBishops(Enums.ChessmanSide s);
-        ulong GetRooks(Enums.ChessmanSide s);
-        ulong GetQueens(Enums.ChessmanSide s);
-        ulong GetKing(Enums.ChessmanSide s);
+        Enums.GameSide ToMove { get; }
+        ulong GetPawns(Enums.GameSide s);
+        ulong GetKnights(Enums.GameSide s);
+        ulong GetBishops(Enums.GameSide s);
+        ulong GetRooks(Enums.GameSide s);
+        ulong GetQueens(Enums.GameSide s);
+        ulong GetKing(Enums.GameSide s);
         void SetBoard(string fen);
         string SavePos();
         void Dump(TextWriter tw);

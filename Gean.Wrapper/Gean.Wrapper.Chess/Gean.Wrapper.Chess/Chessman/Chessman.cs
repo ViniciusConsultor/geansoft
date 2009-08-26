@@ -29,7 +29,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子的战方
         /// </summary>
-        public virtual Enums.ChessmanSide ChessmanSide { get; protected set; }
+        public virtual Enums.GameSide GameSide { get; protected set; }
         /// <summary>
         /// 获取或设置该棋子是否已被杀死
         /// </summary>
@@ -37,14 +37,25 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋子所在位置
         /// </summary>
-        public virtual ChessPosition CurrPosition { get; protected set; }
+        public ChessPosition CurrPosition
+        {
+            get { return this._currPosition; }
+        }
+        protected ChessPosition _currPosition;
 
         #endregion
 
+        public void MoveIn(ChessGame chessGame, ChessPosition tgtPosition)
+        {
+            ChessPosition srcPosition = _currPosition;
+            _currPosition = tgtPosition;
+            OnPositionChanged(new PositionChangedEventArgs(this, srcPosition, tgtPosition));
+        }
+
         #region abstract
 
-        protected abstract ChessPosition SetCurrPosition(ChessPosition position);
         public abstract ChessPosition[] GetEnablePositions();
+        protected abstract ChessPosition SetCurrPosition(ChessPosition position);
 
         #endregion
 
@@ -66,7 +77,7 @@ namespace Gean.Wrapper.Chess
             Chessman man = obj as Chessman;
             if (this.ChessmanType.Equals(man.ChessmanType))
                 return false;
-            if (this.ChessmanSide.Equals(man.ChessmanSide))
+            if (this.GameSide.Equals(man.GameSide))
                 return false;
             if (this.IsCaptured.Equals(man.IsCaptured))
                 return false;
@@ -77,7 +88,7 @@ namespace Gean.Wrapper.Chess
         public override int GetHashCode()
         {
             return unchecked(3 * (
-                this.ChessmanSide.GetHashCode() +
+                this.GameSide.GetHashCode() +
                 this.ChessmanType.GetHashCode() +
                 this.IsCaptured.GetHashCode() +
                 this.CurrPosition.GetHashCode()
@@ -108,15 +119,15 @@ namespace Gean.Wrapper.Chess
         /// <summary>根据指定的棋子战方与指定的棋子X坐标获取开局的棋子坐标</summary>
         /// <param name="side">指定的棋子战方</param>
         /// <param name="x">指定的棋子X坐标</param>
-        protected static ChessPosition GetOpenningsPosition(Enums.ChessmanSide side, int x)
+        protected static ChessPosition GetOpenningsPosition(Enums.GameSide side, int x)
         {
             ChessPosition point = ChessPosition.Empty;
             switch (side)
             {
-                case Enums.ChessmanSide.White:
+                case Enums.GameSide.White:
                     point = new ChessPosition(x, 1);
                     break;
-                case Enums.ChessmanSide.Black:
+                case Enums.GameSide.Black:
                     point = new ChessPosition(x, 8);
                     break;
             }
@@ -124,5 +135,22 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        public event PositionChangedEventHandler PositionChangedEvent;
+        protected virtual void OnPositionChanged(PositionChangedEventArgs e)
+        {
+            if (PositionChangedEvent != null)
+                PositionChangedEvent(this, e);
+        }
+        public delegate void PositionChangedEventHandler(object sender, PositionChangedEventArgs e);
+        public class PositionChangedEventArgs : ChangedEventArgs<ChessPosition>
+        {
+            public Chessman Chessman { get; private set; }
+            public PositionChangedEventArgs(Chessman chessman, ChessPosition srcPosition, ChessPosition tgtPosition)
+                : base(srcPosition, tgtPosition)
+            {
+                this.Chessman = chessman;
+            }
+        }
     }
 }

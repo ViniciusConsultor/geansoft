@@ -9,7 +9,7 @@ namespace Gean.UI.ChessControl.Demo
     static class Program
     {
 
-        public static FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
+        public static FormWindowState IsShangBan { get { return FormWindowState.Normal; } }
 
         public static string PGNFile_340_Game { get { return @"pgn\340,game.pgn"; } }
         public static string PGNFile_8_Game { get { return @"pgn\8,game.pgn"; } }
