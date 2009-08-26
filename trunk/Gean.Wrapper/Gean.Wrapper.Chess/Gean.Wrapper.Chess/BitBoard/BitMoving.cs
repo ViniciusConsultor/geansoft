@@ -82,23 +82,23 @@ namespace Gean.Wrapper.Chess
 
             if ((pCell == (int)Enums.Cell.e1
                 && cCell == (int)Enums.Cell.g1
-                && 0 != (board.GetKing(Enums.ChessmanSide.White) & bm.Previous)
+                && 0 != (board.GetKing(Enums.GameSide.White) & bm.Previous)
                 )
                 ||
                 (pCell == (int)Enums.Cell.e8
                 && cCell == (int)Enums.Cell.g8
-                && 0 != (board.GetKing(Enums.ChessmanSide.Black) & bm.Previous)
+                && 0 != (board.GetKing(Enums.GameSide.Black) & bm.Previous)
                 )
                 )
                 bm.Action |= Enums.Action.KingSideCastling;
             if ((pCell == (int)Enums.Cell.e1
                 && cCell == (int)Enums.Cell.c1
-                && 0 != (board.GetKing(Enums.ChessmanSide.White) & bm.Previous)
+                && 0 != (board.GetKing(Enums.GameSide.White) & bm.Previous)
                 )
                 ||
                 (pCell == (int)Enums.Cell.e8
                 && cCell == (int)Enums.Cell.c8
-                && 0 != (board.GetKing(Enums.ChessmanSide.Black) & bm.Previous)
+                && 0 != (board.GetKing(Enums.GameSide.Black) & bm.Previous)
                 )
                 )
                 bm.Action |= Enums.Action.QueenSideCastling;

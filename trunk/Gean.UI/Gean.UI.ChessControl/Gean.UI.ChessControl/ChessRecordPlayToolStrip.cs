@@ -59,7 +59,7 @@ namespace Gean.UI.ChessControl
             {
                 //srcPos = ChessPath.GetSourcePosition(step, this.ChessBoard.CurrChessSide, this.ChessBoard.OwnedChessGame);
             }
-            this.ChessBoard.MoveIn(srcPos, tgtPos);
+            //this.ChessBoard.MoveIn(srcPos, tgtPos);
         }
 
         public void Back()

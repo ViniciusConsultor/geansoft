@@ -126,6 +126,9 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        /// <summary>
+        /// 建立一个新棋局的默认集合
+        /// </summary>
         public static ChessmanCollection OpeningChessmansCreator()
         {
             ChessmanCollection chessmans = new ChessmanCollection();

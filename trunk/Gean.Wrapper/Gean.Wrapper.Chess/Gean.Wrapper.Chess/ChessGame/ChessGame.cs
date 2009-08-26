@@ -93,10 +93,10 @@ namespace Gean.Wrapper.Chess
             get { return CurrFENBuilder.FullMove; }
             set { CurrFENBuilder.FullMove = value; }
         }
-        public virtual Enums.ChessmanSide ChessmanSide
+        public virtual Enums.GameSide GameSide
         {
-            get { return Enums.ToChessmanSide(CurrFENBuilder.Color); }
-            set { CurrFENBuilder.Color = Enums.FormChessmanSide(value); }
+            get { return Enums.ToGameSide(CurrFENBuilder.Color); }
+            set { CurrFENBuilder.Color = Enums.FormGameSide(value); }
         }
         public virtual bool BlackCastleKing
         {
@@ -148,14 +148,14 @@ namespace Gean.Wrapper.Chess
         #region === Move ===
 
         /// <summary>
-        /// 将指定的棋子移到本棋格(已注册杀棋事件与落子事件)。
-        /// 1.棋子的战方应在调用该方法之前进行判断;
-        /// 2.该棋子是否能够落入指定的棋格应在调用该方法之前进行判断;
-        /// 重点方法。
+        /// internal方法：一般来讲，是提供给Chessman及其派生类使用，建议其他位置不要调用。
+        /// 将指定的棋子从指定源位置移到目标位置。(已注册行棋事件)。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
-        /// <param name="action">该棋步的动作</param>
-        public ChessStep MoveIn(FENBuilder fen, Chessman chessman, ChessPosition srcPos, ChessPosition tgtPos)
+        /// <param name="srcPos">指定源位置</param>
+        /// <param name="tgtPos">指定目标位置</param>
+        /// <returns>移动是否成功</returns>
+        internal bool MoveIn(Chessman chessman, ChessPosition srcPos, ChessPosition tgtPos)
         {
             //指定的棋子为空或动作为空
             if (Chessman.IsNullOrEmpty(chessman) || tgtPos == ChessPosition.Empty)
@@ -163,11 +163,11 @@ namespace Gean.Wrapper.Chess
             Enums.Action action = Enums.Action.General;
 
 
-            ChessStep chessStep = new ChessStep(Number, chessman.ChessmanSide, chessman.ChessmanType, srcPos, tgtPos, action);
+            ChessStep chessStep = new ChessStep(Number, chessman.GameSide, chessman.ChessmanType, srcPos, tgtPos, action);
             this.CurrFENBuilder = this.CurrFENBuilder.Move(chessman, action, srcPos, tgtPos);
             //注册行棋事件
-            OnMoveIn(new MoveInEventArgs(action, chessman.ChessmanSide, chessStep));
-            return chessStep;
+            OnMoveIn(new MoveInEventArgs(action, chessman.GameSide, chessStep));
+            return true;
         }
 
         #endregion
@@ -269,12 +269,12 @@ namespace Gean.Wrapper.Chess
         public class MoveInEventArgs : EventArgs
         {
             public Enums.Action Action { get; private set; }
-            public Enums.ChessmanSide ChessmanSide { get; private set; }
+            public Enums.GameSide GameSide { get; private set; }
             public ChessStep ChessStep { get; private set; }
-            public MoveInEventArgs(Enums.Action action, Enums.ChessmanSide chessmanSide, ChessStep chessStep)
+            public MoveInEventArgs(Enums.Action action, Enums.GameSide chessmanSide, ChessStep chessStep)
             {
                 this.Action = action;
-                this.ChessmanSide = chessmanSide;
+                this.GameSide = chessmanSide;
                 this.ChessStep = chessStep;
             }
         }

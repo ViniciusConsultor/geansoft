@@ -88,40 +88,40 @@ namespace Gean.Wrapper.Chess
             return BitBoard.SavePos();
         }
 
-        public Enums.ChessmanSide ToMove
+        public Enums.GameSide ToMove
         {
             get { return BitBoard.ToMove; }
         }
-        public bool InCheck(Enums.ChessmanSide side)
+        public bool InCheck(Enums.GameSide side)
         {
             return MoveGenerator.InCheck(BitBoard, side);
         }
-        public bool InCheck(Enums.ChessmanSide side, ulong bit)
+        public bool InCheck(Enums.GameSide side, ulong bit)
         {
             int cell = BitToCell(bit);
             return MoveGenerator.InCheck(BitBoard, new int[] { cell }, side);
         }
-        public ulong GetPawns(Enums.ChessmanSide side)
+        public ulong GetPawns(Enums.GameSide side)
         {
             return BitBoard.GetPawns(side);
         }
-        public ulong GetKnights(Enums.ChessmanSide side)
+        public ulong GetKnights(Enums.GameSide side)
         {
             return BitBoard.GetKnights(side);
         }
-        public ulong GetBishops(Enums.ChessmanSide side)
+        public ulong GetBishops(Enums.GameSide side)
         {
             return BitBoard.GetBishops(side);
         }
-        public ulong GetRooks(Enums.ChessmanSide side)
+        public ulong GetRooks(Enums.GameSide side)
         {
             return BitBoard.GetRooks(side);
         }
-        public ulong GetQueens(Enums.ChessmanSide side)
+        public ulong GetQueens(Enums.GameSide side)
         {
             return BitBoard.GetQueens(side);
         }
-        public ulong GetKing(Enums.ChessmanSide side)
+        public ulong GetKing(Enums.GameSide side)
         {
             return BitBoard.GetKing(side);
         }
@@ -174,11 +174,11 @@ namespace Gean.Wrapper.Chess
         /// 计算出一个散列Key值
         /// </summary>
         /// <param name="sideToMove"></param>
-        public void CalculateZobristKey(Enums.ChessmanSide sideToMove)
+        public void CalculateZobristKey(Enums.GameSide sideToMove)
         {
             _zKey = ZobristKey(sideToMove);
         }
-        public ulong ZobristKey(Enums.ChessmanSide c)
+        public ulong ZobristKey(Enums.GameSide c)
         {
             ulong key = 0;
             ulong p = 1UL;
@@ -186,52 +186,52 @@ namespace Gean.Wrapper.Chess
             {
                 #region
                 //White
-                if (0 != (p & GetBishops(Enums.ChessmanSide.White)))
+                if (0 != (p & GetBishops(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[2, 0, i];
                 }
-                if (0 != (p & GetKnights(Enums.ChessmanSide.White)))
+                if (0 != (p & GetKnights(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[1, 0, i];
                 }
-                if (0 != (p & GetRooks(Enums.ChessmanSide.White)))
+                if (0 != (p & GetRooks(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[3, 0, i];
                 }
-                if (0 != (p & GetQueens(Enums.ChessmanSide.White)))
+                if (0 != (p & GetQueens(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[4, 0, i];
                 }
-                if (0 != (p & GetKing(Enums.ChessmanSide.White)))
+                if (0 != (p & GetKing(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[5, 0, i];
                 }
-                if (0 != (p & GetPawns(Enums.ChessmanSide.White)))
+                if (0 != (p & GetPawns(Enums.GameSide.White)))
                 {
                     key ^= ZobristKeyGen[0, 0, i];
                 }
                 //black
-                if (0 != (p & GetBishops(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetBishops(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[2, 1, i];
                 }
-                if (0 != (p & GetKnights(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetKnights(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[1, 1, i];
                 }
-                if (0 != (p & GetRooks(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetRooks(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[3, 1, i];
                 }
-                if (0 != (p & GetQueens(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetQueens(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[4, 1, i];
                 }
-                if (0 != (p & GetKing(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetKing(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[5, 1, i];
                 }
-                if (0 != (p & GetPawns(Enums.ChessmanSide.Black)))
+                if (0 != (p & GetPawns(Enums.GameSide.Black)))
                 {
                     key ^= ZobristKeyGen[0, 1, i];
                 }
@@ -245,7 +245,7 @@ namespace Gean.Wrapper.Chess
             //    key ^= CastleBlackRandom;
             //if (blackCanCastleLong)
             //    key ^= LongCastleBlackRandom;
-            if (c == Enums.ChessmanSide.Black)
+            if (c == Enums.GameSide.Black)
                 key ^= BlackRandom;
             return key;
         }
@@ -254,12 +254,12 @@ namespace Gean.Wrapper.Chess
 
         #region PieceSquare
 
-        public int GetExtimatedBoardPositionalValue(Enums.ChessmanSide s, Enums.GamePhase phase)
+        public int GetExtimatedBoardPositionalValue(Enums.GameSide s, Enums.GamePhase phase)
         {
             return 0;
         }
         
-        //public int GetExtimatedBoardPositionalValue(Enums.ChessmanSide s, Enums.GamePhase phase)
+        //public int GetExtimatedBoardPositionalValue(Enums.GameSide s, Enums.GamePhase phase)
         //{
         //    int valueWhite = 0, valueBlack = 0;
         //    foreach (int cell in Unpack(WhitePawns))
@@ -329,7 +329,7 @@ namespace Gean.Wrapper.Chess
         //    {
         //        valueBlack += bishopSquareBonuses[cell];
         //    }
-        //    return s == Enums.ChessmanSide.White ? valueWhite - valueBlack : valueBlack - valueWhite;
+        //    return s == Enums.GameSide.White ? valueWhite - valueBlack : valueBlack - valueWhite;
         //}
 
         //public int GetMoveBonus(BitMoving bm, Enums.GamePhase phase)
@@ -676,9 +676,9 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static Enums.ChessmanSide Flip(Enums.ChessmanSide s)
+        public static Enums.GameSide Flip(Enums.GameSide s)
         {
-            return s == Enums.ChessmanSide.White ? Enums.ChessmanSide.Black : Enums.ChessmanSide.White;
+            return s == Enums.GameSide.White ? Enums.GameSide.Black : Enums.GameSide.White;
         }
         public static ICollection<int> Unpack(ulong bits)
         {

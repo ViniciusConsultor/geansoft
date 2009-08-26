@@ -9,7 +9,7 @@ namespace Gean.UI.ChessControl
     {
         ChessRecord ActiveRecord { get; }
         int CurrChessStepPair { get; }
-        Enums.ChessmanSide CurrChessmanSide { get; }
+        Enums.GameSide CurrGameSide { get; }
         ChessStep GetStep();
     }
 }

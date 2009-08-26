@@ -7,25 +7,25 @@ namespace Gean.Wrapper.Chess
     public class ChessmanBishop : Chessman
     {
 
-        public static ChessmanBishop Bishop03 = new ChessmanBishop(Enums.ChessmanSide.Black, new ChessPosition(3, 8));
-        public static ChessmanBishop Bishop06 = new ChessmanBishop(Enums.ChessmanSide.Black, new ChessPosition(6, 8));
-        public static ChessmanBishop Bishop59 = new ChessmanBishop(Enums.ChessmanSide.White, new ChessPosition(3, 1));
-        public static ChessmanBishop Bishop62 = new ChessmanBishop(Enums.ChessmanSide.White, new ChessPosition(6, 1));
+        public static ChessmanBishop Bishop03 = new ChessmanBishop(Enums.GameSide.Black, new ChessPosition(3, 8));
+        public static ChessmanBishop Bishop06 = new ChessmanBishop(Enums.GameSide.Black, new ChessPosition(6, 8));
+        public static ChessmanBishop Bishop59 = new ChessmanBishop(Enums.GameSide.White, new ChessPosition(3, 1));
+        public static ChessmanBishop Bishop62 = new ChessmanBishop(Enums.GameSide.White, new ChessPosition(6, 1));
 
-        public ChessmanBishop(Enums.ChessmanSide manSide, ChessPosition position)
+        public ChessmanBishop(Enums.GameSide manSide, ChessPosition position)
         {
-            this.ChessmanSide = manSide;
+            this.GameSide = manSide;
             switch (manSide)
             {
-                case Enums.ChessmanSide.White:
+                case Enums.GameSide.White:
                     this.ChessmanType = Enums.ChessmanType.WhiteBishop;
                     break;
-                case Enums.ChessmanSide.Black:
+                case Enums.GameSide.Black:
                     this.ChessmanType = Enums.ChessmanType.BlackBishop;
                     break;
             }
             this.IsCaptured = false;
-            this.CurrPosition = this.SetCurrPosition(position);
+            this._currPosition = this.SetCurrPosition(position);
         }
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)
@@ -37,6 +37,5 @@ namespace Gean.Wrapper.Chess
         {
             return this.CurrPosition.GetBishopPositions();
         }
-
     }
 }

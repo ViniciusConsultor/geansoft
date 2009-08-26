@@ -37,6 +37,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._currTree = new System.Windows.Forms.TreeView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._recordListView = new Gean.UI.ChessControl.ChessRecordListView();
             this._mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this._openingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +49,6 @@
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._FENStringLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._mainSpliter.Panel2.SuspendLayout();
             this._mainSpliter.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -62,6 +62,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this._mainMenuStrip.SuspendLayout();
             this._stripContainer.ContentPanel.SuspendLayout();
             this._stripContainer.SuspendLayout();
@@ -69,7 +70,6 @@
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // _mainSpliter
@@ -82,7 +82,7 @@
             // 
             this._mainSpliter.Panel2.Controls.Add(this.splitContainer1);
             this._mainSpliter.Size = new System.Drawing.Size(632, 373);
-            this._mainSpliter.SplitterDistance = 348;
+            this._mainSpliter.SplitterDistance = 403;
             this._mainSpliter.SplitterWidth = 3;
             this._mainSpliter.TabIndex = 0;
             // 
@@ -99,8 +99,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._rightSplit);
-            this.splitContainer1.Size = new System.Drawing.Size(281, 373);
-            this.splitContainer1.SplitterDistance = 122;
+            this.splitContainer1.Size = new System.Drawing.Size(226, 373);
+            this.splitContainer1.SplitterDistance = 91;
             this.splitContainer1.TabIndex = 1;
             // 
             // _recordTree
@@ -108,7 +108,7 @@
             this._recordTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._recordTree.Location = new System.Drawing.Point(0, 0);
             this._recordTree.Name = "_recordTree";
-            this._recordTree.Size = new System.Drawing.Size(122, 373);
+            this._recordTree.Size = new System.Drawing.Size(91, 373);
             this._recordTree.TabIndex = 0;
             // 
             // _rightSplit
@@ -125,7 +125,7 @@
             // _rightSplit.Panel2
             // 
             this._rightSplit.Panel2.Controls.Add(this._recordListView);
-            this._rightSplit.Size = new System.Drawing.Size(155, 373);
+            this._rightSplit.Size = new System.Drawing.Size(131, 373);
             this._rightSplit.SplitterDistance = 200;
             this._rightSplit.TabIndex = 0;
             // 
@@ -137,7 +137,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(155, 200);
+            this.tabControl1.Size = new System.Drawing.Size(131, 200);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -146,7 +146,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(147, 174);
+            this.tabPage1.Size = new System.Drawing.Size(123, 174);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "棋盘选项";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -160,8 +160,8 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this._currTree);
-            this.splitContainer2.Size = new System.Drawing.Size(141, 168);
-            this.splitContainer2.SplitterDistance = 101;
+            this.splitContainer2.Size = new System.Drawing.Size(117, 168);
+            this.splitContainer2.SplitterDistance = 83;
             this.splitContainer2.TabIndex = 0;
             // 
             // _currTree
@@ -169,19 +169,27 @@
             this._currTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._currTree.Location = new System.Drawing.Point(0, 0);
             this._currTree.Name = "_currTree";
-            this._currTree.Size = new System.Drawing.Size(101, 168);
+            this._currTree.Size = new System.Drawing.Size(83, 168);
             this._currTree.TabIndex = 0;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.pictureBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(147, 174);
+            this.tabPage2.Size = new System.Drawing.Size(147, 175);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "棋谱选项";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(127, 90);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // _recordListView
             // 
@@ -191,7 +199,7 @@
             this._recordListView.Location = new System.Drawing.Point(0, 0);
             this._recordListView.Name = "_recordListView";
             this._recordListView.Number = 1;
-            this._recordListView.Size = new System.Drawing.Size(155, 169);
+            this._recordListView.Size = new System.Drawing.Size(131, 169);
             this._recordListView.TabIndex = 0;
             this._recordListView.UseCompatibleStateImageBehavior = false;
             this._recordListView.View = System.Windows.Forms.View.Details;
@@ -303,14 +311,6 @@
             this.toolStripContainer1.TabIndex = 5;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(127, 90);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // DemoMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,6 +321,7 @@
             this.MainMenuStrip = this._mainMenuStrip;
             this.Name = "DemoMainForm";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DemoMainForm";
             this._mainSpliter.Panel2.ResumeLayout(false);
             this._mainSpliter.ResumeLayout(false);
@@ -335,6 +336,7 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this._mainMenuStrip.ResumeLayout(false);
             this._mainMenuStrip.PerformLayout();
             this._stripContainer.ContentPanel.ResumeLayout(false);
@@ -347,7 +349,6 @@
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

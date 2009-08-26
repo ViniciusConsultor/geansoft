@@ -9,25 +9,25 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class ChessmanRook : Chessman
     {
-        public static ChessmanRook Rook01 = new ChessmanRook(Enums.ChessmanSide.Black, new ChessPosition(1, 8));
-        public static ChessmanRook Rook08 = new ChessmanRook(Enums.ChessmanSide.Black, new ChessPosition(8, 8));
-        public static ChessmanRook Rook57 = new ChessmanRook(Enums.ChessmanSide.White, new ChessPosition(1, 1));
-        public static ChessmanRook Rook64 = new ChessmanRook(Enums.ChessmanSide.White, new ChessPosition(8, 1));
+        public static ChessmanRook Rook01 = new ChessmanRook(Enums.GameSide.Black, new ChessPosition(1, 8));
+        public static ChessmanRook Rook08 = new ChessmanRook(Enums.GameSide.Black, new ChessPosition(8, 8));
+        public static ChessmanRook Rook57 = new ChessmanRook(Enums.GameSide.White, new ChessPosition(1, 1));
+        public static ChessmanRook Rook64 = new ChessmanRook(Enums.GameSide.White, new ChessPosition(8, 1));
 
-        public ChessmanRook(Enums.ChessmanSide manSide, ChessPosition position)
+        public ChessmanRook(Enums.GameSide manSide, ChessPosition position)
         {
-            this.ChessmanSide = manSide;
+            this.GameSide = manSide;
             switch (manSide)
             {
-                case Enums.ChessmanSide.White:
+                case Enums.GameSide.White:
                     this.ChessmanType = Enums.ChessmanType.WhiteRook;
                     break;
-                case Enums.ChessmanSide.Black:
+                case Enums.GameSide.Black:
                     this.ChessmanType = Enums.ChessmanType.BlackRook;
                     break;
             }
             this.IsCaptured = false;
-            this.CurrPosition = this.SetCurrPosition(position);
+            this._currPosition = this.SetCurrPosition(position);
         }
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)

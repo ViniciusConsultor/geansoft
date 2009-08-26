@@ -251,7 +251,7 @@ namespace Gean.Wrapper.Chess
 
         #region Get enable position array
 
-        public ChessPosition[] GetPositions(Chessman man, Enums.ChessmanSide side)
+        public ChessPosition[] GetPositions(Chessman man, Enums.GameSide side)
         {
             switch (man.ChessmanType)
             {
@@ -276,11 +276,11 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取“兵”的可能移动到的位置
         /// </summary>
-        public ChessPosition[] GetPawnPositions(Enums.ChessmanSide side)
+        public ChessPosition[] GetPawnPositions(Enums.GameSide side)
         {
             List<ChessPosition> positions = new List<ChessPosition>();
             ChessPosition pos;
-            if (side == Enums.ChessmanSide.White)
+            if (side == Enums.GameSide.White)
             {
                 if (this._y < 1) return null;
 
@@ -301,7 +301,7 @@ namespace Gean.Wrapper.Chess
                 if (pos != ChessPosition.Empty)
                     positions.Add(pos);
             }
-            if (side == Enums.ChessmanSide.Black)
+            if (side == Enums.GameSide.Black)
             {
                 if (this._y > 6) return null;
 

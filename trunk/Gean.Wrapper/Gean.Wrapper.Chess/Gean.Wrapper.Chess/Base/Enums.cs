@@ -314,36 +314,36 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        #region ChessmanSide
+        #region GameSide
 
         /// <summary>
-        /// 棋子的战方：黑棋，白棋
+        /// 棋局当前战方：黑棋，白棋
         /// </summary>
-        public enum ChessmanSide
+        public enum GameSide
         {
             White = 0, Black = 1
         }
 
-        public static char FormChessmanSide(ChessmanSide side)
+        public static char FormGameSide(GameSide side)
         {
-            if (side == ChessmanSide.White) return 'w';
-            if (side == ChessmanSide.Black) return 'b';
+            if (side == GameSide.White) return 'w';
+            if (side == GameSide.Black) return 'b';
             throw new ChessException();
         }
-        public static ChessmanSide ToChessmanSide(char c)
+        public static GameSide ToGameSide(char c)
         {
-            if (c == 'w') return ChessmanSide.White;
-            if (c == 'b') return ChessmanSide.Black;
+            if (c == 'w') return GameSide.White;
+            if (c == 'b') return GameSide.Black;
             throw new ChessException();
         }
         /// <summary>
         /// 获取棋的另一战方
         /// </summary>
-        public static ChessmanSide GetOtherChessmanSide(ChessmanSide currSide)
+        public static GameSide GetOtherGameSide(GameSide currSide)
         {
-            if (currSide == ChessmanSide.Black)
-                return ChessmanSide.White;
-            return ChessmanSide.Black;
+            if (currSide == GameSide.Black)
+                return GameSide.White;
+            return GameSide.Black;
         }
 
         #endregion
@@ -545,7 +545,7 @@ namespace Gean.Wrapper.Chess
             }
             return man;
         }
-        public static ChessmanSide ToChessmanSideByChessmanType(ChessmanType type)
+        public static GameSide ToGameSideByChessmanType(ChessmanType type)
         {
             switch (type)
             {
@@ -555,14 +555,14 @@ namespace Gean.Wrapper.Chess
                 case ChessmanType.WhiteBishop:
                 case ChessmanType.WhiteKnight:
                 case ChessmanType.WhitePawn:
-                    return ChessmanSide.White;
+                    return GameSide.White;
                 case ChessmanType.BlackKing:
                 case ChessmanType.BlackQueen:
                 case ChessmanType.BlackRook:
                 case ChessmanType.BlackBishop:
                 case ChessmanType.BlackKnight:
                 case ChessmanType.BlackPawn:
-                    return ChessmanSide.Black;
+                    return GameSide.Black;
                 case ChessmanType.AllKings:
                 case ChessmanType.AllQueens:
                 case ChessmanType.AllRooks:
@@ -760,58 +760,58 @@ public enum FenChessmans
     /// </summary>
     All
 }
-public static void FenChessmansToType(FenChessmans fenChessmans, out Enums.ChessmanSide manSide, out Enums.ChessmanType manType)
+public static void FenChessmansToType(FenChessmans fenChessmans, out Enums.GameSide manSide, out Enums.ChessmanType manType)
 {
-    manSide = ChessmanSide.White;
+    manSide = GameSide.White;
     manType = ChessmanType.None;
     switch (fenChessmans)
     {
         case FenChessmans.WhiteKing:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.King;
             break;
         case FenChessmans.WhiteQueen:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.Queen;
             break;
         case FenChessmans.WhiteRook:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.Rook;
             break;
         case FenChessmans.WhiteBishop:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.Bishop;
             break;
         case FenChessmans.WhiteKnight:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.Knight;
             break;
         case FenChessmans.WhitePawn:
-            manSide = ChessmanSide.White;
+            manSide = GameSide.White;
             manType = ChessmanType.Pawn;
             break;
         case FenChessmans.BlackKing:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.King;
             break;
         case FenChessmans.BlackQueen:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.Queen;
             break;
         case FenChessmans.BlackRook:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.Rook;
             break;
         case FenChessmans.BlackBishop:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.Bishop;
             break;
         case FenChessmans.BlackKnight:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.Knight;
             break;
         case FenChessmans.BlackPawn:
-            manSide = ChessmanSide.Black;
+            manSide = GameSide.Black;
             manType = ChessmanType.Pawn;
             break;
         case FenChessmans.None:

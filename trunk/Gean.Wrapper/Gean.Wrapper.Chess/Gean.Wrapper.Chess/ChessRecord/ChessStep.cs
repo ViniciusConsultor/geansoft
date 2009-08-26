@@ -30,7 +30,7 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 获取或设置该步棋的棋子战方
         /// </summary>
-        public Enums.ChessmanSide ChessmanSide { get; internal set; }
+        public Enums.GameSide GameSide { get; internal set; }
         /// <summary>
         /// 获取或设置该步棋的升变后棋子类型
         /// </summary>
@@ -91,14 +91,14 @@ namespace Gean.Wrapper.Chess
         #region ctor
 
         public ChessStep(int number,
-                         Enums.ChessmanSide manSide, 
+                         Enums.GameSide manSide, 
                          Enums.ChessmanType chessmanType, 
                          ChessPosition srcPos, 
                          ChessPosition tagPos, 
                          params Enums.Action[] action)
         {
             this.Number = number;
-            this.ChessmanSide = manSide;
+            this.GameSide = manSide;
             this.ChessmanType = chessmanType;
             this.SourcePosition = srcPos;
             this.TargetPosition = tagPos;
@@ -236,7 +236,7 @@ namespace Gean.Wrapper.Chess
                     }
                 }
             }
-            if (this.ChessmanSide == Enums.ChessmanSide.White)
+            if (this.GameSide == Enums.GameSide.White)
             {
                 sb.Insert(0, this.Number.ToString() + ". ");
             }
@@ -265,7 +265,7 @@ namespace Gean.Wrapper.Chess
                 return false;
             if (this.ChessmanType != step.ChessmanType)
                 return false;
-            if (this.ChessmanSide != step.ChessmanSide)
+            if (this.GameSide != step.GameSide)
                 return false;
             if (!UtilityEquals.CollectionsNoSortedEquals<Enums.Action>(this.Actions, step.Actions))
                 return false;
@@ -322,9 +322,9 @@ namespace Gean.Wrapper.Chess
                     //TODO!!!!!!
                 }
                 if (white == null)
-                    white = ChessStep.Parse(number, steps[i], Enums.ChessmanSide.White);
+                    white = ChessStep.Parse(number, steps[i], Enums.GameSide.White);
                 else if (black == null)
-                    black = ChessStep.Parse(number, steps[i], Enums.ChessmanSide.Black);
+                    black = ChessStep.Parse(number, steps[i], Enums.GameSide.Black);
             }
 
             return new ChessStep[] { white, black };
@@ -337,7 +337,7 @@ namespace Gean.Wrapper.Chess
         /// <param name="value">指定的字符串</param>
         /// <param name="manSide">棋子的战方（主要是针对兵的源棋格使用）</param>
         /// <returns></returns>
-        public static ChessStep Parse(int number, string value, Enums.ChessmanSide manSide)
+        public static ChessStep Parse(int number, string value, Enums.GameSide manSide)
         {
             if (string.IsNullOrEmpty(value)) 
                 throw new ArgumentNullException();
@@ -478,7 +478,7 @@ namespace Gean.Wrapper.Chess
 
         private static void ParseSrcPos(string before, 
                                         string after, 
-                                        Enums.ChessmanSide manSide, 
+                                        Enums.GameSide manSide, 
                                         out Enums.ChessmanType type, 
                                         out ChessPosition pos,
                                         out Enums.Orientation hasSame,
@@ -511,7 +511,7 @@ namespace Gean.Wrapper.Chess
                     sameVertical = int.Parse(after[1].ToString());
                     if (type == Enums.ChessmanType.AllPawns)
                     {
-                        if (manSide == Enums.ChessmanSide.Black)
+                        if (manSide == Enums.GameSide.Black)
                             sameVertical++;
                         else
                             sameVertical--;
