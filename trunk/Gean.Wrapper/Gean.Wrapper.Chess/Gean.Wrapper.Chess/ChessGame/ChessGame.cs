@@ -31,8 +31,18 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public ChessGame(FENBuilder fenBuilder)
         {
+            this.Record = new ChessRecord();
+
+            this.FenNotation = fenBuilder;
             this.LoadPositions();
-            this.CurrFENBuilder = fenBuilder;
+            if (fenBuilder.Equals(FENBuilder.NewGame))
+            {
+                this.InitializeChessmans();
+            }
+            else
+            {
+                this.InitializeChessmans(fenBuilder.ToChessmans());
+            }
         }
 
         /// <summary>
@@ -48,6 +58,8 @@ namespace Gean.Wrapper.Chess
         }
 
         #endregion
+
+        #region property
 
         #region this
 
@@ -84,90 +96,133 @@ namespace Gean.Wrapper.Chess
         /// <summary>
         /// 棋局当前FEN记录
         /// </summary>
-        public virtual FENBuilder CurrFENBuilder { get; private set; }
+        public virtual FENBuilder FenNotation { get; private set; }
         /// <summary>
         /// 棋局当前回合数
         /// </summary>
         public virtual int Number
         {
-            get { return CurrFENBuilder.FullMove; }
-            set { CurrFENBuilder.FullMove = value; }
+            get { return FenNotation.FullMove; }
+            set { FenNotation.FullMove = value; }
         }
         public virtual Enums.GameSide GameSide
         {
-            get { return Enums.ToGameSide(CurrFENBuilder.Color); }
-            set { CurrFENBuilder.Color = Enums.FormGameSide(value); }
+            get { return Enums.ToGameSide(FenNotation.Color); }
+            set { FenNotation.Color = Enums.FormGameSide(value); }
         }
         public virtual bool BlackCastleKing
         {
-            get { return CurrFENBuilder.BlackCastleKing; }
-            set { CurrFENBuilder.BlackCastleKing = value; }
+            get { return FenNotation.BlackCastleKing; }
+            set { FenNotation.BlackCastleKing = value; }
         }
         public virtual bool BlackCastleQueen
         {
-            get { return CurrFENBuilder.BlackCastleQueen; }
-            set { CurrFENBuilder.BlackCastleQueen = value; }
+            get { return FenNotation.BlackCastleQueen; }
+            set { FenNotation.BlackCastleQueen = value; }
         }
         public virtual bool WhiteCastleKing
         {
-            get { return CurrFENBuilder.WhiteCastleKing; }
-            set { CurrFENBuilder.WhiteCastleKing = value; }
+            get { return FenNotation.WhiteCastleKing; }
+            set { FenNotation.WhiteCastleKing = value; }
         }
         public virtual bool WhiteCastleQueen
         {
-            get { return CurrFENBuilder.WhiteCastleQueen; }
-            set { CurrFENBuilder.WhiteCastleQueen = value; }
+            get { return FenNotation.WhiteCastleQueen; }
+            set { FenNotation.WhiteCastleQueen = value; }
         }
         public virtual string Enpassant
         {
-            get { return CurrFENBuilder.Enpassant; }
-            set { CurrFENBuilder.Enpassant = value; }
+            get { return FenNotation.Enpassant; }
+            set { FenNotation.Enpassant = value; }
         }
         public virtual int HalfMove
         {
-            get { return CurrFENBuilder.HalfMove; }
-            set { CurrFENBuilder.HalfMove = value; }
+            get { return FenNotation.HalfMove; }
+            set { FenNotation.HalfMove = value; }
         }
 
         #endregion
+
+        /// <summary>
+        /// 当前棋盘所拥有的棋子集合
+        /// </summary>
+        public virtual ChessmanCollection Chessmans { get; private set; }
 
         /// <summary>
         /// 获取本局棋的记录
         /// </summary>
         public virtual ChessRecord Record { get; private set; }
 
-        public bool HasChessman(ChessPosition position)
+        /// <summary>
+        /// 返回指定的位置是否有棋子
+        /// </summary>
+        /// <param name="position">指定的位置</param>
+        /// <returns></returns>
+        public virtual bool HasChessman(ChessPosition position)
         {
-            char c = this.CurrFENBuilder[position.Dot];
+            char c = this.FenNotation[position.Dot];
             if (c == '1')
                 return false;
             else
                 return true;
         }
 
-        #region === Move ===
+        #endregion
+
+        #region Initialize Chessmans
 
         /// <summary>
-        /// internal方法：一般来讲，是提供给Chessman及其派生类使用，建议其他位置不要调用。
-        /// 将指定的棋子从指定源位置移到目标位置。(已注册行棋事件)。
+        /// 初始化默认棋子集合(32个棋子)
+        /// </summary>
+        protected virtual void InitializeChessmans()
+        {
+            this.Chessmans = ChessmanCollection.OpeningChessmansCreator();
+            foreach (Chessman man in this.Chessmans)
+            {
+                man.PositionChangedEvent += new Chessman.PositionChangedEventHandler(ChessmanPositionChangedEvent);
+            }
+        }
+
+        /// <summary>
+        /// 初始化棋子集合
+        /// </summary>
+        /// <param name="images">一个指定棋子集合</param>
+        protected virtual void InitializeChessmans(IEnumerable<Chessman> chessmans)
+        {
+            this.Chessmans = new ChessmanCollection();
+            this.Chessmans.AddRange(chessmans);
+            foreach (Chessman man in this.Chessmans)
+            {
+                man.PositionChangedEvent += new Chessman.PositionChangedEventHandler(ChessmanPositionChangedEvent);
+            }
+        }
+
+        #endregion
+
+        #region === Move ===
+
+        protected virtual void ChessmanPositionChangedEvent(object sender, Chessman.PositionChangedEventArgs e)
+        {
+            this.MoveIn(e.Action, e.MovedChessman, e.CaptruedChessman, e.OldItem, e.NewItem);
+        }
+
+        /// <summary>
+        /// 将指定的棋子从指定源位置移到目标位置。
         /// </summary>
         /// <param name="chessman">指定的棋子</param>
         /// <param name="srcPos">指定源位置</param>
         /// <param name="tgtPos">指定目标位置</param>
-        /// <returns>移动是否成功</returns>
-        internal bool MoveIn(Chessman chessman, ChessPosition srcPos, ChessPosition tgtPos)
+        protected virtual void MoveIn(Enums.Action action, 
+                                      Chessman movedChessman, 
+                                      Chessman captruedChessman, 
+                                      ChessPosition srcPos, 
+                                      ChessPosition tgtPos)
         {
-            //指定的棋子为空或动作为空
-            if (Chessman.IsNullOrEmpty(chessman) || tgtPos == ChessPosition.Empty)
-                throw new ArgumentNullException();
-            Enums.Action action = Enums.Action.General;
-
-
-            ChessStep chessStep = new ChessStep(Number, chessman.GameSide, chessman.ChessmanType, srcPos, tgtPos, action);
-            this.CurrFENBuilder = this.CurrFENBuilder.Move(chessman, action, srcPos, tgtPos);
+            ChessStep chessStep = new ChessStep(Number++, movedChessman.ChessmanType, srcPos, tgtPos, action);
+            this.Record.Items.Add(chessStep);
+            //this.FenNotation = this.FenNotation.Move(movedChessman, action, srcPos, tgtPos);
             //注册行棋事件
-            OnMoveIn(new MoveInEventArgs(action, chessman.GameSide, chessStep));
-            return true;
+            OnMoveIn(new MoveInEventArgs(action, movedChessman.GameSide, chessStep));
         }
 
         #endregion

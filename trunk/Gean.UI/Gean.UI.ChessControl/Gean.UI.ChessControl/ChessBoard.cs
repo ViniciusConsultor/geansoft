@@ -45,10 +45,6 @@ namespace Gean.UI.ChessControl
         #region Property
 
         /// <summary>
-        /// 当前棋盘所拥有的棋子集合
-        /// </summary>
-        public virtual ChessmanCollection Chessmans { get; set; }
-        /// <summary>
         /// 获取此棋盘所拥有(包含)的ChessGame
         /// </summary>
         public virtual ChessGame ChessGame
@@ -103,7 +99,7 @@ namespace Gean.UI.ChessControl
         public virtual void LoadGame()
         {
             this._ChessGame = new ChessGame();
-            this.InitializeChessmans();
+            this.Refresh();
         }
         /// <summary>
         /// 载入新棋局
@@ -112,31 +108,7 @@ namespace Gean.UI.ChessControl
         public virtual void LoadGame(FENBuilder fenBuilder)
         {
             this._ChessGame = new ChessGame();
-            this.InitializeChessmans(fenBuilder.ToChessmans());
-        }
-
-        #endregion
-
-        #region Initialize Chessmans
-
-        /// <summary>
-        /// 初始化默认棋子集合（32个棋子）
-        /// </summary>
-        protected virtual void InitializeChessmans()
-        {
-            this.Chessmans = ChessmanCollection.OpeningChessmansCreator();
-            this.Invalidate();
-        }
-
-        /// <summary>
-        /// 初始化棋子集合
-        /// </summary>
-        /// <param name="images">一个指定棋子集合</param>
-        protected virtual void InitializeChessmans(IEnumerable<Chessman> chessmans)
-        {
-            this.Chessmans = new ChessmanCollection();
-            this.Chessmans.AddRange(chessmans);
-            this.Invalidate();
+            this.Refresh();
         }
 
         #endregion
@@ -167,7 +139,7 @@ namespace Gean.UI.ChessControl
             base.OnPaintBackground(pe);
             Graphics g = pe.Graphics;
             this.Paint_ChessBoardGrid();
-            if (this._ChessGame != null && this.Chessmans != null)
+            if (this._ChessGame != null)
             {
                 this.Paint_ChessmanImage();
                 this.Paint_EnableMoveInPosition();
@@ -322,7 +294,7 @@ namespace Gean.UI.ChessControl
                             ChessPosition position = this._ChessGame[x, y];
                             if (!this.ChessGame.HasChessman(position))
                                 return;//找到矩形，但矩形中无棋子，退出
-                            if (this.Chessmans.TryGetChessman(position.Dot, out this.SelectedChessman))
+                            if (this._ChessGame.Chessmans.TryGetChessman(position.Dot, out this.SelectedChessman))
                             {
                                 if (this.SelectedChessman.GameSide != this.CurrChessSide)
                                 {
@@ -418,7 +390,7 @@ namespace Gean.UI.ChessControl
                             return;//找到矩形，但矩形中无棋子，退出
                         }
                         Chessman selectChessman;
-                        if (this.Chessmans.TryGetChessman(position.Dot, out selectChessman))
+                        if (this._ChessGame.Chessmans.TryGetChessman(position.Dot, out selectChessman))
                         {
                             if (selectChessman.GameSide != this.CurrChessSide)
                             {
@@ -528,7 +500,7 @@ namespace Gean.UI.ChessControl
         protected virtual void Paint_ChessmanImage()
         {
             Graphics g = Graphics.FromImage(this.OccImage);
-            foreach (Chessman man in this.Chessmans)
+            foreach (Chessman man in this._ChessGame.Chessmans)
             {
                 if (man.IsCaptured)
                     continue;
