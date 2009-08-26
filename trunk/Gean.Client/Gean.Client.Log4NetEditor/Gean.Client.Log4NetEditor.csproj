@@ -1,0 +1,213 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{64B97B43-3B8B-4529-AECB-930B0CFB9A32}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>dcr.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Log4NetEditor</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Gean.Client.Log4NetEditor</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Gean.OpenSource\Log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dcr.ico" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\AdoNetAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\AspNetTraceAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\BufferingForwardingAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\ColoredConsoleAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\ConsoleAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\EventLogAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\FileAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\ForwardingAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\MemoryAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\NetSendAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\OutputDebugStringAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\RemotingAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\RollingFileAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\SmtpAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\SmtpPickupDirAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\TraceAppender.xml" />
+    <Content Include="Log4netConfigConsulter\AppenderInfo\UdpAppender.xml" />
+    <Compile Include="frmL4JLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log4netConfigConsulter\AppenderConsulter.cs" />
+    <Compile Include="Log4netConfigConsulter\ArgumentStruct.cs" />
+    <Compile Include="Log4netConfigConsulter\Constants.cs" />
+    <Compile Include="Log4netConfigConsulter\UIControlType.cs" />
+    <Compile Include="Log4netEditor\dsADOParameters.Designer.cs" />
+    <Compile Include="Log4netEditor\dsADOParameters1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsADOParameters.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Log4netEditor\frmAppender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log4netEditor\frmLogger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log4netEditor\Helper.cs" />
+    <Compile Include="Log4netEditor\ParameterGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmL4JLocation.resx">
+      <DependentUpon>frmL4JLocation.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log4netEditor\frmAppender.resx">
+      <DependentUpon>frmAppender.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log4netEditor\frmLogger.resx">
+      <DependentUpon>frmLogger.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log4netEditor\ParameterGrid.resx">
+      <DependentUpon>ParameterGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Log4netEditor\dsADOParameters.xsc">
+      <DependentUpon>dsADOParameters.xsd</DependentUpon>
+    </None>
+    <None Include="Log4netEditor\dsADOParameters.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsADOParameters1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Log4netEditor\dsADOParameters.xss">
+      <DependentUpon>dsADOParameters.xsd</DependentUpon>
+    </None>
+    <None Include="Log4netEditor\dsADOParameters.xsx">
+      <DependentUpon>dsADOParameters.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>copy $(TargetFileName) D:\Tools
+copy log4net.dll d:\tools</PostBuildEvent>
+  </PropertyGroup>
+</Project>
