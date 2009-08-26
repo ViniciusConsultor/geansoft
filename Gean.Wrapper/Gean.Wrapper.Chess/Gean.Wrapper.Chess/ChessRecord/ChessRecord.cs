@@ -54,7 +54,7 @@ namespace Gean.Wrapper.Chess
         {
             return unchecked
                 (
-                3 * (Definer.GetHashCode() + Items.GetHashCode())
+                3 * (Definer.GetHashCode() ^ Items.GetHashCode())
                 );
         }
         public override string ToString()

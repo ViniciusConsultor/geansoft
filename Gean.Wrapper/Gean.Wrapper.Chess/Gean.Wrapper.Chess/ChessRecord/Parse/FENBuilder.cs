@@ -301,6 +301,34 @@ namespace Gean.Wrapper.Chess
                 throw new ArgumentOutOfRangeException();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+
+            FENBuilder fen = (FENBuilder)obj;
+            if (!this.BlackCastleKing.Equals(fen.BlackCastleKing)) return false;
+            if (!this.BlackCastleQueen.Equals(fen.BlackCastleQueen)) return false;
+            if (!this.Color.Equals(fen.Color)) return false;
+            if (!this.Enpassant.Equals(fen.Enpassant)) return false;
+            if (!this.FullMove.Equals(fen.FullMove)) return false;
+            if (!this.HalfMove.Equals(fen.HalfMove)) return false;
+            if (!this.WhiteCastleKing.Equals(fen.WhiteCastleKing)) return false;
+            if (!this.WhiteCastleQueen.Equals(fen.WhiteCastleQueen)) return false;
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return unchecked(3 * (
+                this.BlackCastleKing.GetHashCode() ^
+                this.BlackCastleQueen.GetHashCode() ^
+                this.Color.GetHashCode() ^
+                this.Enpassant.GetHashCode() ^
+                this.FullMove.GetHashCode() ^
+                this.HalfMove.GetHashCode() ^
+                this.WhiteCastleKing.GetHashCode() ^
+                this.WhiteCastleQueen.GetHashCode()));
+        }
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -399,7 +427,7 @@ namespace Gean.Wrapper.Chess
         {
             this[tgtPos.Dot] = chessman.ToString()[0];
             this[srcPos.Dot] = '1';
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
             return this;
         }
 

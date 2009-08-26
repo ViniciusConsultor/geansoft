@@ -91,14 +91,12 @@ namespace Gean.Wrapper.Chess
         #region ctor
 
         public ChessStep(int number,
-                         Enums.GameSide manSide, 
                          Enums.ChessmanType chessmanType, 
                          ChessPosition srcPos, 
                          ChessPosition tagPos, 
                          params Enums.Action[] action)
         {
             this.Number = number;
-            this.GameSide = manSide;
             this.ChessmanType = chessmanType;
             this.SourcePosition = srcPos;
             this.TargetPosition = tagPos;
@@ -443,7 +441,7 @@ namespace Gean.Wrapper.Chess
                 }
                 else
                 {
-                    manType = Enums.ChessmanType.AllPawns;
+                    manType = Enums.ChessmanType.WhitePawn;
                     hasSame = Enums.Orientation.Rank;
                     sameHorizontal = Utility.CharToInt(value[0]);
                     sameVertical = int.Parse(value[2].ToString());
@@ -467,7 +465,7 @@ namespace Gean.Wrapper.Chess
             if (actionList.Count == 0)
                 actionList.Add(Enums.Action.General);
 
-            ChessStep step = new ChessStep(number, manSide, manType, srcPos, tgtPos, actionList.ToArray());
+            ChessStep step = new ChessStep(number, manType, srcPos, tgtPos, actionList.ToArray());
             step._hasSame = hasSame;
             step._sameHorizontal = sameHorizontal;
             step._sameVertical = sameVertical;

@@ -47,9 +47,21 @@ namespace Gean.Wrapper.Chess
 
         public void MoveIn(ChessGame chessGame, ChessPosition tgtPosition)
         {
+            Enums.Action action = Enums.Action.General;
+            Chessman tgtChessman = null;
+            foreach (Chessman man in chessGame.Chessmans)
+            {
+                if (man.CurrPosition.Equals(tgtPosition))
+                {
+                    man.IsCaptured = true;
+                    action = Enums.Action.Capture;
+                    tgtChessman = man;
+                    break;
+                }
+            }
             ChessPosition srcPosition = _currPosition;
             _currPosition = tgtPosition;
-            OnPositionChanged(new PositionChangedEventArgs(this, srcPosition, tgtPosition));
+            OnPositionChanged(new PositionChangedEventArgs(action, this, tgtChessman, srcPosition, tgtPosition));
         }
 
         #region abstract
@@ -145,11 +157,15 @@ namespace Gean.Wrapper.Chess
         public delegate void PositionChangedEventHandler(object sender, PositionChangedEventArgs e);
         public class PositionChangedEventArgs : ChangedEventArgs<ChessPosition>
         {
-            public Chessman Chessman { get; private set; }
-            public PositionChangedEventArgs(Chessman chessman, ChessPosition srcPosition, ChessPosition tgtPosition)
+            public Enums.Action Action { get; private set; }
+            public Chessman MovedChessman { get; private set; }
+            public Chessman CaptruedChessman { get; private set; }
+            public PositionChangedEventArgs(Enums.Action action, Chessman movedChessman, Chessman captruedChessman, ChessPosition srcPosition, ChessPosition tgtPosition)
                 : base(srcPosition, tgtPosition)
             {
-                this.Chessman = chessman;
+                this.Action = action;
+                this.MovedChessman = movedChessman;
+                this.CaptruedChessman = captruedChessman;
             }
         }
     }

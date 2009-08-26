@@ -12,6 +12,14 @@
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessRecord" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Gean.Wrapper.Chess.ChessRecord.ChessStepEnumerator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessRecord\ChessRecord.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgBCBAEgAAAQAAAAAAAAIAEAAAAAAAAAAA=</HashCode>
       <FileName>ChessRecord\ChessRecord.cs</FileName>
@@ -31,8 +39,11 @@
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessStep" Collapsed="true">
     <Position X="4.5" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>ABIhAAQIIAgACAAEgEAAQAIAEAACIIA4AAAgAABACAA=</HashCode>
+      <HashCode>ABIhAAwIIAgACAAEgEAAQAIAEAACIIA4AAAgAABACAA=</HashCode>
       <FileName>ChessRecord\ChessStep.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -79,7 +90,7 @@
   <Class Name="Gean.Wrapper.Chess.FENBuilder" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="2.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAgAICABogEAFAECACgIAAABAgAAAAAgAAAkABABEA=</HashCode>
+      <HashCode>gAAgAICABogEAFAECACgIAAABAgAAAAAiAAAkABABEA=</HashCode>
       <FileName>ChessRecord\Parse\FENBuilder.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -102,6 +113,10 @@
   </Class>
   <Class Name="Gean.Wrapper.Chess.ChessGame">
     <Position X="8.5" Y="0.5" Width="1.75" />
+    <Members>
+      <Method Name="ChessGame" Hidden="true" />
+      <Property Name="this" Hidden="true" />
+    </Members>
     <NestedTypes>
       <Delegate Name="Gean.Wrapper.Chess.ChessGame.MoveInEventHandler" Collapsed="true">
         <TypeIdentifier>
@@ -115,7 +130,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAABAIAABAAEADgACEiCAAAAAAECAAAEgAAAAAAABBA=</HashCode>
+      <HashCode>ABABAIgABAAEADgACEiCAAAAAAAAAAAEgAAAAAAABBA=</HashCode>
       <FileName>ChessGame\ChessGame.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

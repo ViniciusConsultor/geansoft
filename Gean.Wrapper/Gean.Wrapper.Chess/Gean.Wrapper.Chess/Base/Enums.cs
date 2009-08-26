@@ -35,57 +35,41 @@ namespace Gean.Wrapper.Chess
             /// </summary>
             CheckMate = 8,
             /// <summary>
-            /// 用兵吃棋的动作
-            /// </summary>
-            PawnCapture = 16,
-            /// <summary>
-            /// 用马吃棋的动作
-            /// </summary>
-            KnightCapture = 32,
-            /// <summary>
-            /// 用象吃棋的动作
-            /// </summary>
-            BishopCapture = 64,
-            /// <summary>
-            /// 用车吃棋的动作
-            /// </summary>
-            RookCapture = 128,
-            /// <summary>
-            /// 用后吃棋的动作
-            /// </summary>
-            QueenCapture = 256,
-            /// <summary>
             /// 吃过路兵
             /// </summary>
-            EnPassant = 512,
+            EnPassant = 16,
             /// <summary>
             /// 升变为后
             /// </summary>
-            PromoteToQueen = 1024,
+            PromoteToQueen = 32,
             /// <summary>
             /// 升变为车
             /// </summary>
-            PromoteToRook = 2048,
+            PromoteToRook = 64,
             /// <summary>
             /// 升变为马
             /// </summary>
-            PromoteToKnight = 4096,
+            PromoteToKnight = 128,
             /// <summary>
             /// 升变为象
             /// </summary>
-            PromoteToBishop = 8192,
+            PromoteToBishop = 256,
             ///// <summary>
             ///// 王车长易位
             ///// </summary>
-            QueenSideCastling = 16384,
+            QueenSideCastling = 512,
             ///// <summary>
             ///// 王车短易位
             ///// </summary>
-            KingSideCastling = 32768,
+            KingSideCastling = 1024,
             /// <summary>
             /// 无效
             /// </summary>
-            Invalid = 65536,
+            Invalid = 2048,
+            /// <summary>
+            /// 杀棋并将军
+            /// </summary>
+            CaptureCheck = (Capture|Check),
             /// <summary>
             /// 王车易位
             /// </summary>
@@ -166,13 +150,6 @@ namespace Gean.Wrapper.Chess
 
                 case Action.General:
                 case Action.Opennings:
-                    return string.Empty;
-
-                case Action.PawnCapture:
-                case Action.KnightCapture:
-                case Action.BishopCapture:
-                case Action.RookCapture:
-                case Action.QueenCapture:
                     return string.Empty;
 
                 case Action.QueenSideCastling:
