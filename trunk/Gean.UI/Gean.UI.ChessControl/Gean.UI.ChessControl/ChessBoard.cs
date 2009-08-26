@@ -371,11 +371,10 @@ namespace Gean.UI.ChessControl
                         if (pos.Equals(tgtPosition))
                         {
                             this.SelectedChessman.MoveIn(this.ChessGame, tgtPosition);
-                            this.Refresh();
-                            return;
+                            break;
                         }
                     }
-                    return;
+                    break;
                 }
             }
             this.SelectedChessPosition = ChessPosition.Empty;
