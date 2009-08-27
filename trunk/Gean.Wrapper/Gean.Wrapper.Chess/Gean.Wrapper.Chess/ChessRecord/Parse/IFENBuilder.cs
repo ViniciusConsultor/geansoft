@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-
+﻿
 namespace Gean.Wrapper.Chess
 {
-    /// <summary>
-    ///   An interface that defines the minimal functionality that must
-    ///   be implemented to allow the setup of a chess position. 
-    ///   Normally used for a FEN or EDP parser that needs to setup
-    ///   a position in multiple places such as a validation engine
-    ///   and the bitmap dislay of the pieces.
-    /// </summary>
-    public interface IFENBuilder
+    interface IFENBuilder
     {
-        /// <summary>
-        /// Used to parse out a position calling the events as needed to inform the using class of what's happening.
-        /// </summary>
-        /// <param name="str"></param>
+        string PiecePlacementData { get; }
+        char ActiveColor { get; set; }
+        bool BlackKingCastlingAvailability { get; }
+        bool BlackQueenCastlingAvailability { get; }
+        bool WhiteKingCastlingAvailability { get; }
+        bool WhiteQueenCastlingAvailability { get; }
+        ChessPosition EnPassantTargetPosition { get; }
+        int HalfMoveClock { get; }
+        int FullMoveNumber { get; }
+        FENBuilder MoveIn(Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos);
+        char this[int dot] { get; set; }
+        void Clear();
         void Parse(string str);
+        string ToFENString();
     }
 }

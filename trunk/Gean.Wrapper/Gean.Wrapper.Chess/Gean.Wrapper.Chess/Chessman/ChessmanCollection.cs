@@ -7,7 +7,7 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanCollection : ICollection<Chessman>
     {
-        List<Chessman> Chessmans = new List<Chessman>(32);
+        List<Chessman> _chessmans = new List<Chessman>(32);
 
         /// <summary>
         /// 尝试从棋子集合中根据指定的棋盘位置获取棋子
@@ -18,9 +18,9 @@ namespace Gean.Wrapper.Chess
         public bool TryGetChessman(int dot, out Chessman chessman)
         {
             chessman = Chessman.Empty;
-            foreach (Chessman man in Chessmans)
+            foreach (Chessman man in _chessmans)
             {
-                if (man.CurrPosition.Dot == dot)
+                if ((man.CurrPosition.Dot == dot) && (!man.IsCaptured))
                 {
                     chessman = man;
                     return true;
@@ -31,7 +31,7 @@ namespace Gean.Wrapper.Chess
 
         public bool TryContains(Chessman item, out int dot)
         {
-            if (Chessmans.Contains(item))
+            if (_chessmans.Contains(item))
             {
                 dot = item.CurrPosition.Dot;
                 return true;
@@ -45,17 +45,17 @@ namespace Gean.Wrapper.Chess
 
         public void AddRange(IEnumerable<Chessman> items)
         {
-            this.Chessmans.AddRange(items);
+            this._chessmans.AddRange(items);
         }
 
         public void Clear()
         {
-            Chessmans.Clear();
+            _chessmans.Clear();
         }
 
         public int IndexOf(Chessman value)
         {
-            return this.Chessmans.IndexOf(value);
+            return this._chessmans.IndexOf(value);
         }
 
         public void Insert(int index, Chessman value)
@@ -65,35 +65,35 @@ namespace Gean.Wrapper.Chess
 
         public void RemoveAt(int index)
         {
-            this.Chessmans.RemoveAt(index);
+            this._chessmans.RemoveAt(index);
         }
 
         public Chessman this[int index]
         {
-            get { return this.Chessmans[index]; }
-            set { this.Chessmans[index] = value; }
+            get { return this._chessmans[index]; }
+            set { this._chessmans[index] = value; }
         }
 
         #region ICollection<Chessman> 成员
 
         public void Add(Chessman item)
         {
-            this.Chessmans.Add(item);
+            this._chessmans.Add(item);
         }
 
         public bool Contains(Chessman item)
         {
-            return this.Chessmans.Contains(item);
+            return this._chessmans.Contains(item);
         }
 
         public void CopyTo(Chessman[] array, int arrayIndex)
         {
-            this.Chessmans.CopyTo(array, arrayIndex);
+            this._chessmans.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return Chessmans.Count; }
+            get { return _chessmans.Count; }
         }
 
         public bool IsReadOnly
@@ -103,7 +103,7 @@ namespace Gean.Wrapper.Chess
 
         public bool Remove(Chessman item)
         {
-            return Chessmans.Remove(item);
+            return _chessmans.Remove(item);
         }
 
         #endregion
@@ -112,7 +112,7 @@ namespace Gean.Wrapper.Chess
 
         public IEnumerator<Chessman> GetEnumerator()
         {
-            return Chessmans.GetEnumerator();
+            return _chessmans.GetEnumerator();
         }
 
         #endregion
@@ -121,7 +121,7 @@ namespace Gean.Wrapper.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Chessmans.GetEnumerator();
+            return _chessmans.GetEnumerator();
         }
 
         #endregion
@@ -146,11 +146,11 @@ namespace Gean.Wrapper.Chess
             chessmans.Add(ChessmanBishop.Bishop06);
             chessmans.Add(ChessmanBishop.Bishop59);
             chessmans.Add(ChessmanBishop.Bishop62);
-            chessmans.Add(ChessmanQueen.WhiteQueen);
-            chessmans.Add(ChessmanQueen.BlackQueen);
-            chessmans.Add(ChessmanKing.WhiteKing);
-            chessmans.Add(ChessmanKing.BlackKing);
-            chessmans.Chessmans.TrimExcess();
+            chessmans.Add(ChessmanQueen.NewWhiteQueen);
+            chessmans.Add(ChessmanQueen.NewBlackQueen);
+            chessmans.Add(ChessmanKing.NewWhiteKing);
+            chessmans.Add(ChessmanKing.NewBlackKing);
+            chessmans._chessmans.TrimExcess();
             return chessmans;
         }
     }

@@ -6,8 +6,8 @@ namespace Gean.Wrapper.Chess
 {
     public class ChessmanQueen : Chessman
     {
-        public static ChessmanQueen BlackQueen = new ChessmanQueen(Enums.GameSide.Black);
-        public static ChessmanQueen WhiteQueen = new ChessmanQueen(Enums.GameSide.White);
+        public static ChessmanQueen NewBlackQueen = new ChessmanQueen(Enums.GameSide.Black);
+        public static ChessmanQueen NewWhiteQueen = new ChessmanQueen(Enums.GameSide.White);
         public ChessmanQueen(Enums.GameSide side) : this(side, ChessPosition.Empty) { }
         public ChessmanQueen(Enums.GameSide side, ChessPosition position)
         {

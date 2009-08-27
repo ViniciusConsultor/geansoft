@@ -25,11 +25,25 @@ namespace Gean.Wrapper.Chess
     /// </summary>
     public class FENBuilder : IFENBuilder
     {
-        private StringBuilder[] Rows = new StringBuilder[8];
-        private int _index = 0;
+        #region Private member variable
+
+        /// <summary>
+        /// 当前FEN的Chessman(棋子)的Placement(位置)的以行为单位的字符串
+        /// </summary>
+        protected virtual StringBuilder[] Rows { get; set; }
+        /// <summary>
+        /// 当前FEN的Chessman(棋子)的Placement(位置)索引
+        /// </summary>
+        protected virtual int Index { get; set; }
+
+        #endregion
+
+        #region Constructor
 
         public FENBuilder()
         {
+            this.Rows = new StringBuilder[8];
+            this.Index = 0;
             for (int i = 0; i < 8; i++)
             {
                 Rows[i] = new StringBuilder("11111111");
@@ -40,13 +54,19 @@ namespace Gean.Wrapper.Chess
             this.Parse(fenstring);
         }
 
+        #endregion
+
         #region Properties
 
         /// <summary>
-        /// The color to move given the current position.
-        /// Must be 'w' or 'b'.
+        /// 1) 棋子位置数值区域(Piece placement data) 
         /// </summary>
-        public char Color
+        public string PiecePlacementData { get; internal set; }
+
+        /// <summary>
+        /// 2) 轮走棋方(Active color)
+        /// </summary>
+        public char ActiveColor
         {
             get { return _activeColor; }
             set
@@ -60,39 +80,42 @@ namespace Gean.Wrapper.Chess
         private char _activeColor;
 
         /// <summary>
-        /// If true then white can still castle king side.
+        /// 3) 易位可行性(Castling availability)(1.白方王侧)
         /// </summary>
-        public bool WhiteCastleKing { get; set; }
+        public bool WhiteKingCastlingAvailability { get; internal set; }
 
         /// <summary>
-        /// If true then white can still castle queen side.
-        /// </summary>    
-        public bool WhiteCastleQueen { get; set; }
+        /// 3) 易位可行性(Castling availability)(2.白方后侧)
+        /// </summary>
+        public bool WhiteQueenCastlingAvailability { get; internal set; }
 
         /// <summary>
-        /// If true then black can still castle king side.
+        /// 3) 易位可行性(Castling availability)(3.黑方王侧)
         /// </summary>
-        public bool BlackCastleKing { get; set; }
+        public bool BlackKingCastlingAvailability { get; internal set; }
 
         /// <summary>
-        /// If true then black can still castle queen side.
+        /// 3) 易位可行性(Castling availability)(4.黑方后侧)
         /// </summary>
-        public bool BlackCastleQueen { get; set; }
+        public bool BlackQueenCastlingAvailability { get; internal set; }
 
         /// <summary>
-        /// Algebraic square for enpassant captures or '-'.
+        /// 4) 吃过路兵目标格(En passant target square)
         /// </summary>
-        public string Enpassant { get; set; }
+        public ChessPosition EnPassantTargetPosition { get; internal set; }
 
         /// <summary>
-        /// Number of half moves to determine the 50 move rule.
+        /// 5) 半回合计数(Halfmove clock)。
+        /// 用一个非负数表示自从上一次动兵或吃子之后目前走了的半回合数。这个是为了适应50步和棋规则而定。
         /// </summary>
-        public int HalfMove { get; set; }
+        public int HalfMoveClock { get; internal set; }
 
         /// <summary>
-        /// Number of completed move cycles, i.e. after black moves.
+        /// 6) 回合数(Fullmove number)。当前要进行到的回合数。不管白还是黑，第一步时总是以1表示，以后黑方每走一步数字就加1。
         /// </summary>
-        public int FullMove { get; set; }
+        public int FullMoveNumber { get; internal set; }
+
+        #endregion
 
         public string Format
         {
@@ -101,9 +124,11 @@ namespace Gean.Wrapper.Chess
         }
         private string _format = "{0} {1} {2} {3} {4} {5}";
 
-        #endregion
-
-        #region IFENBuilder 成员
+        public char this[int dot]
+        {
+            get { return this.GetChar(dot); }
+            set { this.SetChar(dot, value); }
+        }
 
         public void Parse(string str)
         {
@@ -148,6 +173,10 @@ namespace Gean.Wrapper.Chess
                 dot -= 8;
             }
 
+            #endregion
+
+            #region 16.1.3.2: Parse active color
+
             if (note.Length >= 2)
             {
                 // 16.1.3.2: Parse active color
@@ -156,7 +185,7 @@ namespace Gean.Wrapper.Chess
                     char colorchar = Char.ToLower(note[1][0]);
                     if (colorchar.Equals('w') || colorchar.Equals('b'))
                     {
-                        Color = colorchar;
+                        ActiveColor = colorchar;
                     }
                     else
                         throw new ArgumentException("Invalid color designation, use w or b as 2nd field separated by spaces.");
@@ -177,16 +206,16 @@ namespace Gean.Wrapper.Chess
                     switch (achar)
                     {
                         case 'K':
-                            this.WhiteCastleKing = true;
+                            this.WhiteKingCastlingAvailability = true;
                             break;
                         case 'Q':
-                            this.WhiteCastleQueen = true;
+                            this.WhiteQueenCastlingAvailability = true;
                             break;
                         case 'k':
-                            this.BlackCastleKing = true;
+                            this.BlackKingCastlingAvailability = true;
                             break;
                         case 'q':
-                            this.BlackCastleQueen = true;
+                            this.BlackQueenCastlingAvailability = true;
                             break;
                         case '-':
                             break;
@@ -204,20 +233,20 @@ namespace Gean.Wrapper.Chess
                 if (note.Length >= 4)
                 {
                     // 16.1.3.4: Parse en passant target square such as "e3"
-                    this.Enpassant = note[3];
-                    if (this.Enpassant.Length == 2)
+                    if (note[3].Length == 2)
                     {
-                        if (Color.Equals('w'))
+                        if (ActiveColor.Equals('w'))
                         {
-                            if (this.Enpassant[1] != '6')
-                                throw new Exception("Invalid target square for white En passant captures: " + this.Enpassant.ToString());
+                            if (note[3][1] != '6')
+                                throw new Exception("Invalid target square for white En passant captures: " + this.EnPassantTargetPosition.ToString());
                         }
                         else
                         {
-                            if (this.Enpassant[1] != '3')
-                                throw new Exception("Invalid target square for black En passant captures: " + this.Enpassant.ToString());
+                            if (note[3][1] != '3')
+                                throw new Exception("Invalid target square for black En passant captures: " + this.EnPassantTargetPosition.ToString());
                         }
                     }
+                    this.EnPassantTargetPosition = ChessPosition.Parse(note[3]);
                 }
             }
             catch { }
@@ -230,7 +259,7 @@ namespace Gean.Wrapper.Chess
                 if (note.Length >= 5)
                 {
                     // 16.1.3.5: Parse halfmove clock, count of half-move since last pawn advance or unit capture
-                    this.HalfMove = Int16.Parse(note[4]);
+                    this.HalfMoveClock = Int16.Parse(note[4]);
                 }
             }
             catch { }
@@ -242,14 +271,31 @@ namespace Gean.Wrapper.Chess
                 if (note.Length >= 6)
                 {
                     // 16.1.3.6: Parse fullmove number, increment after each black move
-                    this.FullMove = Int16.Parse(note[5]);
+                    this.FullMoveNumber = Int16.Parse(note[5]);
                 }
             }
             catch { }
             #endregion
         }
 
-        #endregion
+        public Chessman[] ToChessmans()
+        {
+            List<Chessman> mans = new List<Chessman>();
+            for (int x = 0; x < Rows.Length; x++)
+            {
+                for (int y = 0; y < Rows[x].Length; y++)
+                {
+                    char c = Rows[x][y];
+                    if (y == '1') continue;
+                    Enums.ChessmanType manType;
+                    Enums.GameSide manSide;
+                    throw new NotImplementedException();
+                }
+            }
+            return mans.ToArray();
+        }
+
+        #region Public Method
 
         /// <summary>
         /// Clear all current settings.
@@ -261,82 +307,13 @@ namespace Gean.Wrapper.Chess
                 Rows[i] = new StringBuilder("11111111");
             }
             this._activeColor = 'w';
-            this.Enpassant = "-";
-            this.WhiteCastleKing = false;
-            this.WhiteCastleQueen = false;
-            this.BlackCastleKing = false;
-            this.BlackCastleQueen = false;
-            this.HalfMove = 0;
-            this.FullMove = 0;
-        }
-
-        /// <summary>
-        /// 在此实例的结尾追加指定对象的字符串表示形式。
-        /// 指定对象应为string,int,char，其他类型将抛出ArgumentOutOfRangeException异常。
-        /// 指定对象应为12345678,abcdefgh,ACDEFGH,/,中部份。
-        /// </summary>
-        /// <param name="value">指定对象</param>
-        /// <returns></returns>
-        public FENBuilder AppendFENChar(object value)
-        {
-            if (value == null) throw new ArgumentNullException();
-            if (value is System.DBNull) throw new ArgumentNullException();
-
-            string str = "12345678prnbqkPRNBQK/";
-            string v = value.ToString();
-            int m = _index / 8;
-            int n = _index % 8;
-            if (value is string || value is int || value is char)
-            {
-                if (str.IndexOf(v) >= 0 && v.Length == 1)
-                {
-                    this.Rows[m][n] = v[0];
-                    _index++;
-                    return this;
-                }
-                else
-                    throw new ArgumentOutOfRangeException();
-            }
-            else
-                throw new ArgumentOutOfRangeException();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj == null) return false;
-            if (obj is System.DBNull) return false;
-
-            FENBuilder fen = (FENBuilder)obj;
-            if (!this.BlackCastleKing.Equals(fen.BlackCastleKing)) return false;
-            if (!this.BlackCastleQueen.Equals(fen.BlackCastleQueen)) return false;
-            if (!this.Color.Equals(fen.Color)) return false;
-            if (!this.Enpassant.Equals(fen.Enpassant)) return false;
-            if (!this.FullMove.Equals(fen.FullMove)) return false;
-            if (!this.HalfMove.Equals(fen.HalfMove)) return false;
-            if (!this.WhiteCastleKing.Equals(fen.WhiteCastleKing)) return false;
-            if (!this.WhiteCastleQueen.Equals(fen.WhiteCastleQueen)) return false;
-            return true;
-        }
-        public override int GetHashCode()
-        {
-            return unchecked(3 * (
-                this.BlackCastleKing.GetHashCode() ^
-                this.BlackCastleQueen.GetHashCode() ^
-                this.Color.GetHashCode() ^
-                this.Enpassant.GetHashCode() ^
-                this.FullMove.GetHashCode() ^
-                this.HalfMove.GetHashCode() ^
-                this.WhiteCastleKing.GetHashCode() ^
-                this.WhiteCastleQueen.GetHashCode()));
-        }
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (StringBuilder row in Rows)
-            {
-                sb.Append(row).Append('/');
-            }
-            return sb.ToString().TrimEnd('/');
+            this.EnPassantTargetPosition = ChessPosition.Empty;
+            this.WhiteKingCastlingAvailability = false;
+            this.WhiteQueenCastlingAvailability = false;
+            this.BlackKingCastlingAvailability = false;
+            this.BlackQueenCastlingAvailability = false;
+            this.HalfMoveClock = 0;
+            this.FullMoveNumber = 0;
         }
 
         public string ToFENString()
@@ -378,15 +355,15 @@ namespace Gean.Wrapper.Chess
 
             parms[1] = _activeColor.ToString();
 
-            if (WhiteCastleKing | WhiteCastleQueen | BlackCastleKing | BlackCastleQueen)
+            if (WhiteKingCastlingAvailability | WhiteQueenCastlingAvailability | BlackKingCastlingAvailability | BlackQueenCastlingAvailability)
             {
-                if (WhiteCastleKing)
+                if (WhiteKingCastlingAvailability)
                     note.Append('K');
-                if (WhiteCastleQueen)
+                if (WhiteQueenCastlingAvailability)
                     note.Append('Q');
-                if (BlackCastleKing)
+                if (BlackKingCastlingAvailability)
                     note.Append('k');
-                if (BlackCastleQueen)
+                if (BlackQueenCastlingAvailability)
                     note.Append('q');
             }
             else
@@ -394,36 +371,16 @@ namespace Gean.Wrapper.Chess
 
             parms[2] = note.ToString();
             note.Length = 0;
-            parms[3] = Enpassant;
-            parms[4] = HalfMove.ToString();
-            parms[5] = FullMove.ToString();
+            if (EnPassantTargetPosition.Equals(ChessPosition.Empty))
+                parms[3] = "-";
+            else
+                parms[3] = EnPassantTargetPosition.ToString();
+            parms[4] = HalfMoveClock.ToString();
+            parms[5] = FullMoveNumber.ToString();
             return string.Format(Format, parms);
         }
 
-        public Chessman[] ToChessmans()
-        {
-            List<Chessman> mans = new List<Chessman>();
-            for (int x = 0; x < Rows.Length; x++)
-            {
-                for (int y = 0; y < Rows[x].Length; y++)
-                {
-                    char c = Rows[x][y];
-                    if (y == '1') continue;
-                    Enums.ChessmanType manType;
-                    Enums.GameSide manSide;
-                    throw new NotImplementedException();
-                }
-            }
-            return mans.ToArray();
-        }
-
-        public char this[int dot]
-        {
-            get { return this.GetChar(dot); }
-            set { this.SetChar(dot, value); }
-        }
-
-        public FENBuilder Move(Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos)
+        public FENBuilder MoveIn(Chessman chessman, Enums.Action action, ChessPosition srcPos, ChessPosition tgtPos)
         {
             this[tgtPos.Dot] = chessman.ToString()[0];
             this[srcPos.Dot] = '1';
@@ -431,20 +388,70 @@ namespace Gean.Wrapper.Chess
             return this;
         }
 
-        private void SetChar(int dot, char value)
+        #endregion
+
+        #region protected virtual
+
+        protected virtual void SetChar(int dot, char value)
         {
             int m = dot / 8;
             int n = dot % 8;
             this.Rows[m][n] = value;
         }
 
-        private char GetChar(int dot)
+        protected virtual char GetChar(int dot)
         {
             dot = dot - 1;
             int m = dot / 8;
             int n = dot % 8;
             return this.Rows[m][n];
         }
+
+        #endregion
+
+        #region Override
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is System.DBNull) return false;
+
+            FENBuilder fen = (FENBuilder)obj;
+            if (!this.BlackKingCastlingAvailability.Equals(fen.BlackKingCastlingAvailability)) return false;
+            if (!this.BlackQueenCastlingAvailability.Equals(fen.BlackQueenCastlingAvailability)) return false;
+            if (!this.ActiveColor.Equals(fen.ActiveColor)) return false;
+            if (!this.EnPassantTargetPosition.Equals(fen.EnPassantTargetPosition)) return false;
+            if (!this.FullMoveNumber.Equals(fen.FullMoveNumber)) return false;
+            if (!this.HalfMoveClock.Equals(fen.HalfMoveClock)) return false;
+            if (!this.WhiteKingCastlingAvailability.Equals(fen.WhiteKingCastlingAvailability)) return false;
+            if (!this.WhiteQueenCastlingAvailability.Equals(fen.WhiteQueenCastlingAvailability)) return false;
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return unchecked(3 * (
+                this.BlackKingCastlingAvailability.GetHashCode() ^
+                this.BlackQueenCastlingAvailability.GetHashCode() ^
+                this.ActiveColor.GetHashCode() ^
+                this.EnPassantTargetPosition.GetHashCode() ^
+                this.FullMoveNumber.GetHashCode() ^
+                this.HalfMoveClock.GetHashCode() ^
+                this.WhiteKingCastlingAvailability.GetHashCode() ^
+                this.WhiteQueenCastlingAvailability.GetHashCode()));
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (StringBuilder row in Rows)
+            {
+                sb.Append(row).Append('/');
+            }
+            return sb.ToString().TrimEnd('/');
+        }
+
+        #endregion
+
+        #region Static
 
         public static FENBuilder NewGame
         {
@@ -455,6 +462,8 @@ namespace Gean.Wrapper.Chess
         /// 新棋局局面，白棋大写，黑棋小写
         /// </summary>
         public static readonly string NewGameFENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+        #endregion
     }
 }
 
@@ -986,4 +995,40 @@ namespace Gean.Wrapper.Chess
         #endregion
     }
 }
+*/
+
+/* AppendFENChar
+
+        /// <summary>
+        /// 在此实例的结尾追加指定对象的字符串表示形式。
+        /// 指定对象应为string,int,char，其他类型将抛出ArgumentOutOfRangeException异常。
+        /// 指定对象应为12345678,abcdefgh,ACDEFGH,/,中部份。
+        /// </summary>
+        /// <param name="value">指定对象</param>
+        /// <returns></returns>
+        public FENBuilder AppendFENChar(object value)
+        {
+            if (value == null) throw new ArgumentNullException();
+            if (value is System.DBNull) throw new ArgumentNullException();
+
+            string str = "12345678prnbqkPRNBQK/";
+            string v = value.ToString();
+            int m = Index / 8;
+            int n = Index % 8;
+            if (value is string || value is int || value is char)
+            {
+                if (str.IndexOf(v) >= 0 && v.Length == 1)
+                {
+                    this.Rows[m][n] = v[0];
+                    Index++;
+                    return this;
+                }
+                else
+                    throw new ArgumentOutOfRangeException();
+            }
+            else
+                throw new ArgumentOutOfRangeException();
+        }
+
+
 */

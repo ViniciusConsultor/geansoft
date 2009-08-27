@@ -45,7 +45,7 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
-        public void MoveIn(ChessGame chessGame, ChessPosition tgtPosition)
+        public virtual void MoveIn(ChessGame chessGame, ChessPosition tgtPosition)
         {
             Enums.Action action = Enums.Action.General;
             Chessman tgtChessman = null;
@@ -100,9 +100,9 @@ namespace Gean.Wrapper.Chess
         public override int GetHashCode()
         {
             return unchecked(3 * (
-                this.GameSide.GetHashCode() +
-                this.ChessmanType.GetHashCode() +
-                this.IsCaptured.GetHashCode() +
+                this.GameSide.GetHashCode() ^
+                this.ChessmanType.GetHashCode() ^
+                this.IsCaptured.GetHashCode() ^
                 this.CurrPosition.GetHashCode()
                 ));
         }
@@ -148,6 +148,8 @@ namespace Gean.Wrapper.Chess
 
         #endregion
 
+        #region PositionChangedEvent
+
         public event PositionChangedEventHandler PositionChangedEvent;
         protected virtual void OnPositionChanged(PositionChangedEventArgs e)
         {
@@ -168,5 +170,7 @@ namespace Gean.Wrapper.Chess
                 this.CaptruedChessman = captruedChessman;
             }
         }
+
+        #endregion
     }
 }

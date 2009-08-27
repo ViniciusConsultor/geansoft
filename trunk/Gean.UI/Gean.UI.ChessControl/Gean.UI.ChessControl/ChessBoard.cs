@@ -343,6 +343,7 @@ namespace Gean.UI.ChessControl
                         if (pos.Equals(tgtPosition))
                         {
                             this.SelectedChessman.MoveIn(this.ChessGame, tgtPosition);
+                            OnPlay(new PlayEventArgs());
                             break;
                         }
                     }
@@ -707,11 +708,6 @@ namespace Gean.UI.ChessControl
         public delegate void PlayEventHandler(object sender, PlayEventArgs e);
         public class PlayEventArgs : EventArgs
         {
-            public ChessStep ChessStep { get; private set; }
-            public PlayEventArgs(ChessStep chessStep)
-            {
-                this.ChessStep = chessStep;
-            }
         }
 
         #endregion

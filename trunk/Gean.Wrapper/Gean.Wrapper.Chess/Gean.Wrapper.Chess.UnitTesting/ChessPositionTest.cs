@@ -342,11 +342,11 @@ namespace Gean.Wrapper.Chess.UnitTesting
         public void GetPawnPositionsTest()
         {
             ChessPosition pos;
-            Enums.ChessmanSide side = Enums.ChessmanSide.Black;
+            Enums.GameSide side = Enums.GameSide.Black;
             ChessPosition[] actual;
 
             pos = new ChessPosition(2, 7);
-            side = Enums.ChessmanSide.Black;
+            side = Enums.GameSide.Black;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(4, actual.Length);
             Assert.AreEqual(18, actual[0].Dot);
@@ -355,7 +355,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Assert.AreEqual(19, actual[3].Dot);
 
             pos = ChessPosition.GetPositionByDot(50);
-            side = Enums.ChessmanSide.White;
+            side = Enums.GameSide.White;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(4, actual.Length);
             Assert.AreEqual(42, actual[0].Dot);
@@ -365,13 +365,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(25);
 
-            side = Enums.ChessmanSide.White;
+            side = Enums.GameSide.White;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(2, actual.Length);
             Assert.AreEqual(17, actual[0].Dot);
             Assert.AreEqual(18, actual[1].Dot);
 
-            side = Enums.ChessmanSide.Black;
+            side = Enums.GameSide.Black;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(2, actual.Length);
             Assert.AreEqual(33, actual[0].Dot);
@@ -379,13 +379,13 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(40);
 
-            side = Enums.ChessmanSide.White;
+            side = Enums.GameSide.White;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(2, actual.Length);
             Assert.AreEqual(32, actual[0].Dot);
             Assert.AreEqual(31, actual[1].Dot);
 
-            side = Enums.ChessmanSide.Black;
+            side = Enums.GameSide.Black;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(2, actual.Length);
             Assert.AreEqual(48, actual[0].Dot);
@@ -393,7 +393,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(9);
 
-            side = Enums.ChessmanSide.Black;
+            side = Enums.GameSide.Black;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(3, actual.Length);
             Assert.AreEqual(17, actual[0].Dot);
@@ -402,7 +402,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(16);
 
-            side = Enums.ChessmanSide.Black;
+            side = Enums.GameSide.Black;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(3, actual.Length);
             Assert.AreEqual(24, actual[0].Dot);
@@ -411,7 +411,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(49);
 
-            side = Enums.ChessmanSide.White;
+            side = Enums.GameSide.White;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(3, actual.Length);
             Assert.AreEqual(41, actual[0].Dot);
@@ -420,7 +420,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
 
             pos = ChessPosition.GetPositionByDot(56);
 
-            side = Enums.ChessmanSide.White;
+            side = Enums.GameSide.White;
             actual = pos.GetPawnPositions(side);
             Assert.AreEqual(3, actual.Length);
             Assert.AreEqual(48, actual[0].Dot);

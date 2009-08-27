@@ -63,51 +63,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
         #endregion
 
         /// <summary>
-        ///Equals 的测试
-        ///</summary>
-        [TestMethod()]
-        public void EqualsTest()
-        {
-            ChessGame game = new ChessGame();
-            game.LoadGrids();
-            FENBuilder builder;
-            builder = FENBuilder.CreateFENBuilder(game);
-            Assert.IsTrue(builder.Equals(builder));
-        }
-
-        /// <summary>
-        ///GetHashCode 的测试
-        ///</summary>
-        [TestMethod()]
-        public void GetHashCodeTest()
-        {
-            ChessGame game = new ChessGame();
-            game.LoadGrids();
-            FENBuilder builder;
-            builder = FENBuilder.CreateFENBuilder(game);
-            Assert.AreEqual(builder.GetHashCode(), builder.GetHashCode());
-        }
-
-        /// <summary>
-        ///ToString 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ToStringTest()
-        {
-            string expected;
-            string actual;
-
-            ChessGame game = new ChessGame();
-            game.LoadGrids();
-            FENBuilder builder;
-
-            builder = FENBuilder.CreateFENBuilder(game);
-            expected = "11111111/11111111/11111111/11111111/11111111/11111111/11111111/11111111"; 
-            actual = builder.ToString();
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         ///Parse 的测试
         ///</summary>
         [TestMethod()]
@@ -172,8 +127,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             bool expected = false; // TODO: 初始化为适当的值
             bool actual;
-            target.WhiteCastleQueen = expected;
-            actual = target.WhiteCastleQueen;
+            target.WhiteQueenCastlingAvailability = expected;
+            actual = target.WhiteQueenCastlingAvailability;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -187,8 +142,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             bool expected = false; // TODO: 初始化为适当的值
             bool actual;
-            target.WhiteCastleKing = expected;
-            actual = target.WhiteCastleKing;
+            target.WhiteKingCastlingAvailability = expected;
+            actual = target.WhiteKingCastlingAvailability;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -202,8 +157,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             int expected = 0; // TODO: 初始化为适当的值
             int actual;
-            target.HalfMove = expected;
-            actual = target.HalfMove;
+            target.HalfMoveClock = expected;
+            actual = target.HalfMoveClock;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -217,8 +172,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             int expected = 0; // TODO: 初始化为适当的值
             int actual;
-            target.FullMove = expected;
-            actual = target.FullMove;
+            target.FullMoveNumber = expected;
+            actual = target.FullMoveNumber;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -230,10 +185,10 @@ namespace Gean.Wrapper.Chess.UnitTesting
         public void EnpassantTest()
         {
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            target.Enpassant = expected;
-            actual = target.Enpassant;
+            ChessPosition expected = ChessPosition.Empty; // TODO: 初始化为适当的值
+            ChessPosition actual;
+            target.EnPassantTargetPosition = expected;
+            actual = target.EnPassantTargetPosition;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -247,8 +202,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             char expected = '\0'; // TODO: 初始化为适当的值
             char actual;
-            target.Color = expected;
-            actual = target.Color;
+            target.ActiveColor = expected;
+            actual = target.ActiveColor;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -262,8 +217,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             bool expected = false; // TODO: 初始化为适当的值
             bool actual;
-            target.BlackCastleQueen = expected;
-            actual = target.BlackCastleQueen;
+            target.BlackQueenCastlingAvailability = expected;
+            actual = target.BlackQueenCastlingAvailability;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
@@ -277,8 +232,8 @@ namespace Gean.Wrapper.Chess.UnitTesting
             FENBuilder target = new FENBuilder(); // TODO: 初始化为适当的值
             bool expected = false; // TODO: 初始化为适当的值
             bool actual;
-            target.BlackCastleKing = expected;
-            actual = target.BlackCastleKing;
+            target.BlackKingCastlingAvailability = expected;
+            actual = target.BlackKingCastlingAvailability;
             Assert.AreEqual(expected, actual);
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
