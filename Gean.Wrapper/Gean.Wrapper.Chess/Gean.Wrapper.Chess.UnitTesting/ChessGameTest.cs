@@ -64,39 +64,6 @@ namespace Gean.Wrapper.Chess.UnitTesting
         #endregion
 
         /// <summary>
-        ///Item 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ItemTest()
-        {
-            ChessGame target = new ChessGame();
-
-            int x = 0;
-            int y = 0;
-
-            ChessGrid expected = null;
-            ChessGrid actual = null;
-
-            x = 1;
-            y = 1;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 8;
-            y = 8;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-
-            x = 3;
-            y = 6;
-            expected = new ChessGrid(x, y);
-            actual = target[x, y];
-            Assert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         ///Record 的测试
         ///</summary>
         [TestMethod()]
@@ -112,43 +79,5 @@ namespace Gean.Wrapper.Chess.UnitTesting
             Assert.Inconclusive("验证此测试方法的正确性。");
         }
 
-        /// <summary>
-        ///LoadGrids 的测试
-        ///</summary>
-        [TestMethod()]
-        public void LoadGridsTest()
-        {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            target.LoadGrids();
-            Assert.Inconclusive("无法验证不返回值的方法。");
-        }
-
-        /// <summary>
-        ///Item 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ItemTest2()
-        {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            int x = 0; // TODO: 初始化为适当的值
-            int y = 0; // TODO: 初始化为适当的值
-            ChessGrid actual;
-            actual = target[x, y];
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///Item 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ItemTest1()
-        {
-            ChessGame target = new ChessGame(); // TODO: 初始化为适当的值
-            char c = '\0'; // TODO: 初始化为适当的值
-            int y = 0; // TODO: 初始化为适当的值
-            ChessGrid actual;
-            actual = target[c, y];
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
     }
 }

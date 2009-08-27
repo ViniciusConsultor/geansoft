@@ -36,6 +36,7 @@ namespace Gean.Wrapper.Chess
         public ChessmanPawn(Enums.GameSide side, ChessPosition position)
         {
             this.GameSide = side;
+            this.EnableEnPassanted = false;
             switch (side)
             {
                 case Enums.GameSide.White:
@@ -47,6 +48,16 @@ namespace Gean.Wrapper.Chess
             }
             this.IsCaptured = false;
             this._currPosition = this.SetCurrPosition(position);
+        }
+
+        /// <summary>
+        /// 获取与设置能被对方吃过路兵
+        /// </summary>
+        public bool EnableEnPassanted { get; internal set; }
+
+        public override void MoveIn(ChessGame chessGame, ChessPosition tgtPosition)
+        {
+            base.MoveIn(chessGame, tgtPosition);
         }
 
         protected override ChessPosition SetCurrPosition(ChessPosition position)

@@ -102,43 +102,43 @@ namespace Gean.Wrapper.Chess
         /// </summary>
         public virtual int Number
         {
-            get { return FenNotation.FullMove; }
-            set { FenNotation.FullMove = value; }
+            get { return FenNotation.FullMoveNumber; }
+            set { FenNotation.FullMoveNumber = value; }
         }
         public virtual Enums.GameSide GameSide
         {
-            get { return Enums.ToGameSide(FenNotation.Color); }
-            set { FenNotation.Color = Enums.FormGameSide(value); }
+            get { return Enums.ToGameSide(FenNotation.ActiveColor); }
+            set { FenNotation.ActiveColor = Enums.FormGameSide(value); }
         }
         public virtual bool BlackCastleKing
         {
-            get { return FenNotation.BlackCastleKing; }
-            set { FenNotation.BlackCastleKing = value; }
+            get { return FenNotation.BlackKingCastlingAvailability; }
+            set { FenNotation.BlackKingCastlingAvailability = value; }
         }
         public virtual bool BlackCastleQueen
         {
-            get { return FenNotation.BlackCastleQueen; }
-            set { FenNotation.BlackCastleQueen = value; }
+            get { return FenNotation.BlackQueenCastlingAvailability; }
+            set { FenNotation.BlackQueenCastlingAvailability = value; }
         }
         public virtual bool WhiteCastleKing
         {
-            get { return FenNotation.WhiteCastleKing; }
-            set { FenNotation.WhiteCastleKing = value; }
+            get { return FenNotation.WhiteKingCastlingAvailability; }
+            set { FenNotation.WhiteKingCastlingAvailability = value; }
         }
         public virtual bool WhiteCastleQueen
         {
-            get { return FenNotation.WhiteCastleQueen; }
-            set { FenNotation.WhiteCastleQueen = value; }
+            get { return FenNotation.WhiteQueenCastlingAvailability; }
+            set { FenNotation.WhiteQueenCastlingAvailability = value; }
         }
-        public virtual string Enpassant
+        public virtual ChessPosition Enpassant
         {
-            get { return FenNotation.Enpassant; }
-            set { FenNotation.Enpassant = value; }
+            get { return FenNotation.EnPassantTargetPosition; }
+            set { FenNotation.EnPassantTargetPosition = value; }
         }
         public virtual int HalfMove
         {
-            get { return FenNotation.HalfMove; }
-            set { FenNotation.HalfMove = value; }
+            get { return FenNotation.HalfMoveClock; }
+            set { FenNotation.HalfMoveClock = value; }
         }
 
         #endregion
@@ -220,7 +220,7 @@ namespace Gean.Wrapper.Chess
         {
             ChessStep chessStep = new ChessStep(Number++, movedChessman.ChessmanType, srcPos, tgtPos, action);
             this.Record.Items.Add(chessStep);
-            //this.FenNotation = this.FenNotation.Move(movedChessman, action, srcPos, tgtPos);
+            this.FenNotation = this.FenNotation.MoveIn(movedChessman, action, srcPos, tgtPos);
             //注册行棋事件
             OnMoveIn(new MoveInEventArgs(action, movedChessman.GameSide, chessStep));
         }

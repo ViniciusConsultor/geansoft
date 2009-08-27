@@ -2,8 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Gean.Wrapper.Chess.UnitTesting
 {
-    
-    
+   
     /// <summary>
     ///这是 ChessDefinerTest 的测试类，旨在
     ///包含所有 ChessDefinerTest 单元测试
@@ -11,7 +10,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
     [TestClass()]
     public class ChessDefinerTest
     {
-
+        #region
 
         private TestContext testContextInstance;
 
@@ -60,49 +59,7 @@ namespace Gean.Wrapper.Chess.UnitTesting
         //}
         //
         #endregion
+        #endregion
 
-
-        /// <summary>
-        ///Parse 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ParseTest()
-        {
-            string tag = string.Empty; // TODO: 初始化为适当的值
-            ChessDefiner expected = null; // TODO: 初始化为适当的值
-            ChessDefiner actual;
-            actual = ChessDefiner.Parse(tag);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///ToString 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ToStringTest()
-        {
-            ChessDefiner target = new ChessDefiner(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            actual = target.ToString();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
-
-        /// <summary>
-        ///Value 的测试
-        ///</summary>
-        [TestMethod()]
-        public void ValueTest()
-        {
-            ChessDefiner target = new ChessDefiner(); // TODO: 初始化为适当的值
-            string expected = string.Empty; // TODO: 初始化为适当的值
-            string actual;
-            target.Value = expected;
-            actual = target.Value;
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("验证此测试方法的正确性。");
-        }
     }
 }

@@ -48,9 +48,8 @@ namespace Gean.UI.ChessControl.Demo
         /// <param name="e"></param>
         private void WhilePlayed(object sender, ChessBoard.PlayEventArgs e)
         {
-            TreeNode node = new TreeNode(e.ChessStep.ToString());
-            this._currTree.Nodes.Add(node);
-            this._statusLabel.Text = e.ChessStep.ToString();
+            TreeNode node = new TreeNode(_board.ChessGame.Record.Items.Peek().ToString());
+            _currTree.Nodes.Add(node);
         }
 
         private void PGNConvent(object sender, EventArgs e)
