@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Wrapper.Chess.ChessPosition" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAIgAAAIACRAAAAkgEMRAAJBCAAAAIBACCIGAIgAaAA=</HashCode>
+      <FileName>ChessRecord\ChessPosition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessRecord" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Gean.Wrapper.Chess.ChessRecord.ChessStepEnumerator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessRecord\ChessRecord.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgBCBAEgAAAQAAAAAAAAIAEAAAAAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ChessRecord.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessRecordFile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AWIAAEAAEBgABBAQCCQCBAQCBCACAAAACEAAASBQIQA=</HashCode>
+      <FileName>ChessRecord\ChessRecordFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessStep" Collapsed="true">
+    <Position X="4.5" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABIhAAwIIAgACAAEgEAAQAIAEAACIIA4AAAgAABACAA=</HashCode>
+      <FileName>ChessRecord\ChessStep.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessDefiner" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ChessDefiner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessChoices" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessChoices.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessComment" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAEAAAAAAAEgAAAAAgAAAAAAIAKAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessComment.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessNag" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessNag.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessSequence" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkIgAkAAAAEEABAUCAAABAQAAAAAAAAECAAAAABQIAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessSequence.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.FENBuilder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAICABogEAFAECACgIAAABAgAAAAAiAAAkABABEA=</HashCode>
+      <FileName>ChessRecord\Parse\FENBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.PGNReader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAggAAAAAAEgQhRAYAAIAABQpAAAAAACoQIkJCACAAg=</HashCode>
+      <FileName>ChessRecord\Parse\PGNReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessResult" Collapsed="true">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAABACAAAAAAmgCAAAAQAABAAAIAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ChessResult.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Wrapper.Chess.ChessGame">
+    <Position X="8.5" Y="0.5" Width="1.75" />
+    <Members>
+      <Method Name="ChessGame" Hidden="true" />
+      <Property Name="this" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Delegate Name="Gean.Wrapper.Chess.ChessGame.MoveInEventHandler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame\ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Class Name="Gean.Wrapper.Chess.ChessGame.MoveInEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ChessGame\ChessGame.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABABAIgABAAEADgACEiCAAAAAAAAAAAEgAAAAAAABBA=</HashCode>
+      <FileName>ChessGame\ChessGame.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Gean.Wrapper.Chess.ISequenceItem" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>ChessRecord\ISequenceItem\ISequenceItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Wrapper.Chess.IStepTree" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChessRecord\IStepTree.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Wrapper.Chess.IFENBuilder" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ChessRecord\Parse\IFENBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Wrapper.Chess.IPGNReader" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAgQgBAAAAAAAAAAAAAAAAAAAAgBAAAAAA=</HashCode>
+      <FileName>ChessRecord\Parse\IPGNReader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Gean.Wrapper.Chess.IPGNReaderEvents" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEBgABAAAACQCAAAABAACAAAAAEAAAQAAAAA=</HashCode>
+      <FileName>ChessRecord\Parse\IPGNReaderEvents.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
