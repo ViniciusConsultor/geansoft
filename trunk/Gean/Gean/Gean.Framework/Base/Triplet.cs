@@ -12,10 +12,7 @@ namespace Gean
     /// Gean: 2009-08-24 22:30:51
     /// </summary>
     [Serializable]
-    public class Triplet<A, B, C> : IEquatable<Triplet<A, B, C>>, ISerializable
-        where A : IEquatable<A>
-        where B : IEquatable<B>
-        where C : IEquatable<C>
+    public class Triplet<A, B, C> : ISerializable
     {
         public readonly A First;
         public readonly B Second;

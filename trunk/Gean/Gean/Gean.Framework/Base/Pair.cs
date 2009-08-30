@@ -12,9 +12,7 @@ namespace Gean
     /// Gean: 2009-08-24 22:30:51
     /// </summary>
     [Serializable]
-    public class Pair<A, B> : IEquatable<Pair<A, B>>, ISerializable
-        where A : IEquatable<A>
-        where B : IEquatable<B>
+    public class Pair<A, B> : ISerializable
     {
         public readonly A First;
         public readonly B Second;
