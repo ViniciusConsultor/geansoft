@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Module.Chess
 {
-    public abstract class Piece
+    public abstract class Piece : IPiece
     {
         #region ctor
 
@@ -48,25 +48,6 @@ namespace Gean.Module.Chess
         protected Position _position;
 
         #endregion
-
-        public virtual void MoveIn(Position tgtPosition)
-        {
-            Enums.Action action = Enums.Action.General;
-            Piece tgtPiece = null;
-            //foreach (Piece man in chessGame.Pieces)
-            //{
-            //    if (man.CurrPosition.Equals(tgtPosition))
-            //    {
-            //        man.IsCaptured = true;
-            //        action = Enums.Action.Capture;
-            //        tgtPiece = man;
-            //        break;
-            //    }
-            //}
-            Position srcPosition = _position;
-            _position = tgtPosition;
-            OnPositionChanged(new PositionChangedEventArgs(action, this, tgtPiece, srcPosition, tgtPosition));
-        }
 
         #region abstract
 

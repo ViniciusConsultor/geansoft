@@ -43,8 +43,13 @@
       <DependentUpon>ExString.resx</DependentUpon>
     </Compile>
     <Compile Include="Base\Utility.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Interface\IGame.cs" />
+    <Compile Include="Interface\IPieceMove.cs" />
+    <Compile Include="Interface\IPiece.cs" />
+    <Compile Include="Piece\Pieces.cs" />
     <Compile Include="Situation.cs" />
-    <Compile Include="Interface\IFENBuilder.cs" />
+    <Compile Include="Interface\ISituation.cs" />
     <Compile Include="Piece\PieceBishop.cs" />
     <Compile Include="Piece\PieceKing.cs" />
     <Compile Include="Piece\PieceKnight.cs" />

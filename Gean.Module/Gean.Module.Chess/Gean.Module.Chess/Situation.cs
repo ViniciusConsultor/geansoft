@@ -1,40 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
 
 namespace Gean.Module.Chess
 {
+    /* 国际象棋的FEN格式串
+    国际象棋的FEN格式串是由6段ASCII字符串组成的代码(彼此5个空格隔开)，这6段代码的意义依次是：
+    (1) 棋子位置数值区域(Piece placement data)
+    表示棋盘上每行的棋子，这是FEN格式串的主要部分；规则是从第 8横线开始顺次数到第 1横线
+    (白方在下，从上数到下)，从 a线开始顺次数到h线；白方棋子以大写字母“PNBRQK”表示，黑方棋子
+    以小写 “pnbrqk”表示，这是英文表示法，每个字母代表的意义与常规规定相同。数字代表一个横线
+    上的连续空格，反斜杠“/” 表示结束一个横线的描述。
+    (2) 轮走棋方(Active color): 轮到哪一方走子；
+    (3) 易位可行性(Castling availability): 每方及该方的王翼和后翼是否还存在“王车易位”的可能；
+    (4) 吃过路兵目标格(En passant target square): 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
+    (5) 半回合计数(Halfmove clock): 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
+    (6) 回合数(Fullmove number): 棋局的回合数。
+    |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+    |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
+    |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
+    |example: 8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48
+    |example: rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3
+    */
+
     /// <summary>
     /// 一个棋局局面描述类。
-    /// 国际象棋的FEN格式串是由6段ASCII字符串组成的代码(彼此5个空格隔开)，这6段代码的意义依次是：
-    /// (1) 棋子位置数值区域(Piece placement data)
-    /// 表示棋盘上每行的棋子，这是FEN格式串的主要部分；规则是从第 8横线开始顺次数到第 1横线
-    /// (白方在下，从上数到下)，从 a线开始顺次数到h线；白方棋子以大写字母“PNBRQK”表示，黑方棋子
-    /// 以小写 “pnbrqk”表示，这是英文表示法，每个字母代表的意义与常规规定相同。数字代表一个横线
-    /// 上的连续空格，反斜杠“/” 表示结束一个横线的描述。
-    /// (2) 轮走棋方(Active color): 轮到哪一方走子；
-    /// (3) 易位可行性(Castling availability): 每方及该方的王翼和后翼是否还存在“王车易位”的可能；
-    /// (4) 吃过路兵目标格(En passant target square): 是否存在吃过路兵的可能，过路兵是经过哪个格子的；
-    /// (5) 半回合计数(Halfmove clock): 最近一次吃子或者进兵后棋局进行的步数(半回合数)，用来判断“50回合自然限着”；
-    /// (6) 回合数(Fullmove number): 棋局的回合数。
-    /// |example: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
-    /// |example: r1bq1rk1/pp2ppbp/2np1np1/8/2PNP3/2N1B3/PP2BPPP/R2QK2R w KQ - 0 9
-    /// |example: 5n2/5Q2/3pp1pk/2P1b3/1P2P2P/r3q3/2R3BP/2R4K b - - 0 37
-    /// |example: 8/8/7k/2p3Qp/1P1bq3/8/6RP/7K b - - 0 48
-    /// |example: rnbqkbnr/ppp1ppp1/7p/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 3
+    /// [,sitju'eiʃən] n. 位置,形势,局面,处境,状况,职位
     /// </summary>
-    public class Situation : ISituation
+    [Serializable]
+    public class Situation : ISituation, ICloneable, ISerializable
     {
-        #region Private member variable
+        #region Static NewGame
+
+        public static Situation NewGame
+        {
+            get { return new Situation(NewGameFENString); }
+        }
 
         /// <summary>
-        /// 当前FEN的Chessman(棋子)的Placement(位置)的以行为单位的字符串
+        /// 新棋局局面，白棋大写，黑棋小写
         /// </summary>
-        protected virtual StringBuilder[] Rows { get; set; }
-        /// <summary>
-        /// 当前FEN的Chessman(棋子)的Placement(位置)索引
-        /// </summary>
-        protected virtual int Index { get; set; }
+        public static readonly string NewGameFENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         #endregion
 
@@ -43,7 +51,6 @@ namespace Gean.Module.Chess
         public Situation()
         {
             this.Rows = new StringBuilder[8];
-            this.Index = 0;
             for (int i = 0; i < 8; i++)
             {
                 Rows[i] = new StringBuilder("11111111");
@@ -56,12 +63,15 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region Properties
+        #region ISituation: FEN Properties
 
         /// <summary>
         /// 1) 棋子位置数值区域(Piece placement data) 
         /// </summary>
-        public string PiecePlacementData { get; internal set; }
+        public string PiecePlacementData
+        {
+            get { return this.ToString(); }
+        }
 
         /// <summary>
         /// 2) 轮走棋方(Active color)
@@ -117,13 +127,13 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        public char this[int dot]
-        {
-            get { return this.GetChar(dot); }
-            set { this.SetChar(dot, value); }
-        }
+        #region ISituation: IParse, IGenerator
 
-        public void Parse(string str)
+        /// <summary>
+        /// 解析一条FEN字符串
+        /// </summary>
+        /// <param name="str"></param>
+        public virtual void Parse(string str)
         {
             this.Clear();
 
@@ -151,7 +161,7 @@ namespace Gean.Module.Chess
                         {
                             if (index > 7)  // This check needed here to avoid overrunning index below under some error conditions.
                                 throw new ArgumentException("Invalid board specification, rank " + (dot / 8 + 1) + " has more then 8 items specified.");
-                            this[dot + index] = achar;
+                            this.SetByPosition(dot + index, achar);
                         }
                         index++;
                     }
@@ -271,28 +281,11 @@ namespace Gean.Module.Chess
             #endregion
         }
 
-        #region Public Method
-
         /// <summary>
-        /// Clear all current settings.
+        /// 生成指定的FEN格式字符串
         /// </summary>
-        public void Clear()
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                Rows[i] = new StringBuilder("11111111");
-            }
-            this._activeColor = 'w';
-            this.EnPassantTargetPosition = Position.Empty;
-            this.WhiteKingCastlingAvailability = false;
-            this.WhiteQueenCastlingAvailability = false;
-            this.BlackKingCastlingAvailability = false;
-            this.BlackQueenCastlingAvailability = false;
-            this.HalfMoveClock = 0;
-            this.FullMoveNumber = 0;
-        }
-
-        public string ToFENString()
+        /// <returns></returns>
+        public virtual string Generator()
         {
             string[] parms = new string[6];
             StringBuilder note = new StringBuilder();
@@ -322,7 +315,7 @@ namespace Gean.Module.Chess
                     else
                         i++;
                 }
-                if (i != 0) 
+                if (i != 0)
                     rowNote.Append(i);
                 note.Append(rowNote).Append('/');
             }
@@ -362,31 +355,51 @@ namespace Gean.Module.Chess
             return sb.ToString();
         }
 
-        ISituation ISituation.MoveIn(Piece piece, Enums.Action action, Position srcPos, Position tgtPos)
-        {
-            this[tgtPos.Dot] = piece.ToString()[0];
-            this[srcPos.Dot] = '1';
-            throw new NotImplementedException();
-            return this;
-        }
-
         #endregion
 
-        #region protected virtual
+        #region Protected Method
 
-        protected virtual void SetChar(int dot, char value)
+        #region By Position
+
+        protected virtual char GetByPosition(int dot)
+        {
+            dot = dot - 1;
+            int m = dot / 8;
+            int n = dot % 8;
+            return this.Rows[m][n];
+        }
+
+        protected virtual void SetByPosition(int dot, char value)
         {
             int m = dot / 8;
             int n = dot % 8;
             this.Rows[m][n] = value;
         }
 
-        protected virtual char GetChar(int dot)
+        #endregion
+
+        /// <summary>
+        /// 当前FEN的Chessman(棋子)的Placement(位置)的以行为单位的字符串
+        /// </summary>
+        protected virtual StringBuilder[] Rows { get; set; }
+
+        /// <summary>
+        /// Clear all current settings.
+        /// </summary>
+        protected virtual void Clear()
         {
-            dot = dot - 1;
-            int m = dot / 8;
-            int n = dot % 8;
-            return this.Rows[m][n];
+            for (int i = 0; i < 8; i++)
+            {
+                Rows[i] = new StringBuilder("11111111");
+            }
+            this._activeColor = 'w';
+            this.EnPassantTargetPosition = Position.Empty;
+            this.WhiteKingCastlingAvailability = false;
+            this.WhiteQueenCastlingAvailability = false;
+            this.BlackKingCastlingAvailability = false;
+            this.BlackQueenCastlingAvailability = false;
+            this.HalfMoveClock = 0;
+            this.FullMoveNumber = 0;
         }
 
         #endregion
@@ -399,28 +412,34 @@ namespace Gean.Module.Chess
             if (obj is System.DBNull) return false;
 
             Situation fen = (Situation)obj;
+            if (!this.ActiveColor.Equals(fen.ActiveColor)) return false;
+            if (!this.WhiteKingCastlingAvailability.Equals(fen.WhiteKingCastlingAvailability)) return false;
+            if (!this.WhiteQueenCastlingAvailability.Equals(fen.WhiteQueenCastlingAvailability)) return false;
             if (!this.BlackKingCastlingAvailability.Equals(fen.BlackKingCastlingAvailability)) return false;
             if (!this.BlackQueenCastlingAvailability.Equals(fen.BlackQueenCastlingAvailability)) return false;
-            if (!this.ActiveColor.Equals(fen.ActiveColor)) return false;
             if (!this.EnPassantTargetPosition.Equals(fen.EnPassantTargetPosition)) return false;
             if (!this.FullMoveNumber.Equals(fen.FullMoveNumber)) return false;
             if (!this.HalfMoveClock.Equals(fen.HalfMoveClock)) return false;
-            if (!this.WhiteKingCastlingAvailability.Equals(fen.WhiteKingCastlingAvailability)) return false;
-            if (!this.WhiteQueenCastlingAvailability.Equals(fen.WhiteQueenCastlingAvailability)) return false;
+            if (!this.PiecePlacementData.Equals(fen.PiecePlacementData)) return false;
             return true;
         }
         public override int GetHashCode()
         {
             return unchecked(3 * (
+                this.PiecePlacementData.GetHashCode() ^
+                this.ActiveColor.GetHashCode() ^
+                this.WhiteKingCastlingAvailability.GetHashCode() ^
+                this.WhiteQueenCastlingAvailability.GetHashCode())) ^
                 this.BlackKingCastlingAvailability.GetHashCode() ^
                 this.BlackQueenCastlingAvailability.GetHashCode() ^
-                this.ActiveColor.GetHashCode() ^
                 this.EnPassantTargetPosition.GetHashCode() ^
                 this.FullMoveNumber.GetHashCode() ^
-                this.HalfMoveClock.GetHashCode() ^
-                this.WhiteKingCastlingAvailability.GetHashCode() ^
-                this.WhiteQueenCastlingAvailability.GetHashCode()));
+                this.HalfMoveClock.GetHashCode();
         }
+        /// <summary>
+        /// 返回一个未压缩的棋子位置数值区域字符串
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -433,37 +452,29 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region Static
+        #region ICloneable
 
-        public static Situation NewGame
+        public object Clone()
         {
-            get { return new Situation(NewGameFENString); }
+            return new Situation(this.Generator());
         }
-
-        /// <summary>
-        /// 新棋局局面，白棋大写，黑棋小写
-        /// </summary>
-        public static readonly string NewGameFENString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         #endregion
 
-        public Piece[] ToChessmans()
+        #region ISerializable
+
+        protected Situation(SerializationInfo info, StreamingContext context)
         {
-            List<Piece> mans = new List<Piece>();
-            for (int x = 0; x < Rows.Length; x++)
-            {
-                for (int y = 0; y < Rows[x].Length; y++)
-                {
-                    char c = Rows[x][y];
-                    if (y == '1') continue;
-                    Enums.PieceType pieceType;
-                    Enums.GameSide side;
-                    throw new NotImplementedException();
-                }
-            }
-            return mans.ToArray();
+            this.Parse(info.GetString("fen"));
         }
 
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("fen", this.Generator());
+        }
+
+        #endregion
     }
 }
 
