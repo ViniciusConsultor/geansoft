@@ -247,12 +247,40 @@ namespace Gean.Module.Chess
 
         #endregion
 
+        #region PlayMode
+
+        /// <summary>
+        /// 当前棋局的模式
+        /// </summary>
+        public enum PlayMode
+        {
+            /// <summary>
+            /// 复盘打谱
+            /// </summary>
+            ReplayGame,
+            /// <summary>
+            /// 人机对战
+            /// </summary>
+            Player2Compute,
+            /// <summary>
+            /// 机机对战
+            /// </summary>
+            Compute2Compute,
+            /// <summary>
+            /// 引擎分析
+            /// </summary>
+            EngineMode,
+        }
+
+        #endregion
+
+
         #region GamePhase
 
         /// <summary>
         /// 棋局阶段
         /// </summary>
-        public enum ChessGamePhase
+        public enum GamePhase
         {
             /// <summary>
             /// 开局
@@ -321,31 +349,6 @@ namespace Gean.Module.Chess
             if (currSide == GameSide.Black)
                 return GameSide.White;
             return GameSide.Black;
-        }
-        /// <summary>
-        /// 获取另一战方的“王”
-        /// </summary>
-        /// <param name="currSide">另一战方</param>
-        /// <param name="pieces">棋子的集合</param>
-        public static PieceKing GetOtherGameSideKing(GameSide currSide, Pieces pieces)
-        {
-            if (currSide == GameSide.Black)
-            {
-                foreach (Piece piece in pieces)
-                {
-                    if (piece.PieceType == PieceType.WhiteKing)
-                        return (PieceKing)piece;
-                }
-            }
-            else
-            {
-                foreach (Piece piece in pieces)
-                {
-                    if (piece.PieceType == PieceType.BlackKing)
-                        return (PieceKing)piece;
-                }
-            }
-            throw new GameException(ExString.PieceKingIsNull);
         }
 
         #endregion
