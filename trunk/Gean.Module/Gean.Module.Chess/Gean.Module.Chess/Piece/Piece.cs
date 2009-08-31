@@ -44,6 +44,7 @@ namespace Gean.Module.Chess
         public Position Position
         {
             get { return this._position; }
+            set { this._position = value; }
         }
         protected Position _position;
 

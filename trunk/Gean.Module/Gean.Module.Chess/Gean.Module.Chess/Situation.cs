@@ -32,6 +32,7 @@ namespace Gean.Module.Chess
     [Serializable]
     public class Situation : ISituation, ICloneable, ISerializable
     {
+
         #region Static NewGame
 
         public static Situation NewGame
@@ -85,18 +86,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 2) 轮走棋方(Active color)
         /// </summary>
-        public char ActiveColor
-        {
-            get { return _activeColor; }
-            set
-            {
-                if (value == 'w' || value == 'b')
-                    _activeColor = value;
-                else
-                    throw new Exception("Specify: 'w' or 'b'");
-            }
-        }
-        private char _activeColor;
+        public Enums.GameSide GameSide { get; internal set; }
 
         /// <summary>
         /// 3) 易位可行性(Castling availability)(1.白方王侧)
@@ -133,6 +123,18 @@ namespace Gean.Module.Chess
         /// 6) 回合数(Fullmove number)。当前要进行到的回合数。不管白还是黑，第一步时总是以1表示，以后黑方每走一步数字就加1。
         /// </summary>
         public int FullMoveNumber { get; internal set; }
+
+        #endregion
+
+        #region ISituation: ContainsPiece
+
+        public bool ContainsPiece(int dot)
+        {
+            if (this.GetByPosition(dot).Equals('1'))
+                return false;
+            else
+                return true;
+        }
 
         #endregion
 
@@ -195,7 +197,7 @@ namespace Gean.Module.Chess
                     char colorchar = Char.ToLower(note[1][0]);
                     if (colorchar.Equals('w') || colorchar.Equals('b'))
                     {
-                        ActiveColor = colorchar;
+                        GameSide = Enums.ToGameSide(colorchar);
                     }
                     else
                         throw new ArgumentException("Invalid color designation, use w or b as 2nd field separated by spaces.");
@@ -245,7 +247,7 @@ namespace Gean.Module.Chess
                     // 16.1.3.4: Parse en passant target square such as "e3"
                     if (note[3].Length == 2)
                     {
-                        if (ActiveColor.Equals('w'))
+                        if (GameSide == Enums.GameSide.White)
                         {
                             if (note[3][1] != '6')
                                 throw new Exception("Invalid target square for white En passant captures: " + this.EnPassantTargetPosition.ToString());
@@ -329,7 +331,7 @@ namespace Gean.Module.Chess
             parms[0] = note.ToString().TrimEnd('/');
             note.Length = 0;
 
-            parms[1] = _activeColor.ToString();
+            parms[1] = Enums.FormGameSide(GameSide).ToString();
 
             if (WhiteKingCastlingAvailability | WhiteQueenCastlingAvailability | BlackKingCastlingAvailability | BlackQueenCastlingAvailability)
             {
@@ -395,14 +397,14 @@ namespace Gean.Module.Chess
         /// </summary>
         protected virtual void Clear()
         {
-            this._activeColor = 'w';
+            this.GameSide = Enums.GameSide.White;
             this.WhiteKingCastlingAvailability = false;
             this.WhiteQueenCastlingAvailability = false;
             this.BlackKingCastlingAvailability = false;
             this.BlackQueenCastlingAvailability = false;
             this.EnPassantTargetPosition = Position.Empty;
             this.HalfMoveClock = 0;
-            this.FullMoveNumber = 0;
+            this.FullMoveNumber = 1;
         }
 
         #endregion
@@ -415,7 +417,7 @@ namespace Gean.Module.Chess
             if (obj is System.DBNull) return false;
 
             Situation fen = (Situation)obj;
-            if (!this.ActiveColor.Equals(fen.ActiveColor)) return false;
+            if (!this.GameSide.Equals(fen.GameSide)) return false;
             if (!this.WhiteKingCastlingAvailability.Equals(fen.WhiteKingCastlingAvailability)) return false;
             if (!this.WhiteQueenCastlingAvailability.Equals(fen.WhiteQueenCastlingAvailability)) return false;
             if (!this.BlackKingCastlingAvailability.Equals(fen.BlackKingCastlingAvailability)) return false;
@@ -430,7 +432,7 @@ namespace Gean.Module.Chess
         {
             return unchecked(3 * (
                 this.PiecePlacementData.GetHashCode() ^
-                this.ActiveColor.GetHashCode() ^
+                this.GameSide.GetHashCode() ^
                 this.WhiteKingCastlingAvailability.GetHashCode() ^
                 this.WhiteQueenCastlingAvailability.GetHashCode())) ^
                 this.BlackKingCastlingAvailability.GetHashCode() ^
@@ -478,5 +480,6 @@ namespace Gean.Module.Chess
         }
 
         #endregion
+
     }
 }

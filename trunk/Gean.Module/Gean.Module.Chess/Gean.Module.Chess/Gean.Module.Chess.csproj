@@ -37,6 +37,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Enums.cs" />
+    <Compile Include="Interface\IFenNotation.cs" />
+    <Compile Include="Interface\IPGNReader.cs" />
+    <Compile Include="Interface\IPGNReaderEvents.cs" />
+    <Compile Include="Record\PGNReader.cs" />
     <Compile Include="SequenceTree\ChessChoices.cs" />
     <Compile Include="SequenceTree\ChessSequence.cs" />
     <Compile Include="Record\ChessStep.cs" />

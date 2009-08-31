@@ -61,6 +61,15 @@ namespace Gean.Module.Chess {
         }
         
         /// <summary>
+        ///   查找类似 棋子“王”在棋子集合中未发现。 的本地化字符串。
+        /// </summary>
+        internal static string PieceKingIsNull {
+            get {
+                return ResourceManager.GetString("PieceKingIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &quot;Enums.ChessmanType.{0}&quot; 类型无法进行相应的运算。 的本地化字符串。
         /// </summary>
         internal static string PieceTypeIsError {
