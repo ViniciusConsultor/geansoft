@@ -37,12 +37,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Enums.cs" />
+    <Compile Include="Interface\IEngineReader.cs" />
     <Compile Include="Interface\IFenNotation.cs" />
     <Compile Include="Interface\IPGNReader.cs" />
     <Compile Include="Interface\IPGNReaderEvents.cs" />
     <Compile Include="Record\PGNReader.cs" />
-    <Compile Include="SequenceTree\ChessChoices.cs" />
-    <Compile Include="SequenceTree\ChessSequence.cs" />
+    <Compile Include="Record\SequenceTree\ChessChoices.cs" />
+    <Compile Include="Record\SequenceTree\ChessSequence.cs" />
     <Compile Include="Record\ChessStep.cs" />
     <Compile Include="ExString.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -71,10 +72,10 @@
     <Compile Include="Exception\PieceException.cs" />
     <Compile Include="Exception\RecordException.cs" />
     <Compile Include="Exception\SituationFailedException.cs" />
-    <Compile Include="SequenceTree\ChessComment.cs" />
-    <Compile Include="SequenceTree\ChessDefiner.cs" />
-    <Compile Include="SequenceTree\ChessNag.cs" />
-    <Compile Include="SequenceTree\ChessResult.cs" />
+    <Compile Include="Record\SequenceTree\ChessComment.cs" />
+    <Compile Include="Record\SequenceTree\ChessDefiner.cs" />
+    <Compile Include="Record\SequenceTree\ChessNag.cs" />
+    <Compile Include="Record\SequenceTree\ChessResult.cs" />
     <Compile Include="Piece\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

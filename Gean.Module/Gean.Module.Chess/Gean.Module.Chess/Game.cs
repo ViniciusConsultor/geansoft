@@ -7,18 +7,30 @@ namespace Gean.Module.Chess
     public class Game : Situation, IGame
     {
 
-        #region IGame 成员
+        #region ctor
 
-        public Pieces ActivedPieces
+        public Game()
         {
-            get { throw new NotImplementedException(); }
+            this.ActivedPieces = new Pieces();
+            this.MovedPieces = new Pieces();
+            this.PlayMode = Enums.PlayMode.ReplayGame;
         }
 
-        public Pieces MovedPieces
-        {
-            get { throw new NotImplementedException(); }
-        }
+        #endregion
 
+        #region IGame
+
+        public Pieces ActivedPieces { get; private set; }
+
+        public Pieces MovedPieces { get; private set; }
+
+        public Enums.PlayMode PlayMode { get; set; }
+
+        /// <summary>
+        /// 获取与指定棋格的位置相关联的棋子。
+        /// </summary>
+        /// <param name="dot">指定棋格的位置</param>
+        /// <param name="piece">关联的棋子</param>
         public bool TryGetPiece(int dot, out Piece piece)
         {
             throw new NotImplementedException();
@@ -26,31 +38,96 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region IPieceMove 成员
+        #region IPieceMove
 
-        public Enums.Action PieceMoveIn(Pair<Position, Position> step)
+        #region MoveIn
+
+        /// <summary>
+        /// 移动指定位置棋格的棋子
+        /// </summary>
+        /// <param name="step">指定的成对的位置,First值为源棋格,Second值是目标棋格</param>
+        public void PieceMoveIn(Pair<Position, Position> step)
         {
             Enums.Action action = Enums.Action.General;
-            //第一步，从源棋格找出棋子。
             Piece piece;
-            if (!this.TryGetPiece(step.First.Dot, out piece))
+            if (this.TryGetPiece(step.First.Dot, out piece))
             {
-                return Enums.Action.Invalid;
+                //第一步，判断目标棋格中是否有棋子。
+                //如果有棋子，更改Action，调用PieceMoveOut方法。
+                if (!this.ContainsPiece(step.Second.Dot))
+                {
+                    action = Enums.Action.Capture;
+                    this.PieceMoveOut(step.Second);
+                }
+
+
+                //第二步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
+                this.PieceMoveIn(piece, step.First, step.Second);
+
+
+                //第三步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
+                action = this.IsCheckPieceKing(action, piece);
+
+
+                //第四步，注册棋子移动后事件
+                OnPieceMoveInEvent(piece, action, step);
             }
-            //第二步，判断目标棋格中是否有棋子。
-            //如果有棋子，更改Action，调用PieceMoveOut方法。
-            if (!this.ContainsPiece(step.Second.Dot))
+        }
+
+        #region PieceMoveIn Sub Method
+
+        /// <summary>
+        /// 内部方法：移动棋子，并更改FEN记录
+        /// </summary>
+        /// <param name="piece">被移动的棋子</param>
+        /// <param name="srcPos">源棋格</param>
+        /// <param name="tgtPos">目标棋格</param>
+        private void PieceMoveIn(Piece piece, Position srcPos, Position tgtPos)
+        {
+            switch (piece.PieceType)
             {
-                action = Enums.Action.Capture;
-                this.PieceMoveOut(step.Second);
+                #region case
+                case Enums.PieceType.WhiteKing:
+                case Enums.PieceType.BlackKing:
+                    {
+                        //TODO:在这里实现王车易位
+                        break;
+                    }
+                case Enums.PieceType.WhitePawn:
+                case Enums.PieceType.BlackPawn:
+                    {
+                        //TODO:在这里实现“吃过路兵”、“升变”
+                        break;
+                    }
+                case Enums.PieceType.WhiteQueen:
+                case Enums.PieceType.WhiteRook:
+                case Enums.PieceType.WhiteBishop:
+                case Enums.PieceType.WhiteKnight:
+                case Enums.PieceType.BlackQueen:
+                case Enums.PieceType.BlackRook:
+                case Enums.PieceType.BlackBishop:
+                case Enums.PieceType.BlackKnight:
+                case Enums.PieceType.AllKings:
+                case Enums.PieceType.AllQueens:
+                case Enums.PieceType.AllRooks:
+                case Enums.PieceType.AllBishops:
+                case Enums.PieceType.AllKnights:
+                case Enums.PieceType.AllPawns:
+                case Enums.PieceType.All:
+                case Enums.PieceType.None:
+                default:
+                    break;
+                #endregion
             }
-            //第三步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
-            this.PieceMoveIn(piece, step.First, step.Second);
-            //第四步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
-            action = IsCheckPieceKing(action, piece);
-            //第五步，注册棋子移动后事件
-            OnPieceMoveInEvent(piece, action, step);
-            return action;
+            piece.Position = tgtPos;
+            this.SetByPosition(srcPos.Dot, '1');
+            this.SetByPosition(tgtPos.Dot, Enums.FromPieceType(piece.PieceType)[0]);
+            this.GameSide = Enums.GetOtherGameSide(this.GameSide);
+            if (this.GameSide == Enums.GameSide.White)
+            {
+                this.FullMoveNumber++;
+            }
+            this.HalfMoveClock++;
         }
 
         /// <summary>
@@ -61,7 +138,7 @@ namespace Gean.Module.Chess
         private Enums.Action IsCheckPieceKing(Enums.Action action, Piece piece)
         {
             Position[] postions = piece.GetEnablePositions();
-            Position kingPos = Enums.GetOtherGameSideKing(this.GameSide, this.ActivedPieces).Position;
+            Position kingPos = this.ActivedPieces.GetOtherGameSideKing(this.GameSide).Position;
             foreach (Position pos in postions)
             {
                 if (pos.Equals(kingPos))
@@ -76,37 +153,11 @@ namespace Gean.Module.Chess
             return action;
         }
 
-        /// <summary>
-        /// 内部方法：移动棋子，并更改FEN记录
-        /// </summary>
-        /// <param name="piece">被移动的棋子</param>
-        /// <param name="srcPos">源棋格</param>
-        /// <param name="tgtPos">目标棋格</param>
-        private void PieceMoveIn(Piece piece, Position srcPos, Position tgtPos)
-        {
-            piece.Position = tgtPos;
-            this.SetByPosition(srcPos.Dot, '1');
-            this.SetByPosition(tgtPos.Dot, Enums.FromPieceType(piece.PieceType)[0]);
-            this.GameSide = Enums.GetOtherGameSide(this.GameSide);
-            if (this.GameSide == Enums.GameSide.White)
-            {
-                this.FullMoveNumber++;
-            }
-            this.HalfMoveClock++;
-        }
+        #endregion
 
-        /// <summary>
-        /// 在棋子移动后发生
-        /// </summary>
-        public event PieceMoveIn PieceMoveInEvent;
-        protected virtual void OnPieceMoveInEvent(Piece piece, Enums.Action action, Pair<Position, Position> positions)
-        {
-            if (PieceMoveInEvent != null)
-            {
-                PieceMoveInEvent(piece, action, positions);
-            }
-        }
+        #endregion
 
+        #region MoveOut
         /// <summary>
         /// 移除指定位置棋格的棋子
         /// </summary>
@@ -121,6 +172,9 @@ namespace Gean.Module.Chess
             this.HalfMoveClock = 0;
             OnPieceMoveOutEvent(piece, pos);//注册棋子被俘事件
         }
+        #endregion
+
+        #region Event
 
         /// <summary>
         /// 在棋子被俘后发生
@@ -134,9 +188,23 @@ namespace Gean.Module.Chess
             }
         }
 
+        /// <summary>
+        /// 在棋子移动后发生
+        /// </summary>
+        public event PieceMoveIn PieceMoveInEvent;
+        protected virtual void OnPieceMoveInEvent(Piece piece, Enums.Action action, Pair<Position, Position> positions)
+        {
+            if (PieceMoveInEvent != null)
+            {
+                PieceMoveInEvent(piece, action, positions);
+            }
+        }
+
         #endregion
 
-        #region IEnumerable<Piece> 成员
+        #endregion
+
+        #region IEnumerable<Piece>
 
         public IEnumerator<Piece> GetEnumerator()
         {
@@ -145,7 +213,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region IEnumerable 成员
+        #region IEnumerable
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
