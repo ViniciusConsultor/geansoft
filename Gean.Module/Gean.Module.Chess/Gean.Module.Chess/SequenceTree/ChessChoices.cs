@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gean.Module.Chess
 {
-    public class ChessChoices : ChessSequence, ISequenceItem
+    public class ChessChoices : ChessSequence, IItem
     {
         #region ISequenceItem 成员
 
