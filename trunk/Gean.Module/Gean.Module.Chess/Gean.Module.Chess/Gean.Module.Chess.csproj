@@ -37,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Enums.cs" />
+    <Compile Include="SequenceTree\ChessChoices.cs" />
+    <Compile Include="SequenceTree\ChessSequence.cs" />
+    <Compile Include="Record\ChessStep.cs" />
     <Compile Include="ExString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,12 +66,11 @@
     <Compile Include="Exception\ChessException.cs" />
     <Compile Include="Exception\PieceException.cs" />
     <Compile Include="Exception\RecordException.cs" />
-    <Compile Include="Exception\FenFailedException.cs" />
-    <Compile Include="ISequenceItem\ChessComment.cs" />
-    <Compile Include="ISequenceItem\ChessDefiner.cs" />
-    <Compile Include="ISequenceItem\ChessNag.cs" />
-    <Compile Include="ISequenceItem\ChessResult.cs" />
-    <Compile Include="ISequenceItem\ISequenceItem.cs" />
+    <Compile Include="Exception\SituationFailedException.cs" />
+    <Compile Include="SequenceTree\ChessComment.cs" />
+    <Compile Include="SequenceTree\ChessDefiner.cs" />
+    <Compile Include="SequenceTree\ChessNag.cs" />
+    <Compile Include="SequenceTree\ChessResult.cs" />
     <Compile Include="Piece\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

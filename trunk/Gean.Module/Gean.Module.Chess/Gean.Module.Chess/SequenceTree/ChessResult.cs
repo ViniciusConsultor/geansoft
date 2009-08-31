@@ -7,7 +7,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 棋局结果
     /// </summary>
-    public class ChessResult : ISequenceItem
+    public class ChessResult : IItem
     {
         public Enums.Result Result 
         {

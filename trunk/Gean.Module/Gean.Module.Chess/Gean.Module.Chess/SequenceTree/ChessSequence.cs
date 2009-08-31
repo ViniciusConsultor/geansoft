@@ -9,13 +9,13 @@ namespace Gean.Module.Chess
     /// 描述棋局中的回合序列(实现IList接口, 集合的元素为<see>ChessStepPair</see>)。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
-    public class ChessSequence : IList<ISequenceItem>
+    public class ChessSequence : IList<IItem>
     {
-        protected List<ISequenceItem> SequenceItemList { get; private set; }
+        protected List<IItem> SequenceItemList { get; private set; }
 
         public ChessSequence()
         {
-            this.SequenceItemList = new List<ISequenceItem>();
+            this.SequenceItemList = new List<IItem>();
         }
 
         public ChessStep Peek()
@@ -38,7 +38,7 @@ namespace Gean.Module.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (ISequenceItem item in this.SequenceItemList)
+            foreach (IItem item in this.SequenceItemList)
             {
                 this.GetItemString(item, sb);
             }
@@ -47,12 +47,12 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 序列树生成字符串<see>TooString()</see>的递归子方法
         /// </summary>
-        private void GetItemString(ISequenceItem item, StringBuilder sb)
+        private void GetItemString(IItem item, StringBuilder sb)
         {
             sb.Append(item.Value).Append(' ');
-            if (item is IStepTree)
+            if (item is ITree)
             {
-                IStepTree tree = (IStepTree)item;
+                ITree tree = (ITree)item;
                 if (tree.HasChildren)
                 {
                     sb.Append(' ').Append('(');
@@ -67,12 +67,12 @@ namespace Gean.Module.Chess
 
         #region IList<ISequenceItem> 成员
 
-        public int IndexOf(ISequenceItem item)
+        public int IndexOf(IItem item)
         {
             return this.SequenceItemList.IndexOf(item);
         }
 
-        public void Insert(int index, ISequenceItem item)
+        public void Insert(int index, IItem item)
         {
             this.SequenceItemList.Insert(index, item);
         }
@@ -82,7 +82,7 @@ namespace Gean.Module.Chess
             this.SequenceItemList.RemoveAt(index);
         }
 
-        public ISequenceItem this[int index]
+        public IItem this[int index]
         {
             get { return this.SequenceItemList[index]; }
             set { this.SequenceItemList[index] = value; }
@@ -92,7 +92,7 @@ namespace Gean.Module.Chess
 
         #region ICollection<ISequenceItem> 成员
 
-        public void Add(ISequenceItem item)
+        public void Add(IItem item)
         {
             this.SequenceItemList.Add(item);
         }
@@ -102,12 +102,12 @@ namespace Gean.Module.Chess
             this.SequenceItemList.Clear();
         }
 
-        public bool Contains(ISequenceItem item)
+        public bool Contains(IItem item)
         {
             return this.SequenceItemList.Contains(item);
         }
 
-        public void CopyTo(ISequenceItem[] array, int arrayIndex)
+        public void CopyTo(IItem[] array, int arrayIndex)
         {
             this.SequenceItemList.CopyTo(array, arrayIndex);
         }
@@ -122,7 +122,7 @@ namespace Gean.Module.Chess
             get { return false; }
         }
 
-        public bool Remove(ISequenceItem item)
+        public bool Remove(IItem item)
         {
             return this.SequenceItemList.Remove(item);
         }
@@ -131,7 +131,7 @@ namespace Gean.Module.Chess
 
         #region IEnumerable<ISequenceItem> 成员
 
-        public IEnumerator<ISequenceItem> GetEnumerator()
+        public IEnumerator<IItem> GetEnumerator()
         {
             return this.SequenceItemList.GetEnumerator();
         }

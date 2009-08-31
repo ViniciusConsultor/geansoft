@@ -45,6 +45,8 @@
     <Compile Include="Base\Triplet.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
+    <Compile Include="Interface\Tree,Item\IItem.cs" />
+    <Compile Include="Interface\Tree,Item\ITree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SmartDateString.Designer.cs">
       <AutoGen>True</AutoGen>

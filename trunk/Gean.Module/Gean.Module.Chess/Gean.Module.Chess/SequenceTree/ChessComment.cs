@@ -9,7 +9,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 描述棋评的类。他被包括在一对大括号中。一般都将跟随在一个ChessStep的后面。
     /// </summary>
-    public class ChessComment : ISequenceItem
+    public class ChessComment : IItem
     {
         /// <summary>
         /// 棋评

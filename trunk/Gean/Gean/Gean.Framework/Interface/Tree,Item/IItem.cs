@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Module.Chess
+namespace Gean
 {
-    public interface ISequenceItem
+    public interface IItem
     {
         string Value { get; }
     }
