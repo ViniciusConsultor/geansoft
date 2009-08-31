@@ -17,18 +17,18 @@ namespace Gean.Module.Chess
             /// 一般棋招动作
             /// </summary>
             General = 0,
-            ///// <summary>
-            ///// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
-            ///// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
-            ///// </summary>
+            /// <summary>
+            /// 将军(“将军”在棋步中仅是某一棋步的结果，他事实是General或Kill棋步的结果)。
+            /// 故该枚举单独使用时指的是普通棋招，并该棋招产生了“将军”的结果。
+            /// </summary>
             Check = 1,
             /// <summary>
             /// 开局摆棋
             /// </summary>
             Opennings = 2,
-            ///// <summary>
-            ///// 有棋被杀死(捕获, 夺得, 俘获) 
-            ///// </summary>
+            /// <summary>
+            /// 有棋被杀死(捕获, 夺得, 俘获) 
+            /// </summary>
             Capture = 4,
             /// <summary>
             /// 将死，记号为“#”
@@ -54,13 +54,13 @@ namespace Gean.Module.Chess
             /// 升变为象
             /// </summary>
             PromoteToBishop = 256,
-            ///// <summary>
-            ///// 王车长易位
-            ///// </summary>
+            /// <summary>
+            /// 王车长易位
+            /// </summary>
             QueenSideCastling = 512,
-            ///// <summary>
-            ///// 王车短易位
-            ///// </summary>
+            /// <summary>
+            /// 王车短易位
+            /// </summary>
             KingSideCastling = 1024,
             /// <summary>
             /// 无效
@@ -69,7 +69,7 @@ namespace Gean.Module.Chess
             /// <summary>
             /// 杀棋并将军
             /// </summary>
-            CaptureCheck = (Capture|Check),
+            CaptureCheck = (Capture | Check),
             /// <summary>
             /// 王车易位
             /// </summary>
@@ -322,10 +322,35 @@ namespace Gean.Module.Chess
                 return GameSide.White;
             return GameSide.Black;
         }
+        /// <summary>
+        /// 获取另一战方的“王”
+        /// </summary>
+        /// <param name="currSide">另一战方</param>
+        /// <param name="pieces">棋子的集合</param>
+        public static PieceKing GetOtherGameSideKing(GameSide currSide, Pieces pieces)
+        {
+            if (currSide == GameSide.Black)
+            {
+                foreach (Piece piece in pieces)
+                {
+                    if (piece.PieceType == PieceType.WhiteKing)
+                        return (PieceKing)piece;
+                }
+            }
+            else
+            {
+                foreach (Piece piece in pieces)
+                {
+                    if (piece.PieceType == PieceType.BlackKing)
+                        return (PieceKing)piece;
+                }
+            }
+            throw new GameException(ExString.PieceKingIsNull);
+        }
 
         #endregion
 
-        #region ChessmanType
+        #region PieceType
 
         /// <summary>
         /// 棋子类型的枚举。
@@ -337,19 +362,19 @@ namespace Gean.Module.Chess
             /// <summary>
             /// 嘛也不是
             /// </summary>
-            None        = 0,
+            None = 0,
             /// <summary>
             /// White's king
             /// </summary>
-            WhiteKing   = 1,
+            WhiteKing = 1,
             /// <summary>
             /// White's queen
             /// </summary>
-            WhiteQueen  = 2,
+            WhiteQueen = 2,
             /// <summary>
             /// White's rook
             /// </summary>
-            WhiteRook   = 4,
+            WhiteRook = 4,
             /// <summary>
             /// White's bishop
             /// </summary>
@@ -361,19 +386,19 @@ namespace Gean.Module.Chess
             /// <summary>
             /// White's pawn
             /// </summary>
-            WhitePawn   = 32,
+            WhitePawn = 32,
             /// <summary>
             /// Black's king
             /// </summary>
-            BlackKing   = 64,
+            BlackKing = 64,
             /// <summary>
             /// Black's queen
             /// </summary>
-            BlackQueen  = 128,
+            BlackQueen = 128,
             /// <summary>
             /// Black's rook
             /// </summary>
-            BlackRook   = 256,
+            BlackRook = 256,
             /// <summary>
             /// Black's bishop
             /// </summary>
@@ -385,31 +410,31 @@ namespace Gean.Module.Chess
             /// <summary>
             /// Black's pawn
             /// </summary>
-            BlackPawn   = 2048,
+            BlackPawn = 2048,
             /// <summary>
             /// Used to hide all kings from displaying on the board.
             /// </summary>
-            AllKings    = WhiteKing   | BlackKing,
+            AllKings = WhiteKing | BlackKing,
             /// <summary>
             /// Used to hide all kings from displaying on the board.
             /// </summary>
-            AllQueens   = WhiteQueen  | BlackQueen,
+            AllQueens = WhiteQueen | BlackQueen,
             /// <summary>
             /// Used to hide all queens from displaying on the board.
             /// </summary>
-            AllRooks    = WhiteRook   | BlackRook,
+            AllRooks = WhiteRook | BlackRook,
             /// <summary>
             /// Used to hide all rooks from displaying on the board.
             /// </summary>
-            AllBishops  = WhiteBishop | BlackBishop,
+            AllBishops = WhiteBishop | BlackBishop,
             /// <summary>
             /// Used to hide all bishops from displaying on the board.
             /// </summary>
-            AllKnights  = WhiteKnight | BlackKnight,
+            AllKnights = WhiteKnight | BlackKnight,
             /// <summary>
             /// Used to hide all knights from displaying on the board.
             /// </summary>
-            AllPawns    = WhitePawn   | BlackPawn,
+            AllPawns = WhitePawn | BlackPawn,
             /// <summary>
             /// Used to hide all the pieces.
             /// </summary>

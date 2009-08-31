@@ -8,6 +8,6 @@ namespace Gean.Module.Chess
     {
         Pieces ActivedPieces { get; }
         Pieces MovedPieces { get; }
-        Piece this[int dot] { get; }
+        bool TryGetPiece(int dot, out Piece piece);
     }
 }
