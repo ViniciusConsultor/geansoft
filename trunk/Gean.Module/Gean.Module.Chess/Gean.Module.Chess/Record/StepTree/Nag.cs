@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Gean.Module.Chess
 {
-    public class ChessNag : IItem
+    public class Nag : IItem
     {
-        public ChessNag()
+        public Nag()
         {
 
         }
-        public ChessNag(string value)
+        public Nag(string value)
         {
             this.Value = value;
         }

@@ -60,7 +60,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 棋局记录的标签对部分
     /// </summary>
-    public class ChessDefiner : Definer
+    public class Tags : Definer, IItem
     {
         public override string ToString()
         {
@@ -72,7 +72,7 @@ namespace Gean.Module.Chess
             return sb.ToString();
         }
 
-        #region ISequenceItem 成员
+        #region IItem
 
         public string Value
         {

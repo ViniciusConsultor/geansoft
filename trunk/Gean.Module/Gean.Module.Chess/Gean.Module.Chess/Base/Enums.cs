@@ -200,27 +200,27 @@ namespace Gean.Module.Chess
         public static Result ToResult(string value)
         {
             value = value.Replace(" ", "");
-            if (value.Equals(ChessResult.ResultWhiteWin))
+            if (value.Equals(GameResult.ResultWhiteWin))
             {
                 return Result.WhiteWin;
             }
-            else if (value.Equals(ChessResult.ResultBlackWin))
+            else if (value.Equals(GameResult.ResultBlackWin))
             {
                 return Result.BlackWin;
             }
-            else if (value.Equals(ChessResult.ResultDraw1))
+            else if (value.Equals(GameResult.ResultDraw1))
             {
                 return Result.Draw;
             }
-            else if (value.Equals(ChessResult.ResultDraw2))
+            else if (value.Equals(GameResult.ResultDraw2))
             {
                 return Result.Draw;
             }
-            else if (value.Equals(ChessResult.ResultDraw3))
+            else if (value.Equals(GameResult.ResultDraw3))
             {
                 return Result.Draw;
             }
-            else if (value.Equals(ChessResult.ResultUnKnown))
+            else if (value.Equals(GameResult.ResultUnKnown))
             {
                 return Result.UnKnown;
             }
@@ -234,14 +234,14 @@ namespace Gean.Module.Chess
             switch (result)
             {
                 case Result.WhiteWin:
-                    return ChessResult.ResultWhiteWin;
+                    return GameResult.ResultWhiteWin;
                 case Result.BlackWin:
-                    return ChessResult.ResultBlackWin;
+                    return GameResult.ResultBlackWin;
                 case Result.Draw:
-                    return ChessResult.ResultDraw1;
+                    return GameResult.ResultDraw1;
                 case Result.UnKnown:
                 default:
-                    return ChessResult.ResultUnKnown;
+                    return GameResult.ResultUnKnown;
             }
         }
 

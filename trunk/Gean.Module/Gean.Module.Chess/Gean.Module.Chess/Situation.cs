@@ -30,7 +30,7 @@ namespace Gean.Module.Chess
     /// [,sitju'eiʃən] n. 位置,形势,局面,处境,状况,职位
     /// </summary>
     [Serializable]
-    public class Situation : ISituation, ICloneable, ISerializable
+    public class Situation : MarshalByRefObject, ISituation, ICloneable, ISerializable
     {
 
         #region Static NewGame

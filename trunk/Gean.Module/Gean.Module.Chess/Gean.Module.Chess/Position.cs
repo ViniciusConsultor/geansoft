@@ -25,6 +25,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 一个描述棋盘位置的类型
     /// </summary>
+    [Serializable]
     public class Position
     {
 
@@ -133,6 +134,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 当前位置的棋盘横坐标(a-h)
         /// </summary>
+        [NonSerialized]
         private char _horizontal;
 
         /// <summary>
@@ -142,6 +144,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 当前位置的棋盘纵坐标(1-8)
         /// </summary>
+        [NonSerialized]
         private int _vertical;
 
         /// <summary>
@@ -151,6 +154,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 当前位置的计算机X坐标(0-7)
         /// </summary>
+        [NonSerialized]
         private int _x;
 
         /// <summary>
@@ -160,6 +164,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 当前位置的计算机Y坐标(0-7)
         /// </summary>
+        [NonSerialized]
         private int _y;
 
         /// <summary>
