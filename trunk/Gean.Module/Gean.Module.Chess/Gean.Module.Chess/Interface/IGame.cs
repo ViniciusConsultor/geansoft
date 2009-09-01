@@ -10,5 +10,6 @@ namespace Gean.Module.Chess
         Pieces MovedPieces { get; }
         Enums.PlayMode PlayMode { get; set; }
         bool TryGetPiece(int dot, out Piece piece);
+        bool TryContains(Piece piece, out int dot);
     }
 }

@@ -263,6 +263,10 @@ namespace Gean.Module.Chess
             /// </summary>
             Player2Compute,
             /// <summary>
+            /// 人人对战
+            /// </summary>
+            Player2Player,
+            /// <summary>
             /// 机机对战
             /// </summary>
             Compute2Compute,
@@ -273,7 +277,6 @@ namespace Gean.Module.Chess
         }
 
         #endregion
-
 
         #region GamePhase
 
@@ -298,23 +301,23 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region ChessGridSide
+        #region GridSide
 
         /// <summary>
         /// 黑格，白格
         /// </summary>
-        public enum ChessGridSide
+        public enum GridSide
         {
             White = 0, Black = 1,
         }
         /// <summary>
         /// 获取棋格的另一方
         /// </summary>
-        public static ChessGridSide GetOtherGridSide(ChessGridSide side)
+        public static GridSide GetOtherGridSide(GridSide side)
         {
-            if (side == ChessGridSide.Black)
-                return ChessGridSide.White;
-            return ChessGridSide.Black;
+            if (side == GridSide.Black)
+                return GridSide.White;
+            return GridSide.Black;
         }
 
         #endregion

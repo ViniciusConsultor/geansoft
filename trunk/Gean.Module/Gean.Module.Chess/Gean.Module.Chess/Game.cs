@@ -20,10 +20,19 @@ namespace Gean.Module.Chess
 
         #region IGame
 
+        /// <summary>
+        /// 可以使用的棋子(未被俘获)
+        /// </summary>
         public Pieces ActivedPieces { get; private set; }
 
+        /// <summary>
+        /// 已被俘获的棋子
+        /// </summary>
         public Pieces MovedPieces { get; private set; }
 
+        /// <summary>
+        /// 当前棋局的模式
+        /// </summary>
         public Enums.PlayMode PlayMode { get; set; }
 
         /// <summary>
@@ -33,7 +42,17 @@ namespace Gean.Module.Chess
         /// <param name="piece">关联的棋子</param>
         public bool TryGetPiece(int dot, out Piece piece)
         {
-            throw new NotImplementedException();
+            return this.ActivedPieces.TryGetPiece(dot, out piece);
+        }
+
+        /// <summary>
+        /// 尝试从棋子集合中判断是否包含指定的棋子，并获取棋盘位置
+        /// </summary>
+        /// <param name="Piece">指定的棋子</param>
+        /// <param name="dot">棋盘位置</param>
+        public bool TryContains(Piece piece, out int dot)
+        {
+            return this.ActivedPieces.TryContains(piece, out dot);
         }
 
         #endregion
