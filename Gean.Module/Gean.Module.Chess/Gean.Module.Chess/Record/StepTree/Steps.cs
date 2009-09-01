@@ -6,32 +6,32 @@ using System.Collections;
 namespace Gean.Module.Chess
 {
     /// <summary>
-    /// 描述棋局中的回合序列(实现IList接口, 集合的元素为<see>ChessStepPair</see>)。
+    /// 描述棋局中的回合序列(实现IList接口)。
     /// 它可能描述的是一整局棋，也可能是描述的是一整局棋的一部份，如变招的描述与记录。
     /// </summary>
-    public class ChessSequence : IList<IItem>
+    public class Steps : IList<IItem>
     {
         protected List<IItem> SequenceItemList { get; private set; }
 
-        public ChessSequence()
+        public Steps()
         {
             this.SequenceItemList = new List<IItem>();
         }
 
-        public ChessStep Peek()
+        public Step Peek()
         {
-            return this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStep;
+            return this.SequenceItemList[this.SequenceItemList.Count - 1] as Step;
         }
 
-        public ChessStep[] PeekPair()
+        public Step[] PeekPair()
         {
             if (this.SequenceItemList.Count < 2)
             {
                 return null;
             }
-            ChessStep[] steps = new ChessStep[2];
-            steps[0] = this.SequenceItemList[this.SequenceItemList.Count - 1] as ChessStep;
-            steps[1] = this.SequenceItemList[this.SequenceItemList.Count - 2] as ChessStep;
+            Step[] steps = new Step[2];
+            steps[0] = this.SequenceItemList[this.SequenceItemList.Count - 1] as Step;
+            steps[1] = this.SequenceItemList[this.SequenceItemList.Count - 2] as Step;
             return steps;
         }
 
@@ -65,7 +65,7 @@ namespace Gean.Module.Chess
             }
         }
 
-        #region IList<ISequenceItem> 成员
+        #region IList<IItem> 成员
 
         public int IndexOf(IItem item)
         {
@@ -90,7 +90,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region ICollection<ISequenceItem> 成员
+        #region ICollection<IItem> 成员
 
         public void Add(IItem item)
         {
@@ -129,7 +129,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region IEnumerable<ISequenceItem> 成员
+        #region IEnumerable<IItem> 成员
 
         public IEnumerator<IItem> GetEnumerator()
         {
@@ -146,11 +146,5 @@ namespace Gean.Module.Chess
         }
 
         #endregion
-
-
-        protected static void Parse(string value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

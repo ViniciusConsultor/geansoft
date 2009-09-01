@@ -9,7 +9,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 描述棋评的类。他被包括在一对大括号中。一般都将跟随在一个ChessStep的后面。
     /// </summary>
-    public class ChessComment : IItem
+    public class Annotation : IItem
     {
         /// <summary>
         /// 棋评
@@ -59,7 +59,7 @@ namespace Gean.Module.Chess
             if (obj == null) return false;
             if (obj is System.DBNull) return false;
 
-            ChessComment comment = (ChessComment)obj;
+            Annotation comment = (Annotation)obj;
             if (!(UtilityEquals.StringEquals(this.Comment, comment.Comment))) return false;
             if (!(UtilityEquals.StringEquals(this._userId, comment._userId))) return false;
             return true;
@@ -74,9 +74,9 @@ namespace Gean.Module.Chess
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static ChessComment Parse(string value)
+        public static Annotation Parse(string value)
         {
-            ChessComment comment = new ChessComment();
+            Annotation comment = new Annotation();
             value = value.Trim().Trim(new char[] { '{', '}' }).Trim();
             if (value[0] == '<')
             {

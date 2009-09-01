@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Gean.Module.Chess
 {
+    [Serializable]
     public class Game : Situation, IGame
     {
 

@@ -7,7 +7,7 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 棋局结果
     /// </summary>
-    public class ChessResult : IItem
+    public class GameResult : IItem
     {
         public Enums.Result Result 
         {
@@ -58,7 +58,7 @@ namespace Gean.Module.Chess
             if (obj == null) return false;
             if (obj is System.DBNull) return false;
 
-            ChessResult r = (ChessResult)obj;
+            GameResult r = (GameResult)obj;
             return Result.Equals(r.Result);
         }
         public override int GetHashCode()
@@ -66,9 +66,9 @@ namespace Gean.Module.Chess
             return base.GetHashCode();
         }
 
-        public static ChessResult Parse(string value)
+        public static GameResult Parse(string value)
         {
-            ChessResult result = new ChessResult();
+            GameResult result = new GameResult();
             if (string.IsNullOrEmpty(value))
             {
                 result.Result = Enums.Result.UnKnown;

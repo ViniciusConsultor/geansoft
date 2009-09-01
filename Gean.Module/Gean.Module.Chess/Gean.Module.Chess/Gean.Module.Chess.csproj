@@ -41,10 +41,12 @@
     <Compile Include="Interface\IFenNotation.cs" />
     <Compile Include="Interface\IPGNReader.cs" />
     <Compile Include="Interface\IPGNReaderEvents.cs" />
-    <Compile Include="Record\PGNReader.cs" />
-    <Compile Include="Record\SequenceTree\ChessChoices.cs" />
-    <Compile Include="Record\SequenceTree\ChessSequence.cs" />
-    <Compile Include="Record\ChessStep.cs" />
+    <Compile Include="Record\Record.cs" />
+    <Compile Include="Record\Records.cs" />
+    <Compile Include="Record\PGN\PGNReader.cs" />
+    <Compile Include="Record\StepTree\Variation.cs" />
+    <Compile Include="Record\StepTree\Steps.cs" />
+    <Compile Include="Step.cs" />
     <Compile Include="ExString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,10 +74,10 @@
     <Compile Include="Exception\PieceException.cs" />
     <Compile Include="Exception\RecordException.cs" />
     <Compile Include="Exception\SituationFailedException.cs" />
-    <Compile Include="Record\SequenceTree\ChessComment.cs" />
-    <Compile Include="Record\SequenceTree\ChessDefiner.cs" />
-    <Compile Include="Record\SequenceTree\ChessNag.cs" />
-    <Compile Include="Record\SequenceTree\ChessResult.cs" />
+    <Compile Include="Record\StepTree\Annotation.cs" />
+    <Compile Include="Record\Tags.cs" />
+    <Compile Include="Record\StepTree\Nag.cs" />
+    <Compile Include="Record\StepTree\GameResult.cs" />
     <Compile Include="Piece\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

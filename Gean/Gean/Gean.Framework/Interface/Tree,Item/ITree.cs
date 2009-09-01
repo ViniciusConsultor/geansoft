@@ -6,6 +6,6 @@ namespace Gean
     {
         object Parent { get; set; }
         bool HasChildren { get; }
-        ICollection<IItem> Items { get; set; }
+        IList<IItem> Items { get; set; }
     }
 }

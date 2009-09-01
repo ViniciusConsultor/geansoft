@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Gean.Module.Chess
 {
-    public class ChessChoices : ChessSequence, IItem
+    /// <summary>
+    /// 变招(变招同样也是一个Step的序列)。
+    /// </summary>
+    public class Variation : Steps, IItem
     {
         #region ISequenceItem 成员
 
