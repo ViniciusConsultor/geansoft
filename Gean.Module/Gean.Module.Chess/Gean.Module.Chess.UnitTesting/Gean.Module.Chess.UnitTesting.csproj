@@ -43,6 +43,7 @@
     <Compile Include="ChessPositionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SituationTest.cs" />
+    <Compile Include="StepTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
