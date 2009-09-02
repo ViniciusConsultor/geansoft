@@ -49,12 +49,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Demo.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DemoApplicationForm.resx">
@@ -70,6 +64,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="DemoFile\g340,game.pgn" />
+    <None Include="DemoFile\8,game.pgn" />
+    <None Include="DemoFile\chs,game.pgn" />
+    <None Include="DemoFile\largeness,game.pgn">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\test,1,game.pgn" />
+    <None Include="DemoFile\test,2,game.pgn" />
+    <None Include="DemoFile\worldopen,game.pgn" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -81,6 +84,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DemoFile\1195,steps1.txt" />
+    <Content Include="DemoFile\401,steps2.txt" />
+    <Content Include="DemoFile\606822,stepsAll.txt" />
     <Content Include="MainIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
