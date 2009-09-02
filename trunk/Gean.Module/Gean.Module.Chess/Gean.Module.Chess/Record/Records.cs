@@ -11,7 +11,7 @@ namespace Gean.Module.Chess
     /// 该文件将被解析成一个IList&lt;Record&gt;集合,即本类型。
     /// 该类型实现了PGN解析接口。
     /// </summary>
-    public class RecordFile : IList<Record>, IPGNReaderEvents
+    public class Records : IList<Record>, IPGNReaderEvents
     {
 
         private List<Record> _chessRecords = new List<Record>();

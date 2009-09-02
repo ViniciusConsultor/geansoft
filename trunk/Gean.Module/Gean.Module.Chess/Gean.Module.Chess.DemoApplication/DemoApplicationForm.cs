@@ -76,7 +76,7 @@ namespace Gean.Module.Chess.DemoApplication
         {
             this.Close();
         }
-        private void _ClearButton_Click(object sender, EventArgs e)
+        internal void Clear(object sender, EventArgs e)
         {
             this._textBox1.Clear();
             this._textBox2.Clear();
