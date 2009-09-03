@@ -11,7 +11,7 @@ namespace Gean.Module.Chess
     /// 该文件将被解析成一个IList&lt;Record&gt;集合,即本类型。
     /// 该类型实现了PGN解析接口。
     /// </summary>
-    public class Records : IList<Record>, IPGNReaderEvents
+    public class Records : IEnumerable<Record>, IPGNReaderEvents
     {
 
         private List<Record> _chessRecords = new List<Record>();
@@ -115,12 +115,18 @@ namespace Gean.Module.Chess
             }
             else if (iParser.State == Enums.PGNReaderState.White)
             {
-                _tmpStep = Step.Parse(int.Parse(_lastNumber), iParser.Value, Enums.GameSide.White);
+                _tmpStep = new Step();
+                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStep.GameSide = Enums.GameSide.White;
+                _tmpStep.Parse(iParser.Value);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
             else if (iParser.State == Enums.PGNReaderState.Black)
             {
-                _tmpStep = Step.Parse(int.Parse(_lastNumber), iParser.Value, Enums.GameSide.Black);
+                _tmpStep = new Step();
+                _tmpStep.Number = int.Parse(_lastNumber);
+                _tmpStep.GameSide = Enums.GameSide.Black;
+                _tmpStep.Parse(iParser.Value);
                 _tmpStepTree.Items.Add(_tmpStep);
             }
         }
@@ -135,70 +141,6 @@ namespace Gean.Module.Chess
         {
             GameResult end = GameResult.Parse(iParser.Value);
             _tmpStepTree.Items.Add(end);
-        }
-
-        #endregion
-
-        #region IList<Record> 成员
-
-        public int IndexOf(Record item)
-        {
-            return _chessRecords.IndexOf(item);
-        }
-
-        public void Insert(int index, Record item)
-        {
-            _chessRecords.Insert(index, item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            _chessRecords.RemoveAt(index);
-        }
-
-        public Record this[int index]
-        {
-            get { return _chessRecords[index]; }
-            set { _chessRecords[index] = value; }
-        }
-
-        #endregion
-
-        #region ICollection<Record> 成员
-
-        public void Add(Record item)
-        {
-            _chessRecords.Add(item);
-        }
-
-        public void Clear()
-        {
-            _chessRecords.Clear();
-        }
-
-        public bool Contains(Record item)
-        {
-            return _chessRecords.Contains(item);
-        }
-
-        public void CopyTo(Record[] array, int arrayIndex)
-        {
-            _chessRecords.CopyTo(array, arrayIndex);
-        }
-
-        public int Count
-        {
-            get { return _chessRecords.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public bool Remove(Record item)
-        {
-            return _chessRecords.Remove(item);
         }
 
         #endregion

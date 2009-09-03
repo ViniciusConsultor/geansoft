@@ -142,6 +142,10 @@ namespace Gean.Module.Chess
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
                             continue;
+                        case Servicer.AsStep.As_N1c3:
+                            this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
+                            this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
+                            continue;
                         case Servicer.AsStep.As_hxg6:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
                             this.Action = Enums.Action.Capture;
@@ -152,7 +156,7 @@ namespace Gean.Module.Chess
                             this.Action = Enums.Action.Capture;
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
                             continue;
-                        case Servicer.AsStep.As_R8xf5:
+                        case Servicer.AsStep.As_R8xf5://N1c3
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.Action = Enums.Action.Capture;
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
@@ -167,12 +171,22 @@ namespace Gean.Module.Chess
                             this.Action = Enums.ToPromoteAction(value[value.Length - 1]);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 4, 2));
                             continue;
+                        case Servicer.AsStep.As_O_O:
+                            this.PieceType = Enums.PieceType.None;
+                            this.Action = Enums.Action.KingSideCastling;
+                            continue;
+                        case Servicer.AsStep.As_O_O_O:
+                            this.PieceType = Enums.PieceType.None;
+                            this.Action = Enums.Action.QueenSideCastling;
+                            continue;
                         default:
                             break;
                         #endregion
                     }
                 }
             }
+
+
         }
 
         #endregion
@@ -181,7 +195,16 @@ namespace Gean.Module.Chess
 
         public string Generator()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder(12);
+            if (this.Action == Enums.Action.KingSideCastling)
+                sb.Append("O-O");
+            else if (this.Action == Enums.Action.QueenSideCastling)
+                sb.Append("O-O-O");
+            else
+            {
+                sb.Append(Enums.FromPieceType(this.PieceType)).Append(this.TargetPosition.ToString());
+            }
+            return sb.ToString();
         }
 
         #endregion
@@ -208,103 +231,7 @@ namespace Gean.Module.Chess
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(12);
-            #region ToString()
-            //if ((this.Actions[0] != Enums.Action.KingSideCastling) && (this.Actions[0] != Enums.Action.QueenSideCastling))
-            //{
-            //    sb.Append(this.TargetPosition.ToString());
-            //}
-            //foreach (Enums.Action action in this.Actions)
-            //{
-            //    switch (action)
-            //    {
-            //        #region case
-            //        case Enums.Action.Capture:
-            //            sb.Insert(0, 'x');
-            //            break;
-            //        case Enums.Action.Check:
-            //            sb.Append('+');
-            //            break;
-            //        case Enums.Action.KingSideCastling:
-            //            sb.Append("O-O");
-            //            break;
-            //        case Enums.Action.QueenSideCastling:
-            //            sb.Append("O-O-O");
-            //            break;
-            //        case Enums.Action.General:
-            //        case Enums.Action.Opennings:
-            //        case Enums.Action.EnPassant:
-            //            break;
-            //        case Enums.Action.Promotion:
-            //            if (sb.ToString().EndsWith("+"))//fxe8=Q+
-            //            {
-            //                string str = "=" + Enums.FromPieceType(this.PromotionPieceType);
-            //                sb.Insert(sb.Length - 1, str);
-            //            }
-            //            else
-            //            {
-            //                sb.Append('=').Append(Enums.FromPieceType(this.PromotionPieceType));
-            //            }
-            //            break;
-            //        case Enums.Action.Invalid:
-            //        default:
-            //            break;
-            //        #endregion
-            //    }
-            //}
-            //if ((this.Actions[0] != Enums.Action.KingSideCastling) &&
-            //    (this.Actions[0] != Enums.Action.QueenSideCastling) &&
-            //    (this.PieceType != Enums.PieceType.AllPawns))
-            //{
-            //    sb.Insert(0, Enums.FromPieceType(this.PieceType));
-            //}
-            //else if ((this.PieceType == Enums.PieceType.AllPawns) && this.Actions.Contains(Enums.Action.Capture))
-            //{
-            //    if (SourcePosition != Position.Empty)
-            //        sb.Insert(0, SourcePosition.Horizontal);
-            //}
-            //if (_hasSame != Enums.Orientation.None)//是否能使用该棋步的棋子
-            //{
-            //    if (this.PieceType != Enums.PieceType.AllPawns)
-            //    {
-            //            switch (_hasSame)
-            //            {
-            //                case Enums.Orientation.Rank:
-            //                    sb.Insert(1, Utility.IntToChar(this.SameHorizontal));
-            //                    break;
-            //                case Enums.Orientation.File:
-            //                    sb.Insert(1, this.SameVertical.ToString());
-            //                    break;
-            //                case Enums.Orientation.None:
-            //                default:
-            //                    break;
-            //            }
-            //    }
-            //    else
-            //    {
-            //        if (!this.Actions.Contains(Enums.Action.Capture))
-            //        {
-            //            switch (_hasSame)
-            //            {
-            //                case Enums.Orientation.Rank:
-            //                    sb.Insert(0, Utility.IntToChar(this.SameHorizontal));
-            //                    break;
-            //                case Enums.Orientation.File:
-            //                    sb.Insert(0, this.SameVertical.ToString());
-            //                    break;
-            //                case Enums.Orientation.None:
-            //                default:
-            //                    break;
-            //            }
-            //        }
-            //    }
-            //}
-            //if (this.GameSide == Enums.GameSide.White)
-            //{
-            //    sb.Insert(0, this.Number.ToString() + ". ");
-            //}
-            #endregion
-            return sb.ToString();
+            return this.Generator();
         }
         public override int GetHashCode()
         {
@@ -347,8 +274,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region static Parse
-
+        /* static Parse
         /// <summary>
         /// 该方法暂不可用。
         /// </summary>
@@ -575,7 +501,6 @@ namespace Gean.Module.Chess
                 pos = new Position(sameHorizontal, sameVertical);
             }
         }
-
-        #endregion
+        */
     }
 }

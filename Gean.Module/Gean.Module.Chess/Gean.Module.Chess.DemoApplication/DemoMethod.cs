@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
-namespace Gean.Module.Chess.DemoApplication
+namespace Gean.Module.Chess.Demo
 {
     internal class DemoMethod
     {
@@ -21,23 +21,54 @@ namespace Gean.Module.Chess.DemoApplication
         /// Demo程序的主窗体的OnLoad事件
         /// </summary>
         /// <param name="form"></param>
-        internal void OnLoadMethod(DemoApplicationForm form)
+        internal void OnLoadMethod()
         {
-            form.StatusText1 = "Success of OnLoad method.";
+            MyDemoDialog.StatusText1 = "Success of OnLoad method.";
         }
 
         /// <summary>
         /// Demo程序的主窗体中的主Button的Click事件
         /// </summary>
         /// <param name="form"></param>
-        internal void MainClick(DemoApplicationForm form)
+        internal void MainClick()
         {
-            MarkSteps(form);
+            MarkRecords(records);
         }
 
-        private static void MarkSteps(DemoApplicationForm form)
+        /// <summary>
+        /// Demo程序的主窗体中的TreeView的节点TreeNode的Click事件
+        /// </summary>
+        internal void NodeClick(TreeNode treeNode)
         {
-            form.Cursor = Cursors.WaitCursor;
+            MyDemoDialog.StatusText2 = "Node Click...";
+        }
+
+        /***********************/
+
+        private Records records = new Records();
+        private static void MarkRecords(Records records)
+        {
+            MyDemoDialog.Clear();
+            PGNReader reader = new PGNReader();
+            reader.Filename = Program.PGNFile_Largeness_Game;
+            reader.AddEvents(records);
+            reader.Parse();
+
+            foreach (var item in records)
+            {
+                MyDemoDialog.ListItems.Add(item);
+            }
+        }
+
+
+        #region 生成一些测试用的Step用例
+
+        /// <summary>
+        /// 生成一些测试用的Step用例
+        /// </summary>
+        private static void MarkSteps()
+        {
+            MyDemoDialog.FormCursor = Cursors.WaitCursor;
 
             List<string> step2 = new List<string>();
             List<string> step3 = new List<string>();
@@ -51,18 +82,17 @@ namespace Gean.Module.Chess.DemoApplication
             string regex = @"\d+\.";
             string file = @"DemoFile\largeness,game.pgn";
             string[] lines = File.ReadAllLines(file);
-            form.ProgressBar.Maximum = lines.Length + 20;
-            form.ProgressBar.Value = 0;
+            MyDemoDialog.ProgressBar.Maximum = lines.Length + 20;
+            MyDemoDialog.ProgressBar.Value = 0;
 
-            form.StatusText1 = "File read complate. Line count: " + lines.Length.ToString() + ".";
-            form.Update();
+            MyDemoDialog.StatusText1 = "File read complate. Line count: " + lines.Length.ToString() + ".";
             Application.DoEvents();
 
             foreach (string line in lines)
             {
                 #region line
-                form.ProgressBar.PerformStep();
-                form.ProgressBar.Invalidate();
+                MyDemoDialog.ProgressBar.PerformStep();
+                MyDemoDialog.ProgressBar.Invalidate();
                 if (string.IsNullOrEmpty(line))
                 {
                     continue;
@@ -135,10 +165,10 @@ namespace Gean.Module.Chess.DemoApplication
             File.AppendAllText("steps1.txt", sb1.ToString());
             File.AppendAllText("steps2.txt", sb2.ToString());
 
-            form.Clear(null, null);
-            form.TextBox3 = "Complated!";
+            MyDemoDialog.Clear();
+            MyDemoDialog.TextBox3 = "Complated!";
 
-            form.Cursor = Cursors.Default;
+            MyDemoDialog.FormCursor = Cursors.Default;
         }
 
         private static void MarkStringBuilder(StringBuilder sbAll, StringBuilder sb1, StringBuilder sb2, params List<string>[] steps)
@@ -152,19 +182,13 @@ namespace Gean.Module.Chess.DemoApplication
                     sbAll.AppendLine(str);
                     if (i % (10 * j) == 0)
                         sb1.AppendLine(str);
-                    if (i % (30 * j) == 0)
+                    if (i % (20 * j) == 0)
                         sb2.AppendLine(str);
                 }
-                j = j * 3;
+                j = j * 2;
             }
         }
 
-        /// <summary>
-        /// Demo程序的主窗体中的TreeView的节点TreeNode的Click事件
-        /// </summary>
-        internal void NodeClick(DemoApplicationForm form, TreeNode treeNode)
-        {
-            form.StatusText2 = "Node Click...";
-        }
+        #endregion
     }
 }
