@@ -1,6 +1,6 @@
-﻿namespace Gean.Module.Chess.DemoApplication
+﻿namespace Gean.Module.Chess.Demo
 {
-    partial class DemoApplicationForm
+    partial class MyDemoDialog
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("RootNode");
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DemoApplicationForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyDemoDialog));
             this._ClearButton = new System.Windows.Forms.Button();
             this._OKButton = new System.Windows.Forms.Button();
             this._CancelButton = new System.Windows.Forms.Button();
@@ -40,8 +40,8 @@
             this._statusStrip = new System.Windows.Forms.StatusStrip();
             this._statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this._statusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this._textBox3 = new System.Windows.Forms.TextBox();
+            this._progressBar = new System.Windows.Forms.ProgressBar();
             this._statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,7 +125,7 @@
             this._textBox2.Multiline = true;
             this._textBox2.Name = "_textBox2";
             this._textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._textBox2.Size = new System.Drawing.Size(328, 152);
+            this._textBox2.Size = new System.Drawing.Size(328, 125);
             this._textBox2.TabIndex = 9;
             this._textBox2.Text = "_textBox2";
             // 
@@ -133,31 +133,24 @@
             // 
             this._statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._statusLabel1,
-            this._statusLabel2,
-            this.ProgressBar});
-            this._statusStrip.Location = new System.Drawing.Point(0, 405);
+            this._statusLabel2});
+            this._statusStrip.Location = new System.Drawing.Point(0, 406);
             this._statusStrip.Name = "_statusStrip";
-            this._statusStrip.Size = new System.Drawing.Size(712, 23);
+            this._statusStrip.Size = new System.Drawing.Size(712, 22);
             this._statusStrip.TabIndex = 10;
             this._statusStrip.Text = "statusStrip1";
             // 
             // _statusLabel1
             // 
             this._statusLabel1.Name = "_statusLabel1";
-            this._statusLabel1.Size = new System.Drawing.Size(21, 18);
+            this._statusLabel1.Size = new System.Drawing.Size(21, 17);
             this._statusLabel1.Text = "OK";
             // 
             // _statusLabel2
             // 
             this._statusLabel2.Name = "_statusLabel2";
-            this._statusLabel2.Size = new System.Drawing.Size(19, 18);
+            this._statusLabel2.Size = new System.Drawing.Size(19, 17);
             this._statusLabel2.Text = "...";
-            // 
-            // ProgressBar
-            // 
-            this.ProgressBar.Name = "ProgressBar";
-            this.ProgressBar.Size = new System.Drawing.Size(300, 17);
-            this.ProgressBar.Step = 1;
             // 
             // _textBox3
             // 
@@ -171,13 +164,24 @@
             this._textBox3.TabIndex = 11;
             this._textBox3.Text = "_textBox3 [ReadOnly]";
             // 
-            // DemoApplicationForm
+            // _progressBar
+            // 
+            this._progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this._progressBar.Location = new System.Drawing.Point(12, 372);
+            this._progressBar.Name = "_progressBar";
+            this._progressBar.Size = new System.Drawing.Size(328, 21);
+            this._progressBar.Step = 1;
+            this._progressBar.TabIndex = 12;
+            // 
+            // MyDemoDialog
             // 
             this.AcceptButton = this._OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._CancelButton;
             this.ClientSize = new System.Drawing.Size(712, 428);
+            this.Controls.Add(this._progressBar);
             this.Controls.Add(this._textBox3);
             this.Controls.Add(this._statusStrip);
             this.Controls.Add(this._textBox2);
@@ -189,7 +193,7 @@
             this.Controls.Add(this._ClearButton);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "DemoApplicationForm";
+            this.Name = "MyDemoDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DemoApplicationForm";
             this._statusStrip.ResumeLayout(false);
@@ -204,16 +208,16 @@
         private System.Windows.Forms.Button _ClearButton;
         private System.Windows.Forms.Button _OKButton;
         private System.Windows.Forms.Button _CancelButton;
-        private System.Windows.Forms.StatusStrip _statusStrip;
-        private System.Windows.Forms.TreeNode _TreeNode;
-        private System.Windows.Forms.TextBox _textBox3;
+        internal System.Windows.Forms.StatusStrip _statusStrip;
+        internal System.Windows.Forms.TreeNode _TreeNode;
+        internal System.Windows.Forms.TextBox _textBox3;
         private System.Windows.Forms.ListBox _Listbox;
         private System.Windows.Forms.TreeView _TreeView;
         private System.Windows.Forms.TextBox _textBox1;
         private System.Windows.Forms.TextBox _textBox2;
         private System.Windows.Forms.ToolStripStatusLabel _statusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel _statusLabel2;
-        internal System.Windows.Forms.ToolStripProgressBar ProgressBar;
+        private System.Windows.Forms.ProgressBar _progressBar;
     }
 }
 

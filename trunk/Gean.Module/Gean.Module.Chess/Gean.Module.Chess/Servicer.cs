@@ -15,7 +15,10 @@ namespace Gean.Module.Chess
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_Rd7, new Regex(@"^[RNBQK][a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_Rxa2, new Regex(@"^[RNBQK]x[a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_Rbe1, new Regex(@"^[RNBQK][a-h][a-h][1-8]$", RegexOptions.Compiled)));
+            regexs.Add(new Pair<AsStep, Regex>(AsStep.As_N1c3, new Regex(@"^[RNBQK][1-8][a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_hxg6, new Regex(@"^[a-h]x[a-h][1-8]$", RegexOptions.Compiled)));
+            regexs.Add(new Pair<AsStep, Regex>(AsStep.As_O_O, new Regex(@"^[O]-[O]$", RegexOptions.Compiled)));
+            regexs.Add(new Pair<AsStep, Regex>(AsStep.As_O_O_O, new Regex(@"^[O]-[O]-[O]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_Ngxf6, new Regex(@"^[RNBQK][a-h]x[a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_R8xf5, new Regex(@"^[RNBQK][1-8]x[a-h][1-8]$", RegexOptions.Compiled)));
             regexs.Add(new Pair<AsStep, Regex>(AsStep.As_e8_Q, new Regex(@"^[a-h][1-8]=[RNBQ]$", RegexOptions.Compiled)));
@@ -30,11 +33,14 @@ namespace Gean.Module.Chess
             As_Rd7,
             As_Rxa2,
             As_Rbe1,
+            As_N1c3,
             As_hxg6,
             As_Ngxf6,
             As_R8xf5,
             As_e8_Q,
             As_exf8_Q,
+            As_O_O,
+            As_O_O_O,
         }
         public static Pair<AsStep, Regex>[] StepRegex;
         public static FlagCollection Flags { get; private set; }

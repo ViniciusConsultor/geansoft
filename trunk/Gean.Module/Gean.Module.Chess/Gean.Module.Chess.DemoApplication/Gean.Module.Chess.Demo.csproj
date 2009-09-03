@@ -12,7 +12,8 @@
     <AssemblyName>Gean.Module.Chess.DemoApplication</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ApplicationIcon>MainIcon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,21 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DemoApplicationForm.cs">
+    <Compile Include="DemoMethod.cs" />
+    <Compile Include="MyDemoDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DemoApplicationForm.Designer.cs">
-      <DependentUpon>DemoApplicationForm.cs</DependentUpon>
+    <Compile Include="MyDemoDialog.Designer.cs">
+      <DependentUpon>MyDemoDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="DemoApplication.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Demo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DemoApplicationForm.resx">
-      <DependentUpon>DemoApplicationForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="MyDemoDialog.resx">
+      <DependentUpon>MyDemoDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -64,15 +61,27 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="DemoFile\g340,game.pgn" />
-    <None Include="DemoFile\8,game.pgn" />
-    <None Include="DemoFile\chs,game.pgn" />
-    <None Include="DemoFile\largeness,game.pgn">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="DemoFile\g340,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="DemoFile\test,1,game.pgn" />
-    <None Include="DemoFile\test,2,game.pgn" />
-    <None Include="DemoFile\worldopen,game.pgn" />
+    <None Include="DemoFile\8,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\chs,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\largeness,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\test,1,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\test,2,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\worldopen,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -84,10 +93,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DemoFile\1195,steps1.txt" />
-    <Content Include="DemoFile\401,steps2.txt" />
-    <Content Include="DemoFile\606822,stepsAll.txt" />
-    <Content Include="MainIcon.ico" />
+    <None Include="DemoFile\4647,steps1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\2326,steps2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DemoFile\606822,stepsAll.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gean.Module.Chess\Gean.Module.Chess.csproj">
+      <Project>{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}</Project>
+      <Name>Gean.Module.Chess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
