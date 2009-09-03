@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Gean.Module.Chess.Demo
 {
@@ -48,9 +49,11 @@ namespace Gean.Module.Chess.Demo
         private Records records = new Records();
         private static void MarkRecords(Records records)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             MyDemoDialog.Clear();
             PGNReader reader = new PGNReader();
-            reader.Filename = Program.PGNFile_Largeness_Game;
+            reader.Filename = Program.PGNFile_Test_1_Game; //@"e:\ChessBase\Bases\08b.pgn";
             reader.AddEvents(records);
             reader.Parse();
 
@@ -58,6 +61,10 @@ namespace Gean.Module.Chess.Demo
             {
                 MyDemoDialog.ListItems.Add(item);
             }
+            long rTime = watch.ElapsedMilliseconds;//总时间
+            long fTIme = rTime / records.Count;
+            MyDemoDialog.StatusText1 = string.Format("记录个数：{2}, 总时间：{0}，每个记录的解析时间为：{1}", rTime, fTIme, records.Count);
+            watch.Stop();
         }
 
 

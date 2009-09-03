@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Gean.Module.Chess
 {
@@ -85,6 +87,49 @@ namespace Gean.Module.Chess
             #endregion
         }
 
+        public static Action ActionAdd(Action actionA, Action actionB)
+        {
+            switch (actionA)
+            {
+                case Action.General:
+                    break;
+                case Action.Check:
+                    break;
+                    break;
+                case Action.Capture:
+                    break;
+                    break;
+                case Action.EnPassant:
+                    break;
+                case Action.PromoteToQueen:
+                    break;
+                case Action.PromoteToRook:
+                    break;
+                case Action.PromoteToKnight:
+                    break;
+                case Action.PromoteToBishop:
+                    break;
+                case Action.QueenSideCastling:
+                    break;
+                case Action.KingSideCastling:
+                    break;
+                case Action.Invalid:
+                    break;
+                case Action.CaptureCheck:
+                    break;
+                case Action.Castling:
+                    break;
+                case Action.Promotion:
+                    break;
+                case Action.CheckMate:
+                case Action.NoPromotion:
+                case Action.Opennings:
+                    break;
+                default:
+                    break;
+            }
+            return Action.Invalid;
+        }
         public static Action ToAction(string value)
         {
             Action action = Action.General;
@@ -184,6 +229,78 @@ namespace Gean.Module.Chess
                 #endregion
 
             }
+        }
+
+        public class ActionCollection : ICollection<Action>
+        {
+            List<Action> _actions = new List<Action>();
+            
+            public void AddRange(IEnumerable<Action> actions)
+            {
+                _actions.AddRange(actions);
+            }
+
+            public Action[] ToArray()
+            {
+                return _actions.ToArray();
+            }
+
+            #region ICollection<Action> 成员
+
+            public void Add(Action item)
+            {
+                _actions.Add(item);
+            }
+
+            public void Clear()
+            {
+                _actions.Clear();
+            }
+
+            public bool Contains(Action item)
+            {
+                return _actions.Contains(item);
+            }
+
+            public void CopyTo(Action[] array, int arrayIndex)
+            {
+                _actions.CopyTo(array, arrayIndex);
+            }
+
+            public int Count
+            {
+                get { return _actions.Count; }
+            }
+
+            public bool IsReadOnly
+            {
+                get { return false; }
+            }
+
+            public bool Remove(Action item)
+            {
+                return _actions.Remove(item);
+            }
+
+            #endregion
+
+            #region IEnumerable<Action> 成员
+
+            public IEnumerator<Action> GetEnumerator()
+            {
+                return _actions.GetEnumerator();
+            }
+
+            #endregion
+
+            #region IEnumerable 成员
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            {
+                return _actions.GetEnumerator();
+            }
+
+            #endregion
         }
 
         #endregion
@@ -642,6 +759,39 @@ namespace Gean.Module.Chess
                 #endregion
             }
             return man;
+        }
+        public static string FromPieceTypeToStep(PieceType type)
+        {
+            switch (type)
+            {
+                case PieceType.WhiteKing:
+                case PieceType.BlackKing:
+                    return "K";
+                case PieceType.WhiteQueen:
+                case PieceType.BlackQueen:
+                    return "Q";
+                case PieceType.WhiteRook:
+                case PieceType.BlackRook:
+                    return "R";
+                case PieceType.WhiteBishop:
+                case PieceType.BlackBishop:
+                    return "B";
+                case PieceType.WhiteKnight:
+                case PieceType.BlackKnight:
+                    return "N";
+                case PieceType.WhitePawn:
+                case PieceType.BlackPawn:
+                case PieceType.AllKings:
+                case PieceType.AllQueens:
+                case PieceType.AllRooks:
+                case PieceType.AllBishops:
+                case PieceType.AllKnights:
+                case PieceType.AllPawns:
+                case PieceType.All:
+                case PieceType.None:
+                default:
+                    return "";
+            }
         }
         public static GameSide ToGameSideByPieceType(PieceType type)
         {

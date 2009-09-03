@@ -99,6 +99,7 @@ namespace Gean.Module.Chess.Demo
             foreach (var item in record.Items)
             {
                 GetSubTreenode(item, node);
+                _textBox2.Text = record.ToString();
             }
             _TreeView.BeginUpdate();
             _TreeView.Nodes.Add(node);

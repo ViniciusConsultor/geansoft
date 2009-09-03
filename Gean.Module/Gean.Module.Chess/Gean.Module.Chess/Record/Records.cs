@@ -16,6 +16,11 @@ namespace Gean.Module.Chess
 
         private List<Record> _chessRecords = new List<Record>();
 
+        public int Count
+        {
+            get { return _chessRecords.Count; }
+        }
+
         #region IGameReaderEvents 成员
 
         private Stack _states;

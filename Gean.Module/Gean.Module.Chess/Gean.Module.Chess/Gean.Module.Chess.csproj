@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Enums.cs" />
-    <Compile Include="Servicer.cs" />
+    <Compile Include="Base\Servicer.cs" />
     <Compile Include="Interface\IEngineReader.cs" />
     <Compile Include="Interface\IFenNotation.cs" />
     <Compile Include="Interface\IPGNReader.cs" />
@@ -81,9 +81,6 @@
     <Compile Include="Record\StepTree\GameResult.cs" />
     <Compile Include="Piece\Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Base\常用英语.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
