@@ -65,7 +65,7 @@ namespace Gean.Module.Chess.UnitTesting
             expected.PieceType = Enums.PieceType.WhitePawn;
             expected.SourcePosition = Position.Empty;
             expected.TargetPosition = new Position('b', 4);
-            expected.Action = Enums.Action.General;
+            expected.Actions.Add(Enums.Action.General);
             expected.PromotionPieceType = Enums.PieceType.None;
             Assert.AreEqual(expected, step);
         }

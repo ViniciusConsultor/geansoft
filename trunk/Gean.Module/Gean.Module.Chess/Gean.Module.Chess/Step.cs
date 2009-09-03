@@ -33,6 +33,7 @@ namespace Gean.Module.Chess
         /// 获取或设置该步棋的源棋格
         /// </summary>
         public Position SourcePosition { get; set; }
+        public char SourceChar { get; set; }
         /// <summary>
         /// 获取或设置该步棋的目标棋格
         /// </summary>
@@ -40,7 +41,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 获取或设置一步棋的动作说明
         /// </summary>
-        public Enums.Action Action { get; set; }
+        public Enums.ActionCollection Actions { get; set; }
         /// <summary>
         /// 获取或设置该步棋的升变后棋子类型
         /// </summary>
@@ -56,8 +57,9 @@ namespace Gean.Module.Chess
             this.GameSide = Enums.GameSide.White;
             this.PieceType = Enums.PieceType.None;
             this.SourcePosition = Position.Empty;
+            this.SourceChar = '%';
             this.TargetPosition = Position.Empty;
-            this.Action = Enums.Action.Invalid;
+            this.Actions = new Enums.ActionCollection();
             this.PromotionPieceType = Enums.PieceType.None;
         }
 
@@ -101,7 +103,7 @@ namespace Gean.Module.Chess
             value = value.Trim();
             if (value.Length < 2 || value == "\r\n")
                 throw new ArgumentOutOfRangeException(value);
-            this.Action = Enums.Action.General;
+            this.Actions.Add(Enums.Action.General);
 
             #endregion
 
@@ -111,13 +113,14 @@ namespace Gean.Module.Chess
                 if (value.EndsWith(flagword))
                 {
                     if (flagword.Equals("+"))//Qh5+
-                        this.Action = Enums.Action.Check;
+                        this.Actions.Add(Enums.Action.Check);
                     value = value.Substring(0, value.LastIndexOf(flagword));//裁剪掉尾部标记符
                     break;
                 }
             }
             #endregion
 
+            bool isMatch = false;
             foreach (var item in Servicer.StepRegex)
             {
                 if (item.Second.IsMatch(value))
@@ -128,65 +131,84 @@ namespace Gean.Module.Chess
                         case Servicer.AsStep.As_e4:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
                             this.TargetPosition = Position.Parse(value);
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_Rd7:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_Rxa2:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.Action = Enums.Action.Capture;
+                            this.Actions.Add(Enums.Action.Capture);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_Rbe1:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
+                            this.SourceChar = value[1];
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_N1c3:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
+                            this.SourceChar = value[1];
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_hxg6:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
-                            this.Action = Enums.Action.Capture;
+                            this.SourceChar = value[0];
+                            this.Actions.Add(Enums.Action.Capture);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_Ngxf6:
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.Action = Enums.Action.Capture;
+                            this.SourceChar = value[1];
+                            this.Actions.Add(Enums.Action.Capture);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_R8xf5://N1c3
                             this.PieceType = Enums.ToPieceType(value[0], this.GameSide);
-                            this.Action = Enums.Action.Capture;
+                            this.SourceChar = value[1];
+                            this.Actions.Add(Enums.Action.Capture);
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_e8_Q:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
-                            this.Action = Enums.ToPromoteAction(value[value.Length - 1]);
+                            this.Actions.Add(Enums.ToPromoteAction(value[value.Length - 1]));
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 4, 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_exf8_Q:
                             this.PieceType = Enums.ToPieceType(this.GameSide);
-                            this.Action = Enums.ToPromoteAction(value[value.Length - 1]);
+                            this.SourceChar = value[0];
+                            this.Actions.Add(Enums.Action.Capture);
+                            this.Actions.Add(Enums.ToPromoteAction(value[value.Length - 1]));
                             this.TargetPosition = Position.Parse(value.Substring(value.Length - 4, 2));
-                            continue;
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_O_O:
                             this.PieceType = Enums.PieceType.None;
-                            this.Action = Enums.Action.KingSideCastling;
-                            continue;
+                            this.Actions.Add(Enums.Action.KingSideCastling);
+                            isMatch = true;
+                            break;
                         case Servicer.AsStep.As_O_O_O:
                             this.PieceType = Enums.PieceType.None;
-                            this.Action = Enums.Action.QueenSideCastling;
-                            continue;
-                        default:
+                            this.Actions.Add(Enums.Action.QueenSideCastling);
+                            isMatch = true;
                             break;
                         #endregion
                     }
+                    if (isMatch == true)
+                    {
+                        break;
+                    }
                 }
             }
-
-
         }
 
         #endregion
@@ -195,14 +217,36 @@ namespace Gean.Module.Chess
 
         public string Generator()
         {
-            StringBuilder sb = new StringBuilder(12);
-            if (this.Action == Enums.Action.KingSideCastling)
+            StringBuilder sb = new StringBuilder(7);
+
+            if (this.Actions.Contains(Enums.Action.KingSideCastling))
                 sb.Append("O-O");
-            else if (this.Action == Enums.Action.QueenSideCastling)
+            else if (this.Actions.Contains(Enums.Action.QueenSideCastling))
                 sb.Append("O-O-O");
             else
             {
-                sb.Append(Enums.FromPieceType(this.PieceType)).Append(this.TargetPosition.ToString());
+                sb.Append(this.TargetPosition.ToString());
+
+                if (this.Actions.Contains(Enums.Action.PromoteToQueen))
+                    sb.Append("=Q");
+                else if (this.Actions.Contains(Enums.Action.PromoteToKnight))
+                    sb.Append("=N");
+                else if (this.Actions.Contains(Enums.Action.PromoteToBishop))
+                    sb.Append("=B");
+                else if (this.Actions.Contains(Enums.Action.PromoteToRook))
+                    sb.Append("=R");
+
+                if (this.Actions.Contains(Enums.Action.Capture))
+                    sb.Insert(0, 'x');
+                if (!this.SourceChar.Equals('%'))
+                    sb.Insert(0, this.SourceChar);
+                sb.Insert(0, Enums.FromPieceTypeToStep(this.PieceType));
+            }
+            if (this.Actions.Contains(Enums.Action.Check))
+                sb.Append('+');
+            if (this.GameSide == Enums.GameSide.White)
+            {
+                sb.Insert(0, ' ').Insert(0, '.').Insert(0, this.Number.ToString());
             }
             return sb.ToString();
         }
@@ -238,7 +282,7 @@ namespace Gean.Module.Chess
             return unchecked
                 (3 * (
                 this.Number.GetHashCode() +
-                this.Action.GetHashCode() +
+                this.Actions.GetHashCode() +
                 this.PieceType.GetHashCode() +
                 this.PromotionPieceType.GetHashCode() +
                 this.TargetPosition.GetHashCode() + 
@@ -257,7 +301,7 @@ namespace Gean.Module.Chess
                 return false;
             if (!this.GameSide.Equals(step.GameSide))
                 return false;
-            if (!this.Action.Equals(step.Action))
+            if (!UtilityEquals.CollectionsEquals<Enums.Action>(this.Actions, step.Actions))
                 return false;
             if (!UtilityEquals.PairEquals(this.TargetPosition, step.TargetPosition))
                 return false;
