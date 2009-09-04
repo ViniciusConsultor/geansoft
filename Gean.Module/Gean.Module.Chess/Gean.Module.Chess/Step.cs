@@ -67,6 +67,7 @@ namespace Gean.Module.Chess
 
         #region IItem
 
+        public string ItemType { get { return "Step"; } }
         public string Value
         {
             get { return this.ToString(); }

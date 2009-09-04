@@ -102,6 +102,9 @@
     <None Include="DemoFile\606822,stepsAll.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="DemoFile\test,3,game.pgn">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">

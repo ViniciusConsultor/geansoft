@@ -15,6 +15,7 @@ namespace Gean.Module.Chess
             this.Value = value;
         }
 
+        public string ItemType { get { return "Nag"; } }
         public string Value { get; set; }
 
         public override string ToString()
