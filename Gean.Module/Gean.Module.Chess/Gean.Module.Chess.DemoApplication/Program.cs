@@ -24,6 +24,7 @@ namespace Gean.Module.Chess.Demo
         public static string PGNFile_Largeness_Game { get { return @"DemoFile\largeness,game.pgn"; } }
         public static string PGNFile_Test_1_Game { get { return @"DemoFile\test,1,game.pgn"; } }
         public static string PGNFile_Test_2_Game { get { return @"DemoFile\test,2,game.pgn"; } }
+        public static string PGNFile_Test_3_Game { get { return @"DemoFile\test,3,game.pgn"; } }
         public static string PGNFile_WorldOpen_Game { get { return @"DemoFile\worldopen,game.pgn"; } }
 
     }

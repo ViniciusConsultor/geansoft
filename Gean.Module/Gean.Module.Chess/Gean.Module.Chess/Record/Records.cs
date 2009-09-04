@@ -128,6 +128,8 @@ namespace Gean.Module.Chess
             }
             else if (iParser.State == Enums.PGNReaderState.Black)
             {
+                if (string.IsNullOrEmpty(iParser.Value))
+                    return;
                 _tmpStep = new Step();
                 _tmpStep.Number = int.Parse(_lastNumber);
                 _tmpStep.GameSide = Enums.GameSide.Black;

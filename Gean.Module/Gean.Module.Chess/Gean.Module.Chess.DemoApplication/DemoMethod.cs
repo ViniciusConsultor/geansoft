@@ -54,20 +54,25 @@ namespace Gean.Module.Chess.Demo
             records = new Records();
             MyDemoDialog.Clear();
             PGNReader reader = new PGNReader();
-            //reader.Filename = Program.PGNFile_340_Game;
-            reader.Filename = Program.PGNFile_Test_1_Game;
+            //reader.Filename = Program.PGNFile_CHS_Game;
+            reader.Filename = Program.PGNFile_Test_2_Game;
             //reader.Filename = @"e:\ChessBase\Bases\08a.pgn";
             reader.AddEvents(records);
             reader.Parse();
-
-            foreach (var item in records)
-            {
-                MyDemoDialog.ListItems.Add(item);
-            }
-            long rTime = watch.ElapsedMilliseconds;//总时间
-            long fTIme = rTime / records.Count;
-            MyDemoDialog.StatusText1 = string.Format("记录个数：{2}, 总时间：{0}，每个记录的解析时间为：{1}", rTime, fTIme, records.Count);
             watch.Stop();
+            double rTime = watch.ElapsedMilliseconds;//总时间
+            double fTIme = rTime / records.Count;
+            MyDemoDialog.StatusText1 = string.Format("记录个数：{2}, 总时间：{0}，每个记录的解析时间为：{1}", rTime, fTIme, records.Count);
+
+            MyDemoDialog.RecordTree.BeginUpdate();
+            foreach (Record record in records)
+            {
+                TreeNode node = new TreeNode();
+                node.Text = (string)record.Tags.Get("Event");
+                node.Tag = record;
+                MyDemoDialog.RecordTree.Nodes.Add(node);
+            }
+            MyDemoDialog.RecordTree.EndUpdate();
         }
 
         #region 生成一些测试用的Step用例
