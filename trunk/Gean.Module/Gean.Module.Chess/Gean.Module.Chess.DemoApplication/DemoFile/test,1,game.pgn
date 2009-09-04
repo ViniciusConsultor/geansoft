@@ -1,84 +1,31 @@
-[Event "Bundesliga 0708"]
-[Site "Germany"]
-[Date "2008.04.19"]
-[Round "14.1"]
-[White "Efimenko, Zahar"]
-[Black "Glek, Igor V"]
-[Result "1-0"]
-[ECO "B01"]
-[WhiteElo "2624"]
-[BlackElo "2543"]
-[Annotator "Meyer,CD"]
-[PlyCount "89"]
-[EventDate "2007.10.20"]
-[EventType "team"]
-[EventRounds "15"]
+[Event "Bad Zwesten op"]
+[Site "Bad Zwesten"]
+[Date "2008.01.05"]
+[Round "6"]
+[White "Skembris, Spyridon"]
+[Black "Sorm, Daniel"]
+[Result "0-1"]
+[ECO "A11"]
+[WhiteElo "2469"]
+[BlackElo "2330"]
+[Annotator "Gutman"]
+[PlyCount "50"]
+[EventDate "2008.01.02"]
+[EventType "swiss"]
+[EventRounds "9"]
 [EventCountry "GER"]
 [Source "ChessBase"]
-[SourceDate "2008.05.28"]
-[WhiteTeam "Werder Bremen"]
-[BlackTeam "Katernberg"]
-[WhiteTeamCountry "GER"]
-[BlackTeamCountry "GER"]
+[SourceDate "2008.04.02"]
 
-1. e4 d5 
-2. exd5 Qxd5 
-3. Nc3 Qd8 {Ein relativ seltene, etwas passive Fortsetzung, populärer und vemutlich auch bessere Skandinavier sind 3...Qa5 und 3...Qd6.} 
-4. d4 Nf6 
-5. Bg5 {Strebt eine schnelle Entwicklung mit Qd2 und 0-0-0 an, was eine interessante Alternative zu 5.Bc4 und 5.Nf3 darstellt.} 
-   c6 
-   ({Nach dem sorglosen} 
-		5... e6 $6 {bekäme Wei?durch} 
-		6. Nf3 {und z.B.} Be7 
-		7. Bc4 $14 {einen kleinen, bequemen Vorteil.} 
-			(7. Bd3 $14)
-   ) 
-6. Qd2 ({Falls} 6. Nf3 {, so kann} Bf5 (6... Bg4 7. Bxf6 exf6 8. Be2 Bb4 9. Qd3 O-O 10. O-O Nd7 11. a3
-Ba5 12. Nd2 Be6 13. Nc4 Bc7 14. Rad1 Re8 15. Bf3 Nb6 16. Nxb6 Bxb6 17. d5 cxd5
-18. Nxd5 $14 {1/2-1/2 Leko,P (2694)-Adams,M (2716)/Frankfurt 1999/CBM 072 (53)}
-) 7. Qd2 {mit Zugumstellung wieder zum Text führen.} (7. Ne5 Nbd7 8. Bc4 (8.
-Qf3 $6 Bxc2 9. Bc4 e6 $15) (8. Bd3 Bxd3 9. Nxd3 e6 $11) 8... Nxe5 9. dxe5 Qxd1+
-10. Rxd1 Nd7 11. Bf4 g5 12. Bxg5 Nxe5 ({oder mit Zugumstellung} 12... Rg8 13.
-Bf4 Bg7 14. Bb3 Nxe5) 13. Bb3 Rg8 14. Bf4 Bg7 $11) (7. Bc4 e6 $13 {/=, CDM}))
-6... Bf5 7. Nf3 (7. O-O-O e6 8. Nge2 h6 9. Bxf6 Qxf6 10. Ng3 Bb4 11. a3 Bxc3
-12. Qxc3 O-O 13. Nxf5 exf5 $5 (13... Qxf5 $11) 14. Qb3 Nd7 $5 15. Qxb7 Rfd8 16.
-g3 Rab8 17. Qxa7 c5 $44 18. Bg2 Nb6 19. dxc5 Nd5 20. c3 Rxb2 21. Kxb2 Qxc3+ 22.
-Kb1 Qb3+ {1/2-1/2 Sprenger,J (2505)-Schunk,T (2315)/Osterburg 2006}) 7... Nbd7
-8. O-O-O e6 9. Bd3 Bxd3 10. Qxd3 Be7 11. Rhe1 O-O 12. Ne5 ({Um der drohenden
-Verflachung vorzubeugen, mag} 12. Kb1 Nd5 13. h4 $5 {geeigneter sein:} h6 (
-13... Nxc3+ 14. Qxc3 h6 15. Bxe7 Qxe7 16. g4 $14) 14. Bxe7 Qxe7 15. Nxd5 cxd5
-16. g4 $14) 12... Nd5 (12... Nxe5 13. dxe5 Nd5 14. Bxe7 Qxe7 15. Ne4 b5 16. Qg3
-$14 {/=}) 13. Bxe7 Qxe7 14. Ne4 Rad8 (14... Nxe5 15. dxe5 b5 16. Qg3 {wie
-gehabt}) 15. Qg3 h6 16. f4 N5f6 17. Nf2 c5 18. Qf3 ({Etwas besser erscheinen: 
-I} 18. Qa3 Nd5 19. Nxd7 Rxd7 20. dxc5 Nxf4 21. g3 Nd5 22. Ne4 Rc7 $14 {/=}) ({
-II} 18. f5 cxd4 19. Nxf7 Rxf7 20. fxe6 Rff8 21. exd7 Qxd7 22. Nd3 Rfe8 $14 {/=}
-) 18... Nb6 $6 (18... Nd5 19. c4 Nxe5 20. dxe5 Nb4 $11 {hätte leicht Ausgleich
-ergeben. Nach dem Partiezug indes wird der folgende Damenschwenk unangenehm ...
-}) 19. Qa3 $1 Nbd5 $6 ({Unterschätzt den Doppelangriff (c5/a7). Geringere Übel
-waren:  I} 19... Rc8 20. Nfd3 $14 (20. Qxa7 $4 Qc7 21. dxc5 Qxc5)) ({II} 19...
-Nbd7 20. g3 Rfe8 21. Nxd7 Nxd7 22. d5 Nf8 23. c4 $14) 20. Qxc5 $6 ({Stärker war
-} 20. dxc5 $1 {mit weißem Vorteil:} Rc8 (20... Nxf4 21. Rxd8 Qxd8 (21... Rxd8
-22. g3 N4d5 23. c4 Nc7 24. Qxa7) 22. g3 Qd4 23. Qe3 Qxe3+ 24. Rxe3 N6d5 25. Rb3
-) 21. Nfd3 $16) 20... Qxc5 21. dxc5 Nxf4 22. g3 N4d5 23. c4 Ne7 24. b4 $14 Rc8
-({Oder} 24... Rxd1+ 25. Rxd1 Rc8 26. Kb2 $14) 25. Nd7 ({Auch die Aktivierung
-des Königs mittels} 25. Kb2 {kam in Betracht:} Rfd8 26. Kc3) 25... Rfd8 26.
-Nxf6+ gxf6 27. Ne4 f5 ({Von etwa gleicher Qualität sind:  I} 27... Nc6 28. a3 (
-28. Nxf6+ Kg7 29. Nh5+ Kg6 30. Nf4+ Kf6) 28... f5 29. Nd6 Rc7 $14) ({II} 27...
-Rxd1+ 28. Rxd1 Nc6 29. a3 (29. Nd6 Rc7 30. a3) 29... f5 30. Nd6 Rc7 $14) 28.
-Nd6 Rb8 29. Kc2 Kg7 $2 ({Danach wir die weiße Initiative am Damenflügel sehr
-bedrohlich, während Schwarz mit} 29... b6 {noch rechtzeitig interveniert, z.B.}
-30. cxb6 axb6 (30... Rxb6 $4 31. Nxf5 Rxd1 32. Nxe7+ Kf8 33. Rxd1 Kxe7 34. Kc3
-$18) 31. Kb3 $14) 30. b5 $16 h5 ({Oder z.B.} 30... Kf6 {(30...a6 31.a4; 30...
-Nc8?? 31.Nxf5+)} 31. Re3 Nc8 (31... a6 32. Red3 Rg8 33. a4 Nc8 34. a5 Nxd6 35.
-Rxd6 Rg4 36. Kb3 Rgg8 37. Rb6 h5 38. Rd7 $18) 32. Ra3 Rg8 (32... b6 33. Rad3
-Nxd6 34. c6 $1 Rbc8 35. Rxd6 Rxd6 36. Rxd6 $16) (32... Rd7 33. Ne4+ Ke7 34.
-Rxd7+ Kxd7 35. Nf6+ Ke7 36. Nh5 $16) 33. Rdd3 h5 34. Kc3 $16) 31. Re3 Rh8 32.
-Ra3 a6 (32... Nc8 33. Kb3 (33. Rd4)) 33. Rb1 $6 ({Vergibt noch einmal seinen
-Vorteil, der mit} 33. c6 $1 bxc6 34. bxa6 h4 35. a7 Ra8 36. Rb1 hxg3 37. hxg3
-$16 {festzuhalten war.}) 33... h4 $2 ({Nach diversen Ungenauigkeiten der
-letzte und entscheidende Fehler. Erforderlich war} 33... axb5 34. cxb5 h4 $132
-{+/=.   Nun jedoch läßt Wei?nicht mehr locker und bringt sein Übergewicht am
-Damenflügel zur Geltung.}) 34. bxa6 bxa6 35. Rxb8 Rxb8 36. Rxa6 $18 hxg3 37.
-hxg3 Rd8 38. a4 Kf6 39. a5 Ng6 40. c6 Ne7 41. c7 Rg8 42. Rb6 Ke5 43. Nxf7+ Kd4
-44. Rxe6 Nc8 45. Rd6+ {- ein "typischer Arbeitssieg" in einem Mannschaftskampf}
-1-0
+1. c4 c6 2. Nc3 d5 3. e3 e5 4. Qh5 $6 ({Eine neue, aber keine gute Idee. Wei?
+gewinnt einem Bauern auf Kosten eines katastrop halen Entwicklung srkstands.
+Meistens wird} 4. d4 $5 {bevorzugt.} Bd6) 5. cxd5 Nf6 6. Qe2 cxd5 7. Nxd5
+Nxd5 8. Qb5+ Nc6 9. Qxd5 O-O 10. Qb3 Be6 11. Qd1 ({Kaum gstiger we} 11. Qa4
+Rc8 12. Ne2 Nb4 13. Nc3 Bf5 $17 {gewesen.}) 11... f5 $6 ({Besser geflt} 11...
+Nb4 $1 12. a3 Qa5 $17 {mit vernichtenden Angriff.}) 12. Ne2 f4 13. Nc3 Qh4 14.
+Qa4 $2 ({Mehr Widerstand versprach} 14. g3 fxg3 15. fxg3 Qh6 16. Bg2 Rf7) 14...
+Bb4 ({Wiederum war} 14... Nb4 $1 {sehr stark in Hinblick auf} 15. a3 fxe3 16.
+axb4 Rf4 $19) 15. e4 Rad8 16. d3 ({Auch nach dem besseren} 16. Bb5 Nd4 17. h3
+a6 18. Bd3 Bc5 {ist Wei?nicht zu beneiden.}) 16... Bc5 17. Nd1 Nd4 18. Nc3 b5
+(18... Nf3+ 19. Kd1 Qxf2 $19) 19. Qd1 Nb3 20. g3 Bxf2+ 21. Kxf2 fxg3+ 22. Kg1
+g2 23. Be3 gxf1=Q+ 24. Qxf1 Qg4+ 25. Qg2 Nxa1 0-1

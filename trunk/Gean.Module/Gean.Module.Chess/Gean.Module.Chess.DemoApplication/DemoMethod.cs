@@ -51,9 +51,12 @@ namespace Gean.Module.Chess.Demo
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
+            records = new Records();
             MyDemoDialog.Clear();
             PGNReader reader = new PGNReader();
-            reader.Filename = Program.PGNFile_Test_1_Game; //@"e:\ChessBase\Bases\08b.pgn";
+            //reader.Filename = Program.PGNFile_340_Game;
+            reader.Filename = Program.PGNFile_Test_1_Game;
+            //reader.Filename = @"e:\ChessBase\Bases\08a.pgn";
             reader.AddEvents(records);
             reader.Parse();
 
@@ -66,7 +69,6 @@ namespace Gean.Module.Chess.Demo
             MyDemoDialog.StatusText1 = string.Format("记录个数：{2}, 总时间：{0}，每个记录的解析时间为：{1}", rTime, fTIme, records.Count);
             watch.Stop();
         }
-
 
         #region 生成一些测试用的Step用例
 

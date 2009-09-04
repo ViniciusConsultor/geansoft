@@ -45,6 +45,7 @@ namespace Gean.Module.Chess
         /// </summary>
         public readonly static string ResultUnKnown = "?";
 
+        public string ItemType { get { return "GameResult"; } }
         public string Value { get; private set; }
 
         public override string ToString()

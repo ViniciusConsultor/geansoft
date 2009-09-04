@@ -6,6 +6,7 @@ namespace Gean
 {
     public interface IItem
     {
+        string ItemType { get; }
         string Value { get; }
     }
 }

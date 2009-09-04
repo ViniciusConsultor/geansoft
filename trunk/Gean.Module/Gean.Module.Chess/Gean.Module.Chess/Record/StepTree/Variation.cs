@@ -9,8 +9,9 @@ namespace Gean.Module.Chess
     /// </summary>
     public class Variation : Steps, IItem
     {
-        #region ISequenceItem 成员
+        #region IItem 成员
 
+        public string ItemType { get { return "Variation"; } }
         public string Value
         {
             get { return this.ToString(); }

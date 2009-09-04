@@ -30,8 +30,9 @@ namespace Gean.Module.Chess
         }
         private string _userId;
 
-        #region ISequenceItem 成员
+        #region IItem 成员
 
+        public string ItemType { get { return "Annotation"; } }
         public string Value
         {
             get { return this.ToString(); }
