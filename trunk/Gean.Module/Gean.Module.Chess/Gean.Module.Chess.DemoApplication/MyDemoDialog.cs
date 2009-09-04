@@ -49,9 +49,9 @@ namespace Gean.Module.Chess.Demo
         {
             get { return _form._progressBar; }
         }
-        public static ListBox.ObjectCollection ListItems
+        public static TreeView RecordTree
         {
-            get { return _form._Listbox.Items; }
+            get { return _form._RecordTree; }
         }
         public static TreeNode RootNode
         {
@@ -86,24 +86,24 @@ namespace Gean.Module.Chess.Demo
             StatusText2 = "";
             this.Method = new DemoMethod();
             this.UpdateListBox();
-            this._Listbox.SelectedIndexChanged += new EventHandler(_Listbox_SelectedIndexChanged);
+            this._RecordTree.NodeMouseClick += new TreeNodeMouseClickEventHandler(_RecordTree_NodeMouseClick);
         }
 
-        void _Listbox_SelectedIndexChanged(object sender, EventArgs e)
+        void _RecordTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (!(_Listbox.SelectedItem is ITree))
+            if (!(e.Node.Tag is ITree))
                 return;
-            _TreeView.Nodes.Clear();
-            Record record = this._Listbox.SelectedItem as Record;
+            _StepTree.Nodes.Clear();
+            Record record = e.Node.Tag as Record;
             TreeNode node = new TreeNode("Game");
 
             this.MarkNode(record, node, new StringBuilder());
 
-            _TreeView.BeginUpdate();
-            _TreeView.Nodes.Add(node);
-            _TreeView.ShowLines = true;
-            _TreeView.ExpandAll();
-            _TreeView.EndUpdate();
+            _StepTree.BeginUpdate();
+            _StepTree.Nodes.Add(node);
+            _StepTree.ShowLines = true;
+            _StepTree.ExpandAll();
+            _StepTree.EndUpdate();
             _textBox2.Text = record.ToString();
         }
 
@@ -166,10 +166,8 @@ namespace Gean.Module.Chess.Demo
             this._statusLabel1.Text = "";
             this._statusLabel2.Text = "";
             this._progressBar.Value = 0;
-            this._Listbox.Items.Clear();
-            this._Listbox.Update();
-            this._TreeView.Nodes.Clear();
-            this._TreeView.Update();
+            this._RecordTree.Nodes.Clear();
+            this._StepTree.Nodes.Clear();
             this.UpdateListBox();
             this.Update();
         }
@@ -179,7 +177,6 @@ namespace Gean.Module.Chess.Demo
         /// </summary>
         private void UpdateListBox()
         {
-            this._Listbox.Items.Add(this.InitString);
             this.Text = Application.ProductName + " | DemoCount: " + this.DemoCount.ToString();
         }
 

@@ -33,8 +33,8 @@
             this._ClearButton = new System.Windows.Forms.Button();
             this._OKButton = new System.Windows.Forms.Button();
             this._CancelButton = new System.Windows.Forms.Button();
-            this._Listbox = new System.Windows.Forms.ListBox();
-            this._TreeView = new System.Windows.Forms.TreeView();
+            this._RecordTree = new System.Windows.Forms.TreeView();
+            this._StepTree = new System.Windows.Forms.TreeView();
             this._textBox1 = new System.Windows.Forms.TextBox();
             this._textBox2 = new System.Windows.Forms.TextBox();
             this._statusStrip = new System.Windows.Forms.StatusStrip();
@@ -79,30 +79,29 @@
             this._CancelButton.UseVisualStyleBackColor = true;
             this._CancelButton.Click += new System.EventHandler(this._CancelButton_Click);
             // 
-            // _Listbox
+            // _RecordTree
             // 
-            this._Listbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this._RecordTree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this._Listbox.FormattingEnabled = true;
-            this._Listbox.Location = new System.Drawing.Point(12, 64);
-            this._Listbox.Name = "_Listbox";
-            this._Listbox.Size = new System.Drawing.Size(328, 173);
-            this._Listbox.TabIndex = 6;
+            this._RecordTree.Location = new System.Drawing.Point(12, 64);
+            this._RecordTree.Name = "_RecordTree";
+            this._RecordTree.Size = new System.Drawing.Size(328, 173);
+            this._RecordTree.TabIndex = 6;
             // 
-            // _TreeView
+            // _StepTree
             // 
-            this._TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this._StepTree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this._TreeView.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._TreeView.Location = new System.Drawing.Point(346, 64);
-            this._TreeView.Name = "_TreeView";
+            this._StepTree.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._StepTree.Location = new System.Drawing.Point(346, 64);
+            this._StepTree.Name = "_TreeView";
             treeNode1.Name = "_RootNode";
             treeNode1.Text = "RootNode";
-            this._TreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            this._StepTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1});
-            this._TreeView.Size = new System.Drawing.Size(354, 240);
-            this._TreeView.TabIndex = 7;
-            this._TreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this._TreeView_NodeMouseClick);
+            this._StepTree.Size = new System.Drawing.Size(354, 240);
+            this._StepTree.TabIndex = 7;
+            this._StepTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this._TreeView_NodeMouseClick);
             // 
             // _textBox1
             // 
@@ -188,8 +187,8 @@
             this.Controls.Add(this._statusStrip);
             this.Controls.Add(this._textBox2);
             this.Controls.Add(this._textBox1);
-            this.Controls.Add(this._TreeView);
-            this.Controls.Add(this._Listbox);
+            this.Controls.Add(this._StepTree);
+            this.Controls.Add(this._RecordTree);
             this.Controls.Add(this._CancelButton);
             this.Controls.Add(this._OKButton);
             this.Controls.Add(this._ClearButton);
@@ -213,8 +212,8 @@
         internal System.Windows.Forms.StatusStrip _statusStrip;
         internal System.Windows.Forms.TreeNode _TreeNode;
         internal System.Windows.Forms.TextBox _textBox3;
-        private System.Windows.Forms.ListBox _Listbox;
-        private System.Windows.Forms.TreeView _TreeView;
+        private System.Windows.Forms.TreeView _RecordTree;
+        private System.Windows.Forms.TreeView _StepTree;
         private System.Windows.Forms.TextBox _textBox1;
         private System.Windows.Forms.TextBox _textBox2;
         private System.Windows.Forms.ToolStripStatusLabel _statusLabel1;
