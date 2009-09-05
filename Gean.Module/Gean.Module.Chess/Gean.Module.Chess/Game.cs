@@ -224,20 +224,20 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region IEnumerable<Piece>
+        #region IEnumerable<Piece> 成员
 
         public IEnumerator<Piece> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.ActivedPieces.GetEnumerator();
         }
 
         #endregion
 
-        #region IEnumerable
+        #region IEnumerable 成员
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return this.ActivedPieces.GetEnumerator();
         }
 
         #endregion

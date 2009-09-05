@@ -11,15 +11,10 @@ namespace Gean.Module.Chess
     /// 该文件将被解析成一个IList&lt;Record&gt;集合,即本类型。
     /// 该类型实现了PGN解析接口。
     /// </summary>
-    public class Records : IEnumerable<Record>, IPGNReaderEvents
+    public class Records : ICollection<Record>, IPGNReaderEvents
     {
 
         private List<Record> _chessRecords = new List<Record>();
-
-        public int Count
-        {
-            get { return _chessRecords.Count; }
-        }
 
         #region IGameReaderEvents 成员
 
@@ -170,5 +165,48 @@ namespace Gean.Module.Chess
 
         #endregion
 
+        public Record this[int index]
+        {
+            get { return _chessRecords[index]; }
+        }
+
+        #region ICollection<Record> 成员
+
+        public int Count
+        {
+            get { return _chessRecords.Count; }
+        }
+
+        public void Add(Record item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(Record item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(Record[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsReadOnly
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Remove(Record item)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
