@@ -9,9 +9,9 @@ namespace Gean.Gui.ChessControl
     public static class Servicer
     {
         /// <summary>
-        /// 静态类型:ChessBoardHelper的初始化
+        /// 静态构造函数
         /// </summary>
-        public static void Initialize()
+        static Servicer()
         {
             Servicer.PieceImages = new Dictionary<Enums.PieceType, Image>(12);
             Servicer.InitializeBoardImage();

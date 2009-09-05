@@ -38,8 +38,7 @@ namespace Gean.Gui.ChessControl.Demo
 
         private static void Initialize()
         {
-            Logger.Info("ChessBoardService.Initialize()");
-            Servicer.Initialize();
+
         }
     }
 }
