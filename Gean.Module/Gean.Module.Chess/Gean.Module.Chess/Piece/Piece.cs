@@ -50,7 +50,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region abstract
+        #region Abstract
 
         public abstract Position[] GetEnablePositions();
 
@@ -94,7 +94,7 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region static
+        #region Static
 
         /// <summary>
         /// 表示棋子为空(null)时。此变量为只读。
@@ -111,6 +111,47 @@ namespace Gean.Module.Chess
             if (chessman == Piece.Empty)
                 return true;
             return false;
+        }
+
+        public static Piece Creator(Enums.PieceType type, Position pos)
+        {
+            switch (type)
+            {
+                case Enums.PieceType.WhiteKing:
+                    return new PieceKing(Enums.GameSide.White, pos);
+                case Enums.PieceType.WhiteQueen:
+                    return new PieceQueen(Enums.GameSide.White, pos);
+                case Enums.PieceType.WhiteRook:
+                    return new PieceRook(Enums.GameSide.White, pos);
+                case Enums.PieceType.WhiteBishop:
+                    return new PieceBishop(Enums.GameSide.White, pos);
+                case Enums.PieceType.WhiteKnight:
+                    return new PieceKnight(Enums.GameSide.White, pos);
+                case Enums.PieceType.WhitePawn:
+                    return new PiecePawn(Enums.GameSide.White, pos);
+                case Enums.PieceType.BlackKing:
+                    return new PieceKing(Enums.GameSide.Black, pos);
+                case Enums.PieceType.BlackQueen:
+                    return new PieceQueen(Enums.GameSide.Black, pos);
+                case Enums.PieceType.BlackRook:
+                    return new PieceRook(Enums.GameSide.Black, pos);
+                case Enums.PieceType.BlackBishop:
+                    return new PieceBishop(Enums.GameSide.Black, pos);
+                case Enums.PieceType.BlackKnight:
+                    return new PieceKnight(Enums.GameSide.Black, pos);
+                case Enums.PieceType.BlackPawn:
+                    return new PiecePawn(Enums.GameSide.Black, pos);
+                case Enums.PieceType.None:
+                case Enums.PieceType.AllKings:
+                case Enums.PieceType.AllQueens:
+                case Enums.PieceType.AllRooks:
+                case Enums.PieceType.AllBishops:
+                case Enums.PieceType.AllKnights:
+                case Enums.PieceType.AllPawns:
+                case Enums.PieceType.All:
+                default:
+                    throw new PieceException(string.Format(ExString.PieceTypeIsError, type.ToString()));
+            }
         }
 
         /// <summary>

@@ -114,7 +114,7 @@ namespace Gean.Gui.ChessControl.Demo
 
         private void NewGame(object sender, EventArgs e)
         {
-            this._board.LoadGame();
+            this._board.LoadSituation();
         }
     }
 }

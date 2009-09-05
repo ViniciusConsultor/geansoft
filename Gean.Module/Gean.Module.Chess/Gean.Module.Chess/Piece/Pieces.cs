@@ -8,7 +8,7 @@ namespace Gean.Module.Chess
     /// </summary>
     public class Pieces : ICollection<Piece>
     {
-        List<Piece> _piecrs = new List<Piece>(32);
+        List<Piece> _pieces = new List<Piece>(32);
 
         /// <summary>
         /// 获取另一战方的“王”
@@ -19,7 +19,7 @@ namespace Gean.Module.Chess
         {
             if (currSide == Enums.GameSide.Black)
             {
-                foreach (Piece piece in _piecrs)
+                foreach (Piece piece in _pieces)
                 {
                     if (piece.PieceType == Enums.PieceType.WhiteKing)
                         return (PieceKing)piece;
@@ -27,7 +27,7 @@ namespace Gean.Module.Chess
             }
             else
             {
-                foreach (Piece piece in _piecrs)
+                foreach (Piece piece in _pieces)
                 {
                     if (piece.PieceType == Enums.PieceType.BlackKing)
                         return (PieceKing)piece;
@@ -44,7 +44,7 @@ namespace Gean.Module.Chess
         public bool TryGetPiece(int dot, out Piece piece)
         {
             piece = Piece.Empty;
-            foreach (Piece pe in _piecrs)
+            foreach (Piece pe in _pieces)
             {
                 if (pe.Position.Dot == dot)
                 {
@@ -62,7 +62,7 @@ namespace Gean.Module.Chess
         /// <param name="dot">棋盘位置</param>
         public bool TryContains(Piece item, out int dot)
         {
-            if (_piecrs.Contains(item))
+            if (_pieces.Contains(item))
             {
                 dot = item.Position.Dot;
                 return true;
@@ -80,34 +80,46 @@ namespace Gean.Module.Chess
         /// <param name="items">指定棋子集合</param>
         public void AddRange(IEnumerable<Piece> items)
         {
-            this._piecrs.AddRange(items);
+            this._pieces.AddRange(items);
         }
         
         #region ICollection<Piece>
 
         public void Add(Piece item)
         {
-            this._piecrs.Add(item);
+            this._pieces.Add(item);
         }
 
         public void Clear()
         {
-            _piecrs.Clear();
+            _pieces.Clear();
         }
 
         public bool Contains(Piece item)
         {
-            return this._piecrs.Contains(item);
+            return this._pieces.Contains(item);
+        }
+
+        public bool Contains(Enums.PieceType type, Position pos)
+        {
+            foreach (var item in _pieces)
+            {
+                if (item.PieceType.Equals(type) && item.Position.Equals(pos))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void CopyTo(Piece[] array, int arrayIndex)
         {
-            this._piecrs.CopyTo(array, arrayIndex);
+            this._pieces.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return _piecrs.Count; }
+            get { return _pieces.Count; }
         }
 
         public bool IsReadOnly
@@ -117,7 +129,7 @@ namespace Gean.Module.Chess
 
         public bool Remove(Piece item)
         {
-            return _piecrs.Remove(item);
+            return _pieces.Remove(item);
         }
 
         #endregion
@@ -126,7 +138,7 @@ namespace Gean.Module.Chess
 
         public IEnumerator<Piece> GetEnumerator()
         {
-            return _piecrs.GetEnumerator();
+            return _pieces.GetEnumerator();
         }
 
         #endregion
@@ -135,7 +147,7 @@ namespace Gean.Module.Chess
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _piecrs.GetEnumerator();
+            return _pieces.GetEnumerator();
         }
 
         #endregion
