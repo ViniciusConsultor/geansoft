@@ -82,7 +82,6 @@ namespace Gean.Module.Chess
         {
             this._piecrs.AddRange(items);
         }
-
         
         #region ICollection<Piece>
 
@@ -123,16 +122,16 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        #region IEnumerable<Piece>
+        #region IEnumerable<Piece> 成员
 
-        IEnumerator<Piece> IEnumerable<Piece>.GetEnumerator()
+        public IEnumerator<Piece> GetEnumerator()
         {
             return _piecrs.GetEnumerator();
         }
 
         #endregion
 
-        #region IEnumerable
+        #region IEnumerable 成员
 
         IEnumerator IEnumerable.GetEnumerator()
         {
