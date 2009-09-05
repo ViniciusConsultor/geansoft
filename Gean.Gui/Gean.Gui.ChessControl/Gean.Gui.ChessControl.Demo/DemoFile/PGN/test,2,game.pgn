@@ -1,31 +1,128 @@
-[Event "Aeroflot Open"]
-[Site "Moscow RUS"]
-[Date "2009.02.18"]
-[Round "2"]
-[White "Zvjaginsev,V"]
-[Black "Ehlvest,J"]
+[Event "Pittsburgh op"]
+[Site "Pittsburgh"]
+[Date "1946.??.??"]
+[Round "?"]
+[White "Steiner, Herman"]
+[Black "Evans, Larry"]
+[Result "1-0"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D78"]
+
+1.d4 Nf6 2.Nf3 g6 3.g3 Bg7 4.Bg2 d5 5.O-O O-O 6.c4 c6 7.Nbd2 Ne4 8.Qb3 Nxd2
+9.Bxd2 dxc4 10.Qxc4 Be6 11.Qb4 Qd7 12.Rfd1 Na6 13.Qa3 Qd6 14.Qxd6 exd6 15.Bf4 d5
+16.b4 Nxb4 17.Bd6 Nc2 18.Bxf8 Bxf8 19.Rab1 Rb8 20.Ne5 Bd6 21.Nf3 Na3 22.Rb3 a5
+23.Ne5 a4 24.Rc3 Nb5 25.Re3 Bxe5 26.Rxe5 Nc3 27.Rd3 Nb5 28.Ree3 Nd6 29.Rd1 Nc4
+30.Rc3 b5 31.a3 b4 32.axb4 Rxb4 33.e4 Rb3 34.Rxb3 axb3 35.Rb1 Nd2 36.Rb2 Nxe4
+37.Rxb3 c5 38.Bxe4 dxe4 39.Rb8+ Kg7 40.dxc5  1-0
+
+[Event "Pittsburgh op"]
+[Site "Pittsburgh"]
+[Date "1946.??.??"]
+[Round "?"]
+[White "Evans, Larry"]
+[Black "Kramer, Haije"]
+[Result "0-1"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D78"]
+
+1.d4 Nf6 2.Nf3 g6 3.g3 Bg7 4.Bg2 d5 5.O-O O-O 6.c4 dxc4 7.Na3 c6 8.Nxc4 Bf5
+9.Nh4 Be4 10.b3 Bxg2 11.Nxg2 Nbd7 12.Bb2 Qc7 13.Qc2 Nd5 14.e4 N5b6 15.Nge3 Rac8
+16.Rac1 Nf6 17.Nxb6 Qxb6 18.Nc4 Qd8 19.Rfd1 Qd7 20.Ne5 Qh3 21.f3 Bh6 22.Rb1 Rfd8
+23.Bc1 Bg7 24.Ba3 Nd7 25.Bxe7 Nxe5 26.dxe5 Rxd1+ 27.Rxd1 Bxe5 28.Bd6 Bg7
+29.f4 c5 30.e5 Qe6 31.Qe4 Qd7 32.Rd5 Qb5 33.e6 f5 34.Qc4 Qxc4 35.bxc4 Bd4+
+36.Kf1 b6 37.Be5 Bxe5 38.fxe5 Re8 39.Rd6 Kf8 40.Kf2 Ke7 41.Rd7+ Kxe6 42.Rxh7 Kxe5  0-1
+
+[Event "Aalborg"]
+[Site "Aalborg"]
+[Date "1947.??.??"]
+[Round "3"]
+[White "Stoltz, Goesta"]
+[Black "Poulsen, Christian"]
+[Result "0-1"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D78"]
+
+1.d4 Nf6 2.c4 g6 3.g3 Bg7 4.Bg2 d5 5.Nf3 O-O 6.O-O c6 7.Nbd2 Ne4 8.cxd5 cxd5
+9.Ne5 Nd7 10.Nxd7 Qxd7 11.Nxe4 dxe4 12.Be3 Qd5 13.f3 Bf5 14.Qb3 Qxb3 15.axb3 exf3
+16.Bxf3 Rfd8 17.Rfd1 a5 18.Rd2 Ra6 19.Bxb7 Rb6 20.Bf3 Rxb3 21.Bf2 Bh6 22.e3 Rxe3
+23.Bg2 Rxg3 24.Re2 Rd3 25.Rxe7 Bg7 26.Bf1 Rd2 27.Bc4 Bxd4 28.Bxd4 R8xd4 29.Bxf7+ Kf8
+30.Rae1 Bh3 31.Be6 Kxe7 32.Bxh3+ Kf6 33.Re6+ Kg5 34.Re5+ Kh4 35.Re3 Rxb2  0-1
+
+[Event "WECU Bristol"]
+[Site "Bristol"]
+[Date "1947.??.??"]
+[Round "4"]
+[White "Bruce, Rowena M"]
+[Black "Sullivan, C."]
+[Result "1-0"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D78"]
+
+1.Nf3 d5 2.d4 Nf6 3.g3 g6 4.Bg2 Bg7 5.O-O O-O 6.c4 c6 7.Nc3 dxc4 8.Ne5 Be6
+9.a4 Nbd7 10.Nf3 Nd5 11.Ng5 Nxc3 12.bxc3 Nb6 13.Nxe6 fxe6 14.e4 e5 15.a5 Nd7
+16.Qa4 b5 17.axb6 Nxb6 18.Qxc6 Rf6 19.Qb5 Qc7 20.dxe5 Rc6 21.f4 Rb8 22.Qa5 Rc5
+23.Qxa7 Qd8 24.Be3 Ra8 25.Qxa8 Nxa8 26.Bxc5 Nb6 27.Ra7 Bf8 28.Rb1 Nc8 29.Ra8 Kf7
+30.Rbb8 Qd1+ 31.Bf1 g5 32.Rxc8 Bg7 33.Re8 gxf4 34.Rxe7+ Kg6 35.Ra6+ Kh5 36.Rxg7 h6
+37.g4+  1-0
+
+[Event "ARG-ch"]
+[Site "Buenos Aires"]
+[Date "1947.??.??"]
+[Round "?"]
+[White "Iliesco, Juan Traian"]
+[Black "Pilnik, Herman"]
 [Result "1/2-1/2"]
-[WhiteElo "2636"]
-[BlackElo "2595"]
-[EventDate "2009.02.17"]
-[ECO "B06"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D77"]
 
-1. e4 g6 {碧瑶"1" comment...} 
-2. Nc3 d6 (2. c4 Nc6 3. d4 cxd4 4. Nxd4 Nf6)
-4. Nf3 c5 
-5. g3 Nc6 {"5" (36. Rxd7 Bxd7 59. Ke2 Ke6 37. Qxd7 Qxh4 ) comment...}
-6. Bg2 e6 
-7. O-O Nge7  { "7" comment: 中国 }
-8. d3 O-O (8. c4 c6 {"2-2" comment...} 9. Nc3 Nf6 (9. c4 b6 {"2-3-3" comment...} 10. g3 Bb7) 10. cxd5 cxd5 11. Bf4 Nc6) 
-9. Rb1 Rb8 
-10. Be3 Nd4 
-	(10. Nf1 O-O 11. Ng3 c5 12. Bf4 e5 13. Be3 Qc7 14. Qd2 Kh7 
-		(14. Bb5+ Bd7 15. Be2 h5 16. f4 gxf3 17. gxf3 Bc6 18. Bf4 Qe7 19. Rhg1 Ng6) 
-	15. Rad1 Rad8 16. dxe5 Nxe5 17. Nxe5 dxe5 18. Qe2 f5 19. exf5 gxf5)
-11. Ne2 Nxf3+ 
-12. Bxf3 b6
-13. c3 1/2-1/2
+1.Nf3 d5 2.g3 g6 3.Bg2 Bg7 4.d4 Nf6 5.O-O O-O 6.c4 c5 7.dxc5 dxc4 8.Qc2 Qd5
+9.Na3 Qxc5 10.Qxc4 Qh5 11.Qb5 Nc6 12.Qxh5 Nxh5 13.Nb5 Rd8 14.Nc3 Be6 15.Be3 Nf6
+16.Rfd1 Nd5 17.Nxd5 Bxd5 18.Nd2 Bxg2 19.Kxg2 Rd5 20.Ne4 Rad8 21.Rxd5 Rxd5
+22.Rb1 f5 23.Nc5 b6 24.Ne6 Bf6 25.b3 Kf7 26.Ng5+ Kg8 27.Rc1 Rd6 28.Nf3 e5
+29.Nd2 Nb4 30.Nc4 Rd7 31.Bd2 Nd5 32.Rc2 Kf7 33.Ne3 Rc7 34.Rxc7+ Nxc7 35.Bc3 Ke6
+36.Kf1 b5 37.Ke1 Be7 38.Kd1 Bc5 39.Bd2 a6 40.Kc2 Nd5 41.Nxd5 Kxd5 42.f3 e4
+43.Bf4 Bd4 44.Kd2 h5 45.Be3 Bf6 46.h3 Be5 47.f4 Bd6 48.Kc2 Bb4 49.Kd1 h4
+50.gxh4 Be7 51.h5 gxh5 52.Kc2 Bd6 53.Kd2 a5 54.Kc2 Bc7 55.Kc3 Bd8 56.Kc2 a4
+57.Kc3 Ba5+ 58.Kc2 axb3+ 59.axb3 Bd8 60.Kc3 Be7 61.Kc2 Bf6 62.Kd2 Bg7 63.Kc2 Bd4
+64.Bc1 Bc5 65.e3 Bb4 66.Bd2 Kc5 67.Bc3  1/2-1/2
 
+[Event "La Plata-New York radio m"]
+[Site "La Plata"]
+[Date "1947.??.??"]
+[Round "?"]
+[White "Reshevsky, Samuel Herman"]
+[Black "Stahlberg, Gideon"]
+[Result "1-0"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D77"]
+
+1.Nf3 d5 2.g3 Nf6 3.Bg2 g6 4.d4 Bg7 5.O-O O-O 6.c4 c5 7.dxc5 dxc4 8.Qc2 Qd5
+9.Na3 Qxc5 10.Qxc4 Qxc4 11.Nxc4 Nc6 12.Nce5 Nxe5 13.Nxe5 Ne8 14.Nd3 Nd6 15.Bg5 Re8
+16.Rac1 h6 17.Be3 Bf5 18.Rc7 Bxd3 19.exd3 Rac8 20.Rfc1 Rxc7 21.Rxc7 Bxb2
+22.Bxb7 Bf6 23.Bc6 Rb8 24.Bxa7 Rb1+ 25.Kg2 Ra1 26.a4 Nf5 27.Bb6 Bd4 28.a5 Bc3
+29.Ra7 Nd4 30.Be4 Nb3 31.a6 Bd4 32.Bxd4 Nxd4 33.Rd7 f5 34.Bd5+  1-0
+
+[Event "JUG-ch"]
+[Site "Ljubljana"]
+[Date "1947.??.??"]
+[Round "12"]
+[White "Bidev, P."]
+[Black "Bozic, Aleksandar"]
+[Result "1/2-1/2"]
+[WhiteElo ""]
+[BlackElo ""]
+[ECO "D75"]
+
+1.d4 Nf6 2.Nf3 g6 3.g3 Bg7 4.Bg2 O-O 5.O-O d5 6.c4 c5 7.dxc5 Na6 8.cxd5 Nxd5
+9.c6 bxc6 10.Nbd2 Rb8 11.Nc4 Nb6 12.Qxd8 Rxd8 13.Na5 Bd7 14.Bf4 Rbc8 15.Be5 f6
+16.Bf4 e5 17.Be3 Be8 18.Rac1 Bf8 19.Bh3 Rc7 20.Be6+ Kg7 21.Rfd1 Rxd1+ 22.Rxd1 Bf7
+23.Bxf7 Kxf7 24.Rc1 c5 25.Rd1 Be7  1/2-1/2
 
 [Event "Aeroflot Open"]
 [Site "Moscow RUS"]
@@ -187,22 +284,76 @@ Qd3 Ra8 94. Qd1 Rah8 95. h5 Nxh5 96. Bxh5 gxh5 97. Rxh5 Qb8 98. Rxh6 Rxh6
 99. Rxh6 gxh6 100. Qe2 Qc8 101. Bb6 Ng8 102. Qc2 Qd7 103. Qe2 Qc8 104. Qc2
 Qd7 105. Qe2 Qc8 106. Qc2 1/2-1/2
 
-[Event "1st Big Slick GM"]
-[Site "London ENG"]
-[Date "2009.06.28"]
+[Event "Aeroflot Open"]
+[Site "Moscow RUS"]
+[Date "2009.02.18"]
 [Round "2"]
-[White "Slavin,A"]
-[Black "Galego,L"]
+[White "Zvjaginsev,V"]
+[Black "Ehlvest,J"]
 [Result "1/2-1/2"]
-[WhiteElo "2308"]
-[BlackElo "2454"]
-[EventDate "2009.06.27"]
-[ECO "A46"]
+[WhiteElo "2636"]
+[BlackElo "2595"]
+[EventDate "2009.02.17"]
+[ECO "B06"]
 
-1. d4 Nf6 2. Nf3 d6 3. Bg5 Nbd7 4. Nbd2 c6 5. c3 e5 6. e4 Be7 7. Be2 O-O 8.
-O-O Re8 9. Qc2 Qc7 10. Rfe1 Nf8 11. dxe5 dxe5 12. Nc4 Ng6 13. Rad1 Be6 14.
-Ne3 Ng4 15. Nxg4 Bxg4 16. Be3 h6 17. Nd2 Bxe2 18. Rxe2 Rad8 19. Nf1 Rxd1
-20. Qxd1 Rd8 21. Rd2 1/2-1/2
+1. N1a6 Ngxf6+ {"1" 关于中文的显示测试...} 
+2. axh8=N+ Qxb4+ (2. c4 Nc6 3. d4 cxd4 4. Nxd4 Nf6)
+3. Ngxf6+ Rdxe7+
+4. axb8=Q+ Kf3 
+5. g3 Nc6 {"5" (36. Rxd7 Bxd7 59. Ke2 Ke6 37. Qxd7 Qxh4 ) comment...}
+6. Bg2 e6 
+7. O-O+ Nge7  { "7" comment: 菩提本无树 明镜亦非台 本来无一物 何处惹尘埃 }
+8. d3 O-O-O+ (8. c4 c6 {"2-2" comment...} 9. Nc3 Nf6 (9. c4 b6 {"2-3-3" comment...} 10. g3 Bb7) 10. cxd5 cxd5 11. Bf4 Nc6) 
+9. Rdxe7+ Rb8 
+10. Be3 Nd4 
+	(
+	10. Nf1 O-O 11. O-O-O c5 12. Bf4 e5 13. Be3 Qc7 14. Qd2 Kh7 
+		(
+		14. Bb5+ Bd7 15. Be2 h5 16. f4 gxf3 
+			(
+			16. Qc2 Bf5 17. Bd3 Bxd3 
+				(17. Qd3 Qb8 18. Nf2 Rfd8 19. e4 d5 20. cxd5 Qxf4 21. dxe6 fxe6 22. Qh3 Nf8 23. Nd3 Qd2 24. Rfd1 Qg5 25. e5 Nd5)
+			18. Rxd3 Qf5 19. Qe2 Nc5
+			)
+		17. gxf3 Bc6 18. Bf4 Qe7 19. Rhg1 Ng6
+		) 
+	15. Rad1 Rad8 16. dxe5 Nxe5 17. Nxe5 dxe5 18. Qe2 f5 19. exf5 gxf5
+	)
+11. Ne2 Nxf3+ 
+12. R8e3+ b6
+13. c3 1/2-1/2
+
+[Event "Bad Zwesten op"]
+[Site "Bad Zwesten"]
+[Date "2008.01.05"]
+[Round "6"]
+[White "Skembris, Spyridon"]
+[Black "Sorm, Daniel"]
+[Result "0-1"]
+[ECO "A11"]
+[WhiteElo "2469"]
+[BlackElo "2330"]
+[Annotator "Gutman"]
+[PlyCount "50"]
+[EventDate "2008.01.02"]
+[EventType "swiss"]
+[EventRounds "9"]
+[EventCountry "GER"]
+[Source "ChessBase"]
+[SourceDate "2008.04.02"]
+
+1. c4 c6 2. Nc3 d5 3. e3 e5 4. Qh5 $6 ({Eine neue, aber keine gute Idee. Wei?
+gewinnt einem Bauern auf Kosten eines katastrophalen Entwicklungsr kstands.
+Meistens wird} 4. d4 $5 {bevorzugt.}) 4... Bd6 5. cxd5 Nf6 6. Qe2 cxd5 7. Nxd5
+Nxd5 8. Qb5+ Nc6 9. Qxd5 O-O 10. Qb3 Be6 11. Qd1 ({Kaum gstiger we} 11. Qa4
+Rc8 12. Ne2 Nb4 13. Nc3 Bf5 $17 {gewesen.}) 11... f5 $6 ({Besser geflt} 11...
+Nb4 $1 12. a3 Qa5 $17 {mit vernichtenden Angriff.}) 12. Ne2 f4 13. Nc3 Qh4 14.
+Qa4 $2 ({Mehr Widerstand versprach} 14. g3 fxg3 15. fxg3 Qh6 16. Bg2 Rf7) 14...
+Bb4 ({Wiederum war} 14... Nb4 $1 {sehr stark in Hinblick auf} 15. a3 fxe3 16.
+axb4 Rf4 $19) 15. e4 Rad8 16. d3 ({Auch nach dem besseren} 16. Bb5 Nd4 17. h3
+a6 18. Bd3 Bc5 {ist Wei?nicht zu beneiden.}) 16... Bc5 17. Nd1 Nd4 18. Nc3 b5
+(18... Nf3+ 19. Kd1 Qxf2 $19) 19. Qd1 Nb3 20. g3 Bxf2+ 21. Kxf2 fxg3+ 22. Kg1
+g2 23. Be3 gxf1=Q+ 24. Qxf1 Qg4+ 25. Qg2 Nxa1 0-1
 
 [Event "1st Big Slick GM"]
 [Site "London ENG"]
