@@ -19,6 +19,17 @@ namespace Gean.Module.Chess
 
         #endregion
 
+        public void StartGame()
+        {
+            this.Parse(NewGameFENString);
+        }
+
+        protected override void SetByPosition(int dot, char value)
+        {
+            base.SetByPosition(dot, value);
+            this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+        }
+
         #region IGame
 
         /// <summary>

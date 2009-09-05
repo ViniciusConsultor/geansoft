@@ -91,21 +91,22 @@ namespace Gean.Gui.ChessControl
 
         #endregion
 
-        #region LoadGame Method
+        #region LoadSituation Method
 
         /// <summary>
-        /// 载入新棋局
+        /// 载入新局面
         /// </summary>
-        public virtual void LoadGame()
+        public virtual void LoadSituation()
         {
             _Game = new Game();
+            _Game.StartGame();
             this.Refresh();
         }
         /// <summary>
-        /// 载入新棋局
+        /// 载入新局面
         /// </summary>
-        /// <param name="chessmans">指定的棋子集合，一般是指残局或中盘棋局</param>
-        public virtual void LoadGame(Situation fenBuilder)
+        /// <param name="fenString">指定的棋子集合，一般是指残局或中盘棋局</param>
+        public virtual void LoadSituation(string fenString)
         {
             _Game = new Game();
             this.Refresh();

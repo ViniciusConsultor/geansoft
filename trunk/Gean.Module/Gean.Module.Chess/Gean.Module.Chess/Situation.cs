@@ -146,12 +146,12 @@ namespace Gean.Module.Chess
         /// <param name="str"></param>
         public virtual void Parse(string str)
         {
-            int dot = 56;
-            int index = 0;
-
             string[] note = str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             #region 16.1.3.1: Parse piece placement data
+
+            int dot = 1;
+            int index = 0;
 
             string[] row = note[0].Split('/');
             if (row.Length != 8)
@@ -182,7 +182,7 @@ namespace Gean.Module.Chess
                 if (index != 8)
                     throw new ArgumentException("Invalid board specification, rank " + (dot / 8 + 1) + " has " + index + " items specified, there should be 8.");
 
-                dot -= 8;
+                dot += 8;
             }
 
             #endregion
@@ -372,17 +372,18 @@ namespace Gean.Module.Chess
 
         protected virtual char GetByPosition(int dot)
         {
-            dot = dot - 1;
-            int m = dot / 8;
-            int n = dot % 8;
+            int dotTmp = dot - 1;
+            int m = dotTmp / 8;
+            int n = dotTmp % 8;
             return this.Rows[m][n];
         }
 
         protected virtual void SetByPosition(int dot, char value)
         {
-            int m = dot / 8;
-            int n = dot % 8;
-            this.Rows[m][n] = value;
+            int x;
+            int y;
+            Position.CalculateXY(dot, out x, out y);
+            this.Rows[x - 1][y - 1] = value;
         }
 
         #endregion
