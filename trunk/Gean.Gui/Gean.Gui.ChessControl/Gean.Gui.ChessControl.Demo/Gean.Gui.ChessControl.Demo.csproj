@@ -70,14 +70,18 @@
     <Content Include="DemoFile\Chessman\white_pawn.png" />
     <Content Include="DemoFile\Chessman\white_queen.png" />
     <Content Include="DemoFile\Chessman\white_rook.png" />
+    <Content Include="DemoFile\PGN\2326,steps2.txt" />
+    <Content Include="DemoFile\PGN\4647,steps1.txt" />
+    <Content Include="DemoFile\PGN\606822,stepsAll.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DemoFile\PGN\340,game.pgn" />
     <None Include="DemoFile\PGN\8,game.pgn" />
     <None Include="DemoFile\PGN\chs,game.pgn" />
+    <None Include="DemoFile\PGN\g340,game.pgn" />
     <None Include="DemoFile\PGN\largeness,game.pgn" />
     <None Include="DemoFile\PGN\test,1,game.pgn" />
     <None Include="DemoFile\PGN\test,2,game.pgn" />
+    <None Include="DemoFile\PGN\test,3,Nag,game.pgn" />
     <None Include="DemoFile\PGN\worldopen,game.pgn" />
     <None Include="Log4netWrapper.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

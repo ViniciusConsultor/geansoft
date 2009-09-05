@@ -78,40 +78,56 @@ namespace Gean.Gui.ChessControl.Demo
             {
                 return;
             }
-            this._recordTree.Nodes.Clear();
+            _recordTree.Nodes.Clear();
             Record record = this._recordListView.SelectedRecord[0];
             TreeNode node = new TreeNode("Game");
-            foreach (var item in record.Items)
-            {
-                GetSubTreenode(item, node);
-            }
-            this._recordTree.BeginUpdate();
-            this._recordTree.Nodes.Add(node);
-            this._recordTree.ShowLines = true;
-            this._recordTree.ExpandAll();
-            this._recordTree.EndUpdate();
+
+            this.MarkNode(record, node, new StringBuilder());
+
+            _recordTree.BeginUpdate();
+            _recordTree.Nodes.Add(node);
+            _recordTree.ShowLines = true;
+            _recordTree.ExpandAll();
+            _recordTree.EndUpdate();
         }
 
-        /// <summary>生成ChessStep树递归子方法</summary>
-        /// <param name="item"></param>
-        /// <param name="parNode"></param>
-        private static void GetSubTreenode(IItem item, TreeNode parNode)
+        private void MarkNode(ITree tree, TreeNode node, StringBuilder text)
         {
-            TreeNode squNode = new TreeNode(item.Value);
-            if (item is ITree)
+            foreach (IItem item in tree.Items)
             {
-                ITree st = (ITree)item;
-                if (st.HasChildren)
+                TreeNode subnode = new TreeNode();
+                if (item is Step)
                 {
-                    foreach (var subItem in st.Items)
+                    Step step = (Step)item;
+                    if (step.GameSide == Enums.GameSide.White)
                     {
-                        GetSubTreenode(subItem, squNode);
+                        text = new StringBuilder();
+                        text.Append(item.ItemType).Append(": ").Append(step.Generator());
+                    }
+                    if (step.GameSide == Enums.GameSide.Black)
+                    {
+                        text.Append(' ').Append(step.Generator());
+                        subnode.Text = text.ToString();
+                        node.Nodes.Add(subnode);
+                    }
+                    if (item is ITree)
+                    {
+                        ITree subtree = (ITree)item;
+                        if (subtree.HasChildren)
+                        {
+                            MarkNode(subtree, subnode, new StringBuilder());
+                        }
                     }
                 }
+                else
+                {
+                    text = new StringBuilder();
+                    text.Append(item.ItemType).Append(": ").Append(item.Value);
+                    subnode.Text = text.ToString();
+                    node.Nodes.Add(subnode);
+                }
             }
-            parNode.Nodes.Add(squNode);
         }
-
         private void NewGame(object sender, EventArgs e)
         {
             this._board.LoadSituation();
