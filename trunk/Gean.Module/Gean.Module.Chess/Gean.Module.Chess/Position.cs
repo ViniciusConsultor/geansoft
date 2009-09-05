@@ -82,13 +82,13 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// 将指定的横坐标与指定的纵坐标转换成相应的FEN的点
+        /// 将指定的横坐标(1-8)与指定的纵坐标(1-8)转换成相应的FEN的点
         /// </summary>
         /// <param name="x">横坐标(1-8)</param>
         /// <param name="y">纵坐标(1-8)</param>
         public static int CalculateDot(int x, int y)
         {
-            return (8 * (7 - y)) + (x + 1);
+            return (8 * (7 - (y - 1))) + ((x - 1) + 1);
         }
 
         #endregion
