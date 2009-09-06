@@ -372,10 +372,10 @@ namespace Gean.Module.Chess
 
         protected virtual char GetByPosition(int dot)
         {
-            int dotTmp = dot - 1;
-            int m = dotTmp / 8;
-            int n = dotTmp % 8;
-            return this.Rows[m][n];
+            int x;
+            int y;
+            Position.CalculateXY(dot, out x, out y);
+            return this.Rows[x - 1][y - 1];
         }
 
         protected virtual void SetByPosition(int dot, char value)

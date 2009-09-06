@@ -77,8 +77,17 @@ namespace Gean
             IEnumerator e2 = b.GetEnumerator();
             for (int i = 0; e1.MoveNext() && e2.MoveNext(); i++)
             {
-                if (0 != comparer.Compare((T)e1.Current, (T)e2.Current))
+                if (comparer == null)
+                {
+                    T c1 = (T)e1.Current;
+                    T c2 = (T)e2.Current;
+                    if (!c1.Equals(c2))
+                        return false;
+                }
+                else if (0 != comparer.Compare((T)e1.Current, (T)e2.Current))
+                {
                     return false;
+                }
             }
             return true;
         }

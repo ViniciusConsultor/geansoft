@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using Gean.Module.Chess;
+using Gean.Log4net;
 
 namespace Gean.Gui.ChessControl
 {
@@ -13,11 +14,16 @@ namespace Gean.Gui.ChessControl
         /// </summary>
         static Servicer()
         {
+            Servicer.Logger = Log4netLoggingService.Initialize();
             Servicer.PieceImages = new Dictionary<Enums.PieceType, Image>(12);
             Servicer.InitializeBoardImage();
             Servicer.InitializeGridImages();
             Servicer.InitializePieceImages();
         }
+
+        #region Logger
+        public static Log4netLoggingService Logger;
+        #endregion
 
         #region Board Image
 

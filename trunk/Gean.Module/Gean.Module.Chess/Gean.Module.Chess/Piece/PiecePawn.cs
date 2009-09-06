@@ -75,48 +75,48 @@ namespace Gean.Module.Chess
         public override Position[] GetEnablePositions()
         {
             List<Position> positions = new List<Position>();
-            Position pos = _position;
+            Position pos = Position.Empty;
             if (this.GameSide == Enums.GameSide.White)
             {
-                if (pos.Y < 1) return null;
+                if (_position.Y < 1) return null;
 
-                pos = pos.ShiftNorth();
-                positions.Add(pos);
+                pos = _position.ShiftWestNorth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
+                pos = _position.ShiftEastNorth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
+                pos = _position.ShiftNorth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
 
-                if (pos.Y == 1)
+                if (_position.Y == 1)
                 {
                     pos = pos.ShiftNorth();
-                    positions.Add(pos);
+                    if (pos != Position.Empty)
+                        positions.Add(pos);
                 }
-
-                pos = pos.ShiftWestNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-
-                pos = pos.ShiftEastNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
             }
             if (this.GameSide == Enums.GameSide.Black)
             {
-                if (pos.Y > 6) return null;
+                if (_position.Y > 6) return null;
 
-                pos = pos.ShiftSouth();
-                positions.Add(pos);
+                pos = _position.ShiftWestSouth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
+                pos = _position.ShiftEastSouth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
+                pos = _position.ShiftSouth();
+                if (pos != Position.Empty)
+                    positions.Add(pos);
 
-                if (pos.Y == 6)
+                if (_position.Y == 6)
                 {
                     pos = pos.ShiftSouth();
-                    positions.Add(pos);
+                    if (pos != Position.Empty)
+                        positions.Add(pos);
                 }
-
-                pos = pos.ShiftWestSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-
-                pos = pos.ShiftEastSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
             }
             return positions.ToArray();
         }

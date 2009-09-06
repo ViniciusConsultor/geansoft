@@ -106,7 +106,7 @@ namespace Gean.Module.Chess
             _vertical = vertical;
             _x = Utility.CharToInt(horizontal) - 1;
             _y = vertical - 1;
-            this.Dot = Position.CalculateDot(_x, _y);
+            this.Dot = Position.CalculateDot(_x + 1, _y + 1);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Gean.Module.Chess
             _y = y - 1;
             _horizontal = Utility.IntToChar(x);
             _vertical = y;
-            this.Dot = Position.CalculateDot(_x, _y);
+            this.Dot = Position.CalculateDot(_x + 1, _y + 1);
         }
 
         #endregion
