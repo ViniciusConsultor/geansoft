@@ -29,40 +29,44 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
+            return RookShift(_position);
+        }
 
-            Position pos = _position;
+        internal static Positions RookShift(Position srcPos)
+        {
+            Positions positions = new Positions();
+
+            Position pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftEast();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftWest();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftNorth();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftSouth();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-
-            return positions.ToArray();
+            return positions;
         }
     }
 }

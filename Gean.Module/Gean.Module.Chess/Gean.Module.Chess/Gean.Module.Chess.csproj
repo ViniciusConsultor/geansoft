@@ -42,6 +42,8 @@
     <Compile Include="Interface\IFenNotation.cs" />
     <Compile Include="Interface\IPGNReader.cs" />
     <Compile Include="Interface\IPGNReaderEvents.cs" />
+    <Compile Include="Position\PositionPair.cs" />
+    <Compile Include="Position\Positions.cs" />
     <Compile Include="Record\Record.cs" />
     <Compile Include="Record\Records.cs" />
     <Compile Include="Record\PGN\PGNReader.cs" />
@@ -67,7 +69,7 @@
     <Compile Include="Piece\PieceQueen.cs" />
     <Compile Include="Piece\PieceRook.cs" />
     <Compile Include="Piece\PiecePawn.cs" />
-    <Compile Include="Position.cs">
+    <Compile Include="Position\Position.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Exception\GameException.cs" />

@@ -72,9 +72,9 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
+            Positions positions = new Positions();
             Position pos = Position.Empty;
             if (this.GameSide == Enums.GameSide.White)
             {
@@ -118,7 +118,7 @@ namespace Gean.Module.Chess
                         positions.Add(pos);
                 }
             }
-            return positions.ToArray();
+            return positions;
         }
     }
 }

@@ -43,12 +43,12 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
-            //positions.AddRange(this.GetRookPositions());
-            //positions.AddRange(this.GetBishopPositions());
-            return positions.ToArray();
+            Positions positions = new Positions();
+            positions.AddRange(PieceRook.RookShift(_position));
+            positions.AddRange(PieceBishop.BishopShift(_position));
+            return positions;
         }
     }
 }

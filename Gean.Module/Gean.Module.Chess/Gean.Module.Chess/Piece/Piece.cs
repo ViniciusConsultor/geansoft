@@ -52,7 +52,7 @@ namespace Gean.Module.Chess
 
         #region Abstract
 
-        public abstract Position[] GetEnablePositions();
+        public abstract Positions GetEnablePositions();
 
         #endregion
 
