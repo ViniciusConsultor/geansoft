@@ -37,6 +37,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +48,10 @@
     <Compile Include="StepTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean.Gui\Gean.Gui.ChessControl\Gean.Gui.ChessControl\Gean.Gui.ChessControl.csproj">
+      <Project>{F466F85A-2B08-4ED4-BE13-B99F84AD6BA1}</Project>
+      <Name>Gean.Gui.ChessControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
@@ -54,6 +60,9 @@
       <Project>{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}</Project>
       <Name>Gean.Module.Chess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Ref\Gean.Gui.ChessControl.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

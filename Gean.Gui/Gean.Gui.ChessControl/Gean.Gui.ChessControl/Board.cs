@@ -77,6 +77,7 @@ namespace Gean.Gui.ChessControl
         public Board()
         {
             this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);//通知系统，当控件大小发生改变的时候应该进行重绘
             this.BackColor = Color.Chocolate;
 
             this.BackgroundImage = Servicer.BoardImage;
@@ -409,46 +410,6 @@ namespace Gean.Gui.ChessControl
 
         #endregion
 
-        #region private Invalidate Method
-
-        /// <summary>
-        /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
-        /// </summary>
-        /// <param name="rectangle">指定的 "rectangle"</param>
-        private void InvalidateBoard(Rectangle rectangle)
-        {
-            this.InvalidateBoard(null, rectangle);
-        }
-        /// <summary>
-        /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
-        /// </summary>
-        /// <param name="image">指定的 "rectangle" 的背景图片</param>
-        /// <param name="rectangle">指定的 "rectangle"</param>
-        private void InvalidateBoard(Image image, Rectangle rectangle)
-        {
-            Graphics g = this.CreateGraphics();
-            g.FillRectangle(Brushes.Transparent, rectangle);
-            if (image != null)
-            {
-                g.DrawImage(image, rectangle);
-            }
-
-            // 使控件的 "rectangle" 以外的区域无效，重新绘制更新区域
-            Point pt = rectangle.Location;
-            Rectangle top = new Rectangle(0, 0, this.Width, pt.Y);
-            Rectangle left = new Rectangle(0, pt.Y, pt.X, rectangle.Height + 1);
-            Rectangle right = new Rectangle
-                (pt.X + rectangle.Width + 1, pt.Y, this.Width - pt.Y - rectangle.Width, rectangle.Height + 1);
-            Rectangle bottom = new Rectangle
-                (0, pt.Y + rectangle.Height + 1, this.Width, this.Height - pt.Y - rectangle.Height);
-            this.Invalidate(top, false);
-            this.Invalidate(left, false);
-            this.Invalidate(right, false);
-            this.Invalidate(bottom, false);
-        }
-
-        #endregion
-
         #region protected virtual: === Paint ===
 
         #region Paint_ChessBoardGrid
@@ -534,9 +495,9 @@ namespace Gean.Gui.ChessControl
             foreach (Position position in this.EnableMoveInPosition)
             {
                 rect = this.Rectangles[position.X, position.Y];
-                for (int i = 0; i <= 1; i++)
+                using (SolidBrush gl = new SolidBrush(Color.FromArgb(100, Color.Blue)))
                 {
-                    g.DrawRectangle(Pens.Green, Rectangle.Inflate(rect, i, i));
+                    g.FillRectangle(gl, rect);
                 }
             }
         }
@@ -591,6 +552,46 @@ namespace Gean.Gui.ChessControl
         }
 
         #endregion
+
+        #endregion
+
+        #region private Invalidate Method
+
+        /// <summary>
+        /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
+        /// </summary>
+        /// <param name="rectangle">指定的 "rectangle"</param>
+        private void InvalidateBoard(Rectangle rectangle)
+        {
+            this.InvalidateBoard(null, rectangle);
+        }
+        /// <summary>
+        /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
+        /// </summary>
+        /// <param name="image">指定的 "rectangle" 的背景图片</param>
+        /// <param name="rectangle">指定的 "rectangle"</param>
+        private void InvalidateBoard(Image image, Rectangle rectangle)
+        {
+            Graphics g = this.CreateGraphics();
+            g.FillRectangle(Brushes.Transparent, rectangle);
+            if (image != null)
+            {
+                g.DrawImage(image, rectangle);
+            }
+
+            // 使控件的 "rectangle" 以外的区域无效，重新绘制更新区域
+            Point pt = rectangle.Location;
+            Rectangle top = new Rectangle(0, 0, this.Width, pt.Y);
+            Rectangle left = new Rectangle(0, pt.Y, pt.X, rectangle.Height + 1);
+            Rectangle right = new Rectangle
+                (pt.X + rectangle.Width + 1, pt.Y, this.Width - pt.Y - rectangle.Width, rectangle.Height + 1);
+            Rectangle bottom = new Rectangle
+                (0, pt.Y + rectangle.Height + 1, this.Width, this.Height - pt.Y - rectangle.Height);
+            this.Invalidate(top, false);
+            this.Invalidate(left, false);
+            this.Invalidate(right, false);
+            this.Invalidate(bottom, false);
+        }
 
         #endregion
 
