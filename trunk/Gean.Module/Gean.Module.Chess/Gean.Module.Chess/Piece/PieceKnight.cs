@@ -26,9 +26,9 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
+            Positions positions = new Positions();
             Position aPos = _position.ShiftWestNorth();
             Position bPos = _position.ShiftEastNorth();
             Position cPos = _position.ShiftWestSouth();
@@ -71,7 +71,7 @@ namespace Gean.Module.Chess
                     positions.Add(pos);
             }
 
-            return positions.ToArray();
+            return positions;
         }
     }
 }

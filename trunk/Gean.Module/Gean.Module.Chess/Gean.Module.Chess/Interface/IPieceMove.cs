@@ -9,7 +9,7 @@ namespace Gean.Module.Chess
     /// </summary>
     public interface IPieceMove
     {
-        void PieceMoveIn(Pair<Position, Position> step);
+        void PieceMoveIn(PositionPair step);
         event PieceMoveIn PieceMoveInEvent;
 
         void PieceMoveOut(Position pos);

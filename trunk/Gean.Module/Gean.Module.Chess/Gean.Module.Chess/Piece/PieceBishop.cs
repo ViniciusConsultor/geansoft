@@ -27,10 +27,15 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
-            Position pos = _position;
+            return BishopShift(_position);
+        }
+
+        internal static Positions BishopShift(Position srcPos)
+        {
+            Positions positions = new Positions();
+            Position pos = srcPos;
 
             while (pos != Position.Empty)
             {
@@ -38,29 +43,28 @@ namespace Gean.Module.Chess
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftEastSouth();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftWestNorth();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-            pos = _position;
+            pos = srcPos;
             while (pos != Position.Empty)
             {
                 pos = pos.ShiftWestSouth();
                 if (pos != Position.Empty)
                     positions.Add(pos);
             }
-
-            return positions.ToArray();
+            return positions;
         }
     }
 }

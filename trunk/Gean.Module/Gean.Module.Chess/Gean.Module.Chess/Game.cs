@@ -77,7 +77,7 @@ namespace Gean.Module.Chess
         /// 移动指定位置棋格的棋子
         /// </summary>
         /// <param name="step">指定的成对的位置,First值为源棋格,Second值是目标棋格</param>
-        public void PieceMoveIn(Pair<Position, Position> step)
+        public void PieceMoveIn(PositionPair step)
         {
             Enums.Action action = Enums.Action.General;
             Piece piece;
@@ -168,7 +168,7 @@ namespace Gean.Module.Chess
         /// <param name="piece">可能产生将军动作的棋子</param>
         private Enums.Action IsCheckPieceKing(Enums.Action action, Piece piece)
         {
-            Position[] postions = piece.GetEnablePositions();
+            Positions postions = piece.GetEnablePositions();
             Position kingPos = this.ActivedPieces.GetOtherGameSideKing(this.GameSide).Position;
             foreach (Position pos in postions)
             {

@@ -55,9 +55,9 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override Position[] GetEnablePositions()
+        public override Positions GetEnablePositions()
         {
-            List<Position> positions = new List<Position>();
+            Positions positions = new Positions();
             Position pos = _position;
 
             pos = _position.ShiftEast();
@@ -85,7 +85,7 @@ namespace Gean.Module.Chess
             if (pos != Position.Empty)
                 positions.Add(pos);
 
-            return positions.ToArray();
+            return positions;
         }
     }
 }

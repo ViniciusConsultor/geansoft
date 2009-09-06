@@ -10,6 +10,42 @@ namespace Gean
 {
     public static class UtilityDrawing
     {
+        /// <summary>
+        /// 将指定的图片去除指定的透明色调，返回一个图片中的图形形状
+        /// </summary>
+        /// <param name="bitmap">指定的图片</param>
+        /// <param name="transparencyColor">指定的透明色调</param>
+        /// <returns></returns>
+        public static Region BitmapToRegion(Bitmap bitmap, Color transparencyColor)
+        {
+            if (bitmap == null)
+                throw new ArgumentNullException("Bitmap", "Bitmap cannot be null!");
+
+            int height = bitmap.Height;
+            int width = bitmap.Width;
+            Region region = null;
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                for (int j = 0; j < height; j++)
+                    for (int i = 0; i < width; i++)
+                    {
+                        if (bitmap.GetPixel(i, j) == transparencyColor)
+                            continue;
+                        int x0 = i;
+                        while ((i < width) && (bitmap.GetPixel(i, j) != transparencyColor))
+                            i++;
+                        path.AddRectangle(new Rectangle(x0, j, i - x0, 1));
+                    }
+                region = new Region(path);
+            }
+            return region;
+        }
+
+        /// <summary>
+        /// 对指定的图片进行色彩反转
+        /// </summary>
+        /// <param name="bitmap">指定的图片</param>
+        /// <returns></returns>
         public static bool Invert(Bitmap bitmap)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
@@ -41,6 +77,10 @@ namespace Gean
             return true;
         }
 
+        /// <summary>
+        /// 对指定的图片进行置为灰度模式
+        /// </summary>
+        /// <param name="b">指定的图片</param>
         public static bool GrayScale(Bitmap b)
         {
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
@@ -78,6 +118,12 @@ namespace Gean
             return true;
         }
 
+        /// <summary>
+        /// 对指定的图片进行指定数量的亮度调节
+        /// </summary>
+        /// <param name="b">指定的图片</param>
+        /// <param name="nContrast">指定数量</param>
+        /// <returns></returns>
         public static bool Brightness(Bitmap b, int nBrightness)
         {
             if (nBrightness < -255 || nBrightness > 255)
@@ -481,7 +527,6 @@ namespace Gean
             }
         }
 
-
         /// <summary>
         /// 给图片添加图片水印
         /// </summary>
@@ -499,6 +544,7 @@ namespace Gean
                 }
             }
         }
+        
         /// <summary>
         /// 给图片添加文字水印
         /// </summary>
@@ -712,25 +758,18 @@ namespace Gean
         /// </summary>
         public enum MarkPosition
         {
-            /**/
             /// <summary>
             /// 左上角
             /// </summary>
             MP_Left_Top,
-
-            /**/
             /// <summary>
             /// 左下角
             /// </summary>
             MP_Left_Bottom,
-
-            /**/
             /// <summary>
             /// 右上角
             /// </summary>
             MP_Right_Top,
-
-            /**/
             /// <summary>
             /// 右下角
             /// </summary>

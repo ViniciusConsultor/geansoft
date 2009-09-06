@@ -80,6 +80,9 @@ namespace Gean.Gui.ChessControl
             this.SetStyle(ControlStyles.ResizeRedraw, true);//通知系统，当控件大小发生改变的时候应该进行重绘
             this.BackColor = Color.Chocolate;
 
+            this.EnableMoveInPosition = new Positions();
+            this.EnableCapturePosition = new Positions();
+
             this.BackgroundImage = Servicer.BoardImage;
             this.Rectangles = new Rectangle[8, 8];
 
@@ -149,6 +152,7 @@ namespace Gean.Gui.ChessControl
                 this.Paint_SelectedPosition();
                 this.Paint_SelectedMovedPiece();
             }
+            //绘制控件图片
             g.DrawImage(this.OccImage, new Point(0, 0));
             g.Flush();
         }
@@ -157,18 +161,6 @@ namespace Gean.Gui.ChessControl
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
-            //Graphics g = pe.Graphics;
-            //this.Paint_ChessBoardGrid();
-            //if (_Game != null && this.Pieces != null)
-            //{
-            //    this.Paint_PieceImage();
-            //    this.Paint_EnableMoveInPosition();
-            //    this.Paint_MouseMovedPosition();
-            //    this.Paint_SelectedPosition();
-            //    this.Paint_SelectedMovedPiece();
-            //}
-            //g.DrawImage(this.OccImage, new Point(0, 0));
-            //g.Flush();
         }
 
         #endregion
@@ -256,7 +248,14 @@ namespace Gean.Gui.ChessControl
         /// 鼠标左键是否被按下
         /// </summary>
         private bool _isMouseDown = false;
-        protected Position[] EnableMoveInPosition;
+        /// <summary>
+        /// 被选中的棋子能杀死的棋子的位置
+        /// </summary>
+        protected Positions EnableCapturePosition;
+        /// <summary>
+        /// 被选中的棋子能移动到的位置
+        /// </summary>
+        protected Positions EnableMoveInPosition;
         /// <summary>
         /// 获取已选择的棋子所在的棋格坐标
         /// </summary>
@@ -281,7 +280,7 @@ namespace Gean.Gui.ChessControl
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            this._isMouseDown = true;
+            _isMouseDown = true;
             if (_Game == null) return;
             switch (e.Button)
             {
@@ -302,6 +301,7 @@ namespace Gean.Gui.ChessControl
                                 }
                                 this.SelectedPosition = new Position(x, y);
                                 this.EnableMoveInPosition = this.SelectedPiece.GetEnablePositions();
+                                //this.EnableCapturePosition = _Game.
                                 this.SelectedPieceImage = Servicer.GetPieceImage(this.SelectedPiece.PieceType);
                                 this.Refresh();
                             }
@@ -326,7 +326,7 @@ namespace Gean.Gui.ChessControl
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            this._isMouseDown = false;
+            _isMouseDown = false;
             if (_Game == null) return;
             for (int x = 1; x <= 8; x++)
             {
@@ -336,13 +336,13 @@ namespace Gean.Gui.ChessControl
                     {
                         continue;
                     }
-                    //尝试移动棋子
+                    //开始移动
                     Position tgtPosition = new Position(x, y);
                     foreach (Position pos in EnableMoveInPosition)
                     {
                         if (pos.Equals(tgtPosition))
                         {
-                            Pair<Position, Position> pair = new Pair<Position, Position>(this.SelectedPosition, tgtPosition);
+                            PositionPair pair = new PositionPair(this.SelectedPosition, tgtPosition);
                             _Game.PieceMoveIn(pair);
                             OnPlay(new PlayEventArgs());
                             break;
@@ -495,9 +495,17 @@ namespace Gean.Gui.ChessControl
             foreach (Position position in this.EnableMoveInPosition)
             {
                 rect = this.Rectangles[position.X, position.Y];
-                using (SolidBrush gl = new SolidBrush(Color.FromArgb(100, Color.Blue)))
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(80, Color.YellowGreen)))
                 {
-                    g.FillRectangle(gl, rect);
+                    g.FillRectangle(brush, rect);
+                }
+            }
+            foreach (Position position in this.EnableCapturePosition)
+            {
+                rect = this.Rectangles[position.X, position.Y];
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(120, Color.Green)))
+                {
+                    g.FillRectangle(brush, rect);
                 }
             }
         }
@@ -563,14 +571,14 @@ namespace Gean.Gui.ChessControl
         /// <param name="rectangle">指定的 "rectangle"</param>
         private void InvalidateBoard(Rectangle rectangle)
         {
-            this.InvalidateBoard(null, rectangle);
+            this.InvalidateBoard(rectangle, null);
         }
         /// <summary>
         /// 使控件指定的 "rectangle" 以外的区域无效，重新绘制更新区域
         /// </summary>
-        /// <param name="image">指定的 "rectangle" 的背景图片</param>
         /// <param name="rectangle">指定的 "rectangle"</param>
-        private void InvalidateBoard(Image image, Rectangle rectangle)
+        /// <param name="image">指定的 "rectangle" 的背景图片</param>
+        private void InvalidateBoard(Rectangle rectangle, Image image)
         {
             Graphics g = this.CreateGraphics();
             g.FillRectangle(Brushes.Transparent, rectangle);
@@ -712,6 +720,7 @@ namespace Gean.Gui.ChessControl
         }
 
         #endregion
+
 
     }
 
