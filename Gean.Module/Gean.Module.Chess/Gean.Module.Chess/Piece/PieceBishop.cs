@@ -29,47 +29,43 @@ namespace Gean.Module.Chess
 
         public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            throw new NotImplementedException();
+            enableMovein = new Positions();
+            enableCapture = new Positions();
+            PieceBishop.BishopShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            return true;
         }
 
-        //public override Positions GetEnablePositions(ISituation situation)
-        //{
-        //    return BishopShift(_position, situation);
-        //}
-
-        internal static Positions BishopShift(Position srcPos, ISituation situation)
+        internal static void BishopShift(
+            Enums.GameSide side, ISituation situation, Position position,
+            Positions moveInPs, Positions capturePs)
         {
-            Positions positions = new Positions();
-            Position pos = srcPos;
+            bool enableMoved = true;
+            Position tgtPos = Position.Empty;
 
-            while (pos != Position.Empty)
+            tgtPos = position;
+            while (enableMoved)
             {
-                pos = pos.ShiftEastNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftEastNorth();
+                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+            tgtPos = position;
+            while (enableMoved)
             {
-                pos = pos.ShiftEastSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftEastSouth();
+                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+            tgtPos = position;
+            while (enableMoved)
             {
-                pos = pos.ShiftWestNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftWestNorth();
+                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+            tgtPos = position;
+            while (enableMoved)
             {
-                pos = pos.ShiftWestSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftWestSouth();
+                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            return positions;
         }
     }
 }

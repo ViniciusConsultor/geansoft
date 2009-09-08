@@ -83,6 +83,7 @@ namespace Gean.Module.Chess
                 Position tmpPos = Position.Empty;
                 //向北
                 tmpPos = _position.ShiftNorth();
+                if (tmpPos == Position.Empty) return false;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -97,16 +98,17 @@ namespace Gean.Module.Chess
                     }
                 }
                 //剑指西北
-                this.Capture(_position.ShiftWestNorth(), enableCapture, situation);
+                Position.Shift(this.GameSide, situation, _position.ShiftWestNorth(), enableMovein, enableCapture, false);
                 //剑指东北
-                this.Capture(_position.ShiftEastNorth(), enableCapture, situation);
+                Position.Shift(this.GameSide, situation, _position.ShiftEastNorth(), enableMovein, enableCapture, false);
             }
-            else 
+            else
             {
                 if (_position.Y > 6) return false;
                 Position tmpPos = Position.Empty;
                 //向南
                 tmpPos = _position.ShiftSouth();
+                if (tmpPos == Position.Empty) return false;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -121,30 +123,30 @@ namespace Gean.Module.Chess
                     }
                 }
                 //剑指西南
-                this.Capture(_position.ShiftWestSouth(), enableCapture, situation);
+                Position.Shift(this.GameSide, situation, _position.ShiftWestSouth(), enableMovein, enableCapture, false);
                 //剑指东南
-                this.Capture(_position.ShiftEastSouth(), enableCapture, situation);
+                Position.Shift(this.GameSide, situation, _position.ShiftEastSouth(), enableMovein, enableCapture, false);
             }
             return true;
         }
 
-        /// <summary>
-        /// 判断指定的棋格是否有敌方的棋子
-        /// </summary>
-        /// <param name="tgtPos">指定的棋格</param>
-        /// <param name="enableCapture">被吃子的集合</param>
-        /// <param name="situation">当前局面</param>
-        private void Capture(Position tgtPos, Positions enableCapture, ISituation situation)
-        {
-            if (tgtPos == Position.Empty) return;
-            char c;
-            if (situation.TryGetPiece(tgtPos.Dot, out c))
-            {
-                if (char.IsLower(c) && this.GameSide == Enums.GameSide.White)
-                    enableCapture.Add(tgtPos);
-                if (char.IsUpper(c) && this.GameSide == Enums.GameSide.Black)
-                    enableCapture.Add(tgtPos);
-            }
-        }   
+        ///// <summary>
+        ///// 判断指定的棋格是否有敌方的棋子
+        ///// </summary>
+        ///// <param name="tgtPos">指定的棋格</param>
+        ///// <param name="enableCapture">被吃子的集合</param>
+        ///// <param name="situation">当前局面</param>
+        //private void Capture(Position tgtPos, Positions enableCapture, ISituation situation)
+        //{
+        //    if (tgtPos == Position.Empty) return;
+        //    char c;
+        //    if (situation.TryGetPiece(tgtPos.Dot, out c))
+        //    {
+        //        if (char.IsLower(c) && this.GameSide == Enums.GameSide.White)
+        //            enableCapture.Add(tgtPos);
+        //        if (char.IsUpper(c) && this.GameSide == Enums.GameSide.Black)
+        //            enableCapture.Add(tgtPos);
+        //    }
+        //}   
     }
 }
