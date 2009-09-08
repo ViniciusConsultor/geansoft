@@ -379,7 +379,7 @@ namespace Gean.Module.Chess
 
             parms[2] = note.ToString();
             note.Length = 0;
-            if (EnPassantTargetPosition.Equals(Position.Empty))
+            if (EnPassantTargetPosition == Position.Empty)
                 parms[3] = "-";
             else
                 parms[3] = EnPassantTargetPosition.ToString();
@@ -405,7 +405,7 @@ namespace Gean.Module.Chess
             int x;
             int y;
             Position.CalculateXY(dot, out x, out y);
-            return this.Rows[x - 1][y - 1];
+            return this.Rows[y - 1][x - 1];
         }
 
         protected virtual void SetByPosition(int dot, char value)
@@ -413,7 +413,7 @@ namespace Gean.Module.Chess
             int x;
             int y;
             Position.CalculateXY(dot, out x, out y);
-            this.Rows[x - 1][y - 1] = value;
+            this.Rows[y - 1][x - 1] = value;
         }
 
         #endregion
@@ -479,9 +479,9 @@ namespace Gean.Module.Chess
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (StringBuilder row in Rows)
+            for (int i = this.Rows.Length - 1; i >= 0; i--)
             {
-                sb.Append(row).Append('/');
+                sb.Append(this.Rows[i]).Append('/');
             }
             return sb.ToString().TrimEnd('/');
         }

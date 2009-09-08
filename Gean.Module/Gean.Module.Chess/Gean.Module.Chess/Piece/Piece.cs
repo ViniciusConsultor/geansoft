@@ -72,13 +72,13 @@ namespace Gean.Module.Chess
             if (obj is System.DBNull) return false;
 
             Piece man = obj as Piece;
-            if (this.PieceType.Equals(man.PieceType))
+            if (!this.PieceType.Equals(man.PieceType))
                 return false;
-            if (this.GameSide.Equals(man.GameSide))
+            if (!this.GameSide.Equals(man.GameSide))
                 return false;
-            if (this.IsCaptured.Equals(man.IsCaptured))
+            if (!this.IsCaptured.Equals(man.IsCaptured))
                 return false;
-            if (this.Position.Equals(man.Position))
+            if (!this.Position.Equals(man.Position))
                 return false;
             return true;
         }
