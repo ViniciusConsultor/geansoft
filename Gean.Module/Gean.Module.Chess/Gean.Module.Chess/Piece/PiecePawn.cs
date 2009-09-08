@@ -72,53 +72,79 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override Positions GetEnablePositions()
+        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            Positions positions = new Positions();
-            Position pos = Position.Empty;
+            enableMovein = new Positions();
+            enableCapture = new Positions();
+
             if (this.GameSide == Enums.GameSide.White)
             {
-                if (_position.Y < 1) return null;
-
-                pos = _position.ShiftWestNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = _position.ShiftEastNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = _position.ShiftNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-
+                if (_position.Y < 1) return false;//白兵怎么也不可能在第一行上
+                Position tmpPos = Position.Empty;
+                //向北
+                tmpPos = _position.ShiftNorth();
+                if (!situation.ContainsPiece(tmpPos.Dot))
+                {
+                    enableMovein.Add(tmpPos);
+                }
+                //再向北(仅当在兵从未动过时)
                 if (_position.Y == 1)
                 {
-                    pos = pos.ShiftNorth();
-                    if (pos != Position.Empty)
-                        positions.Add(pos);
+                    tmpPos = tmpPos.ShiftNorth();
+                    if (!situation.ContainsPiece(tmpPos.Dot))
+                    {
+                        enableMovein.Add(tmpPos);
+                    }
                 }
+                //剑指西北
+                this.Capture(_position.ShiftWestNorth(), enableCapture, situation);
+                //剑指东北
+                this.Capture(_position.ShiftEastNorth(), enableCapture, situation);
             }
-            if (this.GameSide == Enums.GameSide.Black)
+            else 
             {
-                if (_position.Y > 6) return null;
-
-                pos = _position.ShiftWestSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = _position.ShiftEastSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = _position.ShiftSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-
+                if (_position.Y > 6) return false;
+                Position tmpPos = Position.Empty;
+                //向南
+                tmpPos = _position.ShiftSouth();
+                if (!situation.ContainsPiece(tmpPos.Dot))
+                {
+                    enableMovein.Add(tmpPos);
+                }
+                //再向南(仅当在兵从未动过时)
                 if (_position.Y == 6)
                 {
-                    pos = pos.ShiftSouth();
-                    if (pos != Position.Empty)
-                        positions.Add(pos);
+                    tmpPos = tmpPos.ShiftSouth();
+                    if (!situation.ContainsPiece(tmpPos.Dot))
+                    {
+                        enableMovein.Add(tmpPos);
+                    }
                 }
+                //剑指西南
+                this.Capture(_position.ShiftWestSouth(), enableCapture, situation);
+                //剑指东南
+                this.Capture(_position.ShiftEastSouth(), enableCapture, situation);
             }
-            return positions;
+            return true;
         }
+
+        /// <summary>
+        /// 判断指定的棋格是否有敌方的棋子
+        /// </summary>
+        /// <param name="tgtPos">指定的棋格</param>
+        /// <param name="enableCapture">被吃子的集合</param>
+        /// <param name="situation">当前局面</param>
+        private void Capture(Position tgtPos, Positions enableCapture, ISituation situation)
+        {
+            if (tgtPos == Position.Empty) return;
+            char c;
+            if (situation.TryGetPiece(tgtPos.Dot, out c))
+            {
+                if (char.IsLower(c) && this.GameSide == Enums.GameSide.White)
+                    enableCapture.Add(tgtPos);
+                if (char.IsUpper(c) && this.GameSide == Enums.GameSide.Black)
+                    enableCapture.Add(tgtPos);
+            }
+        }   
     }
 }

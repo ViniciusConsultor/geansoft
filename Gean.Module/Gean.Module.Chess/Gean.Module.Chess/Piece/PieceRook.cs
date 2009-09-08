@@ -29,12 +29,16 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Positions GetEnablePositions()
+        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            return RookShift(_position);
+            throw new NotImplementedException();
         }
+        //public override Positions GetEnablePositions(ISituation situation)
+        //{
+        //    return RookShift(_position, situation);
+        //}
 
-        internal static Positions RookShift(Position srcPos)
+        internal static Positions RookShift(Position srcPos, ISituation situation)
         {
             Positions positions = new Positions();
 

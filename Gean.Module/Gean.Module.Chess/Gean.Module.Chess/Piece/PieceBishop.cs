@@ -27,12 +27,17 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Positions GetEnablePositions()
+        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            return BishopShift(_position);
+            throw new NotImplementedException();
         }
 
-        internal static Positions BishopShift(Position srcPos)
+        //public override Positions GetEnablePositions(ISituation situation)
+        //{
+        //    return BishopShift(_position, situation);
+        //}
+
+        internal static Positions BishopShift(Position srcPos, ISituation situation)
         {
             Positions positions = new Positions();
             Position pos = srcPos;

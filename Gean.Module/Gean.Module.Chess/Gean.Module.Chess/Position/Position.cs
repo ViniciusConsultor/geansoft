@@ -91,6 +91,39 @@ namespace Gean.Module.Chess
             return (8 * (7 - (y - 1))) + ((x - 1) + 1);
         }
 
+        /// <summary>
+        /// 从当前的位置移动到新位置。
+        /// 而后，判断该位置中是否有棋子，并根据判断结果更新两个Position集合(可移动集合,杀棋集合)。
+        /// 同时返回新位置。
+        /// </summary>
+        /// <param name="situation">当前局面</param>
+        /// <param name="srcPos">当前位置</param>
+        /// <param name="moveIn">可移动位置的集合</param>
+        /// <param name="capture">可杀棋位置的集合</param>
+        /// <param name="pos">返回的新位置</param>
+        /// <returns></returns>
+        public static bool Shift(ISituation situation, Position srcPos, Position tgtPos, Positions moveIn, Positions capture)
+        {
+            if (tgtPos != Position.Empty)
+            {
+                Enums.PieceType pieceType;
+                if (situation.TryGetPiece(tgtPos.Dot, out pieceType))
+                {
+                    if (situation.GameSide != Enums.ToGameSideByPieceType(pieceType))
+                    {
+                        capture.Add(tgtPos);
+                    }
+                    return false;
+                }
+                else
+                {
+                    moveIn.Add(tgtPos);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         #endregion
 
         #region ctor
