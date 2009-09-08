@@ -11,5 +11,14 @@ namespace Gean.Module.Chess
         /// </summary>
         /// <param name="dot">指定位置</param>
         bool ContainsPiece(int dot);
+
+        /// <summary>
+        /// 尝试返回指定位置的棋格是否含有棋子，如含有棋子则返回该棋子
+        /// </summary>
+        /// <param name="dot">指定位置的棋格</param>
+        /// <param name="piece">该棋格中的棋子，如有则返回，如无则返回"Enums.PieceType.None"</param>
+        /// <returns></returns>
+        bool TryGetPiece(int dot, out Enums.PieceType pieceType);
+        bool TryGetPiece(int dot, out char c);
     }
 }

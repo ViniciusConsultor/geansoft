@@ -31,12 +31,6 @@ namespace Gean.Module.Chess
         /// </summary>
         public bool IsMoved { get; internal set; }
 
-        //public override void MoveIn(ChessGame chessGame, Position tgtPosition)
-        //{
-        //    base.MoveIn(chessGame, tgtPosition);
-        //    this.IsMoved = true;
-        //}
-
         protected override Position InitPosition(Position position)
         {
             if (position == Position.Empty)
@@ -55,37 +49,23 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override Positions GetEnablePositions()
+        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            Positions positions = new Positions();
-            Position pos = _position;
+            enableMovein = new Positions();
+            enableCapture = new Positions();
+            Position pos = Position.Empty;
 
-            pos = _position.ShiftEast();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftWest();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftSouth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftNorth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftEastNorth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftEastSouth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftWestNorth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
-            pos = _position.ShiftWestSouth();
-            if (pos != Position.Empty)
-                positions.Add(pos);
+            Position.Shift(situation, _position, _position.ShiftEast(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftNorth(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftSouth(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftWest(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftEastNorth(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftEastSouth(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftWestNorth(), enableMovein, enableCapture);
+            Position.Shift(situation, _position, _position.ShiftWestSouth(), enableMovein, enableCapture);
 
-            return positions;
+            return true;
         }
+
     }
 }

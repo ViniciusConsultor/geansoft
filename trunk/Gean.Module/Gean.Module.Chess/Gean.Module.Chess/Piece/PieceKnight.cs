@@ -26,52 +26,56 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override Positions GetEnablePositions()
+        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            Positions positions = new Positions();
-            Position aPos = _position.ShiftWestNorth();
-            Position bPos = _position.ShiftEastNorth();
-            Position cPos = _position.ShiftWestSouth();
-            Position dPos = _position.ShiftEastSouth();
-            Position pos;
-            if (aPos != Position.Empty)
-            {
-                pos = aPos.ShiftNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = aPos.ShiftWest();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-            }
-            if (bPos != Position.Empty)
-            {
-                pos = bPos.ShiftNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = bPos.ShiftEast();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-            }
-            if (cPos != Position.Empty)
-            {
-                pos = cPos.ShiftWest();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = cPos.ShiftSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-            }
-            if (dPos != Position.Empty)
-            {
-                pos = dPos.ShiftEast();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-                pos = dPos.ShiftSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
-            }
-
-            return positions;
+            throw new NotImplementedException();
         }
+        //public override Positions GetEnablePositions(ISituation situation)
+        //{
+        //    Positions positions = new Positions();
+        //    Position aPos = _position.ShiftWestNorth();
+        //    Position bPos = _position.ShiftEastNorth();
+        //    Position cPos = _position.ShiftWestSouth();
+        //    Position dPos = _position.ShiftEastSouth();
+        //    Position pos;
+        //    if (aPos != Position.Empty)
+        //    {
+        //        pos = aPos.ShiftNorth();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //        pos = aPos.ShiftWest();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //    }
+        //    if (bPos != Position.Empty)
+        //    {
+        //        pos = bPos.ShiftNorth();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //        pos = bPos.ShiftEast();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //    }
+        //    if (cPos != Position.Empty)
+        //    {
+        //        pos = cPos.ShiftWest();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //        pos = cPos.ShiftSouth();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //    }
+        //    if (dPos != Position.Empty)
+        //    {
+        //        pos = dPos.ShiftEast();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //        pos = dPos.ShiftSouth();
+        //        if (pos != Position.Empty)
+        //            positions.Add(pos);
+        //    }
+
+        //    return positions;
+        //}
     }
 }

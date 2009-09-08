@@ -300,8 +300,7 @@ namespace Gean.Gui.ChessControl
                                     return;//找到棋子，但棋子战方不符
                                 }
                                 this.SelectedPosition = new Position(x, y);
-                                this.EnableMoveInPosition = this.SelectedPiece.GetEnablePositions();
-                                //this.EnableCapturePosition = _Game.
+                                this.SelectedPiece.GetEnablePositions(_Game, out this.EnableMoveInPosition, out this.EnableCapturePosition);
                                 this.SelectedPieceImage = Servicer.GetPieceImage(this.SelectedPiece.PieceType);
                                 this.Refresh();
                             }
@@ -503,7 +502,7 @@ namespace Gean.Gui.ChessControl
             foreach (Position position in this.EnableCapturePosition)
             {
                 rect = this.Rectangles[position.X, position.Y];
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(120, Color.Green)))
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(120, Color.Blue)))
                 {
                     g.FillRectangle(brush, rect);
                 }
@@ -547,7 +546,7 @@ namespace Gean.Gui.ChessControl
         }
         #endregion
 
-        #region Paint_SelectedPosition
+        #region Paint_SelectedMovedPiece
         /// <summary>5. 绘制移动的棋子
         /// </summary>
         /// <param name="g">Graphics</param>

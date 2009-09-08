@@ -27,7 +27,10 @@ namespace Gean.Module.Chess
         protected override void SetByPosition(int dot, char value)
         {
             base.SetByPosition(dot, value);
-            this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+            if (!value.Equals('1'))
+            {
+                this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+            }
         }
 
         #region IGame
@@ -85,7 +88,7 @@ namespace Gean.Module.Chess
             {
                 //第一步，判断目标棋格中是否有棋子。
                 //如果有棋子，更改Action，调用PieceMoveOut方法。
-                if (!this.ContainsPiece(step.Second.Dot))
+                if (this.ContainsPiece(step.Second.Dot))
                 {
                     action = Enums.Action.Capture;
                     this.PieceMoveOut(step.Second);
@@ -168,19 +171,19 @@ namespace Gean.Module.Chess
         /// <param name="piece">可能产生将军动作的棋子</param>
         private Enums.Action IsCheckPieceKing(Enums.Action action, Piece piece)
         {
-            Positions postions = piece.GetEnablePositions();
-            Position kingPos = this.ActivedPieces.GetOtherGameSideKing(this.GameSide).Position;
-            foreach (Position pos in postions)
-            {
-                if (pos.Equals(kingPos))
-                {
-                    if (action == Enums.Action.General)
-                        action = Enums.Action.Check;
-                    else
-                        action = Enums.Action.CaptureCheck;
-                    break;
-                }
-            }
+            //Positions postions = piece.GetEnablePositions(this);
+            //Position kingPos = this.ActivedPieces.GetOtherGameSideKing(this.GameSide).Position;
+            //foreach (Position pos in postions)
+            //{
+            //    if (pos.Equals(kingPos))
+            //    {
+            //        if (action == Enums.Action.General)
+            //            action = Enums.Action.Check;
+            //        else
+            //            action = Enums.Action.CaptureCheck;
+            //        break;
+            //    }
+            //}
             return action;
         }
 

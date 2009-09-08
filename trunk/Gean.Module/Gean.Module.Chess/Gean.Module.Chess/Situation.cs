@@ -136,6 +136,36 @@ namespace Gean.Module.Chess
                 return true;
         }
 
+        public bool TryGetPiece(int dot, out Enums.PieceType pieceType)
+        {
+            char c = this.GetByPosition(dot);
+            if (c.Equals('1'))
+            {
+                pieceType = Enums.PieceType.None;
+                return false;
+            }
+            else
+            {//有棋子
+                pieceType = Enums.ToPieceType(c);
+                return true;
+            }
+        }
+
+        public bool TryGetPiece(int dot, out char mychar)
+        {
+            char c = this.GetByPosition(dot);
+            if (c.Equals('1'))
+            {
+                mychar = '?';
+                return false;
+            }
+            else
+            {//有棋子
+                mychar = c;
+                return true;
+            }
+        }
+
         #endregion
 
         #region ISituation: IParse, IGenerator
