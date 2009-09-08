@@ -56,6 +56,26 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
+        /// 根据指定的棋格的FEN点获取相应的棋子
+        /// </summary>
+        /// <param name="dot">指定的棋格的FEN点</param>
+        /// <returns>相应的棋子</returns>
+        public Piece this[int dot]
+        {
+            get
+            {
+                foreach (Piece piece in _pieces)
+                {
+                    if (piece.Position.Dot == dot)
+                    {
+                        return piece;
+                    }
+                }
+                return Piece.Empty;
+            }
+        }
+
+        /// <summary>
         /// 尝试从棋子集合中判断是否包含指定的棋子，并获取棋盘位置
         /// </summary>
         /// <param name="Piece">指定的棋子</param>

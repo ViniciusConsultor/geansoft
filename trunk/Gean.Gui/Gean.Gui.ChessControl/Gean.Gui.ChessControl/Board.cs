@@ -142,7 +142,6 @@ namespace Gean.Gui.ChessControl
         protected override void OnPaintBackground(PaintEventArgs pe)
         {
             base.OnPaintBackground(pe);
-            Graphics g = pe.Graphics;
             this.Paint_ChessBoardGrid();
             if (_Game != null)
             {
@@ -153,6 +152,7 @@ namespace Gean.Gui.ChessControl
                 this.Paint_SelectedMovedPiece();
             }
             //绘制控件图片
+            Graphics g = pe.Graphics;
             g.DrawImage(this.OccImage, new Point(0, 0));
             g.Flush();
         }
@@ -292,7 +292,7 @@ namespace Gean.Gui.ChessControl
                         {
                             if (!this.Rectangles[x - 1, y - 1].Contains(e.Location))
                                 continue;
-                            if (_Game.TryGetPiece(Position.CalculateDot(x, y), out this.SelectedPiece))//Pieces.TryGetPiece(position.Dot, out this.SelectedPiece))
+                            if (_Game.TryGetPiece(Position.CalculateDot(x, y), out this.SelectedPiece))   //Pieces.TryGetPiece(position.Dot, out this.SelectedPiece))
                             {
                                 if (this.SelectedPiece.GameSide != this.CurrChessSide)
                                 {
@@ -337,6 +337,18 @@ namespace Gean.Gui.ChessControl
                     }
                     //开始移动
                     Position tgtPosition = new Position(x, y);
+                    //吃子
+                    foreach (Position pos in EnableCapturePosition)
+                    {
+                        if (pos.Equals(tgtPosition))
+                        {
+                            PositionPair pair = new PositionPair(this.SelectedPosition, tgtPosition);
+                            _Game.PieceMoveIn(pair);
+                            OnPlay(new PlayEventArgs());
+                            goto forEnd;
+                        }
+                    }
+                    //仅移动
                     foreach (Position pos in EnableMoveInPosition)
                     {
                         if (pos.Equals(tgtPosition))
@@ -344,12 +356,13 @@ namespace Gean.Gui.ChessControl
                             PositionPair pair = new PositionPair(this.SelectedPosition, tgtPosition);
                             _Game.PieceMoveIn(pair);
                             OnPlay(new PlayEventArgs());
-                            break;
+                            goto forEnd;
                         }
                     }
                     break;
                 }
             }
+        forEnd:
             this.SelectedPosition = Position.Empty;
             this.EnableMoveInPosition = null;
             this.SelectedPiece = null;
@@ -369,6 +382,8 @@ namespace Gean.Gui.ChessControl
                 {
                     if (!this.Rectangles[x - 1, y - 1].Contains(e.Location))
                     {
+                        if (!_isMouseDown)
+                            this.Cursor = Cursors.Default;
                         continue;
                     }
                     if (_isMouseDown)
@@ -397,6 +412,7 @@ namespace Gean.Gui.ChessControl
                             {
                                 return;//找到棋子，但棋子战方不符
                             }
+                            this.Cursor = Cursors.Hand;
                             this.SelectPositionByMouseMoved = new Position(x, y);
                             this.Refresh();
                             return;
@@ -470,7 +486,6 @@ namespace Gean.Gui.ChessControl
                 g.DrawImage(_currManImage, _currManRect);
 
             }
-            //_currManRect = Rectangle.Empty;
             _currManImage = null;
         }
         /// <summary>

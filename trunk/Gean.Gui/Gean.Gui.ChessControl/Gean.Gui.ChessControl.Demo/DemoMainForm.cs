@@ -27,8 +27,8 @@ namespace Gean.Gui.ChessControl.Demo
             InitializeComponent();
             this._board.Dock = DockStyle.Fill;
             this._board.BringToFront();
-            this._mainSpliter.Panel1.Controls.Add(_board);
-            this._statusLabel.Text = "OK";
+            this._splitContainer3.Panel1.Controls.Add(_board);
+            this._label.Text = "OK";
             this._recordListView.SelectedIndexChanged += new EventHandler(SelectedRecord);
 
             this._board.PlayEvent += new Board.PlayEventHandler(WhilePlayed);
@@ -46,8 +46,7 @@ namespace Gean.Gui.ChessControl.Demo
         /// <param name="e"></param>
         private void WhilePlayed(object sender, Board.PlayEventArgs e)
         {
-            //TreeNode node = new TreeNode(_board.Game.Record.Items.Peek().ToString());
-            //_currTree.Nodes.Add(node);
+            this._fenTextBox.Text = _board.Game.ToString() + "\r\n" + _board.Game.Generator();
         }
 
         private void PGNConvent(object sender, EventArgs e)
@@ -67,7 +66,7 @@ namespace Gean.Gui.ChessControl.Demo
                 this._recordListView.Add(item);
             }
             duration.Stop();
-            this._statusLabel.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
+            this._label.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
                 records.Count, duration.DurationValue, duration.DurationValue / records.Count);
             this.Cursor = Cursors.Default;
         }
@@ -131,6 +130,7 @@ namespace Gean.Gui.ChessControl.Demo
         private void NewGame(object sender, EventArgs e)
         {
             this._board.LoadSituation();
+            this.WhilePlayed(null, null);
         }
     }
 }

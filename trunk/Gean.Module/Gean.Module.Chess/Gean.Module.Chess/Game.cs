@@ -22,17 +22,22 @@ namespace Gean.Module.Chess
         public void StartGame()
         {
             this.Parse(NewGameFENString);
+            this._isInit = false;
         }
 
+        private bool _isInit = true;
         protected override void SetByPosition(int dot, char value)
         {
             base.SetByPosition(dot, value);
             if (!value.Equals('1'))
             {
-                this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+                if (_isInit)
+                    this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
+                else
+                    this.ActivedPieces[dot].Position = Position.GetPositionByDot(dot);
             }
         }
-
+        
         #region IGame
 
         /// <summary>
@@ -51,7 +56,7 @@ namespace Gean.Module.Chess
         public Enums.PlayMode PlayMode { get; set; }
 
         /// <summary>
-        /// 获取与指定棋格的位置相关联的棋子。
+        /// 从“可以使用的棋子集合”中获取与指定棋格的位置相关联的棋子。
         /// </summary>
         /// <param name="dot">指定棋格的位置</param>
         /// <param name="piece">关联的棋子</param>
@@ -61,7 +66,7 @@ namespace Gean.Module.Chess
         }
 
         /// <summary>
-        /// 尝试从棋子集合中判断是否包含指定的棋子，并获取棋盘位置
+        /// 从“可以使用的棋子集合”中尝试从棋子集合中判断是否包含指定的棋子，并获取棋盘位置
         /// </summary>
         /// <param name="Piece">指定的棋子</param>
         /// <param name="dot">棋盘位置</param>
@@ -198,8 +203,7 @@ namespace Gean.Module.Chess
         /// <param name="pos">指定位置</param>
         public void PieceMoveOut(Position pos)
         {
-            Piece piece;
-            this.TryGetPiece(pos.Dot, out piece);
+            Piece piece = this.ActivedPieces[pos.Dot];
             piece.IsCaptured = true;
             this.ActivedPieces.Remove(piece);
             this.MovedPieces.Add(piece);
