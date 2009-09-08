@@ -53,16 +53,15 @@ namespace Gean.Module.Chess
         {
             enableMovein = new Positions();
             enableCapture = new Positions();
-            Position pos = Position.Empty;
 
-            Position.Shift(situation, _position, _position.ShiftEast(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftNorth(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftSouth(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftWest(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftEastNorth(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftEastSouth(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftWestNorth(), enableMovein, enableCapture);
-            Position.Shift(situation, _position, _position.ShiftWestSouth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftEast(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftSouth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftWest(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftNorth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftEastNorth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftEastSouth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftWestNorth(), enableMovein, enableCapture);
+            Position.Shift(this.GameSide, situation, _position.ShiftWestSouth(), enableMovein, enableCapture);
 
             return true;
         }

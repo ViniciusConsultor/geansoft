@@ -19,25 +19,38 @@ namespace Gean.Module.Chess
 
         #endregion
 
-        public void StartGame()
+        #region Game Initializer
+
+        /// <summary>
+        /// 初始化棋局
+        /// </summary>
+        public void GameInitializer()
         {
             this.Parse(NewGameFENString);
-            this._isInit = false;
+            this._isInitialized = false;
         }
 
-        private bool _isInit = true;
+        /// <summary>
+        /// 判断棋盘是在初始化
+        /// </summary>
+        private bool _isInitialized = true;
+
+        #endregion
+
+        #region Set Piece Position
         protected override void SetByPosition(int dot, char value)
         {
             base.SetByPosition(dot, value);
             if (!value.Equals('1'))
             {
-                if (_isInit)
+                if (_isInitialized)//如果是初始化，增加棋子
                     this.ActivedPieces.Add(Piece.Creator(Enums.ToPieceType(value), Position.GetPositionByDot(dot)));
-                else
+                else//如果不是初始化，改变棋子的Position
                     this.ActivedPieces[dot].Position = Position.GetPositionByDot(dot);
             }
         }
-        
+        #endregion
+
         #region IGame
 
         /// <summary>

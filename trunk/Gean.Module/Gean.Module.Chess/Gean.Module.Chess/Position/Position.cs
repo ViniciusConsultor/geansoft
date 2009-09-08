@@ -93,35 +93,47 @@ namespace Gean.Module.Chess
 
         /// <summary>
         /// 从当前的位置移动到新位置。
-        /// 而后，判断该位置中是否有棋子，并根据判断结果更新两个Position集合(可移动集合,杀棋集合)。
-        /// 同时返回新位置。
+        /// 而后，判断该位置中是否有棋子，并根据判断结果更新两个Position集合(可移动"位置"集合,可杀棋"位置"集合)。
+        /// 并返回是否可以继续移动的判断。
         /// </summary>
         /// <param name="situation">当前局面</param>
-        /// <param name="srcPos">当前位置</param>
-        /// <param name="moveIn">可移动位置的集合</param>
-        /// <param name="capture">可杀棋位置的集合</param>
-        /// <param name="pos">返回的新位置</param>
-        /// <returns></returns>
-        public static bool Shift(ISituation situation, Position srcPos, Position tgtPos, Positions moveIn, Positions capture)
+        /// <param name="tgtPos">目标位置</param>
+        /// <param name="moveInPs">可移动"位置"集合</param>
+        /// <param name="capturePs">可杀棋"位置"集合</param>
+        /// <param name="enableToMoved">该棋格为空时，是否可以移入，一般是指“兵”，“兵”的斜向的两个棋格对于“兵”来讲能吃子不能移入。</param>
+        /// <returns>移动到新位置后是否可以继续移动(当目标棋格中无棋子)</returns>
+        public static bool Shift(
+            Enums.GameSide side, ISituation situation,
+            Position tgtPos, Positions moveInPs, Positions capturePs, bool enableToMoved)
         {
-            if (tgtPos != Position.Empty)
+            if (tgtPos == Position.Empty) return false;
+
+            char pieceChar;
+            if (situation.TryGetPiece(tgtPos.Dot, out pieceChar))
             {
-                Enums.PieceType pieceType;
-                if (situation.TryGetPiece(tgtPos.Dot, out pieceType))
+                if (char.IsLower(pieceChar) && side == Enums.GameSide.White)
+                    capturePs.Add(tgtPos);
+                if (char.IsUpper(pieceChar) && side == Enums.GameSide.Black)
+                    capturePs.Add(tgtPos);
+                return false;
+            }
+            else
+            {
+                if (enableToMoved)
                 {
-                    if (situation.GameSide != Enums.ToGameSideByPieceType(pieceType))
-                    {
-                        capture.Add(tgtPos);
-                    }
-                    return false;
-                }
-                else
-                {
-                    moveIn.Add(tgtPos);
+                    moveInPs.Add(tgtPos);
                     return true;
                 }
+                else
+                    return false;
             }
-            return false;
+        }
+
+        public static bool Shift(
+            Enums.GameSide side, ISituation situation,
+            Position tgtPos, Positions moveInPs, Positions capturePs)
+        {
+            return Shift(side, situation, tgtPos, moveInPs, capturePs, true);
         }
 
         #endregion

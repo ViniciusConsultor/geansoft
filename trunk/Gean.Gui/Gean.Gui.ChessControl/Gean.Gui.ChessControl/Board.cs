@@ -83,8 +83,8 @@ namespace Gean.Gui.ChessControl
             this.EnableMoveInPosition = new Positions();
             this.EnableCapturePosition = new Positions();
 
-            this.BackgroundImage = Servicer.BoardImage;
             this.Rectangles = new Rectangle[8, 8];
+            this.BackgroundImage = Servicer.BoardImage;
 
             Board.GetRectangleSize(this.Size, out _XofPanel, out _YofPanel, out _rectangleWidth, out _rectangleHeight);
 
@@ -103,7 +103,7 @@ namespace Gean.Gui.ChessControl
         public virtual void LoadSituation()
         {
             _Game = new Game();
-            _Game.StartGame();
+            _Game.GameInitializer();
             this.Refresh();
         }
         /// <summary>
