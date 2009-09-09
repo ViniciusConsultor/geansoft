@@ -31,46 +31,53 @@ namespace Gean.Module.Chess
 
         public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            throw new NotImplementedException();
+            enableMovein = new Positions();
+            enableCapture = new Positions();
+            PieceRook.RookShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            return true;
         }
-        //public override Positions GetEnablePositions(ISituation situation)
-        //{
-        //    return RookShift(_position, situation);
-        //}
 
-        internal static Positions RookShift(Position srcPos, ISituation situation)
+        /// <summary>
+        /// 车的基本路线(即横平竖直)
+        /// </summary>
+        internal static void RookShift(
+            Enums.GameSide side, ISituation situation, Position position,
+            Positions moveInPs, Positions capturePs)
         {
-            Positions positions = new Positions();
+            bool canContine = true;
+            Position tgtPos = Position.Empty;
 
-            Position pos = srcPos;
-            while (pos != Position.Empty)
+            canContine = true;
+            tgtPos = position;
+            while (canContine)
             {
-                pos = pos.ShiftEast();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftEast();
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+
+            canContine = true;
+            tgtPos = position;
+            while (canContine)
             {
-                pos = pos.ShiftWest();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftSouth();
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+
+            canContine = true;
+            tgtPos = position;
+            while (canContine)
             {
-                pos = pos.ShiftNorth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftWest();
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            pos = srcPos;
-            while (pos != Position.Empty)
+
+            canContine = true;
+            tgtPos = position;
+            while (canContine)
             {
-                pos = pos.ShiftSouth();
-                if (pos != Position.Empty)
-                    positions.Add(pos);
+                tgtPos = tgtPos.ShiftNorth();
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
-            return positions;
         }
     }
 }

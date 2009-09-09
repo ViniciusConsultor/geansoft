@@ -35,36 +35,46 @@ namespace Gean.Module.Chess
             return true;
         }
 
+        /// <summary>
+        /// 象的基本路线(即斜向)
+        /// </summary>
         internal static void BishopShift(
             Enums.GameSide side, ISituation situation, Position position,
             Positions moveInPs, Positions capturePs)
         {
-            bool enableMoved = true;
+            bool canContine = true;
             Position tgtPos = Position.Empty;
 
+            canContine = true; 
             tgtPos = position;
-            while (enableMoved)
+            while (canContine)
             {
                 tgtPos = tgtPos.ShiftEastNorth();
-                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
+
+            canContine = true;
             tgtPos = position;
-            while (enableMoved)
+            while (canContine)
             {
                 tgtPos = tgtPos.ShiftEastSouth();
-                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
+
+            canContine = true;
             tgtPos = position;
-            while (enableMoved)
+            while (canContine)
             {
                 tgtPos = tgtPos.ShiftWestNorth();
-                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
+
+            canContine = true;
             tgtPos = position;
-            while (enableMoved)
+            while (canContine)
             {
                 tgtPos = tgtPos.ShiftWestSouth();
-                enableMoved = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
+                canContine = Position.Shift(side, situation, tgtPos, moveInPs, capturePs);
             }
         }
     }

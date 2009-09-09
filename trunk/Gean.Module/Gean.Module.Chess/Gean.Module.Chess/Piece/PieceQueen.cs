@@ -45,15 +45,12 @@ namespace Gean.Module.Chess
 
         public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
-            throw new NotImplementedException();
+            enableMovein = new Positions();
+            enableCapture = new Positions();
+            PieceRook.RookShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            PieceBishop.BishopShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            return true;
         }
-        //public override Positions GetEnablePositions(ISituation situation)
-        //{
-        //    Positions positions = new Positions();
-        //    positions.AddRange(PieceRook.RookShift(_position, situation));
-        //    positions.AddRange(PieceBishop.BishopShift(_position, situation));
-        //    return positions;
-        //}
 
 
     }
