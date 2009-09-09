@@ -46,7 +46,7 @@ namespace Gean.Gui.ChessControl.Demo
         /// <param name="e"></param>
         private void WhilePlayed(object sender, Board.PlayEventArgs e)
         {
-            this._fenTextBox.Text = _board.Game.ToString() + "\r\n" + _board.Game.Generator();
+            this._fenTextBox.Text = _board.Game.ToString() + "\r\n" + _board.Game.Generator() + "\r\n";// +e.GetHashCode();
         }
 
         private void PGNConvent(object sender, EventArgs e)
