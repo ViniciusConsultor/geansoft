@@ -5,6 +5,7 @@ using Gean.Module.Chess;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Collections.Specialized;
+using System.Drawing.Text;
 
 namespace Gean.Gui.ChessControl
 {
@@ -79,6 +80,7 @@ namespace Gean.Gui.ChessControl
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);//通知系统，当控件大小发生改变的时候应该进行重绘
             this.BackColor = Color.Chocolate;
+            this.MinimumSize = new Size(300, 300);
 
             this.EnableMoveInPosition = new Positions();
             this.EnableCapturePosition = new Positions();
@@ -143,6 +145,8 @@ namespace Gean.Gui.ChessControl
         {
             base.OnPaintBackground(pe);
             this.Paint_ChessBoardGrid();
+            this.Paint_BoardFrame();
+            this.Paint_PositionNumber();
             if (_Game != null)
             {
                 this.Paint_PieceImage();
@@ -151,8 +155,6 @@ namespace Gean.Gui.ChessControl
                 this.Paint_SelectedPosition();
                 this.Paint_SelectedMovedPiece();
             }
-            this.Paint_BoardFrame();
-            this.Paint_PositionNumber();
             //绘制控件图片
             Graphics g = pe.Graphics;
             g.DrawImage(this.OccImage, new Point(0, 0));
@@ -567,12 +569,19 @@ namespace Gean.Gui.ChessControl
         #endregion
 
         #region Paint_BoardFrame
+        private int _frameWidth = 0;
         /// <summary>
         /// 6.绘制棋盘外边框
         /// </summary>
         private void Paint_BoardFrame()
         {
+            _frameWidth = _rectangleWidth / 5;
             Graphics g = Graphics.FromImage(this.OccImage);
+            Rectangle rect = new Rectangle(_XofPanel, _YofPanel, _rectangleWidth * 8, _rectangleHeight * 8);
+            for (int i = 1; i < _frameWidth; i++)
+            {
+                g.DrawRectangle(Pens.Khaki, Rectangle.Inflate(rect, i, i));
+            }
 
         }
         #endregion
@@ -583,8 +592,28 @@ namespace Gean.Gui.ChessControl
         /// </summary>
         private void Paint_PositionNumber()
         {
+            //3磅 = 4像素
+            string str = "abcdefgh";
             Graphics g = Graphics.FromImage(this.OccImage);
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
+            Font font = new Font("Verdana", (_rectangleHeight / 3));// * (4 / 3));
+            SizeF sf = g.MeasureString("8", font);
+
+            for (int i = 8; i >= 1; i--)
+            {
+                int x = (int)(_XofPanel - _frameWidth - sf.Width - 3);
+                int y = (int)(_YofPanel - _frameWidth + ((8 - i) * _rectangleHeight) + _rectangleHeight / 2.3);
+                RectangleF rectF = new RectangleF(x, y, sf.Width, sf.Height);
+                g.DrawString(i.ToString(), font, Brushes.Black, rectF);
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                int x = (int)(_XofPanel + (i * _rectangleHeight) + _rectangleHeight / 2.8);
+                int y = (int)(_YofPanel + (8 * _rectangleHeight) + _frameWidth  + 3);
+                RectangleF rectF = new RectangleF(x, y, sf.Width, sf.Height);
+                g.DrawString(str.Substring(i, 1), font, Brushes.Black, rectF);
+            }
         }
         #endregion
 

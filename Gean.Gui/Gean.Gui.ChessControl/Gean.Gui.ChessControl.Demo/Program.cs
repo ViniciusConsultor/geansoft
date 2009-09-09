@@ -10,7 +10,7 @@ namespace Gean.Gui.ChessControl.Demo
     {
         public static Log4netLoggingService Logger = Log4netLoggingService.Initialize();
         
-        public static FormWindowState IsShangBan { get { return FormWindowState.Normal; } }
+        public static FormWindowState IsShangBan { get { return FormWindowState.Maximized; } }
 
         public static string Steps_2326 { get { return @"pgn\2326,steps2.txt"; } }
         public static string Steps_4647 { get { return @"pgn\4647,steps1.txt"; } }
