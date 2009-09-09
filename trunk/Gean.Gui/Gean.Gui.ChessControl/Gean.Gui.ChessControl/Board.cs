@@ -151,6 +151,8 @@ namespace Gean.Gui.ChessControl
                 this.Paint_SelectedPosition();
                 this.Paint_SelectedMovedPiece();
             }
+            this.Paint_BoardFrame();
+            this.Paint_PositionNumber();
             //绘制控件图片
             Graphics g = pe.Graphics;
             g.DrawImage(this.OccImage, new Point(0, 0));
@@ -300,7 +302,7 @@ namespace Gean.Gui.ChessControl
                                     return;//找到棋子，但棋子战方不符
                                 }
                                 this.SelectedPosition = new Position(x, y);
-                                this.SelectedPiece.GetEnablePositions(_Game, out this.EnableMoveInPosition, out this.EnableCapturePosition);
+                                this.SelectedPiece.SetEnablePositions(_Game, out this.EnableMoveInPosition, out this.EnableCapturePosition);
                                 this.SelectedPieceImage = Servicer.GetPieceImage(this.SelectedPiece.PieceType);
                                 this.Refresh();
                             }
@@ -428,15 +430,9 @@ namespace Gean.Gui.ChessControl
         #region protected virtual: === Paint ===
 
         #region Paint_ChessBoardGrid
-        /// <summary>绘制棋盘
+        /// <summary>
+        /// 绘制棋盘
         /// </summary>
-        /// <param name="g">Graphics</param>
-        /// <param name="rectangles">64个棋格矩形集合</param>
-        /// <param name="hasGridImage">是否有棋格矩形背景图片</param>
-        /// <param name="XofPanel">棋盘左上角X坐标</param>
-        /// <param name="YofPanel">棋盘左上角Y坐标</param>
-        /// <param name="rectangleWidth">矩形宽度</param>
-        /// <param name="rectangleHeight">矩形高度</param>
         protected virtual void Paint_ChessBoardGrid()
         {
             Graphics g = Graphics.FromImage(this.OccImage);
@@ -473,7 +469,6 @@ namespace Gean.Gui.ChessControl
         #region Paint_PieceImage
         /// <summary>1. 用指定的棋子图片集合绘制棋子
         /// </summary>
-        /// <param name="g">Graphics</param>
         protected virtual void Paint_PieceImage()
         {
             Graphics g = Graphics.FromImage(this.OccImage);
@@ -497,7 +492,6 @@ namespace Gean.Gui.ChessControl
         #region Paint_EnableMoveInPosition
         /// <summary>2. 绘制能移动到的矩形位置
         /// </summary>
-        /// <param name="g">Graphics</param>
         protected virtual void Paint_EnableMoveInPosition()
         {
             if (this.SelectedPosition == null)
@@ -528,7 +522,6 @@ namespace Gean.Gui.ChessControl
         #region Paint_MouseMovedPosition
         /// <summary>3. 绘制鼠标移动到的矩形位置
         /// </summary>
-        /// <param name="g">Graphics</param>
         protected virtual void Paint_MouseMovedPosition()
         {
             if (this.SelectPositionByMouseMoved == null)
@@ -546,7 +539,6 @@ namespace Gean.Gui.ChessControl
         #region Paint_SelectedPosition
         /// <summary>4. 绘制已选择的矩形位置
         /// </summary>
-        /// <param name="g">Graphics</param>
         protected virtual void Paint_SelectedPosition()
         {
             if (this.SelectedPosition == null)
@@ -564,7 +556,6 @@ namespace Gean.Gui.ChessControl
         #region Paint_SelectedMovedPiece
         /// <summary>5. 绘制移动的棋子
         /// </summary>
-        /// <param name="g">Graphics</param>
         private void Paint_SelectedMovedPiece()
         {
             if (this.SelectedPieceImage == null)
@@ -573,6 +564,28 @@ namespace Gean.Gui.ChessControl
             g.DrawImage(this.SelectedPieceImage, this.SelectedMovedRectangle);
         }
 
+        #endregion
+
+        #region Paint_BoardFrame
+        /// <summary>
+        /// 6.绘制棋盘外边框
+        /// </summary>
+        private void Paint_BoardFrame()
+        {
+            Graphics g = Graphics.FromImage(this.OccImage);
+
+        }
+        #endregion
+
+        #region Paint_PositionNumber
+        /// <summary>
+        /// 7.绘制棋盘坐标
+        /// </summary>
+        private void Paint_PositionNumber()
+        {
+            Graphics g = Graphics.FromImage(this.OccImage);
+
+        }
         #endregion
 
         #endregion

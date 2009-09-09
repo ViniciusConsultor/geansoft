@@ -26,12 +26,11 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
+        public override void SetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
             enableCapture = new Positions();
             enableMovein = new Positions();
 
-            Positions positions = new Positions();
             Position aPos = _position.ShiftWestNorth();
             Position bPos = _position.ShiftEastNorth();
             Position cPos = _position.ShiftWestSouth();
@@ -56,7 +55,6 @@ namespace Gean.Module.Chess
                 Position.Shift(this.GameSide, situation, dPos.ShiftEast(), enableMovein, enableCapture);
                 Position.Shift(this.GameSide, situation, dPos.ShiftSouth(), enableMovein, enableCapture);
             }
-            return false;        
         }
     }
 }

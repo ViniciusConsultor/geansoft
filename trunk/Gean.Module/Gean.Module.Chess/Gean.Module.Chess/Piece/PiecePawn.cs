@@ -72,18 +72,18 @@ namespace Gean.Module.Chess
                 return position;
         }
 
-        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
+        public override void SetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
             enableMovein = new Positions();
             enableCapture = new Positions();
 
             if (this.GameSide == Enums.GameSide.White)
             {
-                if (_position.Y < 1) return false;//白兵怎么也不可能在第一行上
+                if (_position.Y < 1) return;//白兵怎么也不可能在第一行上
                 Position tmpPos = Position.Empty;
                 //向北
                 tmpPos = _position.ShiftNorth();
-                if (tmpPos == Position.Empty) return false;
+                if (tmpPos == Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -104,11 +104,11 @@ namespace Gean.Module.Chess
             }
             else
             {
-                if (_position.Y > 6) return false;
+                if (_position.Y > 6) return;
                 Position tmpPos = Position.Empty;
                 //向南
                 tmpPos = _position.ShiftSouth();
-                if (tmpPos == Position.Empty) return false;
+                if (tmpPos == Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
@@ -127,7 +127,6 @@ namespace Gean.Module.Chess
                 //剑指东南
                 Position.Shift(this.GameSide, situation, _position.ShiftEastSouth(), enableMovein, enableCapture, false);
             }
-            return true;
         }
 
         ///// <summary>
