@@ -29,12 +29,11 @@ namespace Gean.Module.Chess
             }
         }
 
-        public override bool GetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
+        public override void SetEnablePositions(ISituation situation, out Positions enableMovein, out Positions enableCapture)
         {
             enableMovein = new Positions();
             enableCapture = new Positions();
             PieceRook.RookShift(this.GameSide, situation, _position, enableMovein, enableCapture);
-            return true;
         }
 
         /// <summary>
