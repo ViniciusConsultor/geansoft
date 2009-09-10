@@ -33,7 +33,7 @@ namespace Gean.Module.Chess
         {
             enableMovein = new Positions();
             enableCapture = new Positions();
-            PieceRook.RookShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            PieceRook.RookShift(this.GameSide, situation, this.Position, enableMovein, enableCapture);
         }
 
         /// <summary>

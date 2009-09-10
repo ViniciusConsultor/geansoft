@@ -31,7 +31,7 @@ namespace Gean.Module.Chess
         {
             enableMovein = new Positions();
             enableCapture = new Positions();
-            PieceBishop.BishopShift(this.GameSide, situation, _position, enableMovein, enableCapture);
+            PieceBishop.BishopShift(this.GameSide, situation, this.Position, enableMovein, enableCapture);
         }
 
         /// <summary>
