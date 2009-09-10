@@ -13,7 +13,7 @@ namespace Gean.Module.Chess
         /// </summary>
         protected Piece(Position position) 
         {
-            _position = this.InitPosition(position);
+            this.Position = this.InitPosition(position);
             this.IsCaptured = false;
         }
 
@@ -41,12 +41,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 棋子所在位置
         /// </summary>
-        public Position Position
-        {
-            get { return this._position; }
-            set { this._position = value; }
-        }
-        protected Position _position;
+        public virtual Position Position { get; internal set; }
 
         #endregion
 

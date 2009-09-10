@@ -31,10 +31,10 @@ namespace Gean.Module.Chess
             enableCapture = new Positions();
             enableMovein = new Positions();
 
-            Position aPos = _position.ShiftWestNorth();
-            Position bPos = _position.ShiftEastNorth();
-            Position cPos = _position.ShiftWestSouth();
-            Position dPos = _position.ShiftEastSouth();
+            Position aPos = this.Position.ShiftWestNorth();
+            Position bPos = this.Position.ShiftEastNorth();
+            Position cPos = this.Position.ShiftWestSouth();
+            Position dPos = this.Position.ShiftEastSouth();
             if (aPos != Position.Empty)
             {
                 Position.Shift(this.GameSide, situation, aPos.ShiftNorth(), enableMovein, enableCapture);

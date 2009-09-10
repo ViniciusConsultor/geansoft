@@ -79,17 +79,18 @@ namespace Gean.Module.Chess
 
             if (this.GameSide == Enums.GameSide.White)
             {
-                if (_position.Y < 1) return;//白兵怎么也不可能在第一行上
+                #region 白兵
+                if (this.Position.Y < 1) return;//白兵怎么也不可能在第一行上
                 Position tmpPos = Position.Empty;
                 //向北
-                tmpPos = _position.ShiftNorth();
+                tmpPos = this.Position.ShiftNorth();
                 if (tmpPos == Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
                 }
                 //再向北(仅当在兵从未动过时)
-                if (_position.Y == 1)
+                if (this.Position.Y == 1)
                 {
                     tmpPos = tmpPos.ShiftNorth();
                     if (!situation.ContainsPiece(tmpPos.Dot))
@@ -97,24 +98,71 @@ namespace Gean.Module.Chess
                         enableMovein.Add(tmpPos);
                     }
                 }
-                //剑指西北
-                Position.Shift(this.GameSide, situation, _position.ShiftWestNorth(), enableMovein, enableCapture, false);
-                //剑指东北
-                Position.Shift(this.GameSide, situation, _position.ShiftEastNorth(), enableMovein, enableCapture, false);
+                //吃过路兵的判断
+                if (this.Position.Y == 4)
+                {
+                    #region 过路兵
+                    //西北
+                    tmpPos = this.Position.ShiftWest();
+                    if (tmpPos != null)
+                    {
+                        Piece pawn;
+                        Game game = (Game)situation;
+                        if (game.TryGetPiece(tmpPos.Dot, out pawn))
+                        {
+                            if (pawn is PiecePawn)
+                            {
+                                if (((PiecePawn)pawn).EnableEnPassanted)
+                                {
+                                    enableMovein.Add(this.Position.ShiftWestNorth());
+                                    enableCapture.Add(tmpPos);
+                                }
+                            }
+                        }
+                    }
+                    //东北
+                    tmpPos = this.Position.ShiftEast();
+                    if (tmpPos != null)
+                    {
+                        Piece pawn;
+                        Game game = (Game)situation;
+                        if (game.TryGetPiece(tmpPos.Dot, out pawn))
+                        {
+                            if (pawn is PiecePawn)
+                            {
+                                if (((PiecePawn)pawn).EnableEnPassanted)
+                                {
+                                    enableMovein.Add(this.Position.ShiftEastNorth());
+                                    enableCapture.Add(tmpPos);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                else
+                {
+                    //剑指西北
+                    Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture, false);
+                    //剑指东北
+                    Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture, false);
+                }
+                #endregion
             }
             else
             {
-                if (_position.Y > 6) return;
+                #region 黑兵
+                if (this.Position.Y > 6) return;
                 Position tmpPos = Position.Empty;
                 //向南
-                tmpPos = _position.ShiftSouth();
+                tmpPos = this.Position.ShiftSouth();
                 if (tmpPos == Position.Empty) return;
                 if (!situation.ContainsPiece(tmpPos.Dot))
                 {
                     enableMovein.Add(tmpPos);
                 }
                 //再向南(仅当在兵从未动过时)
-                if (_position.Y == 6)
+                if (this.Position.Y == 6)
                 {
                     tmpPos = tmpPos.ShiftSouth();
                     if (!situation.ContainsPiece(tmpPos.Dot))
@@ -122,30 +170,57 @@ namespace Gean.Module.Chess
                         enableMovein.Add(tmpPos);
                     }
                 }
-                //剑指西南
-                Position.Shift(this.GameSide, situation, _position.ShiftWestSouth(), enableMovein, enableCapture, false);
-                //剑指东南
-                Position.Shift(this.GameSide, situation, _position.ShiftEastSouth(), enableMovein, enableCapture, false);
+                //吃过路兵的判断
+                if (this.Position.Y == 3)
+                {
+                    #region 过路兵
+                    //西南
+                    tmpPos = this.Position.ShiftWest();
+                    if (tmpPos != null)
+                    {
+                        Piece pawn;
+                        Game game = (Game)situation;
+                        if (game.TryGetPiece(tmpPos.Dot, out pawn))
+                        {
+                            if (pawn is PiecePawn)
+                            {
+                                if (((PiecePawn)pawn).EnableEnPassanted)
+                                {
+                                    enableMovein.Add(this.Position.ShiftWestSouth());
+                                    enableCapture.Add(tmpPos);
+                                }
+                            }
+                        }
+                    }
+                    //东南
+                    tmpPos = this.Position.ShiftEast();
+                    if (tmpPos != null)
+                    {
+                        Piece pawn;
+                        Game game = (Game)situation;
+                        if (game.TryGetPiece(tmpPos.Dot, out pawn))
+                        {
+                            if (pawn is PiecePawn)
+                            {
+                                if (((PiecePawn)pawn).EnableEnPassanted)
+                                {
+                                    enableMovein.Add(this.Position.ShiftEastSouth());
+                                    enableCapture.Add(tmpPos);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                else
+                {
+                    //剑指西南
+                    Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture, false);
+                    //剑指东南
+                    Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture, false);
+                }
+                #endregion
             }
         }
-
-        ///// <summary>
-        ///// 判断指定的棋格是否有敌方的棋子
-        ///// </summary>
-        ///// <param name="tgtPos">指定的棋格</param>
-        ///// <param name="enableCapture">被吃子的集合</param>
-        ///// <param name="situation">当前局面</param>
-        //private void Capture(Position tgtPos, Positions enableCapture, ISituation situation)
-        //{
-        //    if (tgtPos == Position.Empty) return;
-        //    char c;
-        //    if (situation.TryGetPiece(tgtPos.Dot, out c))
-        //    {
-        //        if (char.IsLower(c) && this.GameSide == Enums.GameSide.White)
-        //            enableCapture.Add(tgtPos);
-        //        if (char.IsUpper(c) && this.GameSide == Enums.GameSide.Black)
-        //            enableCapture.Add(tgtPos);
-        //    }
-        //}   
     }
 }

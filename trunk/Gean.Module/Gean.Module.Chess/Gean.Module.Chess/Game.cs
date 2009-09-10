@@ -97,32 +97,56 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 移动指定位置棋格的棋子
         /// </summary>
-        /// <param name="step">指定的成对的位置,First值为源棋格,Second值是目标棋格</param>
-        public void PieceMoveIn(PositionPair step)
+        /// <param name="pair">指定的成对的位置,First值为源棋格,Second值是目标棋格</param>
+        public void PieceMoveIn(PositionPair pair)
         {
             Enums.Action action = Enums.Action.General;
             Piece piece;
-            if (this.TryGetPiece(step.First.Dot, out piece))
+            if (this.TryGetPiece(pair.First.Dot, out piece))
             {
-                //第一步，判断目标棋格中是否有棋子。
+                //第1步，判断目标棋格中是否有棋子。
                 //如果有棋子，更改Action，调用PieceMoveOut方法。
-                if (this.ContainsPiece(step.Second.Dot))
+                if (this.ContainsPiece(pair.Second.Dot))
                 {
                     action = Enums.Action.Capture;
-                    this.PieceMoveOut(step.Second);
+                    this.PieceMoveOut(pair.Second);
                 }
 
+                //第2步，如上一步棋有过路兵的局面，先取消
+                if (this.EnPassantTargetPosition != null)
+                {
+                    Piece pawn;
+                    if (this.TryGetPiece(this.EnPassantTargetPosition.Dot, out pawn))
+                    {
+                        ((PiecePawn)pawn).EnableEnPassanted = false;
+                    }
+                    this.EnPassantTargetPosition = Position.Empty;
+                }
 
-                //第二步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
-                this.PieceMoveIn(piece, step.First, step.Second);
+                //第3步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
+                this.PieceMoveIn(piece, pair.First, pair.Second);
 
+                //第4步，判断是否过路兵的局面
+                if (piece is PiecePawn)
+                {
+                    //成为能被吃过路兵的“兵”
+                    if ((pair.First.Y == 1 && pair.Second.Y == 3) || (pair.First.Y == 6 && pair.Second.Y == 4))
+                    {
+                        ((PiecePawn)piece).EnableEnPassanted = true;
+                        this.EnPassantTargetPosition = pair.Second;
+                    }
+                    else
+                    {
+                        ((PiecePawn)piece).EnableEnPassanted = false;
+                    }
+                }
 
-                //第三步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
+                //第5步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
                 action = this.IsCheckPieceKing(action, piece);
 
 
-                //第四步，注册棋子移动后事件
-                OnPieceMoveInEvent(piece, action, step);
+                //第6步，注册棋子移动后事件
+                OnPieceMoveInEvent(piece, action, pair);
             }
         }
 

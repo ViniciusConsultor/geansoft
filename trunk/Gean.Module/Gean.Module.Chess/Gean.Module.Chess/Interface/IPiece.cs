@@ -5,7 +5,7 @@ namespace Gean.Module.Chess
     {
         Enums.GameSide GameSide { get; }
         Enums.PieceType PieceType { get; }
-        Position Position { get; set; }
+        Position Position { get; }
         bool IsCaptured { get; }
     }
 }
