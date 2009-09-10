@@ -51,7 +51,7 @@ namespace Gean.Module.Chess
 
         #region FEN Property
 
-        public Situation Fen { get; set; }
+        public ISituation Fen { get; set; }
 
         #endregion
 
@@ -243,7 +243,7 @@ namespace Gean.Module.Chess
                 else if (this.Actions.Contains(Enums.Action.PromoteToRook))
                     sb.Append("=R");
 
-                if (this.Actions.Contains(Enums.Action.Capture))
+                if (this.Actions.Contains(Enums.Action.Capture) || this.Actions.Contains(Enums.Action.EnPassant))
                     sb.Insert(0, 'x');
                 if (!this.SourceChar.Equals('?'))
                     sb.Insert(0, this.SourceChar);

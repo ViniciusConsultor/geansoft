@@ -19,9 +19,9 @@ namespace Gean.Module.Chess
     /// 一个描述棋子移动入某棋格的委托类型
     /// </summary>
     /// <param name="piece">棋子</param>
-    /// <param name="action">移动所产生的动作类型</param>
-    /// <param name="positionPair">移动时源、目标棋格对</param>
-    public delegate void PieceMoveIn(Piece piece, Enums.Action action, Pair<Position, Position> positions);
+    /// <param name="actions">移动所产生的动作类型</param>
+    /// <param name="pair">移动时源、目标棋格对</param>
+    public delegate void PieceMoveIn(Piece piece, Enums.ActionCollection actions, PositionPair pair);
     /// <summary>
     /// 一个描述棋子移出棋局（被杀死）的委托类型
     /// </summary>

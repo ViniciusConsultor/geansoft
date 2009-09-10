@@ -12,43 +12,43 @@ namespace Gean.Gui.ChessControl.Demo
 {
     public partial class DemoMainForm : Form
     {
-
-
-        public FormWindowState IsShangBan { get { return Program.IsShangBan; } }
-
-        public string PGNFile { get { return Program.PGNFile_Test_2_Game; } } 
+        private FormWindowState IsShangBan { get { return Program.IsShangBan; } }
+        #region private
+        private string PGNFile { get { return Program.PGNFile_Test_2_Game; } } 
         private string _demoFile = Path.GetDirectoryName(@"..\..\DemoFile\");
         private Board _board = new Board();
-        private Records records = new Records();
+        private Records _records = new Records();
+        private RecordPlayToolStrip _playStrip = new RecordPlayToolStrip();
+        private StepsPanel _stepsPanel = new StepsPanel();
+        #endregion
 
-        /// <summary>构造函数</summary>
         public DemoMainForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.WindowState = this.IsShangBan;
+
+            this._label.Text = "OK";
             this._board.Dock = DockStyle.Fill;
             this._board.BringToFront();
             this._splitContainer3.Panel1.Controls.Add(_board);
-            this._label.Text = "OK";
-            this._recordListView.SelectedIndexChanged += new EventHandler(SelectedRecord);
-
-            this._board.PlayEvent += new Board.PlayEventHandler(WhilePlayed);
-
-            RecordPlayToolStrip strip = new RecordPlayToolStrip();
-
-            this._stripContainer.TopToolStripPanel.Controls.Add(strip);
+            this._stripContainer.TopToolStripPanel.Controls.Add(_playStrip);
             this._stripContainer.TopToolStripPanel.Controls.Add(_mainMenuStrip);
+            this._stepsPanel.Dock = DockStyle.Fill;
+            this._stepsPanel.BackColor = Color.Plum;
+            this._stepsTabPage.Controls.Add(_stepsPanel);
 
-            this.WindowState = this.IsShangBan;
+            this._recordListView.SelectedIndexChanged += new EventHandler(ViewStepCollection);
+            this._board.PlayEvent += new Board.PlayEventHandler(WhilePlayed);
         }
 
-        /// <summary>当下棋后发生</summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void WhilePlayed(object sender, Board.PlayEventArgs e)
+        //F4：新建游戏
+        private void NewGame(object sender, EventArgs e)
         {
-            this._fenTextBox.Text = _board.Game.ToString() + "\r\n" + _board.Game.Generator() + "\r\n";// +e.GetHashCode();
+            this._board.LoadSituation();
+            this.WhilePlayed(null, null);
         }
 
+        //F5：针对PGN文件进行转换与解析
         private void PGNConvent(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
@@ -56,81 +56,98 @@ namespace Gean.Gui.ChessControl.Demo
             duration.Start();
             PGNReader reader = new PGNReader();
             reader.Filename = Path.GetFullPath(Path.Combine(_demoFile, PGNFile)); 
-            reader.AddEvents(records);
+            reader.AddEvents(_records);
             reader.Parse();
-            string s = records[0].ToString();
+            string s = _records[0].ToString();
 
             this._recordListView.Items.Clear();
-            foreach (var item in records)
+            foreach (var item in _records)
             {
                 this._recordListView.Add(item);
             }
             duration.Stop();
             this._label.Text = string.Format("[Count: {0} record]. [Duration time: {1}]. [{2} Time/Record.]",
-                records.Count, duration.DurationValue, duration.DurationValue / records.Count);
+                _records.Count, duration.DurationValue, duration.DurationValue / _records.Count);
             this.Cursor = Cursors.Default;
         }
 
-        private void SelectedRecord(object sender, EventArgs e)
+        //当下棋后发生
+        private void WhilePlayed(object sender, Board.PlayEventArgs e)
         {
-            if (this._recordListView.SelectedRecord == null || this._recordListView.SelectedRecord.Length == 0)
-            {
-                return;
-            }
-            _recordTree.Nodes.Clear();
+            this._fenTextBox.Text = _board.Game.ToString() + "\r\n" + _board.Game.Generator() + "\r\n";// +e.GetHashCode();
+        }
+
+        //
+        private void ViewStepCollection(object sender, EventArgs e)
+        {
+            if (this._recordListView.SelectedRecord == null || this._recordListView.SelectedRecord.Length == 0) return;
             Record record = this._recordListView.SelectedRecord[0];
-            TreeNode node = new TreeNode("Game");
-
-            this.MarkNode(record, node, new StringBuilder());
-
-            _recordTree.BeginUpdate();
-            _recordTree.Nodes.Add(node);
-            _recordTree.ShowLines = true;
-            _recordTree.ExpandAll();
-            _recordTree.EndUpdate();
-        }
-
-        private void MarkNode(ITree tree, TreeNode node, StringBuilder text)
-        {
-            foreach (IItem item in tree.Items)
+            _stepsPanel.Controls.Clear();
+            for (int i = 0; i < record.Items.Count; i++)
             {
-                TreeNode subnode = new TreeNode();
-                if (item is Step)
+                if (record.Items[i] is IGenerator)
                 {
-                    Step step = (Step)item;
-                    if (step.GameSide == Enums.GameSide.White)
-                    {
-                        text = new StringBuilder();
-                        text.Append(item.ItemType).Append(": ").Append(step.Generator());
-                    }
-                    if (step.GameSide == Enums.GameSide.Black)
-                    {
-                        text.Append(' ').Append(step.Generator());
-                        subnode.Text = text.ToString();
-                        node.Nodes.Add(subnode);
-                    }
-                    if (item is ITree)
-                    {
-                        ITree subtree = (ITree)item;
-                        if (subtree.HasChildren)
-                        {
-                            MarkNode(subtree, subnode, new StringBuilder());
-                        }
-                    }
-                }
-                else
-                {
-                    text = new StringBuilder();
-                    text.Append(item.ItemType).Append(": ").Append(item.Value);
-                    subnode.Text = text.ToString();
-                    node.Nodes.Add(subnode);
+                    _stepsPanel.Add(record.Items[i] as IGenerator);
                 }
             }
-        }
-        private void NewGame(object sender, EventArgs e)
-        {
-            this._board.LoadSituation();
-            this.WhilePlayed(null, null);
         }
     }
 }
+
+/* 点击Record的ListView，在树上显示Record
+private void SelectedRecord(object sender, EventArgs e)
+{
+    if (this._recordListView.SelectedRecord == null || this._recordListView.SelectedRecord.Length == 0)
+    {
+        return;
+    }
+    _recordTree.Nodes.Clear();
+    Record record = this._recordListView.SelectedRecord[0];
+    TreeNode node = new TreeNode("Game");
+
+    this.MarkNode(record, node, new StringBuilder());
+
+    _recordTree.BeginUpdate();
+    _recordTree.Nodes.Add(node);
+    _recordTree.ShowLines = true;
+    _recordTree.ExpandAll();
+    _recordTree.EndUpdate();
+}
+private void MarkNode(ITree tree, TreeNode node, StringBuilder text)
+{
+    foreach (IItem item in tree.Items)
+    {
+        TreeNode subnode = new TreeNode();
+        if (item is Step)
+        {
+            Step step = (Step)item;
+            if (step.GameSide == Enums.GameSide.White)
+            {
+                text = new StringBuilder();
+                text.Append(item.ItemType).Append(": ").Append(step.Generator());
+            }
+            if (step.GameSide == Enums.GameSide.Black)
+            {
+                text.Append(' ').Append(step.Generator());
+                subnode.Text = text.ToString();
+                node.Nodes.Add(subnode);
+            }
+            if (item is ITree)
+            {
+                ITree subtree = (ITree)item;
+                if (subtree.HasChildren)
+                {
+                    MarkNode(subtree, subnode, new StringBuilder());
+                }
+            }
+        }
+        else
+        {
+            text = new StringBuilder();
+            text.Append(item.ItemType).Append(": ").Append(item.Value);
+            subnode.Text = text.ToString();
+            node.Nodes.Add(subnode);
+        }
+    }
+}
+*/

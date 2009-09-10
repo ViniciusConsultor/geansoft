@@ -122,7 +122,7 @@ namespace Gean.Module.Chess
         /// <param name="pair">指定的成对的位置,First值为源棋格,Second值是目标棋格</param>
         public void PieceMoveIn(PositionPair pair)
         {
-            Enums.Action action = Enums.Action.General;
+            Enums.ActionCollection actions = new Enums.ActionCollection();
             Piece piece;
             if (this.TryGetPiece(pair.First.Dot, out piece))
             {
@@ -134,17 +134,17 @@ namespace Gean.Module.Chess
                         return;
                     }
                 }
-
+                actions.Add(Enums.Action.General);
                 //第2步，判断目标棋格中是否有棋子。
                 //如果有棋子，更改Action，调用PieceMoveOut方法。
                 if (this.ContainsPiece(pair.Second.Dot))
                 {
-                    action = Enums.Action.Capture;
+                    actions.Add(Enums.Action.Capture);
                     this.PieceMoveOut(pair.Second);
                 }
 
                 //第3步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
-                this.PieceMoveIn(piece, pair.First, pair.Second);
+                this.PieceMoveIn(piece, actions, pair.First, pair.Second);
 
                 //第4步，如上一步棋出现过“过路兵”的局面，而现在进行了新的一步棋了，故而取消上一步棋的“过路兵”局面。
                 if (_piecePawnByEnPassanted != null)
@@ -196,11 +196,11 @@ namespace Gean.Module.Chess
                 }
 
                 //第6步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
-                action = this.IsCheckPieceKing(action, piece);
+                actions.Add(this.IsCheckPieceKing(piece));
 
 
                 //第7步，注册棋子移动后事件
-                OnPieceMoveInEvent(piece, action, pair);
+                OnPieceMoveInEvent(piece, actions, pair);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Gean.Module.Chess
         /// <param name="piece">被移动的棋子</param>
         /// <param name="srcPos">源棋格</param>
         /// <param name="tgtPos">目标棋格</param>
-        private void PieceMoveIn(Piece piece, Position srcPos, Position tgtPos)
+        private void PieceMoveIn(Piece piece, Enums.ActionCollection actions, Position srcPos, Position tgtPos)
         {
             switch (piece.PieceType)
             {
@@ -231,6 +231,7 @@ namespace Gean.Module.Chess
                         {
                             if (tgtPos.X == _piecePawnByEnPassanted.Position.X)
                             {
+                                actions.Add(Enums.Action.EnPassant);
                                 PieceMoveOut(_piecePawnByEnPassanted.Position);
                             }
                         }
@@ -273,7 +274,7 @@ namespace Gean.Module.Chess
         /// </summary>
         /// <param name="action">动作</param>
         /// <param name="piece">可能产生将军动作的棋子</param>
-        private Enums.Action IsCheckPieceKing(Enums.Action action, Piece piece)
+        private Enums.Action IsCheckPieceKing(Piece piece)
         {
             //Positions postions = piece.GetEnablePositions(this);
             //Position kingPos = this.ActivedPieces.GetOtherGameSideKing(this.GameSide).Position;
@@ -288,7 +289,7 @@ namespace Gean.Module.Chess
             //        break;
             //    }
             //}
-            return action;
+            return Enums.Action.General;
         }
 
         #endregion
@@ -329,11 +330,11 @@ namespace Gean.Module.Chess
         /// 在棋子移动后发生
         /// </summary>
         public event PieceMoveIn PieceMoveInEvent;
-        protected virtual void OnPieceMoveInEvent(Piece piece, Enums.Action action, Pair<Position, Position> positions)
+        protected virtual void OnPieceMoveInEvent(Piece piece, Enums.ActionCollection actions, PositionPair pair)
         {
             if (PieceMoveInEvent != null)
             {
-                PieceMoveInEvent(piece, action, positions);
+                PieceMoveInEvent(piece, actions, pair);
             }
         }
 
