@@ -78,7 +78,7 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 1) 棋子位置数值区域(Piece placement data) 
         /// </summary>
-        public string PiecePlacementData
+        public virtual string PiecePlacementData
         {
             get { return this.ToString(); }
         }
@@ -86,49 +86,49 @@ namespace Gean.Module.Chess
         /// <summary>
         /// 2) 轮走棋方(Active color)
         /// </summary>
-        public Enums.GameSide GameSide { get; internal set; }
+        public virtual Enums.GameSide GameSide { get; internal set; }
 
         /// <summary>
         /// 3) 易位可行性(Castling availability)(1.白方王侧)
         /// </summary>
-        public bool WhiteKingCastlingAvailability { get; internal set; }
+        public virtual bool WhiteKingCastlingAvailability { get; internal set; }
 
         /// <summary>
         /// 3) 易位可行性(Castling availability)(2.白方后侧)
         /// </summary>
-        public bool WhiteQueenCastlingAvailability { get; internal set; }
+        public virtual bool WhiteQueenCastlingAvailability { get; internal set; }
 
         /// <summary>
         /// 3) 易位可行性(Castling availability)(3.黑方王侧)
         /// </summary>
-        public bool BlackKingCastlingAvailability { get; internal set; }
+        public virtual bool BlackKingCastlingAvailability { get; internal set; }
 
         /// <summary>
         /// 3) 易位可行性(Castling availability)(4.黑方后侧)
         /// </summary>
-        public bool BlackQueenCastlingAvailability { get; internal set; }
+        public virtual bool BlackQueenCastlingAvailability { get; internal set; }
 
         /// <summary>
         /// 4) 吃过路兵目标格(En passant target square)
         /// </summary>
-        public Position EnPassantTargetPosition { get; internal set; }
+        public virtual Position EnPassantTargetPosition { get; internal set; }
 
         /// <summary>
         /// 5) 半回合计数(Halfmove clock)。
         /// 用一个非负数表示自从上一次动兵或吃子之后目前走了的半回合数。这个是为了适应50步和棋规则而定。
         /// </summary>
-        public int HalfMoveClock { get; internal set; }
+        public virtual int HalfMoveClock { get; internal set; }
 
         /// <summary>
         /// 6) 回合数(Fullmove number)。当前要进行到的回合数。不管白还是黑，第一步时总是以1表示，以后黑方每走一步数字就加1。
         /// </summary>
-        public int FullMoveNumber { get; internal set; }
+        public virtual int FullMoveNumber { get; internal set; }
 
         #endregion
 
         #region ISituation: ContainsPiece
 
-        public bool ContainsPiece(int dot)
+        public virtual bool ContainsPiece(int dot)
         {
             if (this.GetByPosition(dot).Equals('1'))
                 return false;
@@ -136,7 +136,7 @@ namespace Gean.Module.Chess
                 return true;
         }
 
-        public bool TryGetPiece(int dot, out Enums.PieceType pieceType)
+        public virtual bool TryGetPiece(int dot, out Enums.PieceType pieceType)
         {
             char c = this.GetByPosition(dot);
             if (c.Equals('1'))
@@ -151,7 +151,7 @@ namespace Gean.Module.Chess
             }
         }
 
-        public bool TryGetPiece(int dot, out char mychar)
+        public virtual bool TryGetPiece(int dot, out char mychar)
         {
             char c = this.GetByPosition(dot);
             if (c.Equals('1'))

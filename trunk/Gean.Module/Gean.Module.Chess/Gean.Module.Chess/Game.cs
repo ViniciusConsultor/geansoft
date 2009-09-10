@@ -19,6 +19,28 @@ namespace Gean.Module.Chess
 
         #endregion
 
+        #region Override EnPassantTargetPosition
+        public override Position EnPassantTargetPosition
+        {
+            get
+            {
+                if (_piecePawnByEnPassanted == null)
+                {
+                    return Position.Empty;
+                }
+                return _piecePawnByEnPassanted.Position;
+            }
+            internal set
+            {
+                base.EnPassantTargetPosition = value;
+            }
+        }
+        /// <summary>
+        /// 一个可以被吃过路兵的“兵”
+        /// </summary>
+        private PiecePawn _piecePawnByEnPassanted;
+        #endregion
+
         #region Game Initializer
 
         /// <summary>
@@ -112,19 +134,15 @@ namespace Gean.Module.Chess
                     this.PieceMoveOut(pair.Second);
                 }
 
-                //第2步，如上一步棋有过路兵的局面，先取消
-                if (this.EnPassantTargetPosition != null)
-                {
-                    Piece pawn;
-                    if (this.TryGetPiece(this.EnPassantTargetPosition.Dot, out pawn))
-                    {
-                        ((PiecePawn)pawn).EnableEnPassanted = false;
-                    }
-                    this.EnPassantTargetPosition = Position.Empty;
-                }
-
-                //第3步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
+                //第2步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
                 this.PieceMoveIn(piece, pair.First, pair.Second);
+
+                //第3步，如上一步棋有过路兵的局面，先取消
+                if (_piecePawnByEnPassanted != null)
+                {
+                    _piecePawnByEnPassanted.EnableEnPassanted = false;
+                    _piecePawnByEnPassanted = null;
+                }
 
                 //第4步，判断是否过路兵的局面
                 if (piece is PiecePawn)
@@ -132,8 +150,33 @@ namespace Gean.Module.Chess
                     //成为能被吃过路兵的“兵”
                     if ((pair.First.Y == 1 && pair.Second.Y == 3) || (pair.First.Y == 6 && pair.Second.Y == 4))
                     {
-                        ((PiecePawn)piece).EnableEnPassanted = true;
-                        this.EnPassantTargetPosition = pair.Second;
+                        char pawnChar;
+                        Position tmpPos = pair.Second.ShiftWest();
+                        if (tmpPos != null)
+                        {
+                            if (this.TryGetPiece(tmpPos.Dot, out pawnChar))
+                            {
+                                Enums.GameSide side = char.IsLower(pawnChar) ? Enums.GameSide.Black : Enums.GameSide.White;
+                                if (this.GameSide == side)
+                                {
+                                    _piecePawnByEnPassanted = piece as PiecePawn;
+                                    _piecePawnByEnPassanted.EnableEnPassanted = true;
+                                }
+                            }
+                        }
+                        tmpPos = pair.Second.ShiftEast();
+                        if (tmpPos != null)
+                        {
+                            if (this.TryGetPiece(tmpPos.Dot, out pawnChar))
+                            {
+                                Enums.GameSide side = char.IsLower(pawnChar) ? Enums.GameSide.Black : Enums.GameSide.White;
+                                if (this.GameSide == side)
+                                {
+                                    _piecePawnByEnPassanted = piece as PiecePawn;
+                                    _piecePawnByEnPassanted.EnableEnPassanted = true;
+                                }
+                            }
+                        }
                     }
                     else
                     {
