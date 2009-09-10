@@ -35,11 +35,8 @@
             this._recordTree = new System.Windows.Forms.TreeView();
             this._rightSplit = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this._currTree = new System.Windows.Forms.TreeView();
+            this._stepsTabPage = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._recordListView = new Gean.Gui.ChessControl.RecordListView();
             this._mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this._openingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,11 +60,6 @@
             this._rightSplit.Panel2.SuspendLayout();
             this._rightSplit.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this._mainMenuStrip.SuspendLayout();
             this._stripContainer.ContentPanel.SuspendLayout();
             this._stripContainer.SuspendLayout();
@@ -91,7 +83,7 @@
             // 
             this._mainSpliter.Panel2.Controls.Add(this.splitContainer1);
             this._mainSpliter.Size = new System.Drawing.Size(632, 373);
-            this._mainSpliter.SplitterDistance = 491;
+            this._mainSpliter.SplitterDistance = 382;
             this._mainSpliter.SplitterWidth = 3;
             this._mainSpliter.TabIndex = 0;
             // 
@@ -105,8 +97,8 @@
             // _splitContainer3.Panel2
             // 
             this._splitContainer3.Panel2.Controls.Add(this._fenTextBox);
-            this._splitContainer3.Size = new System.Drawing.Size(491, 373);
-            this._splitContainer3.SplitterDistance = 337;
+            this._splitContainer3.Size = new System.Drawing.Size(382, 373);
+            this._splitContainer3.SplitterDistance = 302;
             this._splitContainer3.TabIndex = 0;
             // 
             // _fenTextBox
@@ -117,7 +109,7 @@
             this._fenTextBox.Multiline = true;
             this._fenTextBox.Name = "_fenTextBox";
             this._fenTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this._fenTextBox.Size = new System.Drawing.Size(491, 32);
+            this._fenTextBox.Size = new System.Drawing.Size(382, 67);
             this._fenTextBox.TabIndex = 0;
             // 
             // splitContainer1
@@ -133,8 +125,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this._rightSplit);
-            this.splitContainer1.Size = new System.Drawing.Size(138, 373);
-            this.splitContainer1.SplitterDistance = 40;
+            this.splitContainer1.Size = new System.Drawing.Size(247, 373);
+            this.splitContainer1.SplitterDistance = 58;
             this.splitContainer1.TabIndex = 1;
             // 
             // _recordTree
@@ -142,7 +134,7 @@
             this._recordTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this._recordTree.Location = new System.Drawing.Point(0, 0);
             this._recordTree.Name = "_recordTree";
-            this._recordTree.Size = new System.Drawing.Size(40, 373);
+            this._recordTree.Size = new System.Drawing.Size(58, 373);
             this._recordTree.TabIndex = 0;
             // 
             // _rightSplit
@@ -159,71 +151,40 @@
             // _rightSplit.Panel2
             // 
             this._rightSplit.Panel2.Controls.Add(this._recordListView);
-            this._rightSplit.Size = new System.Drawing.Size(94, 373);
+            this._rightSplit.Size = new System.Drawing.Size(185, 373);
             this._rightSplit.SplitterDistance = 200;
             this._rightSplit.TabIndex = 0;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this._stepsTabPage);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(94, 200);
+            this.tabControl1.Size = new System.Drawing.Size(185, 200);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // _stepsTabPage
             // 
-            this.tabPage1.Controls.Add(this.splitContainer2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(86, 174);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "棋盘选项";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this._currTree);
-            this.splitContainer2.Size = new System.Drawing.Size(80, 168);
-            this.splitContainer2.SplitterDistance = 40;
-            this.splitContainer2.TabIndex = 0;
-            // 
-            // _currTree
-            // 
-            this._currTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._currTree.Location = new System.Drawing.Point(0, 0);
-            this._currTree.Name = "_currTree";
-            this._currTree.Size = new System.Drawing.Size(40, 168);
-            this._currTree.TabIndex = 0;
+            this._stepsTabPage.Location = new System.Drawing.Point(4, 22);
+            this._stepsTabPage.Name = "_stepsTabPage";
+            this._stepsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this._stepsTabPage.Size = new System.Drawing.Size(177, 174);
+            this._stepsTabPage.TabIndex = 0;
+            this._stepsTabPage.Text = "Record";
+            this._stepsTabPage.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(86, 175);
+            this.tabPage2.Size = new System.Drawing.Size(177, 175);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "棋谱选项";
+            this.tabPage2.Text = "Options";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(127, 90);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // _recordListView
             // 
@@ -233,7 +194,7 @@
             this._recordListView.Location = new System.Drawing.Point(0, 0);
             this._recordListView.Name = "_recordListView";
             this._recordListView.Number = 1;
-            this._recordListView.Size = new System.Drawing.Size(94, 169);
+            this._recordListView.Size = new System.Drawing.Size(185, 169);
             this._recordListView.TabIndex = 0;
             this._recordListView.UseCompatibleStateImageBehavior = false;
             this._recordListView.View = System.Windows.Forms.View.Details;
@@ -370,11 +331,6 @@
             this._rightSplit.Panel2.ResumeLayout(false);
             this._rightSplit.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this._mainMenuStrip.ResumeLayout(false);
             this._mainMenuStrip.PerformLayout();
             this._stripContainer.ContentPanel.ResumeLayout(false);
@@ -404,16 +360,13 @@
         private System.Windows.Forms.ToolStripMenuItem _newGameToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage _stepsTabPage;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.TreeView _currTree;
         private System.Windows.Forms.ToolStripContainer _stripContainer;
         private System.Windows.Forms.StatusStrip _mainStatus;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripStatusLabel _label;
         private System.Windows.Forms.ToolStripStatusLabel _lableFenstring;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.SplitContainer _splitContainer3;
         private System.Windows.Forms.TextBox _fenTextBox;
     }
