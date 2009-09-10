@@ -126,7 +126,16 @@ namespace Gean.Module.Chess
             Piece piece;
             if (this.TryGetPiece(pair.First.Dot, out piece))
             {
-                //第1步，判断目标棋格中是否有棋子。
+                //第1步，判断一下过路兵的格子的逻辑
+                if (piece is PiecePawn)
+                {
+                    if (pair.First.Y == pair.Second.Y)
+                    {
+                        return;
+                    }
+                }
+
+                //第2步，判断目标棋格中是否有棋子。
                 //如果有棋子，更改Action，调用PieceMoveOut方法。
                 if (this.ContainsPiece(pair.Second.Dot))
                 {
@@ -134,19 +143,20 @@ namespace Gean.Module.Chess
                     this.PieceMoveOut(pair.Second);
                 }
 
-                //第2步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
+                //第3步，调用内部方法PieceMoveIn，移动棋子，并更改FEN记录
                 this.PieceMoveIn(piece, pair.First, pair.Second);
 
-                //第3步，如上一步棋有过路兵的局面，先取消
+                //第4步，如上一步棋出现过“过路兵”的局面，而现在进行了新的一步棋了，故而取消上一步棋的“过路兵”局面。
                 if (_piecePawnByEnPassanted != null)
                 {
                     _piecePawnByEnPassanted.EnableEnPassanted = false;
                     _piecePawnByEnPassanted = null;
                 }
 
-                //第4步，判断是否过路兵的局面
+                //第5步，判断是否过路兵的局面
                 if (piece is PiecePawn)
                 {
+                    #region 过路兵
                     //成为能被吃过路兵的“兵”
                     if ((pair.First.Y == 1 && pair.Second.Y == 3) || (pair.First.Y == 6 && pair.Second.Y == 4))
                     {
@@ -182,13 +192,14 @@ namespace Gean.Module.Chess
                     {
                         ((PiecePawn)piece).EnableEnPassanted = false;
                     }
+                    #endregion
                 }
 
-                //第5步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
+                //第6步，移动棋子后，根据移动棋子后的局面生成Action，主要是判断另一战方的“王”是否被将军
                 action = this.IsCheckPieceKing(action, piece);
 
 
-                //第6步，注册棋子移动后事件
+                //第7步，注册棋子移动后事件
                 OnPieceMoveInEvent(piece, action, pair);
             }
         }
@@ -205,7 +216,7 @@ namespace Gean.Module.Chess
         {
             switch (piece.PieceType)
             {
-                #region case
+                #region case 王车易位，过路兵，升变
                 case Enums.PieceType.WhiteKing:
                 case Enums.PieceType.BlackKing:
                     {
@@ -215,7 +226,15 @@ namespace Gean.Module.Chess
                 case Enums.PieceType.WhitePawn:
                 case Enums.PieceType.BlackPawn:
                     {
-                        //TODO:在这里实现“吃过路兵”、“升变”
+                        //移走被吃的过路兵
+                        if (_piecePawnByEnPassanted != null)
+                        {
+                            if (tgtPos.X == _piecePawnByEnPassanted.Position.X)
+                            {
+                                PieceMoveOut(_piecePawnByEnPassanted.Position);
+                            }
+                        }
+                        //TODO:在这里实现“升变”
                         break;
                     }
                 case Enums.PieceType.WhiteQueen:

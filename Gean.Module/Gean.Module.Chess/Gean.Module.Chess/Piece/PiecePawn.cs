@@ -140,13 +140,10 @@ namespace Gean.Module.Chess
                     }
                     #endregion
                 }
-                else
-                {
-                    //剑指西北
-                    Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture, false);
-                    //剑指东北
-                    Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture, false);
-                }
+                //剑指西北
+                Position.Shift(this.GameSide, situation, this.Position.ShiftWestNorth(), enableMovein, enableCapture, false);
+                //剑指东北
+                Position.Shift(this.GameSide, situation, this.Position.ShiftEastNorth(), enableMovein, enableCapture, false);
                 #endregion
             }
             else
@@ -212,13 +209,10 @@ namespace Gean.Module.Chess
                     }
                     #endregion
                 }
-                else
-                {
-                    //剑指西南
-                    Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture, false);
-                    //剑指东南
-                    Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture, false);
-                }
+                //剑指西南
+                Position.Shift(this.GameSide, situation, this.Position.ShiftWestSouth(), enableMovein, enableCapture, false);
+                //剑指东南
+                Position.Shift(this.GameSide, situation, this.Position.ShiftEastSouth(), enableMovein, enableCapture, false);
                 #endregion
             }
         }
