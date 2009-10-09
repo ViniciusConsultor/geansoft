@@ -11,14 +11,15 @@ namespace Gean.Gui.ChessControl
     public class StepsPanel : FlowLayoutPanel
     {
         Font font = new Font("Consolas", 9);
-        SizeF labelSize;
+        Size labelSize;
 
 
         public StepsPanel()
         {
             using (Graphics g = this.CreateGraphics())
             {
-                labelSize = g.MeasureString("888. 88888", font);
+                SizeF sf = g.MeasureString("888. 88888", font);
+                labelSize = new Size((int)(sf.Width + 2), (int)(sf.Height + 5));
             }
 
             this.AutoScroll = true;
@@ -28,7 +29,7 @@ namespace Gean.Gui.ChessControl
         {
             StepLabel stepLabel = new StepLabel(step);
             stepLabel.Font = font;
-            stepLabel.Size = new Size((int)(labelSize.Width + 2), (int)(labelSize.Height + 5));
+            stepLabel.Size = labelSize;//new Size((int)(labelSize.Width + 2), (int)(labelSize.Height + 5));
             stepLabel.Margin = new Padding(2, 2, 2, 2);
             stepLabel.TextAlign = ContentAlignment.MiddleLeft;
             stepLabel.Click += new EventHandler(stepLabel_Click);
