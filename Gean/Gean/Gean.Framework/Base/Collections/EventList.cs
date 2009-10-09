@@ -5,6 +5,11 @@ using System.Diagnostics;
 
 namespace Gean
 {
+    /// <summary>
+    /// 一个支持Event的List。
+    /// 不可用，完成度50%
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class EventList<T> : List<T>
     {
         #region 一些新的方法
