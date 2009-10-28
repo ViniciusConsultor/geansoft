@@ -25,7 +25,7 @@ namespace Gean.Gui.WinForm
             {
                 return 1;
             }
-            RectangleF rect = new RectangleF(_labelList[Count - 1].AbsolutePointF, _labelList[Count - 1].SizeF);
+            RectangleF rect = new RectangleF(_labelList[Count - 1].Location, _labelList[Count - 1].Size);
             return rect.Y + rect.Height;
         }
 

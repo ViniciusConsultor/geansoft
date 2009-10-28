@@ -5,15 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{177AE121-2AF1-4EE7-A80E-9F28CB49106D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{8649B553-0F96-4CB7-A14E-D620576D058B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Gui.WinForm</RootNamespace>
-    <AssemblyName>Gean.Gui.WinForm</AssemblyName>
+    <RootNamespace>Gean.Client.SimpleRunner</RootNamespace>
+    <AssemblyName>Gean.Client.SimpleRunner</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>
-    </StartupObject>
+    <ApplicationIcon>rodimus.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,28 +34,32 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Gean.OpenSource\SQLite.NET\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.2.2864.18696, Culture=neutral, PublicKeyToken=d481317c817cec47, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Gean.OpenSource\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudsControl\CloudCollection.cs" />
-    <Compile Include="CloudsControl\CloudLabel.cs">
-      <SubType>Component</SubType>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CloudsControl\CloudsPanel.cs">
-      <SubType>Component</SubType>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IconToolStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="NumericLedBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,38 +78,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="QuickTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SimpleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SingleLine.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SpinnerControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ToolTipPro.cs" />
-    <Compile Include="TreeViewPro\DragDropResult.cs" />
-    <Compile Include="TreeViewPro\Enum\ContentType.cs" />
-    <Compile Include="TreeViewPro\Enum\DragDropResultType.cs" />
-    <Compile Include="TreeViewPro\Enum\TreeNodeType.cs" />
-    <Compile Include="TreeViewPro\SelectedNodeCollection.cs" />
-    <Compile Include="TreeViewPro\TreeNodeAttribute.cs" />
-    <Compile Include="TreeViewPro\TreeNodePro.cs" />
-    <Compile Include="TreeViewPro\TreeViewPro.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ValidateTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Gean\Gean\Gean.Framework\Gean.csproj">
-      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
-      <Name>Gean</Name>
-    </ProjectReference>
+    <Content Include="rodimus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -116,4 +90,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

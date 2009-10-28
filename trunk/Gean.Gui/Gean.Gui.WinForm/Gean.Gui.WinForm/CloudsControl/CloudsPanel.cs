@@ -181,7 +181,7 @@ namespace Gean.Gui.WinForm
 
             foreach (var item in this.CloudItems)
             {
-                item.AbsolutePointF = this.GetPointF(item.SizeF, item);
+                item.Location = Point.Ceiling(this.GetPointF(item.Size, item));
             }
             _currPoint = _defaultPoint;
 
@@ -253,8 +253,8 @@ namespace Gean.Gui.WinForm
 
                 for (int i = _lines[lineNum]; i < _lines[lineNum + innerLines + 1] - 1; i++)
                 {
-                    g.FillRectangle(backcolorBrush, new RectangleF(this.CloudItems[i].AbsolutePointF, this.CloudItems[i].SizeF));
-                    g.DrawString(this.CloudItems[i].Text, this.Font, txtBrush, this.CloudItems[i].AbsolutePointF);
+                    g.FillRectangle(backcolorBrush, new RectangleF(this.CloudItems[i].Location, this.CloudItems[i].Size));
+                    g.DrawString(this.CloudItems[i].Text, this.Font, txtBrush, this.CloudItems[i].Location);
                 }
             }
         }

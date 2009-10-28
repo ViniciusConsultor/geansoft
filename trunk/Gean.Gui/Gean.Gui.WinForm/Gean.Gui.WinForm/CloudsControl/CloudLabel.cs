@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Gean.Gui.WinForm
 {
-    public class CloudLabel
+    public class CloudLabel : Control
     {
-        internal SizeF SizeF { get; set; }
-        internal PointF AbsolutePointF { get; set; }
-        internal PointF RelativePointF { get; set; }
         internal int LineNumber { get; private set; }
         public int Number { get; private set; }
         public IGenerator Cloud { get; set; }
@@ -32,7 +30,7 @@ namespace Gean.Gui.WinForm
         {
             this.Cloud = cloud;
             this.Number = number;
-            this.SizeF = sizeF;
+            this.Size = Size.Ceiling(sizeF);
         }
 
         public CloudLabel(IGenerator cloud, int number) :
