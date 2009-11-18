@@ -1,20 +1,9 @@
-﻿#region 引用命名空间
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Resources;
 using Gean.Resources;
-#endregion
 
-/*  1. 功能：智能日期类型,特点：
- *  <1> 字符串与DateTime类型之间的自动转换
- *  <2> 能够理解"空"日期。
- *  <3> 能够在日期和空日期之间进行比较。
- *  2. 原作者：Rockford Lhotka,何平
- *  3. 整理人：simpkan, Http://www.nsimple.cn 
- *  4. 创建日期：2008-4-18
- *  5. 最后修改日期：2009-08-12 21:34:54
- */
 namespace Gean
 {
     /// <summary>
