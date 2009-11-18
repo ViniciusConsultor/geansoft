@@ -8,7 +8,7 @@ namespace Gean
 {
     public class SnipScreen
     {
-        private static Bitmap SnipFullScreen()
+        public static Bitmap SnipFullScreen()
         {
             //获取屏幕句柄，即源显示设备句柄
             IntPtr dc1 = CreateDC("DISPLAY", null, null, (IntPtr)null);
