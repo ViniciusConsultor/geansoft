@@ -122,5 +122,23 @@ namespace Gean
         }
         #endregion
 
+        #region Global Hotkey
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool RegisterGlobalHotkey(IntPtr hWnd, int id, GlobalHotkeyModifiers fsModifiers, Keys vk);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterGlobalHotkey(IntPtr hWnd, int id);
+
+        public enum GlobalHotkeyModifiers
+        {
+            MOD_ALT = 0x1,
+            MOD_CONTROL = 0x2,
+            MOD_SHIFT = 0x4,
+            MOD_WIN = 0x8
+        }
+
+        #endregion
     }
 }

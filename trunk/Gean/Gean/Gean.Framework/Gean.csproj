@@ -80,6 +80,7 @@
     <Compile Include="Wrapper\Database\SafeDataReader.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
+    <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
