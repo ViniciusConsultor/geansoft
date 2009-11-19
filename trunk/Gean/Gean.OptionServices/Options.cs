@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using System.Diagnostics;
 using System.IO;
-using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Gean.OptionServices
 {
     public sealed class Options
     {
-
         #region 单件实例
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace Gean.OptionServices
         #endregion
 
         private static Dictionary<string, string> _optionDictionary = new Dictionary<string, string>();
-        private static string _configfile;
+        private static string _configFile;
 
         /// <summary>
         /// Initializeses the specified config file.
@@ -51,7 +49,7 @@ namespace Gean.OptionServices
         /// <param name="configFile">The config file.</param>
         public static void Initializes(string configFile)
         {
-            _configfile = configFile;
+            _configFile = configFile;
             if (!File.Exists(configFile))//如果用户的配置文件不存在，创建默认的配置文件
             {
                 using (XmlTextWriter w = new XmlTextWriter(configFile, Encoding.UTF8))
@@ -156,7 +154,7 @@ namespace Gean.OptionServices
         public void Save()
         {
             XmlDocument optionXml = new XmlDocument();
-            optionXml.Load(_configfile);
+            optionXml.Load(_configFile);
             while (optionXml.DocumentElement.HasChildNodes)
             {
                 optionXml.DocumentElement.RemoveChild(optionXml.DocumentElement.FirstChild);
@@ -168,7 +166,7 @@ namespace Gean.OptionServices
                 ele.InnerText = item.Value;
                 optionXml.DocumentElement.AppendChild(ele);
             }
-            optionXml.Save(_configfile);
+            optionXml.Save(_configFile);
         }
 
         /// <summary>
