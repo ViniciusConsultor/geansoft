@@ -5,7 +5,7 @@ using System.Xml;
 using System.IO;
 using System.Diagnostics;
 
-namespace Gean.OptionServices
+namespace Gean
 {
     public sealed class Options
     {

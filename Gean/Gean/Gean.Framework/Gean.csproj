@@ -82,6 +82,7 @@
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\Options.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
