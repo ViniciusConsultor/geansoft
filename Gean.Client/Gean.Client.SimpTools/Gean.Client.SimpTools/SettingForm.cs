@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Gean.Client.SimpTools
 {
@@ -26,7 +27,15 @@ namespace Gean.Client.SimpTools
         protected override void OnActivated(EventArgs e)
         {
             this.Hide();
-        } 
+        }
+
+        private XmlDocument _settingDoc = new XmlDocument();
+        private MenuStrip _rightMenu = new MenuStrip();
+
+        private void RightMenuBuilder()
+        { 
+            
+        }
 
     }
 }

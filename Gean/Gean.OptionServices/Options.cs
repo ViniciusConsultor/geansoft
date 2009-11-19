@@ -4,234 +4,193 @@ using System.Text;
 using System.Xml;
 using System.Diagnostics;
 using System.IO;
-using System.Drawing;
-using System.Collections.Specialized;
+using Newtonsoft.Json;
 
 namespace Gean.OptionServices
 {
     public sealed class Options
     {
 
-        private Options() { }
-        private Options _options = null;
-        public static Options Options 
+        #region 单件实例
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Options"/> class.
+        /// </summary>
+        private Options()
         {
-            get
+            //在这里添加构造函数的代码
+        }
+
+        /// <summary>
+        /// 获得一个本类型的单件实例.
+        /// </summary>
+        /// <value>The instance.</value>
+        public static Options Instance
+        {
+            get { return Singleton.Instance; }
+        }
+
+        private class Singleton
+        {
+            static Singleton()
             {
-                if (_options == null)
+                Instance = new Options();
+            }
+
+            internal static readonly Options Instance = null;
+        }
+
+        #endregion
+
+        private static Dictionary<string, string> _optionDictionary = new Dictionary<string, string>();
+        private static string _configfile;
+
+        /// <summary>
+        /// Initializeses the specified config file.
+        /// </summary>
+        /// <param name="configFile">The config file.</param>
+        public static void Initializes(string configFile)
+        {
+            _configfile = configFile;
+            if (!File.Exists(configFile))//如果用户的配置文件不存在，创建默认的配置文件
+            {
+                using (XmlTextWriter w = new XmlTextWriter(configFile, Encoding.UTF8))
                 {
-                    _options = new Options();
-                    _options.Load();
+                    w.WriteStartDocument();
+                    w.WriteStartElement("configuration");
+                    w.WriteAttributeString("created", DateTime.Now.ToString());
+                    w.WriteAttributeString("applicationVersion", "1");
+                    w.WriteAttributeString("modified", DateTime.Now.ToString());
+                    w.WriteEndElement();
+                    w.Flush();
                 }
-                return _options;
             }
-        }
-
-        private static StringDictionary _innerDictionary = null;
-        private XmlDocument _docment = new XmlDocument();
-
-        private void Load(string confFile)
-        {
-            _innerDictionary = new StringDictionary();
-        }
-
-
-
-
-
-        static XmlDocument _softOptionXml;
-
-        /// <summary>
-        /// 加载选项的数据文件
-        /// </summary>
-        static public void Load()
-        {
-            if (_softOptionXml == null)
+            try
             {
-                _softOptionXml = new XmlDocument();
-                CheckAndLoadFile();
+                XmlDocument optionXml = new XmlDocument();
+                optionXml.Load(configFile);
+                LoadOptions(optionXml);
+            }
+            catch
+            {
+                File.Delete(configFile);
+                Initializes(configFile);
             }
         }
-        /// <summary>
-        /// 重新载入选项配置文件
-        /// </summary>
-        public static void ReLoad()
-        {
-            CheckAndLoadFile();
-        }
 
-        private static void CheckAndLoadFile()
+        /// <summary>
+        /// Loads the options.
+        /// </summary>
+        /// <param name="optionXml">The option XML.</param>
+        private static void LoadOptions(XmlDocument optionXml)
         {
-            //string fileName = PathService.Config_GlobalSetting;
-            //bool isFirst = false;
-            //if (!File.Exists(fileName))//如果用户的配置文件不存在，将默认的配置文件拷入
-            //{
-            //    File.Copy(PathService.CL_SoftOption, fileName, true);
-            //    File.SetAttributes(fileName, FileAttributes.Normal);
-            //    isFirst = true;
-            //}
-            //_softOptionXml.Load(fileName);
-            //if (isFirst)//保存配置文件重置后的当前时间
-            //{
-            //    XmlElement ele = _softOptionXml.DocumentElement;
-            //    ele.SetAttribute("saveTime", DateTime.Now.ToString());
-            //    _softOptionXml.Save(fileName);
-            //}
+            foreach (XmlNode item in optionXml.DocumentElement.ChildNodes)
+            {
+                if (item.NodeType != XmlNodeType.Element)
+                {
+                    continue;
+                }
+                XmlElement ele = (XmlElement)item;
+                _optionDictionary.Add(ele.GetAttribute("name"), ele.InnerText);
+            }
         }
 
         /// <summary>
-        /// 返回选项数据文件里Items元素
+        /// Gets or sets the <see cref="System.String"/> with the specified name.
         /// </summary>
-        /// <param name="itemName">items元素的名称</param>
+        /// <value></value>
+        public string this[string name]
+        {
+            get { return this.GetOptionValue(name); }
+            set { this.SetOption(name, value); }
+        }
+
+        /// <summary>
+        /// Gets the option value.
+        /// </summary>
+        /// <param name="name">The name.</param>
         /// <returns></returns>
-        static XmlElement GetItemElement(string itemsName)
+        public string GetOptionValue(string name)
         {
-            XmlElement ele = (XmlElement)_softOptionXml.SelectSingleNode(string.Format(@"options/option/items[@name='{0}']", itemsName));
-            Debug.Assert(ele != null, itemsName + ": Node isn't Find!");
-            return ele;
+            string value;
+            Debug.Assert(TryGetOptionValue(name, out value), string.Format("Option \"{0}\": Value is Null or Empty!", name));
+            return value;
         }
 
         /// <summary>
-        /// 取得节点的值
+        /// Tries the get option value.
         /// </summary>
-        /// <param name="itemsEle">当前元素的父级元素</param>
-        /// <param name="name">当前元素名称</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
         /// <returns></returns>
-        static public string GetNodeValue(XmlElement itemsEle, string name)
+        public bool TryGetOptionValue(string name, out string value)
         {
-            string nodeName = name.Trim();
-            XmlNode element = itemsEle.SelectSingleNode(string.Format("subItem[@name='{0}']", nodeName));
-
-#if DEBUG
-            if (element == null)
-            {
-                XmlElement ele = (XmlElement)element;
-                ele = _softOptionXml.CreateElement("subItem");
-                ele.SetAttribute("name", nodeName);
-                itemsEle.AppendChild(ele);
-                _softOptionXml.Save("");
-            }
-            element = itemsEle.SelectSingleNode(string.Format("subItem[@name='{0}']", nodeName));
-#endif
-
-            Debug.Assert(element != null, nodeName + " : SoftOptionService取得节点的值时没有找到节点！");
-            return element.InnerText;
+            return _optionDictionary.TryGetValue(name, out value);
         }
 
         /// <summary>
-        /// 设置节点的值
+        /// Sets the option.
         /// </summary>
-        /// <param name="itemsEle">当前元素的父级元素</param>
-        /// <param name="name">当前元素名称</param>
-        /// <param name="value">元素的值</param>
-        static void SetNodeValue(XmlElement itemsEle, string name, string value)
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        public void SetOption(string name, string value)
         {
-            string nodeName = name.Trim();
-            XmlNode node = itemsEle.SelectSingleNode(string.Format("subItem[@name='{0}']", nodeName));
-            if (node == null)
+            if (_optionDictionary.ContainsKey(name))
             {
-                XmlElement newElement = _softOptionXml.CreateElement("subItem");
-                newElement.SetAttribute("name", nodeName);
-                itemsEle.AppendChild(newElement);
-                node = (XmlNode)newElement;
-            }
-            node.InnerText = "";
-            XmlCDataSection data = _softOptionXml.CreateCDataSection(value);
-            node.AppendChild(data);
-        }
-
-        /// <summary>
-        /// 获取元素值
-        /// </summary>
-        /// <param name="itemsEle">当前元素的父级</param>
-        /// <param name="nodeName">当前元素的节点名</param>
-        /// <param name="returnType">当前元素值的类型</param>
-        /// <returns></returns>
-        static Object GetValue(XmlElement itemsEle, string nodeName, Type returnType)
-        {
-            string nodeValue = GetNodeValue(itemsEle, nodeName);
-
-            //  Debug.Assert(nodeValue != null);
-
-            if (returnType == typeof(Color))
-            {
-                Debug.Assert(nodeValue != "", "返回值不能为空");
-                return Color.FromArgb(int.Parse(nodeValue));
-            }
-            if (returnType == typeof(Boolean))
-            {
-                return bool.Parse(nodeValue);
-            }
-            if (returnType == typeof(int))
-            {
-                return UtilityConvert.ToInt32(nodeValue);
-            }
-            if (returnType == typeof(float))
-            {
-                return float.Parse(nodeValue);
-            }
-            if (returnType == typeof(long))
-            {
-                return long.Parse(nodeValue);
-            }
-            if (returnType == typeof(Decimal))
-            {
-                return decimal.Parse(nodeValue);
-            }
-            if (returnType == typeof(DateTime))
-            {
-                return DateTime.Parse(nodeValue);
-            }
-            if (returnType == typeof(String))
-            {
-                return nodeValue;
-            }
-            Debug.Fail(returnType + "类型不存在!");
-            return null;
-        }
-
-        /// <summary>
-        /// 设置元素值
-        /// </summary>
-        /// <param name="itemsEle">当前元素的父级</param>
-        /// <param name="nodeName">当前元素名称</param>
-        /// <param name="nodeValue">重新要赋给元素的值</param>
-        static void SetValue(XmlElement itemsEle, string nodeName, Object nodeValue)
-        {
-            string nodeVal = "";
-            Type valueType = nodeValue.GetType();
-
-            if (valueType == typeof(Color))
-            {
-                Color c = (Color)nodeValue;
-                nodeVal = c.ToArgb().ToString();
+                //更新option的值
+                _optionDictionary[name] = value;
             }
             else
             {
-                nodeVal = nodeValue.ToString();
+                //增加option的值
+                _optionDictionary.Add(name, value);
             }
 
-            SetNodeValue(itemsEle, nodeName, nodeVal);
+            //注册选项发生改变的项引发的事件
+            OnOptionChanged(new OptionChangedEventArgs(name, value));
         }
 
         /// <summary>
-        /// 外部可直接使用的选项配置文件XmlDocument的引用对象
+        /// Saves this instance.
         /// </summary>
-        public static XmlDocument SoftOptionXmlDocument
+        public void Save()
         {
-            get { return _softOptionXml; }
+            XmlDocument optionXml = new XmlDocument();
+            optionXml.Load(_configfile);
+            while (optionXml.DocumentElement.HasChildNodes)
+            {
+                optionXml.DocumentElement.RemoveChild(optionXml.DocumentElement.FirstChild);
+            }
+            foreach (var item in _optionDictionary)
+            {
+                XmlElement ele = optionXml.CreateElement("section");
+                ele.SetAttribute("name", item.Key);
+                ele.InnerText = item.Value;
+                optionXml.DocumentElement.AppendChild(ele);
+            }
+            optionXml.Save(_configfile);
         }
 
-        public static void Save()
+        /// <summary>
+        /// 当选项改变的时候发生的事件
+        /// </summary>
+        public event OptionChangedEventHandler OptionChangedEvent;
+        private void OnOptionChanged(OptionChangedEventArgs e)
         {
-            SoftOptionXmlDocument.Save("");
-
-            if (Saved != null)
+            if (OptionChangedEvent != null)
+                OptionChangedEvent(this, e);
+        }
+        public delegate void OptionChangedEventHandler(object sender, OptionChangedEventArgs e);
+        public class OptionChangedEventArgs : EventArgs
+        {
+            public string OptionName { get; private set; }
+            public string OptionValue { get; private set; }
+            public OptionChangedEventArgs(string name, string value)
             {
-                Saved(null, EventArgs.Empty);
+                this.OptionName = name;
+                this.OptionValue = value;
             }
         }
 
-        public static event EventHandler Saved;
     }
 }
