@@ -627,7 +627,7 @@ namespace Gean
                 else
                 {
                     double temp = Convert.ToDouble(data);
-                    return Math.Round(temp, decimals);
+                    return System.Math.Round(temp, decimals);
                 }
             }
             catch
@@ -681,7 +681,7 @@ namespace Gean
                 else
                 {
                     double temp = Convert.ToDouble(data);
-                    return Math.Round(temp, decimals);
+                    return System.Math.Round(temp, decimals);
                 }
             }
             catch
@@ -741,7 +741,7 @@ namespace Gean
                 else
                 {
                     decimal temp = Convert.ToDecimal(data);
-                    return Math.Round(temp, decimals);
+                    return System.Math.Round(temp, decimals);
                 }
             }
             catch
@@ -795,7 +795,7 @@ namespace Gean
                 else
                 {
                     decimal temp = Convert.ToDecimal(data);
-                    return Math.Round(temp, decimals);
+                    return System.Math.Round(temp, decimals);
                 }
             }
             catch

@@ -6,7 +6,6 @@ namespace Gean
 {
     public static class User32
     {
-
         #region LoadCursor
         [DllImport("user32.dll")]
         private static extern IntPtr LoadCursorFromFile(string fileName);

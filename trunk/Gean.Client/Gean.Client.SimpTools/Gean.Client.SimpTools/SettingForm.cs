@@ -20,8 +20,10 @@ namespace Gean.Client.SimpTools
 
         private void InitializeIcon()
         {
-            _mainNotifyIcon.Icon = new Icon("TheIcon.ico");
+            _mainNotifyIcon.Icon = new Icon("Resources\\TheIcon.ico");
             _mainNotifyIcon.Text = "Gean SimpTools.";
+            RightMenu menu = new RightMenu();
+            _mainNotifyIcon.ContextMenuStrip = menu;
         }
 
         protected override void OnActivated(EventArgs e)

@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.BigIntegerDemo", "Gean.BigIntegerDemo\Gean.BigIntegerDemo.csproj", "{2F23D875-9810-4E82-B454-6EBAC6704C29}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Gean.Framework.vsmdi
@@ -28,6 +30,10 @@ Global
 		{8641E9D9-F2A0-4347-A87B-8EC11FCE117D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8641E9D9-F2A0-4347-A87B-8EC11FCE117D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8641E9D9-F2A0-4347-A87B-8EC11FCE117D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F23D875-9810-4E82-B454-6EBAC6704C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F23D875-9810-4E82-B454-6EBAC6704C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F23D875-9810-4E82-B454-6EBAC6704C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F23D875-9810-4E82-B454-6EBAC6704C29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

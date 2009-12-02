@@ -41,7 +41,7 @@ namespace Gean.Chinese
         private static bool CheckIDCard18(string Id)
         {
             long n = 0;
-            if (long.TryParse(Id.Remove(17), out n) == false || n < Math.Pow(10, 16) || long.TryParse(Id.Replace('x', '0').Replace('X', '0'), out n) == false)
+            if (long.TryParse(Id.Remove(17), out n) == false || n < System.Math.Pow(10, 16) || long.TryParse(Id.Replace('x', '0').Replace('X', '0'), out n) == false)
             {
                 return false;//数字验证
             }
@@ -65,7 +65,7 @@ namespace Gean.Chinese
                 sum += int.Parse(Wi[i]) * int.Parse(Ai[i].ToString());
             }
             int y = -1;
-            Math.DivRem(sum, 11, out y);
+            System.Math.DivRem(sum, 11, out y);
             if (arrVarifyCode[y] != Id.Substring(17, 1).ToLower())
             {
                 return false;//校验码验证
@@ -81,7 +81,7 @@ namespace Gean.Chinese
         private static bool CheckIDCard15(string Id)
         {
             long n = 0;
-            if (long.TryParse(Id, out n) == false || n < Math.Pow(10, 14))
+            if (long.TryParse(Id, out n) == false || n < System.Math.Pow(10, 14))
             {
                 return false;//数字验证
             }

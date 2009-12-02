@@ -54,6 +54,12 @@
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\File\FileEncoding.cs" />
+    <Compile Include="Utility\Math\BigInteger.cs" />
+    <Compile Include="Utility\Math\Combination\Combinations.cs" />
+    <Compile Include="Utility\Math\Combination\CombinatorialBase.cs" />
+    <Compile Include="Utility\Math\Combination\Permutations.cs" />
+    <Compile Include="Utility\Math\Combination\Variations.cs" />
+    <Compile Include="Utility\Math\Combination\Permutation.cs" />
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />
@@ -62,7 +68,6 @@
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Widgets\Checker.cs" />
     <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
-    <Compile Include="Widgets\GlobaShortcut.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
     <Compile Include="Widgets\SnipScreen.cs" />
     <Compile Include="Wrapper\Database\DbEnums.cs" />
