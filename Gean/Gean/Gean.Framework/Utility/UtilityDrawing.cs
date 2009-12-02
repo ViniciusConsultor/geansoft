@@ -253,9 +253,9 @@ namespace Gean
 
             for (int i = 0; i < 256; ++i)
             {
-                redGamma[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / red)) + 0.5));
-                greenGamma[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / green)) + 0.5));
-                blueGamma[i] = (byte)Math.Min(255, (int)((255.0 * Math.Pow(i / 255.0, 1.0 / blue)) + 0.5));
+                redGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / red)) + 0.5));
+                greenGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / green)) + 0.5));
+                blueGamma[i] = (byte)System.Math.Min(255, (int)((255.0 * System.Math.Pow(i / 255.0, 1.0 / blue)) + 0.5));
             }
 
             // GDI+ still lies to us - the return format is BGR, NOT RGB.
@@ -313,16 +313,16 @@ namespace Gean
                     for (int x = 0; x < b.Width; ++x)
                     {
                         nPixel = p[2] + red;
-                        nPixel = Math.Max(nPixel, 0);
-                        p[2] = (byte)Math.Min(255, nPixel);
+                        nPixel = System.Math.Max(nPixel, 0);
+                        p[2] = (byte)System.Math.Min(255, nPixel);
 
                         nPixel = p[1] + green;
-                        nPixel = Math.Max(nPixel, 0);
-                        p[1] = (byte)Math.Min(255, nPixel);
+                        nPixel = System.Math.Max(nPixel, 0);
+                        p[1] = (byte)System.Math.Min(255, nPixel);
 
                         nPixel = p[0] + blue;
-                        nPixel = Math.Max(nPixel, 0);
-                        p[0] = (byte)Math.Min(255, nPixel);
+                        nPixel = System.Math.Max(nPixel, 0);
+                        p[0] = (byte)System.Math.Min(255, nPixel);
 
                         p += 3;
                     }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
-namespace Gean.Client.SimpTools
+namespace DemoTools
 {
     static class Program
     {
@@ -15,8 +14,7 @@ namespace Gean.Client.SimpTools
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SettingForm());
+            Application.Run(new Form1());
         }
-
     }
 }

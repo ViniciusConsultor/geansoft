@@ -580,21 +580,6 @@ namespace Gean
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // TODO: GetFullPath is a **very** expensive method (performance-wise)!
         // Call it only when necessary. (see IsEqualFile)
 
@@ -663,7 +648,7 @@ namespace Gean
             string[] bPath = dir2.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
             StringBuilder result = new StringBuilder();
             int indx = 0;
-            for (; indx < Math.Min(bPath.Length, aPath.Length); ++indx)
+            for (; indx < System.Math.Min(bPath.Length, aPath.Length); ++indx)
             {
                 if (bPath[indx].Equals(aPath[indx], StringComparison.OrdinalIgnoreCase))
                 {
@@ -704,7 +689,7 @@ namespace Gean
             string[] bPath = baseDirectoryPath.Split(separators);
             string[] aPath = absPath.Split(separators);
             int indx = 0;
-            for (; indx < Math.Min(bPath.Length, aPath.Length); ++indx)
+            for (; indx < System.Math.Min(bPath.Length, aPath.Length); ++indx)
             {
                 if (!bPath[indx].Equals(aPath[indx], StringComparison.OrdinalIgnoreCase))
                     break;
