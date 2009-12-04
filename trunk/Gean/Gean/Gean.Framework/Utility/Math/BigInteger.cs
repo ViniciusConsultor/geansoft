@@ -132,7 +132,7 @@
 #endregion
 using System;
 
-namespace Gean.MathHelper
+namespace Gean.Math
 {
 
     /// <summary>
@@ -1376,7 +1376,7 @@ namespace Gean.MathHelper
             constant.DataLength = i + 1;
 
             constant = constant / n;
-            int totalBits = exp.bitCount();
+            int totalBits = exp.BitCount();
             int count = 0;
 
             // perform squaring and multiply exponentiation
@@ -1530,11 +1530,12 @@ namespace Gean.MathHelper
             return g;
         }
 
-        //***********************************************************************
-        // Populates "this" with the specified amount of random bits
-        //***********************************************************************
-
-        public void genRandomBits(int bits, Random rand)
+        /// <summary>
+        /// 按照指定的位数随机填充实例
+        /// </summary>
+        /// <param name="bits"></param>
+        /// <param name="rand"></param>
+        public void RandomBitsGenerator(int bits, Random rand)
         {
             int dwords = bits >> 5;
             int remBits = bits & 0x1F;
@@ -1568,17 +1569,16 @@ namespace Gean.MathHelper
                 DataLength = 1;
         }
 
-        //***********************************************************************
-        // Returns the position of the most significant bit in the BigInteger.
-        //
-        // Eg.  The result is 0, if the value of BigInteger is 0...0000 0000
-        //      The result is 1, if the value of BigInteger is 0...0000 0001
-        //      The result is 2, if the value of BigInteger is 0...0000 0010
-        //      The result is 2, if the value of BigInteger is 0...0000 0011
-        //
-        //***********************************************************************
-
-        public int bitCount()
+        /// <summary>
+        /// 返回在BigInteger中的最重要的位的位置。
+        /// 
+        /// Eg.  The result is 0, if the value of BigInteger is 0...0000 0000
+        ///      The result is 1, if the value of BigInteger is 0...0000 0001
+        ///      The result is 2, if the value of BigInteger is 0...0000 0010
+        ///      The result is 2, if the value of BigInteger is 0...0000 0011
+        /// </summary>
+        /// <returns></returns>
+        public int BitCount()
         {
             while (DataLength > 1 && _Data[DataLength - 1] == 0)
                 DataLength--;
@@ -1638,7 +1638,7 @@ namespace Gean.MathHelper
             if ((thisVal._Data[0] & 0x1) == 0)     // even numbers
                 return false;
 
-            int bits = thisVal.bitCount();
+            int bits = thisVal.BitCount();
             BigInteger a = new BigInteger();
             BigInteger p_sub1 = thisVal - (new BigInteger(1));
             Random rand = new Random();
@@ -1655,7 +1655,7 @@ namespace Gean.MathHelper
                     while (testBits < 2)
                         testBits = (int)(rand.NextDouble() * bits);
 
-                    a.genRandomBits(testBits, rand);
+                    a.RandomBitsGenerator(testBits, rand);
 
                     int byteLen = a.DataLength;
 
@@ -1750,7 +1750,7 @@ namespace Gean.MathHelper
 
             BigInteger t = p_sub1 >> s;
 
-            int bits = thisVal.bitCount();
+            int bits = thisVal.BitCount();
             BigInteger a = new BigInteger();
             Random rand = new Random();
 
@@ -1766,7 +1766,7 @@ namespace Gean.MathHelper
                     while (testBits < 2)
                         testBits = (int)(rand.NextDouble() * bits);
 
-                    a.genRandomBits(testBits, rand);
+                    a.RandomBitsGenerator(testBits, rand);
 
                     int byteLen = a.DataLength;
 
@@ -1852,7 +1852,7 @@ namespace Gean.MathHelper
                 return false;
 
 
-            int bits = thisVal.bitCount();
+            int bits = thisVal.BitCount();
             BigInteger a = new BigInteger();
             BigInteger p_sub1 = thisVal - 1;
             BigInteger p_sub1_shift = p_sub1 >> 1;
@@ -1871,7 +1871,7 @@ namespace Gean.MathHelper
                     while (testBits < 2)
                         testBits = (int)(rand.NextDouble() * bits);
 
-                    a.genRandomBits(testBits, rand);
+                    a.RandomBitsGenerator(testBits, rand);
 
                     int byteLen = a.DataLength;
 
@@ -1960,7 +1960,7 @@ namespace Gean.MathHelper
                     done = true;    // J(D, this) = 1
                 else
                 {
-                    if (Jresult == 0 && Math.Abs(D) < thisVal)       // divisor found
+                    if (Jresult == 0 && System.Math.Abs(D) < thisVal)       // divisor found
                         return false;
 
                     if (dCount == 20)
@@ -1972,7 +1972,7 @@ namespace Gean.MathHelper
                     }
 
                     //Console.WriteLine(D);
-                    D = (Math.Abs(D) + 2) * sign;
+                    D = (System.Math.Abs(D) + 2) * sign;
                     sign = -sign;
                 }
                 dCount++;
@@ -2200,7 +2200,7 @@ namespace Gean.MathHelper
 
             BigInteger t = p_sub1 >> s;
 
-            int bits = thisVal.bitCount();
+            int bits = thisVal.BitCount();
             BigInteger a = 2;
 
             // b = a^t mod p
@@ -2325,7 +2325,7 @@ namespace Gean.MathHelper
 
             while (!done)
             {
-                result.genRandomBits(bits, rand);
+                result.RandomBitsGenerator(bits, rand);
                 result._Data[0] |= 0x01;		// make it odd
 
                 // prime test
@@ -2347,7 +2347,7 @@ namespace Gean.MathHelper
 
             while (!done)
             {
-                result.genRandomBits(bits, rand);
+                result.RandomBitsGenerator(bits, rand);
                 //Console.WriteLine(result.ToString(16));
 
                 // gcd test
@@ -2429,7 +2429,7 @@ namespace Gean.MathHelper
 
         public byte[] getBytes()
         {
-            int numBits = bitCount();
+            int numBits = BitCount();
 
             int numBytes = numBits >> 3;
             if ((numBits & 0x7) != 0)
@@ -2520,7 +2520,7 @@ namespace Gean.MathHelper
 
         public BigInteger sqrt()
         {
-            uint numBits = (uint)this.bitCount();
+            uint numBits = (uint)this.BitCount();
 
             if ((numBits & 0x1) != 0)        // odd number of bits
                 numBits = (numBits >> 1) + 1;
@@ -2654,7 +2654,7 @@ namespace Gean.MathHelper
             if ((k._Data[0] & 0x00000001) == 0)
                 throw (new ArgumentException("Argument k must be odd."));
 
-            int numbits = k.bitCount();
+            int numbits = k.BitCount();
             uint mask = (uint)0x1 << ((numbits & 0x1F) - 1);
 
             // v = v0, v1 = v1, u1 = u1, Q_k = Q^0
@@ -3009,7 +3009,7 @@ namespace Gean.MathHelper
                 Console.Write("Round = " + count);
 
                 BigInteger a = new BigInteger();
-                a.genRandomBits(t1, rand);
+                a.RandomBitsGenerator(t1, rand);
 
                 BigInteger b = a.sqrt();
                 BigInteger c = (b + 1) * (b + 1);
