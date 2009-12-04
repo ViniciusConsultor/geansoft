@@ -110,7 +110,7 @@ namespace Gean
         /// <returns></returns>
         public string GetOptionValue(string name)
         {
-            string value;
+            string value = string.Empty;
             Debug.Assert(TryGetOptionValue(name, out value), string.Format("Option \"{0}\": Value is Null or Empty!", name));
             return value;
         }

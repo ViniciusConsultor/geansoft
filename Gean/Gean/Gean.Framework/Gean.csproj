@@ -55,11 +55,13 @@
     </Compile>
     <Compile Include="Utility\File\FileEncoding.cs" />
     <Compile Include="Utility\Math\BigInteger.cs" />
-    <Compile Include="Utility\Math\Combination\Combinations.cs" />
-    <Compile Include="Utility\Math\Combination\CombinatorialBase.cs" />
-    <Compile Include="Utility\Math\Combination\Permutations.cs" />
-    <Compile Include="Utility\Math\Combination\Variations.cs" />
-    <Compile Include="Utility\Math\Combination\Permutation.cs" />
+    <Compile Include="Utility\Math\UtilityMath.cs" />
+    <Compile Include="Utility\Math\Combinatorics\Combinations.cs" />
+    <Compile Include="Utility\Math\Combinatorics\GenerateOption.cs" />
+    <Compile Include="Utility\Math\Combinatorics\IMetaCollection.cs" />
+    <Compile Include="Utility\Math\Combinatorics\Permutations.cs" />
+    <Compile Include="Utility\Math\Combinatorics\SmallPrimeUtility.cs" />
+    <Compile Include="Utility\Math\Combinatorics\Variations.cs" />
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
     <Compile Include="Utility\UtilityEquals.cs" />
