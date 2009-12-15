@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Gean.EastOfArt.Workbench")]
+[assembly: AssemblyTitle("Gean.EastOfArt.Data")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("nsimple.cn")]
-[assembly: AssemblyProduct("Gean.EastOfArt.Workbench")]
+[assembly: AssemblyProduct("Gean.EastOfArt.Data")]
 [assembly: AssemblyCopyright("Copyright © nsimple.cn 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("308843b0-ffac-40a0-9fb0-561f105e83e4")]
+[assembly: Guid("3ce188fe-88cb-405e-b9a4-424157e86e77")]
 
 // 程序集的版本信息由下面四个值组成:
 //
