@@ -1,12 +1,10 @@
-﻿#region 引用命名空间
-using System;
+﻿using System;
 using System.Data;
 using System.Configuration;
 using System.Data.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-#endregion
 
 namespace Gean.Data
 {

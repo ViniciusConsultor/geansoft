@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="mydemo_db" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=mydemo_db;Integrated Security=True;Pooling=False" SettingsObjectName="Gean.Data.SQLite.Demo.Properties.Settings" SettingsPropertyName="mydemo_dbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.[user]" Member="user">
+    <Type Name="user">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="pwd" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="login_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

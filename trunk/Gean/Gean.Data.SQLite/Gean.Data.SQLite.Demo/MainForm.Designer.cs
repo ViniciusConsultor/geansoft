@@ -32,8 +32,15 @@
             this._propertyGrid = new System.Windows.Forms.PropertyGrid();
             this._okButton = new System.Windows.Forms.Button();
             this._canelButton = new System.Windows.Forms.Button();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._listBox = new System.Windows.Forms.ListBox();
+            this._textBox = new System.Windows.Forms.TextBox();
+            this._splitContainer.Panel1.SuspendLayout();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _splitContainer
@@ -43,6 +50,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this._splitContainer.Location = new System.Drawing.Point(15, 16);
             this._splitContainer.Name = "_splitContainer";
+            // 
+            // _splitContainer.Panel1
+            // 
+            this._splitContainer.Panel1.Controls.Add(this.splitContainer1);
             // 
             // _splitContainer.Panel2
             // 
@@ -82,6 +93,42 @@
             this._canelButton.UseVisualStyleBackColor = true;
             this._canelButton.Click += new System.EventHandler(this._canelButton_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this._textBox);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this._listBox);
+            this.splitContainer1.Size = new System.Drawing.Size(372, 343);
+            this.splitContainer1.SplitterDistance = 124;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // _listBox
+            // 
+            this._listBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._listBox.FormattingEnabled = true;
+            this._listBox.Location = new System.Drawing.Point(0, 0);
+            this._listBox.Name = "_listBox";
+            this._listBox.Size = new System.Drawing.Size(372, 212);
+            this._listBox.TabIndex = 0;
+            // 
+            // _textBox
+            // 
+            this._textBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBox.Location = new System.Drawing.Point(0, 0);
+            this._textBox.Multiline = true;
+            this._textBox.Name = "_textBox";
+            this._textBox.Size = new System.Drawing.Size(372, 124);
+            this._textBox.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AcceptButton = this._okButton;
@@ -98,8 +145,13 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ControlDemo1";
+            this._splitContainer.Panel1.ResumeLayout(false);
             this._splitContainer.Panel2.ResumeLayout(false);
             this._splitContainer.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -110,5 +162,8 @@
         private System.Windows.Forms.PropertyGrid _propertyGrid;
         private System.Windows.Forms.Button _okButton;
         private System.Windows.Forms.Button _canelButton;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TextBox _textBox;
+        private System.Windows.Forms.ListBox _listBox;
     }
 }

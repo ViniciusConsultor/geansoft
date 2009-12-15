@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.SQLite.Demo", "Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.LinqToData", "Gean.LinqToData\Gean.LinqToData.csproj", "{9C7092DC-7ECF-41F5-9E19-0C882CC52F7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7092DC-7ECF-41F5-9E19-0C882CC52F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7092DC-7ECF-41F5-9E19-0C882CC52F7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7092DC-7ECF-41F5-9E19-0C882CC52F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7092DC-7ECF-41F5-9E19-0C882CC52F7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

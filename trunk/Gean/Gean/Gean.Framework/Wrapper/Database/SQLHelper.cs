@@ -2599,28 +2599,41 @@ namespace Gean.Data
         }
 
         #endregion Parameter Discovery Functions
-
+        
     }
 }
 
-/* sqlhelper使用指南
-http://blog.csai.cn/user1/18042/archives/2006/9812.html
+/* SqlHelper使用指南
+ * http://blog.csai.cn/user1/18042/archives/2006/9812.html
 
-sqlhelper使用指南
+ * SqlHelper使用指南
 
- * 摘要：Data Access Application Block 是一个 .NET 组件，包含优化的数据访问代码，可以帮助用户调用存储过程以及向 SQL Server 数据库发出 SQL 文本命令。它返回 SqlDataReader、DataSet 和 XmlReader 对象。您可以在自己的 .NET 应用程序中将其作为构造块来使用，以减少需要创建、测试和维护的自定义代码的数量。您可以下载完整的 C# 和 Visual Basic .NET 源代码以及综合文档。
+ * 摘要：Data Access Application Block 是一个 .NET 组件，包含优化的数据访问代码，
+ * 可以帮助用户调用存储过程以及向 SQL Server 数据库发出 SQL 文本命令。
+ * 它返回 SqlDataReader、DataSet 和 XmlReader 对象。
+ * 您可以在自己的 .NET 应用程序中将其作为构造块来使用，
+ * 以减少需要创建、测试和维护的自定义代码的数量。
+ * 您可以下载完整的 C# 和 Visual Basic .NET 源代码以及综合文档。
 
-简介
-您是否正在从事 .NET 应用程序数据访问代码的设计和开发？您是否觉得自己总是在反复编写相同的数据访问代码？您是否曾经将数据访问代码包装在 Helper 函数中，以便能够在一行中调用存储过程？如果是，那么 Microsoft&reg; Data Access Application Block for .NET 正是为您设计的。
+ * 简介
 
-Data Access Application Block 将访问 Microsoft SQL Server&#8482; 数据库的性能和资源管理方面的最佳经验封装在一起。您可以很方便地在自己的 .NET 应用程序中将其作为构造块使用，从页减少了需要创建、测试和维护的自定义代码的数量。
+ * 您是否正在从事 .NET 应用程序数据访问代码的设计和开发？
+ * 您是否觉得自己总是在反复编写相同的数据访问代码？
+ * 您是否曾经将数据访问代码包装在 Helper 函数中，以便能够在一行中调用存储过程？
+ * 如果是，那么 Microsoft Data Access Application Block for .NET 正是为您设计的。
 
-尤其是，Data Access Application Block 可以帮助您：
+ * Data Access Application Block 将访问 Microsoft SQL Server; 
+ * 数据库的性能和资源管理方面的最佳经验封装在一起。
+ * 您可以很方便地在自己的 .NET 应用程序中将其作为构造块使用，
+ * 从而大面积减少了需要创建、测试和维护的自定义代码的数量。
 
-调用存储过程或 SQL 文本命令。
-指定参数详细信息。
-返回 SqlDataReader、DataSet 或 XmlReader 对象。
-例如，在引用了 Data Access Application Block 的应用程序中，您可以简单地在一行代码中调用存储过程并生成 DataSet，如下所示：
+ * 尤其是，Data Access Application Block 可以帮助您：
+
+ * 调用存储过程或 SQL 文本命令。
+ * 指定参数详细信息。
+ * 返回 SqlDataReader、DataSet 或 XmlReader 对象。
+ * 例如，在引用了 Data Access Application Block 的应用程序中，
+ * 您可以简单地在一行代码中调用存储过程并生成 DataSet，如下所示：
 
 [Visual Basic]
 Dim ds As DataSet = SqlHelper.ExecuteDataset( _
