@@ -37,6 +37,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -78,7 +79,8 @@
     <Compile Include="Wrapper\Database\IBaseQuery.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Wrapper\Database\IDataBase.cs">
+    <Compile Include="Wrapper\Database\IDataBase.cs" />
+    <Compile Include="Wrapper\Database\ISafeQuery.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Wrapper\Database\IQuery.cs">
@@ -150,6 +152,9 @@
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Wrapper\Database\Sql_Connection_String .txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
