@@ -7,9 +7,9 @@ namespace Gean
     /// <summary>
     /// 用于取得一个文本文件的编码方式(Encoding)。
     /// </summary>
-    public class FileEncoding
+    public class TextFileEncoding
     {
-        public FileEncoding()
+        public TextFileEncoding()
         {
         }
 

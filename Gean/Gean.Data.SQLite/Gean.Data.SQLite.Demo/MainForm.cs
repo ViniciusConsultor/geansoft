@@ -5,16 +5,25 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SQLite;
 
 namespace Gean.Data.SQLite.Demo
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
-            SQLiteConnection conn = SQLiteHelper.GetSQLiteConnection(@"SQLiteLite.gdb");
+
+        }
+
+        private void _canelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void _okButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
