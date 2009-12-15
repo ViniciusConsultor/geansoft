@@ -53,7 +53,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\File\FileEncoding.cs" />
+    <Compile Include="Utility\File\TextFileEncoding.cs" />
     <Compile Include="Utility\Math\BigInteger.cs" />
     <Compile Include="Utility\Math\UtilityMath.cs" />
     <Compile Include="Utility\Math\Combinatorics\Combinations.cs" />
@@ -85,6 +85,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Wrapper\Database\SafeDataReader.cs" />
+    <Compile Include="Wrapper\Database\SQLHelper.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />

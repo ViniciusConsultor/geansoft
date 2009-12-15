@@ -21,6 +21,10 @@ namespace Gean.Data.SQLite
             return new SQLiteConnection("Data Source=\"" + filename + "\"");
         }
 
+        /// <summary>
+        /// Gets or sets 数据库文件实体.
+        /// </summary>
+        /// <value>数据库文件实体.</value>
         public static string SQLiteFile { get; set; }
 
         private static void PrepareCommand(SQLiteCommand cmd, SQLiteConnection conn, string cmdText, params object[] p)
@@ -35,7 +39,9 @@ namespace Gean.Data.SQLite
             if (p != null)
             {
                 foreach (object parm in p)
+                {
                     cmd.Parameters.AddWithValue(string.Empty, parm);
+                }
             }
         }
 
@@ -77,7 +83,7 @@ namespace Gean.Data.SQLite
         }
 
         ///<summary>
-        /// 返回SqlDataReader对象
+        /// 返回SqlDataReader对象。实现DataReader方法，取出一条一条记录
         ///</summary>
         ///<param name="cmdText"></param>
         ///<param name="commandParameters">传入的参数</param>
@@ -142,5 +148,71 @@ namespace Gean.Data.SQLite
             }
             return ds;
         }
+
+        /// <summary>
+        /// 根据数据库中的数据类型返回DotNet的数据类型
+        /// </summary>
+        /// <param name="type">数据库中的数据类型</param>
+        /// <returns>DotNet的数据类型</returns>
+        public static Type GetType(string type)
+        {
+            switch (type.ToLower())
+            {
+                case "int":
+                    return typeof(Int32);
+                case "text":
+                    return typeof(String);
+                case "bigint":
+                    return typeof(Int64);
+                case "binary":
+                    return typeof(System.Byte[]);
+                case "bit":
+                    return typeof(Boolean);
+                case "char":
+                    return typeof(String);
+                case "datetime":
+                    return typeof(System.DateTime);
+                case "decimal":
+                    return typeof(System.Decimal);
+                case "float":
+                    return typeof(System.Double);
+                case "image":
+                    return typeof(System.Byte[]);
+                case "money":
+                    return typeof(System.Decimal);
+                case "nchar":
+                    return typeof(String);
+                case "ntext":
+                    return typeof(String);
+                case "numeric":
+                    return typeof(System.Decimal);
+                case "nvarchar":
+                    return typeof(String);
+                case "real":
+                    return typeof(System.Single);
+                case "smalldatetime":
+                    return typeof(System.DateTime);
+                case "smallint":
+                    return typeof(Int16);
+                case "smallmoney":
+                    return typeof(System.Decimal);
+                case "timestamp":
+                    return typeof(System.DateTime);
+                case "tinyint":
+                    return typeof(System.Byte);
+                case "uniqueidentifier":
+                    return typeof(System.Guid);
+                case "varbinary":
+                    return typeof(System.Byte[]);
+                case "varchar":
+                    return typeof(String);
+                case "Variant":
+                    return typeof(Object);
+                default:
+                    return typeof(String);
+            }
+        }
+
     }
+
 }
