@@ -10,6 +10,19 @@ namespace Gean.Framework.Demo
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("  1. BigIntegerDemo");
+            Console.WriteLine("  2. EncryptDemo");
+            Console.WriteLine();
+            string key = Console.ReadLine();
+            switch (key)
+            {
+                case "1":
+                    BigIntegerDemo();
+                    break;
+                case "2":
+                    EncryptDemo();
+                    break;
+            }
         }
 
 

@@ -70,7 +70,7 @@ namespace Gean.Framework.Demo
             Console.Write("\nGenerating 512-bits random pseudoprime. . .");
             Random rand = new Random();
             BigInteger prime = BigInteger.genPseudoPrime(512, 5, rand);
-            Console.WriteLine("\n" + prime);
+            Console.WriteLine("\n" + prime + "\n");
 
             //int dwStart = System.Environment.TickCount;
             //BigInteger.MulDivTest(100000);
@@ -78,6 +78,7 @@ namespace Gean.Framework.Demo
             //BigInteger.RSATest2(10);
             //Console.WriteLine(System.Environment.TickCount - dwStart);
 
+            Console.WriteLine("Complated...........\n\n");
             Console.ReadKey();
         }
 
