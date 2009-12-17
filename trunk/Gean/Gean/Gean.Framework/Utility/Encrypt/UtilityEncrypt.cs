@@ -4,19 +4,25 @@ using System.Text;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace Gean
+namespace Gean.Encrypt
 {
     /// <summary>
-    /// 针对MD5类的扩展
+    /// 针对加解密方法的扩展
+    /// 2009-12-17 17:56:04
     /// </summary>
     public class UtilityEncrypt
     {
-        static MD5 _MD5;
+        /// <summary>
+        /// 本框架设定的缺省密钥字符串，只读状态。
+        /// </summary>
+        public static readonly string DefaultKey = "Gean.Encrypt";
 
-        /* .net中已有命名空间直接可以获得MD5，SHA1值
-        System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(temp_str, "md5"); 
-        System.Web.Configuration.FormsAuthPasswordFormat
-        */
+        private static MD5 _MD5;
+
+        /// <summary>
+        /// 默认密钥向量
+        /// </summary>
+        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
         /// <summary>
         /// 获得一个字符串的MD5值
@@ -31,20 +37,20 @@ namespace Gean
             }
 
             byte[] data = _MD5.ComputeHash(Encoding.Default.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < data.Length; i++)
             {
-                sBuilder.Append(data[i].ToString("x2"));
+                sb.Append(data[i].ToString("x2"));
             }
 
-            return sBuilder.ToString();
+            return sb.ToString();
         }
 
         /// <summary>
-        /// 校验一个字符串的MD5值
+        /// 得到一个指定的字符串的MD5值后，与提供的一个指定的MD5值进行比较
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="hash"></param>
+        /// <param name="input">指定的字符串</param>
+        /// <param name="hash">需进行比较的一个指定MD5值</param>
         /// <returns></returns>
         static public bool VerifyMd5String(string input, string hash)
         {
@@ -62,7 +68,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// SHA256函数
+        /// 获取用SHA256对一个指定的原始字符串进行加密后的字符串
         /// </summary>
         /// <param name="str">原始字符串</param>
         /// <returns>SHA256结果</returns>
@@ -75,12 +81,7 @@ namespace Gean
         }
 
         /// <summary>
-        /// 默认密钥向量
-        /// </summary>
-        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
-
-        /// <summary>
-        /// DES加密字符串
+        /// 获取用DES方法加密一个指定的待加密的字符串
         /// </summary>
         /// <param name="encryptString">待加密的字符串</param>
         /// <param name="encryptKey">加密密钥,要求为8位</param>

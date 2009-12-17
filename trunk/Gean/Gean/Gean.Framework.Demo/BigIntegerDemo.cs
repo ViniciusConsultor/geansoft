@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using Gean.MathHelper;
+using Gean.Math;
 
-namespace Gean.BigIntegerDemo
+namespace Gean.Framework.Demo
 {
-    class Program
+    partial class Program
     {
-        public static void Main(string[] args)
+        private static void BigIntegerDemo()
         {
             // Known problem -> these two pseudoprimes passes my implementation of
             // primality test but failed in JDK's isProbablePrime test.
@@ -79,5 +80,6 @@ namespace Gean.BigIntegerDemo
 
             Console.ReadKey();
         }
+
     }
 }

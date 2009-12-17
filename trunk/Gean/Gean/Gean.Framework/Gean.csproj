@@ -90,6 +90,10 @@
     <Compile Include="Wrapper\Database\SQLHelper.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
+    <Compile Include="Utility\Encrypt\DEncrypt.cs" />
+    <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
+    <Compile Include="Utility\Encrypt\HashEncode.cs" />
+    <Compile Include="Utility\Encrypt\RSACryption.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Options.cs" />
@@ -116,7 +120,7 @@
     <Compile Include="Utility\UtilityCollection.cs" />
     <Compile Include="Utility\UtilityConvert.cs" />
     <Compile Include="Utility\UtilityDateTime.cs" />
-    <Compile Include="Utility\UtilityEncrypt.cs" />
+    <Compile Include="Utility\Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Utility\UtilityGuid.cs" />
     <Compile Include="Utility\UtilityHardware.cs" />
     <Compile Include="Utility\UtilityKeys.cs" />

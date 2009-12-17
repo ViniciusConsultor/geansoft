@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Gean.BigIntegerDemo")]
+[assembly: AssemblyTitle("Gean.Framework.Demo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("nsimple.cn")]
-[assembly: AssemblyProduct("Gean.BigIntegerDemo")]
+[assembly: AssemblyProduct("Gean.Framework.Demo")]
 [assembly: AssemblyCopyright("Copyright © nsimple.cn 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("628da07a-3f8a-495c-ab7c-44548ab55dea")]
+[assembly: Guid("7a4e60fa-f991-4ddf-b78a-1f4816a517a6")]
 
 // 程序集的版本信息由下面四个值组成:
 //

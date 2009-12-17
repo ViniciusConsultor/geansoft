@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Gean.EastOfArt.Data
 {
-    class Class1
+    public class Unknown
     {
     }
 }

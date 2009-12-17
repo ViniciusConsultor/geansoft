@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogWriterTest.cs" />
-    <Compile Include="PermutationTest.cs" />
+    <Compile Include="UtilityMathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
