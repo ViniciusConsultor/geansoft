@@ -8,6 +8,47 @@ namespace Gean.Math
 {
     public class UtilityMath
     {
+        /// <summary>
+        /// 将一个字符类型的数字加1，如字符串"20060308"，加1后变成"20060309"。
+        /// 如果字符串是"0002006"，"JH200603"，甚至是"JH20060A01"，这个函数是
+        /// 将字符串的ASCII码+1，所以基本不需考虑是否包含字母或包含0前缀。 
+        /// </summary>
+        /// <param name="numberStr">The number STR.</param>
+        /// <returns></returns>
+        public static string IncString(string numberStr)
+        {
+            if (numberStr == "") return "";
+
+            char[] numberChar = numberStr.ToCharArray();
+            bool isJw = true; //进位
+            int charIndex = numberStr.Length - 1;
+            string resultStr = "";
+
+            while (charIndex >= 0)
+            {
+                if (isJw == true)
+                {
+                    isJw = false;
+                    if (numberStr[charIndex] == '9' || numberStr[charIndex] == 'Z' || numberStr[charIndex] == 'z')
+                    {
+                        resultStr = "0" + resultStr;
+                        isJw = true;
+                    }
+                    else
+                    {
+                        int ASCIIValue = (int)numberStr[charIndex] + 1;
+                        char ASCII = (char)ASCIIValue;
+                        resultStr = new string(ASCII, 1) + resultStr;
+                    }
+                }
+                else
+                {
+                    resultStr = new string(numberStr[charIndex], 1) + resultStr;
+                }
+                charIndex--;
+            }
+            return resultStr;
+        } 
 
         /// <summary>   
         /// 连乘积函数

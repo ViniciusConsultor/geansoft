@@ -1,6 +1,7 @@
-﻿using Gean.MathHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Gean.Math;
+
 namespace Gean.Framework.UnitTesting
 {
     
@@ -10,7 +11,7 @@ namespace Gean.Framework.UnitTesting
     ///包含所有 PermutationsTest 单元测试
     ///</summary>
     [TestClass()]
-    public class PermutationTest
+    public class UtilityMathTest
     {
         #region
 
@@ -75,28 +76,28 @@ namespace Gean.Framework.UnitTesting
             int r = 64;
             BigInteger expected = 1;
             BigInteger actual;
-            actual = Permutation.C(n, r);
+            actual = UtilityMath.C(n, r);
             Assert.AreEqual(expected, actual);
 
             r = 2;
             expected = 2016;
-            actual = Permutation.C(n, r);
+            actual = UtilityMath.C(n, r);
             Assert.AreEqual(expected, actual);
 
             r = 4;
             expected = 635376;
-            actual = Permutation.C(n, r);
+            actual = UtilityMath.C(n, r);
             Assert.AreEqual(expected, actual);
 
             r = 8;
             expected = 4426165368;
-            actual = Permutation.C(n, r);
+            actual = UtilityMath.C(n, r);
             Assert.AreEqual(expected, actual);
 
             n = 512;
             r = 32;
             string expectedstring = "702814253655938225018039814641109516123603866169840";
-            string actualstring = Permutation.C(n, r).ToString();
+            string actualstring = UtilityMath.C(n, r).ToString();
             Assert.AreEqual(expectedstring, actualstring);
         }
 
@@ -110,19 +111,19 @@ namespace Gean.Framework.UnitTesting
             int r = 1;
             BigInteger expected = 64;
             BigInteger actual;
-            actual = Permutation.P(n, r);
+            actual = UtilityMath.P(n, r);
             Assert.AreEqual(expected, actual);
 
             n = 64;
             r = 4;
             expected = 15249024;
-            actual = Permutation.P(n, r);
+            actual = UtilityMath.P(n, r);
             Assert.AreEqual(expected, actual);
 
             n = 64;
             r = 8;
             expected = 178462987637760;
-            actual = Permutation.P(n, r);
+            actual = UtilityMath.P(n, r);
             Assert.AreEqual(expected, actual);
         }
 
