@@ -15,7 +15,7 @@ namespace Gean.Encrypt
         /// <summary>
         /// 本框架设定的缺省密钥字符串，只读状态。
         /// </summary>
-        public static readonly string DefaultKey = "Gean.Encrypt";
+        public static readonly string DefaultKey = "DCBAmnxy";
 
         private static MD5 _MD5;
 
@@ -81,9 +81,9 @@ namespace Gean.Encrypt
         }
 
         /// <summary>
-        /// 获取用DES方法加密一个指定的待加密的字符串
+        /// 获取用DES方法加密 [一个指定的待加密的字符串] 后的字符串
         /// </summary>
-        /// <param name="encryptString">待加密的字符串</param>
+        /// <param name="encryptString">一个指定的待加密的字符串</param>
         /// <param name="encryptKey">加密密钥,要求为8位</param>
         /// <returns>加密成功返回加密后的字符串,失败返回源串</returns>
         public static string EncodeDESString(string encryptString, string encryptKey)

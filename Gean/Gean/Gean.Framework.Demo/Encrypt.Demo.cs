@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Gean.Encrypt;
+
+namespace Gean.Framework.Demo
+{
+    partial class Program
+    {
+        public static void EncryptDemo()
+        {
+            string encryptString = DateTime.Now.ToLongDateString() + DateTime.Now.ToLongTimeString();
+            
+            Console.WriteLine();
+            Console.WriteLine("DefaultKey = " + UtilityEncrypt.DefaultKey);
+            Console.WriteLine("\n待加密的字符串：" + encryptString);
+
+            Console.WriteLine("\nMD5 加密结果：" + UtilityEncrypt.GetMd5String(encryptString));
+            Console.WriteLine("\nMD5 加密结果：" + UtilityEncrypt.GetSHA256String(encryptString));
+
+            string e = UtilityEncrypt.EncodeDESString(encryptString, "12345678");
+            Console.WriteLine("\nDES 加密结果：" + );
+
+
+            Console.WriteLine("\nComplated...........\n\n");
+            Console.ReadKey();
+        }
+    }
+}
