@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gean.EastOfArt.Properties
+namespace Gean.EastOfArt.Workbench.Properties
 {
 
 
