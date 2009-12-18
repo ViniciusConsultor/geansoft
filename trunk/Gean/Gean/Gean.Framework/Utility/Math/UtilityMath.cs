@@ -9,6 +9,22 @@ namespace Gean.Math
     public class UtilityMath
     {
         /// <summary>
+        /// 按照四舍五入的规则进行舍位。
+        /// 因为Math.Round方法并不是遵循四舍五入的原则，而是采用“四舍六入五成双”这种方式，若需要
+        /// 舍入到的位的后面"小于5"或"大于5"的话,按通常意义的四舍五入处理。若"若需要舍入到的位的
+        /// 后面"等于5",则要看舍入后末位为偶数还是奇数。
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="decimals"></param>
+        /// <returns></returns>
+        public static decimal Round(decimal d, int decimals)
+        {
+            decimal tenPow = Convert.ToDecimal(System.Math.Pow(10, decimals));
+            decimal scrD = d * tenPow + 0.5m;
+            return (Convert.ToDecimal(System.Math.Floor(Convert.ToDouble(scrD))) / tenPow);
+        }
+
+        /// <summary>
         /// 将一个字符类型的数字加1，如字符串"20060308"，加1后变成"20060309"。
         /// 如果字符串是"0002006"，"JH200603"，甚至是"JH20060A01"，这个函数是
         /// 将字符串的ASCII码+1，所以基本不需考虑是否包含字母或包含0前缀。 
@@ -120,8 +136,30 @@ namespace Gean.Math
             return a / b;
         }
 
+        /// <summary>
+        /// 舍入的方式，指按“四舍五入”，或“四舍六入五成双”
+        /// </summary>
+        public enum RoundingMode
+        {
+            /// <summary>
+            /// 四舍五入
+            /// </summary>
+            Rounding_4she5ru,
+            /// <summary>
+            /// 四舍六入五成双(System.Math.Round的默认方式)。
+            /// Math.Round(1.25, 1) = 1.2 因为5前面是2,为偶数,所以把5舍去不进位。
+            /// Math.Round(1.35, 1) = 1.4 因为5前面是3,为奇数,所以进位。
+            /// 而0也看成为偶数,所以Math.Round(0.5, 0) = 0。
+            /// 从统计学的角度,"四舍六入五成双"比"四舍五入"要科学,它使舍入后的结果有的变大,有的变小,更
+            /// 平均.而不是像四舍五入那样逢五就入,导致结果偏向大数。
+            /// 例如:1.15+1.25+1.35+1.45=5.2,若按四舍五入取一位小数计算1.2+1.3+1.4+1.5=5.4。
+            /// 按"四舍六入五成双"计算,1.2+1.2+1.4+1.4=5.2,舍入后的结果更能反映实际结果。
+            /// </summary>
+            Rounding_4she6ru5chengshuang
+        }
+
         /// <summary>  
-        /// 排列循环方法  
+        /// [否决的，未完成的] 排列循环方法  
         /// </summary>  
         /// <param name="N"></param>  
         /// <param name="R"></param>  
@@ -151,7 +189,7 @@ namespace Gean.Math
         }
 
         /// <summary>  
-        /// 排列堆栈方法  
+        /// [否决的，未完成的] 排列堆栈方法  
         /// </summary>  
         /// <param name="N"></param>  
         /// <param name="R"></param>  
@@ -183,7 +221,7 @@ namespace Gean.Math
         }
 
         /// <summary>  
-        /// 组合  
+        /// [否决的，未完成的] 组合  
         /// </summary>  
         /// <param name="N"></param>  
         /// <param name="R"></param>  
@@ -194,7 +232,8 @@ namespace Gean.Math
         }
 
         /// <summary>
-        /// 10置换法
+        /// [否决的，未完成的] 
+        /// 10置换法完成组合
         /// 算法思想：
         /// (1)  初始化一个m个元素的数组（全部由0，1组成），将前n个初始化为1，后面的为0。这时候就可以输出第一个组合序列了。
         /// (2)  从前往后找，找到第一个10组合，将其反转成01，然后将这个10组合前面的所有1，全部往左边推 ，
