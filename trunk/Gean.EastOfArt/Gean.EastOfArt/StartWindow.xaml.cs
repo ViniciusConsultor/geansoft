@@ -28,7 +28,12 @@ namespace Gean.EastOfArt
         {
             InitializeComponent();
 
-            timer.Interval = 1200;
+            this.Loaded += new RoutedEventHandler(StartWindow_Loaded);
+        }
+
+        void StartWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            timer.Interval = 2200;
             timer.AutoReset = false;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer_Elapsed);
             timer.Start();
