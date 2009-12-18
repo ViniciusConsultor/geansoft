@@ -1,0 +1,4 @@
+﻿<Window x:Class="Gean.EastOfArt.StartWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="StartWindow" Height="270" Width="360" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False" Background="DarkCyan" WindowStyle="None" ResizeMode="NoResize" Cursor="Wait" BorderBrush="Red"></Window>
