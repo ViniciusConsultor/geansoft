@@ -32,21 +32,19 @@ namespace Gean
             if (obj == null) return false;
             if (obj is System.DBNull) return false;
             if (obj is Pair<A, B>)
-                return Equals((Pair<A, B>)obj); // use Equals method below
+                return Equals((Pair<A, B>)obj);
             else
                 return false;
         }
 
         public bool Equals(Pair<A, B> other)
         {
-            // add comparisions for all members here
             return First.Equals(other.First) && Second.Equals(other.Second);
         }
 
         public override int GetHashCode()
         {
-            // combine the hash codes of all members here (e.g. with XOR operator ^)
-            return unchecked(3 * (First.GetHashCode() ^ Second.GetHashCode()));
+            return unchecked(27 * (First.GetHashCode() ^ Second.GetHashCode()));
         }
 
         public override string ToString()

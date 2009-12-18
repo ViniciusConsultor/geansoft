@@ -70,24 +70,14 @@
     <Compile Include="Utility\UtilityRAR.cs" />
     <Compile Include="Utility\UtilityType.cs" />
     <Compile Include="Widgets\Checker.cs" />
-    <Compile Include="Widgets\Chinese\ChineseRandom.cs" />
+    <Compile Include="Widgets\Chinese\ChineseSpellRandom.cs" />
+    <Compile Include="Widgets\Chinese\ChineseRmb.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
     <Compile Include="Widgets\SnipScreen.cs" />
-    <Compile Include="Wrapper\Database\DbEnums.cs" />
     <Compile Include="Wrapper\Database\DbParam.cs" />
     <Compile Include="Wrapper\Database\DbParamCollection.cs" />
-    <Compile Include="Wrapper\Database\IBaseQuery.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Wrapper\Database\IDataBase.cs" />
-    <Compile Include="Wrapper\Database\ISafeQuery.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Wrapper\Database\IQuery.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Wrapper\Database\SafeDataReader.cs" />
-    <Compile Include="Wrapper\Database\SQLHelper.cs" />
+    <Compile Include="Wrapper\Database\Helper\SQLHelper.cs" />
     <Compile Include="Wrapper\Definer\Definer.cs" />
     <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
     <Compile Include="Utility\Encrypt\DEncrypt.cs" />
@@ -159,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Wrapper\Database\Sql_Connection_String .txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Wrapper\Database\Interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

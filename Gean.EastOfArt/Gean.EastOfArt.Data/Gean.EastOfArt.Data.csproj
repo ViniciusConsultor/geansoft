@@ -57,7 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="ImageRecords.generated.cs" />
     <Compile Include="Members.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -180,7 +180,7 @@ namespace Gean.Data
 
         #endregion
 
-        #region ExecuteNonQuery
+        #region 执行不返回任何行或值的命令
 
         //此方法用于执行不返回任何行或值的命令。这些命令通常用于执行数据库更新，但也可用于返回存储过程的输出参数。
 
@@ -446,7 +446,7 @@ namespace Gean.Data
 
         #endregion ExecuteNonQuery
 
-        #region ExecuteDataset
+        #region 返回 DataSet 对象，该对象包含由某一命令返回的结果集。
 
         //此方法返回 DataSet 对象，该对象包含由某一命令返回的结果集。 
 
@@ -729,7 +729,7 @@ namespace Gean.Data
 
         #endregion ExecuteDataset
 
-        #region ExecuteReader
+        #region 返回 SqlDataReader 对象，该对象包含由某一命令返回的结果集。
 
         //此方法用于返回 SqlDataReader 对象，该对象包含由某一命令返回的结果集。 
 
@@ -1049,7 +1049,7 @@ namespace Gean.Data
 
         #endregion ExecuteReader
 
-        #region ExecuteScalar
+        #region 返回一个值。该值始终是该命令返回的第一行的第一列。
 
         //此方法返回一个值。该值始终是该命令返回的第一行的第一列。 
 
@@ -1317,7 +1317,7 @@ namespace Gean.Data
 
         #endregion ExecuteScalar
 
-        #region ExecuteXmlReader
+        #region 返回 FOR XML 查询的 XML 片段。
 
         //此方法返回 FOR XML 查询的 XML 片段。 
 
@@ -1507,7 +1507,7 @@ namespace Gean.Data
 
         #endregion ExecuteXmlReader
 
-        #region FillDataset
+        #region 填充数据集
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
         /// the connection string. 
@@ -1838,7 +1838,7 @@ namespace Gean.Data
         }
         #endregion
 
-        #region UpdateDataset
+        #region Update DataSet
         /// <summary>
         /// Executes the respective command for each inserted, updated, or deleted row in the DataSet.
         /// </summary>

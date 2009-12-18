@@ -24,7 +24,7 @@ namespace Gean.Data
         public void AddParam(string paramName, DbType type, object value)
         {
             //创建参数对象
-            DbParam param = new DbParam(paramName, type, value);
+            DbParam param = new DbParam(type, paramName, value);
 
             //添加到集合
             _params.Add(param);

@@ -20,14 +20,14 @@ namespace Gean
         /// <summary>
         /// 表示伪随机数生成器。静态属性。
         /// </summary>
-        static Random Randow { get; set; }
+        static Random Random { get; set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         public UtilityRandom()
         {
-            Randow = new Random(unchecked((int)DateTime.Now.Ticks));
+            Random = new Random(unchecked((int)DateTime.Now.Ticks));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Gean
             int[] ints = new int[num];
             for (int i = 0; i < num; i++)
             {
-                ints[i] = Randow.Next(minValue, maxValue);
+                ints[i] = Random.Next(minValue, maxValue);
             }
             return ints;
         }
@@ -78,7 +78,7 @@ namespace Gean
                 bool hasValue = false;
                 while (!hasValue)
                 {
-                    int m = Randow.Next(minValue, maxValue);
+                    int m = Random.Next(minValue, maxValue);
                     if (!ints.Contains(m))
                     {
                         ints.Add(m);
@@ -136,7 +136,7 @@ namespace Gean
                     bool isLow = true;
                     while (isLow)//如果生成的数是小写字母范围的，去除
                     {
-                        int m = Randow.Next(begin, end);
+                        int m = Random.Next(begin, end);
                         if (!(m >= 10 && m < 10 + 26))
                         {
                             sb.Append(chars[m]);
@@ -146,7 +146,7 @@ namespace Gean
                 }
                 else
                 {
-                    sb.Append(chars[Randow.Next(begin, end)]);
+                    sb.Append(chars[Random.Next(begin, end)]);
                 }
             }
             return sb.ToString();

@@ -20,7 +20,8 @@ namespace Gean.Framework.Demo
             Console.WriteLine("\nMD5 加密结果：" + UtilityEncrypt.GetSHA256String(encryptString));
 
             string e = UtilityEncrypt.EncodeDESString(encryptString, "12345678");
-            Console.WriteLine("\nDES 加密结果：" + );
+            Console.WriteLine("\nDES 加密结果：" + e);
+            Console.WriteLine("\nDES 解密结果：" + UtilityEncrypt.DecodeDESString(e, "12345678"));
 
 
             Console.WriteLine("\nComplated...........\n\n");
