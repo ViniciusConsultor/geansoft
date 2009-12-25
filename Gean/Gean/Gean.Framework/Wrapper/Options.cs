@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Gean
 {
-    public sealed class Options
+    public class Options
     {
         #region 单件实例
 

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Base\CloneableObject.cs" />
     <Compile Include="Base\Triplet.cs" />
+    <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
     <Compile Include="Interface\Tree,Item\IItem.cs" />
@@ -74,12 +75,15 @@
     <Compile Include="Widgets\Chinese\ChineseRmb.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
     <Compile Include="Widgets\SnipScreen.cs" />
+    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPool.cs" />
+    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPoolEnum.cs" />
+    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPoolException.cs" />
+    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionStruct.cs" />
     <Compile Include="Wrapper\Database\DbParam.cs" />
     <Compile Include="Wrapper\Database\DbParamCollection.cs" />
     <Compile Include="Wrapper\Database\SafeDataReader.cs" />
     <Compile Include="Wrapper\Database\Helper\SQLHelper.cs" />
-    <Compile Include="Wrapper\Definer\Definer.cs" />
-    <Compile Include="Wrapper\Definer\DefinerChangedEvent.cs" />
+    <Compile Include="Base\Collections\Definition.cs" />
     <Compile Include="Utility\Encrypt\DEncrypt.cs" />
     <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
     <Compile Include="Utility\Encrypt\HashEncode.cs" />
@@ -152,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Wrapper\Database\Interface\" />
+    <Folder Include="Wrapper\Definer\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

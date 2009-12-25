@@ -1,16 +1,10 @@
-﻿#region 命名空间引用
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Data;
-using System.Data.Common;
-#endregion
 
 namespace Gean.Data
 {
     /// <summary>
-    /// 数据读取器的增强版本
+    /// 数据读取器DataReader的增强版本
     /// </summary>
     public class SafeDataReader : IDisposable
     {
@@ -18,7 +12,7 @@ namespace Gean.Data
         /// <summary>
         /// 数据读取器
         /// </summary>
-        private IDataReader _reader;
+        protected IDataReader _reader;
         #endregion
 
         #region 构造函数
@@ -163,7 +157,7 @@ namespace Gean.Data
         /// 获取GUID
         /// </summary>
         /// <param name="fieldName">字段名</param>
-        public Guid GetGUID(string fieldName)
+        public Guid GetGuid(string fieldName)
         {
             //有效性检测
             if (Checker.IsNullOrEmpty(fieldName) || _reader[fieldName] == null)
