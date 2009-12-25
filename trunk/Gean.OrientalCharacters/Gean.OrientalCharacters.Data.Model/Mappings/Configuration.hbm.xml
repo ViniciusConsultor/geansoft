@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Gean.EasternArt.Data.Model.Configuration,Gean.EasternArt.Data.Model" table="Configuration" lazy="true" mutable="false">
+    <id name="_id" access="field" column="Id" type="long">
+      <generator class="native" />
+    </id>
+    <property type="string" access="field" not-null="true" length="24" name="_configurationkey" column="[ConfigurationKey]" />
+    <property type="string" access="field" not-null="true" length="24" name="_configurationvalue" column="[ConfigurationValue]" />
+    <property type="long" access="field" not-null="true" name="_owner" column="[Owner]" />
+    <property type="DateTime" access="field" not-null="true" name="_modifeddatatime" column="[ModifedDatatime]" />
+  </class>
+</hibernate-mapping>

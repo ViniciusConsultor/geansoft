@@ -10,7 +10,7 @@ namespace Gean.Framework.Demo
     partial class Program
     {
         static void Main(string[] args)
-        {
+        {        
             Console.WriteLine();
             Console.WriteLine("  1. BigIntegerDemo");
             Console.WriteLine("  2. EncryptDemo");
