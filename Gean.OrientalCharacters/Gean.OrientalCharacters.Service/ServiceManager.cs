@@ -23,7 +23,7 @@ namespace Gean.EasternArt.Service
         /// </summary>
         public static void InitializeService()
         {
-            _informationsService.Demo_AddStartupInformation(100 * 100);
+            _informationsService.Demo_AddStartupInformation(35);
 
             //初始化完成，置完成状态为真
             _initializeState = true;
