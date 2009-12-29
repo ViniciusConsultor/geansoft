@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 //[assembly: AssemblyCompany("http://www.nsimple.cn/")]
 //[assembly: AssemblyProduct("OrientalCharacters")]
 //[assembly: AssemblyCopyright("Copyright © nsimple.cn 2010")]
-//[assembly: AssemblyTrademark("")]
+//[assembly: AssemblyTrademark("nsimple, software:OrientalCharacters")]
 //[assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 //[assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("86504480-7A44-430d-A6AB-F23DD72C2326")]
+[assembly: Guid("d8ccf9dc-bc08-4ecf-a85a-a773b111913d")]
 
 // 程序集的版本信息由下面四个值组成:
 //

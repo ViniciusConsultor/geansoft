@@ -7,7 +7,8 @@ using System.Collections;
 namespace Gean.Data
 {
     /// <summary>
-    /// SqlHelper 类提供了一组静态方法，可以用来向 SQL Server 数据库发出许多各种不同类型的命令。 
+    /// 一个由微软提供的数据访问组件(助手类)，其封装很严密，且应用简单。
+    /// 目的是从数据库获得信息或将信息保存到数据库。
     /// </summary>
     public sealed class SqlHelper
     {

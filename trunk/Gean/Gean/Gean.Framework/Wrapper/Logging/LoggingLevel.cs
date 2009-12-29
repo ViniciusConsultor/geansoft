@@ -1,9 +1,9 @@
-﻿namespace Gean
+﻿namespace Gean.Logging
 {
     /// <summary>
     /// 日志信息级别
     /// </summary>
-    public enum LogLevel
+    public enum LoggingLevel
     {
         /// <summary>
         /// 信息
