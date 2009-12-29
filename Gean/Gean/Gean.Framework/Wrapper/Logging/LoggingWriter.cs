@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace Gean
+namespace Gean.Logging
 {
-    public class LogWriter : ILogWriter
+    public class LoggingWriter : ILoggingWriter
     {
         protected virtual FileInfo LogFile { get; set; }
         protected virtual StreamWriter Stream { get; set; }
@@ -16,7 +16,7 @@ namespace Gean
         /// 构造函数。文本文件日志记录类。
         /// </summary>
         /// <param name="logfiles">日志记录的文件</param>
-        private LogWriter(string logfile)
+        private LoggingWriter(string logfile)
         {
             if (!File.Exists(logfile))//如果Log文件存在，将不在保留
             {
@@ -34,7 +34,7 @@ namespace Gean
                 {
                     logfile += ".log";
                 }
-                Stream = LogWriter.FileCreator(logfile);
+                Stream = LoggingWriter.FileCreator(logfile);
             }
             this.LogFile = new FileInfo(logfile);
         }
@@ -44,7 +44,7 @@ namespace Gean
         /// </summary>
         /// <param name="logLevel">当前信息的日志等级</param>
         /// <param name="message">信息主体，可是多个对象(当未是String时，将会调用object的Tostring()获取字符串)</param>
-        public void Write(LogLevel logLevel, params object[] message)
+        public void Write(LoggingLevel logLevel, params object[] message)
         {
             lock (Stream)
             {
@@ -77,16 +77,16 @@ namespace Gean
             }//lock (_StreamWriterDic)
         }
 
-        static LogWriter _logWriter = null;
+        static LoggingWriter _logWriter = null;
         /// <summary>
         /// 文本文件日志记录类的初始化，主要初始化日志文件。
         /// </summary>
         /// <param name="logTaget">log文件的完全路径名</param>
-        public static LogWriter InitializeComponent(string logfiles)
+        public static LoggingWriter InitializeComponent(string logfiles)
         {
             if (_logWriter == null)
             {
-                _logWriter = new LogWriter(logfiles);
+                _logWriter = new LoggingWriter(logfiles);
             }
             return _logWriter;
         }

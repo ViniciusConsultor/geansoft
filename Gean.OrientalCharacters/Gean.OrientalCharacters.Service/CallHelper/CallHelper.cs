@@ -2,11 +2,14 @@
 using System;
 using System.Windows.Forms;
 using Gean.OrientalCharacters.CoreWorkbench;
+using Gean.OrientalCharacters.Service;
+using Gean.Logging;
 
 namespace Gean.EasternArt.Service
 {
     public sealed class CallHelper
     {
+        private static NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// 调入EasternArt主窗体进行显示.
@@ -19,6 +22,7 @@ namespace Gean.EasternArt.Service
             bench.Closing += new CancelEventHandler(StartupWindowClosing);
             bench.Show();
             window.Activate();
+            _logger.Info(LogString.Normal(StringService.CoreWorkbenchGettingOpened));
         }
         /// <summary>
         /// 欢迎窗体
@@ -34,6 +38,7 @@ namespace Gean.EasternArt.Service
             if (_startupWindow == null)
                 return;
             _startupWindow.Close();
+            _logger.Info(LogString.Normal(StringService.CoreWorkbenchAlreadyClosed));
         }
 
     }

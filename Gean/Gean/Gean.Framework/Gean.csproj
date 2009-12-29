@@ -75,20 +75,13 @@
     <Compile Include="Widgets\Chinese\ChineseRmb.cs" />
     <Compile Include="Widgets\SmartDate.cs" />
     <Compile Include="Widgets\SnipScreen.cs" />
-    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPool.cs" />
-    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPoolEnum.cs" />
-    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionPoolException.cs" />
-    <Compile Include="Wrapper\Database\ConnectionPool\ConnectionStruct.cs" />
-    <Compile Include="Wrapper\Database\DbParam.cs" />
-    <Compile Include="Wrapper\Database\DbParamCollection.cs" />
-    <Compile Include="Wrapper\Database\SafeDataReader.cs" />
-    <Compile Include="Wrapper\Database\Helper\SQLHelper.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
     <Compile Include="Utility\Encrypt\DEncrypt.cs" />
     <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
     <Compile Include="Utility\Encrypt\HashEncode.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
+    <Compile Include="Wrapper\Logging\LogString.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Options.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
@@ -106,7 +99,7 @@
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\EventArgs\ChangedEventArgs.cs" />
     <Compile Include="Base\EventArgs\EventArgs.cs" />
-    <Compile Include="Wrapper\Logger\ILogWriter.cs" />
+    <Compile Include="Wrapper\Logging\ILoggingWriter.cs" />
     <Compile Include="Utility\File\FileEnums.cs" />
     <Compile Include="Utility\File\FileSearching.cs" />
     <Compile Include="Utility\File\UtilityFile.cs" />
@@ -124,8 +117,8 @@
     <Compile Include="Widgets\Chinese\ChineseIDCardValid.cs" />
     <Compile Include="Widgets\Chinese\ChineseSpell.cs" />
     <Compile Include="Widgets\Duration.cs" />
-    <Compile Include="Wrapper\Logger\LogLevel.cs" />
-    <Compile Include="Wrapper\Logger\LogWriter.cs" />
+    <Compile Include="Wrapper\Logging\LoggingLevel.cs" />
+    <Compile Include="Wrapper\Logging\LoggingWriter.cs" />
     <Compile Include="Wrapper\User32.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
@@ -150,13 +143,6 @@
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Wrapper\Database\Sql_Connection_String .txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wrapper\Database\Interface\" />
-    <Folder Include="Wrapper\Definer\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
