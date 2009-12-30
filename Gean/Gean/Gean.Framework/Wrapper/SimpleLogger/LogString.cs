@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Logging
+namespace Gean.SimpleLogger
 {
     /// <summary>
     /// 组装一些较易阅读的日志字符串

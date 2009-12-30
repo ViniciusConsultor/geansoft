@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Logging
+namespace Gean.SimpleLogger
 {
     public interface ILoggingWriter
     {

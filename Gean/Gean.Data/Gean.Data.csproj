@@ -40,15 +40,13 @@
     <Compile Include="ConnectionPool\ConnectionPoolEnum.cs" />
     <Compile Include="ConnectionPool\ConnectionPoolException.cs" />
     <Compile Include="ConnectionPool\ConnectionStruct.cs" />
-    <Compile Include="DbParam.cs" />
-    <Compile Include="DbParamCollection.cs" />
-    <Compile Include="Helper\SQLHelper.cs" />
+    <Compile Include="DataTransfer.cs" />
+    <Compile Include="SQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SafeDataReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gean.Data.cd" />
-    <None Include="Sql_Connection_String .txt" />
+    <None Include="SQLHelper.cd" />
+    <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gean\Gean.Framework\Gean.csproj">
