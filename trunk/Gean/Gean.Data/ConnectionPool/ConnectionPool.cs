@@ -43,7 +43,7 @@ namespace Gean.Data
         private bool isThreadCheckRun = false;
         //private Mutex mUnique = new Mutex();
         #endregion
-        //--------------------------------------------------------------------
+
         #region 构造方法 与 初始化函数
         /// <summary>
         /// 初始化连接池
@@ -113,7 +113,7 @@ namespace Gean.Data
         }
 
         #endregion
-        //--------------------------------------------------------------------
+
         #region 属性部分
         /// <summary>
         /// 连接池服务状态
@@ -375,7 +375,7 @@ namespace Gean.Data
         }
 
         #endregion
-        //--------------------------------------------------------------------
+
         #region 启动服务 与 终止服务
         /// <summary>
         /// 启动服务，线程安全，同步调用
@@ -457,7 +457,7 @@ namespace Gean.Data
         }
 
         #endregion
-        //--------------------------------------------------------------------
+
         #region 获得连接 与 释放连接
         /// <summary>
         /// 在连接池中申请一个连接，使用None级别，线程安全
@@ -662,7 +662,7 @@ namespace Gean.Data
         }
 
         #endregion
-        //--------------------------------------------------------------------
+
         #region 私有方法
         private int createThreadMode = 0;//创建线程工作模式
         private int createThreadProcessTemp = 0;//需要创建的连接数

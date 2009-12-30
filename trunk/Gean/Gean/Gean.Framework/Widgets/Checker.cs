@@ -43,5 +43,17 @@ namespace Gean
             return IsNullOrEmpty<object>(data);
         }
 
+        ///// <summary>
+        ///// 判断某值是否在枚举内（位枚举）
+        ///// </summary>
+        ///// <param name="checkingValue">被检测的枚举值</param>
+        ///// <param name="expectedValue">期望的枚举值</param>
+        ///// <returns></returns>
+        //public static bool Exists<E>(E checkingValue, E expectedValue) where E : Enum
+        //{
+        //    int intCheckingValue = Convert.ToInt32(checkingValue);
+        //    int intExpectedValue = Convert.ToInt32(expectedValue);
+        //    return (intCheckingValue & intExpectedValue) == intExpectedValue;
+        //}
     }
 }

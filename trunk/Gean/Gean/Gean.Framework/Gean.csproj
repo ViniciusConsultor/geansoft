@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
@@ -42,9 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ColumnAttribute.cs" />
     <Compile Include="Base\CloneableObject.cs" />
+    <Compile Include="Base\BaseException.cs" />
+    <Compile Include="Base\Collections\CollectionBase.cs" />
     <Compile Include="Base\Triplet.cs" />
+    <Compile Include="Interface\Converting\Converting.cs" />
+    <Compile Include="Interface\FieldMemberInfo\FieldMemberInfo.cs" />
+    <Compile Include="Interface\FieldMemberInfo\IFieldMemberInfo.cs" />
     <Compile Include="Interface\ICommand.cs" />
+    <Compile Include="Interface\Converting\IConverting.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
     <Compile Include="Interface\Tree,Item\IItem.cs" />
@@ -80,8 +88,30 @@
     <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
     <Compile Include="Utility\Encrypt\HashEncode.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
+    <Compile Include="Wrapper\Config\ConfigException.cs" />
+    <Compile Include="Wrapper\Config\ConfigHelper.cs" />
+    <Compile Include="Wrapper\Config\ConfigSetting.cs" />
+    <Compile Include="Wrapper\Config\ConfigSettingCollection.cs" />
+    <Compile Include="Wrapper\Config\ConfigSettingOperator.cs" />
+    <Compile Include="Wrapper\Config\DotNetConfig\BaseConfigurationElement.cs" />
+    <Compile Include="Wrapper\Config\DotNetConfig\BaseConfigurationElementCollection.cs" />
+    <Compile Include="Wrapper\Config\DotNetConfig\ConfigCollection.cs" />
+    <Compile Include="Wrapper\Config\DotNetConfig\GroupHandler.cs" />
+    <Compile Include="Wrapper\Config\DotNetConfig\SectionBaseHandler.cs" />
+    <Compile Include="Wrapper\Config\IConfigSetting.cs" />
+    <Compile Include="Wrapper\Config\ISettingProperty.cs" />
+    <Compile Include="Wrapper\Config\ISettingValue.cs" />
+    <Compile Include="Wrapper\Config\SettingProperty.cs" />
+    <Compile Include="Wrapper\Config\SettingValue.cs" />
+    <Compile Include="Wrapper\Config\SettingValueCollection.cs" />
+    <Compile Include="Wrapper\Config\XmlConfig\XmlConfigSetting.cs" />
+    <Compile Include="Wrapper\Config\XmlConfig\XmlSettingProperty.cs" />
+    <Compile Include="Wrapper\Config\XmlConfig\XmlSettingValue.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
-    <Compile Include="Wrapper\Logging\LogString.cs" />
+    <Compile Include="Wrapper\SimpleLogger\LogString.cs" />
+    <Compile Include="Wrapper\Mail\Config\MailSetting.cs" />
+    <Compile Include="Wrapper\Mail\Config\SectionHandler.cs" />
+    <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Options.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
@@ -99,7 +129,7 @@
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\EventArgs\ChangedEventArgs.cs" />
     <Compile Include="Base\EventArgs\EventArgs.cs" />
-    <Compile Include="Wrapper\Logging\ILoggingWriter.cs" />
+    <Compile Include="Wrapper\SimpleLogger\ILoggingWriter.cs" />
     <Compile Include="Utility\File\FileEnums.cs" />
     <Compile Include="Utility\File\FileSearching.cs" />
     <Compile Include="Utility\File\UtilityFile.cs" />
@@ -117,8 +147,8 @@
     <Compile Include="Widgets\Chinese\ChineseIDCardValid.cs" />
     <Compile Include="Widgets\Chinese\ChineseSpell.cs" />
     <Compile Include="Widgets\Duration.cs" />
-    <Compile Include="Wrapper\Logging\LoggingLevel.cs" />
-    <Compile Include="Wrapper\Logging\LoggingWriter.cs" />
+    <Compile Include="Wrapper\SimpleLogger\LoggingLevel.cs" />
+    <Compile Include="Wrapper\SimpleLogger\LoggingWriter.cs" />
     <Compile Include="Wrapper\User32.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
