@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using Gean.Config.XmlConfig;
+using Gean.Exceptions;
 
 namespace Gean.Config
 {

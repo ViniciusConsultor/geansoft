@@ -1,4 +1,5 @@
 using System;
+using Gean.Exceptions;
 
 namespace Gean.Config
 {

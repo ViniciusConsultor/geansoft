@@ -45,9 +45,10 @@
   <ItemGroup>
     <Compile Include="Attributes\ColumnAttribute.cs" />
     <Compile Include="Base\CloneableObject.cs" />
-    <Compile Include="Base\BaseException.cs" />
+    <Compile Include="Exceptions\GeanException.cs" />
     <Compile Include="Base\Collections\CollectionBase.cs" />
     <Compile Include="Base\Triplet.cs" />
+    <Compile Include="Exceptions\TypeConvertingException.cs" />
     <Compile Include="Interface\Converting\Converting.cs" />
     <Compile Include="Interface\FieldMemberInfo\FieldMemberInfo.cs" />
     <Compile Include="Interface\FieldMemberInfo\IFieldMemberInfo.cs" />
@@ -58,6 +59,11 @@
     <Compile Include="Interface\Tree,Item\IItem.cs" />
     <Compile Include="Interface\Tree,Item\ITree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ArgumentValidationString.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArgumentValidationString.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SmartDateString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,7 +94,7 @@
     <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
     <Compile Include="Utility\Encrypt\HashEncode.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
-    <Compile Include="Wrapper\Config\ConfigException.cs" />
+    <Compile Include="Exceptions\ConfigException.cs" />
     <Compile Include="Wrapper\Config\ConfigHelper.cs" />
     <Compile Include="Wrapper\Config\ConfigSetting.cs" />
     <Compile Include="Wrapper\Config\ConfigSettingCollection.cs" />
@@ -129,7 +135,7 @@
     <Compile Include="Base\Pair.cs" />
     <Compile Include="Base\EventArgs\ChangedEventArgs.cs" />
     <Compile Include="Base\EventArgs\EventArgs.cs" />
-    <Compile Include="Wrapper\SimpleLogger\ILoggingWriter.cs" />
+    <Compile Include="Wrapper\SimpleLogger\ISimpleLoggerWriter.cs" />
     <Compile Include="Utility\File\FileEnums.cs" />
     <Compile Include="Utility\File\FileSearching.cs" />
     <Compile Include="Utility\File\UtilityFile.cs" />
@@ -147,8 +153,8 @@
     <Compile Include="Widgets\Chinese\ChineseIDCardValid.cs" />
     <Compile Include="Widgets\Chinese\ChineseSpell.cs" />
     <Compile Include="Widgets\Duration.cs" />
-    <Compile Include="Wrapper\SimpleLogger\LoggingLevel.cs" />
-    <Compile Include="Wrapper\SimpleLogger\LoggingWriter.cs" />
+    <Compile Include="Wrapper\SimpleLogger\SimpleLoggerLevel.cs" />
+    <Compile Include="Wrapper\SimpleLogger\SimpleLoggerWriter.cs" />
     <Compile Include="Wrapper\User32.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlAttribute.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
@@ -158,6 +164,11 @@
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ArgumentValidationString.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\FilterString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FilterString.Designer.cs</LastGenOutput>

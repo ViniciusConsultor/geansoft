@@ -10,7 +10,7 @@ namespace Gean.MP3
     /// </summary>
     public class Mp3TagID3V1
     {
-        //流派分类，共有148种，我只列举了前21种，大家可以自己补充
+        //流派分类，共有148种，只列举了前21种，应用前应补充
         readonly string[] GENRE = {
             "Blues","Classic Rock","Country","Dance","Disco","Funk","Grunge","Hip-Hop",
             "Jazz","Metal","New Age","Oldies","Other", "Pop", "R&B", "Rap", "Reggae", "Rock", "Techno", 
@@ -132,11 +132,10 @@ namespace Gean.MP3
             //取TAG段的前三个字节
             tagFlag = Encoding.Default.GetString(tagBody, 0, 3);
 
-            //如果没有TAG信息，则直接返回
+            //如果没有TAG信息
             if (!"TAG".Equals(tagFlag, StringComparison.InvariantCultureIgnoreCase))
             {
-                return;
-                //throw new InvalidDataException("指定的MP3文件没有TAG信息！");
+                throw new InvalidDataException("指定的MP3文件没有TAG信息！");
             }
 
             //按照MP3 ID3 V1 的tag定义，依次读取相关的信息

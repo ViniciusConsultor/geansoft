@@ -21,7 +21,6 @@ namespace Gean
     {
         Dictionary<string, object> _definitions = new Dictionary<string, object>();
 
-
         public string this[string key]
         {
             get

@@ -3,7 +3,7 @@
     /// <summary>
     /// 日志信息级别
     /// </summary>
-    public enum LoggingLevel
+    public enum SimpleLoggerLevel
     {
         /// <summary>
         /// 1.最常见的记录信息，一般用于普通输出

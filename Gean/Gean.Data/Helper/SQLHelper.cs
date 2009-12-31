@@ -1,25 +1,49 @@
+// ===============================================================================
+// Microsoft Data Access Application Block for .NET
+// http://msdn.microsoft.com/library/en-us/dnbda/html/daab-rm.asp
+//
+// SQLHelper.cs
+//
+// This file contains the implementations of the SqlHelper and SqlHelperParameterCache
+// classes.
+//
+// For more information see the Data Access Application Block Implementation Overview. 
+// ===============================================================================
+// Release history
+// VERSION	DESCRIPTION
+//   2.0	Added support for FillDataset, UpdateDataset and "Param" helper methods
+//
+// ===============================================================================
+// Copyright (C) 2000-2001 Microsoft Corporation
+// All rights reserved.
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY
+// OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT
+// LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR
+// FITNESS FOR A PARTICULAR PURPOSE.
+// ==============================================================================
+
 using System;
 using System.Data;
 using System.Xml;
 using System.Data.SqlClient;
 using System.Collections;
 
-namespace Gean.Data
+namespace Microsoft.ApplicationBlocks.Data
 {
     /// <summary>
-    /// 一个由微软提供的数据访问组件(助手类)，其封装很严密，且应用简单。
-    /// 目的是从数据库获得信息或将信息保存到数据库。
+    /// The SqlHelper class is intended to encapsulate high performance, scalable best practices for 
+    /// common uses of SqlClient
     /// </summary>
     public sealed class SqlHelper
     {
-        #region 私有方法与构造函数
+        #region private utility methods & constructors
 
         // Since this class provides only static methods, make the default constructor private to prevent 
         // instances from being created with "new SqlHelper()"
         private SqlHelper() { }
 
         /// <summary>
-        /// 该函数用于将所有必要的 SqlParameter 对象连接到正在运行的 SqlCommand。 
+        /// This method is used to attach array of SqlParameters to a SqlCommand.
         /// 
         /// This method will assign a value of DbNull to any parameter with a direction of
         /// InputOutput and a value of null.  
@@ -53,7 +77,7 @@ namespace Gean.Data
         }
 
         /// <summary>
-        /// 该函数用于为 SqlParameter 对象赋值。
+        /// This method assigns dataRow column values to an array of SqlParameters
         /// </summary>
         /// <param name="commandParameters">Array of SqlParameters to be assigned values</param>
         /// <param name="dataRow">The dataRow used to hold the stored procedure's parameter values</param>
@@ -130,7 +154,8 @@ namespace Gean.Data
         }
 
         /// <summary>
-        /// 该函数用于对命令的属性（如连接、事务环境等）进行初始化。 
+        /// This method opens (if necessary) and assigns a connection, transaction, command type and parameters 
+        /// to the provided command
         /// </summary>
         /// <param name="command">The SqlCommand to be prepared</param>
         /// <param name="connection">A valid SqlConnection, on which to execute this command</param>
@@ -179,11 +204,9 @@ namespace Gean.Data
             return;
         }
 
-        #endregion
+        #endregion private utility methods & constructors
 
-        #region 执行不返回任何行或值的命令
-
-        //此方法用于执行不返回任何行或值的命令。这些命令通常用于执行数据库更新，但也可用于返回存储过程的输出参数。
+        #region ExecuteNonQuery
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the database specified in 
@@ -447,9 +470,7 @@ namespace Gean.Data
 
         #endregion ExecuteNonQuery
 
-        #region 返回 DataSet 对象，该对象包含由某一命令返回的结果集。
-
-        //此方法返回 DataSet 对象，该对象包含由某一命令返回的结果集。 
+        #region ExecuteDataset
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
@@ -730,9 +751,7 @@ namespace Gean.Data
 
         #endregion ExecuteDataset
 
-        #region 返回 SqlDataReader 对象，该对象包含由某一命令返回的结果集。
-
-        //此方法用于返回 SqlDataReader 对象，该对象包含由某一命令返回的结果集。 
+        #region ExecuteReader
 
         /// <summary>
         /// This enum is used to indicate whether the connection was provided by the caller, or created by SqlHelper, so that
@@ -1050,9 +1069,7 @@ namespace Gean.Data
 
         #endregion ExecuteReader
 
-        #region 返回一个值。该值始终是该命令返回的第一行的第一列。
-
-        //此方法返回一个值。该值始终是该命令返回的第一行的第一列。 
+        #region ExecuteScalar
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the database specified in 
@@ -1318,10 +1335,7 @@ namespace Gean.Data
 
         #endregion ExecuteScalar
 
-        #region 返回 FOR XML 查询的 XML 片段。
-
-        //此方法返回 FOR XML 查询的 XML 片段。 
-
+        #region ExecuteXmlReader
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
         /// </summary>
@@ -1508,7 +1522,7 @@ namespace Gean.Data
 
         #endregion ExecuteXmlReader
 
-        #region 填充数据集
+        #region FillDataset
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
         /// the connection string. 
@@ -1839,7 +1853,7 @@ namespace Gean.Data
         }
         #endregion
 
-        #region Update DataSet
+        #region UpdateDataset
         /// <summary>
         /// Executes the respective command for each inserted, updated, or deleted row in the DataSet.
         /// </summary>
@@ -2384,17 +2398,12 @@ namespace Gean.Data
     }
 
     /// <summary>
-    /// SqlHelperParameterCache 类提供命令参数缓存功能，可以用来提高性能。
-    /// 该类由许多 Execute 方法（尤其是那些只运行存储过程的重写方法）在内部使用。
-    /// 数据访问客户端也可以直接使用它来缓存特定命令的特定参数集。
-    /// 
-    /// 参数数组缓存在专用 Hashtable 中。
-    /// 从缓存中检索的参数进行内部复制，这样客户端应用程序能够更改参数值以及进行其他操作，
-    /// 而不会影响缓存的参数数组。
-    /// 专用共享函数 CloneParameters 可以实现此目的。 
+    /// SqlHelperParameterCache provides functions to leverage a static cache of procedure parameters, and the
+    /// ability to discover parameters for stored procedures at run-time.
     /// </summary>
     public sealed class SqlHelperParameterCache
     {
+
         #region private methods, variables, and constructors
 
         //Since this class provides only static methods, make the default constructor private to prevent 
@@ -2600,338 +2609,6 @@ namespace Gean.Data
         }
 
         #endregion Parameter Discovery Functions
-        
+
     }
 }
-
-/* SqlHelper使用指南
- * http://blog.csai.cn/user1/18042/archives/2006/9812.html
-
- * SqlHelper使用指南
-
- * 摘要：Data Access Application Block 是一个 .NET 组件，包含优化的数据访问代码，
- * 可以帮助用户调用存储过程以及向 SQL Server 数据库发出 SQL 文本命令。
- * 它返回 SqlDataReader、DataSet 和 XmlReader 对象。
- * 您可以在自己的 .NET 应用程序中将其作为构造块来使用，
- * 以减少需要创建、测试和维护的自定义代码的数量。
- * 您可以下载完整的 C# 和 Visual Basic .NET 源代码以及综合文档。
-
- * 简介
-
- * 您是否正在从事 .NET 应用程序数据访问代码的设计和开发？
- * 您是否觉得自己总是在反复编写相同的数据访问代码？
- * 您是否曾经将数据访问代码包装在 Helper 函数中，以便能够在一行中调用存储过程？
- * 如果是，那么 Microsoft Data Access Application Block for .NET 正是为您设计的。
-
- * Data Access Application Block 将访问 Microsoft SQL Server; 
- * 数据库的性能和资源管理方面的最佳经验封装在一起。
- * 您可以很方便地在自己的 .NET 应用程序中将其作为构造块使用，
- * 从而大面积减少了需要创建、测试和维护的自定义代码的数量。
-
- * 尤其是，Data Access Application Block 可以帮助您：
-
- * 调用存储过程或 SQL 文本命令。
- * 指定参数详细信息。
- * 返回 SqlDataReader、DataSet 或 XmlReader 对象。
- * 例如，在引用了 Data Access Application Block 的应用程序中，
- * 您可以简单地在一行代码中调用存储过程并生成 DataSet，如下所示：
-
-[Visual Basic]
-Dim ds As DataSet = SqlHelper.ExecuteDataset( _
-connectionString, _
-CommandType.StoredProcedure, _
-"getProductsByCategory", _
-new SqlParameter("@CategoryID", categoryID))
-
-[C#]
-DataSet ds = SqlHelper.ExecuteDataset(
-connectionString,
-CommandType.StoredProcedure,
-"getProductsByCategory",
-new SqlParameter("@CategoryID", categoryID));
-
-
-注意： Application Block for .NET（用于 .NET 的应用程序块）是基于对成功的 .NET 应用程序进行详细研究而设计的。它以源代码的形式提供，您可以原样使用，也可以针对自己的应用程序进行自定义。该应用程序块并不代表未来 Microsoft ADO.NET 程序库的发展方向。Microsoft ADO.NET 程序库是为在各种使用情况下实现对数据访问行为的精确控制而建立的。将来的 ADO.NET 版本可能会使用不同的模型来实现这个方案
-
-
-
-SqlHelper 类提供了一组静态方法，可以用来向 SQL Server 数据库发出许多各种不同类型的命令。
-
-SqlHelperParameterCache 类提供命令参数缓存功能，可以用来提高性能。该类由许多 Execute 方法（尤其是那些只运行存储过程的重写方法）在内部使用。数据访问客户端也可以直接使用它来缓存特定命令的特定参数集。
-
-使用 SqlHelper 类执行命令
-SqlHelper 类提供了五种 Shared (Visual Basic) 或 static (C#) 方法，它们是：ExecuteNonQuery、ExecuteDataset、ExecuteReader、ExecuteScalar 和 ExecuteXmlReader。实现的每种方法都提供一组一致的重载。这提供了一种很好的使用 SqlHelper 类来执行命令的模式，同时为开发人员选择访问数据的方式提供了必要的灵活性。每种方法的重载都支持不同的方法参数，因此开发人员可以确定传递连接、事务和参数信息的方式。类中实现的所有方法都支持以下重载：
-
-[Visual Basic]
-Execute* (ByVal connection As SqlConnection, _
-ByVal commandType As CommandType, _
-ByVal CommandText As String)
-
-Execute* (ByVal connection As SqlConnection, _
-ByVal commandType As CommandType, _
-ByVal commandText As String, _
-ByVal ParamArray commandParameters() As SqlParameter)
-
-Execute* (ByVal connection As SqlConnection, _
-ByVal spName As String, _
-ByVal ParamArray parameterValues() As Object)
-
-Execute* (ByVal transaction As SqlTransaction, _
-ByVal commandType As CommandType, _
-ByVal commandText As String)
-
-Execute* (ByVal transaction As SqlTransaction, _
-ByVal commandType As CommandType, _
-ByVal commandText As String, _
-ByVal ParamArray commandParameters() As SqlParameter)
-
-Execute* (ByVal transaction As SqlTransaction, _
-ByVal spName As String, _
-ByVal ParamArray parameterValues() As Object)
-
-[C#]
-Execute* (SqlConnection connection, CommandType commandType,
-string commandText)
-
-Execute* (SqlConnection connection, CommandType commandType,
-string commandText, params SqlParameter[] commandParameters)
-
-Execute* (SqlConnection connection, string spName,
-params object[] parameterValues)
-
-Execute* (SqlConnection connection,
-CommandType commandType, string commandText)
-
-Execute* (SqlConnection connection,
-CommandType commandType, string commandText,
-params SqlParameter[] commandParameters)
-
-Execute* (SqlConnection connection,
-string spName, params object[] parameterValues)
-
-除这些重载以外，除 ExecuteXmlReader 之外的其他方法还提供了另一种重载：允许将连接信息作为连接字符串而不是连接对象来传递，如下面的方法签名所示：
-
-[Visual Basic]
-Execute* (ByVal connectionString As String, _
-ByVal commandType As CommandType, _
-ByVal commandText As String)
-
-Execute* (ByVal connectionString As String, _
-ByVal commandType As CommandType, _
-ByVal commandText As String, _
-ByVal ParamArray commandParameters() As SqlParameter)
-
-Execute* (ByVal connectionString As String, _
-ByVal spName As String, _
-ByVal ParamArray parameterValues() As Object)
-
-[C#]
-Execute* (string connectionString, CommandType commandType,
-string commandText)
-
-Execute* (string connectionString, CommandType commandType,
-string commandText,
-params SqlParameter[] commandParameters)
-
-Execute* (string connectionString, string spName,
-params object[] parameterValues)
-
-注意： ExecuteXmlReader 不支持连接字符串，因为：与 SqlDataReader 对象不同，XmlReader 对象在 XmlReader 关闭时没有提供自动关闭连接的方法。如果客户端传递了连接字符串，那么当客户端完成对 XmlReader 的操作后，将无法关闭与 XmlReader 相关联的连接对象。
-通过参考 Data Access Application Block 程序集并导入 Microsoft.ApplicationBlocks.Data 命名空间，您可以轻松编写使用任何一种 SqlHelper 类方法的代码，如下面的代码示例所示：
-
-[Visual Basic]
-Imports Microsoft.ApplicationBlocks.Data
-
-[C#]
-using Microsoft.ApplicationBlocks.Data;
-
-导入命名空间后，您可以调用任何 Execute* 方法，如下面的代码示例所示：
-
-[Visual Basic]
-Dim ds As DataSet = SqlHelper.ExecuteDataset( _
-"SERVER=(local);DATABASE=Northwind;INTEGRATED SECURITY=True;",
-_
-CommandType.Text, "SELECT * FROM Products")
-
-[C#]
-DataSet ds = SqlHelper.ExecuteDataset(
-"SERVER=DataServer;DATABASE=Northwind;INTEGRATED
-SECURITY=sspi;", _
-CommandType.Text, "SELECT * FROM Products");
-
-使用 SqlHelperParameterCache 类管理参数
-SqlHelperParameterCache 类提供了三种可以用来管理参数的公共共享方法。它们是：
-
-CacheParameterSet。用于将 SqlParameters 数组存储到缓存中。
-GetCachedParameterSet。用于检索缓存的参数数组的副本。
-GetSpParameterSet。一种重载方法，用于检索指定存储过程的相应参数（首先查询一次数据库，然后缓存结果以便将来查询）。
-缓存和检索参数
-通过使用 CacheParameterSet 方法，可以缓存 SqlParameter 对象数组。此方法通过将连接字符串和命令文本连接起来创建一个键，然后将参数数组存储在 Hashtable 中。
-
-要从缓存中检索参数，请使用 GetCachedParameterSet 方法。此方法将返回一个 SqlParameter 对象数组，这些对象已使用缓存（与传递给该方法的连接字符串和命令文本相对应）中的参数的名称、值、方向和数据类型等进行了初始化。
-
-注意： 用作参数集的键的连接字符串通过简单的字符串比较进行匹配。用于从 GetCachedParameterSet 中检索参数的连接字符串必须与用来通过 CacheParameterSet 来存储这些参数的连接字符串完全相同。语法不同的连接字符串即使语义相同，也不会被认为是匹配的。
-以下代码显示了如何使用 SqlHelperParameterCache 类来缓存和检索 Transact-SQL 语句的参数。
-
-[Visual Basic]
-'' 初始化连接字符串和命令文本
-'' 它们将构成用来存储和检索参数的键
-Const CONN_STRING As String = _
-"SERVER=(local); DATABASE=Northwind; INTEGRATED SECURITY=True;"
-Dim sql As String = _
-"SELECT ProductName FROM Products " + _
-"WHERE Category=@Cat AND SupplierID = @Sup"
-
-'' 缓存参数
-Dim paramsToStore(1) As SqlParameter
-paramsToStore(0) = New SqlParameter("@Cat", SqlDbType.Int)
-paramsToStore(1) = New SqlParameter("@Sup", SqlDbType.Int)
-SqlHelperParameterCache.CacheParameterSet(CONN_STRING, _
-sql, _
-paramsToStore)
-
-'' 从缓存中检索参数
-Dim storedParams(1) As SqlParameter
-storedParams = SqlHelperParameterCache.GetCachedParameterSet( _
-CONN_STRING, sql)
-storedParams(0).Value = 2
-storedParams(1).Value = 3
-
-'' 在命令中使用参数
-Dim ds As DataSet
-ds = SqlHelper.ExecuteDataset(CONN_STRING, _
-CommandType.Text, _
-sql, storedParams)
-
-[C#]
-// 初始化连接字符串和命令文本
-// 它们将构成用来存储和检索参数的键
-const string CONN_STRING =
-"SERVER=(local); DATABASE=Northwind; INTEGRATED SECURITY=True;";
-string spName = "SELECT ProductName FROM Products " +
-"WHERE Category=@Cat AND SupplierID = @Sup";
-
-// 缓存参数
-SqlParameter[] paramsToStore = new SqlParameter[2];
-paramsToStore[0] = New SqlParameter("@Cat", SqlDbType.Int);
-paramsToStore[1] = New SqlParameter("@Sup", SqlDbType.Int);
-SqlHelperParameterCache.CacheParameterSet(CONN_STRING,
-sql,
-paramsToStore);
-
-// 从缓存中检索参数
-SqlParameter storedParams = new SqlParameter[2];
-storedParams = SqlHelperParameterCache.GetCachedParameterSet(
-CONN_STRING, sql);
-storedParams(0).Value = 2;
-storedParams(1).Value = 3;
-
-// 在命令中使用参数
-DataSet ds;
-ds = SqlHelper.ExecuteDataset(CONN_STRING,
-CommandType.StoredProcedure,
-sql, storedParams);
-
-检索存储过程参数
-SqlHelperParameterCache 还提供了针对特定存储过程检索参数数组的方法。一种名为 GetSpParameterSet 的重载方法提供了此功能，它包含两种实现。该方法尝试从缓存中检索特定存储过程的参数。如果这些参数尚未被缓存，则使用 .NET 的 SqlCommandBuilder 类从内部检索，并将它们添加到缓存中，以便用于后续的检索请求。然后，为每个参数指定相应的参数设置，最后将这些参数以数组形式返回给客户端。以下代码显示了如何检索 Northwind 数据库中 SalesByCategory 存储过程的参数。
-
-[Visual Basic]
-'' 初始化连接字符串和命令文本
-'' 它们将构成用来存储和检索参数的键
-Const CONN_STRING As String = _
-"SERVER=(local); DATABASE=Northwind; INTEGRATED SECURITY=True;"
-Dim spName As String = "SalesByCategory"
-
-'' 检索参数
-Dim storedParams(1) As SqlParameter
-storedParams = SqlHelperParameterCache.GetSpParameterSet( _
-CONN_STRING, spName)
-storedParams(0).Value = "Beverages"
-storedParams(1).Value = "1997"
-
-'' 在命令中使用参数
-Dim ds As DataSet
-ds = SqlHelper.ExecuteDataset(CONN_STRING, _
-CommandType.StoredProcedure, _
-spName, storedParams)
-
-[C#]
-// 初始化连接字符串和命令文本
-// 它们将构成用来存储和检索参数的键
-const string CONN_STRING =
-"SERVER=(local); DATABASE=Northwind; INTEGRATED SECURITY=True;";
-string spName = "SalesByCategory";
-
-// 检索参数
-SqlParameter storedParams = new SqlParameter[2];
-storedParams = SqlHelperParameterCache.GetSpParameterSet(
-CONN_STRING, spName);
-storedParams[0].Value = "Beverages";
-storedParams[1].Value = "1997";
-
-// 在命令中使用参数
-DataSet ds;
-ds = SqlHelper.ExecuteDataset(CONN_STRING,
-CommandType.StoredProcedure,
-spName, storedParams);
-
-内部设计
-Data Access Application Block 包含了完整的源代码和有关其设计的综合指南。本节介绍有关主要实现的详细信息。
-
-SqlHelper 类实现详细信息
-SqlHelper 类用于通过一组静态方法来封装数据访问功能。该类不能被继承或实例化，因此将其声明为包含专用构造函数的不可继承类。
-
-在 SqlHelper 类中实现的每种方法都提供了一组一致的重载。这提供了一种很好的使用 SqlHelper 类来执行命令的模式，同时为开发人员选择访问数据的方式提供了必要的灵活性。每种方法的重载都支持不同的方法参数，因此开发人员可以确定传递连接、事务和参数信息的方式。在 SqlHelper 类中实现的方法包括：
-
-ExecuteNonQuery。此方法用于执行不返回任何行或值的命令。这些命令通常用于执行数据库更新，但也可用于返回存储过程的输出参数。
-ExecuteReader。此方法用于返回 SqlDataReader 对象，该对象包含由某一命令返回的结果集。
-ExecuteDataset。此方法返回 DataSet 对象，该对象包含由某一命令返回的结果集。
-ExecuteScalar。此方法返回一个值。该值始终是该命令返回的第一行的第一列。
-ExecuteXmlReader。此方法返回 FOR XML 查询的 XML 片段。
-除了这些公共方法外，SqlHelper 类还包含一些专用函数，用于管理参数和准备要执行的命令。不管客户端调用什么样的方法实现，所有命令都通过 SqlCommand 对象来执行。在 SqlCommand 对象能够被执行之前，所有参数都必须添加到 Parameters 集合中，并且必须正确设置 Connection、CommandType、CommandText 和 Transaction 属性。SqlHelper 类中的专用函数主要用于提供一种一致的方式，以便向 SQL Server 数据库发出命令，而不考虑客户端应用程序调用的重载方法实现。SqlHelper 类中的专用实用程序函数包括：
-
-AttachParameters：该函数用于将所有必要的 SqlParameter 对象连接到正在运行的 SqlCommand。
-AssignParameterValues：该函数用于为 SqlParameter 对象赋值。
-PrepareCommand：该函数用于对命令的属性（如连接、事务环境等）进行初始化。
-ExecuteReader：此专用 ExecuteReader 实现用于通过适当的 CommandBehavior 打开 SqlDataReader 对象，以便最有效地管理与阅读器关联的连接的有效期。
-SqlHelperParameterCache 类实现详细信息
-参数数组缓存在专用 Hashtable 中。从缓存中检索的参数进行内部复制，这样客户端应用程序能够更改参数值以及进行其他操作，而不会影响缓存的参数数组。专用共享函数 CloneParameters 可以实现此目的。
-
-常见问题
-此版本包含哪些新增功能？
-与 Data Access Application Block Beta 2.0 版本相比，该 RTM 版本包含以下新增功能和变化：
-
-SqlHelper 类方法的事务型重载不再需要 SqlConnection 参数。在此版本中，连接信息从 SqlTransaction 对象中派生，因此不必在方法签名中包含 SqlConnection 对象参数。
-现在，GetSpParameterSet 方法使用 ADO.NET CommandBuilder 类的 DeriveParameters 方法来确定存储过程所需要的参数。这比 Beta 2.0 版本中直接通过查询数据库来检索信息的效率更高。
-可以使用 XCOPY 部署方法来部署 Data Access Application Block 程序集吗？
-可以。Microsoft.ApplicationBlocks.Data.dll 程序集在编译后可以使用 XCOPY 进行部署。
-
-什么时候应该使用 ExecuteDataset 方法，什么时候应该使用 ExecuteReader 方法？
-这个问题实际上是什么时候应该返回 DataSet 对象中的多个数据行，什么时候应该使用 DataReader。答案取决于您的应用程序的特定需要，以及您在灵活性和原始性能之间的取舍。DataSet 为您提供数据的灵活的且断开连接的关系视图，而 DataReader 为您提供性能卓越的、只读的、仅向前光标。有关 DataSet 和 DataReader 的全面比较，请参阅 Data Access Architecture Guide（英文）。
-
-如何使用 ExecuteDataset 返回包含多个表的数据集？
-通过创建一个可以返回多个行集的存储过程（通过执行多个 SELECT 语句或者对其他存储过程进行嵌套调用），并使用 ExecuteDataset 方法执行该过程，您可以检索包含多个表的数据集。
-
-例如，假设您的数据库包含以下存储过程。
-
-CREATE PROCEDURE GetCategories
-AS
-SELECT * FROM Categories
-GO
-CREATE PROCEDURE GetProducts
-AS
-SELECT * FROM Products
-
-您可以创建一个主存储过程来对这些过程进行嵌套调用，如下面的代码示例所示。
-
-CREATE PROCEDURE GetCategoriesAndProducts
-AS
-BEGIN
-EXEC GetCategories
-EXEC GetProducts
-END
-
-使用 ExecuteDataset 方法执行此主存储过程将返回一个 DateSet，其中包含两个表：一个表包含分类数据，另一个表包含产品数据。
-
-注意： ExecuteDataset 方法不提供为返回的表指定自定义名称的方法。第一个表的编号始终为 0，名称为 Table，第二个表的编号为 1，名称为 Table1，依此类推。
- */

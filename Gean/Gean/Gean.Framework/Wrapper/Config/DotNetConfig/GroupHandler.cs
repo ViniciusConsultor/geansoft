@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.Configuration;
+using Gean.Exceptions;
 
 namespace Gean.Config.DotNetConfig
 {
