@@ -26,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.Demo", "Gean.Data\Gean.Data.Demo\Gean.Data.Demo.csproj", "{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Gean.Data.vsmdi
 	EndGlobalSection
