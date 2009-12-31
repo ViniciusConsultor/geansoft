@@ -8,18 +8,10 @@ using Gean.Data.Exceptions;
 namespace Gean.Data
 {
     /// <summary>
-    /// Executes sql statement or stored procedure
+    /// 执行SQL语句或存储过程
     /// </summary>
     internal class CommandExecutor : ITableCommandExecutor
     {
-        #region Properties
-
-        public IDatabase Database { get; private set; }
-
-        public bool IsInTransaction { get; private set; }
-
-        #endregion
-
         public CommandExecutor(IDatabase database)
         {
             if (database == null)
@@ -28,6 +20,14 @@ namespace Gean.Data
             }
             this.Database = database;
         }
+
+        #region Properties
+
+        public IDatabase Database { get; private set; }
+
+        public bool IsInTransaction { get; private set; }
+
+        #endregion
 
         #region  Transaction
 
