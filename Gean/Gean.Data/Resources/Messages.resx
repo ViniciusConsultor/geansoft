@@ -118,105 +118,108 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BeginTransactionFailed" xml:space="preserve">
-    <value>Begin transaction failed</value>
+    <value>开始事务事务回滚失败!</value>
   </data>
   <data name="ChangeDatabaseFailed" xml:space="preserve">
-    <value>Change database failed .</value>
+    <value>改换数据库失败!</value>
   </data>
   <data name="CloseDatabaseFailed" xml:space="preserve">
-    <value>Close database failed .</value>
+    <value>关闭数据库连接失败!</value>
   </data>
   <data name="CommandTextMissing" xml:space="preserve">
-    <value>CommandText(sql statement or stored procedure) missing.</value>
+    <value>缺少CommandText(sql语句或存储过程)。</value>
   </data>
   <data name="CommitTransactionFailed" xml:space="preserve">
-    <value>Commit transaction failed .</value>
+    <value>提交事务失败!</value>
   </data>
   <data name="ConditionMissing" xml:space="preserve">
-    <value>Condition missing.</value>
+    <value>缺少查询条件。</value>
   </data>
   <data name="ConnectionStringMissing" xml:space="preserve">
-    <value>ConnectionString missing.</value>
+    <value>连接字符串不允许为空!</value>
   </data>
   <data name="DatabaseInstanceNotExisting" xml:space="preserve">
-    <value>Database instance not existing(is null).</value>
+    <value>Database 实例不存在（即为null）！</value>
   </data>
   <data name="EmptyEntity" xml:space="preserve">
-    <value>Entity is not allowed to be null . Initialize Entity .</value>
+    <value>Entity 不允许为空，请初始化Entity .</value>
   </data>
   <data name="EntityMustContainPrimaryKey" xml:space="preserve">
-    <value>Entity must contain primary key.</value>
+    <value>实体须有主键。</value>
   </data>
   <data name="ExecuteNonQueryFailed" xml:space="preserve">
-    <value>ExecuteNonQuery failed .</value>
+    <value>Execute NonQuery 失败!</value>
   </data>
   <data name="ExecuteReaderFailed" xml:space="preserve">
-    <value>ExecuteReader failed .</value>
+    <value>Execute Reader 失败!</value>
   </data>
   <data name="ExecuteScalarFailed" xml:space="preserve">
-    <value>ExecuteScalar failed .</value>
+    <value>Execute Scalar 失败!</value>
   </data>
   <data name="GetDataSetFailed" xml:space="preserve">
-    <value>Get DataSet failed .</value>
+    <value>获取 DataSet 失败!</value>
   </data>
   <data name="GetDataTableFailed" xml:space="preserve">
-    <value>Get DataTable failed .</value>
+    <value>获取 DataTable 失败!</value>
   </data>
   <data name="IDAndPKOfEntityMissing" xml:space="preserve">
-    <value>The identity and primary key of entity missing.</value>
+    <value>父实体缺少ID和主键。</value>
   </data>
   <data name="IdentityOfEntityMissing" xml:space="preserve">
-    <value>The identity of entity missing</value>
+    <value>父实体须有ID。</value>
   </data>
   <data name="InitializeGatewayFailed" xml:space="preserve">
     <value>Initialize gateway failed.CommandExecutor is null.</value>
   </data>
   <data name="InitializeGatewayFailedConnectionString" xml:space="preserve">
-    <value>Initialize gateway failed .ConnectionString should not be null !</value>
+    <value>初始化数据入口失败 !连接字符串不允许为空!</value>
   </data>
   <data name="InitializeGatewayFailedEntity" xml:space="preserve">
-    <value>Initialize gateway failed .Entity should not be null !</value>
+    <value>初始化数据入口失败 !Entity 不允许为空!</value>
   </data>
   <data name="InvalidArguments" xml:space="preserve">
-    <value>Invalid Arguments . No null arguments allowed.</value>
+    <value>非法参数，参数不准是 null 。</value>
   </data>
   <data name="InvalidDatabaseObject" xml:space="preserve">
     <value>Invalid database object.</value>
   </data>
+  <data name="InvalidDatabaseType" xml:space="preserve">
+    <value>失败的数据库类型，无法建立该类型的IDatabase。</value>
+  </data>
   <data name="InvalidEntityConfig" xml:space="preserve">
-    <value>Entity should have a Table attribute and TableName option is not allowed to be null .</value>
+    <value>Entity 必須有TableAttribute修飾，且 TableName選項不允許為 null .</value>
   </data>
   <data name="OpenDatabaseFailed" xml:space="preserve">
-    <value>Open database failed .</value>
+    <value>连接数据库失败!</value>
   </data>
   <data name="OracleSequenceMissing" xml:space="preserve">
     <value>Must provide a sequence for the identity column in oracle.</value>
   </data>
   <data name="ParentEntityMustContainPrimaryKey" xml:space="preserve">
-    <value>Parent entity must contain primary key.</value>
+    <value>父实体须有主键。</value>
   </data>
   <data name="PrimaryKeyMissing" xml:space="preserve">
-    <value>Entity must contain primary key.</value>
+    <value>实体须有主键。.</value>
   </data>
   <data name="PropertyTypeMustMatchAssociationType" xml:space="preserve">
-    <value>Property type(array or non-array) must match relation type.</value>
+    <value>属性类别（数组或非数组）必须与关系类型相符。</value>
   </data>
   <data name="RelationAttributeShouldHasAForeignKey" xml:space="preserve">
-    <value>RelationAttribute should provide a foreign key in a ManyToOne relation.</value>
+    <value>在多對一的关系中，RelationAttribute 必須指定外鍵。</value>
   </data>
   <data name="RollbackTransactionFailed" xml:space="preserve">
-    <value>Rollback transaction failed .</value>
+    <value>事务回滚失败!</value>
   </data>
   <data name="SameArgumentTypeRequired" xml:space="preserve">
-    <value>Same argument types required.</value>
+    <value>所有参数类型必须一致！</value>
   </data>
   <data name="ShouldBeginTransaction" xml:space="preserve">
-    <value>Must begin a transaction before calling this method .</value>
+    <value>必须先开始一个事务。</value>
   </data>
   <data name="SortedOrderRequired" xml:space="preserve">
     <value>Sorted order required.</value>
   </data>
   <data name="TransactionNotExisting" xml:space="preserve">
-    <value>Transaction is not existing .</value>
+    <value>事务不存在！</value>
   </data>
 </root>

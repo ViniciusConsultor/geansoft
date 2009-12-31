@@ -46,18 +46,19 @@
     <Compile Include="Base\CommandExecutor\CommandExecutor.cs" />
     <Compile Include="Base\CommandExecutor\ITableCommandExecutor.cs" />
     <Compile Include="Base\CommandExecutor\IViewCommandExecutor.cs" />
-    <Compile Include="Base\Database\Database.cs" />
-    <Compile Include="Base\Database\DatabaseFactory.cs" />
-    <Compile Include="Base\Database\DatabaseType.cs" />
-    <Compile Include="Base\Database\IDatabase.cs" />
+    <Compile Include="Base\Database\IDatabase\Database.cs" />
+    <Compile Include="Base\Database\IDatabase\DatabaseFactory.cs" />
+    <Compile Include="Base\Database\IDatabase\DatabaseType.cs" />
+    <Compile Include="Base\Database\IDatabase\IDatabase.cs" />
     <Compile Include="Base\Database\OleDatabase.cs" />
     <Compile Include="Base\Database\OracleDatabase.cs" />
     <Compile Include="Base\Database\SqlServerDatabase.cs" />
-    <Compile Include="Base\Database\TransactionCleaner.cs" />
-    <Compile Include="Exception\CommandException.cs" />
-    <Compile Include="Exception\ConnectionException.cs" />
-    <Compile Include="Exception\DataException.cs" />
-    <Compile Include="Exception\OracleErrorCode.cs" />
+    <Compile Include="Base\TransactionCleaner.cs" />
+    <Compile Include="Exceptions\CommandException.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\DataException.cs" />
+    <Compile Include="Exceptions\GatewayException.cs" />
+    <Compile Include="Exceptions\OracleErrorCode.cs" />
     <Compile Include="Base\Interface\AdoHelper.cs" />
     <Compile Include="ORM\DAL\BaseDatabase.cs" />
     <Compile Include="Base\DataTransfer.cs" />
@@ -68,10 +69,10 @@
     <Compile Include="Base\PagerInfo.cs" />
     <Compile Include="Helper\SQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\MsgResource.Designer.cs">
+    <Compile Include="Resources\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MsgResource.resx</DependentUpon>
+      <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -84,12 +85,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MsgResource.resx">
+    <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MsgResource.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\MsgResource.zh-cn.resx">
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

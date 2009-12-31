@@ -22,14 +22,14 @@ namespace Gean.Data.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MsgResource {
+    internal class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MsgResource() {
+        internal Messages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Gean.Data.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Data.Resources.MsgResource", typeof(MsgResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gean.Data.Resources.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Begin transaction failed 的本地化字符串。
+        ///   查找类似 开始事务事务回滚失败! 的本地化字符串。
         /// </summary>
         internal static string BeginTransactionFailed {
             get {
@@ -70,7 +70,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Change database failed . 的本地化字符串。
+        ///   查找类似 改换数据库失败! 的本地化字符串。
         /// </summary>
         internal static string ChangeDatabaseFailed {
             get {
@@ -79,7 +79,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Close database failed . 的本地化字符串。
+        ///   查找类似 关闭数据库连接失败! 的本地化字符串。
         /// </summary>
         internal static string CloseDatabaseFailed {
             get {
@@ -88,7 +88,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 CommandText(sql statement or stored procedure) missing. 的本地化字符串。
+        ///   查找类似 缺少CommandText(sql语句或存储过程)。 的本地化字符串。
         /// </summary>
         internal static string CommandTextMissing {
             get {
@@ -97,7 +97,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Commit transaction failed . 的本地化字符串。
+        ///   查找类似 提交事务失败! 的本地化字符串。
         /// </summary>
         internal static string CommitTransactionFailed {
             get {
@@ -106,7 +106,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Condition missing. 的本地化字符串。
+        ///   查找类似 缺少查询条件。 的本地化字符串。
         /// </summary>
         internal static string ConditionMissing {
             get {
@@ -115,7 +115,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 ConnectionString missing. 的本地化字符串。
+        ///   查找类似 连接字符串不允许为空! 的本地化字符串。
         /// </summary>
         internal static string ConnectionStringMissing {
             get {
@@ -124,7 +124,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Database instance not existing(is null). 的本地化字符串。
+        ///   查找类似 Database 实例不存在（即为null）！ 的本地化字符串。
         /// </summary>
         internal static string DatabaseInstanceNotExisting {
             get {
@@ -133,7 +133,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Entity is not allowed to be null . Initialize Entity . 的本地化字符串。
+        ///   查找类似 Entity 不允许为空，请初始化Entity . 的本地化字符串。
         /// </summary>
         internal static string EmptyEntity {
             get {
@@ -142,7 +142,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Entity must contain primary key. 的本地化字符串。
+        ///   查找类似 实体须有主键。 的本地化字符串。
         /// </summary>
         internal static string EntityMustContainPrimaryKey {
             get {
@@ -151,7 +151,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 ExecuteNonQuery failed . 的本地化字符串。
+        ///   查找类似 Execute NonQuery 失败! 的本地化字符串。
         /// </summary>
         internal static string ExecuteNonQueryFailed {
             get {
@@ -160,7 +160,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 ExecuteReader failed . 的本地化字符串。
+        ///   查找类似 Execute Reader 失败! 的本地化字符串。
         /// </summary>
         internal static string ExecuteReaderFailed {
             get {
@@ -169,7 +169,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 ExecuteScalar failed . 的本地化字符串。
+        ///   查找类似 Execute Scalar 失败! 的本地化字符串。
         /// </summary>
         internal static string ExecuteScalarFailed {
             get {
@@ -178,7 +178,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Get DataSet failed . 的本地化字符串。
+        ///   查找类似 获取 DataSet 失败! 的本地化字符串。
         /// </summary>
         internal static string GetDataSetFailed {
             get {
@@ -187,7 +187,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Get DataTable failed . 的本地化字符串。
+        ///   查找类似 获取 DataTable 失败! 的本地化字符串。
         /// </summary>
         internal static string GetDataTableFailed {
             get {
@@ -196,7 +196,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The identity and primary key of entity missing. 的本地化字符串。
+        ///   查找类似 父实体缺少ID和主键。 的本地化字符串。
         /// </summary>
         internal static string IDAndPKOfEntityMissing {
             get {
@@ -205,7 +205,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 The identity of entity missing 的本地化字符串。
+        ///   查找类似 父实体须有ID。 的本地化字符串。
         /// </summary>
         internal static string IdentityOfEntityMissing {
             get {
@@ -223,7 +223,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Initialize gateway failed .ConnectionString should not be null ! 的本地化字符串。
+        ///   查找类似 初始化数据入口失败 !连接字符串不允许为空! 的本地化字符串。
         /// </summary>
         internal static string InitializeGatewayFailedConnectionString {
             get {
@@ -232,7 +232,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Initialize gateway failed .Entity should not be null ! 的本地化字符串。
+        ///   查找类似 初始化数据入口失败 !Entity 不允许为空! 的本地化字符串。
         /// </summary>
         internal static string InitializeGatewayFailedEntity {
             get {
@@ -241,7 +241,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Invalid Arguments . No null arguments allowed. 的本地化字符串。
+        ///   查找类似 非法参数，参数不准是 null 。 的本地化字符串。
         /// </summary>
         internal static string InvalidArguments {
             get {
@@ -259,7 +259,16 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Entity should have a Table attribute and TableName option is not allowed to be null . 的本地化字符串。
+        ///   查找类似 失败的数据库类型，无法建立该类型的IDatabase。 的本地化字符串。
+        /// </summary>
+        internal static string InvalidDatabaseType {
+            get {
+                return ResourceManager.GetString("InvalidDatabaseType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Entity 必須有TableAttribute修飾，且 TableName選項不允許為 null . 的本地化字符串。
         /// </summary>
         internal static string InvalidEntityConfig {
             get {
@@ -268,7 +277,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Open database failed . 的本地化字符串。
+        ///   查找类似 连接数据库失败! 的本地化字符串。
         /// </summary>
         internal static string OpenDatabaseFailed {
             get {
@@ -286,7 +295,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Parent entity must contain primary key. 的本地化字符串。
+        ///   查找类似 父实体须有主键。 的本地化字符串。
         /// </summary>
         internal static string ParentEntityMustContainPrimaryKey {
             get {
@@ -295,7 +304,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Entity must contain primary key. 的本地化字符串。
+        ///   查找类似 实体须有主键。. 的本地化字符串。
         /// </summary>
         internal static string PrimaryKeyMissing {
             get {
@@ -304,7 +313,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Property type(array or non-array) must match relation type. 的本地化字符串。
+        ///   查找类似 属性类别（数组或非数组）必须与关系类型相符。 的本地化字符串。
         /// </summary>
         internal static string PropertyTypeMustMatchAssociationType {
             get {
@@ -313,7 +322,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 RelationAttribute should provide a foreign key in a ManyToOne relation. 的本地化字符串。
+        ///   查找类似 在多對一的关系中，RelationAttribute 必須指定外鍵。 的本地化字符串。
         /// </summary>
         internal static string RelationAttributeShouldHasAForeignKey {
             get {
@@ -322,7 +331,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Rollback transaction failed . 的本地化字符串。
+        ///   查找类似 事务回滚失败! 的本地化字符串。
         /// </summary>
         internal static string RollbackTransactionFailed {
             get {
@@ -331,7 +340,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Same argument types required. 的本地化字符串。
+        ///   查找类似 所有参数类型必须一致！ 的本地化字符串。
         /// </summary>
         internal static string SameArgumentTypeRequired {
             get {
@@ -340,7 +349,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Must begin a transaction before calling this method . 的本地化字符串。
+        ///   查找类似 必须先开始一个事务。 的本地化字符串。
         /// </summary>
         internal static string ShouldBeginTransaction {
             get {
@@ -358,7 +367,7 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
-        ///   查找类似 Transaction is not existing . 的本地化字符串。
+        ///   查找类似 事务不存在！ 的本地化字符串。
         /// </summary>
         internal static string TransactionNotExisting {
             get {

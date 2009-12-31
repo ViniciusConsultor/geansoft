@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean.Exceptions;
 
-namespace Gean.Data
+namespace Gean.Data.Exceptions
 {
     /// <summary>
     /// Gean.Data的基础异常类
