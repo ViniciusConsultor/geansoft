@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace Gean.Data
+namespace Gean.Data.Exceptions
 {
 	/// <summary>
     /// Represents the exception that raises when executing a command.
