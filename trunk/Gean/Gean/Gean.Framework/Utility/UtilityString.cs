@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Microsoft.VisualBasic;
 using System.Text;
+using System.Reflection;
 
 namespace Gean
 {
@@ -13,6 +14,52 @@ namespace Gean
     /// </summary>
     public static class UtilityString
     {
+        /// <summary>
+        /// 根据对象的属性与属性值生成字符串
+        /// </summary>
+        public static string ToString(Object o)
+        {
+            StringBuilder sb = new StringBuilder();
+            Type t = o.GetType();
+
+            PropertyInfo[] pi = t.GetProperties();
+
+            sb.Append("Properties for: " + o.GetType().Name + Environment.NewLine);
+            foreach (PropertyInfo i in pi)
+            {
+                try
+                {
+                    sb.Append("\t" + i.Name + "(" + i.PropertyType.ToString() + "): ");
+                    if (null != i.GetValue(o, null))
+                    {
+                        sb.Append(i.GetValue(o, null).ToString());
+                    }
+                }
+                catch
+                {
+                }
+                sb.Append(Environment.NewLine);
+            }
+
+            FieldInfo[] fi = t.GetFields();
+            foreach (FieldInfo i in fi)
+            {
+                try
+                {
+                    sb.Append("\t" + i.Name + "(" + i.FieldType.ToString() + "): ");
+                    if (null != i.GetValue(o))
+                    {
+                        sb.Append(i.GetValue(o).ToString());
+                    }
+                }
+                catch
+                {
+                }
+                sb.Append(Environment.NewLine);
+            }
+            return sb.ToString();
+        }
+
         /// <summary>
         /// 区位码及汉字之间的互换
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Gean.Exceptions;
 
 namespace Gean
 {
@@ -328,15 +329,4 @@ namespace Gean
         }
     }
 
-    /// <summary>
-    /// 类型转换异常
-    /// </summary>
-    public class TypeConvertingException : BaseException
-    {
-        public TypeConvertingException(string exceptionMsg, Exception e)
-            : base(exceptionMsg, e)
-        {
-
-        }
-    }
 }

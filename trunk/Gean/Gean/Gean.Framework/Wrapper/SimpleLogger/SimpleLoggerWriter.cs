@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Gean.SimpleLogger
 {
-    public class LoggingWriter : ILoggingWriter
+    public class SimpleLoggerWriter : ISimpleLoggerWriter
     {
         protected virtual FileInfo LogFile { get; set; }
         protected virtual StreamWriter Stream { get; set; }
@@ -16,7 +16,7 @@ namespace Gean.SimpleLogger
         /// 构造函数。文本文件日志记录类。
         /// </summary>
         /// <param name="logfiles">日志记录的文件</param>
-        private LoggingWriter(string logfile)
+        private SimpleLoggerWriter(string logfile)
         {
             if (!File.Exists(logfile))//如果Log文件存在，将不在保留
             {
@@ -34,7 +34,7 @@ namespace Gean.SimpleLogger
                 {
                     logfile += ".log";
                 }
-                Stream = LoggingWriter.FileCreator(logfile);
+                Stream = SimpleLoggerWriter.FileCreator(logfile);
             }
             this.LogFile = new FileInfo(logfile);
         }
@@ -44,7 +44,7 @@ namespace Gean.SimpleLogger
         /// </summary>
         /// <param name="logLevel">当前信息的日志等级</param>
         /// <param name="message">信息主体，可是多个对象(当未是String时，将会调用object的Tostring()获取字符串)</param>
-        public void Write(LoggingLevel logLevel, params object[] message)
+        public void Write(SimpleLoggerLevel logLevel, params object[] message)
         {
             lock (Stream)
             {
@@ -77,16 +77,16 @@ namespace Gean.SimpleLogger
             }//lock (_StreamWriterDic)
         }
 
-        static LoggingWriter _logWriter = null;
+        static SimpleLoggerWriter _logWriter = null;
         /// <summary>
         /// 文本文件日志记录类的初始化，主要初始化日志文件。
         /// </summary>
         /// <param name="logTaget">log文件的完全路径名</param>
-        public static LoggingWriter InitializeComponent(string logfiles)
+        public static SimpleLoggerWriter InitializeComponent(string logfiles)
         {
             if (_logWriter == null)
             {
-                _logWriter = new LoggingWriter(logfiles);
+                _logWriter = new SimpleLoggerWriter(logfiles);
             }
             return _logWriter;
         }

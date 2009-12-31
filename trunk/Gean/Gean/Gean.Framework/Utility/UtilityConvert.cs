@@ -6,6 +6,8 @@ using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Gean.Resources;
+using System.Diagnostics;
 
 namespace Gean
 {
@@ -67,7 +69,7 @@ namespace Gean
 
         #region 重载一
         /// <summary>
-        /// 将数据转换为指定类型
+        /// 将数据转换为指定类型，一般用在实现了IConvertible接口的类型
         /// </summary>
         /// <param name="data">转换的数据</param>
         /// <param name="targetType">转换的目标类型</param>
@@ -100,7 +102,7 @@ namespace Gean
 
         #region 重载二
         /// <summary>
-        /// 将数据转换为指定类型
+        /// 将数据转换为指定类型，一般用在实现了IConvertible接口的类型
         /// </summary>
         /// <typeparam name="T">转换的目标类型</typeparam>
         /// <param name="data">转换的数据</param>
@@ -142,6 +144,55 @@ namespace Gean
             }
         }
         #endregion
+
+        #endregion
+
+        #region 将整型变量转化为布尔变量(True或False).
+        /// <summary>
+        /// 将整型变量转化为布尔变量(True或False).
+        /// 规则：如果整型数值大于0,返回True,否则返回False.
+        /// </summary>
+        /// <param name="intParam">整型数</param>
+        /// <returns>如果整型数值大于0,返回True,否则返回False.</returns>
+        private static bool IntToBoolean(int intParam)
+        {
+            bool bReturn = false;
+            if (intParam > 0)
+            {
+                bReturn = true;
+            }
+            return bReturn;
+        }
+
+        /// <summary>
+        /// 将整型变量转化为布尔变量(True或False).
+        /// 规则：如果整型数值大于0,返回True,否则返回False.
+        /// </summary>
+        /// <param name="intParam">The int param.</param>
+        /// <param name="mode">严格模式：只能转换0或1；宽松模式：大于0,返回True,否则返回False.</param>
+        /// <returns></returns>
+        public static bool IntToBoolean(int intParam, ConvertMode mode)
+        {
+            switch (mode)
+            {
+                case ConvertMode.Strict:
+                    {
+                        switch (intParam)
+                        {
+                            case 0:
+                                return false;
+                            case 1:
+                                return true;
+                        }
+                        throw new ArgumentOutOfRangeException(string.Format(ArgumentValidationString.ValueMustIs0or1, "intParam"));
+                    }
+                case ConvertMode.Relaxed:
+                    return IntToBoolean(intParam);
+                default :
+                    Debug.Fail(mode.ToString());
+                    return false;
+            }
+        }
 
         #endregion
 
@@ -492,6 +543,22 @@ namespace Gean
         }
 
         #endregion
+
+        /// <summary>
+        /// 转换时的模式，一般指是严格转换还是宽松的转换
+        /// </summary>
+        public enum ConvertMode
+        {
+            /// <summary>
+            /// 严格的
+            /// </summary>
+            Strict,
+            /// <summary>
+            /// 宽松的
+            /// </summary>
+            Relaxed
+        }
+
 
     }
 }

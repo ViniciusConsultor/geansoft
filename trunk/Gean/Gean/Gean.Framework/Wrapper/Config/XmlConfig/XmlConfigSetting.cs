@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 using System.Xml;
+using Gean.Exceptions;
 
 namespace Gean.Config.XmlConfig
 {
