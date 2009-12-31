@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\GatewayException.cs" />
     <Compile Include="Exceptions\OracleErrorCode.cs" />
     <Compile Include="Base\Interface\AdoHelper.cs" />
+    <Compile Include="Helper\OracleHelper.cs" />
     <Compile Include="ORM\DAL\BaseDatabase.cs" />
     <Compile Include="Base\DataTransfer.cs" />
     <Compile Include="ORM\DAL\BaseDAL.cs" />
