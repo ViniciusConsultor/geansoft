@@ -54,6 +54,11 @@
     <Compile Include="Base\Database\OracleDatabase.cs" />
     <Compile Include="Base\Database\SqlServerDatabase.cs" />
     <Compile Include="Base\TransactionCleaner.cs" />
+    <Compile Include="dOOdads\AggregateParameter.cs" />
+    <Compile Include="dOOdads\BusinessEntity.cs" />
+    <Compile Include="dOOdads\DynamicQuery.cs" />
+    <Compile Include="dOOdads\TransactionMgr.cs" />
+    <Compile Include="dOOdads\WhereParameter.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\DataException.cs" />
