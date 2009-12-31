@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Web.UI.WebControls;
 
 namespace Gean.Data
 {
@@ -388,8 +390,6 @@ namespace Gean.Data
 
         #endregion TransObject
 
-        /* TransWebFormDataToEntityProperty TransEntityPropertyToWebFormData
-
         #region TransWebFormDataToEntityProperty
 
         /// <summary>
@@ -427,17 +427,17 @@ namespace Gean.Data
                 {
                     string stringValue;
                     object fieldObject = columns[i].GetValue(form);
-                    if (fieldObject is TextBox)
+                    if (fieldObject is System.Web.UI.WebControls.TextBox)
                     {
-                        stringValue = (fieldObject as TextBox).Text;
+                        stringValue = (fieldObject as System.Web.UI.WebControls.TextBox).Text;
                     }
                     else if (fieldObject is DropDownList)
                     {
                         stringValue = (fieldObject as DropDownList).SelectedValue;
                     }
-                    else if (fieldObject is Label)
+                    else if (fieldObject is System.Web.UI.WebControls.Label)
                     {
-                        stringValue = (fieldObject as Label).Text;
+                        stringValue = (fieldObject as System.Web.UI.WebControls.Label).Text;
                     }
                     else if (fieldObject is HyperLink)
                     {
@@ -549,19 +549,19 @@ namespace Gean.Data
                     }
                     object fieldObject = columns[i].GetValue(form);
                     string stringValue = (string)Convert.ChangeType(value, typeof(string));
-                    if (fieldObject is TextBox)
+                    if (fieldObject is System.Web.UI.WebControls.TextBox)
                     {
-                        (fieldObject as TextBox).Text = stringValue;
+                        (fieldObject as System.Web.UI.WebControls.TextBox).Text = stringValue;
                     }
                     else if (fieldObject is DropDownList)
                     {
                         DropDownList ddl = fieldObject as DropDownList;
                         ddl.ClearSelection();
-                        WebHelper.SetDropDownListValueSafely(ddl, stringValue);
+                        ddl.Items.Add(stringValue);
                     }
-                    else if (fieldObject is Label)
+                    else if (fieldObject is System.Web.UI.WebControls.Label)
                     {
-                        (fieldObject as Label).Text = stringValue;
+                        (fieldObject as System.Web.UI.WebControls.Label).Text = stringValue;
                     }
                     else if (fieldObject is HyperLink)
                     {
@@ -578,7 +578,6 @@ namespace Gean.Data
 
         #endregion
 
-        */
     }
 
     #region internal class
