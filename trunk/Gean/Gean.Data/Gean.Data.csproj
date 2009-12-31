@@ -37,33 +37,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandExecutor\CommandExecutor.cs" />
-    <Compile Include="CommandExecutor\ITableCommandExecutor.cs" />
-    <Compile Include="CommandExecutor\IViewCommandExecutor.cs" />
-    <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\DatabaseFactory.cs" />
-    <Compile Include="Database\DatabaseType.cs" />
-    <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="Database\OleDatabase.cs" />
-    <Compile Include="Database\OracleDatabase.cs" />
-    <Compile Include="Database\SqlServerDatabase.cs" />
-    <Compile Include="Database\TransactionCleaner.cs" />
+    <Compile Include="Base\CommandExecutor\CommandExecutor.cs" />
+    <Compile Include="Base\CommandExecutor\ITableCommandExecutor.cs" />
+    <Compile Include="Base\CommandExecutor\IViewCommandExecutor.cs" />
+    <Compile Include="Base\Database\Database.cs" />
+    <Compile Include="Base\Database\DatabaseFactory.cs" />
+    <Compile Include="Base\Database\DatabaseType.cs" />
+    <Compile Include="Base\Database\IDatabase.cs" />
+    <Compile Include="Base\Database\OleDatabase.cs" />
+    <Compile Include="Base\Database\OracleDatabase.cs" />
+    <Compile Include="Base\Database\SqlServerDatabase.cs" />
+    <Compile Include="Base\Database\TransactionCleaner.cs" />
     <Compile Include="Exception\CommandException.cs" />
     <Compile Include="Exception\ConnectionException.cs" />
     <Compile Include="Exception\DataException.cs" />
     <Compile Include="Exception\OracleErrorCode.cs" />
-    <Compile Include="Interface\AdoHelper.cs" />
-    <Compile Include="ConnectionPool\ConnectionPool.cs" />
-    <Compile Include="ConnectionPool\ConnectionPoolEnum.cs" />
-    <Compile Include="ConnectionPool\ConnectionPoolException.cs" />
-    <Compile Include="ConnectionPool\ConnectionStruct.cs" />
-    <Compile Include="DAL\BaseDatabase.cs" />
-    <Compile Include="DataTransfer.cs" />
-    <Compile Include="DAL\BaseDAL.cs" />
-    <Compile Include="DAL\ICommonDAL.cs" />
-    <Compile Include="Entity\BaseEntity.cs" />
-    <Compile Include="PageHelper.cs" />
-    <Compile Include="PagerInfo.cs" />
+    <Compile Include="Base\Interface\AdoHelper.cs" />
+    <Compile Include="ORM\DAL\BaseDatabase.cs" />
+    <Compile Include="Base\DataTransfer.cs" />
+    <Compile Include="ORM\DAL\BaseDAL.cs" />
+    <Compile Include="ORM\DAL\ICommonDAL.cs" />
+    <Compile Include="ORM\Entity\BaseEntity.cs" />
+    <Compile Include="Base\PageHelper.cs" />
+    <Compile Include="Base\PagerInfo.cs" />
     <Compile Include="Helper\SQLHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MsgResource.Designer.cs">
@@ -73,7 +69,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Helper\SQLHelper.cd" />
     <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>
