@@ -27,10 +27,10 @@
 using System.Collections;
 using System.Data;
 
-namespace MyGeneration.dOOdads
+namespace Gean.Data
 {
     /// <summary>
-    /// This class is dynamcially created when you add an AggregateParameter to your BusinessEntity's DynamicQuery (See the BusinessEntity.Query Property).
+    /// 综合参数。从MyGeneration.dOOdads移植。2010-01-02 0:31:42
     /// </summary>
     /// <remarks>
     /// Aggregate and GROUP BY Feature Support by DBMS:
@@ -114,41 +114,6 @@ namespace MyGeneration.dOOdads
     public class AggregateParameter
     {
         /// <summary>
-        /// The aggregate function used by Aggregate.Function
-        /// </summary>
-        public enum Func
-        {
-            /// <summary>
-            /// Average
-            /// </summary>
-            Avg = 1,
-            /// <summary>
-            /// Count
-            /// </summary>
-            Count,
-            /// <summary>
-            /// Maximum
-            /// </summary>
-            Max,
-            /// <summary>
-            /// Minimum
-            /// </summary>
-            Min,
-            /// <summary>
-            /// Standard Deviation
-            /// </summary>
-            StdDev,
-            /// <summary>
-            /// Variance
-            /// </summary>
-            Var,
-            /// <summary>
-            /// Sum
-            /// </summary>
-            Sum
-        };
-
-        /// <summary>
         /// This is only called by dOOdads architecture.
         /// </summary>
         /// <param name="column"></param>
@@ -159,7 +124,7 @@ namespace MyGeneration.dOOdads
             this._alias = column;
             this._distinct = false;
             this._param = param;
-            this._function = AggregateParameter.Func.Sum;
+            this._function = AggregateParameter.Functioned.Sum;
         }
 
         /// <summary>
@@ -217,7 +182,7 @@ namespace MyGeneration.dOOdads
         /// Avg, Count, Min, Max, Sum, StdDev, or Var.
         /// (See AggregateParameter.Func enumeration.)
         /// </summary>
-        public Func Function
+        public Functioned Function
         {
             get
             {
@@ -257,7 +222,6 @@ namespace MyGeneration.dOOdads
             {
                 return _distinct;
             }
-
             set
             {
                 _distinct = value;
@@ -268,9 +232,42 @@ namespace MyGeneration.dOOdads
         private object _value = null;
         private IDataParameter _param;
         private string _column;
-        private Func _function = AggregateParameter.Func.Sum;
+        private Functioned _function = AggregateParameter.Functioned.Sum;
         private string _alias = string.Empty;
         private bool _isDirty = false;
         private bool _distinct = false;
+
+        public enum Functioned
+        {
+            /// <summary>
+            /// 平均
+            /// </summary>
+            Avg = 1,
+            /// <summary>
+            /// 个数
+            /// </summary>
+            Count,
+            /// <summary>
+            /// Maximum
+            /// </summary>
+            Max,
+            /// <summary>
+            /// Minimum
+            /// </summary>
+            Min,
+            /// <summary>
+            /// 标准偏差
+            /// </summary>
+            StandardDeviation,
+            /// <summary>
+            /// 差异,差额
+            /// </summary>
+            Variance,
+            /// <summary>
+            /// 总数, 总和
+            /// </summary>
+            Sum
+        }
+
     }
 }

@@ -1,65 +1,15 @@
-﻿//==============================================================================
-// MyGeneration.dOOdads
-//
-// DynamicQuery.cs
-// Version 5.0
-// Updated - 09/15/2005
-//------------------------------------------------------------------------------
-// Copyright 2004, 2005 by MyGeneration Software.
-// All Rights Reserved.
-//
-// Permission to use, copy, modify, and distribute this software and its 
-// documentation for any purpose and without fee is hereby granted, 
-// provided that the above copyright notice appear in all copies and that 
-// both that copyright notice and this permission notice appear in 
-// supporting documentation. 
-//
-// MYGENERATION SOFTWARE DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS 
-// SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY 
-// AND FITNESS, IN NO EVENT SHALL MYGENERATION SOFTWARE BE LIABLE FOR ANY 
-// SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES 
-// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, 
-// WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER 
-// TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE 
-// OR PERFORMANCE OF THIS SOFTWARE. 
-//==============================================================================
-
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Collections;
 
-namespace MyGeneration.dOOdads
+namespace Gean.Data
 {
     /// <summary>
-    /// DynamicQuery allows you to (without writing any stored procedures) query your database on the fly. All selection criteria are passed in
-    /// via Parameters (SqlParameter, OleDbParameter) in order to prevent sql injection tecniques often attempted by hackers.  
+    /// <see cref="DynamicQuery"/>（无需编写任何存储过程）快速查询数据库。参数标准为（<see cref="SqlParameter"/>，<see cref="OleDbParameter"/>）。针对性完善了黑客SQL注入。
     /// </summary>
     /// <example>
-    /// VB.NET
-    /// <code>
-    /// Dim emps As New Employees
-    ///
-    /// ' LastNames that have "A" anywher in them
-    /// emps.Where.LastName.Value = "%A%"
-    /// emps.Where.LastName.Operator = WhereParameter.Operand.Like_
-    ///
-    /// ' Only return the EmployeeID and LastName
-    /// emps.Query.AddResultColumn(Employees.ColumnNames.EmployeeID)
-    /// emps.Query.AddResultColumn(Employees.ColumnNames.LastName)
-    ///
-    /// ' Order by LastName 
-    /// ' (you can add as many order by columns as you like by repeatedly calling this)
-    /// emps.Query.AddOrderBy(Employees.ColumnNames.LastName, WhereParameter.Dir.ASC)
-    ///
-    /// ' Bring back only distinct rows
-    /// emps.Query.Distinct = True
-    ///
-    /// ' Bring back the top 10 rows
-    /// emps.Query.Top = 10
-    ///
-    /// emps.Query.Load()</code>
     ///	C#
     ///	<code>
     /// Employees emps = new Employees();
@@ -84,20 +34,20 @@ namespace MyGeneration.dOOdads
     ///
     /// emps.Query.Load();</code>
     /// </example>
-    abstract public class DynamicQuery
+    public abstract class DynamicQuery
     {
         /// <summary>
         /// Derived classes implement this, like SqlClientDynamicQuery and OleDbDynamicQuery to account for differences in DBMS systems.
         /// </summary>
-        /// <param name="conjuction">The conjuction, "AND" or "OR"</param>
+        /// <param name="conjuction">一个指定的连词, "AND" or "OR"</param>
         /// <returns></returns>
-        abstract protected IDbCommand _Load(string conjuction);
+        protected abstract IDbCommand _Load(string conjuction);
 
         /// <summary>
         /// You never need to call this, just access your BusinessEntity.Query property.
         /// </summary>
         /// <param name="entity">Passed in via the BusinessEntity</param>
-        public DynamicQuery(BusinessEntity entity)
+        public DynamicQuery(BaseEntity entity)
         {
             this._entity = entity;
         }
@@ -106,7 +56,6 @@ namespace MyGeneration.dOOdads
         {
             return _Load("AND");
         }
-
 
         /// <summary>
         /// Execute the Query and loads your BusinessEntity. The default conjuction between the WHERE parameters is "AND"
@@ -144,7 +93,7 @@ namespace MyGeneration.dOOdads
                 IDbDataAdapter da = this._entity.CreateIDbDataAdapter();
                 da.SelectCommand = cmd;
 
-                TransactionMgr txMgr = TransactionMgr.ThreadTransactionMgr();
+                TransactionManager txMgr = TransactionManager.ThreadTransactionManager();
 
                 dt = new DataTable(_entity.MappingName);
 
@@ -331,15 +280,14 @@ namespace MyGeneration.dOOdads
         /// <summary>
         /// NOTE: This is called by the dOOdad framework and you should never call it. We reserve the right to remove or change this method.
         /// </summary>
-        /// <param name="wItem">The WhereParameter</param>
-        public void AddWhereParameter(WhereParameter wItem)
+        /// <param name="where">The WhereParameter</param>
+        public void AddWhereParameter(WhereParameter where)
         {
             if (_whereParameters == null)
             {
                 _whereParameters = new ArrayList();
             }
-
-            _whereParameters.Add(wItem);
+            _whereParameters.Add(where);
         }
 
         /// <summary>
@@ -407,7 +355,7 @@ namespace MyGeneration.dOOdads
         /// <code>
         /// emps.Query.AddOrderBy(Employees.ColumnNames.LastName, WhereParameter.Dir.ASC)</code>
         /// </example>
-        public virtual void AddOrderBy(string column, WhereParameter.Dir direction)
+        public virtual void AddOrderBy(string column, WhereParameter.OrderBy direction)
         {
             if (_orderBy.Length > 0)
             {
@@ -416,7 +364,7 @@ namespace MyGeneration.dOOdads
 
             _orderBy += column;
 
-            if (direction == WhereParameter.Dir.ASC)
+            if (direction == WhereParameter.OrderBy.ASC)
                 _orderBy += " ASC";
             else
                 _orderBy += " DESC";
@@ -434,7 +382,7 @@ namespace MyGeneration.dOOdads
         /// <code>
         /// emps.Query.AddOrderBy(emps.Query, WhereParameter.Dir.ASC)</code>
         /// </example>
-        public virtual void AddOrderBy(DynamicQuery countAll, WhereParameter.Dir direction)
+        public virtual void AddOrderBy(DynamicQuery countAll, WhereParameter.OrderBy direction)
         {
         }
 
@@ -449,7 +397,7 @@ namespace MyGeneration.dOOdads
         /// <code>
         /// emps.Query.AddOrderBy(emps.Aggregate.CategoryID, WhereParameter.Dir.ASC)</code>
         /// </example>
-        public virtual void AddOrderBy(AggregateParameter aggregate, WhereParameter.Dir direction)
+        public virtual void AddOrderBy(AggregateParameter aggregate, WhereParameter.OrderBy direction)
         {
         }
 
@@ -592,16 +540,16 @@ namespace MyGeneration.dOOdads
         /// A Query has a default conjuction between WHERE parameters, this method lets you intermix those and alternate between AND/OR.
         /// </summary>
         /// <param name="conjuction"></param>
-        public void AddConjunction(WhereParameter.Conj conjuction)
+        public void AddConjunction(WhereParameter.Between conjuction)
         {
             if (_whereParameters == null)
             {
                 _whereParameters = new ArrayList();
             }
 
-            if (conjuction != WhereParameter.Conj.UseDefault)
+            if (conjuction != WhereParameter.Between.UseDefault)
             {
-                if (conjuction == WhereParameter.Conj.And)
+                if (conjuction == WhereParameter.Between.And)
                     _whereParameters.Add(" AND ");
                 else
                     _whereParameters.Add(" OR ");
@@ -678,7 +626,7 @@ namespace MyGeneration.dOOdads
         /// <summary>
         /// Used by derived classes
         /// </summary>
-        protected BusinessEntity _entity;
+        protected BaseEntity _entity;
         /// <summary>
         /// Used by derived classes
         /// </summary>
