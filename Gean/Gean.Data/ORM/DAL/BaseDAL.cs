@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using System.Data;
-using Gean.Data.Entity;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace Gean.Data.DAL
 {
@@ -212,7 +212,7 @@ namespace Gean.Data.DAL
             Checker.CheckForNullReference(obj, "传入的对象obj为空");
 
             Hashtable hash = GetHashByEntity(obj);
-            int count = Update(obj.PrimaryKey, hash, null);
+            int count = 0; Debug.Fail(" = Update(obj.PrimaryKey, hash, null);");
             return UtilityConvert.IntToBoolean(count, UtilityConvert.ConvertMode.Relaxed);
         }
 

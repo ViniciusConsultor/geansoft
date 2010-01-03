@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Gean.Data.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,11 +55,10 @@
     <Compile Include="Base\Database\OracleDatabase.cs" />
     <Compile Include="Base\Database\SqlServerDatabase.cs" />
     <Compile Include="Base\TransactionCleaner.cs" />
-    <Compile Include="dOOdads\AggregateParameter.cs" />
-    <Compile Include="dOOdads\BusinessEntity.cs" />
-    <Compile Include="dOOdads\DynamicQuery.cs" />
-    <Compile Include="dOOdads\TransactionMgr.cs" />
-    <Compile Include="dOOdads\WhereParameter.cs" />
+    <Compile Include="ORM\Entity\AggregateParameter.cs" />
+    <Compile Include="ORM\Entity\DynamicQuery.cs" />
+    <Compile Include="ORM\Entity\TransactionManager.cs" />
+    <Compile Include="ORM\Entity\WhereParameter.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\DataException.cs" />

@@ -29,26 +29,27 @@ using System.Configuration;
 using System.Data;
 using System.Collections;
 using System.Data.SQLite;
+using Gean.Data;
 
-namespace MyGeneration.dOOdads
+namespace Gean.Data.SQLite
 {
 	/// <summary>
 	/// SQLiteDynamicQuery is the SQLite implementation of DynamicQuery
 	/// </summary>
 	public class SQLiteDynamicQuery : DynamicQuery
 	{
-		public SQLiteDynamicQuery(BusinessEntity entity)
+		public SQLiteDynamicQuery(BaseEntity entity)
 			: base(entity)
 		{
 			
 		}
 
-		public override void AddOrderBy(string column, MyGeneration.dOOdads.WhereParameter.Dir direction)
+		public override void AddOrderBy(string column, WhereParameter.OrderBy direction)
 		{
 			base.AddOrderBy("[" + column + "]", direction);
 		}
 
-		public override void AddOrderBy(DynamicQuery countAll, MyGeneration.dOOdads.WhereParameter.Dir direction)
+		public override void AddOrderBy(DynamicQuery countAll, WhereParameter.OrderBy direction)
 		{
 			if(countAll.CountAll)
 			{
@@ -56,7 +57,7 @@ namespace MyGeneration.dOOdads
 			}
 		}
 
-		public override void AddOrderBy(AggregateParameter aggregate, MyGeneration.dOOdads.WhereParameter.Dir direction)
+		public override void AddOrderBy(AggregateParameter aggregate, WhereParameter.OrderBy direction)
 		{
 			base.AddOrderBy (GetAggregate(aggregate, false), direction);
 		}
@@ -82,25 +83,25 @@ namespace MyGeneration.dOOdads
 
 			switch(wItem.Function)
 			{
-				case AggregateParameter.Func.Avg:
+				case AggregateParameter.Functioned.Avg:
 					query += "AVG(";
 					break;
-				case AggregateParameter.Func.Count:
+				case AggregateParameter.Functioned.Count:
 					query += "COUNT(";
 					break;
-				case AggregateParameter.Func.Max:
+				case AggregateParameter.Functioned.Max:
 					query += "MAX(";
 					break;
-				case AggregateParameter.Func.Min:
+				case AggregateParameter.Functioned.Min:
 					query += "MIN(";
 					break;
-				case AggregateParameter.Func.Sum:
+				case AggregateParameter.Functioned.Sum:
 					query += "SUM(";
 					break;
-				case AggregateParameter.Func.StdDev:
+				case AggregateParameter.Functioned.StandardDeviation:
 					query += "STDDEV(";
 					break;
-				case AggregateParameter.Func.Var:
+				case AggregateParameter.Functioned.Variance:
 					query += "VAR(";
 					break;
 			}
@@ -231,9 +232,9 @@ namespace MyGeneration.dOOdads
 						{
 							if(!first && !skipConjuction)
 							{
-								if(wItem.Conjuction != WhereParameter.Conj.UseDefault)
+								if(wItem.Conjuction != WhereParameter.Between.UseDefault)
 								{
-									if(wItem.Conjuction == WhereParameter.Conj.And)
+									if(wItem.Conjuction == WhereParameter.Between.And)
 										query += " AND ";
 									else
 										query += " OR ";

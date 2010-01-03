@@ -28,20 +28,21 @@ using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
+using Gean.Data;
 
-namespace MyGeneration.dOOdads
+namespace Gean.Data.SQLite
 {
 	/// <summary>
 	/// VistaDBEntity is the VistaDB implementation of BusinessEntity
 	/// </summary>
-    public class SQLiteEntity : BusinessEntity
+    public class SQLiteEntity : BaseEntity
     {
         public SQLiteEntity()
         {
 
         }
 
-        public override DynamicQuery CreateDynamicQuery(BusinessEntity entity)
+        public override DynamicQuery CreateDynamicQuery(BaseEntity entity)
         {
             return new SQLiteDynamicQuery(entity);
         }
@@ -104,7 +105,7 @@ namespace MyGeneration.dOOdads
             {
                 if (e.Status == UpdateStatus.Continue && e.StatementType == StatementType.Insert)
                 {
-                    TransactionMgr txMgr = TransactionMgr.ThreadTransactionMgr();
+                    TransactionManager txMgr = TransactionManager.ThreadTransactionManager();
 
                     string[] identityCols = this.GetAutoKeyColumns().Split(';');
 

@@ -1,85 +1,22 @@
-﻿//==============================================================================
-// MyGeneration.dOOdads
-//
-// TransactionMgr.cs
-// Version 5.1
-// Updated - 11/17/2005
-//------------------------------------------------------------------------------
-// Copyright 2004, 2005 by MyGeneration Software.
-// All Rights Reserved.
-//
-// Permission to use, copy, modify, and distribute this software and its 
-// documentation for any purpose and without fee is hereby granted, 
-// provided that the above copyright notice appear in all copies and that 
-// both that copyright notice and this permission notice appear in 
-// supporting documentation. 
-//
-// MYGENERATION SOFTWARE DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS 
-// SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY 
-// AND FITNESS, IN NO EVENT SHALL MYGENERATION SOFTWARE BE LIABLE FOR ANY 
-// SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES 
-// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, 
-// WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER 
-// TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE 
-// OR PERFORMANCE OF THIS SOFTWARE. 
-//==============================================================================
-
-using System;
+﻿using System;
 using System.Data;
 using System.Configuration;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections;
 
-namespace MyGeneration.dOOdads
+namespace Gean.Data
 {
     /// <summary>
-    /// TransactionMgr is used to seemlessly enroll BusinessEntity's  into a transaction. TransactionMgr uses
-    /// ADO.NET transactions and therefore is not a distributed transaction as you would get with COM+. You only have
-    /// to use TransactionMgr if two or more BusinessEntity's need to be saved as a transaction.  The BusinessEntity.Save
-    /// method is already protected by a transaction.
+    /// 事务管理器。<see cref="TransactionManager"/>用于使得<see cref="BaseEntity"/>启动事务。因为<see cref="TransactionManager"/>使用ADO.NET事务，所以没有分布式事务。如果有两个或两个以上<see cref="BaseEntity"/>的需求被保存为一个事务，只需要使用<see cref="TransactionManager"/>。当然，<see cref="BaseEntity.Save()"/>方法的核心就是一个事务。
+    /// 
+    /// 从MyGeneration.dOOdads移植。
+    /// 2010-01-02 1:15:23
     /// </summary>
-    /// <remarks>
-    ///	Transaction Rules:
-    /// <list type="bullet">
-    ///		<item>Your transactions paths do not have to be pre-planned. At any time you can begin a transaction</item>
-    ///		<item>You can nest BeginTransaction/CommitTransaction any number of times as long as they are sandwiched appropriately</item>
-    ///		<item>Once RollbackTransaction is called the transaction is doomed, nothing can be committed even it is attempted.</item>
-    ///		<item>Transactions are stored in the Thread Local Storage.</item>
-    ///	</list>
-    /// Transactions are stored in the Thread Local Storage or
-    /// TLS. This way the API isn't intrusive, ie, forcing you
-    /// to pass a SqlConnection around everywhere.  There is one
-    /// thing to remember, once you call RollbackTransaction you will
-    /// be unable to commit anything on that thread until you
-    /// call ThreadTransactionMgrReset().
-    /// 
-    /// In an ASP.NET application each page is handled by a thread
-    /// that is pulled from a thread pool. Thus, you need to clear
-    /// out the TLS (thread local storage) before your page begins
-    /// execution. The best way to do this is to create a base page
-    /// that inhertis from System.Web.UI.Page and clears the state
-    /// like this:	
-    ///	</remarks>
     ///	<example>
-    /// VB.NET
-    /// <code>
-    /// Dim tx As TransactionMgr
-    /// tx = TransactionMgr.ThreadTransactionMgr()
-    /// 
-    /// Try
-    /// 	tx.BeginTransaction()
-    /// 	emps.Save()
-    /// 	prds.Save()
-    /// 	tx.CommitTransaction()
-    /// Catch ex As Exception
-    /// 	tx.RollbackTransaction()
-    /// 	tx.ThreadTransactionMgrReset()
-    /// End Try
-    /// </code>
     /// C#
     /// <code>
-    /// TransactionMgr tx = TransactionMgr.ThreadTransactionMgr();
+    /// TransactionManager tx = TransactionManager.ThreadTransactionManager();
     /// 
     /// try
     /// {
@@ -91,16 +28,16 @@ namespace MyGeneration.dOOdads
     /// catch(Exception ex)
     /// {
     /// 	tx.RollbackTransaction();
-    /// 	tx.ThreadTransactionMgrReset();
+    /// 	tx.ThreadTransactionManagerReset();
     /// }
     /// </code>
     /// </example>
-    public class TransactionMgr
+    public class TransactionManager
     {
         /// <summary>
-        /// You cannot new an instance of the TransactionMgr class, see the static method <see cref="ThreadTransactionMgr"/>
+        /// 私有化构造函数。使用<see cref="ThreadTransactionManager"/>方法返回实例。
         /// </summary>
-        protected TransactionMgr()
+        protected TransactionManager()
         {
 
         }
@@ -160,25 +97,25 @@ namespace MyGeneration.dOOdads
 
                 this.transactions.Clear();
 
-                if (this.objectsInTransaction != null)
+                if (this._objectsInTransaction != null)
                 {
                     try
                     {
-                        foreach (BusinessEntity entity in this.objectsInTransaction)
+                        foreach (BaseEntity entity in this._objectsInTransaction)
                         {
                             entity.AcceptChanges();
                         }
                     }
                     catch { }
 
-                    this.objectsInTransaction = null;
+                    this._objectsInTransaction = null;
                 }
             }
         }
 
         /// <summary>
         /// RollbackTransaction dooms the transaction regardless of nested calls to BeginTransaction. Once this method is called
-        /// nothing can be done to commit the transaction.  To reset the thread state a call to <see cref="ThreadTransactionMgrReset"/> must be made.
+        /// nothing can be done to commit the transaction.  To reset the thread state a call to <see cref="ThreadTransactionManagerReset"/> must be made.
         /// You must call 
         /// </summary>
         public void RollbackTransaction()
@@ -193,7 +130,7 @@ namespace MyGeneration.dOOdads
 
                 this.transactions.Clear();
                 this.txCount = 0;
-                this.objectsInTransaction = null;
+                this._objectsInTransaction = null;
             }
         }
 
@@ -218,7 +155,7 @@ namespace MyGeneration.dOOdads
         /// txMgr.DeEnlist(cmd, Me)
         /// </code>
         /// </example>
-        public void Enlist(IDbCommand cmd, BusinessEntity entity)
+        public void Enlist(IDbCommand cmd, BaseEntity entity)
         {
             if (txCount == 0 || entity._notRecommendedConnection != null)
             {
@@ -249,7 +186,6 @@ namespace MyGeneration.dOOdads
                     }
                     this.transactions[connStr] = tx;
                 }
-
                 cmd.Connection = tx.sqlConnection;
                 cmd.Transaction = tx.sqlTx;
             }
@@ -274,7 +210,7 @@ namespace MyGeneration.dOOdads
         /// txMgr.DeEnlist(cmd, Me)
         /// </code>
         /// </example>
-        public void DeEnlist(IDbCommand cmd, BusinessEntity entity)
+        public void DeEnlist(IDbCommand cmd, BaseEntity entity)
         {
             if (entity._notRecommendedConnection != null)
             {
@@ -291,20 +227,20 @@ namespace MyGeneration.dOOdads
         }
 
         /// <summary>
-        /// Called internally by BusinessEntity
+        /// Called internally by BaseEntity
         /// </summary>
         /// <param name="entity"></param>
-        internal void AddBusinessEntity(BusinessEntity entity)
+        internal void AddBaseEntity(BaseEntity entity)
         {
-            if (this.objectsInTransaction == null)
+            if (_objectsInTransaction == null)
             {
-                this.objectsInTransaction = new ArrayList();
+                _objectsInTransaction = new ArrayList();
             }
 
-            this.objectsInTransaction.Add(entity);
+            _objectsInTransaction.Add(entity);
         }
 
-        private IDbConnection CreateSqlConnection(BusinessEntity entity)
+        private IDbConnection CreateSqlConnection(BaseEntity entity)
         {
             IDbConnection cn;
 
@@ -332,8 +268,77 @@ namespace MyGeneration.dOOdads
             return cn;
         }
 
-        // We might have multple transactions going at the same time.
-        // There's one per connnection string
+        private Hashtable transactions = new Hashtable();
+        private int txCount = 0;
+        private bool hasRolledBack = false;
+
+        /// <summary>
+        /// Used to control AcceptChanges()
+        /// </summary>
+        internal ArrayList _objectsInTransaction = null;
+
+        #region "static"
+        /// <summary>
+        /// This static method is how you obtain a reference to the TransactionManager. You cannot call "new" on TransactionManager.
+        /// If a TransactionManager doesn't exist on the current thread, one is created and returned to you.
+        /// </summary>
+        /// <returns>The one and only TransactionManager for this thread.</returns>
+        public static TransactionManager ThreadTransactionManager()
+        {
+            TransactionManager txMgr = null;
+
+            object obj = Thread.GetData(_txMgrSlot);
+
+            if (obj != null)
+            {
+                txMgr = (TransactionManager)obj;
+            }
+            else
+            {
+                txMgr = new TransactionManager();
+                Thread.SetData(_txMgrSlot, txMgr);
+            }
+
+            return txMgr;
+        }
+
+        /// <summary>
+        /// This must be called after RollbackTransaction or no futher database activity will happen successfully on the current thread.
+        /// </summary>
+        public static void ThreadTransactionManagerReset()
+        {
+            TransactionManager txMgr = TransactionManager.ThreadTransactionManager();
+
+            try
+            {
+                if (txMgr.txCount > 0 && txMgr.hasRolledBack == false)
+                {
+                    txMgr.RollbackTransaction();
+                }
+            }
+            catch { }
+
+            Thread.SetData(_txMgrSlot, null);
+        }
+
+        /// <summary>
+        /// This is the Transaction's strength. The default is "IsolationLevel.Unspecified, the strongest is "IsolationLevel.Serializable" which is what
+        /// is recommended for serious enterprize level projects.
+        /// </summary>
+        public static IsolationLevel IsolationLevel
+        {
+            get { return _isolationLevel; }
+            set { _isolationLevel = value; }
+        }
+        private static IsolationLevel _isolationLevel = IsolationLevel.Unspecified;
+
+        private static LocalDataStoreSlot _txMgrSlot = Thread.AllocateDataSlot();
+        #endregion
+
+        #region class Transaction
+        /// <summary>
+        /// 可能出现在同一时间出现多事务时。有一个连接字符串。
+        /// </summary>
         private class Transaction : IDisposable
         {
             public IDbTransaction sqlTx = null;
@@ -355,78 +360,6 @@ namespace MyGeneration.dOOdads
             }
             #endregion
         }
-
-        private Hashtable transactions = new Hashtable();
-        private int txCount = 0;
-        private bool hasRolledBack = false;
-
-        // Used to control AcceptChanges()
-        internal ArrayList objectsInTransaction = null;
-
-        #region "static"
-        /// <summary>
-        /// This static method is how you obtain a reference to the TransactionMgr. You cannot call "new" on TransactionMgr.
-        /// If a TransactionMgr doesn't exist on the current thread, one is created and returned to you.
-        /// </summary>
-        /// <returns>The one and only TransactionMgr for this thread.</returns>
-        public static TransactionMgr ThreadTransactionMgr()
-        {
-            TransactionMgr txMgr = null;
-
-            object obj = Thread.GetData(txMgrSlot);
-
-            if (obj != null)
-            {
-                txMgr = (TransactionMgr)obj;
-            }
-            else
-            {
-                txMgr = new TransactionMgr();
-                Thread.SetData(txMgrSlot, txMgr);
-            }
-
-            return txMgr;
-        }
-
-        /// <summary>
-        /// This must be called after RollbackTransaction or no futher database activity will happen successfully on the current thread.
-        /// </summary>
-        public static void ThreadTransactionMgrReset()
-        {
-            TransactionMgr txMgr = TransactionMgr.ThreadTransactionMgr();
-
-            try
-            {
-                if (txMgr.txCount > 0 && txMgr.hasRolledBack == false)
-                {
-                    txMgr.RollbackTransaction();
-                }
-            }
-            catch { }
-
-            Thread.SetData(txMgrSlot, null);
-        }
-
-        /// <summary>
-        /// This is the Transaction's strength. The default is "IsolationLevel.Unspecified, the strongest is "IsolationLevel.Serializable" which is what
-        /// is recommended for serious enterprize level projects.
-        /// </summary>
-        public static IsolationLevel IsolationLevel
-        {
-            get
-            {
-                return _isolationLevel;
-            }
-
-            set
-            {
-                _isolationLevel = value;
-            }
-        }
-
-        private static IsolationLevel _isolationLevel = IsolationLevel.Unspecified;
-        private static LocalDataStoreSlot txMgrSlot = Thread.AllocateDataSlot();
         #endregion
-
     }
 }

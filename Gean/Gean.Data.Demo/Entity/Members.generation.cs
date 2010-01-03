@@ -1,7 +1,6 @@
-
 /*
 //===============================================================================
-//  Generated From - SQLite_CSharp_BusinessEntity.vbgen
+//  Generated From - SQLite_CSharp_BaseEntity.vbgen
 //
 //  The supporting base class SQLiteEntity is in the Architecture directory in "dOOdads".
 //  
@@ -27,8 +26,9 @@ using System.Data;
 using System.Collections;
 using System.Collections.Specialized;
 
-using MyGeneration.dOOdads;
 using System.Data.SQLite;
+using Gean.Data.SQLite;
+using Gean.Data;
 
 namespace Gean.SQLitedOOdads.Demos
 {
@@ -38,7 +38,6 @@ namespace Gean.SQLitedOOdads.Demos
 		{
 			this.QuerySource = "Members";
 			this.MappingName = "Members";
-
 		}	
 
 		//=================================================================
@@ -80,7 +79,7 @@ namespace Gean.SQLitedOOdads.Demos
 		//=================================================================
 		//  Loads a single row of via the primary key
 		//=================================================================
-		public virtual bool LoadByPrimaryKey(Unknown Id)
+		public virtual bool LoadByPrimaryKey(string Id)
 		{
 			this.Where.Id.Value = Id;
 			
@@ -96,7 +95,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@Id", Unknown);
+					return new SQLiteParameter("@Id", DbType.String);
 
 				}
 			}
@@ -105,7 +104,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@Guid", Unknown);
+                    return new SQLiteParameter("@Guid", DbType.String);
 
 				}
 			}
@@ -114,7 +113,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@MemberName", Unknown);
+                    return new SQLiteParameter("@MemberName", DbType.String);
 
 				}
 			}
@@ -123,7 +122,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@Password", Unknown);
+                    return new SQLiteParameter("@Password", DbType.String);
 
 				}
 			}
@@ -132,7 +131,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@AppendDatetime", Unknown);
+                    return new SQLiteParameter("@AppendDatetime", DbType.String);
 
 				}
 			}
@@ -141,7 +140,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@LoginDatetime", Unknown);
+                    return new SQLiteParameter("@LoginDatetime", DbType.String);
 
 				}
 			}
@@ -150,7 +149,7 @@ namespace Gean.SQLitedOOdads.Demos
 			{
 				get
 				{
-					return new SQLiteParameter("@LoginCount", Unknown);
+                    return new SQLiteParameter("@LoginCount", DbType.String);
 
 				}
 			}
@@ -240,87 +239,87 @@ namespace Gean.SQLitedOOdads.Demos
 		
 		#region Properties
 	
-		public virtual Unknown Id
+		public virtual string Id
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.Id);
+				return base.Getstring(ColumnNames.Id);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.Id, value);
+				base.Setstring(ColumnNames.Id, value);
 			}
 		}
 
-		public virtual Unknown Guid
+		public virtual string Guid
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.Guid);
+                return base.Getstring(ColumnNames.Guid);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.Guid, value);
+                base.Setstring(ColumnNames.Guid, value);
 			}
 		}
 
-		public virtual Unknown MemberName
+		public virtual string MemberName
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.MemberName);
+                return base.Getstring(ColumnNames.MemberName);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.MemberName, value);
+                base.Setstring(ColumnNames.MemberName, value);
 			}
 		}
 
-		public virtual Unknown Password
+		public virtual string Password
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.Password);
+                return base.Getstring(ColumnNames.Password);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.Password, value);
+                base.Setstring(ColumnNames.Password, value);
 			}
 		}
 
-		public virtual Unknown AppendDatetime
+		public virtual string AppendDatetime
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.AppendDatetime);
+                return base.Getstring(ColumnNames.AppendDatetime);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.AppendDatetime, value);
+                base.Setstring(ColumnNames.AppendDatetime, value);
 			}
 		}
 
-		public virtual Unknown LoginDatetime
+		public virtual string LoginDatetime
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.LoginDatetime);
+                return base.Getstring(ColumnNames.LoginDatetime);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.LoginDatetime, value);
+                base.Setstring(ColumnNames.LoginDatetime, value);
 			}
 		}
 
-		public virtual Unknown LoginCount
+		public virtual string LoginCount
 	    {
 			get
 	        {
-				return base.GetUnknown(ColumnNames.LoginCount);
+                return base.Getstring(ColumnNames.LoginCount);
 			}
 			set
 	        {
-				base.SetUnknown(ColumnNames.LoginCount, value);
+                base.Setstring(ColumnNames.LoginCount, value);
 			}
 		}
 
@@ -333,14 +332,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.Id) ? string.Empty : base.GetUnknownAsString(ColumnNames.Id);
+				return this.IsColumnNull(ColumnNames.Id) ? string.Empty : base.GetstringAsString(ColumnNames.Id);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.Id);
 				else
-					this.Id = base.SetUnknownAsString(ColumnNames.Id, value);
+					this.Id = base.SetstringAsString(ColumnNames.Id, value);
 			}
 		}
 
@@ -348,14 +347,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.Guid) ? string.Empty : base.GetUnknownAsString(ColumnNames.Guid);
+                return this.IsColumnNull(ColumnNames.Guid) ? string.Empty : base.GetstringAsString(ColumnNames.Guid);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.Guid);
 				else
-					this.Guid = base.SetUnknownAsString(ColumnNames.Guid, value);
+                    this.Guid = base.SetstringAsString(ColumnNames.Guid, value);
 			}
 		}
 
@@ -363,14 +362,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.MemberName) ? string.Empty : base.GetUnknownAsString(ColumnNames.MemberName);
+                return this.IsColumnNull(ColumnNames.MemberName) ? string.Empty : base.GetstringAsString(ColumnNames.MemberName);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.MemberName);
 				else
-					this.MemberName = base.SetUnknownAsString(ColumnNames.MemberName, value);
+                    this.MemberName = base.SetstringAsString(ColumnNames.MemberName, value);
 			}
 		}
 
@@ -378,14 +377,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.Password) ? string.Empty : base.GetUnknownAsString(ColumnNames.Password);
+                return this.IsColumnNull(ColumnNames.Password) ? string.Empty : base.GetstringAsString(ColumnNames.Password);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.Password);
 				else
-					this.Password = base.SetUnknownAsString(ColumnNames.Password, value);
+                    this.Password = base.SetstringAsString(ColumnNames.Password, value);
 			}
 		}
 
@@ -393,14 +392,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.AppendDatetime) ? string.Empty : base.GetUnknownAsString(ColumnNames.AppendDatetime);
+                return this.IsColumnNull(ColumnNames.AppendDatetime) ? string.Empty : base.GetstringAsString(ColumnNames.AppendDatetime);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.AppendDatetime);
 				else
-					this.AppendDatetime = base.SetUnknownAsString(ColumnNames.AppendDatetime, value);
+                    this.AppendDatetime = base.SetstringAsString(ColumnNames.AppendDatetime, value);
 			}
 		}
 
@@ -408,14 +407,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.LoginDatetime) ? string.Empty : base.GetUnknownAsString(ColumnNames.LoginDatetime);
+                return this.IsColumnNull(ColumnNames.LoginDatetime) ? string.Empty : base.GetstringAsString(ColumnNames.LoginDatetime);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.LoginDatetime);
 				else
-					this.LoginDatetime = base.SetUnknownAsString(ColumnNames.LoginDatetime, value);
+                    this.LoginDatetime = base.SetstringAsString(ColumnNames.LoginDatetime, value);
 			}
 		}
 
@@ -423,14 +422,14 @@ namespace Gean.SQLitedOOdads.Demos
 	    {
 			get
 	        {
-				return this.IsColumnNull(ColumnNames.LoginCount) ? string.Empty : base.GetUnknownAsString(ColumnNames.LoginCount);
+                return this.IsColumnNull(ColumnNames.LoginCount) ? string.Empty : base.GetstringAsString(ColumnNames.LoginCount);
 			}
 			set
 	        {
 				if(string.Empty == value)
 					this.SetColumnNull(ColumnNames.LoginCount);
 				else
-					this.LoginCount = base.SetUnknownAsString(ColumnNames.LoginCount, value);
+                    this.LoginCount = base.SetstringAsString(ColumnNames.LoginCount, value);
 			}
 		}
 
@@ -440,7 +439,7 @@ namespace Gean.SQLitedOOdads.Demos
 		#region Where Clause
 		public class WhereClause
 		{
-			public WhereClause(BusinessEntity entity)
+			public WhereClause(BaseEntity entity)
 			{
 				this._entity = entity;
 			}
@@ -648,7 +647,7 @@ namespace Gean.SQLitedOOdads.Demos
 
 			}
 	
-			private BusinessEntity _entity;
+			private BaseEntity _entity;
 			private TearOffWhereParameter _tearOff;
 			
 		}
@@ -672,7 +671,7 @@ namespace Gean.SQLitedOOdads.Demos
 		#region Aggregate Clause
 		public class AggregateClause
 		{
-			public AggregateClause(BusinessEntity entity)
+			public AggregateClause(BaseEntity entity)
 			{
 				this._entity = entity;
 			}
@@ -880,7 +879,7 @@ namespace Gean.SQLitedOOdads.Demos
 
 			}
 	
-			private BusinessEntity _entity;
+			private BaseEntity _entity;
 			private TearOffAggregateParameter _tearOff;
 			
 		}
@@ -961,9 +960,10 @@ namespace Gean.SQLitedOOdads.Demos
 
 	
 			SQLiteParameter p;
-			p = cmd.Parameters.Add(Parameters.Id);
-			p.SourceColumn = ColumnNames.Id;
-			p.SourceVersion = DataRowVersion.Current;
+            
+            //p = cmd.Parameters.Add(Parameters.Id);
+            //p.SourceColumn = ColumnNames.Id;
+            //p.SourceVersion = DataRowVersion.Current;
 
   
 			return cmd;
@@ -973,34 +973,33 @@ namespace Gean.SQLitedOOdads.Demos
 		{
 			SQLiteParameter p;
 		
-			p = cmd.Parameters.Add(Parameters.Id);
-			p.SourceColumn = ColumnNames.Id;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.Id);
+            //p.SourceColumn = ColumnNames.Id;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.Guid);
-			p.SourceColumn = ColumnNames.Guid;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.Guid);
+            //p.SourceColumn = ColumnNames.Guid;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.MemberName);
-			p.SourceColumn = ColumnNames.MemberName;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.MemberName);
+            //p.SourceColumn = ColumnNames.MemberName;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.Password);
-			p.SourceColumn = ColumnNames.Password;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.Password);
+            //p.SourceColumn = ColumnNames.Password;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.AppendDatetime);
-			p.SourceColumn = ColumnNames.AppendDatetime;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.AppendDatetime);
+            //p.SourceColumn = ColumnNames.AppendDatetime;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.LoginDatetime);
-			p.SourceColumn = ColumnNames.LoginDatetime;
-			p.SourceVersion = DataRowVersion.Current;
+            //p = cmd.Parameters.Add(Parameters.LoginDatetime);
+            //p.SourceColumn = ColumnNames.LoginDatetime;
+            //p.SourceVersion = DataRowVersion.Current;
 
-			p = cmd.Parameters.Add(Parameters.LoginCount);
-			p.SourceColumn = ColumnNames.LoginCount;
-			p.SourceVersion = DataRowVersion.Current;
-
+            //p = cmd.Parameters.Add(Parameters.LoginCount);
+            //p.SourceColumn = ColumnNames.LoginCount;
+            //p.SourceVersion = DataRowVersion.Current;
 
 			return cmd;
 		}		
