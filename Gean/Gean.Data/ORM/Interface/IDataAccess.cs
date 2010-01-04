@@ -9,7 +9,7 @@ namespace Gean.Data.DAL
     /// <summary>
     /// IDatabase 的摘要说明。
     /// </summary>
-    public interface IDatabase
+    public interface IDataAccess
     {
         /// <summary>
         /// 数据库连接字符串
@@ -25,7 +25,5 @@ namespace Gean.Data.DAL
         /// 数据库的操作对象
         /// </summary>
         IAdoHelper AdoHelper { get; }
-
-
     }
 }

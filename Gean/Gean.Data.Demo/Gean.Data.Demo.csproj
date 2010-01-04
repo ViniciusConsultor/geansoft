@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class3331.cs" />
     <Compile Include="Entity\Members.generation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main01.cs" />
