@@ -15,7 +15,7 @@ namespace Gean.Data.Demo
         internal static void Do()
         {
             SqlConnectionStringBuilder sqlConnSb = new SqlConnectionStringBuilder();
-            sqlConnSb.DataSource = ".";
+            sqlConnSb.DataSource = @"NSIMPLE-P4MAN\SQLEXPRESS";
             sqlConnSb.InitialCatalog = "Northwind";
             sqlConnSb.IntegratedSecurity = true;
 
