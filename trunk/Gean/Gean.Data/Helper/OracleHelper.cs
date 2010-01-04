@@ -6,8 +6,7 @@ using System.Data.OracleClient;
 namespace Gean.Data.Helper
 {
     /// <summary>
-    /// A helper class used to execute queries against an Oracle database
-    /// 来自微软PetShop示例项目，<see cref="Gean.Data"/>作2009-12-31 11:59:32整理。
+    /// A helper class used to execute queries against an Oracle database. 来自微软PetShop示例项目，<see cref="Gean.Data"/>整理,2009-12-31 11:59:32。
     /// </summary>
     public abstract class OracleHelper
     {

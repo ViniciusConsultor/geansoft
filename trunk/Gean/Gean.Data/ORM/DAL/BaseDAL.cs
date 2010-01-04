@@ -11,7 +11,7 @@ namespace Gean.Data.DAL
     /// <summary>
     /// BaseDAL 的摘要说明。
     /// </summary>
-    public abstract class BaseDAL : IDatabase, ICommonDAL
+    public abstract class BaseDAL : IDataAccess, ICommonDAL
     {
 
         #region 基类变量和构造函数

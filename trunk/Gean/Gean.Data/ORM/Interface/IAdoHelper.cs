@@ -129,8 +129,14 @@ namespace Gean.Data
         External = 1,
     }
 
+    /// <summary>
+    /// 数据行Update之后时调用
+    /// </summary>
     public delegate void RowUpdatedHandler(object obj, RowUpdatedEventArgs e);
 
+    /// <summary>
+    /// 数据行正在Update时调用（马上开始之前）
+    /// </summary>
     public delegate void RowUpdatingHandler(object obj, RowUpdatingEventArgs e);
 
 }
