@@ -8,7 +8,10 @@ namespace Gean.Data.Demo
     {
         static void Main(string[] args)
         {
-            Main01_SqlConnectionStringBuilder_Demo.Do();
+            //Main01_SqlConnectionStringBuilder_Demo.Do();
+            Main02_AdoNet_Demo.Do();
+
+            Console.ReadKey();
         }
     }
 }

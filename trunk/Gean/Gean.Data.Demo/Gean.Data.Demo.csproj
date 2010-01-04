@@ -52,10 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class3331.cs" />
+    <Compile Include="Main02_AdoNet_Demo.cs" />
     <Compile Include="Entity\Members.generation.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Main01.cs" />
+    <Compile Include="Main01_SqlConnectionStringBuilder_Demo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
