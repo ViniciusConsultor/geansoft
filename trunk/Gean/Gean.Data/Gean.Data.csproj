@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
+    <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
     <Compile Include="_temp\Base\CommandExecutor\CommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\ITableCommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\IViewCommandExecutor.cs" />
@@ -54,35 +56,31 @@
     <Compile Include="_temp\Base\Database\OleDatabase.cs" />
     <Compile Include="_temp\Base\Database\OracleDatabase.cs" />
     <Compile Include="_temp\Base\Database\SqlServerDatabase.cs" />
-    <Compile Include="_temp\Base\TransactionCleaner.cs" />
+    <Compile Include="Transaction\TransactionCleaner.cs" />
     <Compile Include="ORM\Entity\AggregateParameter.cs" />
     <Compile Include="ORM\Entity\DynamicQuery.cs" />
-    <Compile Include="ORM\Entity\TransactionManager.cs" />
+    <Compile Include="Transaction\TransactionManager.cs" />
     <Compile Include="ORM\Entity\WhereParameter.cs" />
-    <Compile Include="_temp\Exceptions\CommandException.cs" />
-    <Compile Include="_temp\Exceptions\ConnectionException.cs" />
-    <Compile Include="_temp\Exceptions\DataException.cs" />
-    <Compile Include="_temp\Exceptions\GatewayException.cs" />
-    <Compile Include="_temp\Exceptions\OracleErrorCode.cs" />
-    <Compile Include="ORM\Interface\IAdoHelper.cs" />
-    <Compile Include="Helper\OracleHelper.cs" />
-    <Compile Include="ORM\Interface\IDataAccess.cs" />
-    <Compile Include="_temp\Base\DataTransfer.cs" />
-    <Compile Include="ORM\DAL\BaseDAL.cs" />
-    <Compile Include="ORM\Interface\ICommonDAL.cs" />
+    <Compile Include="Exceptions\CommandException.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
+    <Compile Include="Exceptions\DataException.cs" />
+    <Compile Include="ORM\DAL\Helper\OracleHelper.cs" />
+    <Compile Include="ORM\DAL\DataAcess.cs" />
+    <Compile Include="ORM\DAL\IDataAcess.cs" />
     <Compile Include="ORM\Entity\BaseEntity.cs" />
     <Compile Include="_temp\Base\PageHelper.cs" />
     <Compile Include="_temp\Base\PagerInfo.cs" />
-    <Compile Include="Helper\SQLHelper.cs" />
-    <Compile Include="ORM\Interface\IEntity.cs" />
+    <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs" />
+    <Compile Include="ORM\Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_temp\Resources\Messages.Designer.cs">
+    <Compile Include="Resources\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Gean.Data.cd" />
     <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +90,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="_temp\Resources\Messages.resx">
+    <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

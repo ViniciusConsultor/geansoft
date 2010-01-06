@@ -3,7 +3,7 @@ using System.Collections;
 using System.Data;
 using System.Data.OracleClient;
 
-namespace Gean.Data.Helper
+namespace Gean.Data
 {
     /// <summary>
     /// A helper class used to execute queries against an Oracle database. 来自微软PetShop示例项目，<see cref="Gean.Data"/>整理,2009-12-31 11:59:32。
