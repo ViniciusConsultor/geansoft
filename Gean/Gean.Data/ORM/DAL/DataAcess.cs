@@ -5,43 +5,37 @@ using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.ApplicationBlocks.Data;
 
 namespace Gean.Data.DAL
 {
     /// <summary>
-    /// BaseDAL 的摘要说明。
+    /// DataAcess 的摘要说明。
     /// </summary>
-    public abstract class BaseDAL : IDataAccess, ICommonDAL
+    public abstract class DataAcess
     {
-
-        #region 基类变量和构造函数
-
         /// <summary>
-        /// 需要初始化的对象表名
-        /// </summary>
-        public virtual string TableName { get; protected set; }
-
-        /// <summary>
-        /// 数据库的主键字段名
-        /// </summary>
-        public virtual string PrimaryKey { get; protected set; }
-
-        public BaseDAL()
-        { }
-
-        /// <summary>
-        /// 指定表名以及主键,对基类进构造
+        /// 指定表名以及主键, 对基类进构造
         /// </summary>
         /// <param name="tableName">表名</param>
         /// <param name="primaryKey">表主键</param>
-        public BaseDAL(string tableName, string primaryKey)
+        public DataAcess(string tableName, string primaryKey)
         {
             this.TableName = tableName;
             this.PrimaryKey = primaryKey;
         }
 
-        #endregion
+        /// <summary>
+        /// 实体对应的表名
+        /// </summary>
+        public virtual string TableName { get; protected set; }
 
+        /// <summary>
+        /// 实体对应的表中的主键字段名
+        /// </summary>
+        public virtual string PrimaryKey { get; protected set; }
+
+        /*
         #region 通用操作方法
 
         /// <summary>
@@ -91,12 +85,12 @@ namespace Gean.Data.DAL
 
             if (trans != null)
             {
-                object obj = this.AdoHelper.ExecuteScalar(trans, CommandType.Text, sql, param);
+                object obj = this.AcessHelper.ExecuteScalar(trans, CommandType.Text, sql, param);
                 iret = int.Parse(obj.ToString());
             }
             else
             {
-                object obj = this.AdoHelper.ExecuteScalar(this.Connection, CommandType.Text, sql, param);
+                object obj = this.AcessHelper.ExecuteScalar(CommandType.Text, sql, param);
                 iret = int.Parse(obj.ToString());
             }
 
@@ -174,16 +168,15 @@ namespace Gean.Data.DAL
             int count;
             if (trans != null)
             {
-                count = this.AdoHelper.ExecuteNonQuery(trans, CommandType.Text, sql, param);
+                count = this.AcessHelper.ExecuteNonQuery(trans, CommandType.Text, sql, param);
             }
             else
             {
-                count = this.AdoHelper.ExecuteNonQuery(this.Connection, CommandType.Text, sql, param);
+                count = this.AcessHelper.ExecuteNonQuery(CommandType.Text, sql, param);
             }
 
             return count;
         }
-
 
         #endregion
 
@@ -238,7 +231,7 @@ namespace Gean.Data.DAL
             SqlParameter param = new SqlParameter("@ID", key);
 
             BaseEntity entity = null;
-            using (IDataReader dr = this.AdoHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql, param))
+            using (IDataReader dr = this.AcessHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql, param))
             {
                 if (dr.Read())
                 {
@@ -277,7 +270,7 @@ namespace Gean.Data.DAL
             object entity = null;
             ArrayList list = new ArrayList();
 
-            using (IDataReader dr = this.AdoHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql))
+            using (IDataReader dr = this.AcessHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql))
             {
                 while (dr.Read())
                 {
@@ -326,7 +319,7 @@ namespace Gean.Data.DAL
             object entity = null;
             ArrayList list = new ArrayList();
 
-            using (IDataReader dr = this.AdoHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql))
+            using (IDataReader dr = this.AcessHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql))
             {
                 while (dr.Read())
                 {
@@ -366,24 +359,6 @@ namespace Gean.Data.DAL
 
         #endregion
 
-        #region 子类必须实现的函数(用于更新或者插入)
-
-        /// <summary>
-        /// 将DataReader的属性值转化为实体类的属性值，返回实体类
-        /// </summary>
-        /// <param name="dr">有效的DataReader对象</param>
-        /// <returns>实体类对象</returns>
-        protected abstract BaseEntity DataReaderToEntity(IDataReader dr);
-
-        /// <summary>
-        /// 将实体对象的属性值转化为Hashtable对应的键值(用于插入或者更新操作)
-        /// </summary>
-        /// <param name="obj">有效的实体对象</param>
-        /// <returns>包含键值映射的Hashtable</returns>
-        protected abstract Hashtable GetHashByEntity(BaseEntity obj);
-
-        #endregion
-
         #region IDatabase 成员
 
         public string ConnectionString
@@ -396,7 +371,7 @@ namespace Gean.Data.DAL
             get { throw new NotImplementedException(); }
         }
 
-        public IAdoHelper AdoHelper
+        public IAcessHelper AcessHelper
         {
             get { throw new NotImplementedException(); }
         }
@@ -432,7 +407,7 @@ namespace Gean.Data.DAL
             fields = fields.Substring(0, fields.Length - 3);//除去最后的AND
             string sql = string.Format("SELECT COUNT(*) FROM {0} WHERE {1}", TableName, fields);
 
-            int count = (int)this.AdoHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql, param);
+            int count = (int)this.AcessHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql, param);
             return UtilityConvert.IntToBoolean(count, UtilityConvert.ConvertMode.Relaxed);
         }
 
@@ -460,7 +435,7 @@ namespace Gean.Data.DAL
         {
             string sql = string.Format("SELECT MAX({0}) AS MaxID FROM dbo.{1}", PrimaryKey, TableName);
 
-            object obj = this.AdoHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
+            object obj = SqlHelper.ExecuteScalar(this.ConnectionString, CommandType.Text, sql);
             if (Convert.IsDBNull(obj))
             {
                 return 0;//没有记录的时候为0
@@ -490,13 +465,13 @@ namespace Gean.Data.DAL
         {
             string sql = string.Format("DELETE FROM dbo.{0} WHERE {1} ", TableName, condition);
 
-            int count = this.AdoHelper.ExecuteNonQuery(this.ConnectionString, CommandType.Text, sql);
+            int count = this.AcessHelper.ExecuteNonQuery(this.ConnectionString, CommandType.Text, sql);
 
             return UtilityConvert.IntToBoolean(count, UtilityConvert.ConvertMode.Relaxed);
         }
 
 
         #endregion
-
+        */
     }
 }

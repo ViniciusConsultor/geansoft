@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Gean.Data.Exceptions;
-using Gean.Data._temp.Resources;
+using Gean.Data.Resources;
 
 namespace Gean.Data
 {

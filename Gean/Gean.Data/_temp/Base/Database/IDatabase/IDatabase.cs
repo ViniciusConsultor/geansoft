@@ -9,7 +9,6 @@ namespace Gean.Data
     /// <summary>
     /// The interface of database.
     /// </summary>
-    [ComVisible(false)]
     public interface IDatabase
     {
         /// <summary>

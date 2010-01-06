@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Gean.Data
 {
-    internal class OracleErrorCode
+    public interface IEntity
     {
-        const string SESSION_KILLED= "ORA-00028 ";
     }
 }

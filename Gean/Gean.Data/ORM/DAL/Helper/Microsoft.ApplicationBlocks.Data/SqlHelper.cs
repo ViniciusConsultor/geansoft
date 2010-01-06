@@ -34,7 +34,8 @@ namespace Microsoft.ApplicationBlocks.Data
     /// The SqlHelper class is intended to encapsulate high performance, scalable best practices for 
     /// common uses of SqlClient
     /// </summary>
-    public sealed class SqlHelper
+    sealed class SqlHelper
+    //public sealed class SqlHelper
     {
         #region private utility methods & constructors
 
