@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
+    <Compile Include="ORM\DAL\IDataCRUD.cs" />
     <Compile Include="_temp\Base\CommandExecutor\CommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\ITableCommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\IViewCommandExecutor.cs" />

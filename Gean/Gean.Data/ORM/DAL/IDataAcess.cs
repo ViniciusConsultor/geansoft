@@ -10,8 +10,37 @@ namespace Gean.Data
     /// <summary>
     /// 数据访问层(DAL)的一些基本方法的接口
     /// </summary>
-    public interface IDataAcess<T> where T : IEntity
+    public interface IDataAcess<T> : IDataCRUD where T : IEntity
     {
+        /// <summary>
+        /// Gets 一个数据库访问助手类
+        /// </summary>
+        /// <value>The acess helper.</value>
         IAcessHelper AcessHelper { get; }
+
+
+
+        /// <summary>
+        /// Gets 一个更新命令文本。
+        /// </summary>
+        /// <value>The update command text.</value>
+        String UpdateCommandText { get; }
+        /// <summary>
+        /// Gets 一个插入命令文本。
+        /// </summary>
+        /// <value>The insert command text.</value>
+        String InsertCommandText { get; }
+        /// <summary>
+        /// Gets 一个删除命令文本。
+        /// </summary>
+        /// <value>The delete command text.</value>
+        String DeleteCommandText { get; }
+
+        /// <summary>
+        /// Gets 一组 SQL 命令和一个数据库连接的封装类型<see cref="DataAdapter"/>。
+        /// </summary>
+        /// <value>The data adapter.</value>
+        DataAdapter DataAdapter { get; }
+        
     }
 }

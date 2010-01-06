@@ -8,6 +8,7 @@ namespace Gean.Data
     public interface IAcessHelper
     {
         string ConnectionString { get; }
+        SqlConnection Connection { get; }
 
         SqlCommand CreateCommand(string spName, params string[] sourceColumns);
         DataSet ExecuteDataset(CommandType commandType, string commandText, params SqlParameter[] commandParameters);

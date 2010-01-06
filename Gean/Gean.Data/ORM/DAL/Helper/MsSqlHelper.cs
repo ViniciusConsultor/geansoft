@@ -10,10 +10,24 @@ using System.Diagnostics;
 
 namespace Gean.Data
 {
+    /// <summary>
+    /// 访问Microsoft Sql Server数据库的助手类。一般情况下都已挂在DataAcess的类型中，不必单独使用。
+    /// </summary>
     public class MsSqlHelper : IAcessHelper
     {
-        protected virtual SqlConnection Connection { get; private set; }
+        /// <summary>
+        /// 私有化<see cref="MsSqlHelper"/>构造函数。
+        /// </summary>
+        /// <param name="sqlSb">数据库的连接字符串的生成器</param>
+        protected MsSqlHelper(SqlConnectionStringBuilder sqlSb)
+            : this(sqlSb.ConnectionString)
+        {
+        }
 
+        /// <summary>
+        /// 私有化<see cref="MsSqlHelper"/>构造函数。
+        /// </summary>
+        /// <param name="connectionString">数据库的连接字符串</param>
         protected MsSqlHelper(string connectionString)
         {
             this.ConnectionString = connectionString;
@@ -60,6 +74,18 @@ namespace Gean.Data
 
         public string ConnectionString { get; protected set; }
 
+        /// <summary>
+        /// Gets or sets 一个到Sql Server数据库的连接。
+        /// </summary>
+        /// <value>The connection.</value>
+        public SqlConnection Connection { get; private set; }
+
+        /// <summary>
+        /// 简化创建指定的存储过程与该存储过程可选的参数，返回一个SQL命令对象。
+        /// </summary>
+        /// <param name="spName">指定的存储过程名。</param>
+        /// <param name="sourceColumns">一个SQL命令对象。</param>
+        /// <returns></returns>
         public SqlCommand CreateCommand(string spName, params string[] sourceColumns)
         {
             return SqlHelper.CreateCommand(Connection, spName, sourceColumns);

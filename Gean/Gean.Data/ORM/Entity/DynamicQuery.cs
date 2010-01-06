@@ -7,7 +7,7 @@ using System.Collections;
 namespace Gean.Data
 {
     /// <summary>
-    /// <see cref="DynamicQuery"/>（无需编写任何存储过程）快速查询数据库。参数标准为（<see cref="SqlParameter"/>，<see cref="OleDbParameter"/>）。针对性完善了黑客SQL注入。
+    /// <see cref="DynamicQuery"/>（无需编写任何存储过程）快速查询数据库。参数标准为（<see cref="SqlParameter" />，<see cref="OleDbParameter" />）。针对性完善了黑客SQL注入。
     /// </summary>
     /// <example>
     ///	C#
