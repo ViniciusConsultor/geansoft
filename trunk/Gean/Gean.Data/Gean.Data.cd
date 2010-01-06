@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Gean.Data.DAL.DataAcess" Collapsed="true">
-    <Position X="3.5" Y="0.5" Width="1.5" />
+    <Position X="4.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAEAAIAAAAAEQAAhCAAMAAAEAAAAAACAAAQBAgCA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAgAA=</HashCode>
       <FileName>ORM\DAL\DataAcess.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -24,9 +24,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Gean.Data.IDataAcess&lt;T&gt;" Collapsed="true">
-    <Position X="3.5" Y="1.25" Width="1.5" />
+    <Position X="3" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>gAQAAEAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>ORM\DAL\IDataAcess.cs</FileName>
     </TypeIdentifier>
   </Interface>
