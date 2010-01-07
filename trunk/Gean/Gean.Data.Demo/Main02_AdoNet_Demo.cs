@@ -27,30 +27,30 @@ namespace Gean.Data.Demo
 
         private static void UpdateDemo(SqlConnection cn)
         {
-            Employee emp = new Employee();
-            emp.Address = "";
-            emp.BirthDate = DateTime.Now;
-            emp.City = "shanghai";
-            emp.Country = "";
-            emp.EmployeeID = 1;
-            emp.Extension = "";
-            emp.FirstName = "zhao";
-            emp.HireDate = DateTime.Now;
-            emp.HomePhone = "12222";
-            emp.LastName = "shangzho";
-            emp.Notes = "notes";
-            emp.Photo = UtilityConvert.StringToBytes("abcd");
-            emp.PhotoPath = "abcd";
-            emp.PostalCode = "postalcode";
-            emp.Region = "region";
-            emp.ReportsTo = 6;
-            emp.Title = "title";
-            emp.TitleOfCourtesy = "fahuiqu";
-            string cmd = @"
-                    UPDATA
-
-                    ";
-            MsSqlHelper.GetMsSqlHelper(cn.ConnectionString).ExecuteNonQuery("", CommandType.Text, "");
+//            Employee emp = new Employee();
+//            emp.Address = "";
+//            emp.BirthDate = DateTime.Now;
+//            emp.City = "shanghai";
+//            emp.Country = "";
+//            emp.EmployeeID = 1;
+//            emp.Extension = "";
+//            emp.FirstName = "zhao";
+//            emp.HireDate = DateTime.Now;
+//            emp.HomePhone = "12222";
+//            emp.LastName = "shangzho";
+//            emp.Notes = "notes";
+//            emp.Photo = UtilityConvert.StringToBytes("abcd");
+//            emp.PhotoPath = "abcd";
+//            emp.PostalCode = "postalcode";
+//            emp.Region = "region";
+//            emp.ReportsTo = 6;
+//            emp.Title = "title";
+//            emp.TitleOfCourtesy = "fahuiqu";
+//            string cmd = @"
+//                    UPDATA
+//
+//                    ";
+//            MsSqlHelper.GetMsSqlHelper(cn.ConnectionString).ExecuteNonQuery("", CommandType.Text, "");
         }
 
         private static void SelectDemo(SqlConnection cn)

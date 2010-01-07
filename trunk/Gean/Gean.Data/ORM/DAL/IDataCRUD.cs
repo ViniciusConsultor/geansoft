@@ -10,9 +10,29 @@ namespace Gean.Data
     /// </summary>
     public interface IDataCRUD
     {
+        /// <summary>
+        /// 增加指定的实体到需要的位置。
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         bool Create(IEntity entity);
+        /// <summary>
+        /// 查询指定的实体。
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         bool Retrieve(IEntity entity);
+        /// <summary>
+        /// 修改指定的实体。
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         bool Update(IEntity entity);
+        /// <summary>
+        /// 删除指定的实体。
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
         bool Delete(IEntity entity);
     }
 }
