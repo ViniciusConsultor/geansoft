@@ -49,8 +49,6 @@
     <Compile Include="Exceptions\DataException.cs" />
     <Compile Include="Exceptions\DbTypeNotSupportException.cs" />
     <Compile Include="Exceptions\SQLTextBuilderException.cs" />
-    <Compile Include="Resources\Messages.Designer.cs" />
-    <Compile Include="Resources\SQLText.Designer.cs" />
     <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />
@@ -97,7 +95,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Messages.resx" />
+    <EmbeddedResource Include="Resources\Messages.resx">
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\SQLText.resx" />
   </ItemGroup>
   <ItemGroup>
