@@ -71,6 +71,10 @@ namespace Gean.Data
             this.TemplateSqlTextName = tmpltName;
         }
 
+        /// <summary>
+        /// [不推荐使用，一般情况下应使用<see cref="ToSqlTempletText"/>，以生成<see cref="DbCommand"/>，并以参数设置方式生成该命令。目的：防止SQL注入。]生成相应的SQL语句(子句)
+        /// </summary>
+        /// <returns></returns>
         public string ToSqlText()
         {
             string[] operaterArray = (string[])Operaters.ToArray("".GetType());
@@ -174,6 +178,10 @@ namespace Gean.Data
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 生成Ado.net的模板化SQL语句(子句)
+        /// </summary>
+        /// <returns></returns>
         public string ToSqlTempletText()
         {
             string[] operaterArray = (string[])Operaters.ToArray("".GetType());
@@ -216,6 +224,10 @@ namespace Gean.Data
             return outStr.ToString();
         }
 
+        /// <summary>
+        /// 获取该语句(子句)的所有参数
+        /// </summary>
+        /// <returns></returns>
         public DbParameter[] GetDbParameters()
         {
             ArrayList array = new ArrayList();

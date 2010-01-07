@@ -43,15 +43,6 @@ namespace Gean.Data.UnitTesting
             expected = "aaa AS \"AAA\", bbb AS \"BBB\", ccc AS \"CCC\", ddd AS \"DDD\", eee AS \"EEE\"";
             actual = target.ToSqlText();
             Assert.AreEqual(expected, actual);
-
-            target = new SQLFieldTextBuilder();
-            List<string> a = new List<string>();
-            a.Add("aaa");
-            a.Add("bbb");
-            List<string> b = new List<string>();
-            b.Add("AAA");
-            target.Set(a.ToArray(), b.ToArray());
-            //Assert.IsInstanceOfType(target.Set(a.ToArray(), b.ToArray()), typeof(SQLTextBuilderException)); ;
         }
     }
 }
