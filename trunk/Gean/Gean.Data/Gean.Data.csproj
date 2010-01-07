@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\DbTypeNotSupportException.cs" />
+    <Compile Include="SQLTextBuilder\SQLConditionTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
     <Compile Include="ORM\DAL\IDataCRUD.cs" />
+    <Compile Include="Resources\SQLText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SQLText.resx</DependentUpon>
+    </Compile>
     <Compile Include="_temp\Base\CommandExecutor\CommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\ITableCommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\IViewCommandExecutor.cs" />
@@ -58,17 +65,17 @@
     <Compile Include="_temp\Base\Database\OracleDatabase.cs" />
     <Compile Include="_temp\Base\Database\SqlServerDatabase.cs" />
     <Compile Include="Transaction\TransactionCleaner.cs" />
-    <Compile Include="ORM\Entity\AggregateParameter.cs" />
-    <Compile Include="ORM\Entity\DynamicQuery.cs" />
+    <Compile Include="_temp\AggregateParameter.cs" />
+    <Compile Include="_temp\DynamicQuery.cs" />
     <Compile Include="Transaction\TransactionManager.cs" />
-    <Compile Include="ORM\Entity\WhereParameter.cs" />
+    <Compile Include="_temp\WhereParameter.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\DataException.cs" />
     <Compile Include="ORM\DAL\Helper\OracleHelper.cs" />
     <Compile Include="ORM\DAL\DataAcess.cs" />
     <Compile Include="ORM\DAL\IDataAcess.cs" />
-    <Compile Include="ORM\Entity\BaseEntity.cs" />
+    <Compile Include="_temp\Base\BaseEntity.cs" />
     <Compile Include="_temp\Base\PageHelper.cs" />
     <Compile Include="_temp\Base\PagerInfo.cs" />
     <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs" />
@@ -94,6 +101,11 @@
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SQLText.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQLText.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

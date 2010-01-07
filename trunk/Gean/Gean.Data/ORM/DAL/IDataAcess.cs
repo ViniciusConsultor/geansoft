@@ -57,6 +57,11 @@ namespace Gean.Data
         /// </summary>
         /// <value>The data adapter.</value>
         DataAdapter DataAdapter { get; }
-        
+
+        T DataReaderToEntity(IDataReader dr);
+
+        IList<T> GetAll();
+
+        T FindById(object id);
     }
 }

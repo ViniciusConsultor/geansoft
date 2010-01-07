@@ -29,10 +29,10 @@ namespace Gean.Data
         /// <returns></returns>
         bool Update(IEntity entity);
         /// <summary>
-        /// 删除指定的实体。
+        /// 删除指定ID的实体。
         /// </summary>
-        /// <param name="entity">The entity.</param>
+        /// <param name="entity">指定的ID.</param>
         /// <returns></returns>
-        bool Delete(IEntity entity);
+        bool Delete(object id);
     }
 }

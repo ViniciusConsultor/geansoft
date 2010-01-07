@@ -287,28 +287,6 @@ namespace Gean.Data
         //    return list;
         //}
 
-        /// <summary>
-        /// 返回数据库所有的对象集合
-        /// </summary>
-        /// <returns>指定对象的集合</returns>
-        protected virtual ArrayList BaseGetAll()
-        {
-            string sql = string.Format("Select * From dbo.{0}", TableName);
-
-            object entity = null;
-            ArrayList list = new ArrayList();
-
-            using (IDataReader dr = this.AcessHelper.ExecuteReader(this.ConnectionString, CommandType.Text, sql))
-            {
-                while (dr.Read())
-                {
-                    entity = DataReaderToEntity(dr);
-
-                    list.Add(entity);
-                }
-            }
-            return list;
-        }
 
         ///// <summary>
         ///// 返回数据库所有的对象集合(用于分页数据显示)
