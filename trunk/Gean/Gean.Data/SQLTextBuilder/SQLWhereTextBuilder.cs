@@ -6,10 +6,14 @@ using System.Data.SqlClient;
 using System.Data;
 using Gean.Data.Exceptions;
 using Gean.Data.Resources;
+using System.Data.Common;
 
 namespace Gean.Data
 {
-    public class SQLConditionTextBuilder
+    /// <summary>
+    /// WHERE 子句生成器。从 FROM 子句中的列表中指定哪些记录受到 SELECT, UPDATE, 或 DELETE 语句的影响。
+    /// </summary>
+    public class SQLWhereTextBuilder : ISQLTextBuilder
     {
         /// <summary>
         /// 逻辑操作运算符
@@ -46,7 +50,7 @@ namespace Gean.Data
         public string ToSqlText()
         {
             string[] operaterArray = (string[])Operaters.ToArray("".GetType());
-            SQLConditionTextBuilder[] builderArray = (SQLConditionTextBuilder[])Conditions.ToArray((new SQLConditionTextBuilder()).GetType());
+            SQLWhereTextBuilder[] builderArray = (SQLWhereTextBuilder[])Conditions.ToArray((new SQLWhereTextBuilder()).GetType());
 
             StringBuilder sb = new StringBuilder();
 
@@ -149,7 +153,7 @@ namespace Gean.Data
         public string ToSqlTempletText()
         {
             string[] operaterArray = (string[])Operaters.ToArray("".GetType());
-            SQLConditionTextBuilder[] builderArray = (SQLConditionTextBuilder[])Conditions.ToArray((new SQLConditionTextBuilder()).GetType());
+            SQLWhereTextBuilder[] builderArray = (SQLWhereTextBuilder[])Conditions.ToArray((new SQLWhereTextBuilder()).GetType());
 
             StringBuilder outStr = new StringBuilder();
 
@@ -188,27 +192,27 @@ namespace Gean.Data
             return outStr.ToString();
         }
 
-        public SqlParameter[] GetSqlParameters()
+        public DbParameter[] GetDbParameters()
         {
             ArrayList array = new ArrayList();
             if (ParameterName != null && Value != null)
             {
                 array.Add(new SqlParameter("@" + TemplateSqlTextName, Value));
             }
-            SQLConditionTextBuilder[] builderArray = (SQLConditionTextBuilder[])Conditions.ToArray((new SQLConditionTextBuilder()).GetType());
+            SQLWhereTextBuilder[] builderArray = (SQLWhereTextBuilder[])Conditions.ToArray((new SQLWhereTextBuilder()).GetType());
 
             for (int i = 0; i < builderArray.Length; i++)
             {
-                SqlParameter[] sps = builderArray[i].GetSqlParameters();
+                DbParameter[] sps = builderArray[i].GetDbParameters();
                 for (int j = 0; j < sps.Length; j++)
                 {
                     array.Add(sps[j]);
                 }
             }
-            return (SqlParameter[])array.ToArray(new SqlParameter("", "").GetType());
+            return (DbParameter[])array.ToArray(typeof(DbParameter));
         }
 
-        public void AddCondition(LogicOperation logicOper, SQLConditionTextBuilder txtBuilder)
+        public void Add(LogicOperation logicOper, SQLWhereTextBuilder txtBuilder)
         {
             Operaters.Add(LogicOperationFlags[(int)logicOper]);
             Conditions.Add(txtBuilder); 
