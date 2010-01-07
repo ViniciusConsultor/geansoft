@@ -14,25 +14,25 @@ namespace Gean.Data.Demo
             SQLWhereTextBuilder ctb = new SQLWhereTextBuilder();
 
             SQLWhereTextBuilder b1 = new SQLWhereTextBuilder();
-            b1.Set(CompareOperation.Equal, DbType.String, "name", "%kkp%");
+            b1.Set("name", CompareOperation.Equal, DbType.String, "%kkp%");
 
             SQLWhereTextBuilder b2 = new SQLWhereTextBuilder();
-            b2.Set(CompareOperation.Like, DbType.String, "nickName", "%'kkp'%");
+            b2.Set("nickName", CompareOperation.Like, DbType.String, "%'kkp'%");
 
             SQLWhereTextBuilder b3 = new SQLWhereTextBuilder();
-            b3.Set(CompareOperation.Equal, DbType.Date, "age", DateTime.Now);
+            b3.Set("age", CompareOperation.Equal, DbType.Date, DateTime.Now);
 
             SQLWhereTextBuilder b4 = new SQLWhereTextBuilder();
-            b4.Set(CompareOperation.Equal, DbType.DateTime, "signTime", DateTime.Now);
+            b4.Set("signTime", CompareOperation.Equal, DbType.DateTime, DateTime.Now);
 
             SQLWhereTextBuilder b5 = new SQLWhereTextBuilder();
-            b5.Set(CompareOperation.MoreThan, DbType.Int32, "count", 88888);
+            b5.Set("count", CompareOperation.MoreThan, DbType.Int32, 88888);
 
             SQLWhereTextBuilder b51 = new SQLWhereTextBuilder();
-            b51.Set(CompareOperation.MoreThan, DbType.Decimal, "length", 88888);
+            b51.Set("length", CompareOperation.MoreThan, DbType.Decimal, 88888);
 
             SQLWhereTextBuilder b52 = new SQLWhereTextBuilder();
-            b52.Set(CompareOperation.MoreThan, DbType.Double, "price", 888.88);
+            b52.Set("price", CompareOperation.MoreThan, DbType.Double, 888.88);
 
             b1.Add(LogicOperation.And, b2);
             b2.Add(LogicOperation.And, b3);
@@ -53,6 +53,24 @@ namespace Gean.Data.Demo
             {
                 Console.WriteLine(item.ToString());
             }
+
+            Console.WriteLine("............................");
+
+            SQLFieldTextBuilder ftb = new SQLFieldTextBuilder();
+            ftb.Set("a", "b", "c", "d");
+            Console.WriteLine(ftb.ToSqlText());
+
+            ftb = new SQLFieldTextBuilder();
+            ftb.Set(
+                new Pair<string, string>("aaa", "AAA"),
+                new Pair<string, string>("bbb", "BBB"),
+                new Pair<string, string>("ccc", "CCC")
+                );
+            ftb.Set(
+                new Pair<string, string>("ddd", "DDD"),
+                new Pair<string, string>("eee", "EEE")
+                );
+            Console.WriteLine(ftb.ToSqlText());
         }
     }
 }
