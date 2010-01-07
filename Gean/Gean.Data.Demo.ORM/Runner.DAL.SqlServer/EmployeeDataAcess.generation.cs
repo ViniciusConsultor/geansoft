@@ -7,6 +7,7 @@ using System.Data.Common;
 using Gean.Data;
 using Runner.Entity;
 using Runner.DAL.Interface;
+using Gean.Data.Resources;
 
 namespace Runner.DAL.SQLServer
 {
@@ -167,6 +168,49 @@ namespace Runner.DAL.SQLServer
             }
         }
 
+        public IList<Employee> GetAll()
+        {
+            string sql = string.Format(SQLText.GetAll, this.TableName);
+
+            Employee entity = null;
+            EmployeeCollection list = new EmployeeCollection();
+
+            using (IDataReader dr = this.AcessHelper.ExecuteReader(CommandType.Text, sql))
+            {
+                while (dr.Read())
+                {
+                    entity = DataReaderToEntity(dr);
+                    list.Add(entity);
+                }
+            }
+            return list;
+        }
+
+        public Employee FindById(object id)
+        {
+            string sql = string.Format(SQLText.FindById, TableName, PrimaryKey);
+            SqlParameter param = new SqlParameter("@ID", id);
+            Employee entity = null;
+            using (IDataReader dr = this.AcessHelper.ExecuteReader(CommandType.Text, sql, param))
+            {
+                if (dr.Read())
+                {
+                    entity = DataReaderToEntity(dr);
+                }
+            }
+            return entity;
+        }
+
+        public Employee DataReaderToEntity(IDataReader dr)
+        {
+            Employee employee = new Employee();
+            employee.Address = (string)dr["Address"];
+            employee.BirthDate = DateTime.Parse(dr["BirthDate"].ToString());
+            employee.City = (string)dr["City"];
+
+            return employee;
+        }
+
         #endregion
 
         #region IDataCRUD 成员
@@ -186,7 +230,7 @@ namespace Runner.DAL.SQLServer
             throw new NotImplementedException();
         }
 
-        public bool Delete(IEntity entity)
+        public bool Delete(object id)
         {
             throw new NotImplementedException();
         }
