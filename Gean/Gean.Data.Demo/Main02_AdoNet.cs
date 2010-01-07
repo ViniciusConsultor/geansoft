@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Gean.Data.Demo
 {
-    public class Main02_AdoNet_Demo
+    public class Main02_AdoNet
     {
         internal static void Do()
         {

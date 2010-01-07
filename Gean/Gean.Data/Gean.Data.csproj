@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\DbTypeNotSupportException.cs" />
+    <Compile Include="Exceptions\SQLTextBuilderException.cs" />
     <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />

@@ -7,6 +7,7 @@ using System.Data;
 using Gean.Data.Exceptions;
 using Gean.Data.Resources;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 
 namespace Gean.Data
 {
@@ -16,13 +17,17 @@ namespace Gean.Data
     public class SQLWhereTextBuilder : ISQLTextBuilder
     {
         /// <summary>
+        /// 简单防止SQL注入：字段名中只能含有数字与大小写字母
+        /// </summary>
+        static Regex _RegexParamName = new Regex(@"\?[_a-zA-Z0-9]+", RegexOptions.Compiled);
+        /// <summary>
         /// 逻辑操作运算符
         /// </summary>
-        static readonly string[] LogicOperationFlags = new string[] { "AND", "OR" };
+        static readonly string[] _LogicOperationFlags = new string[] { "AND", "OR" };
         /// <summary>
         /// 比较操作运算符
         /// </summary>
-        static readonly string[] CompareOperationFlags = new string[] 
+        static readonly string[] _CompareOperationFlags = new string[] 
         { ">", "<", "<=", ">=", "=", "<>", "LIKE", "NOT LIKE", "IN" };
 
         protected string CompareOperationFlag { get; set; }
@@ -34,13 +39,32 @@ namespace Gean.Data
         protected ArrayList Operaters = new ArrayList();
         protected ArrayList Conditions = new ArrayList();
 
-        public void Set(CompareOperation flag, DbType dbType, string name, object value)
+        /// <summary>
+        /// 设置当前条件的各个属性。
+        /// </summary>
+        /// <param name="name">当前条件的参数名。</param>
+        /// <param name="flag">当前条件的比较运算符。</param>
+        /// <param name="dbType">当前条件的参数类型。</param>
+        /// <param name="value">当前条件的参数的值。</param>
+        public void Set(string name, CompareOperation flag, DbType dbType, object value)
         {
-            this.Set(flag, dbType, name, value, name);
+            this.Set(name, flag, dbType, value, name);
         }
-        public void Set(CompareOperation flag, DbType dbType, string name, object value, string tmpltName)
+        /// <summary>
+        /// 设置当前条件的各个属性。
+        /// </summary>
+        /// <param name="name">当前条件的参数名。</param>
+        /// <param name="flag">当前条件的比较运算符。</param>
+        /// <param name="dbType">当前条件的参数类型。</param>
+        /// <param name="value">当前条件的参数的值。</param>
+        /// <param name="tmpltName">当前条件的参数的模板字符串。不设置就是当前条件的参数名加上"@"前缀。</param>
+        public void Set(string name, CompareOperation flag, DbType dbType, object value, string tmpltName)
         {
-            this.CompareOperationFlag = CompareOperationFlags[(int)flag];
+            if (_RegexParamName.IsMatch(name))//简单防止SQL注入
+            {
+                return;
+            }
+            this.CompareOperationFlag = _CompareOperationFlags[(int)flag];
             this.ParameterName = name;
             this.DbType = dbType;
             this.Value = value;
@@ -214,7 +238,7 @@ namespace Gean.Data
 
         public void Add(LogicOperation logicOper, SQLWhereTextBuilder txtBuilder)
         {
-            Operaters.Add(LogicOperationFlags[(int)logicOper]);
+            Operaters.Add(_LogicOperationFlags[(int)logicOper]);
             Conditions.Add(txtBuilder); 
         }
     }

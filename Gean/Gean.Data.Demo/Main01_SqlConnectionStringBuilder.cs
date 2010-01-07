@@ -11,7 +11,7 @@ using System.Data.OleDb;
 
 namespace Gean.Data.Demo
 {
-    public class Main01_SqlConnectionStringBuilder_Demo
+    public class Main01_SqlConnectionStringBuilder
     {
         internal static void Do()
         {
