@@ -25,11 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.Demo", "Gean.Data.Demo\Gean.Data.Demo.csproj", "{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM.Demo", "ORM.Demo", "{E185314F-FCCE-4F3C-9EC6-1722D1CA453B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVP - ORM.Demo", "MVP - ORM.Demo", "{E185314F-FCCE-4F3C-9EC6-1722D1CA453B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.Entity", "Gean.Data.Demo.ORM\Runner.Entity\Runner.Entity.csproj", "{D1590206-A0CD-4E47-93B6-5A23F29DD46E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.SQLServer", "Gean.Data.Demo.ORM\Runner.DAL.SqlServer\Runner.DAL.SQLServer.csproj", "{03922E8B-36F9-4B68-8BA3-F734E997062A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.SqlServer", "Gean.Data.Demo.ORM\Runner.DAL.SqlServer\Runner.DAL.SqlServer.csproj", "{03922E8B-36F9-4B68-8BA3-F734E997062A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.Interface", "Gean.Data.Demo.ORM\Runner.DAL.Interface\Runner.DAL.Interface.csproj", "{D91B3EAF-812D-46BD-AA01-2F1597141A72}"
 EndProject
