@@ -49,6 +49,16 @@
     <Compile Include="Exceptions\DataException.cs" />
     <Compile Include="Exceptions\DbTypeNotSupportException.cs" />
     <Compile Include="Exceptions\SQLTextBuilderException.cs" />
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\SQLText.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SQLText.resx</DependentUpon>
+    </Compile>
     <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />
@@ -96,8 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SQLText.resx" />
+    <EmbeddedResource Include="Resources\SQLText.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQLText.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ORM\BLL\" />
