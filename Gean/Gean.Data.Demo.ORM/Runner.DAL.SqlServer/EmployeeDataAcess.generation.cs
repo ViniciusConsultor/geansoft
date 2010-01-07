@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
-using Gean.Data.DAL;
 using System.Data.Common;
+using Gean.Data;
+using Runner.Entity;
+using Runner.DAL.Interface;
 
-namespace Gean.Data.Demo
+namespace Runner.DAL.SQLServer
 {
-    public class EmployeeDataAcess : DataAcess, IDataAcess<Employee>
+    /// <summary>
+    /// 针对Employee表中的记录实体(<see cref="Employee"/>)的数据访问封装类型。
+    /// </summary>
+    public class EmployeeDataAcess : DataAcess, IEmployeeDataAcess, IDataAcess<Employee>
     {
+        /// <summary>
+        /// 构造函数。Initializes a new instance of the <see cref="EmployeeDataAcess"/> class.
+        /// </summary>
         public EmployeeDataAcess()
-            : base("dbo.Employee", "EmployeeId")
         {
-            
+            //在这里添加构造函数逻辑
         }
 
         #region IDataAcess<Employee> 成员
@@ -25,6 +32,33 @@ namespace Gean.Data.Demo
         public IAcessHelper AcessHelper
         {
             get { return MsSqlHelper.GetMsSqlHelper(); }
+        }
+
+        /// <summary>
+        /// 实体对应的表名
+        /// </summary>
+        /// <value></value>
+        public string TableName
+        {
+            get { return "dbo.Employee"; }
+        }
+
+        /// <summary>
+        /// 实体对应的表中的主键字段名
+        /// </summary>
+        /// <value></value>
+        public string PrimaryKey
+        {
+            get { return "EmployeeId"; }
+        }
+
+        /// <summary>
+        /// 实体对应的表中的主键字段的数据类型。
+        /// </summary>
+        /// <value>The type of the primary key.</value>
+        public Type PrimaryKeyType
+        {
+            get { return typeof(Int32); }
         }
 
         /// <summary>
@@ -158,5 +192,6 @@ namespace Gean.Data.Demo
         }
 
         #endregion
+
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System;
+using Gean.Data;
 
-namespace Gean.Data.Demo
+namespace Runner.Entity
 {
     public class Employee : IEntity
     {

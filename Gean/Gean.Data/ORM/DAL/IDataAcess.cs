@@ -18,18 +18,34 @@ namespace Gean.Data
         /// <value>The acess helper.</value>
         IAcessHelper AcessHelper { get; }
 
+        /// <summary>
+        /// 实体对应的表名
+        /// </summary>
+        string TableName { get; }
 
+        /// <summary>
+        /// 实体对应的表中的主键字段名
+        /// </summary>
+        string PrimaryKey { get; }
+
+        /// <summary>
+        /// 实体对应的表中的主键字段数据类型。在数据库设计中应当注意，仅采用int,string两种类型。
+        /// </summary>
+        /// <value>The type of the primary key.</value>
+        Type PrimaryKeyType { get; }
 
         /// <summary>
         /// Gets 一个更新命令文本。
         /// </summary>
         /// <value>The update command text.</value>
         String UpdateCommandText { get; }
+
         /// <summary>
         /// Gets 一个插入命令文本。
         /// </summary>
         /// <value>The insert command text.</value>
         String InsertCommandText { get; }
+
         /// <summary>
         /// Gets 一个删除命令文本。
         /// </summary>

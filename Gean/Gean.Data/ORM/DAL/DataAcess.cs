@@ -7,34 +7,13 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.ApplicationBlocks.Data;
 
-namespace Gean.Data.DAL
+namespace Gean.Data
 {
     /// <summary>
     /// DataAcess 的摘要说明。
     /// </summary>
     public abstract class DataAcess
     {
-        /// <summary>
-        /// 指定表名以及主键, 对基类进构造
-        /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="primaryKey">表主键</param>
-        public DataAcess(string tableName, string primaryKey)
-        {
-            this.TableName = tableName;
-            this.PrimaryKey = primaryKey;
-        }
-
-        /// <summary>
-        /// 实体对应的表名
-        /// </summary>
-        public virtual string TableName { get; protected set; }
-
-        /// <summary>
-        /// 实体对应的表中的主键字段名
-        /// </summary>
-        public virtual string PrimaryKey { get; protected set; }
-
         /*
         #region 通用操作方法
 
