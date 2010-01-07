@@ -45,7 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\DbTypeNotSupportException.cs" />
-    <Compile Include="SQLTextBuilder\SQLConditionTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLHavingTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLOrderByTextBuilder .cs" />
+    <Compile Include="SQLTextBuilder\SQLTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLWhereTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
     <Compile Include="ORM\DAL\IDataCRUD.cs" />
