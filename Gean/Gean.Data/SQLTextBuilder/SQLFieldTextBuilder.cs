@@ -14,7 +14,6 @@ namespace Gean.Data
     /// </summary>
     public class SQLFieldTextBuilder : ISQLTextBuilder
     {
-        
         /// <summary>
         /// 设置别名的关键字
         /// </summary>
@@ -90,16 +89,16 @@ namespace Gean.Data
         }
 
         /// <summary>
-        /// 生成相应的SQL语句(子句)
+        /// 生成Ado.net的模板化SQL语句(子句)
         /// </summary>
         /// <returns></returns>
         public string ToSqlTempletText()
         {
-            return string.Empty;
+            return this.ToSqlTempletText();
         }
 
         /// <summary>
-        /// 生成Ado.net的模板化SQL语句(子句)
+        /// 生成相应的SQL语句(子句)
         /// </summary>
         /// <returns></returns>
         public string ToSqlText()
@@ -118,5 +117,16 @@ namespace Gean.Data
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns a <see cref="System.String"/> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.ToSqlTempletText();
+        }
     }
 }
