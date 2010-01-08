@@ -228,4 +228,7 @@
   <data name="TransactionNotExisting" xml:space="preserve">
     <value>事务不存在！</value>
   </data>
+  <data name="SQLTextBuilderError_In" xml:space="preserve">
+    <value>当使用In子句时，Value必需是SQLTextBuilder.InTextBuilder类型。</value>
+  </data>
 </root>

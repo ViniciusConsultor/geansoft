@@ -54,17 +54,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\SQLText.Designer.cs">
+    <Compile Include="Resources\SQLString.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SQLText.resx</DependentUpon>
+      <DependentUpon>SQLString.resx</DependentUpon>
     </Compile>
     <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLFromTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLHavingTextBuilder.cs" />
     <Compile Include="SQLTextBuilder\SQLOrderByTextBuilder .cs" />
     <Compile Include="SQLTextBuilder\SQLTextBuilder.cs" />
+    <Compile Include="SQLTextBuilder\SQLText.cs" />
     <Compile Include="SQLTextBuilder\SQLWhereTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
@@ -110,9 +112,9 @@
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SQLText.resx">
+    <EmbeddedResource Include="Resources\SQLString.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SQLText.Designer.cs</LastGenOutput>
+      <LastGenOutput>SQLString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

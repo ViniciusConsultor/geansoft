@@ -8,6 +8,7 @@ using Gean.Data.Exceptions;
 using Gean.Data.Resources;
 using System.Data.Common;
 using System.Text.RegularExpressions;
+using System.Collections.Specialized;
 
 namespace Gean.Data
 {
@@ -17,36 +18,56 @@ namespace Gean.Data
     public class SQLWhereTextBuilder : ISQLTextBuilder
     {
         /// <summary>
-        /// 简单防止SQL注入：字段名中只能含有数字与大小写字母
+        /// Gets or sets 比较运算符。
         /// </summary>
-        static Regex _RegexParamName = new Regex(@"\?[_a-zA-Z0-9]+", RegexOptions.Compiled);
-        /// <summary>
-        /// 逻辑操作运算符
-        /// </summary>
-        static readonly string[] _LogicOperationFlags = new string[] { "AND", "OR" };
-        /// <summary>
-        /// 比较操作运算符
-        /// </summary>
-        static readonly string[] _CompareOperationFlags = new string[] 
-        { ">", "<", "<=", ">=", "=", "<>", "LIKE", "NOT LIKE", "IN" };
-
+        /// <value>The compare operation flag.</value>
         protected string CompareOperationFlag { get; set; }
+        /// <summary>
+        /// Gets or sets 一个参数名。
+        /// </summary>
+        /// <value>The name of the parameter.</value>
         protected string ParameterName { get; set; }
+        /// <summary>
+        /// Gets or sets 当前条件的参数的模板字符串。不设置就是当前条件的参数名加上"@"前缀。
+        /// </summary>
+        /// <value>The name of the template SQL text.</value>
         protected string TemplateSqlTextName { get; set; }
+        /// <summary>
+        /// Gets or sets 当前条件的参数类型。
+        /// </summary>
+        /// <value>The type of the db.</value>
         protected DbType DbType { get; set; }
+        /// <summary>
+        /// Gets or sets 当前条件的参数的值。
+        /// </summary>
+        /// <value>The value.</value>
         protected object Value { get; set; }
 
+        /// <summary>
+        /// Gets or sets 本类型是否有效。即当设置生成器成功后，可以正确生成SQL子句。
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> 正确设置，可以生成SQL子句; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEffective { get { return !string.IsNullOrEmpty(ParameterName); } }
+
+        /// <summary>
+        /// 逻辑运算集合。
+        /// </summary>
         protected ArrayList Operaters = new ArrayList();
+        /// <summary>
+        /// 条件集合。
+        /// </summary>
         protected ArrayList Conditions = new ArrayList();
 
         /// <summary>
         /// 设置当前条件的各个属性。
         /// </summary>
         /// <param name="name">当前条件的参数名。</param>
-        /// <param name="flag">当前条件的比较运算符。</param>
+        /// <param name="flag">当前条件的比较运算符。当使用In运算符时，参数的值请使用<see cref="InTextBuilder"/>类型定义，参数类型请使用String。</param>
         /// <param name="dbType">当前条件的参数类型。</param>
         /// <param name="value">当前条件的参数的值。</param>
-        public void Set(string name, CompareOperation flag, DbType dbType, object value)
+        public void Set(string name, SQLText.CompareOperation flag, DbType dbType, object value)
         {
             this.Set(name, flag, dbType, value, name);
         }
@@ -54,17 +75,24 @@ namespace Gean.Data
         /// 设置当前条件的各个属性。
         /// </summary>
         /// <param name="name">当前条件的参数名。</param>
-        /// <param name="flag">当前条件的比较运算符。</param>
+        /// <param name="flag">当前条件的比较运算符。当使用In运算符时，参数的值请使用<see cref="InTextBuilder"/>类型定义，参数类型请使用String。</param>
         /// <param name="dbType">当前条件的参数类型。</param>
         /// <param name="value">当前条件的参数的值。</param>
         /// <param name="tmpltName">当前条件的参数的模板字符串。不设置就是当前条件的参数名加上"@"前缀。</param>
-        public void Set(string name, CompareOperation flag, DbType dbType, object value, string tmpltName)
+        public void Set(string name, SQLText.CompareOperation flag, DbType dbType, object value, string tmpltName)
         {
-            if (_RegexParamName.IsMatch(name))//简单防止SQL注入
+            if (SQLText.RegexParamName.IsMatch(name))//简单防止SQL注入
             {
                 return;
             }
-            this.CompareOperationFlag = _CompareOperationFlags[(int)flag];
+            if (flag == SQLText.CompareOperation.In)//当使用In子句时，Value必需是SQLTextBuilder.InTextBuilder类型。
+            {
+                if (!(value is InTextBuilder))
+                {
+                    throw new SQLTextBuilderException(Messages.SQLTextBuilderError_In);
+                }
+            }
+            this.CompareOperationFlag = SQLText.CompareOperationFlags[(int)flag];
             this.ParameterName = name;
             this.DbType = dbType;
             this.Value = value;
@@ -77,7 +105,7 @@ namespace Gean.Data
         /// <returns></returns>
         public string ToSqlText()
         {
-            string[] operaterArray = (string[])Operaters.ToArray("".GetType());
+            string[] operaterArray = (string[])Operaters.ToArray(typeof(String));
             SQLWhereTextBuilder[] builderArray = (SQLWhereTextBuilder[])Conditions.ToArray((new SQLWhereTextBuilder()).GetType());
 
             StringBuilder sb = new StringBuilder();
@@ -97,7 +125,7 @@ namespace Gean.Data
                     case DbType.Date:
                         {
                             DateTime dt = (DateTime)Value;
-                            sb.Append("'" + dt.ToString("yyyy-MM-dd") + "'");
+                            sb.Append("'").Append(dt.ToString("yyyy-MM-dd")).Append("'");
                             break;
                         }
                     case DbType.DateTime:
@@ -105,13 +133,13 @@ namespace Gean.Data
                     case DbType.DateTimeOffset:
                         {
                             DateTime dt = (DateTime)Value;
-                            sb.Append("'" + dt.ToString("yyyy-MM-dd hh:mm:ss.fff") + "'");
+                            sb.Append("'").Append(dt.ToString("yyyy-MM-dd hh:mm:ss.fff")).Append("'");
                             break;
                         }
                     case DbType.Time:
                         {
                             DateTime dt = (DateTime)Value;
-                            sb.Append("'" + dt.ToString("hh:mm:ss.fff") + "'");
+                            sb.Append("'").Append(dt.ToString("hh:mm:ss.fff")).Append("'");
                             break;
                         }
                     case DbType.AnsiString:
@@ -119,8 +147,17 @@ namespace Gean.Data
                     case DbType.String:
                     case DbType.StringFixedLength:
                         {
-                            string tmp = (string)Value;
-                            sb.Append("'" + tmp.Replace("'", "\"") + "'");
+                            string tmp = "";
+                            if (Value is InTextBuilder)
+                            {
+                                tmp = ((InTextBuilder)Value).ToSqlText();
+                                sb.Append(tmp);
+                            }
+                            else
+                            {
+                                tmp = (string)Value;
+                                sb.Append("'").Append(tmp).Append("'");
+                            }
                             break;
                         }
                     case DbType.Currency:
@@ -147,7 +184,7 @@ namespace Gean.Data
                     default:
                         {
                             string tmp = Value.ToString();
-                            sb.Append("'" + tmp.Replace("'", "\"") + "'");
+                            sb.Append("'").Append(tmp).Append("'");
                             break;
                         }
                     #endregion
@@ -202,7 +239,7 @@ namespace Gean.Data
 
             if (operaterArray.Length > 0)
             {
-                for (int i = 0; i < operaterArray.Length; i++)
+                for (int i = 0; i < operaterArray.Length; i++)//进入递归生成
                 {
                     if (builderArray[i].ToSqlTempletText() == "")
                         continue;
@@ -248,68 +285,73 @@ namespace Gean.Data
             return (DbParameter[])array.ToArray(typeof(DbParameter));
         }
 
-        public void Add(LogicOperation logicOper, SQLWhereTextBuilder txtBuilder)
+        /// <summary>
+        /// 通过一个逻辑运算符(<see cref="LogicOperation"/>)给本类型连接一个逻辑条件。
+        /// </summary>
+        /// <param name="logicOper">一个逻辑运算符。</param>
+        /// <param name="txtBuilder">一个逻辑条件。</param>
+        public void Add(SQLText.LogicOperation logicOper, SQLWhereTextBuilder txtBuilder)
         {
-            Operaters.Add(_LogicOperationFlags[(int)logicOper]);
+            Operaters.Add(SQLText.LogicOperationFlags[(int)logicOper]);
             Conditions.Add(txtBuilder); 
         }
-    }
 
-    /// <summary>
-    /// 逻辑操作运算符
-    /// </summary>
-    public enum LogicOperation : int
-    {
+
         /// <summary>
-        /// 逻辑操作符：And
+        /// Where... In...子句生成器。IN 操作符允许我们在 WHERE 子句中规定多个值。
         /// </summary>
-        And = 0,
-        /// <summary>
-        /// 逻辑操作符：Or
-        /// </summary>
-        Or = 1
-    }
-    /// <summary>
-    /// 比较操作运算符："&lt;", "&gt;", "&gt;=", "&lt;=", "=", "&lt;&gt;", "like", "not like", "in"
-    /// </summary>
-    public enum CompareOperation : int
-    {
-        /// <summary>
-        /// 符号：&lt;
-        /// </summary>
-        MoreThan = 0,
-        /// <summary>
-        /// 符号：&gt;
-        /// </summary>
-        LessThan = 1,
-        /// <summary>
-        /// 符号：&gt;=
-        /// </summary>
-        NotMoreThan = 2,
-        /// <summary>
-        /// 符号：&lt;=
-        /// </summary>
-        NotLessThan = 3,
-        /// <summary>
-        /// 符号：=
-        /// </summary>
-        Equal = 4,
-        /// <summary>
-        /// 符号：&lt;&gt;
-        /// </summary>
-        NotEqual = 5,
-        /// <summary>
-        /// 符号：like
-        /// </summary>
-        Like = 6,
-        /// <summary>
-        /// 符号：not like
-        /// </summary>
-        NotLike = 7,
-        /// <summary>
-        /// 符号：in
-        /// </summary>
-        In = 8
+        public class InTextBuilder : StringCollection, ISQLTextBuilder
+        {
+            public InTextBuilder()
+            {
+                //在这里添加构造函数逻辑。
+            }
+
+            public void Set(params string[] values)
+            {
+                this.AddRange(values);
+            }
+
+            public void Set(SQLTextBuilder builder)
+            {
+                this.Builder = builder;
+            }
+
+            public SQLTextBuilder Builder { get; set; }
+
+            #region ISQLTextBuilder 成员
+
+            public DbParameter[] GetDbParameters()
+            {
+                return null;
+            }
+
+            public string ToSqlTempletText()
+            {
+                throw new NotImplementedException();
+            }
+
+            public string ToSqlText()
+            {
+                StringBuilder sb = new StringBuilder();
+                if (Builder != null)
+                {
+                    sb.Append('(').Append(Builder.ToSqlText()).Append(')');
+                }
+                else
+                {
+                    sb.Append('(');
+                    foreach (var item in this)
+                    {
+                        sb.Append('\'').Append(item).Append('\'').Append(',');
+                    }
+                    sb.Remove(sb.Length-1, 1).Append(')');
+                }
+                return sb.ToString();
+            }
+
+            #endregion
+        }
     }
 
 

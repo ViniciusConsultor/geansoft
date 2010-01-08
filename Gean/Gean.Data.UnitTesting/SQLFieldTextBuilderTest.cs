@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Gean.Data.Exceptions;
 namespace Gean.Data.UnitTesting
 {
-    
-    
     /// <summary>
     ///这是 SQLFieldTextBuilderTest 的测试类，旨在
     ///包含所有 SQLFieldTextBuilderTest 单元测试
@@ -13,7 +11,6 @@ namespace Gean.Data.UnitTesting
     [TestClass()]
     public class SQLFieldTextBuilderTest
     {
-
         /// <summary>
         ///ToSqlText 的测试
         ///</summary>

@@ -170,7 +170,7 @@ namespace Runner.DAL.SQLServer
 
         public IList<Employee> GetAll()
         {
-            string sql = string.Format(SQLText.GetAll, this.TableName);
+            string sql = string.Format(SQLString.GetAll, this.TableName);
 
             Employee entity = null;
             EmployeeCollection list = new EmployeeCollection();
@@ -188,7 +188,7 @@ namespace Runner.DAL.SQLServer
 
         public Employee FindById(object id)
         {
-            string sql = string.Format(SQLText.FindById, TableName, PrimaryKey);
+            string sql = string.Format(SQLString.FindById, TableName, PrimaryKey);
             SqlParameter param = new SqlParameter("@ID", id);
             Employee entity = null;
             using (IDataReader dr = this.AcessHelper.ExecuteReader(CommandType.Text, sql, param))

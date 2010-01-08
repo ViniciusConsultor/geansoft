@@ -14,34 +14,34 @@ namespace Gean.Data.Demo
             SQLWhereTextBuilder ctb = new SQLWhereTextBuilder();
 
             SQLWhereTextBuilder b1 = new SQLWhereTextBuilder();
-            b1.Set("name", CompareOperation.Equal, DbType.String, "%kkp%");
+            b1.Set("name", SQLText.CompareOperation.Equal, DbType.String, "%kkp%");
 
             SQLWhereTextBuilder b2 = new SQLWhereTextBuilder();
-            b2.Set("nickName", CompareOperation.Like, DbType.String, "%'kkp'%");
+            b2.Set("nickName", SQLText.CompareOperation.Like, DbType.String, "%'kkp'%");
 
             SQLWhereTextBuilder b3 = new SQLWhereTextBuilder();
-            b3.Set("age", CompareOperation.Equal, DbType.Date, DateTime.Now);
+            b3.Set("age", SQLText.CompareOperation.Equal, DbType.Date, DateTime.Now);
 
             SQLWhereTextBuilder b4 = new SQLWhereTextBuilder();
-            b4.Set("signTime", CompareOperation.Equal, DbType.DateTime, DateTime.Now);
+            b4.Set("signTime", SQLText.CompareOperation.Equal, DbType.DateTime, DateTime.Now);
 
             SQLWhereTextBuilder b5 = new SQLWhereTextBuilder();
-            b5.Set("count", CompareOperation.MoreThan, DbType.Int32, 88888);
+            b5.Set("count", SQLText.CompareOperation.MoreThan, DbType.Int32, 88888);
 
             SQLWhereTextBuilder b51 = new SQLWhereTextBuilder();
-            b51.Set("length", CompareOperation.MoreThan, DbType.Decimal, 88888);
+            b51.Set("length", SQLText.CompareOperation.MoreThan, DbType.Decimal, 88888);
 
             SQLWhereTextBuilder b52 = new SQLWhereTextBuilder();
-            b52.Set("price", CompareOperation.MoreThan, DbType.Double, 888.88);
+            b52.Set("price", SQLText.CompareOperation.MoreThan, DbType.Double, 888.88);
 
-            b1.Add(LogicOperation.And, b2);
-            b2.Add(LogicOperation.And, b3);
-            b3.Add(LogicOperation.And, b4);
-            b4.Add(LogicOperation.And, b5);
-            b5.Add(LogicOperation.And, b51);
-            b5.Add(LogicOperation.And, b52);
+            b1.Add(SQLText.LogicOperation.And, b2);
+            b2.Add(SQLText.LogicOperation.And, b3);
+            b3.Add(SQLText.LogicOperation.And, b4);
+            b4.Add(SQLText.LogicOperation.And, b5);
+            b5.Add(SQLText.LogicOperation.And, b51);
+            b5.Add(SQLText.LogicOperation.And, b52);
 
-            ctb.Add(LogicOperation.Or, b1);
+            ctb.Add(SQLText.LogicOperation.Or, b1);
 
             Console.WriteLine(ctb.ToSqlText());
             Console.WriteLine();

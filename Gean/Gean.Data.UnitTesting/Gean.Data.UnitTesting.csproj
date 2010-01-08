@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLFieldTextBuilderTest.cs" />
+    <Compile Include="SQLTextBuilderTest.cs" />
+    <Compile Include="SQLWhereTextBuilderTest.cs" />
+    <Compile Include="SQLWhereTextBuilder_InTextBuilderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gean.Data\Gean.Data.csproj">
