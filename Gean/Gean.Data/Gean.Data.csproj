@@ -59,15 +59,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLString.resx</DependentUpon>
     </Compile>
-    <Compile Include="SQLTextBuilder\ISQLTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLFieldTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLFromTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLGroupByTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLHavingTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLOrderByTextBuilder .cs" />
-    <Compile Include="SQLTextBuilder\SQLTextBuilder.cs" />
-    <Compile Include="SQLTextBuilder\SQLText.cs" />
-    <Compile Include="SQLTextBuilder\SQLWhereTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\ISQLTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLFieldTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLFromTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLGroupByTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLHavingTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLInTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLOrderByTextBuilder .cs" />
+    <Compile Include="SQLTextBuilderd\SQLTextBuilder.cs" />
+    <Compile Include="SQLTextBuilderd\SQLText.cs" />
+    <Compile Include="SQLTextBuilderd\SQLWhereTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
     <Compile Include="ORM\DAL\IDataCRUD.cs" />

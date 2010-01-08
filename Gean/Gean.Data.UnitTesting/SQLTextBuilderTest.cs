@@ -46,7 +46,7 @@ namespace Gean.Data.UnitTesting
             ta.Field.Set("CustomerID");
             ta.From.Set("Orders");
 
-            SQLWhereTextBuilder.InTextBuilder inb = new SQLWhereTextBuilder.InTextBuilder();
+            SQLInTextBuilder inb = new SQLInTextBuilder();
             inb.Set(ta);
 
             target.Where.Set("CustomerID", SQLText.CompareOperation.In, DbType.String, inb);

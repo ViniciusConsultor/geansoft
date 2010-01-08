@@ -87,7 +87,7 @@ namespace Gean.Data
             }
             if (flag == SQLText.CompareOperation.In)//当使用In子句时，Value必需是SQLTextBuilder.InTextBuilder类型。
             {
-                if (!(value is InTextBuilder))
+                if (!(value is SQLInTextBuilder))
                 {
                     throw new SQLTextBuilderException(Messages.SQLTextBuilderError_In);
                 }
@@ -148,9 +148,9 @@ namespace Gean.Data
                     case DbType.StringFixedLength:
                         {
                             string tmp = "";
-                            if (Value is InTextBuilder)
+                            if (Value is SQLInTextBuilder)
                             {
-                                tmp = ((InTextBuilder)Value).ToSqlText();
+                                tmp = ((SQLInTextBuilder)Value).ToSqlText();
                                 sb.Append(tmp);
                             }
                             else
@@ -296,63 +296,5 @@ namespace Gean.Data
             Conditions.Add(txtBuilder); 
         }
 
-
-        /// <summary>
-        /// Where... In...子句生成器。IN 操作符允许我们在 WHERE 子句中规定多个值。
-        /// </summary>
-        public class InTextBuilder : StringCollection, ISQLTextBuilder
-        {
-            public InTextBuilder()
-            {
-                //在这里添加构造函数逻辑。
-            }
-
-            public void Set(params string[] values)
-            {
-                this.AddRange(values);
-            }
-
-            public void Set(SQLTextBuilder builder)
-            {
-                this.Builder = builder;
-            }
-
-            public SQLTextBuilder Builder { get; set; }
-
-            #region ISQLTextBuilder 成员
-
-            public DbParameter[] GetDbParameters()
-            {
-                return null;
-            }
-
-            public string ToSqlTempletText()
-            {
-                throw new NotImplementedException();
-            }
-
-            public string ToSqlText()
-            {
-                StringBuilder sb = new StringBuilder();
-                if (Builder != null)
-                {
-                    sb.Append('(').Append(Builder.ToSqlText()).Append(')');
-                }
-                else
-                {
-                    sb.Append('(');
-                    foreach (var item in this)
-                    {
-                        sb.Append('\'').Append(item).Append('\'').Append(',');
-                    }
-                    sb.Remove(sb.Length-1, 1).Append(')');
-                }
-                return sb.ToString();
-            }
-
-            #endregion
-        }
     }
-
-
 }

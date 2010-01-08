@@ -19,7 +19,7 @@ namespace Gean.Data.UnitTesting
         public void ToSqlTextTest01()
         {
             SQLWhereTextBuilder target = new SQLWhereTextBuilder();
-            SQLWhereTextBuilder.InTextBuilder inb = new SQLWhereTextBuilder.InTextBuilder();
+            SQLInTextBuilder inb = new SQLInTextBuilder();
             inb.Set("a", "b", "c", "d");
 
             target.Set("abcd", SQLText.CompareOperation.In, System.Data.DbType.String, inb);
@@ -38,7 +38,7 @@ namespace Gean.Data.UnitTesting
             stb.From.Set("DemoTable");
 
             SQLWhereTextBuilder target = new SQLWhereTextBuilder();
-            SQLWhereTextBuilder.InTextBuilder inb = new SQLWhereTextBuilder.InTextBuilder();
+            SQLInTextBuilder inb = new SQLInTextBuilder();
             inb.Set(stb);
 
             target.Set("abcd", SQLText.CompareOperation.In, System.Data.DbType.String, inb);
