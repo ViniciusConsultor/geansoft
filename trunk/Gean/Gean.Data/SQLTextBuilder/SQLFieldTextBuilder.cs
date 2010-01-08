@@ -15,11 +15,6 @@ namespace Gean.Data
     public class SQLFieldTextBuilder : ISQLTextBuilder
     {
         /// <summary>
-        /// 设置别名的关键字
-        /// </summary>
-        static readonly string AS = "AS";
-
-        /// <summary>
         /// 列名与别名对应的集合
         /// </summary>
         protected Dictionary<string, string> _fieldList = new Dictionary<string, string>();
@@ -94,7 +89,7 @@ namespace Gean.Data
         /// <returns></returns>
         public string ToSqlTempletText()
         {
-            return this.ToSqlTempletText();
+            return this.ToSqlText();
         }
 
         /// <summary>
@@ -109,7 +104,7 @@ namespace Gean.Data
                 sb.Append(pair.Key);
                 if (!string.IsNullOrEmpty((string)pair.Value))
                 {
-                    sb.Append(' ').Append(AS).Append(" \"").Append(pair.Value).Append("\"");
+                    sb.Append(' ').Append(SQLText.AS).Append(" \"").Append(pair.Value).Append("\"");
                 }
                 sb.Append(", ");
             }

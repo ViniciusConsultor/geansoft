@@ -385,6 +385,15 @@ namespace Gean.Data.Resources {
         }
         
         /// <summary>
+        ///   查找类似 当使用In子句时，Value必需是SQLTextBuilder.InTextBuilder类型。 的本地化字符串。
+        /// </summary>
+        public static string SQLTextBuilderError_In {
+            get {
+                return ResourceManager.GetString("SQLTextBuilderError_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 事务不存在！ 的本地化字符串。
         /// </summary>
         public static string TransactionNotExisting {
