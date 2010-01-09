@@ -237,5 +237,9 @@ namespace Runner.DAL.SQLServer
 
         #endregion
 
+        public DbParameter GetIdParam()
+        {
+            return new SqlParameter("@Id", SqlDbType.Int, 32);
+        }
     }
 }
