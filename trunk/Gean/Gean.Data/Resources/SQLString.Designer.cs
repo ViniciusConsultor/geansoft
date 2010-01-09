@@ -77,5 +77,75 @@ namespace Gean.Data.Resources {
                 return ResourceManager.GetString("GetAll", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 SELECT
+        ///	TABLE_NAME AS &apos;TableName&apos;,
+        ///	COLUMN_NAME AS &apos;ColumsName&apos;,
+        ///	DATA_TYPE AS &apos;DbDataType&apos;,
+        ///	IS_NULLABLE AS &apos;IsNull&apos;,
+        ///	isnull(isnull(isnull(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION), DATETIME_PRECISION),1) AS &apos;Length&apos;,
+        ///	COLUMN_DEFAULT AS &apos;DefalutValue&apos;
+        ///FROM
+        ///	INFORMATION_SCHEMA.COLUMNS
+        ///WHERE
+        ///	TABLE_NAME = @TableName 的本地化字符串。
+        /// </summary>
+        public static string GetColumnsByTable {
+            get {
+                return ResourceManager.GetString("GetColumnsByTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT 
+        ///	v_o.name AS &apos;ViewName&apos;, /*视图名*/
+        ///	t_o.name AS &apos;CorrelativeTableName&apos;, /*相关的表名*/
+        ///	v_c.name AS &apos;ViewColumnName&apos;, /*视图中的列名*/
+        ///	t_c.name AS &apos;CorrelativeFieldName&apos; /*相关的表中的字段名*/
+        ///FROM 
+        ///	sysdepends d,
+        ///	sysobjects v_o,
+        ///	syscolumns v_c,
+        ///	sysobjects t_o,
+        ///	syscolumns t_c 
+        ///WHERE 
+        ///	objectproperty(d.id,&apos;IsView&apos;) = 1 
+        ///	and d.id = v_o.id and v_o.id = v_c.id 
+        ///	and d.depnumber = v_c.colid 
+        ///	and d.depid = t_o.id and t_o.id = t_c.id 
+        ///	and d.depnumber = t_c.colid 
+        ///	and v_o.name = @ViewName	/*要查询的视图名*/
+        ///	 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string GetInfoByView {
+            get {
+                return ResourceManager.GetString("GetInfoByView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 SELECT 
+        ///	o.name AS &apos;TableName&apos;,
+        ///	c.name AS &apos;FieldName&apos;,
+        ///	k.colid AS &apos;FieldNumber&apos;,
+        ///	k.keyno AS &apos;IndexedSequential&apos;, /*索引顺序*/
+        ///	t.name AS &apos;DbDataType&apos;
+        ///FROM 
+        ///	sysindexes i
+        ///	join sysindexkeys k on i.id = k.id and i.indid = k.indid
+        ///	join sysobjects o on i.id = o.id
+        ///	join syscolumns c on i.id = c.id and k.colid = c.colid
+        ///	join systypes t on c.xusertype = t.xusertype
+        ///WHERE 
+        ///	o.xtype = &apos;U&apos; and o.name= @TableName
+        ///	and exists
+        ///		(SELECT 1 FROM sysobjects WHERE xtype = &apos;PK&apos; and parent_obj = i.id and name [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string GetPrimaryKeyByTable {
+            get {
+                return ResourceManager.GetString("GetPrimaryKeyByTable", resourceCulture);
+            }
+        }
     }
 }

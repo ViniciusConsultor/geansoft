@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Gean.Data.cd" />
+    <None Include="_doc\sql.sql" />
     <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>

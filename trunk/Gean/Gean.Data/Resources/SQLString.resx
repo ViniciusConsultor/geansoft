@@ -125,4 +125,60 @@
     <value>Select * From dbo.{0}</value>
     <comment>SQL语句：从指定表获得该表中的所有数据</comment>
   </data>
+  <data name="GetColumnsByTable" xml:space="preserve">
+    <value>SELECT
+	TABLE_NAME AS 'TableName',
+	COLUMN_NAME AS 'ColumsName',
+	DATA_TYPE AS 'DbDataType',
+	IS_NULLABLE AS 'IsNull',
+	isnull(isnull(isnull(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION), DATETIME_PRECISION),1) AS 'Length',
+	COLUMN_DEFAULT AS 'DefalutValue'
+FROM
+	INFORMATION_SCHEMA.COLUMNS
+WHERE
+	TABLE_NAME = @TableName</value>
+    <comment>SQL语句：获取指定表的列信息。</comment>
+  </data>
+  <data name="GetInfoByView" xml:space="preserve">
+    <value>SELECT 
+	v_o.name AS 'ViewName', /*视图名*/
+	t_o.name AS 'CorrelativeTableName', /*相关的表名*/
+	v_c.name AS 'ViewColumnName', /*视图中的列名*/
+	t_c.name AS 'CorrelativeFieldName' /*相关的表中的字段名*/
+FROM 
+	sysdepends d,
+	sysobjects v_o,
+	syscolumns v_c,
+	sysobjects t_o,
+	syscolumns t_c 
+WHERE 
+	objectproperty(d.id,'IsView') = 1 
+	and d.id = v_o.id and v_o.id = v_c.id 
+	and d.depnumber = v_c.colid 
+	and d.depid = t_o.id and t_o.id = t_c.id 
+	and d.depnumber = t_c.colid 
+	and v_o.name = @ViewName	/*要查询的视图名*/
+		order by d.id</value>
+    <comment>SQL语句：获取指定视图的相关信息</comment>
+  </data>
+  <data name="GetPrimaryKeyByTable" xml:space="preserve">
+    <value>SELECT 
+	o.name AS 'TableName',
+	c.name AS 'FieldName',
+	k.colid AS 'FieldNumber',
+	k.keyno AS 'IndexedSequential', /*索引顺序*/
+	t.name AS 'DbDataType'
+FROM 
+	sysindexes i
+	join sysindexkeys k on i.id = k.id and i.indid = k.indid
+	join sysobjects o on i.id = o.id
+	join syscolumns c on i.id = c.id and k.colid = c.colid
+	join systypes t on c.xusertype = t.xusertype
+WHERE 
+	o.xtype = 'U' and o.name= @TableName
+	and exists
+		(SELECT 1 FROM sysobjects WHERE xtype = 'PK' and parent_obj = i.id and name = i.name)
+	ORDER BY o.name,k.colid</value>
+    <comment>SQL语句：获取指定表的主键信息</comment>
+  </data>
 </root>

@@ -15,14 +15,20 @@ namespace Gean.Data.Demo
     {
         internal static void Do()
         {
+            SqlConnection cn = GetConnection();
+
+            SelectDemo(cn);
+            UpdateDemo(cn);
+        }
+
+        internal static SqlConnection GetConnection()
+        {
             SqlConnectionStringBuilder sqlConnSb = new SqlConnectionStringBuilder();
             sqlConnSb.DataSource = @"NSIMPLE-P4MAN\SQLEXPRESS";
             sqlConnSb.InitialCatalog = "Northwind";
             sqlConnSb.IntegratedSecurity = true;
             SqlConnection cn = new SqlConnection(sqlConnSb.ConnectionString);
-
-            SelectDemo(cn);
-            UpdateDemo(cn);
+            return cn;
         }
 
         private static void UpdateDemo(SqlConnection cn)
