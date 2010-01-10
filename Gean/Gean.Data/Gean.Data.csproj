@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9B822919-06A0-4892-AEAA-F3C876811351}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -103,12 +103,6 @@
     <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gean\Gean.Framework\Gean.csproj">
-      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
-      <Name>Gean</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
@@ -119,6 +113,12 @@
       <LastGenOutput>SQLString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gean\Gean.Library\Gean.csproj">
+      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ORM\BLL\" />
