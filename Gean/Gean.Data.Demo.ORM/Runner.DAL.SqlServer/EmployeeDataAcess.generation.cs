@@ -173,7 +173,7 @@ namespace Runner.DAL.SQLServer
             string sql = string.Format(SQLString.GetAll, this.TableName);
 
             Employee entity = null;
-            EmployeeCollection list = new EmployeeCollection();
+            EmployeeList list = new EmployeeList();
 
             using (IDataReader dr = this.AcessHelper.ExecuteReader(CommandType.Text, sql))
             {
