@@ -58,7 +58,8 @@ namespace Gean.Data.Demo
             Console.WriteLine(sqliteConnSb.Pooling);
             Console.WriteLine(sqliteConnSb.MaxPageCount);
 
-            Console.ReadKey();
+            Console.WriteLine("==========================");
+            Console.WriteLine();
         }
     }
 
