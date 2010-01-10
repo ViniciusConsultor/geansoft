@@ -1,11 +1,10 @@
-using System.Collections.Generic;
-using System.Text;
 using System;
+using System.Text;
 using Gean.Data;
 
 namespace Runner.Entity
 {
-    public class Employee : IEntity
+    public partial class Employee : IEntity
     {
         public int      EmployeeID          { get; set; }
         public string   LastName            { get; set; }
@@ -84,11 +83,6 @@ namespace Runner.Entity
             return sb.ToString();
         }
     }
-
-    public class EmployeeCollection : List<Employee>
-    {
-    }
-
 }
 
 /*
