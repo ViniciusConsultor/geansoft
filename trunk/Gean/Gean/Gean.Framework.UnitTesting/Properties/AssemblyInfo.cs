@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Gean.Framework.UnitTesting")]
+[assembly: AssemblyTitle("Gean.Library.UnitTesting")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("nsimple.cn")]
-[assembly: AssemblyProduct("Gean.Framework.UnitTesting")]
+[assembly: AssemblyProduct("Gean.Library.UnitTesting")]
 [assembly: AssemblyCopyright("Copyright © nsimple.cn 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

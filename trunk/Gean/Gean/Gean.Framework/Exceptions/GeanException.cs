@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Gean.Exceptions
 {
     /// <summary>
-    /// Gean.Framework的的基础异常类，所有的异常从本类派生
+    /// Gean.Library的的基础异常类，所有的异常从本类派生
     /// </summary>
     [global::System.Serializable]
     public class GeanException : ApplicationException

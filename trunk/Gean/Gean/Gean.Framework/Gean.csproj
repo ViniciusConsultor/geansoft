@@ -3,11 +3,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</ProjectGuid>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <AssemblyName>Gean.Framework</AssemblyName>
+    <AssemblyName>Gean.Library</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>Gean</RootNamespace>
@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Debug\Gean.Framework.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Gean.Library.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,15 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ColumnAttribute.cs" />
     <Compile Include="Base\CloneableObject.cs" />
     <Compile Include="Exceptions\GeanException.cs" />
     <Compile Include="Base\Collections\CollectionBase.cs" />
     <Compile Include="Base\Triplet.cs" />
     <Compile Include="Exceptions\TypeConvertingException.cs" />
     <Compile Include="Interface\Converting\Converting.cs" />
-    <Compile Include="Interface\FieldMemberInfo\FieldMemberInfo.cs" />
-    <Compile Include="Interface\FieldMemberInfo\IFieldMemberInfo.cs" />
     <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\Converting\IConverting.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
@@ -89,11 +86,11 @@
     <Compile Include="Utility\UtilityNet.cs" />
     <Compile Include="Utility\UtilityRAR.cs" />
     <Compile Include="Utility\UtilityType.cs" />
-    <Compile Include="Widgets\Checker.cs" />
-    <Compile Include="Widgets\Chinese\ChineseSpellRandom.cs" />
-    <Compile Include="Widgets\Chinese\ChineseRmb.cs" />
-    <Compile Include="Widgets\SmartDate.cs" />
-    <Compile Include="Widgets\SnipScreen.cs" />
+    <Compile Include="Wrapper\Checker.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseSpellRandom.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseRmb.cs" />
+    <Compile Include="Wrapper\SmartDate.cs" />
+    <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
     <Compile Include="Utility\Encrypt\DEncrypt.cs" />
     <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
@@ -155,9 +152,9 @@
     <Compile Include="Utility\UtilityRandom.cs" />
     <Compile Include="Utility\UtilityRegex.cs" />
     <Compile Include="Utility\UtilityString.cs" />
-    <Compile Include="Widgets\Chinese\ChineseIDCardValid.cs" />
-    <Compile Include="Widgets\Chinese\ChineseSpell.cs" />
-    <Compile Include="Widgets\Duration.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseIDCardValid.cs" />
+    <Compile Include="Wrapper\Chinese\ChineseSpell.cs" />
+    <Compile Include="Wrapper\Duration.cs" />
     <Compile Include="Wrapper\SimpleLogger\SimpleLoggerLevel.cs" />
     <Compile Include="Wrapper\SimpleLogger\SimpleLoggerWriter.cs" />
     <Compile Include="Wrapper\User32.cs" />
@@ -165,6 +162,7 @@
     <Compile Include="Wrapper\Xml\AbstractXmlDocument.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlElement.cs" />
     <Compile Include="Wrapper\Xml\AbstractXmlNode.cs" />
+    <Compile Include="Wrapper\Xml\XmlFormat.cs" />
     <Compile Include="Wrapper\Xml\XmlHelper.cs" />
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
@@ -189,6 +187,9 @@
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Widgets\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>

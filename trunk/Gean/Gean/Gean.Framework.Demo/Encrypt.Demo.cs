@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Gean.Encrypt;
 
-namespace Gean.Framework.Demo
+namespace Gean.Library.Demo
 {
     partial class Program
     {

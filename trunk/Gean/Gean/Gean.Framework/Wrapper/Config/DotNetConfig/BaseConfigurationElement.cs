@@ -67,7 +67,7 @@ namespace Gean.Config.DotNetConfig
         /// <param name="serializeCollectionKey">为 <c>true</c>，则只序列化集合的键属性；否则为 <c>false</c></param>
         protected override void DeserializeElement(XmlReader reader, bool serializeCollectionKey)
         {
-            FieldInfo field = reader.GetType().GetField("_rawXml", FieldMemberInfo.FieldBindingFlags);
+            FieldInfo field = reader.GetType().GetField("_rawXml");//, FieldMemberInfo.FieldBindingFlags);
             this.outerXml = (string)field.GetValue(reader);
             base.DeserializeElement(reader, serializeCollectionKey);
         }
