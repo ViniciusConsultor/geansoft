@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Aarhus.Framework")]
+[assembly: AssemblyTitle("Gean.Library")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NSimple")]
-[assembly: AssemblyProduct("Aarhus.Framework")]
-[assembly: AssemblyCopyright("Copyright © NSimple 2008")]
+[assembly: AssemblyCompany("GeanSoft Studio.")]
+[assembly: AssemblyProduct("Gean.Library")]
+[assembly: AssemblyCopyright("Copyright © GeanSoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("93F5BDD9-6F88-4093-83C8-05D74B8BC5C5")]
+[assembly: Guid("177523CB-4145-4c9a-BFB1-16A2B7EE58C9")]
 
 // 程序集的版本信息由下面四个值组成:
 //

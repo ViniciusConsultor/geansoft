@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Framework.UnitTesting", "Gean.Framework.UnitTesting\Gean.Framework.UnitTesting.csproj", "{8641E9D9-F2A0-4347-A87B-8EC11FCE117D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library.UnitTesting", "Gean.Framework.UnitTesting\Gean.Library.UnitTesting.csproj", "{8641E9D9-F2A0-4347-A87B-8EC11FCE117D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{433376B3-70C8-43A3-8638-6DD8498CB08E}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Framework.Demo", "Gean.Framework.Demo\Gean.Framework.Demo.csproj", "{FDE06E1E-2231-4551-A03B-221989A8AC2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library.Demo", "Gean.Framework.Demo\Gean.Library.Demo.csproj", "{FDE06E1E-2231-4551-A03B-221989A8AC2A}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean.Math;
 
-namespace Gean.Framework.Demo
+namespace Gean.Library.Demo
 {
     partial class Program
     {

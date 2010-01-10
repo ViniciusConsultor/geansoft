@@ -5,7 +5,7 @@ using System.Text;
 using Gean.Math;
 using Gean.Chinese;
 
-namespace Gean.Framework.Demo
+namespace Gean.Library.Demo
 {
     partial class Program
     {

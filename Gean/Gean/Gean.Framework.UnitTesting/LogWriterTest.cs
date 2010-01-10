@@ -1,6 +1,7 @@
-﻿using Gean;
+﻿using Gean.SimpleLogger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace Gean.Framework.UnitTesting
+
+namespace Gean.Library.UnitTesting
 {
     /// <summary>
     ///这是 LogWriterTest 的测试类，旨在
@@ -61,11 +62,11 @@ namespace Gean.Framework.UnitTesting
 
         #endregion
 
-        private LogWriter _logWriter = null;
+        private SimpleLoggerWriter _logWriter = null;
 
         public LogWriterTest()
         {
-            _logWriter = LogWriter.InitializeComponent(@"d:\xiaofanlog.txt");
+            _logWriter = SimpleLoggerWriter.InitializeComponent(@"d:\xiaofanlog.txt");
         }
 
         /// <summary>
@@ -74,18 +75,18 @@ namespace Gean.Framework.UnitTesting
         [TestMethod()]
         public void WriteTest()
         {
-            _logWriter.Write(LogLevel.Info, "LogWriter Begin...");
-            _logWriter.Write(LogLevel.Warning, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Debug, "_logWriter.Write(LogLevel.Debug, ***)");
-            _logWriter.Write(LogLevel.Error, "_logWriter.Write(LogLevel.Error, ***)");
-            _logWriter.Write(LogLevel.Error, "_logWriter.Write(LogLevel.Error, ***)");
-            _logWriter.Write(LogLevel.Info, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Debug, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Error, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Info, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Warning, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Warning, UtilityGuid.Get());
-            _logWriter.Write(LogLevel.Info, "LogWriter End...");
+            _logWriter.Write(SimpleLoggerLevel.Info, "LogWriter Begin...");
+            _logWriter.Write(SimpleLoggerLevel.Warn, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Debug, "_logWriter.Write(LogLevel.Debug, ***)");
+            _logWriter.Write(SimpleLoggerLevel.Error, "_logWriter.Write(LogLevel.Error, ***)");
+            _logWriter.Write(SimpleLoggerLevel.Error, "_logWriter.Write(LogLevel.Error, ***)");
+            _logWriter.Write(SimpleLoggerLevel.Info, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Debug, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Error, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Info, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Warn, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Warn, UtilityGuid.Get());
+            _logWriter.Write(SimpleLoggerLevel.Info, "LogWriter End...");
 
             _logWriter.BakupLogFile();
             _logWriter.Close(false);

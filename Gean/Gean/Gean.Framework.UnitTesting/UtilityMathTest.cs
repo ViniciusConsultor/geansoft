@@ -2,7 +2,7 @@
 using System;
 using Gean.Math;
 
-namespace Gean.Framework.UnitTesting
+namespace Gean.Library.UnitTesting
 {
     
     
