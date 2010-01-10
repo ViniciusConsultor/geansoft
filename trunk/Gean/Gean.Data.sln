@@ -5,13 +5,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data", "Gean.Data\Gean
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{BB907FDE-82AD-45C2-87EA-379B58FA62D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{26DB9112-40FF-4FBC-8173-5A0C5EE046F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM.DefaultProject", "ORM.DefaultProject", "{CFC98FEF-DA41-4336-B2F2-E130264BA027}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.Entity", "..\DesignTime.Demo\ORM.DefaultProject\Runner.Entity\Runner.Entity.csproj", "{D1590206-A0CD-4E47-93B6-5A23F29DD46E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.SqlServer", "..\DesignTime.Demo\ORM.DefaultProject\Runner.DAL.SqlServer\Runner.DAL.SqlServer.csproj", "{03922E8B-36F9-4B68-8BA3-F734E997062A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.SQLite", "..\DesignTime.Demo\ORM.DefaultProject\Runner.DAL.SQLite\Runner.DAL.SQLite.csproj", "{4510C0D9-13EF-43E0-98D1-0DC57F91713D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.Interface", "..\DesignTime.Demo\ORM.DefaultProject\Runner.DAL.Interface\Runner.DAL.Interface.csproj", "{D91B3EAF-812D-46BD-AA01-2F1597141A72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.Factory", "..\DesignTime.Demo\ORM.DefaultProject\Runner.DAL.Factory\Runner.DAL.Factory.csproj", "{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.Demo", "..\DesignTime.Demo\Gean.Data.Demo\Gean.Data.Demo.csproj", "{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.UnitTesting", "..\DesignTime.UnitTest\Gean.Data.UnitTesting\Gean.Data.UnitTesting.csproj", "{21B07E24-0856-47FF-870D-E354A68DB411}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Gean.Data.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +43,45 @@ Global
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1590206-A0CD-4E47-93B6-5A23F29DD46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1590206-A0CD-4E47-93B6-5A23F29DD46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1590206-A0CD-4E47-93B6-5A23F29DD46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1590206-A0CD-4E47-93B6-5A23F29DD46E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03922E8B-36F9-4B68-8BA3-F734E997062A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03922E8B-36F9-4B68-8BA3-F734E997062A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03922E8B-36F9-4B68-8BA3-F734E997062A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03922E8B-36F9-4B68-8BA3-F734E997062A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D91B3EAF-812D-46BD-AA01-2F1597141A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D91B3EAF-812D-46BD-AA01-2F1597141A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D91B3EAF-812D-46BD-AA01-2F1597141A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D91B3EAF-812D-46BD-AA01-2F1597141A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B07E24-0856-47FF-870D-E354A68DB411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B07E24-0856-47FF-870D-E354A68DB411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B07E24-0856-47FF-870D-E354A68DB411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B07E24-0856-47FF-870D-E354A68DB411}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D6A34FF-104B-428B-9DE7-B7D87BE1CE81} = {BB907FDE-82AD-45C2-87EA-379B58FA62D6}
+		{21B07E24-0856-47FF-870D-E354A68DB411} = {26DB9112-40FF-4FBC-8173-5A0C5EE046F4}
+		{D1590206-A0CD-4E47-93B6-5A23F29DD46E} = {CFC98FEF-DA41-4336-B2F2-E130264BA027}
+		{03922E8B-36F9-4B68-8BA3-F734E997062A} = {CFC98FEF-DA41-4336-B2F2-E130264BA027}
+		{4510C0D9-13EF-43E0-98D1-0DC57F91713D} = {CFC98FEF-DA41-4336-B2F2-E130264BA027}
+		{D91B3EAF-812D-46BD-AA01-2F1597141A72} = {CFC98FEF-DA41-4336-B2F2-E130264BA027}
+		{0A250A55-E0CE-4D46-A1AF-BC79401BE70F} = {CFC98FEF-DA41-4336-B2F2-E130264BA027}
 	EndGlobalSection
 EndGlobal
