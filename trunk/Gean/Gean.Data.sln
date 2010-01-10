@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data", "Gean.Data\Gean.Data.csproj", "{9B822919-06A0-4892-AEAA-F3C876811351}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Data.SQLite", "Gean.Data.SQLite\Gean.Data.SQLite\Gean.Data.SQLite.csproj", "{081E4DB7-421A-46B3-8D95-138A9422381D}"
@@ -35,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.Factory", "Gean.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.DAL.SQLite", "Gean.Data.Demo.ORM\Runner.DAL.SQLite\Runner.DAL.SQLite.csproj", "{4510C0D9-13EF-43E0-98D1-0DC57F91713D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -48,10 +48,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B822919-06A0-4892-AEAA-F3C876811351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B822919-06A0-4892-AEAA-F3C876811351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B822919-06A0-4892-AEAA-F3C876811351}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -92,6 +88,10 @@ Global
 		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4510C0D9-13EF-43E0-98D1-0DC57F91713D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
