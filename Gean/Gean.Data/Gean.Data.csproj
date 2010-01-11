@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StoneType.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\DataException.cs" />
@@ -71,7 +72,6 @@
     <Compile Include="SqlTextBuilder\SQLWhereTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
-    <Compile Include="ORM\DAL\IDataCRUD.cs" />
     <Compile Include="_temp\Base\CommandExecutor\CommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\ITableCommandExecutor.cs" />
     <Compile Include="_temp\Base\CommandExecutor\IViewCommandExecutor.cs" />
@@ -88,8 +88,6 @@
     <Compile Include="Transaction\TransactionManager.cs" />
     <Compile Include="_temp\WhereParameter.cs" />
     <Compile Include="ORM\DAL\Helper\OracleHelper.cs" />
-    <Compile Include="ORM\DAL\DataAcess.cs" />
-    <Compile Include="ORM\DAL\IDataAcess.cs" />
     <Compile Include="_temp\Base\BaseEntity.cs" />
     <Compile Include="_temp\Base\PageHelper.cs" />
     <Compile Include="_temp\Base\PagerInfo.cs" />

@@ -4,13 +4,14 @@ using System.Text;
 using System.Collections;
 using System.Data;
 using System.Data.Common;
+using Gean.Data;
 
-namespace Gean.Data
+namespace Runner.DAL
 {
     /// <summary>
     /// 数据访问层(DAL)的一些基本方法的接口
     /// </summary>
-    public interface IDataAcess<T> : IDataCRUD where T : IEntity
+    public interface IDataAcess<T> : IDataCreate, IDataQuery, IDataUpdate, IDataDelete where T : IEntity
     {
         /// <summary>
         /// Gets 一个数据库访问助手类
@@ -60,7 +61,7 @@ namespace Gean.Data
 
         T DataReaderToEntity(IDataReader dr);
 
-        IList<T> GetAll();
+        ICollection<T> GetAll();
 
         T FindById(object id);
     }

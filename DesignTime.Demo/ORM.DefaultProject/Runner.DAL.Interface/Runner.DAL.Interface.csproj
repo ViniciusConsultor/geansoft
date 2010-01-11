@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D91B3EAF-812D-46BD-AA01-2F1597141A72}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Runner.DAL.Interface</RootNamespace>
-    <AssemblyName>Runner.DAL.Interface</AssemblyName>
+    <RootNamespace>Runner.DAL</RootNamespace>
+    <AssemblyName>Runner.DAL</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -36,8 +36,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\IDataAcess.cs" />
+    <Compile Include="Base\IDataCreate.cs" />
+    <Compile Include="Base\IDataDelete.cs" />
+    <Compile Include="Base\IDataQuery.cs" />
+    <Compile Include="Base\IDataUpdate.cs" />
     <Compile Include="IEmployeeDataAcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean\Gean.Data\Gean.Data.csproj">
+      <Project>{9B822919-06A0-4892-AEAA-F3C876811351}</Project>
+      <Name>Gean.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Runner.Entity\Runner.Entity.csproj">
+      <Project>{D1590206-A0CD-4E47-93B6-5A23F29DD46E}</Project>
+      <Name>Runner.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

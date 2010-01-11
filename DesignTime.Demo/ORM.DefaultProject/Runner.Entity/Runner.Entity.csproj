@@ -41,9 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Employee.List.generation.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="Employee.generation.cs" />
+    <Compile Include="Employee.List.generation.cs">
+      <DependentUpon>Employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Employee.generation.cs">
+      <DependentUpon>Employee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -78,4 +82,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetFileName) ..\..\..\..\..\DesignTime.Demo\Gean.Data.Demo\bin\Debug\</PostBuildEvent>
+  </PropertyGroup>
 </Project>
