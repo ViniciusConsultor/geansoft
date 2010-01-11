@@ -13,50 +13,14 @@ namespace Gean.Data.Demo
     {
         static void Main(string[] args)
         {
-            Main01_SqlConnectionStringBuilder.Do();
-            Main02_AdoNet.Do();
-            Main03_SQLTextBuilder.Do();
-
-            Console.WriteLine();
-            SelcetColumns("Customers");
+            //Main01_SqlConnectionStringBuilder.Do();
+            //Main02_AdoNet.Do();
+            //Main03_SQLTextBuilder.Do();
+            Main05_ORM.Do();
 
             Console.ReadKey();
         }
 
-        private static void SelcetColumns(string tableName)
-        {
-            SqlConnection conn = Main02_AdoNet.GetConnection();
-            MsSqlHelper helper = MsSqlHelper.GetMsSqlHelper(conn.ConnectionString);
-            SqlParameter param = new SqlParameter("@TableName", tableName);
-            SqlDataReader reader = helper.ExecuteReader(System.Data.CommandType.Text, Gean.Data.Resources.SQLString.GetColumnsByTable, param);
-
-            while (reader.Read())
-            {
-                Console.Write(reader["TableName"]);
-                Console.Write("\t");
-                string str = (string)reader["ColumsName"];
-                Console.Write(str);
-                if (str.Length <= 7)
-                {
-                    Console.Write("\t\t\t");
-                }
-                else
-                {
-                    Console.Write("\t\t");
-                }
-                str = (string)reader["DbDataType"]; 
-                Console.Write(str);
-                if (str.Length <= 7)
-                {
-                    Console.Write("\t\t");
-                }
-                else
-                {
-                    Console.Write("\t");
-                }
-                Console.WriteLine(reader["Length"]);
-            }
-        }
 
     }
 }
