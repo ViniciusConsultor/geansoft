@@ -25,7 +25,7 @@ namespace Gean
         /// <summary>
         /// 构造函数
         /// </summary>
-        public UtilityRandom()
+        static UtilityRandom()
         {
             Random = new Random(unchecked((int)DateTime.Now.Ticks));
         }

@@ -96,9 +96,6 @@
     <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
-    <Compile Include="Utility\Encrypt\DEncrypt.cs" />
-    <Compile Include="Utility\Encrypt\DESEncrypt.cs" />
-    <Compile Include="Utility\Encrypt\HashEncode.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
     <Compile Include="Exceptions\ConfigException.cs" />
     <Compile Include="Wrapper\Config\ConfigHelper.cs" />

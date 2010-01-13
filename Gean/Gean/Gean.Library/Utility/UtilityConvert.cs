@@ -148,13 +148,14 @@ namespace Gean
         #endregion
 
         #region 将整型变量转化为布尔变量(True或False).
+
         /// <summary>
         /// 将整型变量转化为布尔变量(True或False).
-        /// 规则：如果整型数值大于0,返回True,否则返回False.
+        /// 规则：如果整型数值大于0,返回True,否则返回False.（非严格模式）
         /// </summary>
         /// <param name="intParam">整型数</param>
         /// <returns>如果整型数值大于0,返回True,否则返回False.</returns>
-        private static bool IntToBoolean(int intParam)
+        public static bool IntToBoolean(int intParam)
         {
             bool bReturn = false;
             if (intParam > 0)
@@ -188,9 +189,49 @@ namespace Gean
                     }
                 case ConvertMode.Relaxed:
                     return IntToBoolean(intParam);
-                default :
+                default:
                     Debug.Fail(mode.ToString());
                     return false;
+            }
+        }
+
+        #endregion
+
+        #region 将char转化为布尔变量(True或False).
+
+        /// <summary>
+        /// 将char转化为布尔变量(True或False).
+        /// </summary>
+        /// <param name="charParam">char值</param>
+        /// <returns>如果char是0,返回False；如果char是1,返回True</returns>
+        public static bool CharToBoolean(char charParam)
+        {
+            return CharToBoolean(charParam, ConvertMode.Relaxed);
+        }
+
+        /// <summary>
+        /// 将char转化为布尔变量(True或False).
+        /// </summary>
+        /// <param name="charParam">char值</param>
+        /// <param name="mode">选择是否严格转换模式，当宽松模式下，非0或1的char都将返回false</param>
+        /// <returns>如果char是0,返回False；如果char是1,返回True</returns>
+        public static bool CharToBoolean(char charParam, ConvertMode mode)
+        {
+            switch (charParam)
+            {
+                case '1':
+                    return true;
+                case '0':
+                    return false;
+                default:
+                    if (mode == ConvertMode.Relaxed)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(charParam + " , 参数应严格是1或0.");
+                    }
             }
         }
 
@@ -219,29 +260,32 @@ namespace Gean
             int intValue = Convert.ToInt32(value, from);  //先转成10进制
             string result = Convert.ToString(intValue, to);  //再转成目标进制
 
-            if (to == 2)
-            {
-                StringBuilder sb = new StringBuilder(8);
-                switch (result.Length)
-                {
-                    case 7:
-                        sb.Append("0").Append(result);
-                        break;
-                    case 6:
-                        sb.Append("00").Append(result);
-                        break;
-                    case 5:
-                        sb.Append("000").Append(result);
-                        break;
-                    case 4:
-                        sb.Append("0000").Append(result);
-                        break;
-                    case 3:
-                        sb.Append("00000").Append(result);
-                        break;
-                }
-                return sb.ToString();
-            }
+            //if (to == 2)
+            //{
+            //    StringBuilder sb = new StringBuilder(8);
+            //    switch (result.Length)
+            //    {
+            //        case 8:
+            //            sb.Append(result);
+            //            break;
+            //        case 7:
+            //            sb.Append("0").Append(result);
+            //            break;
+            //        case 6:
+            //            sb.Append("00").Append(result);
+            //            break;
+            //        case 5:
+            //            sb.Append("000").Append(result);
+            //            break;
+            //        case 4:
+            //            sb.Append("0000").Append(result);
+            //            break;
+            //        case 3:
+            //            sb.Append("00000").Append(result);
+            //            break;
+            //    }
+            //    return sb.ToString();
+            //}
             return result;
         }
         #endregion
