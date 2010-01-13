@@ -9,10 +9,6 @@ namespace Gean.Encrypt
     /// </summary> 
     public class RSACryption
     {
-        public RSACryption()
-        {
-        }
-
 
         #region RSA 加密解密
 
@@ -31,7 +27,7 @@ namespace Gean.Encrypt
         }
         #endregion
 
-        #region RSA的加密函数
+        #region RSA 的加密函数
         //############################################################################## 
         //RSA 方式加密 
         //说明KEY必须是XML的行式,返回的是字符串 
@@ -68,7 +64,7 @@ namespace Gean.Encrypt
         }
         #endregion
 
-        #region RSA的解密函数
+        #region RSA 的解密函数
         //RSA的解密函数  string
         public string RSADecrypt(string xmlPrivateKey, string m_strDecryptString)
         {
@@ -100,7 +96,7 @@ namespace Gean.Encrypt
 
         #endregion
 
-        #region RSA数字签名
+        #region RSA 数字签名
 
         #region 获取Hash描述表
         //获取Hash描述表 
@@ -161,7 +157,7 @@ namespace Gean.Encrypt
         }
         #endregion
 
-        #region RSA签名
+        #region RSA 签名
         //RSA签名 
         public bool SignatureFormatter(string p_strKeyPrivate, byte[] HashbyteSignature, ref byte[] EncryptedSignatureData)
         {
