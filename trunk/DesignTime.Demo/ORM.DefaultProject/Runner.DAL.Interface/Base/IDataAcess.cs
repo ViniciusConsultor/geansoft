@@ -36,24 +36,6 @@ namespace Runner.DAL
         Type PrimaryKeyType { get; }
 
         /// <summary>
-        /// Gets 一个更新命令文本。
-        /// </summary>
-        /// <value>The update command text.</value>
-        String UpdateCommandText { get; }
-
-        /// <summary>
-        /// Gets 一个插入命令文本。
-        /// </summary>
-        /// <value>The insert command text.</value>
-        String InsertCommandText { get; }
-
-        /// <summary>
-        /// Gets 一个删除命令文本。
-        /// </summary>
-        /// <value>The delete command text.</value>
-        String DeleteCommandText { get; }
-
-        /// <summary>
         /// Gets 一组 SQL 命令和一个数据库连接的封装类型<see cref="DataAdapter"/>。
         /// </summary>
         /// <value>The data adapter.</value>

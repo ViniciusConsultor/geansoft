@@ -12,8 +12,8 @@ namespace Gean.Data.Demo
         {
             DalFactory.Initialize(AppDomain.CurrentDomain.BaseDirectory, "Runner.DAL.SQLServer");
             IEmployeeDataAcess acess = DalFactory.EmployeeDataAcess;
-
             
+
             Console.WriteLine(acess.ToString());
         }
     }

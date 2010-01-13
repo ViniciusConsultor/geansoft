@@ -25,88 +25,11 @@ namespace Runner.DAL.SQLServer
             //在这里添加构造函数逻辑
         }
 
-        #region Parameters
-        public class Parameters
-        {
-            public static SqlParameter Id
-            {
-                get
-                {
-                    SqlParameter sp = new SqlParameter("@Id", DbType.String);
-                    sp.SourceColumn = "Id";
-                    return sp;
-                }
-            }
-            public static SqlParameter Guid
-            {
-                get { return new SqlParameter("@Guid", DbType.String); }
-            }
-            public static SqlParameter MemberName
-            {
-                get { return new SqlParameter("@MemberName", DbType.String); }
-            }
-            public static SqlParameter Password
-            {
-                get { return new SqlParameter("@Password", DbType.String); }
-            }
-            public static SqlParameter AppendDatetime
-            {
-                get { return new SqlParameter("@AppendDatetime", DbType.String); }
-            }
-            public static SqlParameter LoginDatetime
-            {
-                get { return new SqlParameter("@LoginDatetime", DbType.String); }
-            }
-            public static SqlParameter LoginCount
-            {
-                get { return new SqlParameter("@LoginCount", DbType.String); }
-            }
-        }
-        #endregion
-
-        #region IDataAcess<Employee> 成员
-
-        /// <summary>
-        /// Gets 一个数据库访问助手类
-        /// </summary>
-        /// <value>The acess helper.</value>
-        public IAcessHelper AcessHelper
-        {
-            get { return MsSqlHelper.GetMsSqlHelper(); }
-        }
-
-        /// <summary>
-        /// 实体对应的表名
-        /// </summary>
-        /// <value></value>
-        public string TableName
-        {
-            get { return "dbo.Employee"; }
-        }
-
-        /// <summary>
-        /// 实体对应的表中的主键字段名
-        /// </summary>
-        /// <value></value>
-        public string PrimaryKey
-        {
-            get { return "EmployeeId"; }
-        }
-
-        /// <summary>
-        /// 实体对应的表中的主键字段的数据类型。
-        /// </summary>
-        /// <value>The type of the primary key.</value>
-        public Type PrimaryKeyType
-        {
-            get { return typeof(Int32); }
-        }
-
         /// <summary>
         /// Gets 一个更新命令。
         /// </summary>
         /// <value>The update command.</value>
-        public String UpdateCommandText
+        protected virtual String UpdateCommandText
         {
             get
             {
@@ -137,7 +60,7 @@ namespace Runner.DAL.SQLServer
         /// Gets 一个插入命令。
         /// </summary>
         /// <value>The insert command.</value>
-        public String InsertCommandText
+        protected String InsertCommandText
         {
             get
             {
@@ -184,7 +107,7 @@ namespace Runner.DAL.SQLServer
         /// Gets 一个删除命令。
         /// </summary>
         /// <value>The delete command.</value>
-        public String DeleteCommandText
+        protected String DeleteCommandText
         {
             get
             {
@@ -193,6 +116,44 @@ namespace Runner.DAL.SQLServer
                               WHERE 
                                 [Id]=@Id";
             }
+        }
+
+        #region IDataAcess<Employee> 成员
+
+        /// <summary>
+        /// Gets 一个数据库访问助手类
+        /// </summary>
+        /// <value>The acess helper.</value>
+        public IAcessHelper AcessHelper
+        {
+            get { return MSSqlHelper.GetMsSqlHelper(); }
+        }
+
+        /// <summary>
+        /// 实体对应的表名
+        /// </summary>
+        /// <value></value>
+        public string TableName
+        {
+            get { return "dbo.Employee"; }
+        }
+
+        /// <summary>
+        /// 实体对应的表中的主键字段名
+        /// </summary>
+        /// <value></value>
+        public string PrimaryKey
+        {
+            get { return "EmployeeId"; }
+        }
+
+        /// <summary>
+        /// 实体对应的表中的主键字段的数据类型。
+        /// </summary>
+        /// <value>The type of the primary key.</value>
+        public Type PrimaryKeyType
+        {
+            get { return typeof(Int32); }
         }
 
         /// <summary>
@@ -290,6 +251,46 @@ namespace Runner.DAL.SQLServer
             return false;
         }
 
+        #endregion
+
+
+        #region Parameters
+        class Parameters
+        {
+            public static SqlParameter Id
+            {
+                get
+                {
+                    SqlParameter sp = new SqlParameter("@Id", DbType.String);
+                    sp.SourceColumn = "Id";
+                    return sp;
+                }
+            }
+            public static SqlParameter Guid
+            {
+                get { return new SqlParameter("@Guid", DbType.String); }
+            }
+            public static SqlParameter MemberName
+            {
+                get { return new SqlParameter("@MemberName", DbType.String); }
+            }
+            public static SqlParameter Password
+            {
+                get { return new SqlParameter("@Password", DbType.String); }
+            }
+            public static SqlParameter AppendDatetime
+            {
+                get { return new SqlParameter("@AppendDatetime", DbType.String); }
+            }
+            public static SqlParameter LoginDatetime
+            {
+                get { return new SqlParameter("@LoginDatetime", DbType.String); }
+            }
+            public static SqlParameter LoginCount
+            {
+                get { return new SqlParameter("@LoginCount", DbType.String); }
+            }
+        }
         #endregion
 
         #region ColumnNames

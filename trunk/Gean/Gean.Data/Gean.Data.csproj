@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="StoneType.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
@@ -91,7 +94,6 @@
     <Compile Include="_temp\Base\BaseEntity.cs" />
     <Compile Include="_temp\Base\PageHelper.cs" />
     <Compile Include="_temp\Base\PagerInfo.cs" />
-    <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs" />
     <Compile Include="ORM\Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

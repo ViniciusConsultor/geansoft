@@ -47,7 +47,7 @@ namespace Runner.DAL.Factory
                 string path = Path.Combine(_AssemblyPath, _AssemblyName + ".dll");
                 Debug.Assert(File.Exists(path), path);
                 string classname = GetClassName("Employee");
-                Assembly ass = Assembly.LoadFile(path);
+                Assembly ass = Assembly.LoadFrom(path);
                 IEmployeeDataAcess a = (IEmployeeDataAcess)(ass.CreateInstance(classname, true));
                 return a;
             }

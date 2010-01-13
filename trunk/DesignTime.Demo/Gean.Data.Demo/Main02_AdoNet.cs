@@ -68,7 +68,7 @@ namespace Gean.Data.Demo
                     FROM
                         dbo.Employees
                     ";
-            SqlDataReader reader = MsSqlHelper.GetMsSqlHelper(cn.ConnectionString).ExecuteReader(CommandType.Text, cmd);
+            SqlDataReader reader = MSSqlHelper.GetMsSqlHelper(cn.ConnectionString).ExecuteReader(CommandType.Text, cmd);
             while (reader.Read())
             {
                 Console.WriteLine(String.Format("{0}, {1}", reader[0], reader[1]));
