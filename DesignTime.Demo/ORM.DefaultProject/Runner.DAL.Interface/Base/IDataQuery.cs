@@ -13,5 +13,13 @@ namespace Runner.DAL
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         bool Query(IEntity entity);
+
+
+
+        //object Query4Object(string action, object target);
+        //void Query4List(string action, ref IList target, object queryparam);
+        //int Query4Page(string action, ref IList target, object queryparam, int pageid, int pagesize, string sort, string direct);
+        //int Query4Update(string action, object target);
+        //object Query4Count(string action, object target);
     }
 }

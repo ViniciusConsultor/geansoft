@@ -11,15 +11,15 @@ using System.Diagnostics;
 namespace Gean.Data
 {
     /// <summary>
-    /// 访问Microsoft Sql Server数据库的助手类。一般情况下都已挂在DataAcess的类型中，不必单独使用。
+    /// 访问Microsoft Sql Server数据库的助手类。一般情况下都已挂在DataAcess的类型中，不必单独使用该类型。
     /// </summary>
-    public class MsSqlHelper : IAcessHelper
+    public class MSSqlHelper : IAcessHelper
     {
         /// <summary>
         /// 私有化<see cref="MsSqlHelper"/>构造函数。
         /// </summary>
         /// <param name="sqlSb">数据库的连接字符串的生成器</param>
-        protected MsSqlHelper(SqlConnectionStringBuilder sqlSb)
+        protected MSSqlHelper(SqlConnectionStringBuilder sqlSb)
             : this(sqlSb.ConnectionString)
         {
         }
@@ -28,7 +28,7 @@ namespace Gean.Data
         /// 私有化<see cref="MsSqlHelper"/>构造函数。
         /// </summary>
         /// <param name="connectionString">数据库的连接字符串</param>
-        protected MsSqlHelper(string connectionString)
+        protected MSSqlHelper(string connectionString)
         {
             this.ConnectionString = connectionString;
             this.Connection = new SqlConnection(connectionString);
@@ -37,9 +37,9 @@ namespace Gean.Data
         }
 
         private static bool _isInit = false;
-        private static Dictionary<string, MsSqlHelper> _helpers = new Dictionary<string, MsSqlHelper>(5);
+        private static Dictionary<string, MSSqlHelper> _helpers = new Dictionary<string, MSSqlHelper>(5);
 
-        public static MsSqlHelper GetMsSqlHelper()
+        public static MSSqlHelper GetMsSqlHelper()
         {
             Debug.Assert(_helpers != null || _helpers.Count <= 0, "MsSqlHelper had NOT initialized!");
             foreach (var item in _helpers)
@@ -49,16 +49,16 @@ namespace Gean.Data
             return null;
         }
 
-        public static MsSqlHelper GetMsSqlHelper(string connectionString)
+        public static MSSqlHelper GetMsSqlHelper(string connectionString)
         {
             return GetMsSqlHelper(connectionString, 1);
         }
 
-        public static MsSqlHelper GetMsSqlHelper(string connectionString, int helperCount)
+        public static MSSqlHelper GetMsSqlHelper(string connectionString, int helperCount)
         {
             if (_helpers == null)
             {
-                _helpers = new Dictionary<string, MsSqlHelper>(helperCount * 2);
+                _helpers = new Dictionary<string, MSSqlHelper>(helperCount * 2);
             }
             if (_helpers.ContainsKey(connectionString))
             {
@@ -66,12 +66,16 @@ namespace Gean.Data
             }
             else
             {
-                return new MsSqlHelper(connectionString);
+                return new MSSqlHelper(connectionString);
             }
         }
 
         #region IAcessHelper 成员
 
+        /// <summary>
+        /// 获取当前的连接字符串
+        /// </summary>
+        /// <value>The connection string.</value>
         public string ConnectionString { get; protected set; }
 
         /// <summary>

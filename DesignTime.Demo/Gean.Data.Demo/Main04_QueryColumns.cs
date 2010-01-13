@@ -18,7 +18,7 @@ namespace Gean.Data.Demo
         private static void QueryColumns(string tableName)
         {
             SqlConnection conn = Main02_AdoNet.GetConnection();
-            MsSqlHelper helper = MsSqlHelper.GetMsSqlHelper(conn.ConnectionString);
+            MSSqlHelper helper = MSSqlHelper.GetMsSqlHelper(conn.ConnectionString);
             SqlParameter param = new SqlParameter("@TableName", tableName);
             SqlDataReader reader = helper.ExecuteReader(System.Data.CommandType.Text, Gean.Data.Resources.SQLString.GetColumnsByTable, param);
 
