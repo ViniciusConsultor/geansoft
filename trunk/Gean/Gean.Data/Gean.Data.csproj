@@ -44,10 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Catch\DataCache.cs" />
     <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StoneType.cs" />
+    <Compile Include="Enums\StoneType.cs" />
     <Compile Include="Exceptions\CommandException.cs" />
     <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\DataException.cs" />
@@ -75,32 +76,10 @@
     <Compile Include="SqlTextBuilder\SQLWhereTextBuilder.cs" />
     <Compile Include="ORM\DAL\Helper\IAcessHelper.cs" />
     <Compile Include="ORM\DAL\Helper\MsSqlHelper.cs" />
-    <Compile Include="_temp\Base\CommandExecutor\CommandExecutor.cs" />
-    <Compile Include="_temp\Base\CommandExecutor\ITableCommandExecutor.cs" />
-    <Compile Include="_temp\Base\CommandExecutor\IViewCommandExecutor.cs" />
-    <Compile Include="_temp\Base\Database\IDatabase\Database.cs" />
-    <Compile Include="_temp\Base\Database\IDatabase\DatabaseFactory.cs" />
-    <Compile Include="_temp\Base\Database\IDatabase\DatabaseType.cs" />
-    <Compile Include="_temp\Base\Database\IDatabase\IDatabase.cs" />
-    <Compile Include="_temp\Base\Database\OleDatabase.cs" />
-    <Compile Include="_temp\Base\Database\OracleDatabase.cs" />
-    <Compile Include="_temp\Base\Database\SqlServerDatabase.cs" />
     <Compile Include="Transaction\TransactionCleaner.cs" />
-    <Compile Include="_temp\AggregateParameter.cs" />
-    <Compile Include="_temp\DynamicQuery.cs" />
-    <Compile Include="Transaction\TransactionManager.cs" />
-    <Compile Include="_temp\WhereParameter.cs" />
     <Compile Include="ORM\DAL\Helper\OracleHelper.cs" />
-    <Compile Include="_temp\Base\BaseEntity.cs" />
-    <Compile Include="_temp\Base\PageHelper.cs" />
-    <Compile Include="_temp\Base\PagerInfo.cs" />
     <Compile Include="ORM\Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Gean.Data.cd" />
-    <None Include="_doc\sql.sql" />
-    <None Include="_doc\Sql_Connection_String .txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.resx">

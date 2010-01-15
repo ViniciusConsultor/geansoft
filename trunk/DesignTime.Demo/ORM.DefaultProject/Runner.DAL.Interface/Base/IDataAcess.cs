@@ -11,14 +11,8 @@ namespace Runner.DAL
     /// <summary>
     /// 数据访问层(DAL)的一些基本方法的接口
     /// </summary>
-    public interface IDataAcess<T> : IDataCreate, IDataQuery, IDataUpdate, IDataDelete where T : IEntity
+    public interface IDataAcess : IDataCreate, IDataQuery, IDataUpdate, IDataDelete
     {
-        /// <summary>
-        /// Gets 一个数据库访问助手类
-        /// </summary>
-        /// <value>The acess helper.</value>
-        IAcessHelper AcessHelper { get; }
-
         /// <summary>
         /// 实体对应的表名
         /// </summary>
@@ -35,16 +29,10 @@ namespace Runner.DAL
         /// <value>The type of the primary key.</value>
         Type PrimaryKeyType { get; }
 
-        /// <summary>
-        /// Gets 一组 SQL 命令和一个数据库连接的封装类型<see cref="DataAdapter"/>。
-        /// </summary>
-        /// <value>The data adapter.</value>
-        DataAdapter DataAdapter { get; }
+        //T DataReaderToEntity(IDataReader dr);
 
-        T DataReaderToEntity(IDataReader dr);
+        //ICollection<T> GetAll();
 
-        ICollection<T> GetAll();
-
-        T FindById(object id);
+        //T FindById(object id);
     }
 }

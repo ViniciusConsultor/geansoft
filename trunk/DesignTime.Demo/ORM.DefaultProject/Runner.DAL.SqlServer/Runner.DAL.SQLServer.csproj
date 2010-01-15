@@ -37,7 +37,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmployeeDataAcess.generation.cs" />
+    <Compile Include="EmployeeDataAcess.cs" />
+    <Compile Include="EmployeeDataAcess.generation.cs">
+      <DependentUpon>EmployeeDataAcess.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

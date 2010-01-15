@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml" />
@@ -67,6 +68,10 @@
     <ProjectReference Include="..\ORM.DefaultProject\Runner.DAL.Interface\Runner.DAL.Interface.csproj">
       <Project>{D91B3EAF-812D-46BD-AA01-2F1597141A72}</Project>
       <Name>Runner.DAL.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ORM.DefaultProject\Runner.Entity\Runner.Entity.csproj">
+      <Project>{D1590206-A0CD-4E47-93B6-5A23F29DD46E}</Project>
+      <Name>Runner.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
