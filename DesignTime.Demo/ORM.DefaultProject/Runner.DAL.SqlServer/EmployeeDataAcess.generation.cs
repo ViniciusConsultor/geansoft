@@ -15,7 +15,7 @@ namespace Runner.DAL.SQLServer
     /// <summary>
     /// 针对Employee表中的记录实体(<see cref="Employee"/>)的数据访问封装类型。
     /// </summary>
-    public class EmployeeDataAcess : IEmployeeDataAcess
+    public partial class EmployeeDataAcess : IEmployeeDataAcess
     {
         /// <summary>
         /// 构造函数。Initializes a new instance of the <see cref="EmployeeDataAcess"/> class.
@@ -23,6 +23,15 @@ namespace Runner.DAL.SQLServer
         public EmployeeDataAcess()
         {
             //在这里添加构造函数逻辑
+        }
+
+        /// <summary>
+        /// Gets 一个数据库访问助手类
+        /// </summary>
+        /// <value>The acess helper.</value>
+        protected virtual IAcessHelper AcessHelper
+        {
+            get { return MSSqlHelper.GetMsSqlHelper(); }
         }
 
         /// <summary>
@@ -60,7 +69,7 @@ namespace Runner.DAL.SQLServer
         /// Gets 一个插入命令。
         /// </summary>
         /// <value>The insert command.</value>
-        protected String InsertCommandText
+        protected virtual String InsertCommandText
         {
             get
             {
@@ -107,7 +116,7 @@ namespace Runner.DAL.SQLServer
         /// Gets 一个删除命令。
         /// </summary>
         /// <value>The delete command.</value>
-        protected String DeleteCommandText
+        protected virtual String DeleteCommandText
         {
             get
             {
@@ -118,16 +127,24 @@ namespace Runner.DAL.SQLServer
             }
         }
 
-        #region IDataAcess<Employee> 成员
-
         /// <summary>
-        /// Gets 一个数据库访问助手类
+        /// Gets 一组 SQL 命令和一个数据库连接的封装类型<see cref="DataAdapter"/>。
         /// </summary>
-        /// <value>The acess helper.</value>
-        public IAcessHelper AcessHelper
+        /// <value>The data adapter.</value>
+        protected virtual DataAdapter DataAdapter
         {
-            get { return MSSqlHelper.GetMsSqlHelper(); }
+            get
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.UpdateCommand = new SqlCommand(this.UpdateCommandText);
+                da.DeleteCommand = new SqlCommand(this.DeleteCommandText);
+                da.InsertCommand = new SqlCommand(this.InsertCommandText);
+                return da;
+            }
         }
+
+
+        #region IDataAcess<Employee> 成员
 
         /// <summary>
         /// 实体对应的表名
@@ -135,7 +152,7 @@ namespace Runner.DAL.SQLServer
         /// <value></value>
         public string TableName
         {
-            get { return "dbo.Employee"; }
+            get { return "Employee"; }
         }
 
         /// <summary>
@@ -154,22 +171,6 @@ namespace Runner.DAL.SQLServer
         public Type PrimaryKeyType
         {
             get { return typeof(Int32); }
-        }
-
-        /// <summary>
-        /// Gets 一组 SQL 命令和一个数据库连接的封装类型<see cref="DataAdapter"/>。
-        /// </summary>
-        /// <value>The data adapter.</value>
-        public DataAdapter DataAdapter
-        {
-            get
-            {
-                SqlDataAdapter da = new SqlDataAdapter();
-                da.UpdateCommand = new SqlCommand(this.UpdateCommandText);
-                da.DeleteCommand = new SqlCommand(this.DeleteCommandText);
-                da.InsertCommand = new SqlCommand(this.InsertCommandText);
-                return da;
-            }
         }
 
         public ICollection<Employee> GetAll()
@@ -252,7 +253,6 @@ namespace Runner.DAL.SQLServer
         }
 
         #endregion
-
 
         #region Parameters
         class Parameters
@@ -363,6 +363,5 @@ namespace Runner.DAL.SQLServer
         {
             return this.TableName + " Data Acess Type.";
         }
-
     }
 }

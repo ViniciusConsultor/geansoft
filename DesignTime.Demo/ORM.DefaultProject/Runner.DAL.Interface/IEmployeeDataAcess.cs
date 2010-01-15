@@ -5,7 +5,7 @@ using Runner.Entity;
 
 namespace Runner.DAL
 {
-    public interface IEmployeeDataAcess : IDataAcess<Employee>
+    public interface IEmployeeDataAcess : IDataAcess
     {
     }
 }

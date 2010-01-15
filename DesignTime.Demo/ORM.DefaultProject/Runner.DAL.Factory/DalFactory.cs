@@ -5,6 +5,8 @@ using Runner.DAL;
 using System.Reflection;
 using System.Diagnostics;
 using System.IO;
+using System.Configuration;
+using Gean.Data;
 
 namespace Runner.DAL.Factory
 {
@@ -16,6 +18,27 @@ namespace Runner.DAL.Factory
     /// </summary>
     public static class DalFactory
     {
+        private static readonly string AssemblyPath = ConfigurationManager.AppSettings["DataDAL"];
+
+        /// <summary>
+        /// 创建对象或从缓存获取
+        /// </summary>
+        public static object CreateObject(string AssemblyPath, string classNamespace)
+        {
+            object objType = DataCache.GetCache(classNamespace);//从缓存读取
+            if (objType == null)
+            {
+                try
+                {
+                    objType = Assembly.Load(AssemblyPath).CreateInstance(classNamespace);//反射创建
+                    DataCache.SetCache(classNamespace, objType);// 写入缓存
+                }
+                catch
+                { }
+            }
+            return objType;
+        }
+
         /// <summary>
         /// 类型的程序集所在路径
         /// </summary>
@@ -71,4 +94,6 @@ namespace Runner.DAL.Factory
         private const string DATAACESS = "DataAcess";
 
     }
+
+
 }

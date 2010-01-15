@@ -13,130 +13,27 @@ namespace Gean.Encrypt
     public class UtilityEncrypt
     {
         /// <summary>
-        /// 本框架设定的缺省密钥字符串，只读状态。
+        /// 本框架设定的缺省密钥字符串，只读状态。一般不建议使用。
         /// </summary>
         public static readonly string DefaultKey = "98$Mp6?W";
+
+        /// <summary>  
+        /// 自动生成一个密钥。
+        /// </summary>  
+        /// <returns>返回生成的密钥</returns>  
+        public static string GenerateKey()
+        {
+            // Create an instance of Symetric Algorithm. Key and IV is generated automatically.  
+            DESCryptoServiceProvider desCrypto = (DESCryptoServiceProvider)DESCryptoServiceProvider.Create();
+            // Use the Automatically generated key for Encryption.  
+            return ASCIIEncoding.ASCII.GetString(desCrypto.Key);
+        }
+
         /// <summary>
         /// 默认密钥向量
         /// </summary>
         private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
-        private static MD5 _MD5;
-
-        static UtilityEncrypt()
-        {
-            _MD5 = MD5.Create();
-        }
-
-
-        /// <summary>
-        /// 获得一个字符串的MD5值
-        /// </summary>
-        /// <param name="input">一个字符串</param>
-        /// <returns></returns>
-        public static string GetMd5String(string input)
-        {
-            byte[] data = _MD5.ComputeHash(Encoding.Default.GetBytes(input));
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sb.Append(data[i].ToString("x2"));
-            }
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// 得到一个指定的字符串的MD5值后，与提供的一个指定的MD5值进行比较
-        /// </summary>
-        /// <param name="input">指定的字符串</param>
-        /// <param name="hash">需进行比较的一个指定MD5值</param>
-        /// <returns></returns>
-        public static bool VerifyMd5String(string input, string hash)
-        {
-            string hashOfInput = GetMd5String(input);
-
-            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-            if (0 == comparer.Compare(hashOfInput, hash))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取用SHA256对一个指定的原始字符串进行加密后的字符串
-        /// </summary>
-        /// <param name="str">原始字符串</param>
-        /// <returns>SHA256结果</returns>
-        public static string GetSHA256String(string str)
-        {
-            byte[] SHA256Data = Encoding.UTF8.GetBytes(str);
-            SHA512Managed Sha256 = new SHA512Managed();
-            byte[] Result = Sha256.ComputeHash(SHA256Data);
-            return Convert.ToBase64String(Result);  //返回长度为44字节的字符串
-        }
-
-        /// <summary>
-        /// 获取用DES方法加密 [一个指定的待加密的字符串] 后的字符串
-        /// </summary>
-        /// <param name="encryptString">一个指定的待加密的字符串</param>
-        /// <param name="encryptKey">加密密钥,要求为8位</param>
-        /// <returns>加密成功返回加密后的字符串,失败返回源串</returns>
-        public static string EncodeDESString(string encryptString, string encryptKey)
-        {
-            encryptKey = UtilityString.GetSubString(encryptKey, 0, 8, "");
-            encryptKey = encryptKey.PadRight(8, ' ');
-            byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
-            byte[] rgbIV = Keys;
-            byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
-            DESCryptoServiceProvider dCSP = new DESCryptoServiceProvider();
-            MemoryStream mStream = new MemoryStream();
-            CryptoStream cStream = new CryptoStream(mStream, dCSP.CreateEncryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
-            cStream.Write(inputByteArray, 0, inputByteArray.Length);
-            cStream.FlushFinalBlock();
-            return Convert.ToBase64String(mStream.ToArray());
-        }
-
-        /// <summary>
-        /// DES解密字符串
-        /// </summary>
-        /// <param name="decryptString">待解密的字符串</param>
-        /// <param name="decryptKey">解密密钥,要求为8位,和加密密钥相同</param>
-        /// <returns>解密成功返回解密后的字符串,失败返源串</returns>
-        public static string DecodeDESString(string decryptString, string decryptKey)
-        {
-            try
-            {
-                decryptKey = UtilityString.GetSubString(decryptKey, 0, 8, "");
-                decryptKey = decryptKey.PadRight(8, ' ');
-                byte[] rgbKey = Encoding.UTF8.GetBytes(decryptKey);
-                byte[] rgbIV = Keys;
-                byte[] inputByteArray = Convert.FromBase64String(decryptString);
-                DESCryptoServiceProvider DCSP = new DESCryptoServiceProvider();
-
-                MemoryStream mStream = new MemoryStream();
-                CryptoStream cStream = new CryptoStream(mStream, DCSP.CreateDecryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
-                cStream.Write(inputByteArray, 0, inputByteArray.Length);
-                cStream.FlushFinalBlock();
-                return Encoding.UTF8.GetString(mStream.ToArray());
-            }
-            catch
-            {
-                return decryptString;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 对传入的字符串进行Hash运算，返回通过Hash算法加密过的字串。
-    /// 方法：此静态类提供MD5，SHA1，SHA256，SHA512等四种算法，加密字串的长度依次增大。
-    /// </summary>
-    public class HashEncrypt
-    {
         /// <summary>
         /// 本框架设定的缺省密钥字符串，只读状态。
         /// </summary>
@@ -209,86 +106,6 @@ namespace Gean.Encrypt
         }
 
         /// <summary>
-        /// 使用DES加密
-        /// </summary>
-        /// <param name="originalValue">待加密的字符串</param>
-        /// <param name="key">密钥(最大长度8)</param>
-        /// <returns>加密后的字符串</returns>
-        public static string DESEncrypt(string encryptedValue, string key)
-        {
-            return DESEncrypt(encryptedValue, key, key);
-        }
-
-        /// <summary>
-        /// 使用DES加密
-        /// </summary>
-        /// <param name="originalValue">待加密的字符串</param>
-        /// <param name="key">密钥(注意：长度8)</param>
-        /// <param name="vector">对称算法的初始化向量(注意：长度8)</param>
-        /// <returns>加密后的字符串</returns>
-        public static string DESEncrypt(string encryptedValue, string key, string vector)
-        {
-            key += _defaultKey;
-            vector += _defaultKey;
-            key = key.Substring(0, 8);
-            vector = vector.Substring(0, 8);
-
-            SymmetricAlgorithm sa = new DESCryptoServiceProvider();
-            sa.Key = StringToBytes(key);
-            sa.IV = StringToBytes(vector);
-
-            ICryptoTransform ct = sa.CreateEncryptor();//创建对称加密器对象
-            byte[] bytes = StringToBytes(encryptedValue);
-
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
-            cs.Write(bytes, 0, bytes.Length);
-            cs.FlushFinalBlock();
-            cs.Close();
-            return BytesToString(ms.ToArray());
-        }
-
-        /// <summary>
-        /// 使用DES解密
-        /// </summary>
-        /// <param name="decryptedValue">待解密的字符串</param>
-        /// <param name="key">密钥(注意：长度8)</param>
-        /// <param name="vector">对称算法的初始化向量(注意：长度8)</param>
-        /// <returns>解密后的字符串</returns>
-        public static string DESDecrypt(string decryptedValue, string key, string vector)
-        {
-            key += _defaultKey;
-            vector += _defaultKey;
-            key = key.Substring(0, 8);
-            vector = vector.Substring(0, 8);
-
-            SymmetricAlgorithm sa = new DESCryptoServiceProvider();
-            sa.Key = StringToBytes(key);
-            sa.IV = StringToBytes(vector);
-
-            ICryptoTransform ct = sa.CreateDecryptor();//创建对称解密器对象
-            byte[] bytes = StringToBytes(decryptedValue);
-
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
-            cs.Write(bytes, 0, bytes.Length);
-            cs.FlushFinalBlock();
-            cs.Close();
-            return BytesToString(ms.ToArray());
-        }
-
-        /// <summary>
-        /// 使用DES解密
-        /// </summary>
-        /// <param name="decryptedValue">待解密的字符串</param>
-        /// <param name="key">密钥(最大长度8)</param>
-        /// <returns>解密后的字符串</returns>
-        public static string DESDecrypt(string decryptedValue, string key)
-        {
-            return DESDecrypt(decryptedValue, key, key);
-        }
-
-        /// <summary>
         /// 将字节型数组转换成数字
         /// </summary>
         /// <param name="byteValue">The byte value.</param>
@@ -314,5 +131,148 @@ namespace Gean.Encrypt
             return asciiEncoding.GetBytes(strKey);
         }
 
+        /// <summary>
+        /// 获取用DES方法加密 [一个指定的待加密的字符串] 后的字符串
+        /// </summary>
+        /// <param name="encryptString">一个指定的待加密的字符串</param>
+        /// <param name="encryptKey">加密密钥,要求为8位</param>
+        /// <returns>加密成功返回加密后的字符串,失败返回源串</returns>
+        public static string DESEncrypt(string encryptString, string encryptKey)
+        {
+            encryptKey = UtilityString.GetSubString(encryptKey, 0, 8, "");
+            encryptKey = encryptKey.PadRight(8, ' ');
+            byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
+            byte[] rgbIV = Keys;
+            byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
+            DESCryptoServiceProvider dCSP = new DESCryptoServiceProvider();
+            MemoryStream mStream = new MemoryStream();
+            CryptoStream cStream = new CryptoStream(mStream, dCSP.CreateEncryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
+            cStream.Write(inputByteArray, 0, inputByteArray.Length);
+            cStream.FlushFinalBlock();
+            return Convert.ToBase64String(mStream.ToArray());
+        }
+
+        /// <summary>
+        /// DES解密字符串
+        /// </summary>
+        /// <param name="decryptString">待解密的字符串</param>
+        /// <param name="decryptKey">解密密钥,要求为8位,和加密密钥相同</param>
+        /// <returns>解密成功返回解密后的字符串,失败返源串</returns>
+        public static string DESDecrypt(string decryptString, string decryptKey)
+        {
+            try
+            {
+                decryptKey = UtilityString.GetSubString(decryptKey, 0, 8, "");
+                decryptKey = decryptKey.PadRight(8, ' ');
+                byte[] rgbKey = Encoding.UTF8.GetBytes(decryptKey);
+                byte[] rgbIV = Keys;
+                byte[] inputByteArray = Convert.FromBase64String(decryptString);
+                DESCryptoServiceProvider DCSP = new DESCryptoServiceProvider();
+
+                MemoryStream mStream = new MemoryStream();
+                CryptoStream cStream = new CryptoStream(mStream, DCSP.CreateDecryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
+                cStream.Write(inputByteArray, 0, inputByteArray.Length);
+                cStream.FlushFinalBlock();
+                return Encoding.UTF8.GetString(mStream.ToArray());
+            }
+            catch
+            {
+                return decryptString;
+            }
+        }
+
+        /// <summary>  
+        /// 加密文件  
+        /// </summary>  
+        /// <param name="sInputFilename">要加密的文件</param>  
+        /// <param name="sOutputFilename">加密后保存的文件</param>  
+        /// <param name="sKey">密钥</param>  
+        public static void EncryptFile(string inputFilename, string outputFilename, string key)
+        {
+            using (FileStream fsInput = new FileStream(inputFilename, FileMode.Open, FileAccess.Read))
+            {
+                byte[] bytearrayinput = new byte[fsInput.Length];
+                fsInput.Read(bytearrayinput, 0, bytearrayinput.Length);
+                fsInput.Close();
+
+                FileStream fsEncrypted = new FileStream(outputFilename,
+                   FileMode.OpenOrCreate,
+                   FileAccess.Write);
+                DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+
+                DES.Key = ASCIIEncoding.ASCII.GetBytes(key);
+                DES.IV = ASCIIEncoding.ASCII.GetBytes(key);
+
+                ICryptoTransform desencrypt = DES.CreateEncryptor();
+                CryptoStream cryptostream = new CryptoStream(fsEncrypted, desencrypt, CryptoStreamMode.Write);
+                cryptostream.Write(bytearrayinput, 0, bytearrayinput.Length);
+                cryptostream.Close();
+                fsEncrypted.Close();
+            }
+        }
+
+        /// <summary>  
+        ///   
+        /// </summary>  
+        /// <param name="sInputFilename">要解密的文件</param>  
+        /// <param name="sOutputFilename">解决后保存的文件</param>  
+        /// <param name="sKey">密钥</param>  
+        public static void DecryptFile(string inputFilename, string outputFilename, string key)
+        {
+            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            //A 64 bit key and IV is required for this provider.  
+            //Set secret key For DES algorithm.  
+            DES.Key = ASCIIEncoding.ASCII.GetBytes(key);
+            //Set initialization vector.  
+            DES.IV = ASCIIEncoding.ASCII.GetBytes(key);
+
+            //Create a file stream to read the encrypted file back.  
+            using (FileStream fsread = new FileStream(inputFilename, FileMode.Open, FileAccess.Read))
+            {
+                //Create a DES decryptor from the DES instance.  
+                ICryptoTransform desdecrypt = DES.CreateDecryptor();
+                //Create crypto stream set to read and do a  
+                //DES decryption transform on incoming bytes.  
+                CryptoStream cryptostreamDecr = new CryptoStream(fsread, desdecrypt, CryptoStreamMode.Read);
+                //Print the contents of the decrypted file.  
+                StreamWriter fsDecrypted = new StreamWriter(outputFilename);
+                fsDecrypted.Write(new StreamReader(cryptostreamDecr).ReadToEnd());
+                fsDecrypted.Flush();
+                fsDecrypted.Close();
+            }
+        }
+
+        /// <summary>  
+        ///   
+        /// </summary>  
+        /// <param name="sInputFilename">要解密的文件路径</param>  
+        /// <param name="sKey">密钥</param>  
+        /// <returns>返回内容</returns>  
+        public static string DecryptFile(string inputFilename, string key)
+        {
+            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            //A 64 bit key and IV is required for this provider.  
+            //Set secret key For DES algorithm.  
+            DES.Key = ASCIIEncoding.ASCII.GetBytes(key);
+            //Set initialization vector.  
+            DES.IV = ASCIIEncoding.ASCII.GetBytes(key);
+
+            //Create a file stream to read the encrypted file back.  
+            using (FileStream fsread = new FileStream(inputFilename, FileMode.Open, FileAccess.Read))
+            {
+                byte[] byt = new byte[fsread.Length];
+                fsread.Read(byt, 0, byt.Length);
+                fsread.Flush();
+                fsread.Close();
+                //Create a DES decryptor from the DES instance.  
+                ICryptoTransform desdecrypt = DES.CreateDecryptor();
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cryptostreamDecr = new CryptoStream(ms, desdecrypt, CryptoStreamMode.Write);
+                cryptostreamDecr.Write(byt, 0, byt.Length);
+                cryptostreamDecr.FlushFinalBlock();
+                cryptostreamDecr.Close();
+                return Encoding.UTF8.GetString(ms.ToArray()).Trim();
+            }
+        }
     }
 }
