@@ -1,4 +1,5 @@
 ﻿using Gean.Data;
+using System.Collections;
 namespace Runner.DAL
 {
     /// <summary>
@@ -12,6 +13,6 @@ namespace Runner.DAL
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        bool Create(IEntity entity);
+        bool Create(IDictionary entity);
     }
 }

@@ -143,6 +143,200 @@ namespace Runner.DAL.SQLServer
             }
         }
 
+        #region Parameters
+        class Parameters
+        {
+            public static SqlParameter Id
+            {
+                get
+                {
+                    SqlParameter sp = new SqlParameter("@Id", DbType.String);
+                    sp.SourceColumn = "Id";
+                    return sp;
+                }
+            }
+            public static SqlParameter Guid
+            {
+                get { return new SqlParameter("@Guid", DbType.String); }
+            }
+            public static SqlParameter MemberName
+            {
+                get { return new SqlParameter("@MemberName", DbType.String); }
+            }
+            public static SqlParameter Password
+            {
+                get { return new SqlParameter("@Password", DbType.String); }
+            }
+            public static SqlParameter AppendDatetime
+            {
+                get { return new SqlParameter("@AppendDatetime", DbType.String); }
+            }
+            public static SqlParameter LoginDatetime
+            {
+                get { return new SqlParameter("@LoginDatetime", DbType.String); }
+            }
+            public static SqlParameter LoginCount
+            {
+                get { return new SqlParameter("@LoginCount", DbType.String); }
+            }
+        }
+        #endregion
+
+        #region ColumnNames
+        public class ColumnNames
+        {
+            public const string Id = "Id";
+            public const string Guid = "Guid";
+            public const string MemberName = "MemberName";
+            public const string Password = "Password";
+            public const string AppendDatetime = "AppendDatetime";
+            public const string LoginDatetime = "LoginDatetime";
+            public const string LoginCount = "LoginCount";
+
+            static public string ToPropertyName(string columnName)
+            {
+                if (ht == null)
+                {
+                    ht = new Hashtable();
+
+                    ht[Id] = EmployeeDataAcess.PropertyNames.Id;
+                    ht[Guid] = EmployeeDataAcess.PropertyNames.Guid;
+                    ht[MemberName] = EmployeeDataAcess.PropertyNames.MemberName;
+                    ht[Password] = EmployeeDataAcess.PropertyNames.Password;
+                    ht[AppendDatetime] = EmployeeDataAcess.PropertyNames.AppendDatetime;
+                    ht[LoginDatetime] = EmployeeDataAcess.PropertyNames.LoginDatetime;
+                    ht[LoginCount] = EmployeeDataAcess.PropertyNames.LoginCount;
+
+                }
+                return (string)ht[columnName];
+            }
+
+            static private Hashtable ht = null;
+        }
+        #endregion
+
+        #region PropertyNames
+        public class PropertyNames
+        {
+            public const string Id = "Id";
+            public const string Guid = "Guid";
+            public const string MemberName = "MemberName";
+            public const string Password = "Password";
+            public const string AppendDatetime = "AppendDatetime";
+            public const string LoginDatetime = "LoginDatetime";
+            public const string LoginCount = "LoginCount";
+
+            static public string ToColumnName(string propertyName)
+            {
+                if (ht == null)
+                {
+                    ht = new Hashtable();
+
+                    ht[Id] = EmployeeDataAcess.ColumnNames.Id;
+                    ht[Guid] = EmployeeDataAcess.ColumnNames.Guid;
+                    ht[MemberName] = EmployeeDataAcess.ColumnNames.MemberName;
+                    ht[Password] = EmployeeDataAcess.ColumnNames.Password;
+                    ht[AppendDatetime] = EmployeeDataAcess.ColumnNames.AppendDatetime;
+                    ht[LoginDatetime] = EmployeeDataAcess.ColumnNames.LoginDatetime;
+                    ht[LoginCount] = EmployeeDataAcess.ColumnNames.LoginCount;
+
+                }
+                return (string)ht[propertyName];
+            }
+
+            static private Hashtable ht = null;
+        }
+        #endregion
+
+        public override string ToString()
+        {
+            return this.TableName + " Data Acess Type.";
+        }
+
+        #region IDataAcess 成员
+
+        public string TableName
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string PrimaryKey
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public Type PrimaryKeyType
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
+        #region IDataCreate 成员
+
+        public bool Create(IDictionary entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IDataQuery 成员
+
+        public bool Exists(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Query(IDictionary pairs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Query(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IDataUpdate 成员
+
+        public bool Update(IDictionary entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(object id, IDictionary entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IDataDelete 成员
+
+        public bool Delete(object id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(IDictionary pairs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+}
+
+
+/*
 
         #region IDataAcess<Employee> 成员
 
@@ -254,114 +448,4 @@ namespace Runner.DAL.SQLServer
 
         #endregion
 
-        #region Parameters
-        class Parameters
-        {
-            public static SqlParameter Id
-            {
-                get
-                {
-                    SqlParameter sp = new SqlParameter("@Id", DbType.String);
-                    sp.SourceColumn = "Id";
-                    return sp;
-                }
-            }
-            public static SqlParameter Guid
-            {
-                get { return new SqlParameter("@Guid", DbType.String); }
-            }
-            public static SqlParameter MemberName
-            {
-                get { return new SqlParameter("@MemberName", DbType.String); }
-            }
-            public static SqlParameter Password
-            {
-                get { return new SqlParameter("@Password", DbType.String); }
-            }
-            public static SqlParameter AppendDatetime
-            {
-                get { return new SqlParameter("@AppendDatetime", DbType.String); }
-            }
-            public static SqlParameter LoginDatetime
-            {
-                get { return new SqlParameter("@LoginDatetime", DbType.String); }
-            }
-            public static SqlParameter LoginCount
-            {
-                get { return new SqlParameter("@LoginCount", DbType.String); }
-            }
-        }
-        #endregion
-
-        #region ColumnNames
-        public class ColumnNames
-        {
-            public const string Id = "Id";
-            public const string Guid = "Guid";
-            public const string MemberName = "MemberName";
-            public const string Password = "Password";
-            public const string AppendDatetime = "AppendDatetime";
-            public const string LoginDatetime = "LoginDatetime";
-            public const string LoginCount = "LoginCount";
-
-            static public string ToPropertyName(string columnName)
-            {
-                if (ht == null)
-                {
-                    ht = new Hashtable();
-
-                    ht[Id] = EmployeeDataAcess.PropertyNames.Id;
-                    ht[Guid] = EmployeeDataAcess.PropertyNames.Guid;
-                    ht[MemberName] = EmployeeDataAcess.PropertyNames.MemberName;
-                    ht[Password] = EmployeeDataAcess.PropertyNames.Password;
-                    ht[AppendDatetime] = EmployeeDataAcess.PropertyNames.AppendDatetime;
-                    ht[LoginDatetime] = EmployeeDataAcess.PropertyNames.LoginDatetime;
-                    ht[LoginCount] = EmployeeDataAcess.PropertyNames.LoginCount;
-
-                }
-                return (string)ht[columnName];
-            }
-
-            static private Hashtable ht = null;
-        }
-        #endregion
-
-        #region PropertyNames
-        public class PropertyNames
-        {
-            public const string Id = "Id";
-            public const string Guid = "Guid";
-            public const string MemberName = "MemberName";
-            public const string Password = "Password";
-            public const string AppendDatetime = "AppendDatetime";
-            public const string LoginDatetime = "LoginDatetime";
-            public const string LoginCount = "LoginCount";
-
-            static public string ToColumnName(string propertyName)
-            {
-                if (ht == null)
-                {
-                    ht = new Hashtable();
-
-                    ht[Id] = EmployeeDataAcess.ColumnNames.Id;
-                    ht[Guid] = EmployeeDataAcess.ColumnNames.Guid;
-                    ht[MemberName] = EmployeeDataAcess.ColumnNames.MemberName;
-                    ht[Password] = EmployeeDataAcess.ColumnNames.Password;
-                    ht[AppendDatetime] = EmployeeDataAcess.ColumnNames.AppendDatetime;
-                    ht[LoginDatetime] = EmployeeDataAcess.ColumnNames.LoginDatetime;
-                    ht[LoginCount] = EmployeeDataAcess.ColumnNames.LoginCount;
-
-                }
-                return (string)ht[propertyName];
-            }
-
-            static private Hashtable ht = null;
-        }
-        #endregion
-
-        public override string ToString()
-        {
-            return this.TableName + " Data Acess Type.";
-        }
-    }
-}
+*/

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Data;
+using System.Collections;
 
 namespace Runner.DAL
 {
@@ -16,6 +17,9 @@ namespace Runner.DAL
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        bool Update(IEntity entity);
+        bool Update(IDictionary entity);
+
+        bool Update(object id, IDictionary entity);
+
     }
 }
