@@ -60,6 +60,7 @@
     <Compile Include="Interface\Converting\Converting.cs" />
     <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\Converting\IConverting.cs" />
+    <Compile Include="Interface\IJson.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
     <Compile Include="Interface\Tree,Item\IItem.cs" />
