@@ -32,6 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json.Net20, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Gean.OpenSource\Json.net.v35r6\Bin\DotNet20\Newtonsoft.Json.Net20.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -50,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Gean\Gean.Json2\Gean.Json2.csproj">
+      <Project>{9D29914F-FD46-41FE-BF0F-5551F97EA801}</Project>
+      <Name>Gean.Json2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Gean\Gean.Json3\Gean.Json3.csproj">
       <Project>{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}</Project>
       <Name>Gean.Json3</Name>

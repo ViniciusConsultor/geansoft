@@ -10,12 +10,12 @@ namespace Gean.Json2
 
         public string SerializeObject(object obj)
         {
-            throw new NotImplementedException();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
         }
 
         public T DeserializeObject<T>(string jsonInput)
         {
-            throw new NotImplementedException();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonInput);
         }
 
         #endregion

@@ -31,8 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Net20, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Gean.OpenSource\Json.net.v35r6\Bin\DotNet20\Newtonsoft.Json.Net20.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Json.cs" />
@@ -43,6 +46,9 @@
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LitJson.rar" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

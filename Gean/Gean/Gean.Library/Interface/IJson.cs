@@ -10,16 +10,17 @@ namespace Gean
     public interface IJson
     {
         /// <summary>
-        /// Serializes the object.
+        /// 序列化一个指定的对象
         /// </summary>
-        /// <param name="obj">The obj.</param>
+        /// <param name="obj">一个指定的对象.</param>
+        /// <returns>以 JSON（JavaScript 对象表示法）格式表示的序列化后的字符串</returns>
         string SerializeObject(object obj);
         /// <summary>
-        /// Deserializes the object.
+        /// 以 JSON（JavaScript 对象表示法）格式读取指定的字符串，并返回反序列化的对象。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="jsonInput">The json input.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">将返回的反序列化的对象类型</typeparam>
+        /// <param name="jsonInput">以 JSON（JavaScript 对象表示法）格式表示的字符串.</param>
+        /// <returns>反序列化的对象</returns>
         T DeserializeObject<T>(string jsonInput);
     }
 }
