@@ -1,13 +1,13 @@
 using System;
 using System.Text;
 
-using Newtonsoft.Json;
 using Gean.Data;
+using Gean;
 
 namespace Runner.Entity
 {
     [Serializable]
-    public partial class Employee : IEntity
+    public partial class Employee : IEntity, IJson
     {
         public int      EmployeeID          { get; set; }
         public string   LastName            { get; set; }
@@ -28,7 +28,6 @@ namespace Runner.Entity
         public int      ReportsTo           { get; set; }
         public string   PhotoPath           { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public object PrimaryKey { get { return this.EmployeeID; } }
 
         public override bool Equals(object obj)
@@ -87,11 +86,19 @@ namespace Runner.Entity
             return sb.ToString();
         }
 
-        
-        //public string ToJson()
-        //{
-        //    return JsonConvert.SerializeObject(this);
-        //}
+        #region IJson ≥…‘±
+
+        public string SerializeObject(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Employee DeserializeObject<Employee>(string jsonInput)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
 
