@@ -1,4 +1,10 @@
 ﻿using Gean.Data;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System;
+
 namespace Runner.DAL
 {
     /// <summary>
@@ -8,18 +14,27 @@ namespace Runner.DAL
     public interface IDataQuery
     {
         /// <summary>
-        /// 查询指定的实体。
+        /// 查询指定的ID(主键)的目标记录是否存在
         /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns></returns>
-        bool Query(IEntity entity);
+        /// <param name="id">指定的ID</param>
+        /// <returns>目标记录存在，返回<c>True</c>,否则返回<c>False</c></returns>
+        bool Exists(object id);
 
+        /// <summary>
+        /// 根据指定的条件集合查询目标记录是否存在
+        /// </summary>
+        /// <param name="pairs">指定的条件集合.</param>
+        /// <returns>目标记录存在，返回<c>True</c>,否则返回<c>False</c></returns>
+        bool Query(IDictionary pairs);
 
+        /// <summary>
+        /// 根据指定的条件键值查询（单一条件查询）
+        /// </summary>
+        /// <param name="key">指定的条件.</param>
+        /// <param name="value">指定的条件的值.</param>
+        /// <returns>目标记录存在，返回<c>True</c>,否则返回<c>False</c></returns>
+        bool Query(string key, object value);
 
-        //object Query4Object(string action, object target);
-        //void Query4List(string action, ref IList target, object queryparam);
-        //int Query4Page(string action, ref IList target, object queryparam, int pageid, int pagesize, string sort, string direct);
-        //int Query4Update(string action, object target);
-        //object Query4Count(string action, object target);
     }
+
 }

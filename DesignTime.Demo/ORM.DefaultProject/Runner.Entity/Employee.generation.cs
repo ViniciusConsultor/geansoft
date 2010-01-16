@@ -1,9 +1,12 @@
 using System;
 using System.Text;
+
+using Newtonsoft.Json;
 using Gean.Data;
 
 namespace Runner.Entity
 {
+    [Serializable]
     public partial class Employee : IEntity
     {
         public int      EmployeeID          { get; set; }
@@ -25,11 +28,12 @@ namespace Runner.Entity
         public int      ReportsTo           { get; set; }
         public string   PhotoPath           { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         public object PrimaryKey { get { return this.EmployeeID; } }
 
         public override bool Equals(object obj)
         {
-            return this.PrimaryKey.Equals(((Employee)obj).PrimaryKey);
+            return this.PrimaryKey.Equals(obj);
         }
 
         public override int GetHashCode()
@@ -82,6 +86,12 @@ namespace Runner.Entity
             sb.AppendLine("PhotoPath      : ").Append(PhotoPath);
             return sb.ToString();
         }
+
+        
+        //public string ToJson()
+        //{
+        //    return JsonConvert.SerializeObject(this);
+        //}
     }
 }
 

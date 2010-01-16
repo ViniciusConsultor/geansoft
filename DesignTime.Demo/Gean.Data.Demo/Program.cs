@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using Gean.Data.Resources;
 using System.Data.SqlTypes;
+using System.Xml;
 
 namespace Gean.Data.Demo
 {
@@ -13,12 +14,13 @@ namespace Gean.Data.Demo
     {
         static void Main(string[] args)
         {
-            Main01_SqlConnectionStringBuilder.Do();
+            //Main01_SqlConnectionStringBuilder.Do();
             //Main02_AdoNet.Do();
             //Main03_SQLTextBuilder.Do();
             Main05_ORM.Do();
 
             Console.ReadKey();
+
         }
 
 

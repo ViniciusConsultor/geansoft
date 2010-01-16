@@ -29,10 +29,5 @@ namespace Runner.DAL
         /// <value>The type of the primary key.</value>
         Type PrimaryKeyType { get; }
 
-        //T DataReaderToEntity(IDataReader dr);
-
-        //ICollection<T> GetAll();
-
-        //T FindById(object id);
     }
 }
