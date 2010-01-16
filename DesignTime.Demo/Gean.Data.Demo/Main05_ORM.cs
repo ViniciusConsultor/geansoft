@@ -5,7 +5,7 @@ using Runner.DAL;
 using Runner.DAL.Factory;
 using Runner.Entity;
 using System.Data;
-using Newtonsoft.Json;
+using Gean.Json2;
 
 namespace Gean.Data.Demo
 {
@@ -39,8 +39,8 @@ namespace Gean.Data.Demo
             ee.TitleOfCourtesy = "TitleOfCourtesy";
 
 
-
-            Console.WriteLine(JsonConvert.SerializeObject(ee));
+            Json j = new Json();
+            Console.WriteLine(j.SerializeObject(ee));
             
 
             Console.WriteLine(acess.ToString());
