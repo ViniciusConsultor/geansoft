@@ -6,7 +6,9 @@ namespace Gean
 {
     /// <summary>
     /// 由本框架定义思想构建的ID生成器。本生成器主要思想是将当前时间中的年月日时分替换成一个在当年不可重复的4位（大写字母与数字）字符串标识，这样相对存储长格式时间字符串以及GUID方法来讲，可以大大减少存储空间。
-    /// * 建议不要直接使用此类，而通过继承该类，重写ID中各部份输出规则后再使用。
+    /// * 本类可以直接使用。但建议不要直接使用此类，而通过继承该类，重写ID中各部份输出规则后再使用。
+    /// * 本类线程是安全的。
+    /// * 2010-01-18 11:36:29
     /// 
     /// 经比较，ID生成效率大约为如下所示：
     /// Gean.Data的Id生成器生成500万个ID需要时间（毫秒）： 26090，每秒生成：191000
@@ -59,20 +61,21 @@ namespace Gean
         }
 
         /// <summary>
-        /// 获取一个连接符。默认DEBUG状态输出 '-'，Release时输出为空。可在子类中重写输出。
+        /// 获取一个连接符。默认DEBUG状态输出为空，Release时输出为空。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetSeperator()
         {
-            return "-";
+            return "";
         }
+
         /// <summary>
         /// 获得一个用户标志符。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetUserFlag()
         {
-            return "";
+            return "UF";
         }
         /// <summary>
         /// 获得一个序列名。可在子类中重写输出。
@@ -80,7 +83,7 @@ namespace Gean
         /// <returns></returns>
         protected virtual string GetSequenceName()
         {
-            return "USER";
+            return "";
         }
         /// <summary>
         /// 获得一个当前年份。可在子类中重写输出。
@@ -88,7 +91,7 @@ namespace Gean
         /// <returns></returns>
         protected virtual string GetYear()
         {
-            return DateTime.Now.Year.ToString();
+            return DateTime.Now.Year.ToString().Substring(2);
         }
         /// <summary>
         /// 获得一个时间标志符。可在子类中重写输出。
@@ -109,19 +112,23 @@ namespace Gean
         }
         /// <summary>
         /// 获得一个累计数，以消除最小1秒为单位时出现重复的可能。可在子类中重写输出。
+        /// <code>
+        /// int n = 4; //希望仅出现4位计数标志
+        /// if (_counter &gt; GetMaxCount(n) - 1)
+        ///     _counter++;
+        /// else
+        ///     _counter = 1;
+        /// return Convert.ToString(_counter).PadLeft(n, '0');
+        /// </code>
         /// </summary>
         /// <returns></returns>
         protected virtual string GetCount()
         {
-            int n = 4;//希望仅出现4位计数标志
+            int n = 4; //希望仅出现4位计数标志
             if (_counter < GetMaxCount(n) - 1)
-            {
                 _counter++;
-            }
             else
-            {
                 _counter = 1;
-            }
             return Convert.ToString(_counter).PadLeft(n, '0');
         }
 

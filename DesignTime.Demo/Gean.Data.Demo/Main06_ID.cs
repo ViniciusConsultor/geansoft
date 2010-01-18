@@ -9,17 +9,64 @@ namespace Gean.Data.Demo
 {
     class Main06_ID
     {
+        private static IIDGenerator idg = new IDGenerator();
+
         public static void DoTest()
         {
-            IIDGenerator idg = new IDGenerator();
-            
+            System.Timers.Timer timer1 = new System.Timers.Timer();
+            timer1.Start();
+            timer1.Interval = 11000;
+            timer1.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer2 = new System.Timers.Timer();
+            timer2.Start();
+            timer2.Interval = 22000;
+            timer2.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer3 = new System.Timers.Timer();
+            timer3.Start();
+            timer3.Interval = 33000;
+            timer3.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer4 = new System.Timers.Timer();
+            timer4.Start();
+            timer4.Interval = 44000;
+            timer4.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer5 = new System.Timers.Timer();
+            timer5.Start();
+            timer5.Interval = 5500;
+            timer5.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer6 = new System.Timers.Timer();
+            timer6.Start();
+            timer6.Interval = 6600;
+            timer6.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer7 = new System.Timers.Timer();
+            timer7.Start();
+            timer7.Interval = 7700;
+            timer7.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer8 = new System.Timers.Timer();
+            timer8.Start();
+            timer8.Interval = 8800;
+            timer8.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+            System.Timers.Timer timer9 = new System.Timers.Timer();
+            timer9.Start();
+            timer9.Interval = 9900;
+            timer9.Elapsed += new System.Timers.ElapsedEventHandler(CreateId);
+
+        }
+
+        private static void CreateId(object sender, System.Timers.ElapsedEventArgs e)
+        {
             while (true)
             {
                 string id = idg.Generate();
                 Console.WriteLine(id);
-                //Thread.Sleep(150);
             }
-        
         }
 
         public static void DoTimeTest()
