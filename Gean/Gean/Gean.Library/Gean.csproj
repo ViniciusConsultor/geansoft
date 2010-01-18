@@ -78,6 +78,8 @@
     </Compile>
     <Compile Include="Utility\File\TextFileEncoding.cs" />
     <Compile Include="Utility\Math\BigInteger.cs" />
+    <Compile Include="Utility\Math\Combinations.cs" />
+    <Compile Include="Utility\Math\Permutations.cs" />
     <Compile Include="Utility\Math\UtilityMath.cs" />
     <Compile Include="Utility\UtilityDrawing.cs" />
     <Compile Include="Utility\UtilityEnums.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="Wrapper\Checker.cs" />
     <Compile Include="Wrapper\Chinese\ChineseSpellRandom.cs" />
     <Compile Include="Wrapper\Chinese\ChineseRmb.cs" />
+    <Compile Include="Wrapper\IDGenerator.cs" />
+    <Compile Include="Interface\IIDGenerator.cs" />
     <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
