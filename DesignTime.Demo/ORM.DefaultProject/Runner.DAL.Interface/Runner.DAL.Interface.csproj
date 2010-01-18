@@ -36,7 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\IDataAcess.cs" />
+    <Compile Include="Base\IDataCommand.cs" />
     <Compile Include="Base\IDataCreate.cs" />
     <Compile Include="Base\IDataDelete.cs" />
     <Compile Include="Base\IDataQuery.cs" />
@@ -53,6 +53,9 @@
       <Project>{D1590206-A0CD-4E47-93B6-5A23F29DD46E}</Project>
       <Name>Runner.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

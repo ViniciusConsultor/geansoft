@@ -30,15 +30,33 @@ namespace Gean
             Random = new Random(unchecked((int)DateTime.Now.Ticks));
         }
 
+
         /// <summary>
-        /// 获取一个随机整数。
+        /// 返回非负随机数。
         /// </summary>
-        /// <param name="minValue">随机整数的最小值</param>
-        /// <param name="maxValue">随机整数的最大值</param>
-        /// <returns></returns>
-        public int GetInt(int minValue, int maxValue)
+        /// <returns>返回大于等于零且小于 System.Int32.MaxValue 的 32 位带符号整数。</returns>
+        public int Next()
         {
-            return this.GetInts(1, minValue, maxValue)[0];
+            return Random.Next();
+        }
+        /// <summary>
+        /// 返回一个小于所指定最大值的非负随机数。
+        /// </summary>
+        /// <param name="maxValue">要生成的随机数的上界（随机数不能取该上界值）。maxValue 必须大于等于零。</param>
+        /// <returns>大于等于零且小于 maxValue 的 32 位带符号整数，即：返回值的范围通常包括零但不包括 maxValue。不过，如果 maxValue 等于零，则返回maxValue。</returns>
+        public int Next(int maxValue)
+        {
+            return Random.Next(maxValue);
+        }
+        /// <summary>
+        /// 返回一个指定范围内的随机数。
+        /// </summary>
+        /// <param name="minValue">返回的随机数的下界（随机数可取该下界值）。</param>
+        /// <param name="maxValue">返回的随机数的上界（随机数不能取该上界值）。maxValue 必须大于等于 minValue。</param>
+        /// <returns>一个大于等于 minValue 且小于 maxValue 的 32 位带符号整数，即：返回的值范围包括 minValue 但不包括 maxValue。如果minValue 等于 maxValue，则返回 minValue。</returns>
+        public int Next(int minValue, int maxValue)
+        {
+            return Random.Next(minValue, maxValue);
         }
 
         /// <summary>
