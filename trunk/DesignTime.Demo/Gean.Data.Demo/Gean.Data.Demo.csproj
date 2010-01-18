@@ -51,6 +51,7 @@
     <Compile Include="Main03_SQLTextBuilder.cs" />
     <Compile Include="Main04_QueryColumns.cs" />
     <Compile Include="Main05_ORM.cs" />
+    <Compile Include="Main06_ID.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main01_SqlConnectionStringBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,134 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Net;
+using Gean.Math;
 
 namespace Gean.Data.Demo
 {
-    public class IDGenerator
-    {
-        private static Int32 _counter = 0;
-        private static string[] _timeFlag;
 
-        static IDGenerator()
-        {
-            _timeFlag = new string[527040];
-            for (int i = 0; i < _timeFlag.Length; i++)
-            {
-                _timeFlag[i] = "KKKK";
-            }
-        }
-
-        private static void FillTimeFLag()
-        {
-            //string srcAllChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            //int len;
-            //if (len > srcAllChar.Length) { return false; }
-            //try
-            //{
-            //    Char[] chr = srcAllChar.ToCharArray();
-
-            //    File.WriteAllText(@"e:\My Desktop\file0.txt", "", Encoding.Default);
-
-            //    for (int i = 0; i < len; i++) // 处理 i个字符长度的
-            //    {
-            //        StreamReader sr = new StreamReader(@"e:\My Desktop\file" + i + ".txt", Encoding.Default);
-            //        StreamWriter sw = new StreamWriter(@"e:\My Desktop\file" + (i + 1) + ".txt", false, Encoding.Default);
-            //        string str = "";
-            //        while (true)
-            //        {
-            //            str = sr.ReadLine();
-            //            if (str == null && i != 0)
-            //            {
-            //                break;
-            //            }
-            //            if (i == 0)
-            //            {
-            //                str = "";
-            //            }
-            //            for (int j = 0; j < chr.Length; j++)
-            //            {
-            //                if (str.IndexOf(chr[j]) == -1)   //保证不重复
-            //                {
-            //                    sw.WriteLine(str + chr[j].ToString());
-            //                }
-            //            }
-            //            if (i == 0) { break; }
-            //        }
-            //        sr.Close();
-            //        sw.Close();
-            //    }
-            //    File.Delete(@"e:\My Desktop\file0.txt");
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //return true;
-        }
-
-
-        protected virtual string GetSeperator()
-        {
-            return "";
-        }
-        protected virtual string GetUserFlag()
-        {
-            return "o";
-        }
-        protected virtual string GetSequenceName()
-        {
-            return "";
-        }
-        protected virtual string GetDateTimeFlag()
-        {
-            int time = DateTime.Now.DayOfYear * DateTime.Now.Hour * DateTime.Now.Minute;
-            return _timeFlag[time];
-        }
-        protected virtual string GetSecond()
-        {
-            return Convert.ToString(DateTime.Now.Second);
-        }
-        protected Int32 GetCount()
-        {
-            int n = 2;//希望仅出现4位计数标志
-            if (_counter < GetMaxCount(n) - 1)
-            {
-                _counter++;
-            }
-            else
-            {
-                _counter = 1;
-            }
-            return _counter;
-        }
-
-        public string Generate()
-        {
-            return (new StringBuilder())
-                .Append(GetUserFlag())
-                .Append(GetSeperator())
-                .Append(GetSequenceName())
-                .Append(GetSeperator())
-                .Append(GetDateTimeFlag())
-                .Append(GetSeperator())
-                .Append(GetSecond())
-                .Append(GetSeperator())
-                .Append(GetCount())
-                .ToString();
-        }
-
-        private int GetMaxCount(int n)
-        {
-            int max = 1;
-            for (int i = 0; i < n; i++)
-            {
-                max *= 10;
-            }
-            return max;
-        }
-    }
-
-
+    /// <summary>
+    /// 提取自Hibernate。经测试：生成生成500万个ID需要时间（毫秒）：60331，每秒生成：82000
+    /// </summary>
     public class UUIDGenerator
     {
         private static readonly int _IP;
