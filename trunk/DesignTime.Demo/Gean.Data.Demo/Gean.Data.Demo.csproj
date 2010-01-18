@@ -54,6 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Main01_SqlConnectionStringBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UUIDGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Gean\Gean.Data\Gean.Data.csproj">
@@ -76,10 +77,17 @@
       <Project>{D91B3EAF-812D-46BD-AA01-2F1597141A72}</Project>
       <Name>Runner.DAL.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ORM.DefaultProject\Runner.DAL.SqlServer\Runner.DAL.SQLServer.csproj">
+      <Project>{03922E8B-36F9-4B68-8BA3-F734E997062A}</Project>
+      <Name>Runner.DAL.SQLServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ORM.DefaultProject\Runner.Entity\Runner.Entity.csproj">
       <Project>{D1590206-A0CD-4E47-93B6-5A23F29DD46E}</Project>
       <Name>Runner.Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ORMClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQLite.Data\" />
