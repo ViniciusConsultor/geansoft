@@ -15,6 +15,7 @@ namespace Gean
         /// <param name="obj">一个指定的对象.</param>
         /// <returns>以 JSON（JavaScript 对象表示法）格式表示的序列化后的字符串</returns>
         string SerializeObject(object obj);
+
         /// <summary>
         /// 以 JSON（JavaScript 对象表示法）格式读取指定的字符串，并返回反序列化的对象。
         /// </summary>

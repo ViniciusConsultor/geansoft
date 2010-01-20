@@ -10,6 +10,41 @@ namespace Gean
     /// </summary>
     public class UtilityDateTime
     {
+        /// <summary>     
+        /// 返回两个日期之间的时间间隔（y：年份间隔、M：月份间隔、d：天数间隔、h：小时间隔、m：分钟间隔、s：秒钟间隔、ms：微秒间隔）     
+        /// </summary>     
+        /// <param name="Date1">开始日期</param>     
+        /// <param name="Date2">结束日期</param>     
+        /// <param name="Interval">间隔标志</param>     
+        /// <returns>返回间隔标志指定的时间间隔</returns>     
+        public int DateDiff(System.DateTime Date1, System.DateTime Date2, string Interval)
+        {
+            double dblYearLen = 365;//年的长度，365天     
+            double dblMonthLen = (365 / 12);//每个月平均的天数     
+            System.TimeSpan objT;
+            objT = Date2.Subtract(Date1);
+            switch (Interval)
+            {
+                case "y"://返回日期的年份间隔     
+                    return System.Convert.ToInt32(objT.Days / dblYearLen);
+                case "M"://返回日期的月份间隔     
+                    return System.Convert.ToInt32(objT.Days / dblMonthLen);
+                case "d"://返回日期的天数间隔     
+                    return objT.Days;
+                case "h"://返回日期的小时间隔     
+                    return objT.Hours;
+                case "m"://返回日期的分钟间隔     
+                    return objT.Minutes;
+                case "s"://返回日期的秒钟间隔     
+                    return objT.Seconds;
+                case "ms"://返回时间的微秒间隔     
+                    return objT.Milliseconds;
+                default:
+                    break;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// 月份名称的字符串数组(英语)
         /// </summary>	
@@ -240,7 +275,7 @@ namespace Gean
                 end = end.AddDays(addDays);
             }
         }
-        
+
         /// <summary>
         /// 计算某天属于当年的第几周
         /// </summary>

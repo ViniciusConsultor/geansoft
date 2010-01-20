@@ -21,7 +21,7 @@ namespace Gean
     public class IDGenerator : IIDGenerator
     {
         /// <summary>
-        /// 累计数，消除最小1秒为单位时出现重复的可能。
+        /// 累计数，消除当以秒为单位时出现重复的可能。
         /// </summary>
         private static Int32 _counter = 0;
         /// <summary>
@@ -61,24 +61,15 @@ namespace Gean
         }
 
         /// <summary>
-        /// 获取一个连接符。默认DEBUG状态输出为空，Release时输出为空。可在子类中重写输出。
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetSeperator()
-        {
-            return "";
-        }
-
-        /// <summary>
-        /// 获得一个用户标志符。可在子类中重写输出。
+        /// 获得一个用户标志符，默认为空。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetUserFlag()
         {
-            return "UF";
+            return "";
         }
         /// <summary>
-        /// 获得一个序列名。可在子类中重写输出。
+        /// 获得一个序列名，默认为空。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetSequenceName()
@@ -86,7 +77,7 @@ namespace Gean
             return "";
         }
         /// <summary>
-        /// 获得一个当前年份。可在子类中重写输出。
+        /// 获得一个当前年份,默认后两位。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetYear()
@@ -103,12 +94,12 @@ namespace Gean
             return _timeFlag[time];
         }
         /// <summary>
-        /// 获得当前时间的秒部份。可在子类中重写输出。
+        /// 获得当前时间的秒除以6的值。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetSecond()
         {
-            return Convert.ToString(DateTime.Now.Second).PadLeft(2, '0');
+            return Convert.ToString((int)(DateTime.Now.Second / 6));
         }
         /// <summary>
         /// 获得一个累计数，以消除最小1秒为单位时出现重复的可能。可在子类中重写输出。
@@ -124,7 +115,7 @@ namespace Gean
         /// <returns></returns>
         protected virtual string GetCount()
         {
-            int n = 4; //希望仅出现4位计数标志
+            int n = 2; //希望仅出现4位计数标志
             if (_counter < GetMaxCount(n) - 1)
                 _counter++;
             else
@@ -139,17 +130,12 @@ namespace Gean
         public virtual string Generate()
         {
             return (new StringBuilder())
-                .Append(GetUserFlag())//用户标志，可以定义为不同系统的标志
-                .Append(GetSeperator())
-                .Append(GetSequenceName())//序列名，如可以定义为序列名
-                .Append(GetSeperator())
-                .Append(GetYear())//年份
-                .Append(GetSeperator())
-                .Append(GetDateTimeFlag())//时间的标志位
-                .Append(GetSeperator())
-                .Append(GetSecond())//秒
-                .Append(GetSeperator())
-                .Append(GetCount())//一个数字的累加
+                .Append(GetUserFlag())      //用户标志，可以定义为不同系统的标志
+                .Append(GetSequenceName())  //序列名，如可以定义为序列名
+                .Append(GetYear())          //年份
+                .Append(GetDateTimeFlag())  //时间的标志位
+                .Append(GetSecond())        //秒
+                .Append(GetCount())         //一个数字的累加
                 .ToString();
         }
 
