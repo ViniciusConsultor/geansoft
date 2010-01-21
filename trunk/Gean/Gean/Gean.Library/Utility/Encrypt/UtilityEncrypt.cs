@@ -35,11 +35,6 @@ namespace Gean.Encrypt
         private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
         /// <summary>
-        /// 本框架设定的缺省密钥字符串，只读状态。
-        /// </summary>
-        private static readonly string _defaultKey = "98$Mp6?W";
-
-        /// <summary>
         /// 计算输入数据的 MD5 哈希值
         /// </summary>
         /// <param name="strIN">输入的数据.</param>

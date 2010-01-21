@@ -8,7 +8,7 @@ namespace Gean
     /// 由本框架定义思想构建的ID生成器。本生成器主要思想是将当前时间中的年月日时分替换成一个在当年不可重复的4位（大写字母与数字）字符串标识，这样相对存储长格式时间字符串以及GUID方法来讲，可以大大减少存储空间。
     /// * 本类可以直接使用。但建议不要直接使用此类，而通过继承该类，重写ID中各部份输出规则后再使用。
     /// * 本类线程是安全的。
-    /// * 本类直接使用时，以每6秒为单位，假定每6秒全局生成记录不超过100条，这样全局记录将不会重复，如应用负载较大时请重写GetSecond与GetCount方法。
+    /// * 本类直接使用时，以每6秒为单位，假定每6秒全局生成记录不超过1000条，这样全局记录将不会重复，如应用负载较大时请重写GetSecond与GetCount方法。
     /// * 2010-01-18 11:36:29
     /// 
     /// 经比较，ID生成效率大约为如下所示：
@@ -24,11 +24,11 @@ namespace Gean
         /// <summary>
         /// 累计数，消除当以秒为单位时出现重复的可能。
         /// </summary>
-        private static Int32 _counter = 0;
+        protected static Int32 _counter = 0;
         /// <summary>
         /// 将当前时间中的年月日时分替换成一个在当年里不可重复的4位（大写字母与数字）字符串标识。
         /// </summary>
-        private static string[] _timeFlag;
+        protected static string[] _timeFlag;
 
         /// <summary>
         /// 静态构造函数。
@@ -78,21 +78,24 @@ namespace Gean
             return "";
         }
         /// <summary>
-        /// 获得一个当前年份,默认后两位。可在子类中重写输出。
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetYear()
-        {
-            return DateTime.Now.Year.ToString().Substring(2);
-        }
-        /// <summary>
-        /// 获得一个时间标志符。可在子类中重写输出。
+        /// 获得一个时间标志符（4位）。年份标识追加在标志符后,默认是当前年份距2010年的相差数+1。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetDateTimeFlag()
         {
-            int time = DateTime.Now.DayOfYear * DateTime.Now.Hour * DateTime.Now.Minute;
-            return _timeFlag[time];
+            StringBuilder sb = new StringBuilder();
+
+            //获得一个时间标志符（4位）
+            int time = DateTime.Now.DayOfYear * (DateTime.Now.Hour + 1) * (DateTime.Now.Minute + 1);
+            sb.Append(_timeFlag[time]);
+
+            //年份标识追加在标志符后,默认是当前年份距2010年的相差数+1。
+            time = DateTime.Now.Year;
+            time = time - 2010;
+            time = time + 1;
+            sb.Append(time);
+
+            return sb.ToString();
         }
         /// <summary>
         /// 获得当前时间的秒除以6的值。可在子类中重写输出。
@@ -103,7 +106,7 @@ namespace Gean
             return Convert.ToString((int)(DateTime.Now.Second / 6));
         }
         /// <summary>
-        /// 获得一个累计数，以消除最小1秒为单位时出现重复的可能。可在子类中重写输出。
+        /// 获得一个累计数，以消除当以秒为单位时出现重复的可能。可在子类中重写输出。
         /// <code>
         /// int n = 4; //希望仅出现4位计数标志
         /// if (_counter &gt; GetMaxCount(n) - 1)
@@ -116,7 +119,7 @@ namespace Gean
         /// <returns></returns>
         protected virtual string GetCount()
         {
-            int n = 2; //希望仅出现2位计数标志
+            int n = 3; //希望仅出现3位计数标志
             if (_counter < GetMaxCount(n) - 1)
                 _counter++;
             else
@@ -133,14 +136,13 @@ namespace Gean
             return (new StringBuilder())
                 .Append(GetUserFlag())      //用户标志，可以定义为不同系统的标志
                 .Append(GetSequenceName())  //序列名，如可以定义为序列名
-                .Append(GetYear())          //年份
                 .Append(GetDateTimeFlag())  //时间的标志位
                 .Append(GetSecond())        //秒
                 .Append(GetCount())         //一个数字的累加
                 .ToString();
         }
 
-        private int GetMaxCount(int n)
+        protected int GetMaxCount(int n)
         {
             int max = 1;
             for (int i = 0; i < n; i++)

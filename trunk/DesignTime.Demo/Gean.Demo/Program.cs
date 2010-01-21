@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace Gean.Demo
 {
@@ -8,6 +9,12 @@ namespace Gean.Demo
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Ready...");
+
+            IDGeneratorDemo idgDemo = new IDGeneratorDemo();
+            idgDemo.Do();
+
+            Console.ReadKey();
         }
     }
 }
