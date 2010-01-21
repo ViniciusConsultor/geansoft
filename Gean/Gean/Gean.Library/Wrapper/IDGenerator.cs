@@ -98,7 +98,7 @@ namespace Gean
             return sb.ToString();
         }
         /// <summary>
-        /// 获得当前时间的秒除以6的值。可在子类中重写输出。
+        /// 获得当前时间的秒除以10的值，即以每6秒为一组计时单位。可在子类中重写输出。
         /// </summary>
         /// <returns></returns>
         protected virtual string GetSecond()
