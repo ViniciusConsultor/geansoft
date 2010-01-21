@@ -28,7 +28,7 @@ namespace Gean
         /// <summary>
         /// 将当前时间中的年月日时分替换成一个在当年里不可重复的4位（大写字母与数字）字符串标识。
         /// </summary>
-        protected static string[] _timeFlag;
+        protected static List<string> _timeFlag;
 
         /// <summary>
         /// 静态构造函数。
@@ -45,7 +45,7 @@ namespace Gean
         {
             int timeLength = 366 * 24 * 60;
             char[] src = "ABCDEFGHJKLMNPQRSTWXY23456789".ToCharArray();//减除不易识读的：I,O,U,V,Z,0,1
-            _timeFlag = new string[timeLength];
+            _timeFlag = new List<string>(timeLength);
             Gean.Math.Permutations<char> permut = new Gean.Math.Permutations<char>(src, 4);
             int i = 0;
             foreach (char[] charArray in permut)
@@ -56,7 +56,7 @@ namespace Gean
                 {
                     sb.Append(c);
                 }
-                _timeFlag[i] = sb.ToString();
+                _timeFlag.Add(sb.ToString());
                 i++;
             }
         }
@@ -142,6 +142,11 @@ namespace Gean
                 .ToString();
         }
 
+        /// <summary>
+        /// Gets the max count.
+        /// </summary>
+        /// <param name="n">The n.</param>
+        /// <returns></returns>
         protected int GetMaxCount(int n)
         {
             int max = 1;
@@ -151,5 +156,6 @@ namespace Gean
             }
             return max;
         }
+
     }
 }
