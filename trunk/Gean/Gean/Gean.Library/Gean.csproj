@@ -92,6 +92,7 @@
     <Compile Include="Wrapper\Chinese\ChineseRmb.cs" />
     <Compile Include="Wrapper\IDGenerator.cs" />
     <Compile Include="Interface\IIDGenerator.cs" />
+    <Compile Include="Wrapper\IniFile.cs" />
     <Compile Include="Wrapper\SmartDate.cs" />
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
@@ -187,9 +188,6 @@
       <LastGenOutput>SmartDateString.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Widgets\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
