@@ -429,7 +429,7 @@ namespace Gean
         }
 
         /// <summary> 
-        /// Needed for support of late deserialization 
+        /// 需反序列化的特定对象
         /// </summary>
         private class SerializedValue
         {
