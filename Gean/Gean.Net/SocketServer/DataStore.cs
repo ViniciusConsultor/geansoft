@@ -7,7 +7,7 @@ using Gean.Net.CSUST.Net;
 namespace Gean.Net
 {
     /// <summary>
-    /// 测试用Access数据库类
+    /// 对一次Socket连接发生数据的操作
     /// </summary>
     public class DataStore : TOleDatabaseBase
     {

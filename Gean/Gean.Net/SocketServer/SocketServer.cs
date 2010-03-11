@@ -31,14 +31,14 @@ namespace Gean.Net
         /// <summary>
         /// 本类型所包含的一个私有EMTASS服务，对一些常用方法与事件进行封装，一些不常用的私有化。组合。
         /// </summary>
-        private TSocketServerBase<SessionImplement, DataStore> _socketServer;
+        private TSocketServerBase<Talk, DataStore> _socketServer;
 
         /// <summary>
         /// 私有构造函数
         /// </summary>
         private SocketServer() 
         {
-            _socketServer = new TSocketServerBase<SessionImplement, DataStore>();
+            _socketServer = new TSocketServerBase<Talk, DataStore>();
             this.AttachServerEvent();
         }
 
@@ -47,18 +47,9 @@ namespace Gean.Net
         /// </summary>
         public void Start()
         {
-            string connStr = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = DemoAccessDatabase.mdb;";
-
-            //if (ck_UseDatabase.Checked)
-            //{
-            //    m_socketServer = new TSocketServerBase<TTestSession, TTestAccessDatabase>(1024, 32 * 1024, 64 * 1024, connStr);
-            //}
-            //else
-            //{
-            //    m_socketServer = new TSocketServerBase<TTestSession, TTestAccessDatabase>();
-            //}
-
-            _socketServer.MaxDatagramSize = 1024 * int.Parse("22");
+            //string connStr = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = DemoAccessDatabase.mdb;";
+            //_socketServer = new TSocketServerBase<Talk, DataStore>(1024, 32 * 1024, 64 * 1024, connStr);
+            //_socketServer.MaxDatagramSize = 1024 * int.Parse("22");
 
             _socketServer.Start();
         }
