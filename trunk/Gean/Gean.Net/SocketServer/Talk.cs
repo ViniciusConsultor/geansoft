@@ -6,9 +6,9 @@ using Gean.Net.CSUST.Net;
 namespace Gean.Net
 {
     /// <summary>
-    /// Session的具体实现
+    /// 对一次Socket连接的封装，我们理解这是一次客户端与服务器的对话或交谈(Talk)。
     /// </summary>
-    public class SessionImplement : TSessionBase
+    public class Talk : TSessionBase
     {
         /// <summary>
         /// override.重写错误处理方法, 返回消息给客户端
@@ -16,7 +16,6 @@ namespace Gean.Net
         protected override void OnDatagramDelimiterError()
         {
             base.OnDatagramDelimiterError();
-
             base.SendDatagram("datagram delimiter error");
         }
 

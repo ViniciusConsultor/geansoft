@@ -7,5 +7,8 @@ namespace Runner.Entity
 {
     public partial class Employee : IEntity
     {
+        public Employee()
+        {
+        }
     }
 }
