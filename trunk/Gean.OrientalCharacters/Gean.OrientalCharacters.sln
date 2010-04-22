@@ -1,15 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.OrientalCharacters", "Gean.OrientalCharacters\Gean.OrientalCharacters.csproj", "{F1D691DF-F6B9-4AF5-8569-DBA3C55DDD4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\Gean\Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.OrientalCharacters.Data.Model", "Gean.OrientalCharacters.Data.Model\Gean.OrientalCharacters.Data.Model.csproj", "{7172AEDA-B20F-4464-87EF-6DDAB5EA593F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.OrientalCharacters.Service", "Gean.OrientalCharacters.Service\Gean.OrientalCharacters.Service.csproj", "{8003E3C8-06AD-4A55-B5FB-51424E6A89C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.OrientalCharacters.CoreWorkbench", "Gean.OrientalCharacters.CoreWorkbench\Gean.OrientalCharacters.CoreWorkbench.csproj", "{FA2D8F80-583F-40F0-8B82-0D060AE27875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\Gean\Gean\Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1D691DF-F6B9-4AF5-8569-DBA3C55DDD4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1D691DF-F6B9-4AF5-8569-DBA3C55DDD4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1D691DF-F6B9-4AF5-8569-DBA3C55DDD4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1D691DF-F6B9-4AF5-8569-DBA3C55DDD4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7172AEDA-B20F-4464-87EF-6DDAB5EA593F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7172AEDA-B20F-4464-87EF-6DDAB5EA593F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7172AEDA-B20F-4464-87EF-6DDAB5EA593F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +27,10 @@ Global
 		{FA2D8F80-583F-40F0-8B82-0D060AE27875}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA2D8F80-583F-40F0-8B82-0D060AE27875}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA2D8F80-583F-40F0-8B82-0D060AE27875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

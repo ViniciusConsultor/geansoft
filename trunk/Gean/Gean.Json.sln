@@ -1,6 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B3F125EB-047D-45F7-BD16-3195EBC20F4E}"
+	ProjectSection(SolutionItems) = preProject
+		Gean.Json.vsmdi = Gean.Json.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json2", "Gean.Json2\Gean.Json2.csproj", "{9D29914F-FD46-41FE-BF0F-5551F97EA801}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json3", "Gean.Json3\Gean.Json3.csproj", "{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}"
@@ -9,17 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Library\G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json.UnitTesting", "..\DesignTime.UnitTest\Gean.Json.UnitTesting\Gean.Json.UnitTesting.csproj", "{202119B1-F530-4BB9-9223-E3D7DE858FF8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B3F125EB-047D-45F7-BD16-3195EBC20F4E}"
-	ProjectSection(SolutionItems) = preProject
-		Gean.Json.vsmdi = Gean.Json.vsmdi
-		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
-	EndProjectSection
-EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Gean.Json.vsmdi
 	EndGlobalSection
@@ -47,5 +43,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
