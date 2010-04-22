@@ -1,4 +1,4 @@
-using Gean.Logging;
+using Gean.SimpleLogger;
 using Gean.OrientalCharacters.Service;
 using NLog;
 

@@ -3,7 +3,7 @@ using System;
 using System.Windows.Forms;
 using Gean.OrientalCharacters.CoreWorkbench;
 using Gean.OrientalCharacters.Service;
-using Gean.Logging;
+using Gean.SimpleLogger;
 
 namespace Gean.EasternArt.Service
 {
