@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gean.Client.IHMSJsonBuilder.JsonService" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.AmountCollection" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.Branch" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.Opreation" Collapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.Worker" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.Counter" Collapsed="true">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.CommonAmountObject" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.AmountObject" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.Amount" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.TD" Collapsed="true">
+    <Position X="7.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.ED" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.WD" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.FD" Collapsed="true">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.D" Collapsed="true">
+    <Position X="3.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Gean.Client.IHMSJsonBuilder.AbstractDictionary&lt;T&gt;" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAAAABAAAAABAAEAAAAAAAAAAAgAAAAAAAAAAACAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Gean.Client.IHMSJsonBuilder.IToJson" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AmountCollection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
