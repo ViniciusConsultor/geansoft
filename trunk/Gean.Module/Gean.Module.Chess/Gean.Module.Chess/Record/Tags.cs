@@ -60,12 +60,12 @@ namespace Gean.Module.Chess
     /// <summary>
     /// 棋局记录的标签对部分
     /// </summary>
-    public class Tags : Definer, IItem
+    public class Tags : Definition, IItem
     {
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var item in this._definer)
+            foreach (var item in this._definitions)
             {
                 sb.AppendFormat("[{0} \"{1}\"]", item.Key, item.Value).AppendLine();
             }

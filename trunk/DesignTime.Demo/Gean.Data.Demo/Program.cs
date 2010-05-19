@@ -20,9 +20,9 @@ namespace Gean.Data.Demo
         {
             //Main01_SqlConnectionStringBuilder.Do();
             //Main02_AdoNet.Do();
-            //Main03_SQLTextBuilder.Do();
+            Main03_SQLTextBuilder.Do();
             //Main05_ORM.Do();
-            Main06_ID.DoTest();
+            //Main06_ID.DoTest();
             //Main06_ID.DoTimeTest();
 
             Console.WriteLine("Please Press any key...");

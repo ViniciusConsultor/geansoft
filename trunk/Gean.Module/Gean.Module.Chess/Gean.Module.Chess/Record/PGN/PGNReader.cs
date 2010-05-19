@@ -157,7 +157,7 @@ namespace Gean.Module.Chess
                 EventStarting(this);
             try
             {
-                Encoding fileEncoding = FileEncoding.GetEncoding(_filename);
+                Encoding fileEncoding = TextFileEncoding.GetEncoding(_filename);
                 reader = new StreamReader(_filename, fileEncoding);
 
                 while (!reader.EndOfStream)

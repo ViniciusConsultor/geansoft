@@ -1,19 +1,19 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Chess", "Gean.Module.Chess\Gean.Module.Chess.csproj", "{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Framework\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Chess.UnitTesting", "Gean.Module.Chess.UnitTesting\Gean.Module.Chess.UnitTesting.csproj", "{339CD97C-F1E8-48BF-8212-AD11810AA215}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9CFB18B-ABB7-417A-A85D-054565C59167}"
 	ProjectSection(SolutionItems) = preProject
 		Gean.Module.Chess.vsmdi = Gean.Module.Chess.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Chess", "Gean.Module.Chess\Gean.Module.Chess.csproj", "{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Chess.Demo", "Gean.Module.Chess.DemoApplication\Gean.Module.Chess.Demo.csproj", "{A966AB7D-E678-44F6-8A79-61BBFE9DD835}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Gui.ChessControl", "..\..\Gean.Gui\Gean.Gui.ChessControl\Gean.Gui.ChessControl\Gean.Gui.ChessControl.csproj", "{838DE708-8E67-471A-AFC7-916FB3ED253E}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -28,18 +28,18 @@ Global
 		{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{339CD97C-F1E8-48BF-8212-AD11810AA215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{339CD97C-F1E8-48BF-8212-AD11810AA215}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{339CD97C-F1E8-48BF-8212-AD11810AA215}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{339CD97C-F1E8-48BF-8212-AD11810AA215}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A966AB7D-E678-44F6-8A79-61BBFE9DD835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A966AB7D-E678-44F6-8A79-61BBFE9DD835}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A966AB7D-E678-44F6-8A79-61BBFE9DD835}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A966AB7D-E678-44F6-8A79-61BBFE9DD835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{838DE708-8E67-471A-AFC7-916FB3ED253E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{838DE708-8E67-471A-AFC7-916FB3ED253E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{838DE708-8E67-471A-AFC7-916FB3ED253E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{838DE708-8E67-471A-AFC7-916FB3ED253E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
