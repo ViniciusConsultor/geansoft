@@ -19,7 +19,7 @@ namespace Gean
     /// </summary>
     public class Definition : IEnumerable
     {
-        Dictionary<string, object> _definitions = new Dictionary<string, object>();
+        protected Dictionary<string, object> _definitions = new Dictionary<string, object>();
 
         public string this[string key]
         {

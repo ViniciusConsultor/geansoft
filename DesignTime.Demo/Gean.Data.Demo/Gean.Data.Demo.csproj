@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -18,6 +18,11 @@
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,6 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +41,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -72,22 +79,6 @@
     <ProjectReference Include="..\..\Gean\Gean\Gean.Library\Gean.csproj">
       <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
       <Name>Gean</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ORM.DefaultProject\Runner.DAL.Factory\Runner.DAL.Factory.csproj">
-      <Project>{0A250A55-E0CE-4D46-A1AF-BC79401BE70F}</Project>
-      <Name>Runner.DAL.Factory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ORM.DefaultProject\Runner.DAL.Interface\Runner.DAL.Interface.csproj">
-      <Project>{D91B3EAF-812D-46BD-AA01-2F1597141A72}</Project>
-      <Name>Runner.DAL.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ORM.DefaultProject\Runner.DAL.SqlServer\Runner.DAL.SQLServer.csproj">
-      <Project>{03922E8B-36F9-4B68-8BA3-F734E997062A}</Project>
-      <Name>Runner.DAL.SQLServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ORM.DefaultProject\Runner.Entity\Runner.Entity.csproj">
-      <Project>{D1590206-A0CD-4E47-93B6-5A23F29DD46E}</Project>
-      <Name>Runner.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
