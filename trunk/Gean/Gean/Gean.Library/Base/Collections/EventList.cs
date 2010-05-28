@@ -13,6 +13,7 @@ namespace Gean
     public class EventList<T> : List<T>
     {
         #region 一些新的方法
+
         /// <summary>
         /// 将对象添加到 <see cref="T:System.Collections.Generic.List`1"/> 的结尾处。
         /// </summary>
@@ -69,6 +70,7 @@ namespace Gean
                 OnValueChanged(new EventListValueChangedEventArgs<T>(index, oldvalue, value));
             }
         }
+        
         #endregion
 
         public event ListBeforeDelegate<T> BeforeAdd;
