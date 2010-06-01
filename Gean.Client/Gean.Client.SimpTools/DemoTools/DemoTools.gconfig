@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<simptools>
-  <tool appName="DemoTools.exe"/>
-  <tool text="MP3拷贝器"/>
-  <tool tooltip="这是一个DemoTools。"/>
-</simptools>
