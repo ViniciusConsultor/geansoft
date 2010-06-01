@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}</ProjectGuid>
+    <ProjectGuid>{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Aarhus.Wrapper.Sudoku</AssemblyName>
@@ -85,7 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Gean\Gean\Gean.Library\Gean.csproj">
-      <Project>{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}</Project>
+      <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
       <Name>Gean</Name>
     </ProjectReference>
   </ItemGroup>

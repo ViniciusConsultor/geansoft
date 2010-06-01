@@ -1,15 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Client.Sudoku", "Gean.Client.Sudoku\Gean.Client.Sudoku.csproj", "{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library", "..\..\Gean.Library\Gean.Library\Gean.Library\Gean.Library.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Library\Gean.csproj", "{54E5A1F2-3684-4C25-BB2A-D1D412D17002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Wrapper.Sudoku", "..\..\Gean.Wrapper\Gean.Wrapper.Sudoku\Gean.Wrapper.Sudoku\Gean.Wrapper.Sudoku.csproj", "{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Gui.WinForm", "..\..\Gean.Gui\Gean.Gui.WinForm\Gean.Gui.WinForm\Gean.Gui.WinForm.csproj", "{177AE121-2AF1-4EE7-A80E-9F28CB49106D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library.UI.Controls", "..\..\Gean.Library.UI\Gean.Library.UI.Controls\Gean.Library.UI.Controls\Gean.Library.UI.Controls.csproj", "{BC9321B1-A644-45DB-838A-D65AF74AFAA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Gui.SudokuPanel", "..\..\Gean.Gui\Gean.Gui.SudokuPanel\Gean.Gui.SudokuPanel.csproj", "{F545549C-6C07-4C9E-951E-DEA37BED8112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Library.UI.SudokuPanel", "..\..\Gean.Library.UI\Gean.Library.UI.SudokuPanel\Gean.Library.UI.SudokuPanel\Gean.Library.UI.SudokuPanel.csproj", "{F4525F47-D7DB-49B5-B40F-FC9C7856F506}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Sudoku", "..\..\Gean.Module\Gean.Module.Sudoku\Gean.Module.Sudoku.csproj", "{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -25,22 +25,22 @@ Global
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7EABE2D-7EAC-4DDE-9647-0023858C79B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC9321B1-A644-45DB-838A-D65AF74AFAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC9321B1-A644-45DB-838A-D65AF74AFAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC9321B1-A644-45DB-838A-D65AF74AFAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC9321B1-A644-45DB-838A-D65AF74AFAA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4525F47-D7DB-49B5-B40F-FC9C7856F506}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4525F47-D7DB-49B5-B40F-FC9C7856F506}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4525F47-D7DB-49B5-B40F-FC9C7856F506}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4525F47-D7DB-49B5-B40F-FC9C7856F506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{177AE121-2AF1-4EE7-A80E-9F28CB49106D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{177AE121-2AF1-4EE7-A80E-9F28CB49106D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{177AE121-2AF1-4EE7-A80E-9F28CB49106D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{177AE121-2AF1-4EE7-A80E-9F28CB49106D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F545549C-6C07-4C9E-951E-DEA37BED8112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F545549C-6C07-4C9E-951E-DEA37BED8112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F545549C-6C07-4C9E-951E-DEA37BED8112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F545549C-6C07-4C9E-951E-DEA37BED8112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -61,7 +61,7 @@ namespace Gean.Library.UI.Controls
 
             x = Width / 2;
             y = Height / 2;
-            radius = Math.Min(Width / 2, Height / 2) - 5;
+            radius = System.Math.Min(Width / 2, Height / 2) - 5;
             half = lines / 2;
 
             for (i = 0; i < lines; i++)
@@ -73,11 +73,11 @@ namespace Gean.Library.UI.Controls
                 Pen pen = new Pen(c);
                 pen.Width = 2;
 
-                PointF start = new PointF((float)(x + (radius - inset) * Math.Cos(i * Math.PI / half)),
-                           (float)(y + (radius - inset) * Math.Sin(i * Math.PI / half)));
+                PointF start = new PointF((float)(x + (radius - inset) * System.Math.Cos(i * System.Math.PI / half)),
+                           (float)(y + (radius - inset) * System.Math.Sin(i * System.Math.PI / half)));
 
-                PointF end = new PointF((float)(x + radius * Math.Cos(i * Math.PI / half)),
-                           (float)(y + radius * Math.Sin(i * Math.PI / half)));
+                PointF end = new PointF((float)(x + radius * System.Math.Cos(i * System.Math.PI / half)),
+                           (float)(y + radius * System.Math.Sin(i * System.Math.PI / half)));
 
                 e.Graphics.DrawLine(pen, start, end);
                 pen.Dispose();

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Gean.Wrapper.Sudoku;
+using Gean.Module.Sudoku;
 
 namespace Gean.Client.Sudoku
 {
@@ -16,7 +16,7 @@ namespace Gean.Client.Sudoku
             InitializeComponent();
         }
 
-        internal Exercise Exercise { get; private set; }
+        internal SudoExercise Exercise { get; private set; }
         internal string DoString
         {
             get { return this._ExerciseTextBox.Text; }
@@ -32,7 +32,7 @@ namespace Gean.Client.Sudoku
             else
             {
                 this.DialogResult = DialogResult.OK;
-                this.Exercise = new Exercise("", "", this._ExerciseTextBox.Text);
+                this.Exercise = new SudoExercise("", "", this._ExerciseTextBox.Text);
                 this.Close();
             }
         }
