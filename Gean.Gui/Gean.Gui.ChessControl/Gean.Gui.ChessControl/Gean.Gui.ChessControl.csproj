@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{4302EE32-D91D-4001-8B68-6F3548CBA5B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Gean.Gui.ChessControl</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\Servicer.cs" />
+    <Compile Include="Board.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImgResource.Designer.cs" />
+    <Compile Include="Interface\IActiveRecord.cs" />
+    <Compile Include="Interface\IChessBoard.cs" />
+    <Compile Include="Interface\IRecordPlay.cs" />
+    <Compile Include="RecordListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RecordPlayToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="StepsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ImgResource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\ChessFont\ChessMAYAFONT.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resource\ChessmanDefaultImage\black_bishop.png" />
+    <Content Include="Resource\ChessmanDefaultImage\black_grid_01.jpg" />
+    <Content Include="Resource\ChessmanDefaultImage\black_grid_02.jpg" />
+    <Content Include="Resource\ChessmanDefaultImage\black_king.png" />
+    <Content Include="Resource\ChessmanDefaultImage\black_knight.png" />
+    <Content Include="Resource\ChessmanDefaultImage\black_pawn.png" />
+    <Content Include="Resource\ChessmanDefaultImage\black_queen.png" />
+    <Content Include="Resource\ChessmanDefaultImage\black_rook.png" />
+    <Content Include="Resource\ChessmanDefaultImage\board_1.png" />
+    <Content Include="Resource\ChessmanDefaultImage\board_2.png" />
+    <Content Include="Resource\ChessmanDefaultImage\board_3.png" />
+    <Content Include="Resource\ChessmanDefaultImage\board_4.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_bishop.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_grid_01.jpg" />
+    <Content Include="Resource\ChessmanDefaultImage\white_grid_02.jpg" />
+    <Content Include="Resource\ChessmanDefaultImage\white_king.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_knight.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_pawn.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_queen.png" />
+    <Content Include="Resource\ChessmanDefaultImage\white_rook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Gean.Module\Gean.Module.Chess\Gean.Module.Chess\Gean.Module.Chess.csproj">
+      <Project>{2FE389B0-CE04-4B62-9D5B-21B7ACD56A00}</Project>
+      <Name>Gean.Module.Chess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Gean\Gean\Gean.Library\Gean.csproj">
+      <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
