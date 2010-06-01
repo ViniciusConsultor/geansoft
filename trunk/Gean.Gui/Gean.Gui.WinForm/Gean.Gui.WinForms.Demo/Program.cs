@@ -15,8 +15,8 @@ namespace Gean.UI.WinForms.Demo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new CloudsPanelForm());
-            //Application.Run(new PictureForm());
+            //Application.Run(new CloudsPanelForm());
+            Application.Run(new PictureForm());
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Gean.UI.WinForms.Demo
         {
             if (string.IsNullOrEmpty(_value))
             {
-                _value = ((new StringBuilder()).Append(_number.ToString()).Append(". ").Append(rand.GetString(rand.GetInt(2, 12), UtilityRandom.RandomCharType.All))).ToString();
+                _value = ((new StringBuilder()).Append(_number.ToString()).Append(". ").Append(rand.GetString(2,UtilityRandom.RandomCharType.All)).ToString());
             }
             return _value;
         }
