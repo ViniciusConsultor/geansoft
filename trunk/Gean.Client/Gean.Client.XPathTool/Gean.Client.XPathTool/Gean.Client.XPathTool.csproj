@@ -81,9 +81,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PerformanceDemo\Display.cs" />
-    <Compile Include="PerformanceDemo\HighResolutionTimeSpan.cs" />
-    <Compile Include="PerformanceDemo\PerformanceTimer.cs" />
+    <Compile Include="Performance\Display.cs" />
+    <Compile Include="Performance\HighResolutionTimeSpan.cs" />
+    <Compile Include="Performance\PerformanceTimer.cs" />
     <Compile Include="BooleanOp.cs">
       <SubType>Code</SubType>
     </Compile>

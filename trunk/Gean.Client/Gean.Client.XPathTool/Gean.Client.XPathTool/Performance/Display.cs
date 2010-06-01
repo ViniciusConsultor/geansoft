@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PerformanceDemo
+namespace Performance
 {
 
     public class Display

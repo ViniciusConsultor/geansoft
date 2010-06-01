@@ -1,4 +1,4 @@
-﻿namespace PerformanceDemo
+﻿namespace Performance
 {
     using System;
     using System.Runtime.InteropServices;
