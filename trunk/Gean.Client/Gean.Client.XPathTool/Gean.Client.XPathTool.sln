@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Client.XPathTool", "Gean.Client.XPathTool\Gean.Client.XPathTool.csproj", "{F6C60CC2-286E-456B-B176-14C253328925}"
 EndProject
 Global

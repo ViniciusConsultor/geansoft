@@ -1,6 +1,7 @@
-﻿namespace PerformanceDemo
+﻿using System;
+
+namespace PerformanceDemo
 {
-    using System;
 
     public class Display
     {
