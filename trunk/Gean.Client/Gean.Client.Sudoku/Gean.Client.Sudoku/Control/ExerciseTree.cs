@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean.Library.UI.Controls;
+using Gean.Gui.WinForm;
 
 namespace Gean.Client.Sudoku
 {

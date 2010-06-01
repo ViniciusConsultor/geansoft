@@ -1,4 +1,4 @@
-﻿using Gean.Library.UI.Controls;
+﻿using Gean.Gui.WinForm;
 namespace Gean.Client.Sudoku
 {
 	partial class MainForm
@@ -62,7 +62,7 @@ namespace Gean.Client.Sudoku
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this._RuntimeTabPage = new System.Windows.Forms.TabPage();
-            this.numericLedBox1 = new Gean.Library.UI.Controls.NumericLedBox();
+            this.numericLedBox1 = new Gean.Gui.WinForm.NumericLedBox();
             this.menuStrip1.SuspendLayout();
             this._MainToolStrip.SuspendLayout();
             this._SplitContainer.Panel2.SuspendLayout();
@@ -407,7 +407,7 @@ namespace Gean.Client.Sudoku
         private System.Windows.Forms.ToolStripButton 打印PToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripButton 帮助LToolStripButton;
-        private Gean.Library.UI.Controls.NumericLedBox numericLedBox1;
+        private Gean.Gui.WinForm.NumericLedBox numericLedBox1;
         private System.Windows.Forms.ToolStripMenuItem 文件FToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于AToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
