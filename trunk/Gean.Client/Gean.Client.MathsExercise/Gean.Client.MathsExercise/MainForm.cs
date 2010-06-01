@@ -131,10 +131,5 @@ namespace Gean.Client.MathsExercise
             MessageBox.Show("共 " + _Count + " 道口算题置入剪贴板，拷贝进Word编辑即可。");
         }
 
-        class Pair
-        {
-            public int A { get; set; }
-            public int B { get; set; }
-        }
     }
 }
