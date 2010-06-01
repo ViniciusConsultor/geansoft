@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace Gean.Client.MathsExercise
 {
+    /// <summary>
+    /// 本项目主要是为了一年级小学生的口算出题而设计。题目全部是随机抽取。
+    /// </summary>
     public partial class MainForm : Form
     {
         private static Random _Random = new Random(unchecked((int)DateTime.Now.Ticks));
