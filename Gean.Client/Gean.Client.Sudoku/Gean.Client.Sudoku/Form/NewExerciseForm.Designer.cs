@@ -1,4 +1,4 @@
-﻿using Gean.Library.UI.Controls;
+﻿using Gean.Gui.WinForm;
 namespace Gean.Client.Sudoku
 {
     partial class NewExerciseForm
