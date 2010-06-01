@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     /// <summary>
     /// 一个仿照ForeFox的UI的旋转进度表示控件

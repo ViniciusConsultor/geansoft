@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     /// <summary>
     /// 一个已设置为多行显示的TextBox，有简单的copy,paste等右键菜单

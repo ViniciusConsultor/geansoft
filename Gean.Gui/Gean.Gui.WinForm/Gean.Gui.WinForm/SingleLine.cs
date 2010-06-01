@@ -4,7 +4,7 @@ using System.Drawing;
 using System.ComponentModel;
 using Microsoft.Win32;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     /// <summary>
     /// Represents an horizontal or vertical line.

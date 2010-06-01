@@ -32,7 +32,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     /// <summary>
     /// A control that acts like a LED displayer

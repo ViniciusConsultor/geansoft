@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public class ValidateTextBox : TextBox
     {

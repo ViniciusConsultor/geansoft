@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     /// <summary>
     /// A control that acts like a LED displayer
@@ -1592,7 +1592,7 @@ namespace Gean.Library.UI.Controls
         [System.ComponentModel.Browsable(true),
         System.ComponentModel.Category("Appearance"),
         System.ComponentModel.Description("Set the alignment of the text"),
-        System.ComponentModel.DefaultValue(typeof(Gean.Library.UI.Controls.LxLedControl.Alignment), "Left")]
+        System.ComponentModel.DefaultValue(typeof(Gean.Gui.WinForm.LxLedControl.Alignment), "Left")]
         public Alignment TextAlignment
         {
             get

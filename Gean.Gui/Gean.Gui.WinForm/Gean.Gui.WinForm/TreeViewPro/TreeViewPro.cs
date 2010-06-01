@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using Gean.Library;
+using Gean;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public abstract class TreeViewPro : TreeView
     {
