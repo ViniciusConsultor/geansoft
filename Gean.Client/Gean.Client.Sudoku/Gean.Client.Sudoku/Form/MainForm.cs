@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Gean.Resources;
-using Gean.Wrapper.Sudoku;
-using Gean.Library.UI.SudokuPanel;
+using Gean.Module.Sudoku;
+using Gean.Gui.SudokuPanel;
 
 namespace Gean.Client.Sudoku
 {
@@ -13,7 +13,7 @@ namespace Gean.Client.Sudoku
 	public partial class MainForm : Form
 	{
 
-        internal Exercise _CurrExercise;
+        internal SudoExercise _CurrExercise;
         internal SudokuPanel _DoPanel;
 
 		public MainForm()
@@ -88,13 +88,13 @@ namespace Gean.Client.Sudoku
                 }
                 file = dialog.FileName;
             }
-            DoHelper.Initialize(file);
-            this.InitializeTree(DoHelper.DoXml);
+            SuDoHelper.Initialize(file);
+            this.InitializeTree(SuDoHelper.DoXml);
         }
 
-        private void InitializeTree(DoXml doXml)
+        private void InitializeTree(SuDoXml doXml)
         {
-            Exercise[] cises = doXml.SelectExercises(Difficulty.Easy);
+            SudoExercise[] cises = doXml.SelectExercises(SudoDifficulty.Easy);
             foreach (var item in cises)
             {
                 ExerciseNode node = new ExerciseNode();

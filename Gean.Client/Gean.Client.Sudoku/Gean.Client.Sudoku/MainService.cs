@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean.Wrapper.Sudoku;
+using Gean.Module.Sudoku;
 using System.IO;
 
 namespace Gean.Client.Sudoku

@@ -515,7 +515,7 @@ namespace Gean.Library.UI.Controls
                 if (canDragDrop)
                 {
                     //将要拖动
-                    if (Math.Abs(e.Location.X - _beginPoint.X) > 5 || Math.Abs(e.Location.Y - _beginPoint.Y) > 5)
+                    if (System.Math.Abs(e.Location.X - _beginPoint.X) > 5 || System.Math.Abs(e.Location.Y - _beginPoint.Y) > 5)
                     {
                         _isMouseDown = false;
                         DoDragDropNode();
@@ -1161,7 +1161,7 @@ namespace Gean.Library.UI.Controls
             }
 
             ///找到两个节点的较浅的深度值
-            int minLevel = Math.Min(node1.Level, node2.Level);
+            int minLevel = System.Math.Min(node1.Level, node2.Level);
 
             ///向上遍历，以其祖节点作为代理
             TreeNode agentNode1 = node1;

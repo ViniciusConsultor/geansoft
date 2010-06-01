@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Library.UI.Controls;
-using Gean.Wrapper.Sudoku;
+using Gean.Module.Sudoku;
 
 namespace Gean.Client.Sudoku
 {
     public class ExerciseNode : TreeNodePro
     {
-        public Exercise Exercise { get; set; }
+        public SudoExercise Exercise { get; set; }
 
         public override TreeNodeType NodeType
         {

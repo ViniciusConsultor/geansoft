@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <ProjectGuid>{F4525F47-D7DB-49B5-B40F-FC9C7856F506}</ProjectGuid>
+    <ProjectGuid>{F545549C-6C07-4C9E-951E-DEA37BED8112}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Gean.Module\Gean.Module.Sudoku\Gean.Module.Sudoku.csproj">
-      <Project>{4BBEAC3F-E55E-4C6C-B85A-E30807E9133F}</Project>
+      <Project>{9F41353C-B4BC-41FA-B2A9-258C83EF2DA1}</Project>
       <Name>Gean.Module.Sudoku</Name>
     </ProjectReference>
   </ItemGroup>
