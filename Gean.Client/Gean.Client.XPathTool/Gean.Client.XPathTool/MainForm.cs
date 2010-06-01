@@ -10,7 +10,7 @@
     using System.Xml;
     using System.Xml.XPath;
     using System.Xml.Xsl;
-    using PerformanceDemo;
+    using Performance;
 
     public class MainForm : Form
     {
