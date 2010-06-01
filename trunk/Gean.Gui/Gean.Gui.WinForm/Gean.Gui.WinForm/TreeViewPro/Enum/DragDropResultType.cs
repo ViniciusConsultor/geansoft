@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public enum DragDropResultType
     {

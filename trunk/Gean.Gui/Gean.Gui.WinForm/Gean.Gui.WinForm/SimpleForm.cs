@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public class SimpleForm : Form
     {

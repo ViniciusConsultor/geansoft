@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public enum ImageSize
     {

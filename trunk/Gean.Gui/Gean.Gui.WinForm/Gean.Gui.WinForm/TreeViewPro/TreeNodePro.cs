@@ -7,7 +7,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.IO;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     public abstract class TreeNodePro : TreeNode
     {

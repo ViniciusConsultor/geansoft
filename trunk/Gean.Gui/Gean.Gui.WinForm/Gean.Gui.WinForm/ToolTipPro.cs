@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Gean.Library.UI.Controls
+namespace Gean.Gui.WinForm
 {
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     public class ToolTipPro : NativeWindow
