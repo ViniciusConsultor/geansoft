@@ -64,6 +64,9 @@
     <Compile Include="IconToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="LxLedControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="NumericLedBox.cs">
       <SubType>Component</SubType>
     </Compile>
