@@ -1,17 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Demo", "..\..\DesignTime.Demo\Gean.Demo\Gean.Demo.csproj", "{80B13EEF-7639-4254-8D30-80E28D1F4480}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.UnitTesting", "..\..\DesignTime.UnitTest\Gean.UnitTesting\Gean.UnitTesting.csproj", "{F200FF3A-010E-4EE2-A3E6-6C9D3B1E80FC}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6D2BE8F0-1D32-49AB-9B80-B3BB561122A8}"
 	ProjectSection(SolutionItems) = preProject
 		Gean.Library.vsmdi = Gean.Library.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean.Library\Gean.csproj", "{54E5A1F2-3684-4C25-BB2A-D1D412D17002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Demo", "..\..\DesignTime.Demo\Gean.Demo\Gean.Demo.csproj", "{80B13EEF-7639-4254-8D30-80E28D1F4480}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.UnitTesting", "..\..\DesignTime.UnitTest\Gean.UnitTesting\Gean.UnitTesting.csproj", "{F200FF3A-010E-4EE2-A3E6-6C9D3B1E80FC}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -26,10 +26,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80B13EEF-7639-4254-8D30-80E28D1F4480}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80B13EEF-7639-4254-8D30-80E28D1F4480}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80B13EEF-7639-4254-8D30-80E28D1F4480}.Release|Any CPU.ActiveCfg = Release|Any CPU
