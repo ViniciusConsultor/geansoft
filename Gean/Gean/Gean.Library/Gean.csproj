@@ -116,7 +116,6 @@
     <Compile Include="Wrapper\SnipScreen.cs" />
     <Compile Include="Base\Collections\Definition.cs" />
     <Compile Include="Utility\Encrypt\RSACryption.cs" />
-    <Compile Include="Exceptions\ConfigException.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\SimpleLogger\LogString.cs" />
     <Compile Include="Wrapper\Mail\MailSender.cs" />

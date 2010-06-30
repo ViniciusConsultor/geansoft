@@ -11,12 +11,67 @@ namespace Gean.Exceptions
     [global::System.Serializable]
     public class GeanException : ApplicationException
     {
-        public GeanException() { }
-        public GeanException(string message) : base(message) { }
-        public GeanException(string message, Exception inner) : base(message, inner) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public GeanException()
+            : this(0, null, null)
+        {
+        }
 
-        protected GeanException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="message">异常消息</param>
+        /// <param name="innerException">内部异常</param>
+        public GeanException(string message, Exception innerException)
+            : this(0, message, innerException)
+        {
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="message">异常消息</param>
+        public GeanException(string message)
+            : this(0, message)
+        {
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="errorNo">异常编号</param>
+        /// <param name="message">异常消息</param>
+        public GeanException(int errorNo, string message)
+            : this(errorNo, message, null)
+        {
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="errorNo">异常编号</param>
+        /// <param name="message">异常消息</param>
+        /// <param name="innerException">内部异常</param>
+        public GeanException(int errorNo, string message, Exception innerException)
+            : base(message, innerException)
+        {
+            this.errorNo = errorNo;
+        }
+
+        /// <summary>
+        /// 异常编号
+        /// </summary>
+        protected int errorNo;
+
+        /// <summary>
+        /// 异常编号
+        /// </summary>
+        public int ErrorNo
+        {
+            get { return this.errorNo; }
+        }
 
         /// <summary>
         /// 查找原始的异常
@@ -52,6 +107,5 @@ namespace Gean.Exceptions
             }
             return null;
         }
-
     }
 }
