@@ -77,6 +77,7 @@
     <Compile Include="Exceptions\TypeConvertingException.cs" />
     <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\Converting\IConverting.cs" />
+    <Compile Include="Interface\IFactory.cs" />
     <Compile Include="Interface\IJson.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
