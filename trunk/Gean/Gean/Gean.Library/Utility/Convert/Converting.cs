@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Gean.Exceptions;
 
 namespace Gean
 {
@@ -176,7 +177,7 @@ namespace Gean
             {
                 if (throwError)
                 {
-                    throw new ApplicationException("转换成Type时错误", e);
+                    throw new GeanException("转换成Type时错误", e);
                 }
             }
             return type;
