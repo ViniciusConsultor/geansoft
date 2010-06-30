@@ -52,7 +52,7 @@ namespace Gean.SimpleLogger
                 //加入时间信息
                 sb.Append(DateTime.Now.ToString("yyMMdd HH:mm:ss"))
                   .Append(" ")
-                  .Append(DateTime.Now.Millisecond.ToString())
+                  .Append(DateTime.Now.Millisecond.ToString().PadLeft(3, '0'))
                   .Append(",\t")
                   .Append(logLevel.ToString())
                   .Append(",   \t");
@@ -66,14 +66,20 @@ namespace Gean.SimpleLogger
                             sb.Append(((Exception)item).Message).Append(" | ");
                         }
                     }
+                    else if (item == null)
+                    {
+                        continue;
+                    }
                     else
                     {
                         sb.Append(item.ToString()).Append(" | ");
                     }
                 }
                 //写入文件
-                Stream.WriteLine(sb.ToString(0, sb.Length - 2));
+                string log = sb.ToString(0, sb.Length - 2);
+                Stream.WriteLine(log);
                 Stream.Flush();
+                OnLogWrited(new LogWritedEventArgs(log));
             }//lock (_StreamWriterDic)
         }
 
@@ -132,5 +138,25 @@ namespace Gean.SimpleLogger
                 BakupLogFile();
             }
         }
+
+        /// <summary>
+        /// 当日志写入后发生的事件
+        /// </summary>
+        public event LogWritedEventHandler LogWritedEvent;
+        private void OnLogWrited(LogWritedEventArgs e)
+        {
+            if (LogWritedEvent != null)
+                LogWritedEvent(this, e);
+        }
+        public delegate void LogWritedEventHandler(Object sender, LogWritedEventArgs e);
+        public class LogWritedEventArgs : EventArgs
+        {
+            public String LogString { get; private set; }
+            public LogWritedEventArgs(String logString)
+            {
+                this.LogString = logString;
+            }
+        }
+
     }
 }
