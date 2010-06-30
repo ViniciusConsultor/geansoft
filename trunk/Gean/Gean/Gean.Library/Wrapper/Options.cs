@@ -43,25 +43,25 @@ namespace Gean
         #endregion
 
         private static Dictionary<String, Object> _optionDictionary = new Dictionary<String, Object>();
-        private static String _configFile;
+        private static String _optionFile;
 
         /// <summary>
-        /// Initializeses the specified config file.
+        /// Initializeses the specified option file.
         /// </summary>
-        /// <param name="configFile">config file的完全路径.</param>
-        public static void Initializes(String configFile)
+        /// <param name="optionFile">option file的完全路径.</param>
+        public static void Initializes(String optionFile)
         {
-            _configFile = configFile;
-            if (!File.Exists(configFile))//如果用户的配置文件不存在，创建默认的配置文件
+            _optionFile = optionFile;
+            if (!File.Exists(optionFile))//如果用户的选项文件不存在，创建默认的选项文件
             {
-                using (XmlTextWriter w = new XmlTextWriter(configFile, Encoding.UTF8))
+                using (XmlTextWriter w = new XmlTextWriter(optionFile, Encoding.UTF8))
                 {
                     w.WriteStartDocument();
-                    w.WriteStartElement("configuration");
+                    w.WriteStartElement("Options");
                     w.WriteAttributeString("ProductName", Application.ProductName);
                     w.WriteAttributeString("Created", DateTime.Now.ToString());
                     w.WriteAttributeString("ApplicationVersion", Application.ProductVersion);
-                    w.WriteAttributeString("ConfigurationVersion", "1");
+                    w.WriteAttributeString("OptionVersion", "1");
                     w.WriteAttributeString("UpdateCount", "0");
                     w.WriteAttributeString("Modified", DateTime.Now.ToString());
                     w.WriteEndElement();
@@ -71,13 +71,13 @@ namespace Gean
             try
             {
                 XmlDocument optionXml = new XmlDocument();
-                optionXml.Load(configFile);
+                optionXml.Load(optionFile);
                 LoadOptions(optionXml);
             }
             catch
             {
-                File.Delete(configFile);
-                Initializes(configFile);
+                File.Delete(optionFile);
+                Initializes(optionFile);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Gean
                 }
                 XmlElement ele = (XmlElement)item;
                 Object value = new Object();
-                //如果配置的第一个子节点是一个Element节点的话，一般来讲是数组类型的Option节
+                //如果选项的第一个子节点是一个Element节点的话，一般来讲是数组类型的Option节
                 if (ele.FirstChild.NodeType == XmlNodeType.Element)
                 {
                     value = new List<string>();
@@ -188,7 +188,7 @@ namespace Gean
         public void Save()
         {
             XmlDocument optionXml = new XmlDocument();
-            optionXml.Load(_configFile);
+            optionXml.Load(_optionFile);
             while (optionXml.DocumentElement.HasChildNodes)
             {
                 optionXml.DocumentElement.RemoveChild(optionXml.DocumentElement.FirstChild);
@@ -224,7 +224,7 @@ namespace Gean
                 optionXml.DocumentElement.Attributes["UpdateCount"].Value = (i + 1).ToString();
             }
             optionXml.DocumentElement.Attributes["Modified"].Value = DateTime.Now.ToString();
-            optionXml.Save(_configFile);
+            optionXml.Save(_optionFile);
         }
 
         /// <summary>
