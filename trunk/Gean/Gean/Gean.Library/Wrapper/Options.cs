@@ -4,6 +4,8 @@ using System.Text;
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Forms;
+using System.Collections;
 
 namespace Gean
 {
@@ -40,14 +42,14 @@ namespace Gean
 
         #endregion
 
-        private static Dictionary<string, string> _optionDictionary = new Dictionary<string, string>();
-        private static string _configFile;
+        private static Dictionary<String, Object> _optionDictionary = new Dictionary<String, Object>();
+        private static String _configFile;
 
         /// <summary>
         /// Initializeses the specified config file.
         /// </summary>
-        /// <param name="configFile">The config file.</param>
-        public static void Initializes(string configFile)
+        /// <param name="configFile">config file的完全路径.</param>
+        public static void Initializes(String configFile)
         {
             _configFile = configFile;
             if (!File.Exists(configFile))//如果用户的配置文件不存在，创建默认的配置文件
@@ -56,9 +58,12 @@ namespace Gean
                 {
                     w.WriteStartDocument();
                     w.WriteStartElement("configuration");
-                    w.WriteAttributeString("created", DateTime.Now.ToString());
-                    w.WriteAttributeString("applicationVersion", "1");
-                    w.WriteAttributeString("modified", DateTime.Now.ToString());
+                    w.WriteAttributeString("ProductName", Application.ProductName);
+                    w.WriteAttributeString("Created", DateTime.Now.ToString());
+                    w.WriteAttributeString("ApplicationVersion", Application.ProductVersion);
+                    w.WriteAttributeString("ConfigurationVersion", "1");
+                    w.WriteAttributeString("UpdateCount", "0");
+                    w.WriteAttributeString("Modified", DateTime.Now.ToString());
                     w.WriteEndElement();
                     w.Flush();
                 }
@@ -89,15 +94,43 @@ namespace Gean
                     continue;
                 }
                 XmlElement ele = (XmlElement)item;
-                _optionDictionary.Add(ele.GetAttribute("name"), ele.InnerText);
+                Object value = new Object();
+                //如果配置的第一个子节点是一个Element节点的话，一般来讲是数组类型的Option节
+                if (ele.FirstChild.NodeType == XmlNodeType.Element)
+                {
+                    value = new List<string>();
+                    foreach (XmlNode arrayNode in ele.ChildNodes)
+                    {
+                        if (arrayNode.NodeType != XmlNodeType.Element)
+                        {
+                            Debug.Assert(arrayNode.NodeType == XmlNodeType.Element, arrayNode.OuterXml);
+                            break;
+                        }
+                        XmlElement arrayEle = (XmlElement)arrayNode;
+                        ((List<string>)value).Add(arrayEle.InnerText);
+                    }
+                }
+                else
+                {
+                    value = ele.InnerText;
+                }
+                _optionDictionary.Add(ele.GetAttribute("name"), value);
             }
         }
+
+        /// <summary>
+        /// 获取是否有选项值
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance has option; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasOption { get { return _optionDictionary.Count > 0; } }
 
         /// <summary>
         /// Gets or sets the <see cref="System.String"/> with the specified name.
         /// </summary>
         /// <value></value>
-        public string this[string name]
+        public Object this[String name]
         {
             get { return this.GetOptionValue(name); }
             set { this.SetOption(name, value); }
@@ -108,10 +141,11 @@ namespace Gean
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public string GetOptionValue(string name)
+        public Object GetOptionValue(String name)
         {
-            string value = string.Empty;
-            Debug.Assert(TryGetOptionValue(name, out value), string.Format("Option \"{0}\": Value is Null or Empty!", name));
+            Object value = new Object();
+            bool flag = TryGetOptionValue(name, out value);
+            Debug.Assert(flag, String.Format("Option \"{0}\": Value is Null or Empty!", name));
             return value;
         }
 
@@ -121,7 +155,7 @@ namespace Gean
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public bool TryGetOptionValue(string name, out string value)
+        public bool TryGetOptionValue(String name, out Object value)
         {
             return _optionDictionary.TryGetValue(name, out value);
         }
@@ -131,7 +165,7 @@ namespace Gean
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
-        public void SetOption(string name, string value)
+        public void SetOption(String name, Object value)
         {
             if (_optionDictionary.ContainsKey(name))
             {
@@ -162,10 +196,34 @@ namespace Gean
             foreach (var item in _optionDictionary)
             {
                 XmlElement ele = optionXml.CreateElement("section");
-                ele.SetAttribute("name", item.Key);
-                ele.InnerText = item.Value;
+                if (item.Value is String)//如果值是普通字符串
+                {
+                    ele.SetAttribute("name", item.Key);
+                    ele.InnerText = (String)item.Value;
+                }
+                else if (item.Value is IEnumerable)//如果值是集合类型
+                {
+                    ele.SetAttribute("name", item.Key);
+                    IEnumerable values = (IEnumerable)item.Value;
+                    foreach (var subItem in values)
+                    {
+                        XmlElement subEle = optionXml.CreateElement("value");
+                        subEle.InnerText = (String)subItem;
+                        ele.AppendChild(subEle);
+                    }
+                }
                 optionXml.DocumentElement.AppendChild(ele);
             }
+            int i;
+            if (!int.TryParse(optionXml.DocumentElement.Attributes["UpdateCount"].Value, out i))
+            {
+                optionXml.DocumentElement.SetAttribute("UpdateCount", "1");
+            }
+            else
+            {
+                optionXml.DocumentElement.Attributes["UpdateCount"].Value = (i + 1).ToString();
+            }
+            optionXml.DocumentElement.Attributes["Modified"].Value = DateTime.Now.ToString();
             optionXml.Save(_configFile);
         }
 
@@ -178,12 +236,12 @@ namespace Gean
             if (OptionChangedEvent != null)
                 OptionChangedEvent(this, e);
         }
-        public delegate void OptionChangedEventHandler(object sender, OptionChangedEventArgs e);
+        public delegate void OptionChangedEventHandler(Object sender, OptionChangedEventArgs e);
         public class OptionChangedEventArgs : EventArgs
         {
-            public string OptionName { get; private set; }
-            public string OptionValue { get; private set; }
-            public OptionChangedEventArgs(string name, string value)
+            public String OptionName { get; private set; }
+            public Object OptionValue { get; private set; }
+            public OptionChangedEventArgs(String name, Object value)
             {
                 this.OptionName = name;
                 this.OptionValue = value;

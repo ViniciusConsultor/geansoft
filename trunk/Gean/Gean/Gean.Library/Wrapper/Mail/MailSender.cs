@@ -6,51 +6,48 @@ using System.Timers;
 
 namespace Gean.Mail
 {
-	/// <summary>
-	/// 邮件发送工具，支持认证发送
-	/// </summary>
-	public static class MailSender
-	{
-		#region constructor
+    /// <summary>
+    /// 邮件发送工具，支持认证发送
+    /// </summary>
+    public class MailSender
+    {
+        #region constructor
 
-        static MailSender()
+        public MailSender(string smtp, int port, string username, string pwd)
         {
-            if (MailSetting.Current != null)
-            {
-                smtpServer = MailSetting.Current.Server;
-                serverPort = MailSetting.Current.Port;
-                userName = MailSetting.Current.UserName;
-                password = MailSetting.Current.Password;
-            }
+            _smtpServer = smtp;
+            _serverPort = port;
+            _userName = username;
+            _password = pwd;
         }
 
-		#endregion
-		
-		#region private static fields
+        #endregion
 
-		private static string smtpServer;
-		private static int serverPort;
-		private static string userName;
-		private static string password;
-        private static Timer timer;
-        private static Queue<MailMessage> msgQueue;
-        private static object lockObject = new object();
+        #region private fields
 
-        private static void TimerOnElapsed(object sender, ElapsedEventArgs e)
+        private string _smtpServer;
+        private int _serverPort;
+        private string _userName;
+        private string _password;
+        private Timer _timer;
+        private Queue<MailMessage> _msgQueue;
+        private object _lockObject = new object();
+
+        private void TimerOnElapsed(object sender, ElapsedEventArgs e)
         {
-            timer.Stop();
+            _timer.Stop();
 
-            int msgCount = msgQueue.Count;
+            int msgCount = _msgQueue.Count;
             if (msgCount > 0)
             {
-                SmtpClient smtp = new SmtpClient(smtpServer, serverPort);
-                smtp.Credentials = new NetworkCredential(userName, password);
+                SmtpClient smtp = new SmtpClient(_smtpServer, _serverPort);
+                smtp.Credentials = new NetworkCredential(_userName, _password);
                 while (msgCount-- > 0)
                 {
                     MailMessage message = null;
                     try
                     {
-                        message = msgQueue.Dequeue();
+                        message = _msgQueue.Dequeue();
                         if (message != null)
                         {
                             smtp.Send(message);
@@ -70,112 +67,128 @@ namespace Gean.Mail
                 }
             }
 
-            timer.Start();
+            _timer.Start();
         }
 
-		#endregion
+        #endregion
 
-		#region public static methods
+        #region public methods
 
-		/// <summary>
-		/// 发送邮件
-		/// </summary>
-		/// <param name="message">MailMessage实体</param>
-		public static void Send(MailMessage message) {
-			Send(message, true);
-		}
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="message">MailMessage实体</param>
+        public void Send(MailMessage message)
+        {
+            Send(message, true);
+        }
 
-		/// <summary>
-		/// 发送邮件
-		/// </summary>
-		/// <param name="message">MailMessage实体</param>
-		/// <param name="cached">是否缓存邮件（提高程序响应速度）</param>
-		public static void Send(MailMessage message, bool cached) {
-			if (cached) {
-				lock (lockObject) {
-					if (msgQueue == null) {
-						msgQueue = new Queue<MailMessage>();
-					}
-					if (timer == null) {
-						timer = new Timer(1000);
-						timer.Enabled = false;
-						timer.AutoReset = false;
-						timer.Elapsed += new ElapsedEventHandler(TimerOnElapsed);
-					}
-					if (!timer.Enabled) {
-						timer.Enabled = true;
-					}
-				}
-				lock (msgQueue) {
-					msgQueue.Enqueue(message);
-				}
-			} else {
-				SmtpClient smtp = new SmtpClient(smtpServer, serverPort);
-				smtp.Credentials = new NetworkCredential(userName, password);
-				smtp.Send(message);
-			}
-		}
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="message">MailMessage实体</param>
+        /// <param name="cached">是否缓存邮件（提高程序响应速度）</param>
+        public void Send(MailMessage message, bool cached)
+        {
+            if (cached)
+            {
+                lock (_lockObject)
+                {
+                    if (_msgQueue == null)
+                    {
+                        _msgQueue = new Queue<MailMessage>();
+                    }
+                    if (_timer == null)
+                    {
+                        _timer = new Timer(1000);
+                        _timer.Enabled = false;
+                        _timer.AutoReset = false;
+                        _timer.Elapsed += new ElapsedEventHandler(TimerOnElapsed);
+                    }
+                    if (!_timer.Enabled)
+                    {
+                        _timer.Enabled = true;
+                    }
+                }
+                lock (_msgQueue)
+                {
+                    _msgQueue.Enqueue(message);
+                }
+            }
+            else
+            {
+                SmtpClient smtp = new SmtpClient(_smtpServer, _serverPort);
+                smtp.Credentials = new NetworkCredential(_userName, _password);
+                smtp.Send(message);
+            }
+        }
 
-		/// <summary>
-		/// 发送邮件
-		/// </summary>
-		/// <param name="from">发送者地址</param>
-		/// <param name="to">接收者地址（可填多个地址，用英文分号“;”分割）</param>
-		/// <param name="subject">邮件主题</param>
-		/// <param name="messageText">邮件内容</param>
-		public static void Send(string from, string to, string subject, string messageText) {
-			Send(from, to, subject, messageText, true);
-		}
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="from">发送者地址</param>
+        /// <param name="to">接收者地址（可填多个地址，用英文分号“;”分割）</param>
+        /// <param name="subject">邮件主题</param>
+        /// <param name="messageText">邮件内容</param>
+        public void Send(string from, string to, string subject, string messageText)
+        {
+            Send(from, to, subject, messageText, true);
+        }
 
-		/// <summary>
-		/// 发送邮件
-		/// </summary>
-		/// <param name="from">发送者地址</param>
-		/// <param name="to">接收者地址（可填多个地址，用英文分号“;”分割）</param>
-		/// <param name="subject">邮件主题</param>
-		/// <param name="messageText">邮件内容</param>
-		/// <param name="cached">是否缓存邮件（提高程序响应速度）</param>
-		public static void Send(string from, string to, string subject, string messageText, bool cached) {
-			MailMessage message = new MailMessage(from, to, subject, messageText);
-			Send(message, cached);
-		}
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="from">发送者地址</param>
+        /// <param name="to">接收者地址（可填多个地址，用英文分号“;”分割）</param>
+        /// <param name="subject">邮件主题</param>
+        /// <param name="messageText">邮件内容</param>
+        /// <param name="cached">是否缓存邮件（提高程序响应速度）</param>
+        public void Send(string from, string to, string subject, string messageText, bool cached)
+        {
+            MailMessage message = new MailMessage(from, to, subject, messageText);
+            Send(message, cached);
+        }
 
-		#endregion
+        #endregion
 
-		#region public static properties
+        #region public properties
 
-		/// <summary>
-		/// SMTP服务器地址
-		/// </summary>
-		public static string SmtpServer {
-			get { return smtpServer; }
-			set { smtpServer = value; }
-		}
+        /// <summary>
+        /// SMTP服务器地址
+        /// </summary>
+        public string SmtpServer
+        {
+            get { return _smtpServer; }
+            //set { _smtpServer = value; }
+        }
 
-		/// <summary>
-		/// 服务器侦听端口
-		/// </summary>
-		public static int ServerPort {
-			get { return serverPort; }
-			set { serverPort = value; }
-		}
+        /// <summary>
+        /// 服务器侦听端口
+        /// </summary>
+        public int ServerPort
+        {
+            get { return _serverPort; }
+            //set { _serverPort = value; }
+        }
 
-		/// <summary>
-		/// 认证用户名
-		/// </summary>
-		public static string UserName {
-			get { return userName; }
-			set { userName = value; }
-		}
+        /// <summary>
+        /// 认证用户名
+        /// </summary>
+        public string UserName
+        {
+            get { return _userName; }
+            //set { _userName = value; }
+        }
 
-		/// <summary>
-		/// 认证用户密码
-		/// </summary>
-		public static string Password {
-			get { return password; }
-			set { password = value; }
-		}
+        /// <summary>
+        /// 认证用户密码
+        /// </summary>
+        public string Password
+        {
+            get { return _password; }
+            //set { _password = value; }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

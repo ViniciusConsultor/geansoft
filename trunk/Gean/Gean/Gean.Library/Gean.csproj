@@ -75,7 +75,6 @@
     <Compile Include="Base\Collections\CollectionBase.cs" />
     <Compile Include="Base\Triplet.cs" />
     <Compile Include="Exceptions\TypeConvertingException.cs" />
-    <Compile Include="Interface\Converting\Converting.cs" />
     <Compile Include="Interface\ICommand.cs" />
     <Compile Include="Interface\Converting\IConverting.cs" />
     <Compile Include="Interface\IJson.cs" />
@@ -94,6 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SmartDateString.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Convert\Converting.cs" />
     <Compile Include="Utility\File\TextFileEncoding.cs" />
     <Compile Include="Utility\Math\BigInteger.cs" />
     <Compile Include="Utility\Math\Combinations.cs" />
@@ -137,8 +137,6 @@
     <Compile Include="Wrapper\Config\XmlConfig\XmlSettingValue.cs" />
     <Compile Include="Wrapper\GlobalHotkey\GlobalHotkey.cs" />
     <Compile Include="Wrapper\SimpleLogger\LogString.cs" />
-    <Compile Include="Wrapper\Mail\Config\MailSetting.cs" />
-    <Compile Include="Wrapper\Mail\Config\SectionHandler.cs" />
     <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
     <Compile Include="Wrapper\Options.cs" />
@@ -163,7 +161,7 @@
     <Compile Include="Utility\File\UtilityFile.cs" />
     <Compile Include="Utility\UtilityClipboard.cs" />
     <Compile Include="Utility\UtilityCollection.cs" />
-    <Compile Include="Utility\UtilityConvert.cs" />
+    <Compile Include="Utility\Convert\UtilityConvert.cs" />
     <Compile Include="Utility\UtilityDateTime.cs" />
     <Compile Include="Utility\Encrypt\UtilityEncrypt.cs" />
     <Compile Include="Utility\UtilityGuid.cs" />
