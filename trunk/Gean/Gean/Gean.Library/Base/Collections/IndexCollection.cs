@@ -7,34 +7,35 @@ namespace Gean
 {
     /// <summary>
     /// 集合基础类（泛型）
+    /// 实现可通过键或索引来访问为关联的 System.String 键和 System.Object 值的集合。
     /// </summary>
     /// <typeparam name="T">集合收集对象的类型</typeparam>
-    public class CollectionBase<T> : NameObjectCollectionBase
+    public class IndexCollection<T> : NameObjectCollectionBase
     {
         /// <summary>
         /// 构造函数
         /// </summary>
-        public CollectionBase() : this(false) { }
+        public IndexCollection() : this(false) { }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="uniqueKey">键是否限制为唯一</param>
-        public CollectionBase(bool uniqueKey)
+        public IndexCollection(bool uniqueKey)
             : base()
         {
-            this.uniqueKey = uniqueKey;
+            this._uniqueKey = uniqueKey;
         }
 
-        private bool uniqueKey;
+        private bool _uniqueKey;
 
         /// <summary>
         /// 键是否限制为唯一
         /// </summary>
         public virtual bool UniqueKey
         {
-            get { return this.uniqueKey; }
-            protected set { this.uniqueKey = value; }
+            get { return this._uniqueKey; }
+            protected set { this._uniqueKey = value; }
         }
 
         /// <summary>
