@@ -171,7 +171,7 @@ namespace Gean
             Type type = null;
             try
             {
-                type = UtilityType.CreateType(this.ConvertingValue, throwError);
+                type = UtilityType.CreateType(this.GetType().Assembly, this.ConvertingValue, throwError);
             }
             catch (Exception e)
             {
@@ -199,7 +199,7 @@ namespace Gean
         /// <returns>对象</returns>
         object IConverting.ToObject(params object[] parameters)
         {
-            return UtilityType.CreateObject(this.ConvertingValue, null, true, parameters);
+            return UtilityType.CreateObject(this.GetType().Assembly, this.ConvertingValue, null, true, parameters);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Gean
         /// <returns>对象</returns>
         object IConverting.ToObject(Type expectedType, bool throwError, params object[] parameters)
         {
-            return UtilityType.CreateObject(this.ConvertingValue, expectedType, throwError, parameters);
+            return UtilityType.CreateObject(this.GetType().Assembly, this.ConvertingValue, expectedType, throwError, parameters);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Gean
         /// <returns>对象</returns>
         object IConverting.ToObject(Type expectedType, bool throwError, Type[] paramTypes, object[] paramValues)
         {
-            return UtilityType.CreateObject(this.ConvertingValue, expectedType, throwError, paramTypes, paramValues);
+            return UtilityType.CreateObject(this.GetType().Assembly, this.ConvertingValue, expectedType, throwError, paramTypes, paramValues);
         }
 
         /// <summary>

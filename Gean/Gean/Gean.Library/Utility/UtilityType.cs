@@ -38,7 +38,7 @@ namespace Gean
             {
                 type = assembly.GetType(classname, true, false);
             }
-            catch (Exception e)
+            catch
             {
                 throw;
             }
@@ -59,12 +59,13 @@ namespace Gean
         /// <summary>
         /// 从类型名称中创建类型
         /// </summary>
+        /// <param name="assembly">类型所在程序集.</param>
         /// <param name="typeName">类型名</param>
         /// <param name="throwOnError">失败时是否抛出异常</param>
         /// <returns>Type</returns>
-        public static Type CreateType(string typeName, bool throwOnError)
+        public static Type CreateType(Assembly assembly, string typeName, bool throwOnError)
         {
-            return Type.GetType(typeName, throwOnError, false);
+            return assembly.GetType(typeName, throwOnError, false);
         }
 
         /// <summary>
@@ -162,29 +163,31 @@ namespace Gean
         /// <summary>
         /// 从类型名中创建此类型的实例
         /// </summary>
+        /// <param name="assembly">类型所在程序集.</param>
         /// <param name="typeName">类型名</param>
         /// <param name="expectedType">期望的类型</param>
         /// <param name="throwOnError">失败时是否抛出异常</param>
         /// <param name="parameters">创建实例所需的参数值列表</param>
         /// <returns>类型实例</returns>
-        public static object CreateObject(string typeName, Type expectedType, bool throwOnError, params object[] parameters)
+        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError, params object[] parameters)
         {
-            Type type = CreateType(typeName, throwOnError);
+            Type type = CreateType(assembly, typeName, throwOnError);
             return CreateObject(type, expectedType, throwOnError, parameters);
         }
 
         /// <summary>
         /// 从类型名中创建此类型的实例
         /// </summary>
+        /// <param name="assembly">类型所在程序集.</param>
         /// <param name="typeName">类型名</param>
         /// <param name="expectedType">期望的类型</param>
         /// <param name="throwOnError">失败时是否抛出异常</param>
         /// <param name="parameterTypes">创建实例所需参数的类型列表</param>
         /// <param name="parameterValues">创建实例所需的参数值列表</param>
         /// <returns>类型实例</returns>
-        public static object CreateObject(string typeName, Type expectedType, bool throwOnError, Type[] parameterTypes, object[] parameterValues)
+        public static object CreateObject(Assembly assembly, string typeName, Type expectedType, bool throwOnError, Type[] parameterTypes, object[] parameterValues)
         {
-            Type type = CreateType(typeName, throwOnError);
+            Type type = CreateType(assembly, typeName, throwOnError);
             return CreateObject(type, expectedType, throwOnError, parameterTypes, parameterValues);
         }
 
@@ -219,7 +222,7 @@ namespace Gean
                     {
                         string assemblyName = Path.GetFileNameWithoutExtension(fileName);
                         string typeFullName = typeName + ", " + assemblyName;
-                        type = CreateType(typeFullName, false);
+                        type = Type.GetType(typeFullName, false);
                         if (type != null)
                         {
                             break;
