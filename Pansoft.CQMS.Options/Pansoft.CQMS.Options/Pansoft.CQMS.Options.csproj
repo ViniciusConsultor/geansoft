@@ -39,8 +39,7 @@
   <ItemGroup>
     <Compile Include="Attribute\OptionFileAttribute.cs" />
     <Compile Include="OptionAttribute.cs" />
-    <Compile Include="Base\UUOption.cs" />
-    <Compile Include="Base\OptionCollection.cs" />
+    <Compile Include="OptionCollection.cs" />
     <Compile Include="Base\OptionException.cs" />
     <Compile Include="OptionFile.cs" />
     <Compile Include="Base\OptionOperatorEnum.cs" />
@@ -54,6 +53,7 @@
     <Compile Include="IOptionSerializable.cs" />
     <Compile Include="OptionManager.cs" />
     <Compile Include="Option.cs" />
+    <Compile Include="OptionValueAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

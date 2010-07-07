@@ -4,18 +4,24 @@ using System.Text;
 
 namespace Pansoft.CQMS.Options
 {
-    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
     public sealed class OptionAttribute : Attribute
     {
-        public OptionAttribute(string name, string displayName, object defaultValue)
+        public OptionAttribute(string sectionName, string displayName)
+            : this(sectionName, displayName, false, "")
         {
-            this.OptionName = name;
+        }
+        public OptionAttribute(string sectionName, string displayName, Boolean isCollection, string parentSectionName)
+        {
+            this.OptionSectionName = sectionName;
             this.OptionDisplayName = displayName;
-            this.OptionDefaultValue = defaultValue;
+            this.IsCollection = isCollection;
+            this.ParentSectionName = parentSectionName;
         }
 
-        public string OptionName { get; private set; }
+        public Boolean IsCollection { get; private set; }
+        public string OptionSectionName { get; private set; }
         public string OptionDisplayName { get; private set; }
-        public object OptionDefaultValue { get; private set; }
+        public string ParentSectionName { get; private set; }
     }
 }

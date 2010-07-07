@@ -153,9 +153,9 @@ namespace Pansoft.CQMS.Options
             {
                 switch (key)
                 {
-                    case UUOption.OptionFilePropertyName:
-                    case UUOption.OptionNodePropertyName:
-                        break;
+                    //case UUOption.OptionFilePropertyName:
+                    //case UUOption.OptionNodePropertyName:
+                        //break;
                     default:
                         this._optionValues.Set(property[key].Clone());
                         break;
