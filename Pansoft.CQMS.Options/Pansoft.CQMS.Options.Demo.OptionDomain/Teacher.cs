@@ -4,19 +4,16 @@ using System.Text;
 
 namespace Pansoft.CQMS.Options.Demo.OptionDomain
 {
-    class Teacher
+    [Option("teacher", "老师", true, "teacherList")]
+    public class Teacher
     {
-        public string Name { get; set; }
-        public string Id { get; set; }
-
-        public int MyProperty1 { get; set; }
-        public int MyProperty2 { get; set; }
-        public int MyProperty3 { get; set; }
-        public int MyProperty4 { get; set; }
-        public int MyProperty5 { get; set; }
-        public int MyProperty6 { get; set; }
-        public int MyProperty7 { get; set; }
-        public int MyProperty8 { get; set; }
-        public int MyProperty9 { get; set; }
+        [OptionValue("AAA", "a-a-a")]
+        public string AAA { get; set; }
+        [OptionValue("BBB", "b-b-b")]
+        public string BBB { get; set; }
+        [OptionValue("CCC", "c-c-c")]
+        public string CCC { get; set; }
+        [OptionValue("DDD", "d-d-d")]
+        public string DDD { get; set; }
     }
 }
