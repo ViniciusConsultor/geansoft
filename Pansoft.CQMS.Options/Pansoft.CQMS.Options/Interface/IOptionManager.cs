@@ -6,17 +6,11 @@ namespace Pansoft.CQMS.Options
 	public interface IOptionManager
 	{
         /// <summary>
-        /// 此管理器所管理的选项
-        /// </summary>
-        /// <value>The option.</value>
-		IOption Option { get; }
-
-        /// <summary>
         /// 获得选项节
         /// </summary>
-        /// <param name="xpath">选项节的XPath，如果为<c>null</c>，则返回根选项节</param>
+        /// <param name="param">The param.</param>
         /// <returns><see cref="IOption"/></returns>
-        IOption GetOption(string xpath);
+        OptionCollection GetOption(string param);
 
         /// <summary>
         /// 初始化，提供给模块调用，进行管理器的初始化工作，比如载入选项文件等等
@@ -28,9 +22,11 @@ namespace Pansoft.CQMS.Options
         /// </remarks>
         void Initializes(string optionFile, bool monitor);
 
-		/// <summary>
-		/// 重新载入相关选项信息
-		/// </summary>
-		void Reset();
+        /// <summary>
+        /// 重新载入相关选项信息
+        /// </summary>
+		void ReLoad();
+
+        void Save();
 	}
 }

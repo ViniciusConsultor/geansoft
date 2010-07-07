@@ -842,6 +842,14 @@ namespace Gean
             }
         }
 
+        /// <summary>
+        /// 搜索目录指定格式的文件.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="filemask">The filemask.</param>
+        /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
+        /// <param name="ignoreHidden">if set to <c>true</c> [ignore hidden].</param>
+        /// <returns></returns>
         public static StringCollection SearchDirectory(string directory, string filemask, bool searchSubdirectories, bool ignoreHidden)
         {
             StringCollection collection = new StringCollection();
@@ -849,11 +857,24 @@ namespace Gean
             return collection;
         }
 
+        /// <summary>
+        /// 搜索目录指定格式的文件.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="filemask">The filemask.</param>
+        /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
+        /// <returns></returns>
         public static StringCollection SearchDirectory(string directory, string filemask, bool searchSubdirectories)
         {
             return SearchDirectory(directory, filemask, searchSubdirectories, true);
         }
 
+        /// <summary>
+        /// 搜索目录指定格式的文件.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="filemask">The filemask.</param>
+        /// <returns></returns>
         public static StringCollection SearchDirectory(string directory, string filemask)
         {
             return SearchDirectory(directory, filemask, true, true);
@@ -867,6 +888,11 @@ namespace Gean
         /// <paramref name="collection"/>.
         /// If <paramref name="ignoreHidden"/> is true, hidden files and folders are ignored.
         /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="filemask">The filemask.</param>
+        /// <param name="collection">The collection.</param>
+        /// <param name="searchSubdirectories">if set to <c>true</c> [search subdirectories].</param>
+        /// <param name="ignoreHidden">if set to <c>true</c> [ignore hidden].</param>
         static void SearchDirectory(string directory, string filemask, StringCollection collection, bool searchSubdirectories, bool ignoreHidden)
         {
             // If Directory.GetFiles() searches the 8.3 name as well as the full name so if the filemask is 
@@ -903,7 +929,7 @@ namespace Gean
 
         // This is an arbitrary limitation built into the .NET Framework.
         // Windows supports paths up to 32k length.
-        public static int MaxPathLength = 260;
+        public readonly static int MaxPathLength = 260;
 
         //TODO This code is Windows specific
         static bool MatchN(string src, int srcidx, string pattern, int patidx)

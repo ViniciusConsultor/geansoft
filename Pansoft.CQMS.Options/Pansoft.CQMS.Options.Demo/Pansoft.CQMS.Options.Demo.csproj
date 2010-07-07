@@ -2,18 +2,19 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2061A9E8-82B6-4B6B-884D-A1136D7ABB90}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{21677B5C-74B7-4829-A094-1437C8B82E7E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pansoft.CQMS.Options</RootNamespace>
-    <AssemblyName>Pansoft.CQMS.Options</AssemblyName>
+    <RootNamespace>Pansoft.CQMS.Options.Demo</RootNamespace>
+    <AssemblyName>Pansoft.CQMS.Options.Demo</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,7 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,27 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\OptionFileAttribute.cs" />
-    <Compile Include="OptionAttribute.cs" />
-    <Compile Include="Base\UUOption.cs" />
-    <Compile Include="Base\OptionCollection.cs" />
-    <Compile Include="Base\OptionException.cs" />
-    <Compile Include="OptionFile.cs" />
-    <Compile Include="Base\OptionOperatorEnum.cs" />
-    <Compile Include="Base\OptionSection.cs" />
-    <Compile Include="Base\OptionValue.cs" />
-    <Compile Include="Base\OptionValueCollection.cs" />
-    <Compile Include="Interface\IOption.cs" />
-    <Compile Include="Interface\IOptionManager.cs" />
-    <Compile Include="Interface\IOptionSection.cs" />
-    <Compile Include="Interface\IOptionValue.cs" />
-    <Compile Include="IOptionSerializable.cs" />
-    <Compile Include="OptionManager.cs" />
-    <Compile Include="Option.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,9 +46,14 @@
       <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
       <Name>Gean</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Manager\" />
+    <ProjectReference Include="..\Pansoft.CQMS.Options.Demo.OptionDomain\Pansoft.CQMS.Options.Demo.OptionDomain.csproj">
+      <Project>{C8FC78DE-074E-4236-AB83-304B5B009F90}</Project>
+      <Name>Pansoft.CQMS.Options.Demo.OptionDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pansoft.CQMS.Options\Pansoft.CQMS.Options.csproj">
+      <Project>{2061A9E8-82B6-4B6B-884D-A1136D7ABB90}</Project>
+      <Name>Pansoft.CQMS.Options</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
