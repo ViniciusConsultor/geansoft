@@ -21,8 +21,18 @@ namespace Pansoft.CQMS.Options.Demo
             Console.WriteLine("选项值：" + student.Sex);
             Console.WriteLine("选项值：" + student.Brithday);
             Console.WriteLine("选项值：" + student.Salary);
+            Console.WriteLine();
 
-            OptionManager.Instance.Options.GetItem("");
+            Option[] options = OptionManager.Instance.Options.GetItem("teacher");
+            Console.WriteLine(options.Length);
+            foreach (Option option in options)
+            {
+                Teacher teacher = (Teacher)OptionManager.Instance.Options["teacher"].Entity;
+                Console.WriteLine("选项值：" + teacher.AAA);
+                Console.WriteLine("选项值：" + teacher.BBB);
+                Console.WriteLine("选项值：" + teacher.CCC);
+                Console.WriteLine("选项值：" + teacher.DDD);
+            }
 
             Console.ReadKey();
         }
