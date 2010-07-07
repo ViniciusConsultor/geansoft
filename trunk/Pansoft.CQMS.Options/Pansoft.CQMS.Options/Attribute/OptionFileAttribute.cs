@@ -8,25 +8,25 @@ namespace Pansoft.CQMS.Options
     /// <summary>
     /// 选项文件属性
     /// </summary>
-    /// <remarks>
-    ///		<code>
-    ///			[assembly: OptionFile(OptionFile="option\my.option")]
-    ///		</code>
-    /// </remarks>
-    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class OptionFileAttribute : Attribute
     {
+        private static string StartPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="configFile">指定选项文件地址</param>
         public OptionFileAttribute(string optionFile)
         {
-            string appPath;
-            this.OptionFile = new FileInfo(optionFile);
+            string optionFilePath = Path.Combine(StartPath, optionFile);
+            if (!File.Exists(optionFilePath))
+            {
+                OptionFile.Create(optionFilePath);
+            }
+            this.OptionFileInfo = new FileInfo(optionFilePath);
         }
 
-        public FileInfo OptionFile { get; private set; }
+        public FileInfo OptionFileInfo { get; private set; }
 
         /// <summary>
         /// 从程序集中获得元属性

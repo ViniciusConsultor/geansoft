@@ -5,9 +5,9 @@ using System.Text;
 namespace Pansoft.CQMS.Options
 {
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
-    sealed class OptionSectionAttribute : Attribute
+    public sealed class OptionAttribute : Attribute
     {
-        public OptionSectionAttribute(string name, string displayName, object defaultValue)
+        public OptionAttribute(string name, string displayName, object defaultValue)
         {
             this.OptionName = name;
             this.OptionDisplayName = displayName;
