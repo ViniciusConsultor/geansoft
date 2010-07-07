@@ -15,6 +15,7 @@ namespace Pansoft.CQMS.Options
             {
                 using (XmlTextWriter w = new XmlTextWriter(optionFileFullPath, Encoding.UTF8))
                 {
+                    w.Formatting = Formatting.Indented;
                     w.WriteStartDocument();
                     w.WriteStartElement("Options");
                     w.WriteAttributeString("ProductName", Application.ProductName);

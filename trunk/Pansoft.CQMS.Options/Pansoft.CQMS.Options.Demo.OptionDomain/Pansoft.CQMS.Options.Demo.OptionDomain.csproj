@@ -46,6 +46,10 @@
     <Compile Include="Teacher.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Gean\Gean\Gean.Library\Gean.csproj">
+      <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
+      <Name>Gean</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pansoft.CQMS.Options\Pansoft.CQMS.Options.csproj">
       <Project>{2061A9E8-82B6-4B6B-884D-A1136D7ABB90}</Project>
       <Name>Pansoft.CQMS.Options</Name>
