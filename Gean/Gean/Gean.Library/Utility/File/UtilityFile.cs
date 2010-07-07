@@ -33,7 +33,7 @@ namespace Gean
             get { return applicationRootPath; }
             set { applicationRootPath = value; }
         }
-        private static string applicationRootPath = AppDomain.CurrentDomain.BaseDirectory;
+        private static string applicationRootPath = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
 
         /// <summary>
         /// 扩展Path.Combine方法，可以合并多个路径字符串.
