@@ -32,6 +32,9 @@ namespace Pansoft.CQMS.Options
             static Singleton()
             {
                 Instance = new OptionManager();
+                Instance.Options = new OptionCollection(false);
+                Instance.IsChange = false;
+                Instance.ChangeEventArgsList = new List<Option.OptionChangeEventArgs>();
             }
 
             internal static readonly OptionManager Instance = null;
@@ -40,19 +43,26 @@ namespace Pansoft.CQMS.Options
         #endregion
 
         public String ApplicationStartPath { get { return AppDomain.CurrentDomain.SetupInformation.ApplicationBase; } }
-
-        public OptionCollection Options { get; private set; }
-
+        public OptionFile OptionFile { get; internal set; }
+        public OptionCollection Options { get; internal set; }
+        public Boolean IsChange { get; private set; }
+        public List<Option.OptionChangeEventArgs> ChangeEventArgsList { get; private set; }
         internal XmlDocument OptionDocument { get; private set; }
 
         public void Initializes(string optionFile)
         {
-            this.Options = new OptionCollection(false);
-            string optionFilePath = Path.Combine(ApplicationStartPath, optionFile);
-            if (!File.Exists(optionFilePath))
+            string optionFilePath = string.Empty;
+            if (File.Exists(optionFile))
             {
-                OptionFile.Create(optionFilePath);
+                optionFilePath = optionFile;
             }
+            else
+            {
+                optionFilePath = Path.Combine(ApplicationStartPath, optionFile);
+            }
+
+            this.OptionFile = OptionFile.Load(optionFilePath);
+
             this.OptionDocument = new XmlDocument();
             this.OptionDocument.Load(optionFilePath);
 
@@ -72,22 +82,70 @@ namespace Pansoft.CQMS.Options
                             {
                                 continue;
                             }
-                            this.Options.Add(Option.Builder(ass, type, (OptionAttribute)obj));
+                            Option[] options = Option.Load(ass, type, (OptionAttribute)obj);
+                            foreach (Option o in options)
+                            {
+                                o.OptionChangingEvent += new Option.OptionChangingEventHandler(OptionChangingEvent);
+                            }
                         }
                     }
-                        
                 }
             }
+
+        }
+
+        void OptionChangingEvent(object sender, Option.OptionChangeEventArgs e)
+        {
+            this.IsChange = true;
+            this.ChangeEventArgsList.Add(e);
         }
 
         public void ReLoad()
         {
-            throw new NotImplementedException();
+            this.Options.Clear();
+            this.OptionDocument = null;
+            this.Initializes(this.OptionFile.File.FullName);
         }
 
-        public void Save()
+        public bool Save()
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.OptionDocument.Save(this.OptionFile.File.FullName);
+                this.IsChange = false;
+                this.ChangeEventArgsList.Clear();
+            }
+            catch
+            {
+                throw;
+            }
+            return true;
+        }
+
+        public FileInfo Backup(string file)
+        {
+            FileStream fs = null;
+            try
+            {
+                fs = File.Create(file);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                UtilityFile.CreateDirectory(Path.GetDirectoryName(file));
+                this.Backup(file);
+            }
+            catch (IOException)
+            {
+                FileAttributes fileAtts = FileAttributes.Normal;
+                //先获取此文件的属性
+                fileAtts = System.IO.File.GetAttributes(file);
+                //讲文件属性设置为普通（即没有只读和隐藏等）
+                System.IO.File.SetAttributes(file, FileAttributes.Normal);
+                System.IO.File.Delete(file);
+                this.Backup(file);
+            }
+            this.OptionDocument.Save(fs);
+            return new FileInfo(file);
         }
 
     }

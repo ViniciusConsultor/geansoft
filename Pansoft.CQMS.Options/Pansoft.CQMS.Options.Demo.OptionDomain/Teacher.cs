@@ -8,12 +8,12 @@ namespace Pansoft.CQMS.Options.Demo.OptionDomain
     public class Teacher
     {
         [OptionValue("AAA", "a-a-a")]
-        public string AAA { get; set; }
+        public string AAA { get; private set; }
         [OptionValue("BBB", "b-b-b")]
-        public string BBB { get; set; }
+        public string BBB { get; private set; }
         [OptionValue("CCC", "c-c-c")]
-        public string CCC { get; set; }
+        public string CCC { get; private set; }
         [OptionValue("DDD", "d-d-d")]
-        public string DDD { get; set; }
+        public string DDD { get; private set; }
     }
 }
