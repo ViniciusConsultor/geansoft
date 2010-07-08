@@ -30,7 +30,6 @@ namespace Pansoft.CQMS.Options
         /// <param name="option">СЎПоЅЪ</param>
         public virtual Option Set(Option option)
         {
-            Converting.StringToEnum<OptionOperatorEnum>("");
             this.Set(option.Name, option);
             return option;
         }

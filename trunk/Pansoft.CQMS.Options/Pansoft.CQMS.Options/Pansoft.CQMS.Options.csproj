@@ -37,20 +37,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\OptionFileAttribute.cs" />
     <Compile Include="OptionAttribute.cs" />
     <Compile Include="OptionCollection.cs" />
-    <Compile Include="Base\OptionException.cs" />
     <Compile Include="OptionFile.cs" />
-    <Compile Include="Base\OptionOperatorEnum.cs" />
-    <Compile Include="Base\OptionSection.cs" />
-    <Compile Include="Base\OptionValue.cs" />
-    <Compile Include="Base\OptionValueCollection.cs" />
-    <Compile Include="Interface\IOption.cs" />
-    <Compile Include="Interface\IOptionManager.cs" />
-    <Compile Include="Interface\IOptionSection.cs" />
-    <Compile Include="Interface\IOptionValue.cs" />
-    <Compile Include="IOptionSerializable.cs" />
     <Compile Include="OptionManager.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OptionValueAttribute.cs" />
@@ -63,6 +52,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Attribute\" />
+    <Folder Include="Base\" />
+    <Folder Include="Interface\" />
     <Folder Include="Manager\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
