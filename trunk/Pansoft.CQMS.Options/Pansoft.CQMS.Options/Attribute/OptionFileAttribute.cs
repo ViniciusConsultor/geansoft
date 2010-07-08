@@ -21,7 +21,7 @@ namespace Pansoft.CQMS.Options
             string optionFilePath = Path.Combine(StartPath, optionFile);
             if (!File.Exists(optionFilePath))
             {
-                OptionFile.Create(optionFilePath);
+                OptionFile.Load(optionFilePath);
             }
             this.OptionFileInfo = new FileInfo(optionFilePath);
         }

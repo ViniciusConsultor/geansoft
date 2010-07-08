@@ -8,18 +8,22 @@ namespace Pansoft.CQMS.Options.Demo.OptionDomain
     public class Student
     {
         [OptionValue("studentName","黄阳")]
-        public string Name { get; set; }
-        [OptionValue("studentId", "huangyang")]
-        public string Id { get; set; }
-        [OptionValue("studentAge", 60)]
-        public int Age { get; set; }
-        [OptionValue("studentSex", false)]
-        public bool Sex { get; set; }
-        [OptionValue("studentBrithday", "1848.12.12 23:20:01")]
-        public DateTime Brithday { get; set; }
-        [OptionValue("studentSalary", 12200.00)]
-        public float Salary { get; set; }
+        public string Name { get; private set; }
 
+        [OptionValue("studentId", "huangyang")]
+        public string Id { get; private set; }
+
+        [OptionValue("studentAge", 60)]
+        public int Age { get; private set; }
+
+        [OptionValue("studentSex", false)]
+        public bool Sex { get; private set; }
+
+        [OptionValue("studentBrithday", "1848.12.12 23:20:01")]
+        public DateTime Brithday { get; private set; }
+
+        [OptionValue("studentSalary", 12200.00)]
+        public float Salary { get; private set; }
 
     }
 }
