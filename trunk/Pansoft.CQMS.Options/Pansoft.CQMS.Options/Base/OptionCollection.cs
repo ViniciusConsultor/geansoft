@@ -5,7 +5,7 @@ namespace Pansoft.CQMS.Options
     /// <summary>
     /// 选项节集合
     /// </summary>
-    public class OptionCollection : IndexCollection<UUOption>
+    public class OptionCollection : IndexCollection<Option>
     {
         /// <summary>
         /// 构造方法
@@ -18,7 +18,7 @@ namespace Pansoft.CQMS.Options
         /// </summary>
         /// <param name="option">选项节</param>
         /// <returns>选项节</returns>
-        public virtual UUOption Add(UUOption option)
+        public virtual Option Add(Option option)
         {
             this.Add(option.Name, option);
             return option;
@@ -28,9 +28,8 @@ namespace Pansoft.CQMS.Options
         /// 添加/替换选项节（如果存在则替换）
         /// </summary>
         /// <param name="option">选项节</param>
-        public virtual UUOption Set(UUOption option)
+        public virtual Option Set(Option option)
         {
-            Converting.StringToEnum<OptionOperatorEnum>("");
             this.Set(option.Name, option);
             return option;
         }
@@ -42,9 +41,9 @@ namespace Pansoft.CQMS.Options
         public virtual OptionCollection Clone()
         {
             OptionCollection collection = new OptionCollection(this.UniqueKey);
-            foreach (UUOption option in this.Values)
+            foreach (Option option in this.Values)
             {
-                collection.Add(option.Clone()).Parent = option.Parent;
+                collection.Add(option.Clone());
             }
             return collection;
         }

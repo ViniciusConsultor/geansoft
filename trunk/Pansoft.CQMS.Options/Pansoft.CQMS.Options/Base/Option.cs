@@ -1,574 +1,255 @@
-using System;
+ï»¿using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
+using System.Xml;
 using Gean;
 
 namespace Pansoft.CQMS.Options
 {
-    /// <summary>
-    /// Ñ¡Ïî½ÚµãÊµÏÖ
-    /// </summary>
-    public abstract class Option : IOption
+
+    public sealed class Option : ICloneable
     {
-        #region static fields
-
-        /// <summary>
-        /// Ñ¡Ïî½ÚÁí¸½µÄÎÄ¼şÊôĞÔÃû
-        /// </summary>
-        public const string OptionFilePropertyName = "optionFile";
-        /// <summary>
-        /// Ñ¡Ïî½ÚÔÚÁí¸½ÎÄ¼şµÄ½ÚµãÃû
-        /// </summary>
-        public const string OptionNodePropertyName = "optionNode";
-        /// <summary>
-        /// Ñ¡Ïî½ÚÊµ¼ÊÃû³ÆµÄÊôĞÔÃû
-        /// </summary>
-        public const string OptionNamePropertyName = "name";
-
-        #endregion static fields
-
         #region constructor
 
-        /// <summary>
-        /// ±£»¤¹¹Ôì·½·¨
-        /// </summary>
-        protected Option()
+        private Option()
         {
-        }
-
-        #endregion constructor
-
-        #region fields
-
-        /// <summary>
-        /// ÊÇ·ñÖ»¶Á
-        /// </summary>
-        private bool @readonly;
-        /// <summary>
-        /// ´ËÑ¡Ïî½ÚÊµ¼ÊÃû³Æ
-        /// </summary>
-        private string settingName;
-        /// <summary>
-        /// Ñ¡ÏîÖµ
-        /// </summary>
-        protected OptionValue value;
-        /// <summary>
-        /// ¸¸Ñ¡Ïî½Ú
-        /// </summary>
-        protected Option parent;
-        /// <summary>
-        /// Ñ¡ÏîÊôĞÔ
-        /// </summary>
-        protected OptionSection property;
-        /// <summary>
-        /// ×ÓÑ¡Ïî½Ú
-        /// </summary>
-        protected OptionCollection childSettings;
-        /// <summary>
-        /// Ñ¡Ïî½ÚÃüÁî¼¯ºÏ
-        /// </summary>
-        protected OptionCollection operatorSettings;
-
-        #endregion fields
-
-        #region abstract methods
-
-        /// <summary>
-        /// ´´½¨Ñ¡ÏîÊµÀı
-        /// </summary>
-        /// <returns></returns>
-        protected abstract Option CreateOption();
-
-        /// <summary>
-        /// ´´½¨Ñ¡ÏîÖµ
-        /// </summary>
-        /// <param name="name">Ñ¡ÏîÖµÃû</param>
-        /// <param name="value">Ñ¡ÏîÖµ</param>
-        /// <param name="readonly">ÊÇ·ñÖ»¶Á</param>
-        /// <returns>SettingValue</returns>
-        protected abstract OptionValue CreateOptionValue(string name, string value, bool @readonly);
-
-        /// <summary>
-        /// ´´½¨Ñ¡Ïî½ÚµãÊµÀı
-        /// </summary>
-        /// <param name="readonly">ÊÇ·ñÖ»¶Á</param>
-        /// <returns>SettingProperty</returns>
-        protected abstract OptionSection CreateOptionSection(bool @readonly);
-
-        /// <summary>
-        /// ×ª»»³É×Ö·û´®
-        /// </summary>
-        /// <param name="sb"><see cref="StringBuilder"/></param>
-        /// <param name="layerIndex">Ëù´¦²ã´Î</param>
-        protected abstract void ToString(StringBuilder sb, int layerIndex);
-
-        #endregion abstract methods
-
-        #region members
-
-        /// <summary>
-        /// ´´½¨Ñ¡Ïî½ÚÊµÀı
-        /// </summary>
-        /// <param name="setting">±»¸´ÖÆµÄÑ¡Ïî½Ú</param>
-        /// <param name="deep">ÊÇ·ñÉî¶È¸´ÖÆ</param>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        protected virtual Option CreateOptionSetting(Option setting, bool deep)
-        {
-            Option newSetting = this.CreateOption();
-            newSetting.@readonly = setting.ReadOnly;
-            newSetting.settingName = setting.settingName;
-            if (deep)
-            {
-                newSetting.value = setting.Value.Clone();
-                newSetting.property = setting.Property.Clone(this.@readonly, deep);
-                newSetting.childSettings = setting.childSettings.Clone();
-                newSetting.operatorSettings = setting.operatorSettings.Clone();
-            }
-            else
-            {
-                newSetting.value = setting.Value;
-                newSetting.property = setting.Property;
-                newSetting.childSettings = setting.childSettings;
-                newSetting.operatorSettings = setting.operatorSettings;
-            }
-            return newSetting;
-        }
-
-        /// <summary>
-        /// µ±Ç°Ñ¡Ïî½ÚÊÇ·ñÖ»¶Á
-        /// </summary>
-        public virtual bool ReadOnly
-        {
-            get { return this.@readonly; }
-            protected set { this.@readonly = value; }
-        }
-
-        /// <summary>
-        /// ´ËÑ¡Ïî½ÚµÄÃû
-        /// </summary>
-        public virtual string Name
-        {
-            get { return this.Value.Name; }
-        }
-
-        /// <summary>
-        /// ´ËÑ¡Ïî½ÚÊµ¼ÊÃû³Æ
-        /// </summary>
-        public virtual string SettingName
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(this.settingName))
-                {
-                    return this.settingName;
-                }
-                else
-                {
-                    return this.Name;
-                }
-            }
-            protected set { this.settingName = value; }
-        }
-
-        /// <summary>
-        /// ´ËÑ¡Ïî½ÚµÄÃû/Öµ
-        /// </summary>
-        public virtual OptionValue Value
-        {
-            get { return this.value; }
-            set
-            {
-                if (this.ReadOnly)
-                {
-                    throw new OptionException("Ñ¡Ïî½ÚÖ»¶Á");
-                }
-                this.value = value;
-            }
-        }
-
-        /// <summary>
-        /// °üº¬´ËÑ¡Ïî½ÚµÄ¸¸Ñ¡Ïî½Ú
-        /// </summary>
-        public virtual Option Parent
-        {
-            get { return this.parent; }
-            set { this.parent = value; }
-        }
-
-        /// <summary>
-        /// ´ËÑ¡Ïî½Ú°üº¬µÄ×ÓÑ¡Ïî½ÚÊıÄ¿
-        /// </summary>
-        public virtual int Children
-        {
-            get { return this.childSettings.Count; }
-        }
-
-        /// <summary>
-        /// Ñ¡Ïî½ÚÊôĞÔ
-        /// </summary>
-        public virtual OptionSection Property
-        {
-            get { return this.property; }
-            set
-            {
-                if (this.ReadOnly)
-                {
-                    throw new OptionException("Ñ¡Ïî½ÚÖ»¶Á");
-                }
-                this.property = value;
-            }
-        }
-
-        /// <summary>
-        /// »ñÈ¡´ËÑ¡ÏîÎÄ¼ş
-        /// </summary>
-        public virtual string OptionFile
-        {
-            get { return this.Property.TryGetPropertyValue(OptionFilePropertyName); }
-        }
-
-        /// <summary>
-        /// »ñÈ¡´ËÑ¡Ïî½ÚÁí¸½ÎÄ¼şÖĞµÄ½Úµã
-        /// </summary>
-        public virtual string OptionNode
-        {
-            get { return this.Property.TryGetPropertyValue(OptionNodePropertyName); }
-        }
-
-        /// <summary>
-        /// ´Ë½ÚÊÇ·ñÎªÑ¡Ïî½ÚÃüÁî
-        /// </summary>
-        protected virtual OptionOperatorEnum SettingOperator
-        {
-            get { return Converting.StringToEnum<OptionOperatorEnum>(this.SettingName); }
-        }
-
-        /// <summary>
-        /// »ñÈ¡/ÉèÖÃ×ÓÑ¡Ïî½Ú
-        /// </summary>
-        /// <param name="childSettingName">×ÓÑ¡Ïî½ÚÃû</param>
-        /// <remarks>
-        /// Èç¹û²»´æÔÚ£¬½«·µ»Ø<c>null</c><br />
-        /// Èç¹ûÉèÖÃÊ±´æÔÚÏàÍ¬µÄ½Ú£¬ÔòÌæ»»
-        /// </remarks>
-        public virtual Option this[string childSettingName]
-        {
-            get { return this.childSettings[childSettingName]; }
-        }
-
-        /// <summary>
-        /// »ñÈ¡×ÓÑ¡Ïî½Ú
-        /// </summary>
-        /// <param name="childSettingIndex">×ÓÑ¡Ïî½ÚË³Ğò</param>
-        /// <remarks>
-        /// Èç¹û²»´æÔÚ£¬½«·µ»Ønull
-        /// </remarks>
-        public virtual Option this[int childSettingIndex]
-        {
-            get { return this.childSettings[childSettingIndex]; }
-        }
-
-        /// <summary>
-        /// »ñÈ¡ËùÓĞ×ÓÑ¡Ïî½Ú
-        /// </summary>
-        /// <returns>Ñ¡Ïî½ÚÊı×é</returns>
-        public virtual Option[] GetChildSettings()
-        {
-            return this.childSettings.CopyToArray();
-        }
-
-        /// <summary>
-        /// °´XPath·½Ê½»ñÈ¡Ñ¡Ïî½Ú
-        /// </summary>
-        /// <param name="xpath">XPath</param>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        /// <remarks>
-        /// XPathÎªÀàËÆXMLµÄXPath£¬ĞÎÈç<c>framework/modules/module"</c><br />
-        /// Èç¹ûÓĞÏàÍ¬µÄÑ¡Ïî½Ú£¬Ôò·µ»ØµÚÒ»¸öÑ¡Ïî½Ú
-        /// </remarks>
-        public virtual Option GetChildSetting(string xpath)
-        {
-            string[] settingName = null;
-            if (xpath != null)
-            {
-                if (xpath.StartsWith("/"))
-                {
-                    xpath = xpath.Substring(1);
-                }
-                settingName = xpath.Split('/');
-            }
-            return this.GetChildSetting(settingName);
-        }
-
-        /// <summary>
-        /// °´¶à¼¶·½Ê½»ñÈ¡Ñ¡Ïî½Ú
-        /// </summary>
-        /// <param name="settingName">¶à¼¶µÄÑ¡Ïî½ÚÃû</param>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        /// <remarks>
-        /// ¶à¼¶µÄÑ¡Ïî½ÚÃû£¬ĞÎÈçÓĞÈçÏÂÑ¡Ïî£º
-        ///		<code>
-        ///			&lt;app1&gt;
-        ///				&lt;app2&gt;
-        ///					&lt;app3&gt;&lt;/app3&gt;
-        ///				&lt;/app2&gt;
-        ///			&lt;/app1&gt;
-        ///		</code>
-        ///	Ôò°´Ë³Ğò´«Èë£¬±ÈÈç<c>GetChildSetting("app1", "app2", "app3")</c>£¬´ËÊ±·µ»ØÃûÎª<c>app3</c>µÄÑ¡Ïî½Ú<br />
-        /// "."±íÊ¾µ±Ç°Ñ¡Ïî½Ú£¬".."±íÊ¾ÉÏ¼¶Ñ¡Ïî½Ú
-        /// </remarks>
-        public virtual Option GetChildSetting(params string[] settingName)
-        {
-            Option setting = this;
-            if (settingName != null && settingName.Length > 0)
-            {
-                for (int i = 0; setting != null && i < settingName.Length; i++)
-                {
-                    string name = settingName[i];
-                    switch (name)
-                    {
-                        case ".":
-                        case null:
-                            break;
-                        case "..":
-                            setting = setting.parent;
-                            break;
-                        default:
-                            setting = setting[name];
-                            break;
-                    }
-                }
-            }
-            return setting;
-        }
-
-        /// <summary>
-        /// ¿ËÂ¡´ËÑ¡Ïî½Ú
-        /// </summary>
-        /// <param name="readonly">ÊÇ·ñÖ»¶Á</param>
-        /// <param name="deep">ÊÇ·ñÉî²ã´ÎµÄ¿ËÂ¡</param>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        public virtual Option Clone(bool @readonly, bool deep)
-        {
-            Option setting = this.CreateOptionSetting(this, deep);
-            setting.@readonly = @readonly;
-            return setting;
-        }
-
-        /// <summary>
-        /// ¿ËÂ¡´ËÑ¡Ïî½Ú
-        /// </summary>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        public virtual Option Clone()
-        {
-            return this.Clone(this.ReadOnly, true);
-        }
-
-        /// <summary>
-        /// ºÏ²¢Ñ¡Ïî½Ú
-        /// </summary>
-        /// <param name="setting">Ğè±»ºÏ²¢µÄÑ¡Ïî½Ú</param>
-        /// <returns>ºÏ²¢ºóµÄÑ¡Ïî½Ú</returns>
-        public virtual Option Merge(Option setting)
-        {
-            if (setting == null || string.Compare(this.Name, setting.Name, true) != 0)
-            {
-                return this;
-            }
-            this.Property.Merge(setting.Property);
-            this.value = setting.Value.Clone(this.ReadOnly);
-
-            foreach (Option optionSetting in setting.operatorSettings.Values)
-            {
-                this.operatorSettings.Add(optionSetting).Parent = this;
-            }
-
-            Compile(this, setting.operatorSettings);
-            return this;
-        }
-
-        /// <summary>
-        /// ±àÒë±¾Ñ¡Ïî½Ú£¬½«Ö´ĞĞÒ»Ğ©Ñ¡ÏîÃüÁî£¬¾ßÓĞÑ¡ÏîÃüÁîµÄÑ¡Ïî½ÚĞèÖ´ĞĞ±¾·½·¨ºó²Å¿ÉÒÔÊ¹ÓÃ
-        /// </summary>
-        /// <param name="current">µ±Ç°Ñ¡Ïî½Ú</param>
-        /// <param name="settings">Ñ¡ÏîÃüÁî¼¯ºÏ</param>
-        /// <returns>±àÒëºóµÄÑ¡Ïî½Ú</returns>
-        protected static Option Compile(Option current, OptionCollection settings)
-        {
-            OptionCollection currentSettings = current.childSettings;
-            if (settings.Count > 0)
-            {
-                for (int i = 0; i < settings.Count; i++)
-                {
-                    Option setting = settings[i];
-                    switch (setting.SettingOperator)
-                    {
-                        case OptionOperatorEnum.Add:
-                            if (currentSettings.Contains(setting.Name))
-                            {
-                                throw new OptionException(string.Format("ÒÑ´æÔÚ×ÓÑ¡Ïî½Ú {0}", setting.Name));
-                            }
-                            else
-                            {
-                                currentSettings.Add(setting).Parent = current;
-                            }
-                            break;
-                        case OptionOperatorEnum.Remove:
-                            currentSettings.Remove(setting.Name);
-                            break;
-                        case OptionOperatorEnum.Move:
-                            Option moveSetting = currentSettings[setting.Name];
-                            if (moveSetting != null)
-                            {
-                                currentSettings.Remove(moveSetting.Name);
-                                currentSettings.Add(moveSetting);
-                            }
-                            break;
-                        case OptionOperatorEnum.Clear:
-                            currentSettings.Clear();
-                            break;
-                        case OptionOperatorEnum.Update:
-                            if (currentSettings.Contains(setting.Name))
-                            {
-                                currentSettings[setting.Name].Merge(setting);
-                            }
-                            break;
-                        case OptionOperatorEnum.Set:
-                            if (currentSettings.Contains(setting.Name))
-                            {
-                                currentSettings[setting.Name].Merge(setting);
-                            }
-                            else
-                            {
-                                currentSettings.Add(setting).Parent = current;
-                            }
-                            break;
-                        default:
-                            if (currentSettings.Contains(setting.Name))
-                            {
-                                currentSettings[setting.Name].Merge(setting);
-                            }
-                            else
-                            {
-                                currentSettings.Add(setting).Parent = current;
-                            }
-                            break;
-                    }
-                }
-            }
-            return current;
-        }
-
-        /// <summary>
-        /// »ñÈ¡¸ùÑ¡Ïî½Ú
-        /// </summary>
-        /// <returns>Ñ¡Ïî½Ú</returns>
-        public virtual Option GetRootSetting()
-        {
-            Option root = this;
-            while (root.parent != null)
-            {
-                root = root.parent;
-            }
-            return root;
-        }
-
-        /// <summary>
-        /// ×ª»»³É×Ö·û´®¸ñÊ½
-        /// </summary>
-        /// <returns>×Ö·û´®</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            this.ToString(sb, 0);
-            return sb.ToString();
-        }
-
-        #endregion members
-
-        #region ICloneable Members
-
-        object ICloneable.Clone()
-        {
-            return this.Clone(this.ReadOnly, true);
         }
 
         #endregion
 
-        #region IOptionSetting Members
+        #region property AND field for property
 
-        bool IOption.ReadOnly
+        public String Name { get; private set; }
+        public Object Entity { get; private set; }
+        public XmlElement XmlElement { get; internal set; }
+
+        #endregion
+
+        #region public static methods
+
+        public static Option[] Load(Assembly ass, Type type, OptionAttribute optionAttr)
         {
-            get { return this.ReadOnly; }
+            List<Option> options = new List<Option>(); 
+            #region
+            if (!optionAttr.IsCollection)//å¦‚æœä¸æ˜¯é›†åˆå‹çš„é€‰é¡¹
+            {
+                #region
+                Option option = new Option();
+                option.Name = optionAttr.OptionSectionName;
+                XmlNode optionNode = OptionManager.Instance.OptionDocument.DocumentElement.SelectSingleNode(optionAttr.OptionSectionName);
+                if (optionNode != null)//å½“é€‰é¡¹çš„xmlèŠ‚ç‚¹å¯ä»¥ä»é€‰é¡¹æ–‡ä»¶æ‰¾åˆ°
+                {
+                    //ä»ç±»å‹åˆ›å»ºå¯¹è±¡
+                    option.Entity = UtilityType.CreateObject(ass, type.FullName, type, true, null);
+                    //ä»ç±»å‹è·å¾—è¯¥ç±»å‹çš„æ‰€æœ‰å±æ€§
+                    PropertyInfo[] propertyInfoList = type.GetProperties();
+
+                    //ä¸ºæ¯ä¸ªå±æ€§èµ‹å€¼
+                    foreach (PropertyInfo info in propertyInfoList)
+                    {
+                        object[] valueAttrs = info.GetCustomAttributes(false);
+                        foreach (var attr in valueAttrs)
+                        {
+                            if (attr is OptionValueAttribute)
+                            {
+                                OptionValueAttribute valueAttr = (OptionValueAttribute)attr;
+                                XmlElement optionElement = (XmlElement)optionNode;
+                                Object obj = UtilityConvert.ConvertTo(optionElement.GetAttribute(valueAttr.Name), info.PropertyType);
+                                info.SetValue(option.Entity, obj, null);
+                                option.XmlElement = optionElement;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }//foreach
+                    }//foreach PropertyInfo
+                }
+                #endregion
+                OptionManager.Instance.Options.Add(option);
+                option.OnOptionLoaded(new OptionLoadedEventArgs(option));
+                options.Add(option);
+            }
+            else
+            {
+                #region
+                XmlNode optionNode = OptionManager.Instance.OptionDocument.DocumentElement.SelectSingleNode(optionAttr.ParentSectionName);
+                if (optionNode != null)//å½“é€‰é¡¹çš„xmlèŠ‚ç‚¹å¯ä»¥ä»é€‰é¡¹æ–‡ä»¶æ‰¾åˆ°
+                {
+                    if (optionNode.HasChildNodes)
+                    {
+                        foreach (XmlNode optionChildrenNode in optionNode)
+                        {
+                            Option option = new Option();
+                            #region
+                            if (optionChildrenNode.NodeType == XmlNodeType.Element)
+                            {
+                                option.Name = optionAttr.OptionSectionName;
+
+                                //ä»ç±»å‹åˆ›å»ºå¯¹è±¡
+                                option.Entity = UtilityType.CreateObject(ass, type.FullName, type, true, null);
+                                //ä»ç±»å‹è·å¾—è¯¥ç±»å‹çš„æ‰€æœ‰å±æ€§
+                                PropertyInfo[] propertyInfoList = type.GetProperties();
+
+                                //ä¸ºæ¯ä¸ªå±æ€§èµ‹å€¼
+                                foreach (PropertyInfo info in propertyInfoList)
+                                {
+                                    object[] valueAttrs = info.GetCustomAttributes(false);
+                                    foreach (var attr in valueAttrs)
+                                    {
+                                        if (attr is OptionValueAttribute)
+                                        {
+                                            OptionValueAttribute valueAttr = (OptionValueAttribute)attr;
+                                            XmlElement optionElement = (XmlElement)optionChildrenNode;
+                                            Object obj = UtilityConvert.ConvertTo(optionElement.GetAttribute(valueAttr.Name), info.PropertyType);
+                                            info.SetValue(option.Entity, obj, null);
+                                            option.XmlElement = optionElement;
+                                        }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                    }//foreach
+                                }//foreach PropertyInfo
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                            #endregion
+                            OptionManager.Instance.Options.Add(option);
+                            option.OnOptionLoaded(new OptionLoadedEventArgs(option));
+                            options.Add(option);
+                        }
+                    }
+                }
+                #endregion
+            }
+            #endregion
+            return options.ToArray();
         }
 
-        string IOption.Name
+        #endregion
+
+        #region public methods
+
+        public Option SetOptionValue(string key, object value)
         {
-            get { return this.Name; }
+            PropertyInfo[] propertyInfoList = this.Entity.GetType().GetProperties();
+            foreach (PropertyInfo info in propertyInfoList)
+            {
+                object[] valueAttrs = info.GetCustomAttributes(false);
+                foreach (var attr in valueAttrs)
+                {
+                    if (attr is OptionValueAttribute)
+                    {
+                        OptionValueAttribute valueAttr = (OptionValueAttribute)attr;
+                        if (valueAttr.Name != key)
+                        {
+                            continue;
+                        }
+                        OnOptionChanging(new OptionChangeEventArgs(this, key, value));//é€‰é¡¹å€¼å‘ç”Ÿæ”¹å˜å‰çš„äº‹ä»¶çš„æ³¨å†Œ
+                        this.XmlElement.SetAttribute(valueAttr.Name, value.ToString());
+                        Object obj = UtilityConvert.ConvertTo(this.XmlElement.GetAttribute(valueAttr.Name), info.PropertyType);
+                        info.SetValue(this.Entity, obj, null);
+                        OnOptionChanged(new OptionChangeEventArgs(this, key, value));//é€‰é¡¹å€¼å‘ç”Ÿæ”¹å˜åçš„äº‹ä»¶çš„æ³¨å†Œ
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }//foreach
+            }//foreach PropertyInfo
+            return null;
         }
 
-        string IOption.OptionName
+        #endregion
+
+        #region event
+
+        /// <summary>
+        /// å½“é€‰é¡¹è½½å…¥(Load)å®Œæˆåå‘ç”Ÿçš„äº‹ä»¶
+        /// </summary>
+        public event OptionLoadedEventHandler OptionLoadedEvent;
+        private void OnOptionLoaded(OptionLoadedEventArgs e)
         {
-            get { return this.SettingName; }
+            if (OptionLoadedEvent != null)
+                OptionLoadedEvent(this, e);
+        }
+        public delegate void OptionLoadedEventHandler(Object sender, OptionLoadedEventArgs e);
+
+        /// <summary>
+        /// é€‰é¡¹å€¼å‘ç”Ÿæ”¹å˜æ—¶çš„åŒ…å«äº‹ä»¶æ•°æ®çš„ç±»
+        /// </summary>
+        public class OptionLoadedEventArgs : EventArgs
+        {
+            public Option Option { get; private set; }
+            public OptionLoadedEventArgs(Option option)
+            {
+                this.Option = option;
+            }
         }
 
-        IOptionValue IOption.Value
+
+        /// <summary>
+        /// å½“é€‰é¡¹æ”¹å˜åå‘ç”Ÿçš„äº‹ä»¶
+        /// </summary>
+        public event OptionChangedEventHandler OptionChangedEvent;
+        private void OnOptionChanged(OptionChangeEventArgs e)
         {
-            get { return this.Value; }
+            if (OptionChangedEvent != null)
+                OptionChangedEvent(this, e);
+        }
+        public delegate void OptionChangedEventHandler(Object sender, OptionChangeEventArgs e);
+
+        /// <summary>
+        /// å½“é€‰é¡¹æ”¹å˜å‰å‘ç”Ÿçš„äº‹ä»¶(æ³¨æ„ï¼šæ­¤äº‹ä»¶å‘ç”Ÿåï¼Œé€‰é¡¹å­˜åœ¨ä¿å­˜å‘ç”Ÿå¼‚å¸¸çš„å¯èƒ½æ€§)
+        /// </summary>
+        public event OptionChangingEventHandler OptionChangingEvent;
+        private void OnOptionChanging(OptionChangeEventArgs e)
+        {
+            if (OptionChangingEvent != null)
+                OptionChangingEvent(this, e);
+        }
+        public delegate void OptionChangingEventHandler(Object sender, OptionChangeEventArgs e);
+
+        /// <summary>
+        /// é€‰é¡¹å€¼å‘ç”Ÿæ”¹å˜æ—¶çš„åŒ…å«äº‹ä»¶æ•°æ®çš„ç±»
+        /// </summary>
+        public class OptionChangeEventArgs : EventArgs
+        {
+            public Option Option { get; private set; }
+            public String OptionValueName { get; private set; }
+            public Object OptionValue { get; private set; }
+            public OptionChangeEventArgs(Option option, String key, Object value)
+            {
+                this.Option = option;
+                this.OptionValueName = key;
+                this.OptionValue = value;
+            }
         }
 
-        IOption IOption.Parent
+        #endregion
+
+        #region private methods
+
+        #endregion
+
+        #region fields
+
+        #endregion
+
+        #region ICloneable
+
+        public Option Clone()
         {
-            get { return this.Parent; }
+            return null;
         }
 
-        int IOption.Children
+        object ICloneable.Clone()
         {
-            get { return this.Children; }
-        }
-
-        IOptionSection IOption.OptionSection
-        {
-            get { return this.Property; }
-        }
-
-        IOption IOption.this[string childSettingName]
-        {
-            get { return this[childSettingName]; }
-        }
-
-        IOption IOption.this[int childSettingIndex]
-        {
-            get { return this[childSettingIndex]; }
-        }
-
-        IOption[] IOption.GetChildOptions()
-        {
-            return this.GetChildSettings();
-        }
-
-        IOption IOption.GetChildOption(string xpath)
-        {
-            return this.GetChildSetting(xpath);
-        }
-
-        IOption IOption.GetChildOption(params string[] settingName)
-        {
-            return this.GetChildSetting(settingName);
-        }
-
-        IOption IOption.Clone(bool @readonly, bool deep)
-        {
-            return this.Clone(@readonly, deep);
-        }
-
-        IOption IOption.GetRootOption()
-        {
-            return this.GetRootSetting();
-        }
-
-        void IOption.Merge(IOption setting)
-        {
-            this.Merge((Option)setting);
+            return this.Clone();
         }
 
         #endregion
