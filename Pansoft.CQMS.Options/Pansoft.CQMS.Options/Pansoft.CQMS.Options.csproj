@@ -37,12 +37,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OptionAttribute.cs" />
-    <Compile Include="OptionCollection.cs" />
-    <Compile Include="OptionFile.cs" />
-    <Compile Include="OptionManager.cs" />
-    <Compile Include="Option.cs" />
-    <Compile Include="OptionValueAttribute.cs" />
+    <Compile Include="Attribute\OptionAttribute.cs" />
+    <Compile Include="Base\OptionCollection.cs" />
+    <Compile Include="Base\OptionFile.cs" />
+    <Compile Include="Manager\OptionManager.cs" />
+    <Compile Include="Base\Option.cs" />
+    <Compile Include="Attribute\OptionValueAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,10 +52,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Attribute\" />
-    <Folder Include="Base\" />
     <Folder Include="Interface\" />
-    <Folder Include="Manager\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
