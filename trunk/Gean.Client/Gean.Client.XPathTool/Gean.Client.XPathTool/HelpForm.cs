@@ -7,8 +7,8 @@
 
     public class HelpForm : Form
     {
-        private Container components = null;
         private TextBox textBox1;
+        private Container components = null;
 
         public HelpForm()
         {
@@ -26,7 +26,6 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpForm));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -38,14 +37,14 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(509, 298);
+            this.textBox1.Size = new System.Drawing.Size(378, 156);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.textBox1.Text = "simpkan@gmail.com\r\n2010-08-04 17:27:26";
             // 
             // HelpForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(519, 308);
+            this.ClientSize = new System.Drawing.Size(388, 166);
             this.Controls.Add(this.textBox1);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.MaximizeBox = false;
