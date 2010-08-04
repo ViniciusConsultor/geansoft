@@ -117,25 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>Note that this help file is continuously updated. 
-Therefore, if you have any question which is not answered in this document, then please email at laghari78@yahoo.com.
-
-Q. Why the Use Selected XPath button gets disabled when I execute some query?
-A. Whenever you execute the query against a document, the parser processes the query and only shows the result into the tree view. You should note here that only a fragment of the whole Xml document is shown instead of complete document. In the case, we can't generate Xml Queries dynamically or otherwise it'll fail simply. Workaround: Execute '/' as XPath query to get the whole document loaded again.
-
-Q. Please define how do I create my query in case there is a default namespace?
-A. One thing should be cleared first that XPath doesn't support default namespaces. It has to have some Prefix in order to execute Query over any document containing namespaces. So, to overcome this, we added 'def' as a prefix for default namespaces. So for eg. you have any query which you should work like this. Assuming that default namespace is defined as part of Xml document. 
-
-/rdf:Rdf/current
-
-But, it fails because the 'current' element of xml follows the default namespace. So, XPath needed a prefix to resolve any queries regarding Namespaces. Workaround: As we stated earlier, we defined 'def' as the prefix for Default Namespace. Therefore, the above query will work if the current element is prefixed with 'def'.
-
-/rdf:Rdf/def:current
-
-You can generate XPath automatically by selecting any node with your mouse.
-
-Q. How can I generate queries for XML Attributes?
-Right-Click on the Node on which your required attribute is present. The context menu will show you all the attributes present in the Node. Just select the node to generate the XPath Query.</value>
-  </data>
 </root>

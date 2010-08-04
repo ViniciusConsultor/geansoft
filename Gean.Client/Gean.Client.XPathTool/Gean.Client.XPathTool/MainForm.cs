@@ -490,23 +490,23 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtXmlFileName.Location = new System.Drawing.Point(57, 8);
             this.txtXmlFileName.Name = "txtXmlFileName";
-            this.txtXmlFileName.Size = new System.Drawing.Size(391, 21);
-            this.txtXmlFileName.TabIndex = 1;
+            this.txtXmlFileName.Size = new System.Drawing.Size(514, 21);
+            this.txtXmlFileName.TabIndex = 0;
             // 
             // btnLoadXmlFile
             // 
             this.btnLoadXmlFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadXmlFile.Location = new System.Drawing.Point(464, 8);
+            this.btnLoadXmlFile.Location = new System.Drawing.Point(587, 8);
             this.btnLoadXmlFile.Name = "btnLoadXmlFile";
             this.btnLoadXmlFile.Size = new System.Drawing.Size(72, 23);
-            this.btnLoadXmlFile.TabIndex = 2;
+            this.btnLoadXmlFile.TabIndex = 3;
             this.btnLoadXmlFile.Text = "&Load";
             this.btnLoadXmlFile.Click += new System.EventHandler(this.btnLoadXmlFile_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 43);
+            this.label2.Location = new System.Drawing.Point(5, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 3;
@@ -516,18 +516,19 @@
             // 
             this.txtQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtQuery.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtQuery.Location = new System.Drawing.Point(112, 40);
             this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(424, 21);
-            this.txtQuery.TabIndex = 4;
+            this.txtQuery.Size = new System.Drawing.Size(547, 32);
+            this.txtQuery.TabIndex = 1;
             // 
             // btnExecuteQuery
             // 
             this.btnExecuteQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExecuteQuery.Location = new System.Drawing.Point(544, 40);
+            this.btnExecuteQuery.Location = new System.Drawing.Point(667, 40);
             this.btnExecuteQuery.Name = "btnExecuteQuery";
-            this.btnExecuteQuery.Size = new System.Drawing.Size(80, 23);
-            this.btnExecuteQuery.TabIndex = 5;
+            this.btnExecuteQuery.Size = new System.Drawing.Size(80, 32);
+            this.btnExecuteQuery.TabIndex = 2;
             this.btnExecuteQuery.Text = "&Execute";
             this.btnExecuteQuery.Click += new System.EventHandler(this.btnExecuteQuery_Click);
             // 
@@ -541,12 +542,12 @@
             this._treeResult.ForeColor = System.Drawing.SystemColors.WindowText;
             this._treeResult.FullRowSelect = true;
             this._treeResult.HideSelection = false;
-            this._treeResult.Location = new System.Drawing.Point(8, 72);
+            this._treeResult.Location = new System.Drawing.Point(8, 87);
             this._treeResult.Name = "_treeResult";
-            this._treeResult.Size = new System.Drawing.Size(528, 289);
+            this._treeResult.Size = new System.Drawing.Size(651, 276);
             this._treeResult.TabIndex = 6;
-            this._treeResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeResult_MouseDown);
             this._treeResult.KeyUp += new System.Windows.Forms.KeyEventHandler(this._treeResult_KeyUp);
+            this._treeResult.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeResult_MouseDown);
             // 
             // _CtxAttrContextMenu
             // 
@@ -560,9 +561,9 @@
             // 
             // statusBar
             // 
-            this.statusBar.Location = new System.Drawing.Point(0, 402);
+            this.statusBar.Location = new System.Drawing.Point(0, 404);
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(632, 22);
+            this.statusBar.Size = new System.Drawing.Size(755, 22);
             this.statusBar.TabIndex = 8;
             this.statusBar.Text = "Ready";
             // 
@@ -570,70 +571,70 @@
             // 
             this.btnSelXPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelXPath.Enabled = false;
-            this.btnSelXPath.Location = new System.Drawing.Point(472, 370);
+            this.btnSelXPath.Location = new System.Drawing.Point(595, 372);
             this.btnSelXPath.Name = "btnSelXPath";
             this.btnSelXPath.Size = new System.Drawing.Size(152, 23);
-            this.btnSelXPath.TabIndex = 9;
+            this.btnSelXPath.TabIndex = 7;
             this.btnSelXPath.Text = "&Use Selected XPath";
             this.btnSelXPath.Click += new System.EventHandler(this.btnSelXPath_Click);
             // 
             // checkBox1
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox1.Location = new System.Drawing.Point(38, 370);
+            this.checkBox1.Location = new System.Drawing.Point(38, 372);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(184, 24);
-            this.checkBox1.TabIndex = 10;
+            this.checkBox1.TabIndex = 8;
             this.checkBox1.Text = "Expand All/Collapse All";
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // btnShowNamespaces
             // 
             this.btnShowNamespaces.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShowNamespaces.Location = new System.Drawing.Point(312, 370);
+            this.btnShowNamespaces.Location = new System.Drawing.Point(435, 372);
             this.btnShowNamespaces.Name = "btnShowNamespaces";
             this.btnShowNamespaces.Size = new System.Drawing.Size(152, 23);
-            this.btnShowNamespaces.TabIndex = 11;
+            this.btnShowNamespaces.TabIndex = 6;
             this.btnShowNamespaces.Text = "&Show Namespaces";
             this.btnShowNamespaces.Click += new System.EventHandler(this.btnShowNamespaces_Click);
             // 
             // btnShowHelp
             // 
             this.btnShowHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowHelp.Location = new System.Drawing.Point(8, 370);
+            this.btnShowHelp.Location = new System.Drawing.Point(8, 372);
             this.btnShowHelp.Name = "btnShowHelp";
             this.btnShowHelp.Size = new System.Drawing.Size(24, 23);
-            this.btnShowHelp.TabIndex = 12;
+            this.btnShowHelp.TabIndex = 9;
             this.btnShowHelp.Text = "?";
             this.btnShowHelp.Click += new System.EventHandler(this.btnShowHelp_Click);
             // 
             // btnCSCode
             // 
             this.btnCSCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCSCode.Location = new System.Drawing.Point(544, 338);
+            this.btnCSCode.Location = new System.Drawing.Point(667, 340);
             this.btnCSCode.Name = "btnCSCode";
             this.btnCSCode.Size = new System.Drawing.Size(80, 23);
-            this.btnCSCode.TabIndex = 13;
+            this.btnCSCode.TabIndex = 10;
             this.btnCSCode.Text = "&C# Code";
             this.btnCSCode.Click += new System.EventHandler(this.btnCSCode_Click);
             // 
             // btnNotepad
             // 
             this.btnNotepad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNotepad.Location = new System.Drawing.Point(544, 72);
+            this.btnNotepad.Location = new System.Drawing.Point(667, 87);
             this.btnNotepad.Name = "btnNotepad";
             this.btnNotepad.Size = new System.Drawing.Size(80, 23);
-            this.btnNotepad.TabIndex = 14;
+            this.btnNotepad.TabIndex = 5;
             this.btnNotepad.Text = "&Notepad";
             this.btnNotepad.Click += new System.EventHandler(this.btnNotepad_Click);
             // 
             // btnOpenFile
             // 
             this.btnOpenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOpenFile.Location = new System.Drawing.Point(544, 8);
+            this.btnOpenFile.Location = new System.Drawing.Point(667, 8);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(80, 23);
-            this.btnOpenFile.TabIndex = 15;
+            this.btnOpenFile.TabIndex = 4;
             this.btnOpenFile.Text = "&Open File...";
             this.btnOpenFile.Click += new System.EventHandler(this.btnOpenFile_Click);
             // 
@@ -741,7 +742,7 @@
             this.AcceptButton = this.btnLoadXmlFile;
             this.AllowDrop = true;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(632, 424);
+            this.ClientSize = new System.Drawing.Size(755, 426);
             this.Controls.Add(this.btnOpenFile);
             this.Controls.Add(this.btnNotepad);
             this.Controls.Add(this.btnCSCode);
@@ -912,7 +913,7 @@
                 case XmlNodeType.Element:
                     node = new TreeNode("<" + xNode.Name);
                     node.ForeColor = Color.RoyalBlue;
-                    font = new Font("Tahoma", 12f);
+                    font = new Font("Courier New", 9F);
                     node.NodeFont = font;
                     tNode.Nodes.Add(node);
                     if (xNode.Attributes.Count > 0)
@@ -955,7 +956,7 @@
                     {
                         TreeNode node3 = new TreeNode(xNode.Value);
                         node3.ForeColor = Color.Red;
-                        font = new Font("Tahoma", 12f);
+                        font = new Font("Courier New", 9F);
                         node3.NodeFont = font;
                         tNode.Nodes.Add(node3);
                         return;
