@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Module.Chess", "..\..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "..\..\Gean\Gean\Gean.Library\Gean.csproj", "{54E5A1F2-3684-4C25-BB2A-D1D412D17002}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Gui.ChessControl.Demo", "Gean.Gui.ChessControl.Demo\Gean.Gui.ChessControl.Demo.csproj", "{B3743142-C110-4CC5-98B2-1820527935DC}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -51,6 +53,16 @@ Global
 		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B3743142-C110-4CC5-98B2-1820527935DC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
