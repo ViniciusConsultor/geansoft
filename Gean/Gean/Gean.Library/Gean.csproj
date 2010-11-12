@@ -80,6 +80,7 @@
     <Compile Include="Interface\Converting\IConverting.cs" />
     <Compile Include="Interface\IFactory.cs" />
     <Compile Include="Interface\IJson.cs" />
+    <Compile Include="Interface\IService.cs" />
     <Compile Include="Interface\Parse,Generator\IGenerator.cs" />
     <Compile Include="Interface\Parse,Generator\IParse.cs" />
     <Compile Include="Interface\Tree,Item\IItem.cs" />
@@ -122,7 +123,6 @@
     <Compile Include="Wrapper\SimpleLogger\LogString.cs" />
     <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
-    <Compile Include="Wrapper\Options.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
