@@ -1478,7 +1478,7 @@ namespace Gean.Net.CSUST.Net
         public void CheckTimeout(int maxSessionTimeout)
         {
             TimeSpan ts = DateTime.Now.Subtract(this.LastSessionTime);
-            int elapsedSecond = Math.Abs((int)ts.TotalSeconds);
+            int elapsedSecond = System.Math.Abs((int)ts.TotalSeconds);
 
             if (elapsedSecond > maxSessionTimeout)  // 超时，则准备断开连接
             {
