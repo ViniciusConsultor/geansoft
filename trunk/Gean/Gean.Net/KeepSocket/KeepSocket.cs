@@ -368,7 +368,7 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 关闭连接。销毁连接的实例。如需安全关闭，并打算销毁连接的实例，请调用SafeClose()。
         /// </summary>
-        private void Close()
+        public void Close()
         {
             lock (_Lock)
             {
