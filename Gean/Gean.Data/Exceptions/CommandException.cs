@@ -24,9 +24,5 @@ namespace Gean.Data.Exceptions
         public CommandException() { }
         public CommandException(string message) : base(message) { }
         public CommandException(string message, Exception inner) : base(message, inner) { }
-        protected CommandException(
-          SerializationInfo info,
-          StreamingContext context)
-            : base(info, context) { }
     }
 }
