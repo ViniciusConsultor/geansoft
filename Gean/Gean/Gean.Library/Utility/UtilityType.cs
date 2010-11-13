@@ -283,5 +283,26 @@ namespace Gean
             }
             return list.ToArray();
         }
+
+        /// <summary>
+        /// Determines whether the specified target type contains interface.
+        /// </summary>
+        /// <param name="targetType">Type of the target.</param>
+        /// <param name="implType">Type of the impl.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified target type contains interface; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool ContainsInterface(Type targetType, Type implType)
+        {
+            Type[] interfaces = targetType.GetInterfaces();
+            foreach (var item in interfaces)
+            {
+                if (item == implType)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

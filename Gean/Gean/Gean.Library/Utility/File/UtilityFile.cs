@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
+using System.Reflection;
 using Gean.Resources;
 using Microsoft.Win32;
 
@@ -840,6 +841,68 @@ namespace Gean
                 DirectoryInfo aNewDirectory = new DirectoryInfo(NewDirectoryFullName);
                 CopyDirectory(aOldDirectory, aNewDirectory);
             }
+        }
+
+        /// <summary>
+        /// 搜索指定目录下所有.Net的程序集文件(Dll,Exe)
+        /// </summary>
+        /// <param name="directory">指定目录.</param>
+        /// <returns></returns>
+        public static StringCollection SearchAssemblyFileByDirectory(string directory)
+        {
+            StringCollection dlls = UtilityFile.SearchDirectory(directory, ".dll", true, true);
+            StringCollection exes = UtilityFile.SearchDirectory(directory, ".exe", true, true);
+            StringCollection result = new StringCollection();
+            foreach (var dllPath in dlls)
+            {
+                try
+                {
+                    Assembly.LoadFile(dllPath);
+                    result.Add(dllPath);
+                }
+                catch { }
+            }
+            foreach (var exePath in exes)
+            {
+                try
+                {
+                    Assembly.LoadFile(exePath);
+                    result.Add(exePath);
+                }
+                catch { }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 搜索指定目录下所有.Net的程序集
+        /// </summary>
+        /// <param name="directory">指定目录.</param>
+        /// <returns></returns>
+        public static Assembly[] SearchAssemblyByDirectory(string directory)
+        {
+            StringCollection dlls = UtilityFile.SearchDirectory(directory, "*.dll", true, true);
+            StringCollection exes = UtilityFile.SearchDirectory(directory, "*.exe", true, true);
+            List<Assembly> result = new List<Assembly>();
+            foreach (var dllPath in dlls)
+            {
+                try
+                {
+                    Assembly asse = Assembly.LoadFile(dllPath);
+                    result.Add(asse);
+                }
+                catch { }
+            }
+            foreach (var exePath in exes)
+            {
+                try
+                {
+                    Assembly asse = Assembly.LoadFile(exePath);
+                    result.Add(asse);
+                }
+                catch { }
+            }
+            return result.ToArray();
         }
 
         /// <summary>
