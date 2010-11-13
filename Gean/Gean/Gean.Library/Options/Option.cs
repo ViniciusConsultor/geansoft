@@ -12,10 +12,10 @@ namespace Gean.Options
     public abstract class Option<T> : IOption
     {
         /// <summary>
-        /// Initializeses本类型的具体数据。
+        /// Initializeses本类型的具体数据。该方法将被反射调用。
         /// </summary>
         /// <param name="source">The source.</param>
-        protected void Initializes(T source)
+        protected virtual void Initializes(T source)
         {
             this.Load(source);
             OnOptionLoaded(new OptionLoadedEventArgs(this, source));
@@ -26,6 +26,11 @@ namespace Gean.Options
         /// </summary>
         /// <param name="source">指定的源(一般是一个XmlElement)</param>
         protected abstract void Load(T source);
+
+        /// <summary>
+        /// 保存设定的选项值
+        /// </summary>
+        public abstract bool Save();
 
         /// <summary>
         /// 返回按原始数据格式重新组装数据改变后的报文.
