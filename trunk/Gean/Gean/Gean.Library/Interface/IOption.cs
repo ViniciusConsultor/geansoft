@@ -3,6 +3,8 @@ namespace Gean.Options
 {
     public interface IOption
     {
+        bool Save();
+
         /// <summary>
         /// 当选项载入(Load)完成后发生的事件
         /// </summary>

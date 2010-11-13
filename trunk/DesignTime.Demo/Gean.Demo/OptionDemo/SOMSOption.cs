@@ -29,12 +29,15 @@ namespace Gean.Demo
 
         #endregion
 
-        public string Key { get; private set; }
-        public string Value { get; private set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
 
         public override XmlElement GetChangedDatagram()
         {
-            throw new NotImplementedException();
+            XmlElement element = (XmlElement)this.Element.SelectSingleNode("domain");
+            element.SetAttribute("key", this.Key);
+            element.SetAttribute("value", this.Value);
+            return this.Element;
         }
 
         protected override void Load(XmlElement source)

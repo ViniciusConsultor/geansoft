@@ -16,12 +16,11 @@ namespace Gean.Demo
 
             StringCollection sc = UtilityFile.SearchDirectory(OptionService.ApplicationStartPath, "*.option");
 
-            XmlDocument[] docs = new XmlDocument[sc.Count];
+            OptionXmlFile[] docs = new OptionXmlFile[sc.Count];
             int q = 0;
             foreach (var file in sc)
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(file);
+                OptionXmlFile doc = new OptionXmlFile(file);
                 docs[q] = doc;
                 q++;
             }
@@ -34,6 +33,11 @@ namespace Gean.Demo
             Console.WriteLine(XyzOption.ME.Value);
             Console.WriteLine(AbcdOption.ME.Key);
             Console.WriteLine(AbcdOption.ME.Value);
+
+            SOMSOption.ME.Key = "我修改过了Key。" + DateTime.Now.ToLongTimeString();
+            SOMSOption.ME.Value = "我修改过了Value。" + DateTime.Now.ToLongTimeString();
+
+            SOMSOption.ME.Save();
 
             Console.WriteLine("Complate...");
             Console.ReadKey();

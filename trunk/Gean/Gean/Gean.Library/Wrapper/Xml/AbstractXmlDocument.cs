@@ -47,7 +47,7 @@ namespace Gean.Xml
         /// <summary>
         /// 获取文档的根 System.Xml.XmlElement。
         /// </summary>
-        protected virtual XmlElement DocumentElement
+        public virtual XmlElement DocumentElement
         {
             get { return ((XmlDocument)this.BaseXmlNode).DocumentElement; }
         }
@@ -55,7 +55,7 @@ namespace Gean.Xml
         /// <summary>
         /// 获取文档的根 System.Xml.XmlElement。
         /// </summary>
-        protected virtual XmlNodeList ChildNodes
+        public virtual XmlNodeList ChildNodes
         {
             get { return this.BaseXmlNode.ChildNodes; }
         }

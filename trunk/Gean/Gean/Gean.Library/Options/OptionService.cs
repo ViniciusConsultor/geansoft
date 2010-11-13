@@ -12,7 +12,7 @@ namespace Gean.Options
     /// <summary>
     /// 选项服务管理器
     /// </summary>
-    public sealed class OptionService : IService<XmlDocument>
+    public sealed class OptionService : IService<OptionXmlFile>
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -49,36 +49,46 @@ namespace Gean.Options
 
         private class Singleton
         {
-            static Singleton() { Instance = new OptionService(); }
+            static Singleton() 
+            { 
+                Instance = new OptionService();
+                Instance.XmlFileMap = new Dictionary<string, OptionXmlFile>();
+            }
             internal static readonly OptionService Instance = null;
         }
 
         #endregion
 
-        private XmlDocument[] _SettingDocuments = null;
+        private OptionXmlFile[] _SettingDocuments = null;
 
         private OptionMap _OptionMap = new OptionMap();
 
         /// <summary>
+        /// Gets or sets the XML file map.它的Key是Option类的完全名，Value是该选项数据所在的XML文件。
+        /// </summary>
+        /// <value>The XML file map.</value>
+        public Dictionary<string, OptionXmlFile> XmlFileMap { get; private set; }
+
+        /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="args">传入参数是所有选项的XmlDocument.</param>
+        /// <param name="args">传入参数是所有选项的Xml文件的封装类型(OptionXmlFile).</param>
         /// <returns></returns>
-        public bool Initializes(params XmlDocument[] args)
+        public bool Initializes(params OptionXmlFile[] args)
         {
             if (args == null || args.Length <= 0)
             {
                 logger.Error("当Option服务管理器初始化时,传入参数有误。传入的Option的Xml文件数量为零或为空。");
                 return false;
             }
-            _SettingDocuments = new XmlDocument[args.Length];
+            _SettingDocuments = new OptionXmlFile[args.Length];
             for (int i = 0; i < args.Length; i++)
             {
-                if (!(args[i] is XmlDocument))
+                if (!(args[i] is OptionXmlFile))
                 {
                     logger.Warn("当Option服务管理器初始化时,传入的对象不是Option的XML，无法解析。" + args[i]);
                 }
-                _SettingDocuments[i] = (XmlDocument)args[i];
+                _SettingDocuments[i] = (OptionXmlFile)args[i];
             }
             Dictionary<String, XmlElement> parmsMap = new Dictionary<string, XmlElement>();
             foreach (var document in _SettingDocuments)
@@ -86,7 +96,9 @@ namespace Gean.Options
                 XmlElement[] eles = GetElementByClassMap(document);
                 foreach (var ele in eles)
                 {
-                    parmsMap.Add(ele.GetAttribute("class"), ele);
+                    string klass = ele.GetAttribute("class");
+                    parmsMap.Add(klass, ele);
+                    this.XmlFileMap.Add(klass, document);
                 }
             }
             logger.Info(string.Format("从Option的配置Xml文件中找到 {0} 个Option配置节点", parmsMap.Count));
@@ -113,7 +125,7 @@ namespace Gean.Options
         /// </summary>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        public bool ReStart(params XmlDocument[] args)
+        public bool ReStart(params OptionXmlFile[] args)
         {
             _OptionMap.Clear();
             try
@@ -154,7 +166,7 @@ namespace Gean.Options
         /// </summary>
         /// <param name="document">The document.</param>
         /// <returns></returns>
-        private static XmlElement[] GetElementByClassMap(XmlDocument document)
+        private static XmlElement[] GetElementByClassMap(OptionXmlFile document)
         {
             List<XmlElement> elements = new List<XmlElement>();
             XmlNodeList nodelist = document.DocumentElement.SelectNodes("option[@class]");
