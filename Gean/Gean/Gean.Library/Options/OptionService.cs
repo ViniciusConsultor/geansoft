@@ -200,5 +200,21 @@ namespace Gean.Options
             }
             return typeList.ToArray();
         }
+
+        /// <summary>
+        /// 默认获取应用程序所在的目录及子目录下的所有选项数据文件的文件路径
+        /// </summary>
+        /// <returns></returns>
+        public static OptionXmlFile[] GetOptionFiles()
+        {
+            StringCollection sc = UtilityFile.SearchDirectory(OptionService.ApplicationStartPath, "*.option");
+            List<OptionXmlFile> fileList = new List<OptionXmlFile>();
+            foreach (var filePath in sc)
+            {
+                OptionXmlFile doc = new OptionXmlFile(filePath);
+                fileList.Add(doc);
+            }
+            return fileList.ToArray();
+        }
     }
 }
