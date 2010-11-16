@@ -16,7 +16,7 @@ namespace Gean.Net.KeepSocket
     /// </summary>
     public class KeepSocket
     {
-        private static Logger _Logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region 属性与变量定义
 
@@ -27,7 +27,7 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         public bool _NeedSendMonitor = true;
         /// <summary>
-        /// 关闭本连接的心跳监控
+        /// 关闭本连接的发送线程监控
         /// </summary>
         public void CloseSendMonitor()
         {
@@ -68,8 +68,6 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         private byte[] _ReceiveBuffer = new byte[2048 * 1024];
 
-        private Queue<string> _CommandQueue;
-
         public string QServerIP
         {
             get { return _QServerIP; }
@@ -81,8 +79,6 @@ namespace Gean.Net.KeepSocket
             get { return _QServerPort; }
         }
         private string _QServerPort = "8000";
-
-        private Queue<string> _ResultQueue;
 
         #endregion
 
@@ -120,17 +116,17 @@ namespace Gean.Net.KeepSocket
             Thread HeartBeatWorkThread = new Thread(new ThreadStart(HeartBeatThread));
             HeartBeatWorkThread.IsBackground = true;
             HeartBeatWorkThread.Start();
-            _Logger.Debug("Socket心跳线程启动");
+            logger.Debug("Socket心跳线程启动");
 
             Thread SendWorkThread = new Thread(new ThreadStart(SendThread));
             SendWorkThread.IsBackground = true;
             SendWorkThread.Start();
-            _Logger.Debug("发送线程启动");
+            logger.Debug("发送线程启动");
 
             Thread ReceiveWorkThread = new Thread(new ThreadStart(ReceiveThread));
             ReceiveWorkThread.IsBackground = true;
             ReceiveWorkThread.Start();
-            _Logger.Debug("接收线程启动");
+            logger.Debug("接收线程启动");
         }
 
         /// <summary>
@@ -160,7 +156,7 @@ namespace Gean.Net.KeepSocket
             }
             catch (Exception e)
             {
-                _Logger.Error("关闭SocketConnection实例时异常。异常信息：" + e.Message);
+                logger.Error("关闭SocketConnection实例时异常。异常信息：" + e.Message);
             }
         }
 
@@ -172,58 +168,34 @@ namespace Gean.Net.KeepSocket
         {
             while (_NeedSendMonitor)
             {
-                SendCheck();
-                Thread.Sleep(100);
-            }
-        }
-
-        private void SendCheck()
-        {
-            try
-            {
-                string CmdToSend;
-                lock (_CommandQueue)
+                string command = "";
+                try
                 {
-                    if (_CommandQueue.Count > 0)
+                    lock (_CommandQueue)
                     {
-                        CmdToSend = _CommandQueue.Dequeue();
-
-                        if (CmdToSend.Length > 0)
-                        {
-                            SendDatagram(CmdToSend);
-                        }
+                        if (_CommandQueue.Count <= 0)
+                            continue;
+                        command = _CommandQueue.Dequeue();
+                        this.SendDatagram(command);
                     }
                 }
-            }
-            catch
-            {
-                return;
-            }
-        }
-
-        public bool IsConnected()
-        {
-            if (_SocketClient == null || _SocketClient.Connected == false)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
+                catch (Exception e)
+                {
+                    logger.Warn(string.Format("KeepSocket发送报文失败。报文:{0}。异常信息:{1}", command, e.Message), e);
+                }
+                Thread.Sleep(60);
             }
         }
 
-        private void SendDatagram(string msg)
+        public bool IsConnected
         {
-            if (_SocketClient == null || _SocketClient.Connected == false)
-            {
+            get { return !(_SocketClient == null || _SocketClient.Connected == false); }
+        }
+
+        private void SendDatagram(string datagramText)
+        {
+            if (!IsConnected)
                 this.Connect();
-            }
-            this.SendOneDatagram(msg);
-        }
-
-        private void SendOneDatagram(string datagramText)
-        {
             byte[] datagram = Encoding.Default.GetBytes(datagramText);
             try
             {
@@ -231,7 +203,7 @@ namespace Gean.Net.KeepSocket
             }
             catch (Exception e)
             {
-                _Logger.Error("Socket发送异常。发送内容:" + datagramText + ",异常信息:" + e.Message);
+                logger.Error("Socket发送异常。发送内容:" + datagramText + ",异常信息:" + e.Message);
                 this.SafeClose();
             }
         }
@@ -240,35 +212,31 @@ namespace Gean.Net.KeepSocket
 
         #region 接收线程
 
-        private byte[] recByte;
-        private SplitBytes sb;
-
-        private bool OnReceive = false;
+        private byte[] _ReceiveByteArray;
+        private SplitBytes _SplitByte;
+        /// <summary>
+        /// 正在接收
+        /// </summary>
+        private bool _OnReceive = false;
 
         /// <summary>
         /// 接收线程
         /// </summary>
         protected void ReceiveThread()
         {
-            sb = new SplitBytes();
-            recByte = new byte[1024];
+            _SplitByte = new SplitBytes();
+            _ReceiveByteArray = new byte[2 * 1024];
 
             while (_NeedSendMonitor)
             {
-                if (_SocketClient == null || _SocketClient.Connected == false)
-                {
+                if (!IsConnected)
                     Thread.Sleep(1000);
-                }
                 else
                 {
-                    if (OnReceive)
-                    {
-                        Thread.Sleep(1000);
-                    }
+                    if (_OnReceive)
+                        Thread.Sleep(500);
                     else
-                    {
-                        CheckReceive();
-                    }
+                        this.CheckReceive();
                 }
             }
         }
@@ -277,17 +245,17 @@ namespace Gean.Net.KeepSocket
         {
             try
             {
-                AsyncCallback GetMsgCallback = new AsyncCallback(GetMsg);
-                OnReceive = true;
-                _SocketClient.GetStream().BeginRead(recByte, 0, 1024, GetMsgCallback, null);
+                AsyncCallback receiveCallback = new AsyncCallback(this.GetMessage);
+                _OnReceive = true;
+                _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
             }
             catch
             {
-                OnReceive = false;
+                _OnReceive = false;
             }
         }
 
-        private void GetMsg(IAsyncResult ar)
+        private void GetMessage(IAsyncResult ar)
         {
             try
             {
@@ -297,41 +265,39 @@ namespace Gean.Net.KeepSocket
                 lock (_SocketClient.GetStream())
                 {
                     numberOfBytesRead = _SocketClient.GetStream().EndRead(ar);
-
                     if (numberOfBytesRead < 1)
                     {
-                        Close();
-                        OnReceive = false;
+                        this.Close();
+                        _OnReceive = false;
                         return;
                     }
                 }
-
-                sb.AddBytes(recByte, numberOfBytesRead);
-                recByte = new byte[1024];
+                _SplitByte.AddBytes(_ReceiveByteArray, numberOfBytesRead);
+                _ReceiveByteArray = new byte[1024];
 
                 if (_SocketClient.GetStream().DataAvailable)
                 {
                     isFinish = false;
-                    _SocketClient.GetStream().BeginRead(recByte, 0, recByte.Length, new AsyncCallback(GetMsg), _SocketClient.GetStream());
+                    _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, _ReceiveByteArray.Length, new AsyncCallback(GetMessage), _SocketClient.GetStream());
                 }
 
                 if (isFinish)
                 {
-                    string replyMesage = Encoding.Default.GetString(sb.ReceiveAllByte, 0, sb.ReceiveAllByte.Length);
-                    ProcessProtocolMessage(replyMesage);
+                    string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
+                    this.ProcessProtocolMessage(replyMesage);
 
-                    sb.Dispose();
-                    OnReceive = false;
+                    _SplitByte.Dispose();
+                    _OnReceive = false;
                 }
             }
             catch
             {
-                sb.Dispose();
-                OnReceive = false;
+                _SplitByte.Dispose();
+                _OnReceive = false;
                 this.SafeClose();
             }
         }
-        
+
         #endregion
 
         #region 通讯（连接与关闭）
@@ -351,16 +317,16 @@ namespace Gean.Net.KeepSocket
 
                     if (_SocketClient.Connected)
                     {
-                        _Logger.Debug("Socket连接成功.");
+                        logger.Debug("Socket连接成功.");
                     }
                     else
                     {
-                        _Logger.Debug("Socket连接失败.");
+                        logger.Debug("Socket连接失败.");
                     }
                 }
                 catch (Exception e)
                 {
-                    _Logger.Debug("Socket连接导常。异常信息:" + e.Message);
+                    logger.Debug("Socket连接导常。异常信息:" + e.Message);
                 }
             }
         }
@@ -379,11 +345,11 @@ namespace Gean.Net.KeepSocket
                 try
                 {
                     _SocketClient.Close();
-                    _Logger.Debug("Socket关闭连接成功");
+                    logger.Debug("Socket关闭连接成功");
                 }
                 catch (Exception e)
                 {
-                    _Logger.Debug("Socket关闭连接导常。异常信息:" + e.Message);
+                    logger.Debug("Socket关闭连接导常。异常信息:" + e.Message);
                 }
                 finally
                 {
@@ -410,7 +376,7 @@ namespace Gean.Net.KeepSocket
                 }
                 catch (Exception e)
                 {
-                    _Logger.Debug("Socket关闭连接导常。异常信息:" + e.Message);
+                    logger.Debug("Socket关闭连接导常。异常信息:" + e.Message);
                 }
             }
         }
@@ -445,7 +411,7 @@ namespace Gean.Net.KeepSocket
 
         protected void ProcessProtocolMessage(string msg)
         {
-            _Logger.Debug("收到消息：" + msg);
+            logger.Debug("收到消息：" + msg);
             string protocolMessage = msg;
             string localMsg = protocolMessage;
             string[] msgArray = localMsg.Split('@');
@@ -466,7 +432,7 @@ namespace Gean.Net.KeepSocket
         {
             lock (_CommandQueue)
             {
-                _Logger.Debug(cmd);
+                logger.Debug(cmd);
                 _CommandQueue.Enqueue(cmd);
             }
         }

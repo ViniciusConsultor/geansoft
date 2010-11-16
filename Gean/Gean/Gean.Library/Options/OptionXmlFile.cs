@@ -6,7 +6,7 @@ using Gean.Xml;
 namespace Gean.Options
 {
     /// <summary>
-    /// 选项文件所有的XML文件，封装了XmlDoucment在本类型中。
+    /// 描述一个选项XML文件，封装了XmlDoucment在本类型中。
     /// </summary>
     public class OptionXmlFile : AbstractXmlDocument
     {
