@@ -384,17 +384,13 @@ namespace Gean.Net.KeepSocket
                     _SocketClient.ReceiveTimeout = 2 * 1000;
 
                     if (_SocketClient.Connected)
-                    {
-                        logger.Debug("Socket连接成功.");
-                    }
+                        logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", QServerIP, QServerPort));
                     else
-                    {
-                        logger.Debug("Socket连接失败.");
-                    }
+                        logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", QServerIP, QServerPort));
                 }
                 catch (Exception e)
                 {
-                    logger.Debug("Socket连接导常。异常信息:" + e.Message);
+                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", QServerIP, QServerPort, e.Message));
                 }
             }
         }
