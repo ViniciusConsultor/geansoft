@@ -54,7 +54,7 @@
     <Compile Include="Teacher.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pansoft.CQMS.Options\Pansoft.CQMS.Options.csproj">
+    <ProjectReference Include="..\Gean.Option\Gean.Option.csproj">
       <Project>{2061A9E8-82B6-4B6B-884D-A1136D7ABB90}</Project>
       <Name>Pansoft.CQMS.Options</Name>
     </ProjectReference>

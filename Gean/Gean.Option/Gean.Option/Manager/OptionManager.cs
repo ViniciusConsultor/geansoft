@@ -40,7 +40,7 @@ namespace Gean.Option
                 Instance.ChangeEventArgsList = new List<Option.OptionChangeEventArgs>();
             }
 
-            internal static readonly OptionManager Instance = null;
+            static readonly OptionManager Instance = null;
         }
 
         #endregion
