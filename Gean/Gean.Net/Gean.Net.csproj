@@ -47,10 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\MessageQueue.cs" />
     <Compile Include="KeepSocket\MessageQueue.cs" />
     <Compile Include="KeepSocket\KeepSocket.cs" />
     <Compile Include="KeepSocket\SplitBytes.cs" />
-    <Compile Include="ProtocolWrapper\ProtocolPool.cs" />
+    <Compile Include="ProtocolWrapper\KeepConnectionProtocolPool.cs" />
     <Compile Include="ProtocolWrapper\Protocols.cs" />
     <Compile Include="SocketServer\DataStore.cs" />
     <Compile Include="SocketServer\ETMASS\ETMASS.cs" />
@@ -64,9 +65,7 @@
       <Name>Gean</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

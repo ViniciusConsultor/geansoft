@@ -68,6 +68,12 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         private byte[] _ReceiveBuffer = new byte[2048 * 1024];
 
+        /// <summary>
+        /// 协议消息池
+        /// </summary>
+        public KeepConnectionProtocolPool MessagePool { get { return _MessagePool; } }
+        private KeepConnectionProtocolPool _MessagePool = null;
+
         public string QServerIP
         {
             get { return _QServerIP; }
@@ -89,7 +95,6 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         private KeepSocket()
         {
-            //this.InitializeComponent();
         }
 
         /// <summary>
@@ -101,8 +106,7 @@ namespace Gean.Net.KeepSocket
             KeepSocket me = KeepSocket.ME;
 
             me._ClientId = UtilityHardware.GetCpuID();
-            me._ResultQueue = new Queue<string>();
-            me._CommandQueue = new Queue<string>();
+            me._MessagePool = new KeepConnectionProtocolPool();
             me.InitThread();
 
             return me;
@@ -160,6 +164,17 @@ namespace Gean.Net.KeepSocket
             }
         }
 
+        /// <summary>
+        /// 返回当前长连接的连接状态
+        /// </summary>
+        /// <value>
+        /// 	<c>true</c> if this instance is connected; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsConnected
+        {
+            get { return !(_SocketClient == null || _SocketClient.Connected == false); }
+        }
+
         #endregion
 
         #region 发送线程
@@ -171,13 +186,9 @@ namespace Gean.Net.KeepSocket
                 string command = "";
                 try
                 {
-                    lock (_CommandQueue)
-                    {
-                        if (_CommandQueue.Count <= 0)
-                            continue;
-                        command = _CommandQueue.Dequeue();
+                    command = _MessagePool.DequeueSendingMessage();
+                    if (!string.IsNullOrEmpty(command))
                         this.SendDatagram(command);
-                    }
                 }
                 catch (Exception e)
                 {
@@ -187,11 +198,10 @@ namespace Gean.Net.KeepSocket
             }
         }
 
-        public bool IsConnected
-        {
-            get { return !(_SocketClient == null || _SocketClient.Connected == false); }
-        }
-
+        /// <summary>
+        /// 发送数据的具体执行函数
+        /// </summary>
+        /// <param name="datagramText">The datagram text.</param>
         private void SendDatagram(string datagramText)
         {
             if (!IsConnected)
@@ -200,6 +210,7 @@ namespace Gean.Net.KeepSocket
             try
             {
                 _SocketClient.Client.Send(datagram);
+                logger.Trace(string.Format("发送消息:{0}", datagramText));
             }
             catch (Exception e)
             {
@@ -224,9 +235,6 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         protected void ReceiveThread()
         {
-            _SplitByte = new SplitBytes();
-            _ReceiveByteArray = new byte[2 * 1024];
-
             while (_NeedSendMonitor)
             {
                 if (!IsConnected)
@@ -236,13 +244,15 @@ namespace Gean.Net.KeepSocket
                     if (_OnReceive)
                         Thread.Sleep(500);
                     else
-                        this.CheckReceive();
+                        this.ReceiveDatagram();
                 }
             }
         }
 
-        private void CheckReceive()
+        private void ReceiveDatagram()
         {
+            _SplitByte = new SplitBytes();
+            _ReceiveByteArray = new byte[2 * 1024];
             try
             {
                 AsyncCallback receiveCallback = new AsyncCallback(this.GetMessage);
@@ -257,11 +267,11 @@ namespace Gean.Net.KeepSocket
 
         private void GetMessage(IAsyncResult ar)
         {
+            int numberOfBytesRead;
+            bool isFinish = true;
+
             try
             {
-                int numberOfBytesRead;
-                bool isFinish = true;
-
                 lock (_SocketClient.GetStream())
                 {
                     numberOfBytesRead = _SocketClient.GetStream().EndRead(ar);
@@ -273,28 +283,47 @@ namespace Gean.Net.KeepSocket
                     }
                 }
                 _SplitByte.AddBytes(_ReceiveByteArray, numberOfBytesRead);
-                _ReceiveByteArray = new byte[1024];
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
+            try
+            {
                 if (_SocketClient.GetStream().DataAvailable)
                 {
                     isFinish = false;
                     _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, _ReceiveByteArray.Length, new AsyncCallback(GetMessage), _SocketClient.GetStream());
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
+            try
+            {
                 if (isFinish)
                 {
                     string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
-                    this.ProcessProtocolMessage(replyMesage);
-
-                    _SplitByte.Dispose();
-                    _OnReceive = false;
+                    _MessagePool.EnqueueReceivingMessage(replyMesage);
+                    logger.Trace(string.Format("收到消息:{0}", replyMesage));
                 }
             }
-            catch
+            catch (Exception)
+            {
+                throw;
+            }
+            try
             {
                 _SplitByte.Dispose();
                 _OnReceive = false;
                 this.SafeClose();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -397,58 +426,11 @@ namespace Gean.Net.KeepSocket
 
         public void HeartBeat()
         {
-            lock (_CommandQueue)
-            {
-                if (_CommandQueue.Count == 0)
-                {
-                    //将连接状态校验命令字加入发送队列
-                    _CommandQueue.Enqueue(Protocols.VerifyConnectionStatus(_ClientId));
-                }
-            }
+            if (_MessagePool.SendingQueueCount == 0)
+                //将连接状态校验命令字加入发送队列
+                _MessagePool.EnqueueSendingMessage(Protocols.VerifyConnectionStatus(_ClientId));
         }
 
         #endregion
-
-        protected void ProcessProtocolMessage(string msg)
-        {
-            logger.Debug("收到消息：" + msg);
-            string protocolMessage = msg;
-            string localMsg = protocolMessage;
-            string[] msgArray = localMsg.Split('@');
-            if (msgArray.Length > 1)
-            {
-                for (int i = 0; i < msgArray.Length - 1; i++)
-                {
-                    lock (_ResultQueue)
-                    {
-                        _ResultQueue.Enqueue(msgArray[i] + "@");
-                    }
-                }
-            }
-            protocolMessage = msgArray[msgArray.Length - 1];
-        }
-
-        public void AddCmd(string cmd)
-        {
-            lock (_CommandQueue)
-            {
-                logger.Debug(cmd);
-                _CommandQueue.Enqueue(cmd);
-            }
-        }
-
-        public string GetCmd()
-        {
-            string result = string.Empty;
-            lock (_ResultQueue)
-            {
-                if (_ResultQueue.Count > 0)
-                {
-                    result = _ResultQueue.Dequeue();
-                }
-            }
-            return result;
-        }
-
     }
 }
