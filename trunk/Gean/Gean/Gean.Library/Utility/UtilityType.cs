@@ -95,6 +95,10 @@ namespace Gean
                 }
             }
             object createdObject = null;
+            if (parameterTypes == null)
+            {
+                parameterTypes = new Type[] { };
+            }
             ConstructorInfo constructor = type.GetConstructor(parameterTypes);
             if (constructor == null)
             {
@@ -200,7 +204,8 @@ namespace Gean
         {
             Type type = null;
             List<string> files = new List<string>();
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            Assembly[] currAsseArray = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (Assembly assembly in currAsseArray)
             {
                 type = assembly.GetType(typeName, false);
                 if (type != null)

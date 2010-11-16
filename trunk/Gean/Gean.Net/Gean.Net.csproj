@@ -50,6 +50,7 @@
     <Compile Include="KeepSocket\MessageQueue.cs" />
     <Compile Include="KeepSocket\KeepSocket.cs" />
     <Compile Include="KeepSocket\SplitBytes.cs" />
+    <Compile Include="ProtocolWrapper\ProtocolPool.cs" />
     <Compile Include="ProtocolWrapper\Protocols.cs" />
     <Compile Include="SocketServer\DataStore.cs" />
     <Compile Include="SocketServer\ETMASS\ETMASS.cs" />
@@ -62,6 +63,9 @@
       <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
