@@ -255,17 +255,18 @@ namespace Gean.Net.KeepSocket
             _ReceiveByteArray = new byte[2 * 1024];
             try
             {
-                AsyncCallback receiveCallback = new AsyncCallback(this.GetMessage);
+                AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
                 _OnReceive = true;
                 _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
             }
-            catch
+            catch (Exception e)
             {
+                logger.Warn("ReceiveDatagram时发生异常.异常信息:" + e.Message, e);
                 _OnReceive = false;
             }
         }
 
-        private void GetMessage(IAsyncResult ar)
+        private void AsyncGetMessage(IAsyncResult ar)
         {
             int numberOfBytesRead;
             bool isFinish = true;
@@ -284,8 +285,9 @@ namespace Gean.Net.KeepSocket
                 }
                 _SplitByte.AddBytes(_ReceiveByteArray, numberOfBytesRead);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Warn("AsyncGetMessage时发生异常(0).异常信息:" + e.Message, e);
                 throw;
             }
 
@@ -294,11 +296,12 @@ namespace Gean.Net.KeepSocket
                 if (_SocketClient.GetStream().DataAvailable)
                 {
                     isFinish = false;
-                    _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, _ReceiveByteArray.Length, new AsyncCallback(GetMessage), _SocketClient.GetStream());
+                    _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, _ReceiveByteArray.Length, new AsyncCallback(AsyncGetMessage), _SocketClient.GetStream());
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Warn("AsyncGetMessage时发生异常(1).异常信息:" + e.Message, e);
                 throw;
             }
 
@@ -311,19 +314,22 @@ namespace Gean.Net.KeepSocket
                     logger.Trace(string.Format("收到消息:{0}", replyMesage));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                logger.Warn("AsyncGetMessage时发生异常(2).异常信息:" + e.Message, e);
+                this.SafeClose();
+                this.Connect();
             }
             try
             {
                 _SplitByte.Dispose();
                 _OnReceive = false;
-                this.SafeClose();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                logger.Warn("AsyncGetMessage时发生异常(3).异常信息:" + e.Message, e);
+                this.SafeClose();
+                this.Connect();
             }
         }
 
