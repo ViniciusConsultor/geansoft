@@ -10,6 +10,28 @@ namespace Gean.Net.ProtocolWrapper
     /// </summary>
     public class KeepConnectionProtocolPool
     {
+        public KeepConnectionProtocolPool()
+        {
+            this.ID = UtilityGuid.Get();
+        }
+
+        public string ID { get; private set; }
+
+        public override bool Equals(object obj)
+        {
+            if (null == obj || !(obj is KeepConnectionProtocolPool))
+                return false;
+            return this.ID.Equals(((KeepConnectionProtocolPool)obj).ID);
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 31;
+            int result = 1;
+            result = prime * result + ((this.ID == null) ? 0 : this.ID.GetHashCode());
+            return result;
+        }
+
         /// <summary>
         /// 【待发送的消息队列】
         /// </summary>
@@ -55,8 +77,7 @@ namespace Gean.Net.ProtocolWrapper
             if (_SendingQueue.Count > 0)
             {
                 lock (_SendLock)
-                    message = _SendingQueue.Dequeue();
-                OnSendingRemoved(new ProtocolMessageEventArgs(message));
+                    return message = _SendingQueue.Dequeue();
             }
             return message;
         }
@@ -70,8 +91,7 @@ namespace Gean.Net.ProtocolWrapper
             if (_ReceivingQueue.Count > 0)
             {
                 lock (_ReceiveLock)
-                    _ReceivingQueue.Dequeue();
-                OnReceivingRemoved(new ProtocolMessageEventArgs(message));
+                    return _ReceivingQueue.Dequeue();
             }
             return message;
         }
@@ -86,7 +106,6 @@ namespace Gean.Net.ProtocolWrapper
             {
                 lock (_SendLock)
                     _SendingQueue.Enqueue(message);
-                OnSendingAdded(new ProtocolMessageEventArgs(message));
             }
         }
 
@@ -100,64 +119,6 @@ namespace Gean.Net.ProtocolWrapper
             {
                 lock (_ReceiveLock)
                     _ReceivingQueue.Enqueue(message);
-                OnReceivingAdded(new ProtocolMessageEventArgs(message));
-            }
-        }
-
-
-        /// <summary>
-        /// 【待发送的消息队列】新增消息后发生的事件
-        /// </summary>
-        public event SendingAddedEventHandler SendingAddedEvent;
-        protected virtual void OnSendingAdded(ProtocolMessageEventArgs e)
-        {
-            if (SendingAddedEvent != null)
-                SendingAddedEvent(this, e);
-        }
-        public delegate void SendingAddedEventHandler(Object sender, ProtocolMessageEventArgs e);
-
-        /// <summary>
-        /// 【待发送的消息队列】移除消息后发生的事件
-        /// </summary>
-        public event SendingRemovedEventHandler SendingRemovedEvent;
-        protected virtual void OnSendingRemoved(ProtocolMessageEventArgs e)
-        {
-            if (SendingAddedEvent != null)
-                SendingAddedEvent(this, e);
-        }
-        public delegate void SendingRemovedEventHandler(Object sender, ProtocolMessageEventArgs e);
-
-        /// <summary>
-        /// 【接收到的消息队列】新增消息后发生的事件
-        /// </summary>
-        public event ReceivingAddedEventHandler ReceivingAddedEvent;
-        protected virtual void OnReceivingAdded(ProtocolMessageEventArgs e)
-        {
-            if (SendingAddedEvent != null)
-                SendingAddedEvent(this, e);
-        }
-        public delegate void ReceivingAddedEventHandler(Object sender, ProtocolMessageEventArgs e);
-
-        /// <summary>
-        /// 【接收到的消息队列】新增消息后发生的事件
-        /// </summary>
-        public event ReceivingRemovedEventHandler ReceivingRemovedEvent;
-        protected virtual void OnReceivingRemoved(ProtocolMessageEventArgs e)
-        {
-            if (SendingAddedEvent != null)
-                SendingAddedEvent(this, e);
-        }
-        public delegate void ReceivingRemovedEventHandler(Object sender, ProtocolMessageEventArgs e);
-
-        /// <summary>
-        /// 包含Socket协议消息事件数据的类
-        /// </summary>
-        public class ProtocolMessageEventArgs : EventArgs
-        {
-            public string Message { get; private set; }
-            public ProtocolMessageEventArgs(string message)
-            {
-                this.Message = message;
             }
         }
 

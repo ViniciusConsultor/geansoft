@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\MessageQueue.cs" />
-    <Compile Include="KeepSocket\MessageQueue.cs" />
     <Compile Include="KeepSocket\KeepSocket.cs" />
     <Compile Include="KeepSocket\SplitBytes.cs" />
     <Compile Include="ProtocolWrapper\KeepConnectionProtocolPool.cs" />

@@ -25,7 +25,7 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 是否需要发送线程监控
         /// </summary>
-        public bool _NeedSendMonitor = true;
+        private bool _NeedSendMonitor = true;
         /// <summary>
         /// 关闭本连接的发送线程监控
         /// </summary>
@@ -51,7 +51,7 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 本应用程序连接器Id
         /// </summary>
-        public string _ClientId = string.Empty;
+        private string _ClientId = string.Empty;
 
         /// <summary>
         /// 供多线程加锁服务
@@ -62,11 +62,6 @@ namespace Gean.Net.KeepSocket
         /// 核心的Socket客户端对象
         /// </summary>
         private TcpClient _SocketClient;
-
-        /// <summary>
-        /// 接收缓冲区
-        /// </summary>
-        private byte[] _ReceiveBuffer = new byte[2048 * 1024];
 
         /// <summary>
         /// 协议消息池
@@ -108,6 +103,7 @@ namespace Gean.Net.KeepSocket
             me._ClientId = UtilityHardware.GetCpuID();
             me._MessagePool = new KeepConnectionProtocolPool();
             me.InitThread();
+            logger.Trace("消息池编号:" + me.MessagePool.ID);
 
             return me;
         }
@@ -148,7 +144,6 @@ namespace Gean.Net.KeepSocket
             {
                 Instance = new KeepSocket();
             }
-
             internal static readonly KeepSocket Instance = null;
         }
 
@@ -255,9 +250,19 @@ namespace Gean.Net.KeepSocket
             _ReceiveByteArray = new byte[2 * 1024];
             try
             {
-                AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
-                _OnReceive = true;
-                _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
+                if (!_OnReceive)
+                {
+                    _OnReceive = true;
+                    if (true)
+                    {
+                        AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
+                        _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
+                    }
+                    else
+                    {
+                        this.SynchroGetMessage();
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -266,6 +271,10 @@ namespace Gean.Net.KeepSocket
             }
         }
 
+        /// <summary>
+        /// 【异步】从Socket的输入流中获取消息
+        /// </summary>
+        /// <param name="ar">The ar.</param>
         private void AsyncGetMessage(IAsyncResult ar)
         {
             int numberOfBytesRead;
@@ -288,7 +297,6 @@ namespace Gean.Net.KeepSocket
             catch (Exception e)
             {
                 logger.Warn("AsyncGetMessage时发生异常(0).异常信息:" + e.Message, e);
-                throw;
             }
 
             try
@@ -302,7 +310,6 @@ namespace Gean.Net.KeepSocket
             catch (Exception e)
             {
                 logger.Warn("AsyncGetMessage时发生异常(1).异常信息:" + e.Message, e);
-                throw;
             }
 
             try
@@ -330,6 +337,32 @@ namespace Gean.Net.KeepSocket
                 logger.Warn("AsyncGetMessage时发生异常(3).异常信息:" + e.Message, e);
                 this.SafeClose();
                 this.Connect();
+            }
+        }
+
+        /// <summary>
+        /// 【同步】从Socket的输入流中获取消息
+        /// </summary>
+        private void SynchroGetMessage()
+        {
+            _OnReceive = true;
+            lock (_SocketClient.GetStream())
+            {
+                int size = _SocketClient.Client.Receive(_ReceiveByteArray);
+                if (size < 1)
+                {
+                    this.Close();
+                    _OnReceive = false;
+                    return;
+                }
+                else
+                {
+                    _SplitByte.AddBytes(_ReceiveByteArray, size);
+                    string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
+                    _MessagePool.EnqueueReceivingMessage(replyMesage);
+                    logger.Trace(string.Format("收到消息:{0}", replyMesage));
+                    _OnReceive = false;
+                }
             }
         }
 
