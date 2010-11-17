@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Reflection;
-using System.Net.Sockets;
+using Gean.Net.Common;
 using NLog;
-using Gean.Net.ProtocolWrapper;
 
 namespace Gean.Net.KeepSocket
 {
@@ -69,18 +65,6 @@ namespace Gean.Net.KeepSocket
         public KeepConnectionProtocolPool MessagePool { get { return _MessagePool; } }
         private KeepConnectionProtocolPool _MessagePool = null;
 
-        public string QServerIP
-        {
-            get { return _QServerIP; }
-        }
-        private string _QServerIP = "127.0.0.1";
-
-        public string QServerPort
-        {
-            get { return _QServerPort; }
-        }
-        private string _QServerPort = "8000";
-
         #endregion
 
         #region 单件实例
@@ -99,12 +83,10 @@ namespace Gean.Net.KeepSocket
         public static KeepSocket InitializeComponent()
         {
             KeepSocket me = KeepSocket.ME;
-
             me._ClientId = UtilityHardware.GetCpuID();
             me._MessagePool = new KeepConnectionProtocolPool();
             me.InitThread();
             logger.Trace("消息池编号:" + me.MessagePool.ID);
-
             return me;
         }
 
@@ -379,18 +361,18 @@ namespace Gean.Net.KeepSocket
             {
                 try
                 {
-                    _SocketClient = new TcpClient(QServerIP, int.Parse(QServerPort));
+                    _SocketClient = new TcpClient(KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port);
                     //一次接收的延时
                     _SocketClient.ReceiveTimeout = 2 * 1000;
 
                     if (_SocketClient.Connected)
-                        logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", QServerIP, QServerPort));
+                        logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
                     else
-                        logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", QServerIP, QServerPort));
+                        logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
                 }
                 catch (Exception e)
                 {
-                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", QServerIP, QServerPort, e.Message));
+                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port, e.Message));
                 }
             }
         }
@@ -461,9 +443,12 @@ namespace Gean.Net.KeepSocket
 
         public void HeartBeat()
         {
+            //将连接状态校验命令字加入发送队列
             if (_MessagePool.SendingQueueCount == 0)
-                //将连接状态校验命令字加入发送队列
-                _MessagePool.EnqueueSendingMessage(Protocols.VerifyConnectionStatus(_ClientId));
+            {
+                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConn, 101, _ClientId);
+                _MessagePool.EnqueueSendingMessage(verifyConn);
+            }
         }
 
         #endregion
