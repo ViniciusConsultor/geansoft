@@ -32,6 +32,7 @@ namespace Gean.Net.KeepSocket
 
         public string IPAddress { get; private set; }
         public int Port { get; private set; }
+        public int HeartRange { get; private set; }
         public string VerifyConn { get; private set; }
 
         protected override void Load(System.Xml.XmlElement source)
@@ -46,6 +47,7 @@ namespace Gean.Net.KeepSocket
                 this.IPAddress = baseElement.GetAttribute("serverIp");
             }
             this.Port = int.Parse(baseElement.GetAttribute("port"));
+            this.HeartRange = int.Parse(baseElement.GetAttribute("heartRange"));
         }
 
         public override System.Xml.XmlElement GetChangedDatagram()

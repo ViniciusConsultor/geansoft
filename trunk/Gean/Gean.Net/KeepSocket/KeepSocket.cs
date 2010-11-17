@@ -437,7 +437,7 @@ namespace Gean.Net.KeepSocket
             {
                 HeartBeat();
                 //每分钟心跳一次，检查连接状态
-                Thread.Sleep(60 * 1000);
+                Thread.Sleep(KeepSocketOption.ME.HeartRange * 1000);
             }
         }
 
