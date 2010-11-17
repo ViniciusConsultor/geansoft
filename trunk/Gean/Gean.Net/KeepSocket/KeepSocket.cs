@@ -446,7 +446,7 @@ namespace Gean.Net.KeepSocket
             //将连接状态校验命令字加入发送队列
             if (_MessagePool.SendingQueueCount == 0)
             {
-                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConn, 101, _ClientId);
+                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConn, 11, _ClientId);
                 _MessagePool.EnqueueSendingMessage(verifyConn);
             }
         }
