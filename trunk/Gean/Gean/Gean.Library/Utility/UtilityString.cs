@@ -69,8 +69,34 @@ namespace Gean
             string[] kv = msg.Split('&');
             foreach (string item in kv)
             {
+                if (string.IsNullOrEmpty(item))
+                {
+                    continue;
+                }
                 string[] ab = item.Split('#');
-                typeMap.Add(ab[0], ab[1]);
+                if (typeMap.ContainsKey(ab[0]))
+                {
+                    continue;
+                }
+                if (ab.Length == 2)
+                {
+                    typeMap.Add(ab[0], ab[1]);
+                }
+                else if (ab.Length > 2)
+                {
+                    StringBuilder rab = new StringBuilder();
+                    for (int i = 1; i < ab.Length; i++)
+                    {
+                        if (string.IsNullOrEmpty(ab[i]))
+                            continue;
+                        rab.Append(ab[i]).Append("#");
+                    }
+                    typeMap.Add(ab[0], rab.ToString().TrimEnd('#'));
+                }
+                else
+                {
+                    typeMap.Add(ab[0], "");
+                }
             }
             return typeMap;
         }
