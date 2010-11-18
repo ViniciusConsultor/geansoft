@@ -61,6 +61,21 @@ namespace Gean
         }
 
         /// <summary>
+        /// 针对【M1#个人业务&M5#VIP业务&M2#对公业务】格式的数据进行转换
+        /// </summary>
+        public static Dictionary<string, string> SplitXX(string msg)
+        {
+            Dictionary<string, string> typeMap = new Dictionary<string, string>();
+            string[] kv = msg.Split('&');
+            foreach (string item in kv)
+            {
+                string[] ab = item.Split('#');
+                typeMap.Add(ab[0], ab[1]);
+            }
+            return typeMap;
+        }
+
+        /// <summary>
         /// 区位码及汉字之间的互换
         /// </summary>
         /// <param name="character">汉字</param>
