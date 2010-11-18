@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <options>
   <option class="Gean.Net.KeepSocket.KeepSocketOption">
-    <base serverIp="192.168.2.102" port="3130" heartRange="30" />
+    <base serverIp="127.0.0.1" port="3130" heartRange="30" />
     <verifyConn>TSTCON|{0}|{1}|@</verifyConn>
   </option>
 </options>
