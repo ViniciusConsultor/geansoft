@@ -55,7 +55,7 @@ namespace Gean.MyJson.UnitTesting
         //
         #endregion
 
-        string jsonstring = "{\"Addresses\":[{\"City\":\"Paia\",\"Code\":123456789,\"Description\":\"香港立法会财务委员会。\",\"HiArray\":[\"壹\",\"贰\",\"叁\",\"肆\",\"伍\"],\"IsAddress\":true,\"MChar\":\"m\",\"Number\":[12,23,34,45,56,67,78,89],\"State\":\"HI\",\"Street\":\"32 Kaiea Place\",\"Zip\":\"96779\"},{\"City\":\"Paia\",\"Code\":123456789,\"Description\":\"香港立法会财务委员会。\",\"HiArray\":[\"壹\",\"贰\",\"叁\",\"肆\",\"伍\"],\"IsAddress\":true,\"MChar\":\"m\",\"Number\":[12,23,34,45,56,67,78,89],\"State\":\"HI\",\"Street\":\"32 Kaiea Place\",\"Zip\":\"96779\"}],\"Entered\":\"\\/Date(1263139200000+0800)\\/\",\"Name\":\"John Jones\"}"; 
+        string jsonstring = "{\"Addresses\":[{\"City\":\"Paia\",\"Code\":123456789,\"Description\":\"香港\"立法会\"财务委员会。\",\"HiArray\":[\"壹\",\"贰\",\"叁\",\"肆\",\"伍\"],\"IsAddress\":true,\"MChar\":\"m\",\"Number\":[12,23,34,45,56,67,78,89],\"State\":\"HI\",\"Street\":\"32 Kaiea Place\",\"Zip\":\"96779\"},{\"City\":\"Paia\",\"Code\":123456789,\"Description\":\"香港立法会财务委员会。\",\"HiArray\":[\"壹\",\"贰\",\"叁\",\"肆\",\"伍\"],\"IsAddress\":true,\"MChar\":\"m\",\"Number\":[12,23,34,45,56,67,78,89],\"State\":\"HI\",\"Street\":\"32 Kaiea Place\",\"Zip\":\"96779\"}],\"Entered\":\"\\/Date(1263139200000+0800)\\/\",\"Name\":\"John Jones\"}"; 
 
         /// <summary>
         ///DeserializeObject 的测试
@@ -134,12 +134,12 @@ namespace Gean.MyJson.UnitTesting
         public string State = "HI";
         public string Street = "32 Kaiea Place";
         public string Zip = "96779";
-        public string Description = "香港立法会财务委员会。";
+        public string Description = "香港\"立法会\"财务委员会。";
         public int Code = 123456789;
         public bool IsAddress = true;
         public string[] HiArray = new string[] { "壹", "贰", "叁", "肆", "伍" };
         public Int64[] Number = new Int64[] { 12, 23, 34, 45, 56, 67, 78, 89 };
-        public char MChar = 'm';
+        public char MChar = '~';
     }
 
 }

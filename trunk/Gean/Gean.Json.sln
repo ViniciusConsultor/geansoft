@@ -11,11 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json2", "Gean.Json2\Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json3", "Gean.Json3\Gean.Json3.csproj", "{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Library\Gean.csproj", "{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean", "Gean\Gean.Library\Gean.csproj", "{54E5A1F2-3684-4C25-BB2A-D1D412D17002}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gean.Json.UnitTesting", "..\DesignTime.UnitTest\Gean.Json.UnitTesting\Gean.Json.UnitTesting.csproj", "{202119B1-F530-4BB9-9223-E3D7DE858FF8}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Gean.Json.vsmdi
 	EndGlobalSection
@@ -32,10 +36,10 @@ Global
 		{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDFD5FBB-D035-4652-AAD0-500AE9B92A9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B3FF29A-E829-49B2-80C0-2D1BA9724F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E5A1F2-3684-4C25-BB2A-D1D412D17002}.Release|Any CPU.Build.0 = Release|Any CPU
 		{202119B1-F530-4BB9-9223-E3D7DE858FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{202119B1-F530-4BB9-9223-E3D7DE858FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{202119B1-F530-4BB9-9223-E3D7DE858FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,9 +47,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
