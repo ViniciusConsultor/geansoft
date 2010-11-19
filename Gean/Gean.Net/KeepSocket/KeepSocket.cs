@@ -299,8 +299,20 @@ namespace Gean.Net.KeepSocket
                 if (isFinish)
                 {
                     string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
-                    _MessagePool.EnqueueReceivingMessage(replyMesage);
-                    logger.Trace(string.Format("收到消息:{0}", replyMesage));
+                    string[] msgs = null;
+                    if (replyMesage.IndexOf("@@") >= 0)
+                    {
+                        msgs = UtilityString.Split(replyMesage, "@@", StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    else
+                    {
+                        msgs = replyMesage.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    for (int i = 0; i < msgs.Length; i++)
+                    {
+                        _MessagePool.EnqueueReceivingMessage(msgs[i]);
+                        logger.Trace(string.Format("收到消息:{0}", msgs[i]));
+                    }
                 }
             }
             catch (Exception e)
