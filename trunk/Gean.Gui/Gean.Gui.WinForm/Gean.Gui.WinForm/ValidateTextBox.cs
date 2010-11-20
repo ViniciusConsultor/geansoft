@@ -46,7 +46,7 @@ namespace Gean.Gui.WinForm
             {
                 return;
             }
-            ///用指定的正则验证
+            //用指定的正则验证
             if (_regexRuntime != null)
             {
                 if (_regexRuntime.IsMatch(Text))

@@ -10,7 +10,8 @@ using System.Drawing.Text;
 namespace Gean.Gui.WinForm
 {
     /// <summary>
-    /// 从显示棋谱形成的需求，而设计的一个Label以流状的模式显示在一个Panel中的控件。
+    /// 来自显示国际棋谱形成的需求。
+    /// 设计形成的一个Label以流状的模式显示在一个Panel中的控件。
     /// </summary>
     public class CloudsPanel : ScrollableControl
     {
