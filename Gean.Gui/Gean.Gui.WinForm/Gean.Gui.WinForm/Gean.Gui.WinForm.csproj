@@ -62,6 +62,57 @@
     <Compile Include="FileSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="IconBox\IconBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\AddBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\AlertBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\BackBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\BluetoothBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\CloseBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\DeleteBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\DownloadBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\ForwardBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\InfoBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\LogOffBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\MusicBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\PrivateBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\PublicBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\RefreshBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\RestartBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IconBox\ShutdownBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IconToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -123,6 +174,24 @@
       <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
       <Name>Gean</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\BaseActionIcon\Add.ico" />
+    <Content Include="Resources\BaseActionIcon\Alert.ico" />
+    <Content Include="Resources\BaseActionIcon\Back.ico" />
+    <Content Include="Resources\BaseActionIcon\Bluetooth.ico" />
+    <Content Include="Resources\BaseActionIcon\Close.ico" />
+    <Content Include="Resources\BaseActionIcon\Delete.ico" />
+    <Content Include="Resources\BaseActionIcon\Download.ico" />
+    <Content Include="Resources\BaseActionIcon\Forward.ico" />
+    <Content Include="Resources\BaseActionIcon\Info.ico" />
+    <Content Include="Resources\BaseActionIcon\LogOff.ico" />
+    <Content Include="Resources\BaseActionIcon\Music.ico" />
+    <Content Include="Resources\BaseActionIcon\Private.ico" />
+    <Content Include="Resources\BaseActionIcon\Public.ico" />
+    <Content Include="Resources\BaseActionIcon\Refresh.ico" />
+    <Content Include="Resources\BaseActionIcon\Restart.ico" />
+    <Content Include="Resources\BaseActionIcon\Shutdown.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
