@@ -2,7 +2,7 @@
 <options>
   <option class="Gean.Net.KeepSocket.KeepSocketOption">
     192.168.2.119  127.0.0.1
-    <base serverIp="127.0.0.1" port="3130" heartRange="20" />
+    <base serverIp="127.0.0.1" port="3130" heartRange="20" isAsync="true" />
     <verifyConn>TSTCON|{0}|{1}|@</verifyConn>
   </option>
 </options>

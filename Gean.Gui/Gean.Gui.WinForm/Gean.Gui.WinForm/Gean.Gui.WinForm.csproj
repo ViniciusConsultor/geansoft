@@ -58,6 +58,7 @@
     <Compile Include="CloudsControl\CloudsPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\FormAsyncUpdateDelegate.cs" />
     <Compile Include="FileSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>

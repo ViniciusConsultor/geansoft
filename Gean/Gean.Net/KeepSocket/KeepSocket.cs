@@ -19,18 +19,6 @@ namespace Gean.Net.KeepSocket
         #region 标记
 
         /// <summary>
-        /// 是否需要发送线程监控
-        /// </summary>
-        private bool _NeedSendMonitor = true;
-        /// <summary>
-        /// 关闭本连接的发送线程监控
-        /// </summary>
-        public void CloseSendMonitor()
-        {
-            _NeedSendMonitor = false;
-        }
-
-        /// <summary>
         /// 是否需要心跳监控
         /// </summary>
         private bool _NeedHeartMonitor = true;
@@ -158,7 +146,7 @@ namespace Gean.Net.KeepSocket
 
         private void SendThread()
         {
-            while (_NeedSendMonitor)
+            while (true)
             {
                 string command = "";
                 try
@@ -212,7 +200,7 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         protected void ReceiveThread()
         {
-            while (_NeedSendMonitor)
+            while (true)
             {
                 if (!IsConnected)
                     Thread.Sleep(1000);
@@ -235,7 +223,7 @@ namespace Gean.Net.KeepSocket
                 if (!_OnReceive)
                 {
                     _OnReceive = true;
-                    if (true)
+                    if (KeepSocketOption.ME.IsAsync)
                     {
                         AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
                         _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
@@ -374,16 +362,22 @@ namespace Gean.Net.KeepSocket
                 try
                 {
                     _SocketClient = new TcpClient(KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port);
-                    //一次接收的延时
-                    _SocketClient.ReceiveTimeout = 2 * 1000;
+                    _SocketClient.ReceiveTimeout = 2 * 1000;//一次接收的延时
 
                     if (_SocketClient.Connected)
+                    {
                         logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
+                        OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Normal));
+                    }
                     else
+                    {
+                        OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
                         logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
+                    }
                 }
                 catch (Exception e)
                 {
+                    OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
                     logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port, e.Message));
                 }
             }
@@ -403,6 +397,7 @@ namespace Gean.Net.KeepSocket
                 try
                 {
                     _SocketClient.Close();
+                    OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
                     logger.Debug("Socket关闭连接成功");
                 }
                 catch (Exception e)
@@ -431,6 +426,7 @@ namespace Gean.Net.KeepSocket
                 {
                     _SocketClient.Client.Shutdown(SocketShutdown.Both);
                     _SocketClient.Client.Close();
+                    OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
                 }
                 catch (Exception e)
                 {
@@ -458,11 +454,76 @@ namespace Gean.Net.KeepSocket
             //将连接状态校验命令字加入发送队列
             if (_MessagePool.SendingQueueCount == 0)
             {
-                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConn, 11, _ClientId);
+                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConnCommandString, 11, _ClientId);
                 _MessagePool.EnqueueSendingMessage(verifyConn);
             }
         }
 
         #endregion
+
+        /// <summary>
+        /// Socket长连接断开时发生的事件
+        /// </summary>
+        public event KeepSocketStatusChangedEventHandler KeepSocketStatusChangedEvent;
+        protected virtual void OnKeepSocketStatusChanged(KeepSocketStatusChangedEventArgs e)
+        {
+            if (KeepSocketStatusChangedEvent != null)
+                KeepSocketStatusChangedEvent(this, e);
+        }
+        public delegate void KeepSocketStatusChangedEventHandler(Object sender, KeepSocketStatusChangedEventArgs e);
+
+        /// <summary>
+        /// Socket长连接断开时发生的事件包含数据的类
+        /// </summary>
+        public class KeepSocketStatusChangedEventArgs : EventArgs
+        {
+            public ConnectionStatus Status { get; private set; }
+            public KeepSocketStatusChangedEventArgs(ConnectionStatus status)
+            {
+                this.Status = status;
+            }
+        }
+
+        /// <summary>
+        /// 网络连接状态
+        /// </summary>
+        public enum ConnectionStatus
+        {
+            /// <summary>
+            /// 正常
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// 断开
+            /// </summary>
+            Break
+        }
+
+        /// <summary>
+        /// 网络速度
+        /// </summary>
+        public enum NetVelocity
+        {
+            /// <summary>
+            /// 很好
+            /// </summary>
+            VeryGood,
+            /// <summary>
+            /// 好
+            /// </summary>
+            Good,
+            /// <summary>
+            /// 一般
+            /// </summary>
+            General,
+            /// <summary>
+            /// 不好
+            /// </summary>
+            Pool,
+            /// <summary>
+            /// 坏的
+            /// </summary>
+            Bad
+        }
     }
 }
