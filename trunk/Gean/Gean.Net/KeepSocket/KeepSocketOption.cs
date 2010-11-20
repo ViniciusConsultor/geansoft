@@ -32,13 +32,26 @@ namespace Gean.Net.KeepSocket
 
         public string IPAddress { get; private set; }
         public int Port { get; private set; }
+        /// <summary>
+        /// Gets or sets 心跳间隔.
+        /// </summary>
+        /// <value>The heart range.</value>
         public int HeartRange { get; private set; }
-        public string VerifyConn { get; private set; }
+        /// <summary>
+        /// Gets or sets 长连接校验命令串.
+        /// </summary>
+        /// <value>The verify conn command string.</value>
+        public string VerifyConnCommandString { get; private set; }
+        /// <summary>
+        /// Gets or sets 是否采用异步传输.
+        /// </summary>
+        /// <value><c>true</c> 使用异步传输; otherwise, <c>false</c>.</value>
+        public bool IsAsync { get; private set; }
 
         protected override void Load(System.Xml.XmlElement source)
         {
             XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
-            this.VerifyConn = verifyElement.InnerText.Trim();
+            this.VerifyConnCommandString = verifyElement.InnerText.Trim();
 
             XmlElement baseElement = (XmlElement)source.SelectSingleNode("base");
             System.Net.IPAddress tempIp;
@@ -48,6 +61,7 @@ namespace Gean.Net.KeepSocket
             }
             this.Port = int.Parse(baseElement.GetAttribute("port"));
             this.HeartRange = int.Parse(baseElement.GetAttribute("heartRange"));
+            this.IsAsync = bool.Parse(baseElement.GetAttribute("isAsync"));
         }
 
         public override System.Xml.XmlElement GetChangedDatagram()
