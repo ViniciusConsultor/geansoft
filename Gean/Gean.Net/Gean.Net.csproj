@@ -49,11 +49,12 @@
   <ItemGroup>
     <Compile Include="Common\DataIDGenerator.cs" />
     <Compile Include="Common\Interfaces\IMessage.cs" />
-    <Compile Include="Common\Interfaces\ICommandParser.cs" />
+    <Compile Include="Common\Interfaces\IMessageSpliter.cs" />
     <Compile Include="Common\Interfaces\IProtocolCombin.cs" />
-    <Compile Include="Common\MessageArrivalEventArgs.cs" />
-    <Compile Include="Common\MessageQueue.cs" />
-    <Compile Include="Common\MessageSource.cs" />
+    <Compile Include="Messages\MessageStatus.cs" />
+    <Compile Include="Messages\MessageWrapper.cs" />
+    <Compile Include="Messages\MessageQueue.cs" />
+    <Compile Include="Messages\MessageSource.cs" />
     <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="KeepSocket\KeepSocket.cs" />
     <Compile Include="SocketOption.cs" />

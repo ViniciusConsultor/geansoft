@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Net.Common
+namespace Gean.Net.Messages
 {
     public class MessageQueue : Queue<string>
     {

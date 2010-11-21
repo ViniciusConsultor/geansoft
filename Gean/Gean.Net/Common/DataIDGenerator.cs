@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean;
 
-namespace Gean.Net.Common
+namespace Gean.Net.Messages
 {
     public class DataIDGenerator : IDGenerator
     {

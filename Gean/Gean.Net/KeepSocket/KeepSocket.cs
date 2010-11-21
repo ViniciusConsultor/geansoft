@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using Gean.Net.Common;
+using Gean.Net.Messages;
 using NLog;
 using Gean.Net.MessagePools;
 
@@ -73,7 +73,7 @@ namespace Gean.Net.KeepSocket
         {
             KeepSocket me = KeepSocket.ME;
             me._ClientId = UtilityHardware.GetCpuID();
-            me._MessagePool = new AsyncMessagePool();
+            me._MessagePool = AsyncMessagePool.ME;
             me.InitThread();
             logger.Trace("消息池编号:" + me.MessagePool.ID);
             return me;
@@ -381,7 +381,7 @@ namespace Gean.Net.KeepSocket
                 catch (Exception e)
                 {
                     OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
-                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", SocketOption.ME.IPAddress, SocketOption.ME.Port, e.Message));
+                    logger.Error(string.Format("Socket连接异常。ServerIP:{0},ServerPort:{1}异常信息:{2}", SocketOption.ME.IPAddress, SocketOption.ME.Port, e.Message));
                 }
             }
         }
