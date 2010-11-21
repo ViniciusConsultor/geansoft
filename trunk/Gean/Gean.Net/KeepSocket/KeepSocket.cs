@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using Gean.Net.Common;
 using NLog;
+using Gean.Net.MessagePools;
 
 namespace Gean.Net.KeepSocket
 {
@@ -50,8 +51,8 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 协议消息池
         /// </summary>
-        public AsyncMessagePool MessagePool { get { return _MessagePool; } }
-        private AsyncMessagePool _MessagePool = null;
+        public MessagePool MessagePool { get { return _MessagePool; } }
+        private MessagePool _MessagePool = null;
 
         #endregion
 
@@ -225,7 +226,7 @@ namespace Gean.Net.KeepSocket
                 if (!_WhileReceiving)
                 {
                     _WhileReceiving = true;
-                    if (KeepSocketOption.ME.IsAsync)//选择接收方式
+                    if (SocketOption.ME.IsAsync)//选择接收方式
                     {
                         AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
                         _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
@@ -363,24 +364,24 @@ namespace Gean.Net.KeepSocket
             {
                 try
                 {
-                    _SocketClient = new TcpClient(KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port);
+                    _SocketClient = new TcpClient(SocketOption.ME.IPAddress, SocketOption.ME.Port);
                     _SocketClient.ReceiveTimeout = 2 * 1000;//一次接收的延时
 
                     if (_SocketClient.Connected)
                     {
-                        logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
+                        logger.Info(string.Format("Socket连接成功。ServerIP:{0}, ServerPort:{1}", SocketOption.ME.IPAddress, SocketOption.ME.Port));
                         OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Normal));
                     }
                     else
                     {
                         OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
-                        logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port));
+                        logger.Warn(string.Format("Socket连接失败。ServerIP:{0}, ServerPort:{1}", SocketOption.ME.IPAddress, SocketOption.ME.Port));
                     }
                 }
                 catch (Exception e)
                 {
                     OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
-                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", KeepSocketOption.ME.IPAddress, KeepSocketOption.ME.Port, e.Message));
+                    logger.Error(string.Format("Socket连接导常。ServerIP:{0},ServerPort:{1}异常信息:{2}", SocketOption.ME.IPAddress, SocketOption.ME.Port, e.Message));
                 }
             }
         }
@@ -448,7 +449,7 @@ namespace Gean.Net.KeepSocket
             {
                 HeartBeat();
                 //每分钟心跳一次，检查连接状态
-                Thread.Sleep(KeepSocketOption.ME.HeartRange * 1000);
+                Thread.Sleep(SocketOption.ME.HeartRange * 1000);
             }
         }
 
@@ -457,7 +458,7 @@ namespace Gean.Net.KeepSocket
             //将连接状态校验命令字加入发送队列
             if (_MessagePool.SendingQueueCount == 0)
             {
-                string verifyConn = string.Format(KeepSocketOption.ME.VerifyConnCommandString, 11, _ClientId);
+                string verifyConn = string.Format(SocketOption.ME.VerifyConnCommandString, 11, _ClientId);
                 _MessagePool.EnqueueSending(verifyConn);
             }
         }

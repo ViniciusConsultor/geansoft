@@ -47,17 +47,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ICommandParser.cs" />
-    <Compile Include="Common\IProtocolCombin.cs" />
+    <Compile Include="Common\DataIDGenerator.cs" />
+    <Compile Include="Common\Interfaces\ICommandParser.cs" />
+    <Compile Include="Common\Interfaces\IProtocolCombin.cs" />
     <Compile Include="Common\MessageArrivalEventArgs.cs" />
     <Compile Include="Common\MessageQueue.cs" />
     <Compile Include="Common\MessageSource.cs" />
     <Compile Include="Common\ConnectionStatus.cs" />
     <Compile Include="KeepSocket\KeepSocket.cs" />
-    <Compile Include="KeepSocket\KeepSocketOption.cs" />
+    <Compile Include="SocketOption.cs" />
     <Compile Include="Common\SplitBytes.cs" />
-    <Compile Include="Common\IProtocolParser.cs" />
-    <Compile Include="Common\AsyncMessagePool.cs" />
+    <Compile Include="Common\Interfaces\IProtocolParser.cs" />
+    <Compile Include="MessagePools\AsyncMessagePool.cs" />
+    <Compile Include="MessagePools\MessagePool.cs" />
     <Compile Include="SocketServer\DataStore.cs" />
     <Compile Include="SocketServer\ETMASS\ETMASS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,10 +73,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="KeepSocket.option">
+    <None Include="Socket.option">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

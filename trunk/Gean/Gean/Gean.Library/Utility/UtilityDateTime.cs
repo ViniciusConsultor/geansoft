@@ -10,6 +10,17 @@ namespace Gean
     /// </summary>
     public class UtilityDateTime
     {
+        /// <summary>
+        /// 当前时间的一个毫秒级的长整型数值（保持和Java的一致性）
+        /// Java获取此值的方法是:Calendar.getInstance().getTimeInMillis()
+        /// 具体分析请见:http://blog.csdn.net/LaoBai_2006/archive/2008/10/22/3124719.aspx
+        /// </summary>
+        /// <returns></returns>
+        public static long CurrTicks()
+        {
+            return Decimal.ToInt64(Decimal.Divide(DateTime.UtcNow.Ticks - 621355968000000000, 10000));
+        }
+
         /// <summary>     
         /// 返回两个日期之间的时间间隔（y：年份间隔、M：月份间隔、d：天数间隔、h：小时间隔、m：分钟间隔、s：秒钟间隔、ms：微秒间隔）     
         /// </summary>     
@@ -17,7 +28,7 @@ namespace Gean
         /// <param name="Date2">结束日期</param>     
         /// <param name="Interval">间隔标志</param>     
         /// <returns>返回间隔标志指定的时间间隔</returns>     
-        public int DateDiff(System.DateTime Date1, System.DateTime Date2, string Interval)
+        public static int DateDiff(System.DateTime Date1, System.DateTime Date2, string Interval)
         {
             double dblYearLen = 365;//年的长度，365天     
             double dblMonthLen = (365 / 12);//每个月平均的天数     

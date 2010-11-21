@@ -134,6 +134,7 @@
     <Compile Include="Wrapper\SimpleLogger\LogString.cs" />
     <Compile Include="Wrapper\Mail\MailSender.cs" />
     <Compile Include="Wrapper\Mp3\Mp3Tag.cs" />
+    <Compile Include="Wrapper\SystemDateTime.cs" />
     <Compile Include="Wrapper\Xml\XmlDatasetConvert.cs" />
     <Compile Include="Resources\FilterString.Designer.cs">
       <AutoGen>True</AutoGen>
