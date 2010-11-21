@@ -50,8 +50,8 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 协议消息池
         /// </summary>
-        public KeepConnectionProtocolPool MessagePool { get { return _MessagePool; } }
-        private KeepConnectionProtocolPool _MessagePool = null;
+        public AsyncMessagePool MessagePool { get { return _MessagePool; } }
+        private AsyncMessagePool _MessagePool = null;
 
         #endregion
 
@@ -72,7 +72,7 @@ namespace Gean.Net.KeepSocket
         {
             KeepSocket me = KeepSocket.ME;
             me._ClientId = UtilityHardware.GetCpuID();
-            me._MessagePool = new KeepConnectionProtocolPool();
+            me._MessagePool = new AsyncMessagePool();
             me.InitThread();
             logger.Trace("消息池编号:" + me.MessagePool.ID);
             return me;
@@ -151,7 +151,7 @@ namespace Gean.Net.KeepSocket
                 string command = "";
                 try
                 {
-                    command = _MessagePool.DequeueSendingMessage();
+                    command = _MessagePool.DequeueSending();
                     if (!string.IsNullOrEmpty(command))
                         this.SendDatagram(command);
                 }
@@ -193,7 +193,7 @@ namespace Gean.Net.KeepSocket
         /// <summary>
         /// 正在接收
         /// </summary>
-        private bool _OnReceive = false;
+        private bool _WhileReceiving = false;
 
         /// <summary>
         /// 接收线程
@@ -203,11 +203,13 @@ namespace Gean.Net.KeepSocket
             while (true)
             {
                 if (!IsConnected)
-                    Thread.Sleep(1000);
+                {
+                    Thread.Sleep(1000);//休息1秒再进行尝试，由心跳去控制再次连接
+                }
                 else
                 {
-                    if (_OnReceive)
-                        Thread.Sleep(500);
+                    if (_WhileReceiving)//正在接收时
+                        Thread.Sleep(200);
                     else
                         this.ReceiveDatagram();
                 }
@@ -220,10 +222,10 @@ namespace Gean.Net.KeepSocket
             _ReceiveByteArray = new byte[2 * 1024];
             try
             {
-                if (!_OnReceive)
+                if (!_WhileReceiving)
                 {
-                    _OnReceive = true;
-                    if (KeepSocketOption.ME.IsAsync)
+                    _WhileReceiving = true;
+                    if (KeepSocketOption.ME.IsAsync)//选择接收方式
                     {
                         AsyncCallback receiveCallback = new AsyncCallback(this.AsyncGetMessage);
                         _SocketClient.GetStream().BeginRead(_ReceiveByteArray, 0, 1024, receiveCallback, null);
@@ -237,7 +239,7 @@ namespace Gean.Net.KeepSocket
             catch (Exception e)
             {
                 logger.Warn("ReceiveDatagram时发生异常.异常信息:" + e.Message, e);
-                _OnReceive = false;
+                _WhileReceiving = false;
             }
         }
 
@@ -258,7 +260,7 @@ namespace Gean.Net.KeepSocket
                     if (numberOfBytesRead < 1)
                     {
                         this.Close();
-                        _OnReceive = false;
+                        _WhileReceiving = false;
                         return;
                     }
                 }
@@ -298,7 +300,7 @@ namespace Gean.Net.KeepSocket
                     }
                     for (int i = 0; i < msgs.Length; i++)
                     {
-                        _MessagePool.EnqueueReceivingMessage(msgs[i]);
+                        _MessagePool.EnqueueReceiving(msgs[i]);
                         logger.Trace(string.Format("收到消息:{0}", msgs[i]));
                     }
                 }
@@ -312,7 +314,7 @@ namespace Gean.Net.KeepSocket
             try
             {
                 _SplitByte.Dispose();
-                _OnReceive = false;
+                _WhileReceiving = false;
             }
             catch (Exception e)
             {
@@ -327,23 +329,23 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         private void SynchroGetMessage()
         {
-            _OnReceive = true;
+            _WhileReceiving = true;
             lock (_SocketClient.GetStream())
             {
                 int size = _SocketClient.Client.Receive(_ReceiveByteArray);
                 if (size < 1)
                 {
                     this.Close();
-                    _OnReceive = false;
+                    _WhileReceiving = false;
                     return;
                 }
                 else
                 {
                     _SplitByte.AddBytes(_ReceiveByteArray, size);
                     string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
-                    _MessagePool.EnqueueReceivingMessage(replyMesage);
+                    _MessagePool.EnqueueReceiving(replyMesage);
                     logger.Trace(string.Format("收到消息:{0}", replyMesage));
-                    _OnReceive = false;
+                    _WhileReceiving = false;
                 }
             }
         }
@@ -384,7 +386,8 @@ namespace Gean.Net.KeepSocket
         }
 
         /// <summary>
-        /// 关闭连接。销毁连接的实例。如需安全关闭，并打算销毁连接的实例，请调用SafeClose()。
+        /// 关闭连接。销毁连接的实例。
+        /// 如需安全关闭，并且不打算销毁连接的实例时，请调用<see cref="SafeClose"/>
         /// </summary>
         public void Close()
         {
@@ -455,11 +458,13 @@ namespace Gean.Net.KeepSocket
             if (_MessagePool.SendingQueueCount == 0)
             {
                 string verifyConn = string.Format(KeepSocketOption.ME.VerifyConnCommandString, 11, _ClientId);
-                _MessagePool.EnqueueSendingMessage(verifyConn);
+                _MessagePool.EnqueueSending(verifyConn);
             }
         }
 
         #endregion
+
+        #region 事件
 
         /// <summary>
         /// Socket长连接断开时发生的事件
@@ -484,46 +489,6 @@ namespace Gean.Net.KeepSocket
             }
         }
 
-        /// <summary>
-        /// 网络连接状态
-        /// </summary>
-        public enum ConnectionStatus
-        {
-            /// <summary>
-            /// 正常
-            /// </summary>
-            Normal,
-            /// <summary>
-            /// 断开
-            /// </summary>
-            Break
-        }
-
-        /// <summary>
-        /// 网络速度
-        /// </summary>
-        public enum NetVelocity
-        {
-            /// <summary>
-            /// 很好
-            /// </summary>
-            VeryGood,
-            /// <summary>
-            /// 好
-            /// </summary>
-            Good,
-            /// <summary>
-            /// 一般
-            /// </summary>
-            General,
-            /// <summary>
-            /// 不好
-            /// </summary>
-            Pool,
-            /// <summary>
-            /// 坏的
-            /// </summary>
-            Bad
-        }
+        #endregion
     }
 }
