@@ -87,6 +87,7 @@
     <Compile Include="Interface\Tree,Item\IItem.cs" />
     <Compile Include="Interface\Tree,Item\ITree.cs" />
     <Compile Include="Interface\IOption.cs" />
+    <Compile Include="Options\OptionHelper.cs" />
     <Compile Include="Options\OptionPanel.cs">
       <SubType>Component</SubType>
     </Compile>

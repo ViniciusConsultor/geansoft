@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Net.KeepSocket
+namespace Gean.Net.Common
 {
     public class SplitBytes
     {

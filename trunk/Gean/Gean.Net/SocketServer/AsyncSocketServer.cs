@@ -9,24 +9,26 @@ namespace Gean.Net
     /// 一个Socket会话服务器。
     /// (是对EMTASS(一个开源的可扩展多线程异步Socket服务器框架)<see cref="TSocketServerBase"/>的易用性封装。(单件模式))
     /// </summary>
-    public sealed class SocketServer
+    public sealed class AsyncSocketServer
     {
+        #region 单件实例
+
         /// <summary>
-        /// 将被使用的静态实例。
+        /// 获得一个本类型的单件实例.
         /// </summary>
-        static readonly SocketServer _instance = new SocketServer();
-        /// <summary>
-        /// 静态构造方法。
-        /// </summary>
-        static SocketServer() { }
-        /// <summary>
-        /// <see cref="SocketServer"/>的单件实例
-        /// </summary>
-        /// <value><see cref="SocketServer"/>的单件实例</value>
-        public static SocketServer Instance
+        /// <value>The instance.</value>
+        public static AsyncSocketServer ME
         {
-            get { return _instance; }
+            get { return Singleton.Instance; }
         }
+
+        private class Singleton
+        {
+            static Singleton() { Instance = new AsyncSocketServer(); }
+            internal static readonly AsyncSocketServer Instance = null;
+        }
+
+        #endregion
 
         /// <summary>
         /// 本类型所包含的一个私有EMTASS服务，对一些常用方法与事件进行封装，一些不常用的私有化。组合。
@@ -36,7 +38,7 @@ namespace Gean.Net
         /// <summary>
         /// 私有构造函数
         /// </summary>
-        private SocketServer() 
+        private AsyncSocketServer() 
         {
             _socketServer = new TSocketServerBase<Talk, DataStore>();
             this.AttachServerEvent();

@@ -4,6 +4,7 @@ using System.Text;
 using Gean.Options;
 using System.Net;
 using System.Xml;
+using Gean.Net.Common;
 
 namespace Gean.Net.KeepSocket
 {
@@ -30,8 +31,8 @@ namespace Gean.Net.KeepSocket
 
         #endregion
 
-        public string IPAddress { get; private set; }
-        public int Port { get; private set; }
+        public string IPAddress { get; set; }
+        public int Port { get; set; }
         /// <summary>
         /// Gets or sets 心跳间隔.
         /// </summary>
@@ -48,20 +49,24 @@ namespace Gean.Net.KeepSocket
         /// <value><c>true</c> 使用异步传输; otherwise, <c>false</c>.</value>
         public bool IsAsync { get; private set; }
 
+        public ICommandParser CommandParser { get; private set; }
+
         protected override void Load(System.Xml.XmlElement source)
         {
-            XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
-            this.VerifyConnCommandString = verifyElement.InnerText.Trim();
+            XmlElement serverElement = (XmlElement)source.SelectSingleNode("server");
+            System.Net.IPAddress tempIp;
+            if (System.Net.IPAddress.TryParse(serverElement.GetAttribute("serverIp"), out tempIp))
+            {
+                this.IPAddress = serverElement.GetAttribute("serverIp");
+            }
+            this.Port = int.Parse(serverElement.GetAttribute("port"));
 
             XmlElement baseElement = (XmlElement)source.SelectSingleNode("base");
-            System.Net.IPAddress tempIp;
-            if (System.Net.IPAddress.TryParse(baseElement.GetAttribute("serverIp"), out tempIp))
-            {
-                this.IPAddress = baseElement.GetAttribute("serverIp");
-            }
-            this.Port = int.Parse(baseElement.GetAttribute("port"));
             this.HeartRange = int.Parse(baseElement.GetAttribute("heartRange"));
             this.IsAsync = bool.Parse(baseElement.GetAttribute("isAsync"));
+
+            XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
+            this.VerifyConnCommandString = verifyElement.InnerText.Trim();
         }
 
         public override System.Xml.XmlElement GetChangedDatagram()

@@ -27,7 +27,7 @@ namespace Gean.Net.CSUST.Net
     #region TSocketServerBase
 
     /// <summary>
-    /// [一般不要直接使用，而使用本框架中的<see cref="SocketServer"/>易用性封装类型]
+    /// [一般不要直接使用，而使用本框架中的<see cref="AsyncSocketServer"/>易用性封装类型]
     /// ETMASS——Extensible Multi-Thread Asynchronous Socket Server Framework.
     /// 服务器泛型类 TSocketServerBase。
     /// 该类包括了一个服务器Socket对象、一个TDatabaseBase派生类对象、一个会话TSessionBase类派生对象的列表（Dictionary泛型对象），封装了TDatabaseBase、 TSessionBase的全部事件，提供统一的对外公开接口和事件； 

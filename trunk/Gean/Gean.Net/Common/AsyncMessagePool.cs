@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Net.Common;
+using Gean.Net.KeepSocket;
 
 namespace Gean.Net.Common
 {
     /// <summary>
     /// 用于长连接的协议消息数据池。包括：1.待发送的消息队列; 2.接收到的消息队列
     /// </summary>
-    public class KeepConnectionProtocolPool
+    public class AsyncMessagePool
     {
-        public KeepConnectionProtocolPool()
+        public AsyncMessagePool()
         {
             this.ID = UtilityGuid.Get();
         }
@@ -19,16 +20,17 @@ namespace Gean.Net.Common
 
         public override bool Equals(object obj)
         {
-            if (null == obj || !(obj is KeepConnectionProtocolPool))
+            if (null == obj || !(obj is AsyncMessagePool))
                 return false;
-            return this.ID.Equals(((KeepConnectionProtocolPool)obj).ID);
+            return this.ID.Equals(((AsyncMessagePool)obj).ID);
         }
 
         public override int GetHashCode()
         {
             int prime = 31;
+            int nullCode = -71;
             int result = 1;
-            result = prime * result + ((this.ID == null) ? 0 : this.ID.GetHashCode());
+            result = prime * result + ((this.ID == null) ? nullCode : this.ID.GetHashCode());
             return result;
         }
 
@@ -71,7 +73,7 @@ namespace Gean.Net.Common
         /// <summary>
         /// 移除并返回位于消息池中【待发送的消息队列】开始处的对象。
         /// </summary>
-        public string DequeueSendingMessage()
+        public string DequeueSending()
         {
             string message = string.Empty;
             if (_SendingQueue.Count > 0)
@@ -85,7 +87,7 @@ namespace Gean.Net.Common
         /// <summary>
         /// 移除并返回位于消息池中【接收到的消息队列】开始处的对象。
         /// </summary>
-        public string DequeueReceivingMessage()
+        public string DequeueReceiving()
         {
             string message = string.Empty;
             if (_ReceivingQueue.Count > 0)
@@ -99,28 +101,58 @@ namespace Gean.Net.Common
         /// <summary>
         /// 将消息添加到位于消息池中【待发送的消息队列】的结尾处。
         /// </summary>
-        public void EnqueueSendingMessage(string message)
+        public void EnqueueSending(string message)
         {
             message = message.Trim();
             if (!string.IsNullOrEmpty(message))
             {
                 lock (_SendLock)
+                {
                     _SendingQueue.Enqueue(message);
+                }
+                string command = KeepSocketOption.ME.CommandParser.Parse(message);
+                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncSending, command, message));
             }
         }
 
         /// <summary>
         /// 将消息添加到位于消息池中【接收到的消息队列】的结尾处。
         /// </summary>
-        public void EnqueueReceivingMessage(string message)
+        public void EnqueueReceiving(string message)
         {
             message = message.Trim();
             if (!string.IsNullOrEmpty(message))
             {
                 lock (_ReceiveLock)
+                {
                     _ReceivingQueue.Enqueue(message);
+                }
+                string command = KeepSocketOption.ME.CommandParser.Parse(message);
+                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncReceiving, command, message));
             }
         }
+
+        /// <summary>
+        /// 新发送消息到达时的事件
+        /// </summary>
+        public event SendingMessageArrivalEventHandler SendingMessageArrivalEvent;
+        protected virtual void OnSendingMessageArrival(MessageArrivalEventArgs e)
+        {
+            if (SendingMessageArrivalEvent != null)
+                SendingMessageArrivalEvent(this, e);
+        }
+        public delegate void SendingMessageArrivalEventHandler(object sender, MessageArrivalEventArgs e);
+
+        /// <summary>
+        /// 新回复消息到达时的事件
+        /// </summary>
+        public event ReceivingMessageArrivalEventHandler ReceivingMessageArrivalEvent;
+        protected virtual void OnReceivingMessageArrival(MessageArrivalEventArgs e)
+        {
+            if (ReceivingMessageArrivalEvent != null)
+                ReceivingMessageArrivalEvent(this, e);
+        }
+        public delegate void ReceivingMessageArrivalEventHandler(object sender, MessageArrivalEventArgs e);
 
     }
 }
