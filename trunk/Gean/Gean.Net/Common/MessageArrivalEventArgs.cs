@@ -7,7 +7,7 @@ namespace Gean.Net.Common
     /// <summary>
     /// 当新（发送、回复）消息到达时的事件发生时包含事件数据的类
     /// </summary>
-    public class MessageArrivalEventArgs : EventArgs
+    public class MessageArrivalEventArgs : EventArgs, IMessage
     {
         private static string _ClientId = string.Empty;
         static MessageArrivalEventArgs()
@@ -57,32 +57,7 @@ namespace Gean.Net.Common
 
         public override string ToString()
         {
-            switch (this.Source)
-            {
-                case MessageSource.AsyncSending:
-                case MessageSource.SynchroSending:
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append(this.Command).Append('|');
-                        sb.Append(ClientType).Append('|');
-                        sb.Append(ClientId).Append('|');
-                        sb.Append(TimeTicks).Append('|');
-                        sb.Append(TalkId).Append('|');
-                        sb.Append(Data).Append('|');
-                        sb.Append('@');
-                        return sb.ToString();
-                    }
-                case MessageSource.AsyncReceiving:
-                case MessageSource.SynchroReceiving:
-                default:
-                    {
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append(this.Command).Append('|');
-                        sb.Append(Data).Append('|');
-                        sb.Append('@');
-                        return sb.ToString();
-                    }
-            }
+            return SocketOption.ME.Combin.Combin(this);
         }
     }
 }
