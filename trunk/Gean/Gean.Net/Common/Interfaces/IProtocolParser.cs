@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Net.Common.Interfaces
+namespace Gean.Net.Messages.Interfaces
 {
     /// <summary>
     /// 描述一个协议数据解析器的接口
@@ -14,6 +14,6 @@ namespace Gean.Net.Common.Interfaces
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        object Parse(object message);
+        object Parse(MessageWrapper message);
     }
 }

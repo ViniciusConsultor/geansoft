@@ -2,22 +2,40 @@
 using System.Collections.Generic;
 using System.Text;
 using Gean.Net.KeepSocket;
-using Gean.Net.Common;
+using Gean.Net.Messages;
 
 namespace Gean.Net.MessagePools
 {
     public class AsyncMessagePool : MessagePool
     {
+        #region 单件实例
+
+        private AsyncMessagePool() { }
+
+        /// <summary>
+        /// 获得一个本类型的单件实例.
+        /// </summary>
+        /// <value>The instance.</value>
+        public static AsyncMessagePool ME
+        {
+            get { return Singleton.Instance; }
+        }
+
+        private class Singleton
+        {
+            static Singleton() { Instance = new AsyncMessagePool(); }
+            internal static readonly AsyncMessagePool Instance = null;
+        }
+
+        #endregion
+
         /// <summary>
         /// 返回本消息池中的消息来源是否是异步的
         /// </summary>
         /// <value><c>true</c> if this instance is async; otherwise, <c>false</c>.</value>
         public override bool IsAsync
         {
-            get
-            {
-                return SocketOption.ME.IsAsync;
-            }
+            get { return SocketOption.ME.IsAsync; }
         }
 
         /// <summary>
@@ -60,8 +78,8 @@ namespace Gean.Net.MessagePools
                 {
                     _SendingQueue.Enqueue(message);
                 }
-                string command = SocketOption.ME.CommandParser.Parse(message);
-                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncSending, command, message));
+                string command = SocketOption.ME.Spliter.SplitAtCommand(message);
+                OnSendingMessageArrival(new MessageWrapper(MessageSource.AsyncSending, command, message));
             }
         }
 
@@ -77,8 +95,8 @@ namespace Gean.Net.MessagePools
                 {
                     _ReceivingQueue.Enqueue(message);
                 }
-                string command = SocketOption.ME.CommandParser.Parse(message);
-                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncReceiving, command, message));
+                MessageWrapper wrapp = MessageWrapper.Parse(message, MessageSource.AsyncReceiving);
+                OnReceivingMessageArrival(wrapp);
             }
         }
 

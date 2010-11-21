@@ -4,8 +4,8 @@ using System.Text;
 using Gean.Options;
 using System.Net;
 using System.Xml;
-using Gean.Net.Common;
-using Gean.Net.Common.Interfaces;
+using Gean.Net.Messages;
+using Gean.Net.Messages.Interfaces;
 
 namespace Gean.Net
 {
@@ -73,12 +73,17 @@ namespace Gean.Net
         /// Gets or sets 从消息中解析命令字的接口
         /// </summary>
         /// <value>The command parser.</value>
-        public ICommandParser CommandParser { get; private set; }
+        public IMessageSpliter Spliter { get; private set; }
         /// <summary>
         /// Gets or sets 一个协议数据组装器.
         /// </summary>
         /// <value>The combin.</value>
-        public IProtocolCombin Combin { get; private set; }
+        public IProtocolCombine Combiner { get; private set; }
+        /// <summary>
+        /// Gets or sets 协议数据的结束符
+        /// </summary>
+        /// <value>The end char.</value>
+        public string EndChar { get; private set; }
 
         #endregion
 
@@ -100,8 +105,11 @@ namespace Gean.Net
             XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
             this.VerifyConnCommandString = verifyElement.InnerText.Trim();
 
-            this.CommandParser = OptionHelper.InterfaceBuilder<ICommandParser>(source.SelectSingleNode("commandParser")).Value; ;
-            this.Combin = OptionHelper.InterfaceBuilder<IProtocolCombin>(source.SelectSingleNode("combin")).Value;
+            XmlElement endCharElement = (XmlElement)source.SelectSingleNode("endChar");
+            this.EndChar = endCharElement.InnerText.Trim();
+
+            this.Spliter = OptionHelper.InterfaceBuilder<IMessageSpliter>(source.SelectSingleNode("spliter")).Value; ;
+            this.Combiner = OptionHelper.InterfaceBuilder<IProtocolCombine>(source.SelectSingleNode("combin")).Value;
         }
 
         public override System.Xml.XmlElement GetChangedDatagram()

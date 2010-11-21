@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean.Net.Common;
+using Gean.Net.Messages;
 using Gean.Net.KeepSocket;
 
 namespace Gean.Net.MessagePools
@@ -11,12 +11,7 @@ namespace Gean.Net.MessagePools
     /// </summary>
     public abstract class MessagePool
     {
-        public MessagePool()
-        {
-            this.ID = UtilityGuid.Get();
-        }
-
-        public string ID { get; private set; }
+        public string ID { get { return UtilityGuid.Get(); } }
 
         public override bool Equals(object obj)
         {
@@ -98,23 +93,23 @@ namespace Gean.Net.MessagePools
         /// 新发送消息到达时的事件
         /// </summary>
         public event SendingMessageArrivalEventHandler SendingMessageArrivalEvent;
-        protected virtual void OnSendingMessageArrival(MessageArrivalEventArgs e)
+        protected virtual void OnSendingMessageArrival(MessageWrapper e)
         {
             if (SendingMessageArrivalEvent != null)
                 SendingMessageArrivalEvent(this, e);
         }
-        public delegate void SendingMessageArrivalEventHandler(object sender, MessageArrivalEventArgs e);
+        public delegate void SendingMessageArrivalEventHandler(object sender, MessageWrapper e);
 
         /// <summary>
         /// 新回复消息到达时的事件
         /// </summary>
         public event ReceivingMessageArrivalEventHandler ReceivingMessageArrivalEvent;
-        protected virtual void OnReceivingMessageArrival(MessageArrivalEventArgs e)
+        protected virtual void OnReceivingMessageArrival(MessageWrapper e)
         {
             if (ReceivingMessageArrivalEvent != null)
                 ReceivingMessageArrivalEvent(this, e);
         }
-        public delegate void ReceivingMessageArrivalEventHandler(object sender, MessageArrivalEventArgs e);
+        public delegate void ReceivingMessageArrivalEventHandler(object sender, MessageWrapper e);
         #endregion
     }
 }

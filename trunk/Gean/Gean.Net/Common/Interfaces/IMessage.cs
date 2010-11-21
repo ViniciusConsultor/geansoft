@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Gean.Net.Common
+namespace Gean.Net.Messages
 {
     public interface IMessage
     {
@@ -7,8 +7,9 @@ namespace Gean.Net.Common
         int ClientType { get; }
         string Command { get; }
         string Data { get; set; }
-        MessageSource Source { get; }
         string TalkId { get; }
         string TimeTicks { get; }
+        MessageSource Source { get; }
+        MessageStatus Status { get; }
     }
 }
