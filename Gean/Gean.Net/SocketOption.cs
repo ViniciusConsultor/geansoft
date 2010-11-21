@@ -5,34 +5,50 @@ using Gean.Options;
 using System.Net;
 using System.Xml;
 using Gean.Net.Common;
+using Gean.Net.Common.Interfaces;
 
-namespace Gean.Net.KeepSocket
+namespace Gean.Net
 {
-    public class KeepSocketOption : XmlOption
+    public class SocketOption : XmlOption
     {
         #region 单件实例
 
-        private KeepSocketOption() { }
+        private SocketOption() { }
 
         /// <summary>
         /// 获得一个本类型的单件实例.
         /// </summary>
         /// <value>The instance.</value>
-        public static KeepSocketOption ME
+        public static SocketOption ME
         {
             get { return Singleton.Instance; }
         }
 
         private class Singleton
         {
-            static Singleton() { Instance = new KeepSocketOption(); }
-            internal static readonly KeepSocketOption Instance = null;
+            static Singleton() { Instance = new SocketOption(); }
+            internal static readonly SocketOption Instance = null;
         }
 
         #endregion
 
+        #region 用户可更改的选项
+
+        /// <summary>
+        /// Gets or sets 服务器IP地址
+        /// </summary>
+        /// <value>The IP address.</value>
         public string IPAddress { get; set; }
+        /// <summary>
+        /// Gets or sets 服务器的端口
+        /// </summary>
+        /// <value>The port.</value>
         public int Port { get; set; }
+
+        #endregion
+
+        #region 程序员配置的选项
+
         /// <summary>
         /// Gets or sets 心跳间隔.
         /// </summary>
@@ -48,8 +64,18 @@ namespace Gean.Net.KeepSocket
         /// </summary>
         /// <value><c>true</c> 使用异步传输; otherwise, <c>false</c>.</value>
         public bool IsAsync { get; private set; }
-
+        /// <summary>
+        /// Gets or sets 客户端类型.
+        /// </summary>
+        /// <value>The type of the client.</value>
+        public int ClientType { get; private set; }
+        /// <summary>
+        /// Gets or sets 从消息中解析命令字的接口
+        /// </summary>
+        /// <value>The command parser.</value>
         public ICommandParser CommandParser { get; private set; }
+
+        #endregion
 
         protected override void Load(System.Xml.XmlElement source)
         {
@@ -64,6 +90,7 @@ namespace Gean.Net.KeepSocket
             XmlElement baseElement = (XmlElement)source.SelectSingleNode("base");
             this.HeartRange = int.Parse(baseElement.GetAttribute("heartRange"));
             this.IsAsync = bool.Parse(baseElement.GetAttribute("isAsync"));
+            this.ClientType = int.Parse(baseElement.GetAttribute("clientType"));
 
             XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
             this.VerifyConnCommandString = verifyElement.InnerText.Trim();

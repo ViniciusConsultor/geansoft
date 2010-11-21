@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Net.Common
+namespace Gean.Net.Common.Interfaces
 {
     /// <summary>
     /// 从消息中解析命令字的接口

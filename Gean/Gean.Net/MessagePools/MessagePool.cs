@@ -4,14 +4,14 @@ using System.Text;
 using Gean.Net.Common;
 using Gean.Net.KeepSocket;
 
-namespace Gean.Net.Common
+namespace Gean.Net.MessagePools
 {
     /// <summary>
-    /// 用于长连接的协议消息数据池。包括：1.待发送的消息队列; 2.接收到的消息队列
+    /// 用于长连接的协议异步消息数据池。包括：1.待发送的消息队列; 2.接收到的消息队列
     /// </summary>
-    public class AsyncMessagePool
+    public abstract class MessagePool
     {
-        public AsyncMessagePool()
+        public MessagePool()
         {
             this.ID = UtilityGuid.Get();
         }
@@ -20,9 +20,9 @@ namespace Gean.Net.Common
 
         public override bool Equals(object obj)
         {
-            if (null == obj || !(obj is AsyncMessagePool))
+            if (null == obj || !(obj is MessagePool))
                 return false;
-            return this.ID.Equals(((AsyncMessagePool)obj).ID);
+            return this.ID.Equals(((MessagePool)obj).ID);
         }
 
         public override int GetHashCode()
@@ -37,20 +37,20 @@ namespace Gean.Net.Common
         /// <summary>
         /// 【待发送的消息队列】
         /// </summary>
-        private MessageQueue _SendingQueue = new MessageQueue();
+        protected MessageQueue _SendingQueue = new MessageQueue();
         /// <summary>
         /// 发送队列线程锁
         /// </summary>
-        private object _SendLock = new object();
+        protected object _SendLock = new object();
 
         /// <summary>
         /// 【接收到的消息队列】
         /// </summary>
-        private MessageQueue _ReceivingQueue = new MessageQueue();
+        protected MessageQueue _ReceivingQueue = new MessageQueue();
         /// <summary>
         /// 接收队列线程锁
         /// </summary>
-        private object _ReceiveLock = new object();
+        protected object _ReceiveLock = new object();
 
         /// <summary>
         /// 返回发送队列的消息数
@@ -68,70 +68,32 @@ namespace Gean.Net.Common
         public int ReceivingQueueCount
         {
             get { return _ReceivingQueue.Count; }
-        }       
+        }
+
+        /// <summary>
+        /// 返回本消息池中的消息来源是否是异步的
+        /// </summary>
+        /// <value><c>true</c> if this instance is async; otherwise, <c>false</c>.</value>
+        public abstract bool IsAsync { get; }
 
         /// <summary>
         /// 移除并返回位于消息池中【待发送的消息队列】开始处的对象。
         /// </summary>
-        public string DequeueSending()
-        {
-            string message = string.Empty;
-            if (_SendingQueue.Count > 0)
-            {
-                lock (_SendLock)
-                    return message = _SendingQueue.Dequeue();
-            }
-            return message;
-        }
-
+        public abstract string DequeueSending();
         /// <summary>
         /// 移除并返回位于消息池中【接收到的消息队列】开始处的对象。
         /// </summary>
-        public string DequeueReceiving()
-        {
-            string message = string.Empty;
-            if (_ReceivingQueue.Count > 0)
-            {
-                lock (_ReceiveLock)
-                    return _ReceivingQueue.Dequeue();
-            }
-            return message;
-        }
-
+        public abstract string DequeueReceiving();
         /// <summary>
         /// 将消息添加到位于消息池中【待发送的消息队列】的结尾处。
         /// </summary>
-        public void EnqueueSending(string message)
-        {
-            message = message.Trim();
-            if (!string.IsNullOrEmpty(message))
-            {
-                lock (_SendLock)
-                {
-                    _SendingQueue.Enqueue(message);
-                }
-                string command = KeepSocketOption.ME.CommandParser.Parse(message);
-                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncSending, command, message));
-            }
-        }
-
+        public abstract void EnqueueSending(string message);
         /// <summary>
         /// 将消息添加到位于消息池中【接收到的消息队列】的结尾处。
         /// </summary>
-        public void EnqueueReceiving(string message)
-        {
-            message = message.Trim();
-            if (!string.IsNullOrEmpty(message))
-            {
-                lock (_ReceiveLock)
-                {
-                    _ReceivingQueue.Enqueue(message);
-                }
-                string command = KeepSocketOption.ME.CommandParser.Parse(message);
-                OnReceivingMessageArrival(new MessageArrivalEventArgs(MessageSource.AsyncReceiving, command, message));
-            }
-        }
+        public abstract void EnqueueReceiving(string message);
 
+        #region 事件
         /// <summary>
         /// 新发送消息到达时的事件
         /// </summary>
@@ -153,6 +115,6 @@ namespace Gean.Net.Common
                 ReceivingMessageArrivalEvent(this, e);
         }
         public delegate void ReceivingMessageArrivalEventHandler(object sender, MessageArrivalEventArgs e);
-
+        #endregion
     }
 }

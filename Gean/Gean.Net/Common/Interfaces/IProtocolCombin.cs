@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Net.Common
+namespace Gean.Net.Common.Interfaces
 {
     /// <summary>
     /// 描述一个协议数据组装器的接口
