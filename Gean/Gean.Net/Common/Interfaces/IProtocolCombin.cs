@@ -12,8 +12,8 @@ namespace Gean.Net.Common.Interfaces
         /// <summary>
         /// 将指定的对象根据规则进行组装成协议数据
         /// </summary>
-        /// <param name="args">The args.</param>
+        /// <param name="message">The args.</param>
         /// <returns></returns>
-        string Combin(params object[] args);
+        string Combin(IMessage message);
     }
 }

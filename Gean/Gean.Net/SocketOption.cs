@@ -74,6 +74,11 @@ namespace Gean.Net
         /// </summary>
         /// <value>The command parser.</value>
         public ICommandParser CommandParser { get; private set; }
+        /// <summary>
+        /// Gets or sets 一个协议数据组装器.
+        /// </summary>
+        /// <value>The combin.</value>
+        public IProtocolCombin Combin { get; private set; }
 
         #endregion
 
@@ -94,6 +99,9 @@ namespace Gean.Net
 
             XmlElement verifyElement = (XmlElement)source.SelectSingleNode("verifyConn");
             this.VerifyConnCommandString = verifyElement.InnerText.Trim();
+
+            this.CommandParser = OptionHelper.InterfaceBuilder<ICommandParser>(source.SelectSingleNode("commandParser")).Value; ;
+            this.Combin = OptionHelper.InterfaceBuilder<IProtocolCombin>(source.SelectSingleNode("combin")).Value;
         }
 
         public override System.Xml.XmlElement GetChangedDatagram()
