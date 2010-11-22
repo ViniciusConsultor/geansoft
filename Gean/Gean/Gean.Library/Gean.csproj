@@ -87,12 +87,16 @@
     <Compile Include="Interface\Tree,Item\IItem.cs" />
     <Compile Include="Interface\Tree,Item\ITree.cs" />
     <Compile Include="Interface\IOption.cs" />
+    <Compile Include="Options\IOptionPanelAction.cs" />
+    <Compile Include="Options\OptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options\OptionForm.Designer.cs">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Options\OptionHelper.cs" />
     <Compile Include="Options\OptionPanel.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Options\OptionPanel.Designer.cs">
-      <DependentUpon>OptionPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Options\OptionXmlFile.cs" />
     <Compile Include="Options\XmlOption.cs" />
@@ -180,6 +184,9 @@
     <Compile Include="Wrapper\Xml\XmlSchemaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Options\OptionForm.resx">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ArgumentValidationString.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArgumentValidationString.Designer.cs</LastGenOutput>
