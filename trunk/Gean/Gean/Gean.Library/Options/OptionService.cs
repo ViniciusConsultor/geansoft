@@ -49,8 +49,8 @@ namespace Gean.Options
 
         private class Singleton
         {
-            static Singleton() 
-            { 
+            static Singleton()
+            {
                 Instance = new OptionService();
                 Instance.XmlFileMap = new Dictionary<string, OptionXmlFile>();
             }
@@ -108,15 +108,24 @@ namespace Gean.Options
 
             foreach (Type klass in optionArray)
             {
-                if (klass.IsAbstract)
-                    continue;
-                IOption option = (IOption)klass.GetProperty(INSTANCE_NAME).GetValue(null, null);
-                MethodInfo method = klass.GetMethod(METHOD_NAME, BindingFlags.NonPublic | BindingFlags.Instance);
-                method.Invoke(option, new object[] { parmsMap[klass.FullName] });
+                try
+                {
+                    if (klass.IsAbstract)
+                        continue;
+                    IOption option = (IOption)klass.GetProperty(INSTANCE_NAME).GetValue(null, null);
+                    MethodInfo method = klass.GetMethod(METHOD_NAME, BindingFlags.NonPublic | BindingFlags.Instance);
+                    method.Invoke(option, new object[] { parmsMap[klass.FullName] });
 
-                logger.Info(string.Format("程序的 {0} 选项类型初始化成功。", klass.Name));
-                _OptionMap.Add(klass.Name, option);
+                    logger.Info(string.Format("程序的 {0} 选项类型初始化成功。", klass.Name));
+                    _OptionMap.Add(klass.Name, option);
+                }
+                catch (Exception e)
+                {
+                    logger.Error(string.Format("{0} 选项初始化异常。", klass.Name), e);
+                }
             }
+
+
             return _OptionMap.Count > 0;
         }
 
