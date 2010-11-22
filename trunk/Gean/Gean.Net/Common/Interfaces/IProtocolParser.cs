@@ -13,7 +13,6 @@ namespace Gean.Net.Messages.Interfaces
         /// 将协议数据解析成相应的对象
         /// </summary>
         /// <param name="message">The message.</param>
-        /// <returns></returns>
-        object Parse(MessageWrapper message);
+        void Parse(MessageWrapper message);
     }
 }
