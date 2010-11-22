@@ -51,8 +51,13 @@ namespace Gean.Net.Messages
         /// </summary>
         /// <value>The data.</value>
         public string Data { get; set; }
-
+        /// <summary>
+        /// 本类型实例生成方式
+        /// </summary>
         public MessageSource Source { get; private set; }
+        /// <summary>
+        /// 数据状态，一般是指当是返回数据时，由服务器发回的状态
+        /// </summary>
         public MessageStatus Status { get; private set; }
 
         public MessageWrapper(MessageSource msgSource, string command, string data)

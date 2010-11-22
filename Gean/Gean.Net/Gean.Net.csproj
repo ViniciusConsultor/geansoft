@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Common\DataIDGenerator.cs" />
     <Compile Include="Common\Interfaces\IMessage.cs" />
+    <Compile Include="Common\Interfaces\IMessageBuilder.cs" />
     <Compile Include="Common\Interfaces\IMessageSpliter.cs" />
     <Compile Include="Common\Interfaces\IProtocolCombin.cs" />
     <Compile Include="Messages\MessageStatus.cs" />
