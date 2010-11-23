@@ -12,6 +12,11 @@ namespace Gean.Demo
     {
         static void Main(string[] args)
         {
+            IDGeneratorDemo();
+        }
+
+        private static void OptionDemo()
+        {
             Console.WriteLine("Ready...");
 
             StringCollection sc = UtilityFile.SearchDirectory(OptionService.ApplicationStartPath, "*.option");

@@ -100,5 +100,20 @@ namespace Gean.Net.MessagePools
             }
         }
 
+        /// <summary>
+        /// 增加一个等待回复的交易ID，以绑定异步消息的发送与回复
+        /// </summary>
+        public override int AddTalkId(string talkId)
+        {
+            return _PendingRequestList.Add(talkId);
+        }
+
+        /// <summary>
+        /// 删除一个等待回复的交易ID，以绑定异步消息的发送与回复
+        /// </summary>
+        public override void RemoveTalkId(string talkId)
+        {
+            _PendingRequestList.Remove(talkId);
+        }
     }
 }

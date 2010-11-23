@@ -10,7 +10,7 @@ namespace Gean.Options
 {
     public sealed partial class OptionForm : Form, IOptionPanelAction
     {
-        private List<OptionPanel> OptionPanelList { get; protected set; }
+        protected List<OptionPanel> OptionPanelList { get; private set; }
 
         #region 单件实例
 

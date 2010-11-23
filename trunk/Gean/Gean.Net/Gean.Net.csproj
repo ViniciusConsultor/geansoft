@@ -70,6 +70,10 @@
     <Compile Include="SocketServer\Talk.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gean.Option\Gean.Option.csproj">
+      <Project>{59DC75D1-8746-48EF-80A5-38138B8B0C62}</Project>
+      <Name>Gean.Option</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gean\Gean.Library\Gean.csproj">
       <Project>{54E5A1F2-3684-4C25-BB2A-D1D412D17002}</Project>
       <Name>Gean</Name>
