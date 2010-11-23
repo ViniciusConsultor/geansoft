@@ -289,15 +289,16 @@ namespace Gean.Net.KeepSocket
             {
                 if (isFinish)
                 {
+                    string endChar = SocketOption.ME.EndChar;
                     string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
                     string[] msgs = null;
-                    if (replyMesage.IndexOf("@@") >= 0)
+                    if (endChar.Length > 1)
                     {
-                        msgs = UtilityString.Split(replyMesage, "@@", StringSplitOptions.RemoveEmptyEntries);
+                        msgs = replyMesage.Split(new string[] { endChar }, StringSplitOptions.RemoveEmptyEntries);
                     }
-                    else
+                    else if (endChar.Length == 1)
                     {
-                        msgs = replyMesage.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+                        msgs = replyMesage.Split(new char[] { endChar[0] }, StringSplitOptions.RemoveEmptyEntries);
                     }
                     for (int i = 0; i < msgs.Length; i++)
                     {

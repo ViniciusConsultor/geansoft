@@ -6,6 +6,6 @@
     <endChar>@</endChar>
     <verifyConn>TSTCON|{0}|{1}|@</verifyConn>
     <spliter name="FieldMessageSpliter" class ="Pansoft.Protocol.FieldProtocol.FieldMessageSpliter" />
-    <combin name="FieldProtocolCombine" class ="Pansoft.Protocol.Combine.FieldProtocolCombine" />
+    <combin name="FieldProtocolCombine" class ="Pansoft.Protocol.FieldProtocol.FieldProtocolCombine" />
   </option>
 </options>

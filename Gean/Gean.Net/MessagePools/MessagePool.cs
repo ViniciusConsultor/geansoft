@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean.Net.Messages;
 using Gean.Net.KeepSocket;
+using System.Collections.Specialized;
 
 namespace Gean.Net.MessagePools
 {
@@ -48,6 +49,11 @@ namespace Gean.Net.MessagePools
         protected object _ReceiveLock = new object();
 
         /// <summary>
+        /// 等待回复的请求的交易(对话)的ID
+        /// </summary>
+        protected StringCollection _PendingRequestList = new StringCollection();
+
+        /// <summary>
         /// 返回发送队列的消息数
         /// </summary>
         /// <value>The sending queue count.</value>
@@ -70,6 +76,15 @@ namespace Gean.Net.MessagePools
         /// </summary>
         /// <value><c>true</c> if this instance is async; otherwise, <c>false</c>.</value>
         public abstract bool IsAsync { get; }
+
+        /// <summary>
+        /// 增加一个等待回复的交易ID，以绑定异步消息的发送与回复
+        /// </summary>
+        public abstract int AddTalkId(string talkId);
+        /// <summary>
+        /// 删除一个等待回复的交易ID，以绑定异步消息的发送与回复
+        /// </summary>
+        public abstract void RemoveTalkId(string talkId);
 
         /// <summary>
         /// 移除并返回位于消息池中【待发送的消息队列】开始处的对象。

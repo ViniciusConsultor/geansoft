@@ -30,7 +30,8 @@ namespace Gean.Demo
                 dic = new Dictionary<string, int>(count);
                 while (i < count)
                 {
-                    dic.Add(this.IDGen.Generate(), i);
+                    string id = this.IDGen.Generate();
+                    dic.Add(id, i);
                     i++;
                 }
                 string[] s = new string[2];
@@ -55,23 +56,24 @@ namespace Gean.Demo
 
         class MyId : IDGenerator
         {
-            protected override string GetSecond()
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(DateTime.Now.Second.ToString().PadLeft(2, '0'));
-                sb.Append(DateTime.Now.Millisecond.ToString().PadLeft(4, '0'));
-                return sb.ToString();
-            }
+            //protected override string GetSecond()
+            //{
+            //    StringBuilder sb = new StringBuilder();
+            //    sb.Append(DateTime.Now.Second.ToString().PadLeft(2, '0'));
+            //    sb.Append(DateTime.Now.Millisecond.ToString().PadLeft(4, '0'));
+            //    return sb.ToString();
+            //}
 
-            protected override string GetCount()
-            {
-                int n = 5;
-                if (_counter < GetMaxCount(n) - 1)
-                    _counter++;
-                else
-                    _counter = 1;
-                return Convert.ToString(_counter).PadLeft(n, '0');
-            }
+            //protected override string GetCount()
+            //{
+            //    int n = 5;
+            //    if (_counter < GetMaxCount(n) - 1)
+            //        _counter++;
+            //    else
+            //        _counter = 1;
+            //    return Convert.ToString(_counter).PadLeft(n, '0');
+            //    return "";
+            //}
         }
     }
 }
