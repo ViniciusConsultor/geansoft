@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
-using Gean.Options.Interfaces;
+using Gean.Option.Interfaces;
 
-namespace Gean.Options
+namespace Gean.Option
 {
     /// <summary>
     /// 由GeanSoft设计的应用程序 Option（选项）框架的选项节点类型
@@ -46,7 +46,7 @@ namespace Gean.Options
         /// <summary>
         /// Raises the <see cref="E:OptionLoadedEvent"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="Gean.Options.OptionLoadedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="Gean.Option.OptionLoadedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnOptionLoaded(OptionLoadedEventArgs e)
         {
             if (OptionLoadedEvent != null)
@@ -60,7 +60,7 @@ namespace Gean.Options
         /// <summary>
         /// Raises the <see cref="E:OptionChangedEvent"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="Gean.Options.OptionChangeEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="Gean.Option.OptionChangeEventArgs"/> instance containing the event data.</param>
         protected virtual void OnOptionChanged(OptionChangeEventArgs e)
         {
             if (OptionChangedEvent != null)
@@ -74,7 +74,7 @@ namespace Gean.Options
         /// <summary>
         /// Raises the <see cref="E:OptionChangingEvent"/> event.
         /// </summary>
-        /// <param name="e">The <see cref="Gean.Options.OptionChangeEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="Gean.Option.OptionChangeEventArgs"/> instance containing the event data.</param>
         protected virtual void OnOptionChanging(OptionChangeEventArgs e)
         {
             if (OptionChangingEvent != null)

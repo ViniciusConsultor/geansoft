@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Gean.Options
+namespace Gean.Option
 {
     public abstract partial class OptionPanel : Panel
     {

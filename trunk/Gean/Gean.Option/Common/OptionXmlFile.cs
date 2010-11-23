@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gean.Xml;
 
-namespace Gean.Options.Common
+namespace Gean.Option.Common
 {
     /// <summary>
     /// 描述一个选项XML文件，封装了XmlDoucment在本类型中。

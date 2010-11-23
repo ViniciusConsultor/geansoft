@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Gean.Options.Interfaces
+namespace Gean.Option.Interfaces
 {
     /// <summary>
     /// 这是一个描述Option(选项、配置)的接口。

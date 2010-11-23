@@ -1,4 +1,4 @@
-﻿namespace Gean.Options.Controls
+﻿namespace Gean.Option.Controls
 {
     partial class OptionForm
     {

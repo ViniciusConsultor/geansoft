@@ -8,8 +8,8 @@
     <ProjectGuid>{59DC75D1-8746-48EF-80A5-38138B8B0C62}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Options</RootNamespace>
-    <AssemblyName>Gean.Options</AssemblyName>
+    <RootNamespace>Gean.Option</RootNamespace>
+    <AssemblyName>Gean.Option</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
