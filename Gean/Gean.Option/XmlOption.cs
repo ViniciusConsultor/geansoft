@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using Gean.Options;
 using NLog;
+using Gean.Options.Common;
 
 namespace Gean.Options
 {

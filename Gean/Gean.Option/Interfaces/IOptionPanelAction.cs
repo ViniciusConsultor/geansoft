@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gean.Options
+namespace Gean.Options.Interfaces
 {
     public interface IOptionPanelAction
     {

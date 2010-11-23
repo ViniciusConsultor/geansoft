@@ -8,8 +8,8 @@
     <ProjectGuid>{59DC75D1-8746-48EF-80A5-38138B8B0C62}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gean.Option</RootNamespace>
-    <AssemblyName>Gean.Option</AssemblyName>
+    <RootNamespace>Gean.Options</RootNamespace>
+    <AssemblyName>Gean.Options</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,24 +45,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IOptionPanelAction.cs" />
+    <Compile Include="Interfaces\IOption.cs" />
+    <Compile Include="Interfaces\IOptionPanelAction.cs" />
     <Compile Include="Option.cs" />
-    <Compile Include="OptionForm.cs">
+    <Compile Include="Controls\OptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionForm.Designer.cs">
+    <Compile Include="Controls\OptionForm.Designer.cs">
       <DependentUpon>OptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OptionHelper.cs" />
-    <Compile Include="OptionMap.cs" />
-    <Compile Include="OptionPanel.cs">
+    <Compile Include="Common\OptionHelper.cs" />
+    <Compile Include="Common\OptionMap.cs" />
+    <Compile Include="Controls\OptionPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="OptionService.cs" />
-    <Compile Include="OptionXmlFile.cs" />
+    <Compile Include="Common\OptionXmlFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlOption.cs" />
-    <EmbeddedResource Include="OptionForm.resx">
+    <EmbeddedResource Include="Controls\OptionForm.resx">
       <DependentUpon>OptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -73,6 +74,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -90,6 +92,7 @@
       <Name>Gean</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

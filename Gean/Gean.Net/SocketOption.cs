@@ -6,6 +6,7 @@ using System.Net;
 using System.Xml;
 using Gean.Net.Messages;
 using Gean.Net.Messages.Interfaces;
+using Gean.Options.Common;
 
 namespace Gean.Net
 {

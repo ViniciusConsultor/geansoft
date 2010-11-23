@@ -6,6 +6,8 @@ using System.Xml;
 using NLog;
 using System.Reflection;
 using System.Collections.Specialized;
+using Gean.Options.Interfaces;
+using Gean.Options.Common;
 
 namespace Gean.Options
 {
