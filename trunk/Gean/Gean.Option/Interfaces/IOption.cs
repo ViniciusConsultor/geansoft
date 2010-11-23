@@ -1,6 +1,9 @@
 ﻿using System;
-namespace Gean.Options
+namespace Gean.Options.Interfaces
 {
+    /// <summary>
+    /// 这是一个描述Option(选项、配置)的接口。
+    /// </summary>
     public interface IOption
     {
         bool Save();
@@ -22,7 +25,6 @@ namespace Gean.Options
     public delegate void OptionChangedEventHandler(Object sender, OptionChangeEventArgs e);
     public delegate void OptionChangingEventHandler(Object sender, OptionChangeEventArgs e);
     public delegate void OptionLoadedEventHandler(Object sender, OptionLoadedEventArgs e);
-
 
     /// <summary>
     /// 选项值发生改变时的包含事件数据的类

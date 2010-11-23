@@ -5,8 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Gean.Options.Interfaces;
 
-namespace Gean.Options
+namespace Gean.Options.Controls
 {
     public sealed partial class OptionForm : Form, IOptionPanelAction
     {
