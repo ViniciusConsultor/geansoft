@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gean.Options.Properties {
+namespace Gean.Option.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
-using Gean.Options.Interfaces;
+using Gean.Option.Interfaces;
 
-namespace Gean.Options.Common
+namespace Gean.Option.Common
 {
     /// <summary>
     /// 选项集合

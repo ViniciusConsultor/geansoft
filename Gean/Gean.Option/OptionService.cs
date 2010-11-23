@@ -6,10 +6,10 @@ using System.Xml;
 using NLog;
 using System.Reflection;
 using System.Collections.Specialized;
-using Gean.Options.Interfaces;
-using Gean.Options.Common;
+using Gean.Option.Interfaces;
+using Gean.Option.Common;
 
-namespace Gean.Options
+namespace Gean.Option
 {
     /// <summary>
     /// 选项服务管理器

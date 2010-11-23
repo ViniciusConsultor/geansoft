@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
-namespace Gean.Options.Common
+namespace Gean.Option.Common
 {
     /// <summary>
     /// Option组件的助手类

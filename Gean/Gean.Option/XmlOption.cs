@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
-using Gean.Options;
+using Gean.Option;
 using NLog;
-using Gean.Options.Common;
+using Gean.Option.Common;
 
-namespace Gean.Options
+namespace Gean.Option
 {
     /// <summary>
     /// 内容保存在XML中的Option的抽象类

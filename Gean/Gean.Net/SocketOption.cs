@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Gean.Options;
+using Gean.Option;
 using System.Net;
 using System.Xml;
 using Gean.Net.Messages;
 using Gean.Net.Messages.Interfaces;
-using Gean.Options.Common;
+using Gean.Option.Common;
 
 namespace Gean.Net
 {
