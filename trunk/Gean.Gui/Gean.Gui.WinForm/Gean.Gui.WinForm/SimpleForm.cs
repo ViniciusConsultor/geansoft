@@ -19,7 +19,7 @@ namespace Gean.Gui.WinForm
             this.MinimumSize = new Size(320, 240);
             this.Size = new Size(640, 480);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "Aarhus.Library.UI.Controls.SimpleForm";
+            this.Text = this.GetType().FullName;
 
             this.ResumeLayout(false);
         }

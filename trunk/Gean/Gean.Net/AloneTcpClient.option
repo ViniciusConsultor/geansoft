@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<options>
+  <option class="Gean.Net.SocketOption">
+    <hosts>
+      <host>
+        <IP>127.0.0.1</IP>
+        <port>1234</port>
+      </host>
+      <host>
+        <IP>127.0.0.1</IP>
+        <port>13000</port>
+      </host>
+    </hosts>
+    <backupFile>D:\temp\messages.txt</backupFile>
+    <logPath>D:\temp\</logPath>
+    <interval>300000</interval>
+  </option>
+</options>

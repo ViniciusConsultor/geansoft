@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPAddressTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ToolStripNetVelocityLabel.cs">
       <SubType>Component</SubType>
     </Compile>

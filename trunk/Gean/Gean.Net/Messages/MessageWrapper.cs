@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Gean.Net.KeepSocket;
 
 namespace Gean.Net.Messages
 {
@@ -24,7 +25,7 @@ namespace Gean.Net.Messages
         /// Gets the 请求者类型.
         /// </summary>
         /// <value>The type of the client.</value>
-        public int ClientType { get { return SocketOption.ME.ClientType; } }
+        public int ClientType { get { return KeepSocketOption.ME.ClientType; } }
         /// <summary>
         /// Gets the 请求者编号.
         /// </summary>
@@ -72,7 +73,7 @@ namespace Gean.Net.Messages
         public static MessageWrapper Parse(string message, MessageSource msgSource)
         {
             //LST_OPER_TYPE|OK|20101118191412|BEMP12001|.......
-            string[] result = SocketOption.ME.Spliter.Split(message);
+            string[] result = KeepSocketOption.ME.Spliter.Split(message);
             //第1个域，命令字
             if (result.Length <= 0 || string.IsNullOrEmpty(result[0]))
                 return null;
@@ -119,7 +120,7 @@ namespace Gean.Net.Messages
 
         public override string ToString()
         {
-            return SocketOption.ME.Combiner.Combin(this);
+            return KeepSocketOption.ME.Combiner.Combin(this);
         }
     }
 }
