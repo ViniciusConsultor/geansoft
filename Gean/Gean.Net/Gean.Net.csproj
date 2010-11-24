@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AloneSocket\AloneTcpClient.cs" />
+    <Compile Include="AloneSocket\Enumerations.cs" />
+    <Compile Include="AloneSocket\EventArgs.cs" />
+    <Compile Include="AloneSocket\Host.cs" />
+    <Compile Include="AloneSocket\LogMessage.cs" />
+    <Compile Include="AloneSocket\MessageService.cs" />
     <Compile Include="Common\DataIDGenerator.cs" />
     <Compile Include="Common\Interfaces\IMessage.cs" />
     <Compile Include="Common\Interfaces\IMessageBuilder.cs" />
@@ -57,8 +63,8 @@
     <Compile Include="Messages\MessageQueue.cs" />
     <Compile Include="Messages\MessageSource.cs" />
     <Compile Include="Common\ConnectionStatus.cs" />
-    <Compile Include="KeepSocket\KeepSocket.cs" />
-    <Compile Include="SocketOption.cs" />
+    <Compile Include="KeepSocket\KeepSocketClient.cs" />
+    <Compile Include="KeepSocket\KeepSocketOption.cs" />
     <Compile Include="Common\SplitBytes.cs" />
     <Compile Include="Common\Interfaces\IProtocolParser.cs" />
     <Compile Include="MessagePools\AsyncMessagePool.cs" />
@@ -80,11 +86,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Socket.option">
+    <None Include="KeepSocketClient.option">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="AloneTcpClient.option">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

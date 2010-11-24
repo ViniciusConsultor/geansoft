@@ -14,8 +14,8 @@ namespace Gean
     /// <typeparam name="TSecond">The type of the second.</typeparam>
     public class Pair<TFirst, TSecond>
     {
-        private readonly TFirst first;
-        private readonly TSecond second;
+        private TFirst first;
+        private TSecond second;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pair&lt;TFirst, TSecond&gt;"/> class.
@@ -71,6 +71,7 @@ namespace Gean
         public TFirst First
         {
             get { return this.first; }
+            set { this.first = value; }
         }
 
         /// <summary>
@@ -80,6 +81,7 @@ namespace Gean
         public TSecond Second
         {
             get { return this.second; }
+            set { this.second = value; }
         }
 
         /// <summary>
