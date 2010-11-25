@@ -412,7 +412,10 @@ namespace Gean.Net.KeepSocket
                 }
                 try
                 {
-                    _SocketClient.Close();
+                    if (_SocketClient.Client != null)
+                    {
+                        _SocketClient.Close();
+                    }
                     OnKeepSocketStatusChanged(new KeepSocketStatusChangedEventArgs(ConnectionStatus.Break));
                     logger.Debug("Socket关闭连接成功");
                 }
@@ -446,7 +449,7 @@ namespace Gean.Net.KeepSocket
                 }
                 catch (Exception e)
                 {
-                    logger.Debug("Socket关闭连接导常。异常信息:" + e.Message);
+                    logger.Debug("Socket关闭(SafeClose)连接导常。异常信息:" + e.Message);
                 }
             }
         }
