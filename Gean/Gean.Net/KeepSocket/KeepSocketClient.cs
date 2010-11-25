@@ -302,6 +302,7 @@ namespace Gean.Net.KeepSocket
                 {
                     string endChar = KeepSocketOption.ME.EndChar;
                     string replyMesage = Encoding.Default.GetString(_SplitByte.ReceiveAllByte, 0, _SplitByte.ReceiveAllByte.Length);
+                    logger.Trace("原始数据:"+replyMesage);
                     string[] msgs = null;
                     if (endChar.Length > 1)
                     {
