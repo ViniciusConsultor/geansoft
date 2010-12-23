@@ -127,7 +127,6 @@ namespace Gean.Option
                 }
             }
 
-
             return _OptionMap.Count > 0;
         }
 
