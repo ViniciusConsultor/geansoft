@@ -7,7 +7,7 @@ namespace Gean.Client
 {
     public class ToolStripMenuItemService
     {
-        public static ToolStripMenuItem Parse(Definers definers)
+        public static ToolStripMenuItem Parse(Definition definers)
         {
             ToolStripMenuItem menustrip = new ToolStripMenuItem();
             foreach (KeyValuePair<string, object> item in definers)

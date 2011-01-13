@@ -16,7 +16,7 @@ namespace Gean.Client.DemoApplication
         /// </summary>
         private void MainDemoApplication()
         {
-            List<Definers> definersList = new List<Definers>();
+            List<Definition> definersList = new List<Definition>();
 
             XmlDocument doc = new XmlDocument();
             doc.Load("abcd.xml");
@@ -28,7 +28,7 @@ namespace Gean.Client.DemoApplication
                     continue;
                 }
                 XmlElement element = (XmlElement)node;
-                Definers definers = Definers.Parse(element);
+                Definition definers = Definition.Load("abcd.xml");
                 definersList.Add(definers);
             }
 
