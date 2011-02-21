@@ -59,11 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDGeneratorDemo.cs" />
-    <Compile Include="OptionDemo\AbcdOption.cs" />
-    <Compile Include="OptionDemo\XyzOption.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OptionDemo\SOMSOption.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -84,9 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="OptionDemo\our.option">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

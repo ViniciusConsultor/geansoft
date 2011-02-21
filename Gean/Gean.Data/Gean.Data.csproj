@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Catch\DataCache.cs" />
+    <Compile Include="Cache\DataCache.cs" />
     <Compile Include="ORM\DAL\Helper\Microsoft.ApplicationBlocks.Data\SqlHelper.cs">
       <SubType>Code</SubType>
     </Compile>
